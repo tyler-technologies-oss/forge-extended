@@ -1,0 +1,18 @@
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+
+:host {
+  display: contents;
+}
+
+.surface {
+  background-color: #{forge-theme.variable(surface-dim)};
+  padding: 48px;
+  box-sizing: border-box;
+}
+
+.message-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}

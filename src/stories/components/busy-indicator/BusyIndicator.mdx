@@ -1,0 +1,12 @@
+import { Meta, Title, Canvas } from '@storybook/blocks';
+import * as BusyIndicatorStories from './BusyIndicator.stories';
+
+<Meta of={BusyIndicatorStories} />
+
+<Title />
+
+Busy indicators are a specialized dialog that is used to indicate that a process is running and the user should wait. It is typically used when a process is
+expected to take more than a few seconds to complete. The busy indicator is modal and will prevent the user from interacting with the rest of the application
+until the process is complete.
+
+<Canvas of={BusyIndicatorStories.Demo} />
