@@ -1,8 +1,17 @@
-import { defineTextFieldComponent, defineIconButtonComponent, defineIconComponent } from '@tylertech/forge';
-import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import {
+  defineTextFieldComponent,
+  defineIconButtonComponent,
+  defineIconComponent,
+  TextFieldComponent,
+  IconButtonComponent
+} from '@tylertech/forge';
+import { LitElement, TemplateResult, css, html, unsafeCSS } from 'lit';
+import { customElement, property, query, queryAssignedElements } from 'lit/decorators.js';
 
 import styles from './quantity-field.scss?inline';
+
+const DECREMENT_BUTTON_SLOT_SELECTOR = 'slot[name="decrement-button"]';
+const INCREMENT_BUTTON_SLOT_SELECTOR = 'slot[name="increment-button"]';
 
 @customElement('forge-quantity-field')
 export class QuantityFieldElement extends LitElement {
@@ -13,6 +22,27 @@ export class QuantityFieldElement extends LitElement {
   }
 
   public static override styles = unsafeCSS(styles);
+
+  @property({ type: Boolean, reflect: true }) invalid = false;
+  @property({ type: Boolean, reflect: true }) required = false;
+  @queryAssignedElements({ selector: 'forge-text-field' }) private textFields!: TextFieldComponent[];
+  @query(DECREMENT_BUTTON_SLOT_SELECTOR) private decrementButtonSlot!: HTMLSlotElement;
+  @query(INCREMENT_BUTTON_SLOT_SELECTOR) private incrementButtonSlot!: HTMLSlotElement;
+
+  get decrementButton(): IconButtonComponent {
+    return this.decrementButtonSlot.assignedElements()[0] as IconButtonComponent;
+  }
+
+  get incrementButton(): IconButtonComponent {
+    return this.incrementButtonSlot.assignedElements()[0] as IconButtonComponent;
+  }
+
+  private _incrementListener = this._increment.bind(this);
+  private _decrementMethod = this._decrement.bind(this);
+
+  constructor() {
+    super();
+  }
 
   public override render(): TemplateResult {
     return html`
@@ -26,5 +56,35 @@ export class QuantityFieldElement extends LitElement {
         <slot name="support-text"></slot>
       </div>
     `;
+  }
+
+  public override attributeChangedCallback(name: string, oldVal: string | null, newVal: string | null) {
+    super.attributeChangedCallback(name, oldVal, newVal);
+
+    if (name === 'invalid' && this.textFields[0]) {
+      this.textFields[0].invalid = this.invalid;
+    }
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+
+    this.decrementButton?.removeEventListener('click', this._decrementMethod);
+    this.incrementButton?.removeEventListener('click', this._incrementListener);
+  }
+
+  protected firstUpdated(): void {
+    this.decrementButton?.addEventListener('click', this._decrementMethod);
+    this.incrementButton?.addEventListener('click', this._incrementListener);
+  }
+
+  private _increment(): void {
+    const input = this.querySelector('input') as HTMLInputElement;
+    input.stepUp();
+  }
+
+  private _decrement(): void {
+    const input = this.querySelector('input') as HTMLInputElement;
+    input.stepDown();
   }
 }

@@ -1,8 +1,75 @@
+@use '@tylertech/forge/sass/core/styles/theme' as theme;
 @use '@tylertech/forge/sass/typography' as forge-typography;
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/focus-indicator' as forge-focus-indicator;
+
+@mixin label-base() {
+  @include forge-typography.style(label1);
+}
+
+@mixin label() {
+  color: theme.variable(text-high);
+}
+
+@mixin label-invalid() {
+  @include label-base();
+  color: theme.variable(error);
+}
+
+@mixin required-label() {
+  &::before {
+    color: theme.variable(error);
+    content: '*';
+    margin-right: 4px;
+  }
+}
+
+@mixin support-text-base() {
+  height: 1rem;
+}
+
+@mixin support-text() {
+  @include support-text-base();
+  color: theme.variable(text-medium);
+}
+
+@mixin support-text-invalid() {
+  @include support-text-base();
+  color: theme.variable(error);
+}
+
+@mixin icon-button() {
+  color: theme.variable(text-medium);
+}
+
+@mixin decrement-button() {
+  @include icon-button();
+  margin-right: 4px;
+}
+
+@mixin increment-button() {
+  @include icon-button();
+  margin-left: 4px;
+}
 
 :host {
   display: inline block;
+}
+
+:host([required]) {
+  ::slotted([slot='label']) {
+    @include required-label();
+  }
+}
+
+:host([invalid]) {
+  ::slotted([slot='label']) {
+    @include label-invalid();
+  }
+
+  ::slotted([slot='support-text']) {
+    @include support-text-invalid();
+  }
 }
 
 .container {
@@ -20,4 +87,35 @@
   @include forge-typography.style(label1);
 
   margin: 0;
+}
+
+.container {
+  ::slotted([slot='label']) {
+    @include label-base();
+    @include label();
+  }
+
+  ::slotted([slot='support-text']) {
+    @include support-text();
+  }
+
+  &__inner {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  ::slotted(forge-icon-button:first-of-type) {
+    @include decrement-button();
+  }
+
+  ::slotted(forge-icon-button:last-of-type) {
+    @include increment-button();
+  }
+
+  ::slotted(forge-text-field) {
+    // If the forge-text-field is slotted, remove its excess top and bottom margin
+    --forge-text-field-margin-top: 0;
+    --forge-text-field-margin-bottom: 0;
+  }
 }
