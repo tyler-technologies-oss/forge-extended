@@ -23,17 +23,17 @@ export class QuantityFieldElement extends LitElement {
 
   public static override styles = unsafeCSS(styles);
 
-  @property({ type: Boolean, reflect: true }) invalid = false;
-  @property({ type: Boolean, reflect: true }) required = false;
+  @property({ type: Boolean, reflect: true }) public invalid = false;
+  @property({ type: Boolean, reflect: true }) public required = false;
   @queryAssignedElements({ selector: 'forge-text-field' }) private textFields!: TextFieldComponent[];
   @query(DECREMENT_BUTTON_SLOT_SELECTOR) private decrementButtonSlot!: HTMLSlotElement;
   @query(INCREMENT_BUTTON_SLOT_SELECTOR) private incrementButtonSlot!: HTMLSlotElement;
 
-  get decrementButton(): IconButtonComponent {
+  private get _decrementButton(): IconButtonComponent {
     return this.decrementButtonSlot.assignedElements()[0] as IconButtonComponent;
   }
 
-  get incrementButton(): IconButtonComponent {
+  private get _incrementButton(): IconButtonComponent {
     return this.incrementButtonSlot.assignedElements()[0] as IconButtonComponent;
   }
 
@@ -58,7 +58,7 @@ export class QuantityFieldElement extends LitElement {
     `;
   }
 
-  public override attributeChangedCallback(name: string, oldVal: string | null, newVal: string | null) {
+  public override attributeChangedCallback(name: string, oldVal: string | null, newVal: string | null): void {
     super.attributeChangedCallback(name, oldVal, newVal);
 
     if (name === 'invalid' && this.textFields[0]) {
@@ -69,13 +69,13 @@ export class QuantityFieldElement extends LitElement {
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
 
-    this.decrementButton?.removeEventListener('click', this._decrementMethod);
-    this.incrementButton?.removeEventListener('click', this._incrementListener);
+    this._decrementButton?.removeEventListener('click', this._decrementMethod);
+    this._incrementButton?.removeEventListener('click', this._incrementListener);
   }
 
-  protected firstUpdated(): void {
-    this.decrementButton?.addEventListener('click', this._decrementMethod);
-    this.incrementButton?.addEventListener('click', this._incrementListener);
+  public firstUpdated(): void {
+    this._decrementButton?.addEventListener('click', this._decrementMethod);
+    this._incrementButton?.addEventListener('click', this._incrementListener);
   }
 
   private _increment(): void {
