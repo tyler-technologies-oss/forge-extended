@@ -1,7 +1,7 @@
 @use '@tylertech/forge/sass/core/styles/theme' as theme;
 @use '@tylertech/forge/sass/typography' as forge-typography;
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
-@use '@tylertech/forge/sass/focus-indicator' as forge-focus-indicator;
+@use '@tylertech/forge/sass/icon-button' as forge-icon-button;
 
 @mixin label-base() {
   @include forge-typography.style(label1);
@@ -69,6 +69,14 @@
 
   ::slotted([slot='support-text']) {
     @include support-text-invalid();
+  }
+
+  ::slotted(forge-icon-button) {
+    @include forge-icon-button.provide-theme(
+      (
+        focus-indicator-color: theme.variable(error)
+      )
+    );
   }
 }
 

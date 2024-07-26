@@ -76,6 +76,10 @@ export class QuantityFieldElement extends LitElement {
   public firstUpdated(): void {
     this._decrementButton?.addEventListener('click', this._decrementMethod);
     this._incrementButton?.addEventListener('click', this._incrementListener);
+
+    if (this.textFields[0]) {
+      this.textFields[0].invalid = this.invalid;
+    }
   }
 
   private _increment(): void {
