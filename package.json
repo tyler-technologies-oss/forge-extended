@@ -8,7 +8,7 @@
   "module": "dist/index.mjs",
   "types": "types/index.d.ts",
   "exports": {
-    ".": "./dist/index.mjs",
+    "./*": "./dist/*",
     "./package.json": "./package.json",
     "./custom-elements.json": "./custom-elements.json"
   },
@@ -25,7 +25,6 @@
   },
   "files": [
     "dist",
-    "types",
     "custom-elements.json"
   ],
   "scripts": {

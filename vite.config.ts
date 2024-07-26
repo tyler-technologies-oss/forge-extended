@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import { resolve, basename, dirname } from 'path';
 import { defineConfig } from 'vite';
 import glob from 'glob';
 import tsconfigPaths from 'vite-tsconfig-paths';
@@ -13,9 +13,23 @@ export default defineConfig({
     outDir: 'dist',
     minify: true,
     sourcemap: true,
+
     rollupOptions: {
-      external: [/^@tylertech\/forge$/]
+      external: [/^@tylertech\/forge$/, /^lit$/, /^lit\/decorators.js$/, /^lit\/css-tag.js$/],
+      output: {
+        dir: 'dist',
+        preserveModules: true,
+        preserveModulesRoot: 'src/lib'
+      }
     }
   },
-  plugins: [tsconfigPaths(), dts({ outDir: 'types', compilerOptions: { rootDir: './src/lib' } })]
+  plugins: [
+    tsconfigPaths(),
+    dts({
+      outDir: 'dist',
+      compilerOptions: {
+        rootDir: './src/lib'
+      }
+    })
+  ]
 });
