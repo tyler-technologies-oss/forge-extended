@@ -1,4 +1,4 @@
-import { Decorator, type Meta, type StoryObj } from '@storybook/web-components';
+import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import { IconRegistry } from '@tylertech/forge';
 import { tylIconPlus, tylIconMinus } from '@tylertech/tyler-icons/extended';

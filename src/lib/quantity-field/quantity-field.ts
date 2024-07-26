@@ -5,7 +5,7 @@ import {
   TextFieldComponent,
   IconButtonComponent
 } from '@tylertech/forge';
-import { LitElement, TemplateResult, css, html, unsafeCSS } from 'lit';
+import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property, query, queryAssignedElements } from 'lit/decorators.js';
 
 import styles from './quantity-field.scss?inline';
