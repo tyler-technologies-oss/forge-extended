@@ -17,5 +17,13 @@ export default defineConfig({
       external: [/^@tylertech\/forge$/]
     }
   },
-  plugins: [tsconfigPaths(), dts({ outDir: 'types', compilerOptions: { rootDir: './src/lib' } })]
+  plugins: [
+    tsconfigPaths(),
+    dts({
+      outDir: 'types',
+      compilerOptions: { rootDir: './src/lib' },
+      insertTypesEntry: true,
+      include: 'src/lib/**/!(*.test).ts'
+    })
+  ]
 });

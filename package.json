@@ -6,9 +6,23 @@
   "author": "Tyler Technologies, Inc.",
   "main": "dist/index.mjs",
   "module": "dist/index.mjs",
-  "types": "types/index.d.ts",
+  "typings": "types/index.d.ts",
+  "typesVersions": {
+    "*": {
+      "*": [
+        "types/*"
+      ]
+    }
+  },
   "exports": {
-    ".": "./dist/index.mjs",
+    ".": {
+      "default": "./dist/index.mjs",
+      "types": "./types/index.d.ts"
+    },
+    "./*": {
+      "default": "./dist/*.mjs",
+      "types": "./types/*/*.d.ts"
+    },
     "./package.json": "./package.json",
     "./custom-elements.json": "./custom-elements.json"
   },
