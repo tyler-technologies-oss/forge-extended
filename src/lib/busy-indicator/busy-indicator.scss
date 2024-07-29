@@ -1,7 +1,33 @@
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/typography' as forge-typography;
 
 :host {
   display: contents;
+}
+
+:host([direction='row']) {
+  .message-container {
+    flex-direction: row;
+  }
+
+  .message {
+    flex: 1 auto;
+    text-align: center;
+    margin: 0;
+  }
+}
+
+:host([direction='column']) {
+  .message-container {
+    flex-direction: column;
+  }
+
+  .cancel-button {
+    margin-top: 16px;
+    margin-bottom: -12px;
+    margin-right: 0;
+    margin-left: 0;
+  }
 }
 
 .surface {
@@ -15,4 +41,33 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
+  flex-direction: column;
+}
+
+.message {
+  flex: 1 auto;
+  margin-block: 0;
+
+  &:nth-child(2) {
+    margin-left: 16px;
+  }
+
+  @include forge-typography.style(body2);
+  color: forge-theme.variable(text-medium);
+}
+
+.title {
+  margin-top: -24px;
+  margin-left: -24px;
+
+  @include forge-typography.style(heading4);
+}
+
+.cancel-button {
+  margin-left: 16px;
+}
+
+.progress-container {
+  min-width: 244px;
+  margin-top: 24px;
 }
