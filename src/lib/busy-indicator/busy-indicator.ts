@@ -41,10 +41,10 @@ export class BusyIndicatorElement extends LitElement {
   @property({ type: Boolean, reflect: true })
   public spinner = true;
 
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean, reflect: true, attribute: 'progress-bar-determinate' })
   public progressBarDeterminate = false;
 
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean, reflect: true, attribute: 'progress-bar' })
   public progressBar = false;
 
   @property({ type: Number })
