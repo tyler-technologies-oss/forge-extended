@@ -24,7 +24,7 @@ const meta = {
         ?open=${args.open}
         .titleText="${args.titleText}"
         .message=${args.message}
-        .cancel=${args.cancel}
+        .cancelable=${args.cancelable}
         .spinner=${args.spinner}
         .progress=${args.progress}
         .progressBar=${args.progressBar}
@@ -48,7 +48,7 @@ const meta = {
     open: false,
     titleText: 'Loading...',
     message: 'Please wait while we load your data',
-    cancel: false,
+    cancelable: false,
     spinner: true,
     progressBar: false,
     progress: 0,
@@ -64,6 +64,6 @@ type Story = StoryObj;
 
 export const Demo: Story = {
   args: {
-    cancel: true
+    cancelable: true
   }
 };

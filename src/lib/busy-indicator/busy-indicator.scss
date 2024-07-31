@@ -1,38 +1,21 @@
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+
+//
+// Host
+//
 
 :host {
   display: contents;
 }
 
-:host([direction='row']) {
-  .message-container {
-    flex-direction: row;
-  }
-
-  .message {
-    flex: 1 auto;
-    text-align: center;
-    margin: 0;
-  }
-}
-
-:host([direction='column']) {
-  .message-container {
-    flex-direction: column;
-  }
-
-  .cancel-button {
-    margin-top: 16px;
-    margin-bottom: -12px;
-    margin-right: 0;
-    margin-left: 0;
-  }
-}
+//
+// Base
+//
 
 .surface {
-  background-color: #{forge-theme.variable(surface-dim)};
-  padding: 48px;
+  padding: #{forge-spacing.variable(xxlarge)};
   box-sizing: border-box;
 }
 
@@ -40,34 +23,45 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: #{forge-spacing.variable(medium)};
   flex-direction: column;
 }
 
 .message {
+  @include forge-typography.style(body2);
+
   flex: 1 auto;
   margin-block: 0;
-
-  &:nth-child(2) {
-    margin-left: 16px;
-  }
-
-  @include forge-typography.style(body2);
-  color: forge-theme.variable(text-medium);
+  color: #{forge-theme.variable(text-medium)};
 }
 
 .title {
-  margin-top: -24px;
-  margin-left: -24px;
-
   @include forge-typography.style(heading4);
+
+  margin-top: calc(#{forge-spacing.variable(large)} * -1);
+  margin-left: calc(#{forge-spacing.variable(large)} * -1);
 }
 
 .cancel-button {
-  margin-left: 16px;
+  margin-inline-start: #{forge-spacing.variable(medium)};
 }
 
 .progress-container {
   min-width: 244px;
-  margin-top: 24px;
+  margin-block-start: #{forge-spacing.variable(large)};
+}
+
+//
+// Direction - Row
+//
+
+:host([direction='row']) {
+  .message-container {
+    flex-direction: row;
+  }
+
+  .message {
+    text-align: center;
+    margin: 0;
+  }
 }

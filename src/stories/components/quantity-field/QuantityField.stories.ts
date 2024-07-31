@@ -16,16 +16,16 @@ const meta = {
     return html`
       <forge-quantity-field .invalid=${args.invalid} .required=${args.required}>
         <label slot="label" for="quantity">Quantity</label>
-        <forge-icon-button aria-label="Decrement" slot="decrement-button">
+        <forge-icon-button shape="squared" aria-label="Decrement" slot="decrement-button">
           <forge-icon name="minus"></forge-icon>
         </forge-icon-button>
         <forge-text-field>
           <input id="quantity" type="number" value="1" aria-label="Set a quantity" step="2" />
         </forge-text-field>
-        <forge-icon-button aria-label="Increment" slot="increment-button">
+        <forge-icon-button shape="squared" aria-label="Increment" slot="increment-button">
           <forge-icon name="plus"></forge-icon>
         </forge-icon-button>
-        <p slot="support-text">Enter a quantity</p>
+        <span slot="support-text">Enter a quantity</span>
       </forge-quantity-field>
     `;
   },

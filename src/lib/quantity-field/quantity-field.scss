@@ -3,72 +3,67 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/icon-button' as forge-icon-button;
 
-@mixin label-base() {
-  @include forge-typography.style(label1);
-}
-
-@mixin label() {
-  color: theme.variable(text-high);
-}
-
-@mixin label-invalid() {
-  @include label-base();
-  color: theme.variable(error);
-}
-
-@mixin required-label() {
-  &::before {
-    color: theme.variable(error);
-    content: '*';
-    margin-right: 4px;
-  }
-}
-
-@mixin support-text-base() {
-  height: 1rem;
-}
-
-@mixin support-text() {
-  @include support-text-base();
-  color: theme.variable(text-medium);
-}
-
-@mixin support-text-invalid() {
-  @include support-text-base();
-  color: theme.variable(error);
-}
-
-@mixin icon-button() {
-  color: theme.variable(text-medium);
-}
-
-@mixin decrement-button() {
-  @include icon-button();
-  margin-right: 4px;
-}
-
-@mixin increment-button() {
-  @include icon-button();
-  margin-left: 4px;
-}
+//
+// Host
+//
 
 :host {
   display: inline block;
 }
 
+//
+// Base
+//
+
+.container,
+.inner {
+  display: flex;
+  gap: #{forge-spacing.variable(xxsmall)};
+}
+
+.container {
+  flex-direction: column;
+}
+
+.inner {
+  align-items: center;
+}
+
+//
+// Slotted
+//
+
+::slotted(:is([slot='label'], [slot='support-text'])) {
+  @include forge-typography.style(label1);
+}
+
+::slotted([slot='label']) {
+  color: #{theme.variable(text-high)};
+}
+
+::slotted(:is([slot='decrement-button'], [slot='increment-button'], [slot='support-text'])) {
+  color: #{theme.variable(text-medium)};
+}
+
+//
+// Required
+//
+
 :host([required]) {
-  ::slotted([slot='label']) {
-    @include required-label();
+  ::slotted([slot='label'])::before {
+    content: '*';
+    color: #{theme.variable(error)};
+    margin-inline-end: #{forge-spacing.variable(xxsmall)};
   }
 }
 
-:host([invalid]) {
-  ::slotted([slot='label']) {
-    @include label-invalid();
-  }
+//
+// Invalid
+//
 
-  ::slotted([slot='support-text']) {
-    @include support-text-invalid();
+:host([invalid]) {
+  ::slotted([slot='label'], [slot='support-text']) {
+    color: #{theme.variable(error)};
   }
 
   ::slotted(forge-icon-button) {
@@ -77,53 +72,5 @@
         focus-indicator-color: theme.variable(error)
       )
     );
-  }
-}
-
-.container {
-  display: flex;
-  flex-direction: column;
-  gap: #{forge-spacing.variable(xxsmall)};
-}
-
-.inner {
-  display: flex;
-  align-items: center;
-}
-
-::slotted(:is([slot='label'], [slot='support-text'])) {
-  @include forge-typography.style(label1);
-
-  margin: 0;
-}
-
-.container {
-  ::slotted([slot='label']) {
-    @include label-base();
-    @include label();
-  }
-
-  ::slotted([slot='support-text']) {
-    @include support-text();
-  }
-
-  &__inner {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  ::slotted(forge-icon-button:first-of-type) {
-    @include decrement-button();
-  }
-
-  ::slotted(forge-icon-button:last-of-type) {
-    @include increment-button();
-  }
-
-  ::slotted(forge-text-field) {
-    // If the forge-text-field is slotted, remove its excess top and bottom margin
-    --forge-text-field-margin-top: 0;
-    --forge-text-field-margin-bottom: 0;
   }
 }

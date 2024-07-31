@@ -1,4 +1,5 @@
 import { expect } from '@esm-bundle/chai';
+import sinon from 'sinon';
 import { fixture, html } from '@open-wc/testing';
 import { BusyIndicatorElement } from './busy-indicator';
 
@@ -35,11 +36,11 @@ describe('Busy Indicator', () => {
     expect(el.message).to.equal('Please wait while we load your data');
   });
 
-  it('should set cancel attribute', async () => {
-    const el = await fixture<BusyIndicatorElement>(html`<forge-busy-indicator cancel></forge-busy-indicator>`);
+  it('should set cancelable attribute', async () => {
+    const el = await fixture<BusyIndicatorElement>(html`<forge-busy-indicator cancelable></forge-busy-indicator>`);
 
-    expect(el.cancel).to.be.true;
-    expect(el.hasAttribute('cancel')).to.be.true;
+    expect(el.cancelable).to.be.true;
+    expect(el.hasAttribute('cancelable')).to.be.true;
   });
 
   it('should set spinner attribute', async () => {
@@ -81,5 +82,29 @@ describe('Busy Indicator', () => {
     const el = await fixture<BusyIndicatorElement>(html`<forge-busy-indicator direction="row"></forge-busy-indicator>`);
 
     expect(el.direction).to.equal('row');
+  });
+
+  it('should dispatch cancel event', async () => {
+    const el = await fixture<BusyIndicatorElement>(html`<forge-busy-indicator open cancelable></forge-busy-indicator>`);
+
+    const spy = sinon.spy();
+    el.addEventListener('forge-busy-indicator-cancel', spy);
+
+    const cancelButton = el.shadowRoot?.querySelector('.cancel-button') as HTMLButtonElement;
+    cancelButton.click();
+
+    expect(spy).to.have.been.calledOnce;
+    expect(el.open).to.be.false;
+  });
+
+  it('should not close when cancel event is prevented', async () => {
+    const el = await fixture<BusyIndicatorElement>(html`<forge-busy-indicator open cancelable></forge-busy-indicator>`);
+
+    el.addEventListener('forge-busy-indicator-cancel', e => e.preventDefault());
+
+    const cancelButton = el.shadowRoot?.querySelector('.cancel-button') as HTMLButtonElement;
+    cancelButton.click();
+
+    expect(el.open).to.be.true;
   });
 });
