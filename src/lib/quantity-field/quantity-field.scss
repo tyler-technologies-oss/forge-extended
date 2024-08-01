@@ -29,6 +29,10 @@
   align-items: center;
 }
 
+forge-icon-button {
+  color: #{theme.variable(text-medium)};
+}
+
 //
 // Slotted
 //
@@ -41,7 +45,7 @@
   color: #{theme.variable(text-high)};
 }
 
-::slotted(:is([slot='decrement-button'], [slot='increment-button'], [slot='support-text'])) {
+::slotted([slot='support-text']) {
   color: #{theme.variable(text-medium)};
 }
 
@@ -66,7 +70,9 @@
     color: #{theme.variable(error)};
   }
 
-  ::slotted(forge-icon-button) {
+  forge-icon-button {
+    color: #{theme.variable(error)};
+
     @include forge-icon-button.provide-theme(
       (
         focus-indicator-color: theme.variable(error)

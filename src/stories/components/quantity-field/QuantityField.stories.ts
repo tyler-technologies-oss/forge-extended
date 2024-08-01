@@ -1,13 +1,9 @@
 import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-import { IconRegistry } from '@tylertech/forge';
-import { tylIconPlus, tylIconMinus } from '@tylertech/tyler-icons/extended';
 
 import '$lib/quantity-field/quantity-field';
 
 const component = 'forge-quantity-field';
-
-IconRegistry.define([tylIconPlus, tylIconMinus]);
 
 const meta = {
   title: 'Components/Quantity Field',
@@ -16,15 +12,7 @@ const meta = {
     return html`
       <forge-quantity-field .invalid=${args.invalid} .required=${args.required}>
         <label slot="label" for="quantity">Quantity</label>
-        <forge-icon-button shape="squared" aria-label="Decrement" slot="decrement-button">
-          <forge-icon name="minus"></forge-icon>
-        </forge-icon-button>
-        <forge-text-field>
-          <input id="quantity" type="number" value="1" aria-label="Set a quantity" step="2" />
-        </forge-text-field>
-        <forge-icon-button shape="squared" aria-label="Increment" slot="increment-button">
-          <forge-icon name="plus"></forge-icon>
-        </forge-icon-button>
+        <input id="quantity" type="number" value="1" aria-label="Set a quantity" step="2" />
         <span slot="support-text">Enter a quantity</span>
       </forge-quantity-field>
     `;
