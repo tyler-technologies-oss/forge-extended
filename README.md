@@ -26,6 +26,39 @@ Now you can install the extended library:
 npm install @tylertech/forge-extended
 ```
 
+### Importing components
+
+You can import components from the extended library like so:
+
+```javascript
+import '@tylertech/forge-extended/quantity-field';
+```
+
+> This is a side-effect import, so you don't need to assign it to a variable. It will register the component with the
+> custom element registry and make it available for use in your HTML.
+
+You can also reference types from components modules like so:
+
+```typescript
+import { type QuantityFieldElement } from  '@tylertech/forge-extended/quantity-field';
+```
+
+> This is useful for strongly typing your custom elements in TypeScript.
+
+### Importing **all** components
+
+If you want to import all components from the extended library, you can do so like this:
+
+```javascript
+import '@tylertech/forge-extended';
+```
+
+> **Important:** This will import **all** components from the extended library, which may not be necessary and could
+> increase your bundle size. It is recommended to only import the components you need individually.
+>
+> Additionally, you should mix the full library import with individual imports, as this may cause issues with
+> tree-shaking, bundle size, and can lead to conflicts when the code is run in the browser to define custom elements.
+
 ## Version compatibility
 
 | `@tylertech/forge-extended` | `@tylertech/forge` |

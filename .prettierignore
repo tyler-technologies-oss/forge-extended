@@ -7,3 +7,6 @@ package-lock.json
 CONTRIBUTING.md
 CHANGELOG.md
 README.md
+.gitignore
+.autorc
+.prettierignore
