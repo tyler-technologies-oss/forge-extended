@@ -10,21 +10,15 @@ interfaces more efficiently.
 
 ## Usage
 
-To get started using this library you must first install the core Forge library (if already installed, see version
+To get started using this library you must install the Forge component library (if already installed, see version
 compatibility table below):
 
 ```bash
-npm install @tylertech/forge
+npm install @tylertech/forge @tylertech/forge-extended
 ```
 
 > The core Forge library is a peer dependency of this extended library, and they are very tightly coupled and
 > intended to always be used alongside each other.
-
-Now you can install the extended library:
-
-```bash
-npm install @tylertech/forge-extended
-```
 
 ### Importing components
 
@@ -54,9 +48,9 @@ import '@tylertech/forge-extended';
 ```
 
 > **Important:** This will import **all** components from the extended library, which may not be necessary and could
-> increase your bundle size. It is recommended to only import the components you need individually.
+> increase your bundle size. It is recommended to only import the components you **need** individually.
 >
-> Additionally, you should mix the full library import with individual imports, as this may cause issues with
+> Additionally, you should **not** mix the full library import with individual imports, as this may cause issues with
 > tree-shaking, bundle size, and can lead to conflicts when the code is run in the browser to define custom elements.
 
 ## Version compatibility
@@ -78,7 +72,7 @@ npm install
 This will open the Storybook site that is used for local development.
 
 ```bash
-npm run start
+npm start
 ```
 
 ### Vite Dev
