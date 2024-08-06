@@ -6,5 +6,5 @@ dist/
 types/
 cdn-deployment/
 custom-elements.json
-*.tar.gz
+*.tgz
 *storybook.log

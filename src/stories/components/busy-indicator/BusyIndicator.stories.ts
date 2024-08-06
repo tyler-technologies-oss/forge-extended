@@ -19,7 +19,18 @@ const meta = {
 
     return html`
       <forge-button variant="raised" @click=${handleClick}>Show Busy Indicator</forge-button>
-      <forge-busy-indicator ${ref(busyIndicatorRef)} ?open=${args.open}></forge-busy-indicator>
+      <forge-busy-indicator
+        ${ref(busyIndicatorRef)}
+        ?open=${args.open}
+        .titleText="${args.titleText}"
+        .message=${args.message}
+        .cancelable=${args.cancelable}
+        .spinner=${args.spinner}
+        .progress=${args.progress}
+        .progressBar=${args.progressBar}
+        .progressBarDeterminate=${args.progressBarDeterminate}
+        .buffer=${args.buffer}
+        .direction=${args.direction}></forge-busy-indicator>
     `;
   },
   argTypes: {
@@ -27,10 +38,23 @@ const meta = {
       control: {
         type: 'boolean'
       }
+    },
+    direction: {
+      control: 'select',
+      options: ['row', 'column']
     }
   },
   args: {
-    open: false
+    open: false,
+    titleText: 'Loading...',
+    message: 'Please wait while we load your data',
+    cancelable: false,
+    spinner: true,
+    progressBar: false,
+    progress: 0,
+    buffer: 0,
+    direction: 'column',
+    progressBarDeterminate: false
   }
 } satisfies Meta;
 
@@ -38,4 +62,8 @@ export default meta;
 
 type Story = StoryObj;
 
-export const Demo: Story = {};
+export const Demo: Story = {
+  args: {
+    cancelable: true
+  }
+};

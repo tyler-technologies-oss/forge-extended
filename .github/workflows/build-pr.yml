@@ -8,7 +8,7 @@ jobs:
     name: Build and Test
     uses: tyler-technologies-oss/forge-automation-shared/.github/workflows/wf-build-and-test.yml@v2.10.3
     with:
-      BUILD_ENABLED: ${{ needs.wf-config.outputs.build-files-changed == 'true' }}
-      TESTS_ENABLED: ${{ needs.wf-config.outputs.test-files-changed == 'true' }}
+      TESTS_ENABLED: true
+      TESTS_NPM_SCRIPT: test:ci
     secrets:
       NPM_TOKEN: ${{ secrets.FORGE_NPM_TOKEN }}

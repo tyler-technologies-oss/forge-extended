@@ -3,6 +3,7 @@
   "ignorePatterns": [
     "dist/**/*",
     "plugins/**/*",
+    "scripts/**/*",
     "src/stories/**/*",
     "vite.config.ts",
     "web-test-runner.config.ts",

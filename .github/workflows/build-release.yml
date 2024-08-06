@@ -74,7 +74,7 @@ jobs:
               - '.github/workflows/**'
               - 'src/**'
             test:
-              - 'src/**'
+              - 'src/lib/**'
     outputs:
       is-release: ${{ steps.detect-release.outputs.release }}
       build-files-changed: ${{ steps.file-filter.outputs.build == 'true' }}
