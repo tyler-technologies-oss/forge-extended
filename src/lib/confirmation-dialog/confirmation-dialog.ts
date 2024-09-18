@@ -81,7 +81,7 @@ export class ConfirmationDialogElement extends LitElement {
         <div class="container" part="container">
           ${title}
           ${message}
-          <div class="actions-container part-"actions-container">
+          <div class="actions-container" part-"actions-container">
             ${secondaryActionButton}
             ${primaryActionButton}
           </div>
