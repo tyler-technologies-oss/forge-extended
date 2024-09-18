@@ -19,7 +19,7 @@
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  max-width: 360px;
+  max-width: 768px;
   gap: #{forge-spacing.variable(medium)};
 }
 

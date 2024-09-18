@@ -33,24 +33,12 @@ const meta = {
       </forge-dialog>
     `;
   },
-  argTypes: {
-    open: {
-      control: {
-        type: 'boolean'
-      }
-    },
-    direction: {
-      control: 'select',
-      options: ['row', 'column']
-    }
-  },
   args: {
-    open: false,
     titleText: 'This is the title',
-    message: `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.`,
+    message: 'Are you sure you want to permanently delete this file?',
     showSecondaryActionButton: true,
-    secondaryActionButtonText: 'Secondary Action',
-    primaryActionButtonText: 'Save & Close'
+    secondaryActionButtonText: 'No',
+    primaryActionButtonText: 'Yes'
   }
 } satisfies Meta;
 
