@@ -18,16 +18,26 @@ const meta = {
       confirmationDialogRef.value!.open = true;
     }
 
+    function closeDialog() {
+      confirmationDialogRef.value!.open = false;
+    }
+
     function onConfirmationDialogAction(e: IConfirmationDialogAction) {
       const isPrimary = e.detail.primaryAction;
       if (!isPrimary) {
         confirmationDialogRef.value!.open = false;
         return;
       } else {
-        confirmationDialogRef.value!.isBusy = true;
-        setTimeout(() => {
-          confirmationDialogRef.value!.open = false;
-        }, args.simulateLoading);
+        // This logic (whether async or synchronous) would be managed by the consumer
+        if (!args.simulateAsync) {
+          closeDialog();
+          return;
+        } else {
+          confirmationDialogRef.value!.isBusy = true;
+          setTimeout(() => {
+            closeDialog();
+          }, 2500);
+        }
       }
     }
 
@@ -56,7 +66,7 @@ const meta = {
     showSecondaryButton: true,
     secondaryButtonText: 'No',
     primaryButtonText: 'Yes',
-    simulateLoading: '500'
+    simulateAsync: false
   }
 } satisfies Meta;
 
