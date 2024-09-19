@@ -88,10 +88,27 @@ describe('Confirmation Dialog', () => {
     const spy = sinon.spy();
     el.addEventListener('forge-confirmation-dialog-action', spy);
 
-    const secondaryButton = el.shadowRoot?.querySelector('forge-button[variant="outlined"]') as HTMLButtonElement;
-    console.log(secondaryButton);
+    const secondaryButton = el.shadowRoot?.querySelector('#secondary-button') as HTMLButtonElement;
 
     secondaryButton.click();
+
+    expect(spy).to.have.been.calledOnce;
+  });
+
+  it('should dispatch forge-confirmation-dialog-action event when clicking the primary button', async () => {
+    const el = await fixture<ConfirmationDialogElement>(
+      html`<forge-confirmation-dialog
+        show-secondary-button
+        primary-button-text="Save"
+        open></forge-confirmation-dialog>`
+    );
+
+    const spy = sinon.spy();
+    el.addEventListener('forge-confirmation-dialog-action', spy);
+
+    const primaryButton = el.shadowRoot?.querySelector('#primary-button') as HTMLButtonElement;
+
+    primaryButton.click();
 
     expect(spy).to.have.been.calledOnce;
   });
