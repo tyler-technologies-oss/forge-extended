@@ -19,12 +19,14 @@ const meta = {
       dialogRef.value!.open = true;
     }
 
-    function showToast(message: string) {
-      ToastComponent.present({ message: message });
+    function showToast(isPrimary: boolean) {
+      isPrimary
+        ? ToastComponent.present({ message: 'Primary action clicked', theme: 'primary' })
+        : ToastComponent.present({ message: 'Secondary action clicked', theme: 'secondary' });
     }
 
     function onConfirmationDialogAction(e: IConfirmationDialogAction) {
-      e.detail.primaryAction ? showToast('Primary action clicked') : showToast('Secondary action clicked');
+      showToast(e.detail.primaryAction);
     }
 
     return html`
