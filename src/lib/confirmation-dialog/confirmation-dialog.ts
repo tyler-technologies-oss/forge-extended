@@ -10,10 +10,10 @@ declare global {
   }
 
   interface HTMLElementEventMap {
-    'forge-confirmation-dialog-close': CustomEvent<void>;
+    'forge-confirmation-dialog-action': CustomEvent<void>;
   }
 
-  interface IConfirmationDialogClose extends CustomEvent {
+  interface IConfirmationDialogAction extends CustomEvent {
     detail: {
       primaryAction: boolean;
     };
@@ -72,13 +72,17 @@ export class ConfirmationDialogElement extends LitElement {
       : nothing;
 
     const secondaryActionButton = this.showSecondaryActionButton
-      ? html`<forge-button class="cancel-button" part="cancel-button" variant="outlined" @click=${this._onSecondary}>
+      ? html`<forge-button
+          class="cancel-button"
+          part="cancel-button"
+          variant="outlined"
+          @click=${this._onAction(false)}>
           <slot name="cancel-text">${this.secondaryActionButtonText}</slot>
         </forge-button>`
       : nothing;
 
     const primaryActionButton = this.primaryActionButtonText
-      ? html`<forge-button class="primary-button" part="primary-button" variant="raised" @click=${this._onPrimary}>
+      ? html`<forge-button class="primary-button" part="primary-button" variant="raised" @click=${this._onAction(true)}>
           <slot name="primary-text">${this.primaryActionButtonText}</slot>
         </forge-button>`
       : nothing;
@@ -95,21 +99,12 @@ export class ConfirmationDialogElement extends LitElement {
     `;
   }
 
-  private _onPrimary(): void {
-    const event = new CustomEvent('forge-confirmation-dialog-close', {
+  private _onAction(isPrimary: boolean): void {
+    const event = new CustomEvent('forge-confirmation-dialog-action', {
       bubbles: true,
       cancelable: true,
-      detail: { primaryAction: true }
-    } as IConfirmationDialogClose);
-    this.dispatchEvent(event);
-  }
-
-  private _onSecondary(): void {
-    const event = new CustomEvent('forge-confirmation-dialog-close', {
-      bubbles: true,
-      cancelable: true,
-      detail: { primaryAction: false }
-    } as IConfirmationDialogClose);
+      detail: { primaryAction: isPrimary }
+    } as IConfirmationDialogAction);
     this.dispatchEvent(event);
   }
 }

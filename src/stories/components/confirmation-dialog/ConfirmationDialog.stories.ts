@@ -19,11 +19,16 @@ const meta = {
       dialogRef.value!.open = true;
     }
 
+    function onConfirmationDialogAction() {
+      console.log('button clicked');
+    }
+
     return html`
       <forge-button variant="raised" @click=${handleClick}>Show Confirmation Dialog</forge-button>
       <forge-dialog ${ref(dialogRef)}>
         <forge-confirmation-dialog
           ${ref(confirmationDialogRef)}
+          @forge-confirmation-dialog-action=${onConfirmationDialogAction}
           .titleText="${args.titleText}"
           .message=${args.message}
           .showSecondaryActionButton=${args.showSecondaryActionButton}
