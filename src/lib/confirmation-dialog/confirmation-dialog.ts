@@ -72,13 +72,13 @@ export class ConfirmationDialogElement extends LitElement {
       : nothing;
 
     const secondaryActionButton = this.showSecondaryActionButton
-      ? html`<forge-button class="cancel-button" part="cancel-button" variant="outlined" @click=${this._onSecondary()}>
+      ? html`<forge-button class="cancel-button" part="cancel-button" variant="outlined" @click=${this._onSecondary}>
           <slot name="cancel-text">${this.secondaryActionButtonText}</slot>
         </forge-button>`
       : nothing;
 
     const primaryActionButton = this.primaryActionButtonText
-      ? html`<forge-button class="primary-button" part="primary-button" variant="raised" @click=${this._onPrimary()}>
+      ? html`<forge-button class="primary-button" part="primary-button" variant="raised" @click=${this._onPrimary}>
           <slot name="primary-text">${this.primaryActionButtonText}</slot>
         </forge-button>`
       : nothing;
