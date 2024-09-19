@@ -4,7 +4,7 @@ import { createRef, ref } from 'lit/directives/ref.js';
 
 import '$lib/confirmation-dialog/confirmation-dialog';
 import { ConfirmationDialogElement } from '$lib';
-import { DialogComponent } from '@tylertech/forge';
+import { DialogComponent, ToastComponent } from '@tylertech/forge';
 
 const component = 'forge-confirmation-dialog';
 
@@ -14,13 +14,19 @@ const meta = {
   render: args => {
     const confirmationDialogRef = createRef<ConfirmationDialogElement>();
     const dialogRef = createRef<DialogComponent>();
+    const toastRef = createRef<ToastComponent>();
+    let toastContent = '';
 
     function handleClick() {
       dialogRef.value!.open = true;
     }
 
-    function onConfirmationDialogAction() {
-      console.log('button clicked');
+    function showToast(message: string) {
+      ToastComponent.present({ message: message });
+    }
+
+    function onConfirmationDialogAction(e: IConfirmationDialogAction) {
+      e.detail.primaryAction ? showToast('Primary action clicked') : showToast('Secondary action clicked');
     }
 
     return html`
@@ -28,7 +34,7 @@ const meta = {
       <forge-dialog ${ref(dialogRef)}>
         <forge-confirmation-dialog
           ${ref(confirmationDialogRef)}
-          @forge-confirmation-dialog-action=${onConfirmationDialogAction}
+          @forge-confirmation-dialog-action=${(e: IConfirmationDialogAction) => onConfirmationDialogAction(e)}
           .titleText="${args.titleText}"
           .message=${args.message}
           .showSecondaryActionButton=${args.showSecondaryActionButton}
@@ -36,6 +42,7 @@ const meta = {
           .primaryActionButtonText=${args.primaryActionButtonText}>
         </forge-confirmation-dialog>
       </forge-dialog>
+      <forge-toast ${ref(toastRef)}> ${toastContent} </forge-toast>
     `;
   },
   args: {
