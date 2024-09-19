@@ -15,7 +15,7 @@ declare global {
 
   interface IConfirmationDialogClose extends CustomEvent {
     detail: {
-      action: string;
+      primaryAction: boolean;
     };
   }
 }
@@ -72,21 +72,13 @@ export class ConfirmationDialogElement extends LitElement {
       : nothing;
 
     const secondaryActionButton = this.showSecondaryActionButton
-      ? html`<forge-button
-          class="cancel-button"
-          part="cancel-button"
-          variant="outlined"
-          @click=${this._onClose('secondary')}>
+      ? html`<forge-button class="cancel-button" part="cancel-button" variant="outlined" @click=${this._onSecondary()}>
           <slot name="cancel-text">${this.secondaryActionButtonText}</slot>
         </forge-button>`
       : nothing;
 
     const primaryActionButton = this.primaryActionButtonText
-      ? html`<forge-button
-          class="primary-button"
-          part="primary-button"
-          variant="raised"
-          @click=${this._onClose('primary')}>
+      ? html`<forge-button class="primary-button" part="primary-button" variant="raised" @click=${this._onPrimary()}>
           <slot name="primary-text">${this.primaryActionButtonText}</slot>
         </forge-button>`
       : nothing;
@@ -103,19 +95,21 @@ export class ConfirmationDialogElement extends LitElement {
     `;
   }
 
-  private _onClose(actionType: string): void {
-    let event: IConfirmationDialogClose;
-    actionType === 'primary'
-      ? (event = new CustomEvent('forge-confirmation-dialog-close', {
-          bubbles: true,
-          cancelable: true,
-          detail: { action: 'primary' }
-        }))
-      : (event = new CustomEvent('forge-confirmation-dialog-close', {
-          bubbles: true,
-          cancelable: true,
-          detail: { action: 'secondary' }
-        }));
+  private _onPrimary(): void {
+    let event = new CustomEvent('forge-confirmation-dialog-close', {
+      bubbles: true,
+      cancelable: true,
+      detail: { primaryAction: true }
+    } as IConfirmationDialogClose);
+    this.dispatchEvent(event);
+  }
+
+  private _onSecondary(): void {
+    let event = new CustomEvent('forge-confirmation-dialog-close', {
+      bubbles: true,
+      cancelable: true,
+      detail: { primaryAction: false }
+    } as IConfirmationDialogClose);
     this.dispatchEvent(event);
   }
 }
