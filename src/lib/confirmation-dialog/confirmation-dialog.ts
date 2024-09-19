@@ -76,13 +76,17 @@ export class ConfirmationDialogElement extends LitElement {
           class="cancel-button"
           part="cancel-button"
           variant="outlined"
-          @click=${this._onAction(false)}>
+          @click=${() => this._onAction(false)}>
           <slot name="cancel-text">${this.secondaryActionButtonText}</slot>
         </forge-button>`
       : nothing;
 
     const primaryActionButton = this.primaryActionButtonText
-      ? html`<forge-button class="primary-button" part="primary-button" variant="raised" @click=${this._onAction(true)}>
+      ? html`<forge-button
+          class="primary-button"
+          part="primary-button"
+          variant="raised"
+          @click=${() => this._onAction(true)}>
           <slot name="primary-text">${this.primaryActionButtonText}</slot>
         </forge-button>`
       : nothing;
