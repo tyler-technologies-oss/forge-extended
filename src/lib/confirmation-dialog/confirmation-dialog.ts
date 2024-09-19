@@ -10,7 +10,13 @@ declare global {
   }
 
   interface HTMLElementEventMap {
-    'forge-busy-indicator-cancel': CustomEvent<void>;
+    'forge-confirmation-dialog-close': CustomEvent<void>;
+  }
+
+  interface IConfirmationDialogClose extends CustomEvent {
+    detail: {
+      action: string;
+    };
   }
 }
 
@@ -66,13 +72,21 @@ export class ConfirmationDialogElement extends LitElement {
       : nothing;
 
     const secondaryActionButton = this.showSecondaryActionButton
-      ? html`<forge-button class="cancel-button" part="cancel-button" variant="outlined" @click=${this._onCancel}>
+      ? html`<forge-button
+          class="cancel-button"
+          part="cancel-button"
+          variant="outlined"
+          @click=${this._onClose('secondary')}>
           <slot name="cancel-text">${this.secondaryActionButtonText}</slot>
         </forge-button>`
       : nothing;
 
     const primaryActionButton = this.primaryActionButtonText
-      ? html`<forge-button class="primary-button" part="primary-button" variant="raised" @click=${this._onCancel}>
+      ? html`<forge-button
+          class="primary-button"
+          part="primary-button"
+          variant="raised"
+          @click=${this._onClose('primary')}>
           <slot name="primary-text">${this.primaryActionButtonText}</slot>
         </forge-button>`
       : nothing;
@@ -89,13 +103,19 @@ export class ConfirmationDialogElement extends LitElement {
     `;
   }
 
-  private _onCancel(): void {
-    console.log('cancel');
-
-    // const event = new CustomEvent('forge-busy-indicator-cancel', { bubbles: true, cancelable: true });
-    // this.dispatchEvent(event);
-    // if (!event.defaultPrevented) {
-    //   this.open = false;
-    // }
+  private _onClose(actionType: string): void {
+    let event: IConfirmationDialogClose;
+    actionType === 'primary'
+      ? (event = new CustomEvent('forge-confirmation-dialog-close', {
+          bubbles: true,
+          cancelable: true,
+          detail: { action: 'primary' }
+        }))
+      : (event = new CustomEvent('forge-confirmation-dialog-close', {
+          bubbles: true,
+          cancelable: true,
+          detail: { action: 'secondary' }
+        }));
+    this.dispatchEvent(event);
   }
 }
