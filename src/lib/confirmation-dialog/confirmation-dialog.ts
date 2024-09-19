@@ -35,7 +35,7 @@ export class ConfirmationDialogElement extends LitElement {
   @property({ type: Boolean, reflect: true })
   public open = false;
 
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean, attribute: 'is-busy' })
   public isBusy = false;
 
   /**
@@ -47,7 +47,7 @@ export class ConfirmationDialogElement extends LitElement {
   /**
    * The title text to display.
    */
-  @property({ attribute: 'titleText' })
+  @property({ attribute: 'title-text' })
   public titleText?: string;
 
   /**
