@@ -14,8 +14,6 @@ const meta = {
   render: args => {
     const confirmationDialogRef = createRef<ConfirmationDialogElement>();
     const dialogRef = createRef<DialogComponent>();
-    const toastRef = createRef<ToastComponent>();
-    let toastContent = '';
 
     function handleClick() {
       dialogRef.value!.open = true;
@@ -42,7 +40,6 @@ const meta = {
           .primaryActionButtonText=${args.primaryActionButtonText}>
         </forge-confirmation-dialog>
       </forge-dialog>
-      <forge-toast ${ref(toastRef)}> ${toastContent} </forge-toast>
     `;
   },
   args: {
