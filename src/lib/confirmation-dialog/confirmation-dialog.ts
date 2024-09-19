@@ -96,7 +96,7 @@ export class ConfirmationDialogElement extends LitElement {
   }
 
   private _onPrimary(): void {
-    let event = new CustomEvent('forge-confirmation-dialog-close', {
+    const event = new CustomEvent('forge-confirmation-dialog-close', {
       bubbles: true,
       cancelable: true,
       detail: { primaryAction: true }
@@ -105,7 +105,7 @@ export class ConfirmationDialogElement extends LitElement {
   }
 
   private _onSecondary(): void {
-    let event = new CustomEvent('forge-confirmation-dialog-close', {
+    const event = new CustomEvent('forge-confirmation-dialog-close', {
       bubbles: true,
       cancelable: true,
       detail: { primaryAction: false }
