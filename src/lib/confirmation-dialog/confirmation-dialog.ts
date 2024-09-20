@@ -79,7 +79,9 @@ export class ConfirmationDialogElement extends LitElement {
   public primaryButtonText?: string;
 
   public override render(): TemplateResult {
-    const title = this.showTitleText ? html`<h1 id="title" class="title">${this.titleText}</h1>` : nothing;
+    const title = this.showTitleText
+      ? html`<h1 id="title" class="title">${this.titleText}</h1>`
+      : html`<h1 id="title" class="sr-only">Confirmation</h1>`;
 
     const message = !!this.message?.trim() ? html`<p id="message" class="message">${this.message}</p>` : nothing;
 
