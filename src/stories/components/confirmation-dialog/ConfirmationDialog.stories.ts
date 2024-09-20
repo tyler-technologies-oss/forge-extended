@@ -46,14 +46,16 @@ const meta = {
       <forge-confirmation-dialog
         ${ref(confirmationDialogRef)}
         @forge-confirmation-dialog-action=${(e: IConfirmationDialogAction) => onConfirmationDialogAction(e)}
+        @forge-dialog-close=${closeDialog}
         ?open=${args.open}
         .isBusy=${args.isBusy}
         .showTitleText=${args.showTitleText}
-        .titleText="${args.titleText}"
+        .titleText=${args.titleText}
         .message=${args.message}
         .showSecondaryButton=${args.showSecondaryButton}
         .secondaryButtonText=${args.secondaryButtonText}
         .primaryButtonText=${args.primaryButtonText}>
+        <div slot="message">Are you sure you want to reset your settings?</div>
       </forge-confirmation-dialog>
     `;
   },
@@ -61,8 +63,8 @@ const meta = {
     open: false,
     isBusy: false,
     showTitleText: true,
-    titleText: 'Reset settings?',
-    message: 'Are you sure you want to reset your device to its default settings?',
+    titleText: 'Delete selected images?',
+    message: 'Images will be permanently removed from your account and all synced devices.',
     showSecondaryButton: true,
     secondaryButtonText: 'No',
     primaryButtonText: 'Yes',
