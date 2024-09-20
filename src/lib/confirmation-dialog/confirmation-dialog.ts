@@ -30,10 +30,14 @@ export class ConfirmationDialogElement extends LitElement {
   public static override styles = unsafeCSS(styles);
 
   /**
-   * Indicates whether the busy indicator is open.
+   * Indicates whether the confirmation dialog is open.
    */
   @property({ type: Boolean, reflect: true })
   public open = false;
+
+  /**
+   * Indicates whether the confirmation dialog in a busy state
+   */
 
   @property({ type: Boolean, attribute: 'is-busy' })
   public isBusy = false;
@@ -60,7 +64,7 @@ export class ConfirmationDialogElement extends LitElement {
    * Indicates whether the secondary action button is displayed.
    */
   @property({ type: Boolean, reflect: true, attribute: 'show-secondary-button' })
-  public showSecondaryButton = false;
+  public showSecondaryButton = true;
 
   /**
    * The secondary action button text to display.
