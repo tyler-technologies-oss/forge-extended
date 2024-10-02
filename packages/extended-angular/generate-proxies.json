@@ -1,0 +1,9 @@
+{
+    "manifest": "../extended/dist/custom-elements.json",
+    "importPath": "@tylertech/forge-extended",
+    "exclude": "",
+    "outDir": "projects/forge-angular-extended/src/lib",
+    "outDirExcludePrefix": "forge-",
+    "modulePrefix": "ForgeExtended",
+    "useDefineFunction": true
+}

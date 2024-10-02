@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="https://cdn.forge.tylertech.com/favicon.ico" sizes="16x16" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.forge.tylertech.com/v1/css/tyler-font.css" />
+    <link rel="stylesheet" href="index.scss" />
+    <title>Tyler Forge™ Data Table</title>
+  </head>
+  <body>
+    <div class="layout">
+      <div class="options">
+        <div class="group">
+          <span class="forge-typography--overline">Options</span>
+          <label>
+            <input type="checkbox" id="resizable" />
+            Resizable
+          </label>
+          <label>
+            <input type="checkbox" id="reorderable" />
+            Reorderable
+          </label>
+          <label>
+            <input type="checkbox" id="striped" />
+            Striped
+          </label>
+          <label>
+            <input type="checkbox" id="row-select" />
+            Row selection
+          </label>
+        </div>
+
+        <div class="group">
+          <span class="forge-typography--overline">Sort</span>
+          <label>
+            <input type="checkbox" id="sortable" />
+            Sortable
+          </label>
+          <label>
+            <input type="checkbox" id="manual-sort" />
+            Manual sort
+          </label>
+        </div>
+
+        <div class="group">
+          <span class="forge-typography--overline">Filter</span>
+          <label>
+            <input type="checkbox" id="filterable" />
+            Filterable
+          </label>
+          <label>
+            <input type="checkbox" id="manual-filter" />
+            Manual filter
+          </label>
+        </div>
+      </div>
+      <div class="table-container">
+        <forge-data-table></forge-data-table>
+      </div>
+    </div>
+
+    <script type="module" src="./index.ts"></script>
+    <script type="module" src="./src/lib/data-table.ts"></script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "root": true,
+  "overrides": [
+    {
+      "files": ["*.js", "*.ts"],
+      "parserOptions": {
+        "project": ["**/tsconfig.json"],
+        "tsconfigRootDir": ".",
+        "createDefaultProgram": true
+      },
+      "extends": ["plugin:prettier/recommended"],
+      "rules": {}
+    }
+  ]
+}

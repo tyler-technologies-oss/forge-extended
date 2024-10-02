@@ -1,0 +1,43 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+concurrency: release-{{ github.head_ref }}
+
+jobs:
+  publish-npm:
+    name: Publish NPM
+    uses: tyler-technologies-oss/forge-automation-shared/.github/workflows/wf-build-release.yml@v2.10.3
+    with:
+      PRODUCTION_RELEASE: true
+      # PACKAGE_ASSETS_ARCHIVE_PATH: "deployment-assets.tar.gz"
+      # PACKAGE_ASSETS_ENABLED: true
+    secrets:
+      GITHUB_APP_ID: ${{ secrets.FORGE_AUTOBOT_ID }}
+      GITHUB_APP_KEY: ${{ secrets.FORGE_AUTOBOT_SECRET }}
+      NPM_TOKEN: ${{ secrets.FORGE_NPM_TOKEN }}
+
+  # publish-cdn:
+  #   name: Publish CDN
+  #   uses: tyler-technologies-oss/forge-automation-shared/.github/workflows/wf-publish-cloudfront-assets.yml@v2.10.3
+  #   with:
+  #     AWS_REGION: "us-east-1"
+  #     MAX_CLOUDFRONT_INVALIDATIONS: 25
+  #     INVALIDATE: false # We do not invalidate the CloudFront cache because we're only pushing new assets
+  #   secrets:
+  #     AWS_IAM_ROLE: ${{ secrets.AWS_IAM_ROLE }}
+  #     AWS_S3_BUCKET_NAME: ${{ secrets.AWS_S3_BUCKET_NAME }}
+  #     AWS_CLOUDFRONT_DISTRIBUTION_ID: ${{ secrets.AWS_CLOUDFRONT_DISTRIBUTION_ID }}
+
+  deploy-storybook:
+    name: Deploy Storybook
+    uses: tyler-technologies-oss/forge-automation-shared/.github/workflows/wf-publish-gh-pages.yml@v2.10.3
+    with:
+      PRODUCTION_RELEASE: true
+      BUILD_DIRECTORY: storybook-static
+      BUILD_TARGET_DIRECTORY: docs/${{ github.head_ref || github.ref_name }}
+      BUILD_NPM_SCRIPT: "build-storybook"
+    secrets:
+      GITHUB_DEPLOY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NPM_TOKEN: ${{ secrets.FORGE_NPM_TOKEN }}

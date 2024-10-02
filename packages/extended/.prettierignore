@@ -1,0 +1,12 @@
+.github/
+.husky/
+.coverage/
+dist/
+node_modules/
+package-lock.json
+CONTRIBUTING.md
+CHANGELOG.md
+README.md
+.gitignore
+.autorc
+.prettierignore

@@ -1,0 +1,32 @@
+@use '@tylertech/forge/dist/forge-core.css';
+@use '@tylertech/forge/dist/forge.css';
+@use '@tylertech/forge/sass/theme/theme-dark';
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    @include theme-dark.theme-properties;
+  }
+}
+
+.layout {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  height: 100%;
+}
+
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: var(--forge-spacing-medium);
+  border-right: 1px solid var(--forge-theme-outline);
+  padding-inline: 1rem;
+
+  .group {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.table-container {
+  padding: var(--forge-spacing-medium);
+}
