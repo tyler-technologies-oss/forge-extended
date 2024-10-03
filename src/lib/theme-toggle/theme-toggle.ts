@@ -107,7 +107,7 @@ export class ThemeToggleElement extends LitElement {
       <forge-button-toggle-group
         aria-label="Choose communication type"
         @forge-button-toggle-group-change=${(e: IThemeToggleChange) => this._onAction(e)}>
-        <forge-button-toggle .value="light">
+        <forge-button-toggle value="light">
           <div class="toggle-type-container">
             <forge-icon name="wb_sunny"></forge-icon>
             <slot name="light-toggle-text">
@@ -115,7 +115,7 @@ export class ThemeToggleElement extends LitElement {
             </slot>
           </div>
         </forge-button-toggle>
-        <forge-button-toggle .value="dark">
+        <forge-button-toggle value="dark">
           <div class="toggle-type-container">
             <forge-icon name="moon_waning_crescent"></forge-icon>
             <slot name="dark-toggle-text">
@@ -123,7 +123,7 @@ export class ThemeToggleElement extends LitElement {
             </slot>
           </div>
         </forge-button-toggle>
-        <forge-button-toggle .value="automatic">
+        <forge-button-toggle value="automatic">
           <div class="toggle-type-container">
             <forge-icon name="settings_brightness"></forge-icon>
             <slot name="automatic-toggle-text">
@@ -161,7 +161,9 @@ export class ThemeToggleElement extends LitElement {
           ${buttonToggleGroup}
         </div>
         <forge-toolbar inverted>
-          <div slot="end">${primaryButton}</div>
+          <div slot="end">
+            ${primaryButton}
+          </div>
         </forge-toolbar>
         </div>
       </forge-popover>
@@ -169,11 +171,9 @@ export class ThemeToggleElement extends LitElement {
   }
 
   private _onAction(e: IThemeToggleChange): void {
-    const themeSelected = e.detail;
     const event = new CustomEvent('forge-theme-toggle-toggled', {
       bubbles: true,
-      cancelable: true,
-      detail: { theme: themeSelected }
+      detail: { theme: e.detail }
     });
     this.dispatchEvent(event);
   }
