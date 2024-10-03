@@ -113,7 +113,7 @@ export class ThemeToggleElement extends LitElement {
       <forge-button-toggle-group
         aria-label="Choose communication type"
         @forge-button-toggle-group-change=${(e: IThemeToggleChange) => this._onAction(e)}>
-        <forge-button-toggle value=${ThemeTypes.Light}>
+        <forge-button-toggle .value=${ThemeTypes.Light}>
           <div class="toggle-type-container">
             <forge-icon name="wb_sunny"></forge-icon>
             <slot name="light-toggle-text">
@@ -121,7 +121,7 @@ export class ThemeToggleElement extends LitElement {
             </slot>
           </div>
         </forge-button-toggle>
-        <forge-button-toggle value=${ThemeTypes.Dark}>
+        <forge-button-toggle .value=${ThemeTypes.Dark}>
           <div class="toggle-type-container">
             <forge-icon name="moon_waning_crescent"></forge-icon>
             <slot name="dark-toggle-text">
@@ -129,7 +129,7 @@ export class ThemeToggleElement extends LitElement {
             </slot>
           </div>
         </forge-button-toggle>
-        <forge-button-toggle value=${ThemeTypes.Automatic}>
+        <forge-button-toggle .value=${ThemeTypes.Automatic}>
           <div class="toggle-type-container">
             <forge-icon name="settings_brightness"></forge-icon>
             <slot name="automatic-toggle-text">
@@ -185,8 +185,12 @@ export class ThemeToggleElement extends LitElement {
   }
 
   private _onPopoverToggle(e: CustomEvent<IPopoverToggleEventData>): void {
-    let { newState } = e.detail;
-    newState === 'open' ? (this.open = true) : (this.open = false);
+    const { newState } = e.detail;
+    if (newState === 'open') {
+      this.open = true;
+    } else {
+      this.open = false;
+    }
   }
 
   private _onClose(): void {
