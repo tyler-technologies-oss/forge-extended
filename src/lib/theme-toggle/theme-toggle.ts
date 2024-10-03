@@ -19,6 +19,12 @@ import { html, LitElement, TemplateResult, unsafeCSS } from 'lit';
 declare global {
   const _THEME_TYPES: 'light' | 'dark' | 'system';
 
+  enum ThemeTypes {
+    Light = 'light',
+    Dark = 'dark',
+    Automatic = 'automatic'
+  }
+
   interface HTMLElementTagNameMap {
     'forge-theme-toggle': ThemeToggleElement;
   }
@@ -107,7 +113,7 @@ export class ThemeToggleElement extends LitElement {
       <forge-button-toggle-group
         aria-label="Choose communication type"
         @forge-button-toggle-group-change=${(e: IThemeToggleChange) => this._onAction(e)}>
-        <forge-button-toggle value="light">
+        <forge-button-toggle value=${ThemeTypes.Light}>
           <div class="toggle-type-container">
             <forge-icon name="wb_sunny"></forge-icon>
             <slot name="light-toggle-text">
@@ -115,7 +121,7 @@ export class ThemeToggleElement extends LitElement {
             </slot>
           </div>
         </forge-button-toggle>
-        <forge-button-toggle value="dark">
+        <forge-button-toggle value=${ThemeTypes.Dark}>
           <div class="toggle-type-container">
             <forge-icon name="moon_waning_crescent"></forge-icon>
             <slot name="dark-toggle-text">
@@ -123,7 +129,7 @@ export class ThemeToggleElement extends LitElement {
             </slot>
           </div>
         </forge-button-toggle>
-        <forge-button-toggle value="automatic">
+        <forge-button-toggle value=${ThemeTypes.Automatic}>
           <div class="toggle-type-container">
             <forge-icon name="settings_brightness"></forge-icon>
             <slot name="automatic-toggle-text">
