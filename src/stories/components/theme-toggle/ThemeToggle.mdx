@@ -1,0 +1,10 @@
+import { Meta, Title, Canvas } from '@storybook/blocks';
+import * as ThemeToggleStories from './ThemeToggle.stories';
+
+<Meta of={ThemeToggleStories} />
+
+<Title />
+
+Confirmation dialogs are designed to convey a brief message or alert, up to 2 sentences. For alerts that are a single sentence, the dialog title can be excluded. They may be closed by clicking outside of the dialog, pressing escape, or by clicking a dismissive action. These dialogs display the same in mobile and desktop contexts.
+
+<Canvas of={ThemeToggleStories.Demo} />
