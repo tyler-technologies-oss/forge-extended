@@ -26,9 +26,38 @@
             Striped
           </label>
           <label>
-            <input type="checkbox" id="row-select" />
-            Row selection
+            <input type="checkbox" id="hover" />
+            Hover
           </label>
+          <label>
+            <input type="checkbox" id="compact" />
+            Compact
+          </label>
+          <label>
+            <input type="checkbox" id="bordered" />
+            Bordered
+          </label>
+          <label>
+            <input type="checkbox" id="allow-row-click" />
+            Allow Row Click
+          </label>
+          <label>
+            <input type="checkbox" id="expandable" />
+            Expandable rows
+          </label>
+          <label>
+            <input type="checkbox" id="custom-cell-template" />
+            Custom Cell Template
+          </label>
+        </div>
+
+        <div class="group">
+          <span class="forge-typography--overline">Row Selection</span>
+          <select id="row-select">
+            <option value="off">Off</option>
+            <option value="single">Single</option>
+            <option value="multiple">Multiple</option>
+          </select>
         </div>
 
         <div class="group">
@@ -53,6 +82,11 @@
             <input type="checkbox" id="manual-filter" />
             Manual filter
           </label>
+        </div>
+
+        <div class="group">
+          <span class="forge-typography--overline">Hidden columns</span>
+          <select id="hidden-columns" multiple style="height: 90px"></select>
         </div>
       </div>
       <div class="table-container">

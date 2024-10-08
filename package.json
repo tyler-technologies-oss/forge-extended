@@ -27,7 +27,9 @@
     "**/*": "npm run format"
   },
   "workspaces": [
-    "packages/*",
+    "packages/data-table",
+    "packages/extended",
+    "packages/extended-angular/dist/forge-angular-extended",
     "apps/*"
   ],
   "dependencies": {
