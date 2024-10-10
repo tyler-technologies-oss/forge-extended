@@ -6,6 +6,7 @@ import {
   defineIconComponent,
   definePopoverComponent,
   defineToolbarComponent,
+  defineTooltipComponent,
   IconRegistry,
   IPopoverToggleEventData
 } from '@tylertech/forge';
@@ -17,31 +18,25 @@ import styles from './theme-toggle.scss?inline';
 import { html, LitElement, TemplateResult, unsafeCSS } from 'lit';
 
 declare global {
-  const _THEME_TYPES: 'light' | 'dark' | 'system';
-
-  enum ThemeTypes {
-    Light = 'light',
-    Dark = 'dark',
-    Automatic = 'automatic'
-  }
-
   interface HTMLElementTagNameMap {
     'forge-theme-toggle': ThemeToggleElement;
   }
 
   interface HTMLElementEventMap {
-    'forge-theme-toggle-theme': CustomEvent<void>;
-  }
-
-  interface IThemeToggleChange extends CustomEvent {
-    detail: {
-      theme: typeof _THEME_TYPES;
-    };
+    'forge-theme-toggle-theme': CustomEvent<ThemeType>;
   }
 }
 
+export type ThemeType = 'light' | 'dark' | 'automatic';
+const LOCAL_STORAGE_KEY = 'tyler-forge-theme';
+
 @customElement('forge-theme-toggle')
 export class ThemeToggleElement extends LitElement {
+  constructor() {
+    super();
+    this._manageLocalStorage();
+  }
+
   static {
     defineIconButtonComponent();
     defineButtonComponent();
@@ -50,6 +45,7 @@ export class ThemeToggleElement extends LitElement {
     defineIconComponent();
     defineButtonToggleComponent();
     defineButtonToggleGroupComponent();
+    defineTooltipComponent();
     IconRegistry.define([tylIconWbSunny, tylIconSettingsBrightness, tylIconMoonWaningCrescent]);
   }
 
@@ -68,73 +64,53 @@ export class ThemeToggleElement extends LitElement {
   public open = false;
 
   /**
-   * Current theme that is set
+   * Current theme value that is set
    */
-  @property({ type: String, attribute: 'theme-type' })
-  public themeType = 'light';
-
-  /**
-   * The title text to display.
-   */
-  @property({ type: String, attribute: 'title-text' })
-  public titleText = 'Display theme';
-
-  /**
-   * The message to display.
-   */
-  @property({ type: String, attribute: 'message' })
-  public message = 'Choose what theme you would like to use for this application.';
-
-  /**
-   * The primary action button text to display.
-   */
-  @property({ type: String, attribute: 'primary-button-text' })
-  public primaryButtonText = 'Close';
+  @property({ type: String, reflect: true })
+  public value = 'light';
 
   public override render(): TemplateResult {
     const iconButton = html`
-      <forge-icon-button aria-label=${this.titleText} id=${this.anchor}>
+      <forge-icon-button aria-labelledby="display-theme-tooltip" id=${this.anchor}>
         <forge-icon name="wb_sunny"></forge-icon>
+        <forge-tooltip>
+          <slot name="tooltip-text" id="display-theme-tooltip"> Toggle your application theme </slot>
+        </forge-tooltip>
       </forge-icon-button>
     `;
     const title = html`
       <h1 id="title" class="title" slot="start">
-        <slot name="title"> ${this.titleText} </slot>
+        <slot name="title"> Display theme </slot>
       </h1>
     `;
 
     const message = html`
       <p id="message" class="message">
-        <slot name="message"> ${this.message} </slot>
+        <slot name="message"> Choose what theme you would like to use for this application. </slot>
       </p>
     `;
 
     const buttonToggleGroup = html`
       <forge-button-toggle-group
-        aria-label="Choose communication type"
-        @forge-button-toggle-group-change=${(e: IThemeToggleChange) => this._onAction(e)}>
-        <forge-button-toggle .value=${ThemeTypes.Light}>
+        value=${this.value}
+        aria-labelledby="title"
+        @forge-button-toggle-group-change=${(e: CustomEvent<ThemeType>) => this._onAction(e)}>
+        <forge-button-toggle value="light">
           <div class="toggle-type-container">
             <forge-icon name="wb_sunny"></forge-icon>
-            <slot name="light-toggle-text">
-              <span>Light</span>
-            </slot>
+            <slot name="light-toggle-text"> Light </slot>
           </div>
         </forge-button-toggle>
-        <forge-button-toggle .value=${ThemeTypes.Dark}>
+        <forge-button-toggle value="dark">
           <div class="toggle-type-container">
             <forge-icon name="moon_waning_crescent"></forge-icon>
-            <slot name="dark-toggle-text">
-              <span>Dark</span>
-            </slot>
+            <slot name="dark-toggle-text"> Dark </slot>
           </div>
         </forge-button-toggle>
-        <forge-button-toggle .value=${ThemeTypes.Automatic}>
+        <forge-button-toggle value="automatic">
           <div class="toggle-type-container">
             <forge-icon name="settings_brightness"></forge-icon>
-            <slot name="automatic-toggle-text">
-              <span>Automatic</span>
-            </slot>
+            <slot name="automatic-toggle-text"> Automatic </slot>
           </div>
         </forge-button-toggle>
       </forge-button-toggle-group>
@@ -142,7 +118,7 @@ export class ThemeToggleElement extends LitElement {
 
     const primaryButton = html`
       <forge-button variant="raised" id="primary-button" @click=${this._onClose}>
-        <slot name="primary-button-text">${this.primaryButtonText}</slot>
+        <slot name="primary-button-text">Close</slot>
       </forge-button>
     `;
 
@@ -176,12 +152,10 @@ export class ThemeToggleElement extends LitElement {
     `;
   }
 
-  private _onAction(e: IThemeToggleChange): void {
-    const event = new CustomEvent('forge-theme-toggle-toggled', {
-      bubbles: true,
-      detail: { theme: e.detail }
-    });
-    this.dispatchEvent(event);
+  private _onAction(e: CustomEvent<ThemeType>): void {
+    this.value = e.detail;
+    this._setLocalStorage(this.value);
+    this._emitThemeChangeEvent(e.detail);
   }
 
   private _onPopoverToggle(e: CustomEvent<IPopoverToggleEventData>): void {
@@ -195,5 +169,29 @@ export class ThemeToggleElement extends LitElement {
 
   private _onClose(): void {
     this.open = false;
+  }
+
+  private _emitThemeChangeEvent(newValue: ThemeType): void {
+    const event = new CustomEvent('forge-theme-toggle-theme', {
+      bubbles: true,
+      detail: newValue
+    });
+    this.dispatchEvent(event);
+  }
+
+  private _manageLocalStorage(): void {
+    const currentTheme = localStorage.getItem(LOCAL_STORAGE_KEY) as ThemeType;
+    if (!currentTheme) {
+      console.log('no theme set');
+      localStorage.setItem(LOCAL_STORAGE_KEY, this.value);
+      return;
+    }
+    this._setLocalStorage(currentTheme);
+    this.value = currentTheme;
+    this._emitThemeChangeEvent(currentTheme);
+  }
+
+  private _setLocalStorage(value: string): void {
+    localStorage.setItem(LOCAL_STORAGE_KEY, value);
   }
 }

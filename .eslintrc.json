@@ -36,9 +36,7 @@
         "no-extra-parens": "off",
         "max-len": "off",
         "arrow-body-style": "off",
-        "eqeqeq": ["error", "always", { "null": "ignore" }],
-        "lit-plugin.rules.no-complex-attribute-binding": "off",
-        "lit-plugin.rules.no-incompatible-type-binding": "off"
+        "eqeqeq": ["error", "always", { "null": "ignore" }]
       }
     }
   ]

@@ -16,6 +16,14 @@
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
     "baseUrl": ".",
+    "plugins": [
+      {
+        "name": "ts-lit-plugin",
+        "rules": {
+          "no-complex-attribute-binding": "off"
+        }
+      }
+    ],
     "paths": {
       "$lib": ["./src/lib"],
       "$lib/*": ["./src/lib/*"]
