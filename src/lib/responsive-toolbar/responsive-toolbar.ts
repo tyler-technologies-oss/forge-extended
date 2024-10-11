@@ -76,7 +76,6 @@ export class ResponsiveToolbar extends LitElement {
         <div
           slot="end"
           ${ref(this.buttonContainer)}
-          class="actions-container"
           style=${this._isOverflowing ? styleMap(visibilityStyles) : nothing}>
           <slot name="actions-desktop"></slot>
         </div>
