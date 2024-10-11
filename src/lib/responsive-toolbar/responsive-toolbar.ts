@@ -1,7 +1,6 @@
 import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { defineToolbarComponent, defineButtonComponent } from '@tylertech/forge';
-import { tylIconPlus, tylIconMinus } from '@tylertech/tyler-icons/extended';
+import { defineToolbarComponent } from '@tylertech/forge';
 import { ref, createRef } from 'lit/directives/ref.js';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { state } from 'lit/decorators.js';
@@ -42,7 +41,6 @@ export class ResponsiveToolbar extends LitElement {
 
   static {
     defineToolbarComponent();
-    defineButtonComponent();
   }
 
   public static override styles = unsafeCSS(styles);
