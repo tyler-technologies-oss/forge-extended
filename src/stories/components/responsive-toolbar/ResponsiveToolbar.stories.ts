@@ -12,7 +12,8 @@ const meta = {
   render: args => {
     const options: IMenuOption[] = [
       { label: 'Add User ', value: 'add-user' },
-      { label: 'Remove User', value: 'remove-user' }
+      { label: 'Remove User', value: 'remove-user' },
+      { label: 'Third action', value: 'third-action' }
     ];
 
     return html`
@@ -20,7 +21,8 @@ const meta = {
         <forge-responsive-toolbar>
           <div slot="start" class="forge-typography--heading4">This is a really really long title</div>
           <forge-stack inline alignment="center" slot="actions-desktop">
-            <forge-button>Remove user</forge-button>
+            <forge-button>Third action</forge-button>
+            <forge-button variant="outlined">Remove user</forge-button>
             <forge-button variant="filled">Add user</forge-button>
           </forge-stack>
           <div slot="actions-mobile">
