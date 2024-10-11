@@ -68,7 +68,7 @@ export class ResponsiveToolbar extends LitElement {
     }
 
     return html`
-      <forge-toolbar ?auto-height=${this.autoHeight} no-divider="${this.noDivider || nothing}">
+      <forge-toolbar ?auto-height=${this.autoHeight} ?no-divider=${this.noDivider}>
         <div ${ref(this.titleContainer)} slot="start">
           <slot name="start"></slot>
         </div>

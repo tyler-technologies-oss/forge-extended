@@ -17,7 +17,7 @@ const meta = {
 
     return html`
       <forge-card style="--forge-card-padding: 0;">
-        <forge-responsive-toolbar buffer="64">
+        <forge-responsive-toolbar>
           <div slot="start" class="forge-typography--heading4">This is a really really long title</div>
           <forge-stack inline alignment="center" slot="actions-desktop">
             <forge-button>Remove user</forge-button>
