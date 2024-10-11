@@ -16,7 +16,3 @@
 forge-toolbar[auto-height] {
   --forge-toolbar-min-height: #{forge-toolbar-tokens.get('height')};
 }
-
-.mobile-container {
-  margin-inline-start: 56px;
-}

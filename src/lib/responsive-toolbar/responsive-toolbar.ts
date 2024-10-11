@@ -83,7 +83,7 @@ export class ResponsiveToolbar extends LitElement {
           <slot name="actions-desktop"></slot>
         </div>
 
-        <div slot="end" class="mobile-container" style=${!this._isOverflowing ? styleMap(visibilityStyles) : nothing}>
+        <div slot="end" style=${!this._isOverflowing ? styleMap(visibilityStyles) : nothing}>
           <slot name="actions-mobile"></slot>
         </div>
       </forge-toolbar>
