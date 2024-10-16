@@ -21,6 +21,12 @@ export class ResponsiveToolbar extends LitElement {
     super();
   }
 
+  static {
+    defineToolbarComponent();
+  }
+
+  public static override styles = unsafeCSS(styles);
+
   /**
    * Internal state to determine if the toolbar title is overlapping the actions
    */
@@ -38,12 +44,6 @@ export class ResponsiveToolbar extends LitElement {
    */
   @property({ type: Boolean, reflect: true, attribute: 'no-divider' })
   public noDivider = false;
-
-  static {
-    defineToolbarComponent();
-  }
-
-  public static override styles = unsafeCSS(styles);
 
   /**
    * Element refs that are used to calculate the overflow of the title and actions
