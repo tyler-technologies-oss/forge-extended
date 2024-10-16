@@ -1,19 +1,24 @@
 import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 import '$lib/responsive-toolbar/responsive-toolbar';
 import { IMenuOption } from '@tylertech/forge';
 
 const component = 'forge-responsive-toolbar';
 
+interface customMenuOption extends IMenuOption {
+  variant?: 'text' | 'raised' | 'outlined';
+}
+
 const meta = {
   title: 'Components/Responsive Toolbar',
   component,
   render: args => {
-    const options: IMenuOption[] = [
-      { label: 'Add User ', value: 'add-user' },
-      { label: 'Remove User', value: 'remove-user' },
-      { label: 'Third action', value: 'third-action' }
+    const options: customMenuOption[] = [
+      { label: 'Add User ', value: 'add-user', variant: 'text' },
+      { label: 'Remove User', value: 'remove-user', variant: 'outlined' },
+      { label: 'Third action', value: 'third-action', variant: 'raised' }
     ];
 
     return html`
@@ -24,9 +29,9 @@ const meta = {
           </forge-icon-button>
           <div slot="start" class="forge-typography--heading4">This is a really really long title</div>
           <forge-stack inline alignment="center" slot="actions-desktop">
-            <forge-button>Third action</forge-button>
-            <forge-button variant="outlined">Remove user</forge-button>
-            <forge-button variant="filled">Add user</forge-button>
+            ${options.map(
+              item => html` <forge-button variant=${ifDefined(item.variant)}>${item.label}</forge-button> `
+            )}
           </forge-stack>
           <div slot="actions-mobile">
             <forge-menu .options=${options}>
