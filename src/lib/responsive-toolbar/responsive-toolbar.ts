@@ -58,10 +58,10 @@ export class ResponsiveToolbar extends LitElement {
 
   public override render(): TemplateResult {
     const visibilityStyles = { visibility: 'hidden', position: 'absolute', right: 8 };
-    const titleRightEdge = this.titleContainer.value?.getBoundingClientRect().right || 0;
-    const actionsLeftEdge = this.buttonContainer.value?.getBoundingClientRect().left || 0;
+    const titleInlineEndEdge = this.titleContainer.value?.getBoundingClientRect().right || 0;
+    const actionsInlineStartEdge = this.buttonContainer.value?.getBoundingClientRect().left || 0;
 
-    if (titleRightEdge + BUFFER >= actionsLeftEdge) {
+    if (titleInlineEndEdge + BUFFER >= actionsInlineStartEdge) {
       this._isOverflowing = true;
     } else {
       this._isOverflowing = false;
