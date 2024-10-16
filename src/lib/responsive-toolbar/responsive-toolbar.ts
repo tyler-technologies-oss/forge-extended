@@ -69,6 +69,7 @@ export class ResponsiveToolbar extends LitElement {
 
     return html`
       <forge-toolbar ?auto-height=${this.autoHeight} ?no-divider=${this.noDivider}>
+        <slot name="before-start" slot="before-start"></slot>
         <div ${ref(this.titleContainer)} slot="start">
           <slot name="start"></slot>
         </div>
@@ -83,6 +84,7 @@ export class ResponsiveToolbar extends LitElement {
         <div slot="end" style=${!this._isOverflowing ? styleMap(visibilityStyles) : nothing}>
           <slot name="actions-mobile"></slot>
         </div>
+        <slot name="after-end" slot="after-end"></slot>
       </forge-toolbar>
     `;
   }

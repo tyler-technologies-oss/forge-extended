@@ -19,6 +19,9 @@ const meta = {
     return html`
       <forge-card style="--forge-card-padding: 0;">
         <forge-responsive-toolbar>
+          <forge-icon-button aria-label="Icon button demo" slot="before-start">
+            <forge-icon name="arrow_back" external></forge-icon>
+          </forge-icon-button>
           <div slot="start" class="forge-typography--heading4">This is a really really long title</div>
           <forge-stack inline alignment="center" slot="actions-desktop">
             <forge-button>Third action</forge-button>
