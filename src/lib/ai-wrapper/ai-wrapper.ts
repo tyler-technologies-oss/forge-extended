@@ -52,12 +52,6 @@ export class AiWrapperElement extends LitElement {
   @property({ type: Boolean, reflect: true })
   public fullsize = false;
 
-  /**
-   * Indicates whether the component is in its full size state.
-   */
-  @property({ type: Array, reflect: true })
-  public messagesSent = false;
-
   private get _header(): TemplateResult {
     return html`
       <forge-toolbar no-border class="dialog-header">
