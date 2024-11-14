@@ -17,12 +17,20 @@
   height: calc(100dvh - 96px);
 }
 
-.dialog-header {
-  --forge-toolbar-padding: #{forge-spacing.variable(small)};
+:host([fullsize]) {
+  .dialog::part(surface) {
+    left: 32px;
+    right: 32px;
+    width: 100%;
+  }
+
+  .container {
+    min-width: 100%;
+  }
 }
 
-.title {
-  @include forge-typography.style(heading4);
+.dialog-header {
+  --forge-toolbar-padding: #{forge-spacing.variable(small)};
 }
 
 .container {
@@ -31,18 +39,16 @@
   min-width: 360px;
 }
 
-.container-inner {
-  background: rgb(255, 255, 255);
-  background: linear-gradient(180deg, rgba(255, 255, 255, 1) 80%, rgba(234, 236, 246, 1) 100%);
-}
-
 .inline-stack {
   display: flex;
   align-items: center;
 }
 
-.icon-color-reset {
-  color: #{forge-theme.variable(outline-medium)};
+.container-inner {
+  background: rgb(255, 255, 255);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 1) 80%, rgba(234, 236, 246, 1) 100%);
+  padding: #{forge-spacing.variable(medium)};
+  overflow: auto;
 }
 
 .input-container {

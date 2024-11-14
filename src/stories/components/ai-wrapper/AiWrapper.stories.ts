@@ -3,8 +3,9 @@ import { html } from 'lit';
 import { createRef, ref } from 'lit/directives/ref.js';
 
 import '$lib/ai-wrapper/ai-wrapper';
-import { AiWrapperElement, ThemeType } from '$lib/ai-wrapper/ai-wrapper';
-import { ToastComponent, AppBarComponent } from '@tylertech/forge';
+import '$lib/ai-wrapper/ai-button';
+import { AiWrapperElement } from '$lib/ai-wrapper/ai-wrapper';
+import { AiButtonElement } from '$lib/ai-wrapper';
 
 const component = 'forge-ai-wrapper';
 
@@ -13,13 +14,8 @@ const meta = {
   component,
 
   render: args => {
-    const themeToggleRef = createRef<AiWrapperElement>();
-
-    function themeToggled(e: CustomEvent<ThemeType>) {
-      const theme = e.detail;
-      ToastComponent.present({ message: `${theme} theme selected` });
-    }
-
+    const aiWrapperRef = createRef<AiWrapperElement>();
+    const aiButtonRef = createRef<AiButtonElement>();
     const skeleton = html` <div style="width: 100%; height: 32px; background-color: lightgray; opacity: .5"></div> `;
 
     return html`
@@ -28,25 +24,21 @@ const meta = {
           padding: 0 !important;
         }
       </style>
-      <forge-scaffold style="height: 900px;">
+      <forge-scaffold style="height: 500px;">
         <forge-app-bar title-text="Tyler Forge" slot="header">
           <forge-icon slot="logo" name="forge_logo" external external-type="custom"></forge-icon>
-          <forge-ai-wrapper
-            slot="end"
-            ${ref(themeToggleRef)}
-            .open=${args.open}
-            @forge-theme-toggle-theme=${(e: CustomEvent<ThemeType>) => {
-              themeToggled(e);
-            }}>
-            <span slot="tooltip-text">${args.tooltipText}</span>
-            <span slot="title">${args.title}</span>
-            <span slot="primary-button-text">${args.primaryButtonText}</span>
-          </forge-ai-wrapper>
+          <forge-ai-button slot="end" ${ref(aiButtonRef)} dialog-trigger-id="forge-ai-open-dialog"></forge-ai-button>
         </forge-app-bar>
         <div slot="body" style="padding-block: 24px; display: grid; gap: 16px; grid-row: auto;">
           ${skeleton} ${skeleton} ${skeleton}
         </div>
       </forge-scaffold>
+
+      <forge-ai-wrapper ${ref(aiWrapperRef)} .open=${args.open} id="forge-ai-open-dialog">
+        <span slot="tooltip-text">${args.tooltipText}</span>
+        <span slot="title">${args.title}</span>
+        <span slot="primary-button-text">${args.primaryButtonText}</span>
+      </forge-ai-wrapper>
     `;
   },
   args: {

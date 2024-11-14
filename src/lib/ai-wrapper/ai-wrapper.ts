@@ -9,8 +9,8 @@ import {
   defineTextFieldComponent
 } from '@tylertech/forge';
 import { customElement, property } from 'lit/decorators.js';
-import { tylIconClose, tylIconInfoOutline, tylIconSend } from '@tylertech/tyler-icons/standard';
-import { tylIconSparkles } from '@tylertech/tyler-icons/extended';
+import { tylIconClose, tylIconSend } from '@tylertech/tyler-icons/standard';
+import { tylIconSparkles, tylIconArrowExpandAll } from '@tylertech/tyler-icons/extended';
 
 import styles from './ai-wrapper.scss?inline';
 import { html, LitElement, TemplateResult, unsafeCSS } from 'lit';
@@ -19,20 +19,12 @@ declare global {
   interface HTMLElementTagNameMap {
     'forge-ai-wrapper': AiWrapperElement;
   }
-
-  interface HTMLElementEventMap {
-    'forge-theme-toggle-theme': CustomEvent<ThemeType>;
-  }
 }
-
-export type ThemeType = 'light' | 'dark' | 'automatic';
-const LOCAL_STORAGE_KEY = 'tyler-forge-ai-';
 
 @customElement('forge-ai-wrapper')
 export class AiWrapperElement extends LitElement {
   constructor() {
     super();
-    this._manageLocalStorage();
   }
 
   static {
@@ -43,42 +35,39 @@ export class AiWrapperElement extends LitElement {
     defineTooltipComponent();
     defineDialogComponent();
     defineTextFieldComponent();
-    IconRegistry.define([tylIconSparkles, tylIconClose, tylIconInfoOutline, tylIconSend]);
+    IconRegistry.define([tylIconSparkles, tylIconClose, tylIconSend, tylIconArrowExpandAll]);
   }
 
   public static override styles = unsafeCSS(styles);
 
   /**
-   * Indicates whether the theme-toggle is open.
+   * Indicates whether the dialog is open.
    */
   @property({ type: Boolean, reflect: true })
   public open = false;
 
   /**
-   * Current theme value that is set
+   * Indicates whether the component is in its full size state.
    */
-  @property({ type: String, reflect: true })
-  public value = 'light';
+  @property({ type: Boolean, reflect: true })
+  public fullsize = false;
 
-  public override render(): TemplateResult {
-    const triggerButton = html`
-      <forge-icon-button aria-labelledby="ai-wrapper-tooltip" @click=${this._onOpen}>
-        <forge-icon name="sparkles"></forge-icon>
-        <forge-tooltip>
-          <slot name="tooltip-text" id="ai-wrapper-tooltip">Get help from AI</slot>
-        </forge-tooltip>
-      </forge-icon-button>
-    `;
+  /**
+   * Indicates whether the component is in its full size state.
+   */
+  @property({ type: Array, reflect: true })
+  public messagesSent = false;
 
-    const header = html`
+  private get _header(): TemplateResult {
+    return html`
       <forge-toolbar no-border class="dialog-header">
         <div slot="title">This is the title</div>
         <div slot="end" class="inline-stack">
-          <forge-icon-button>
-            <forge-icon name="info_outline" class="icon-color-reset"></forge-icon>
+          <forge-icon-button @click=${this._onFullSizeToggle}>
+            <forge-icon name="arrow_expand_all"></forge-icon>
           </forge-icon-button>
           <forge-icon-button @click=${this._onClose}>
-            <forge-icon name="close" class="icon-color-reset"></forge-icon>
+            <forge-icon name="close"></forge-icon>
             <forge-tooltip>
               <slot name="tooltip-text" id="ai-wrapper-tooltip">Close the modal</slot>
             </forge-tooltip>
@@ -86,21 +75,24 @@ export class AiWrapperElement extends LitElement {
         </div>
       </forge-toolbar>
     `;
+  }
 
-    const inputContainer = html`
+  private get _inputContainer(): TemplateResult {
+    return html`
       <div class="input-container">
         <forge-text-field>
           <label>Label</label>
           <input type="text" />
         </forge-text-field>
         <forge-icon-button>
-          <forge-icon name="send" class="icon-color-reset"></forge-icon>
+          <forge-icon name="send"></forge-icon>
         </forge-icon-button>
       </div>
     `;
+  }
 
+  public override render(): TemplateResult {
     return html`
-      ${triggerButton}
       <forge-dialog
         class="dialog"
         animation-type="slide"
@@ -111,9 +103,11 @@ export class AiWrapperElement extends LitElement {
         mode="nonmodal"
         aria-labelledby="title">
         <div class="container">
-          ${header}
-          <div class="container-inner">AI Stuff here</div>
-          ${inputContainer}
+          ${this._header}
+          <div class="container-inner">
+            <slot name="content">This is the content slot</slot>
+          </div>
+          ${this._inputContainer}
         </div>
       </forge-dialog>
     `;
@@ -123,35 +117,15 @@ export class AiWrapperElement extends LitElement {
     // Do state related resets here
   }
 
+  private _onFullSizeToggle(): void {
+    this.fullsize = !this.fullsize;
+  }
+
   private _onOpen(): void {
     this.open = true;
   }
 
   private _onClose(): void {
     this.open = false;
-  }
-
-  private _emitThemeChangeEvent(newValue: ThemeType): void {
-    const event = new CustomEvent('forge-theme-toggle-theme', {
-      bubbles: true,
-      detail: newValue
-    });
-    this.dispatchEvent(event);
-  }
-
-  private _manageLocalStorage(): void {
-    const currentTheme = localStorage.getItem(LOCAL_STORAGE_KEY) as ThemeType;
-    if (!currentTheme) {
-      console.log('no theme set');
-      localStorage.setItem(LOCAL_STORAGE_KEY, this.value);
-      return;
-    }
-    this._setLocalStorage(currentTheme);
-    this.value = currentTheme;
-    this._emitThemeChangeEvent(currentTheme);
-  }
-
-  private _setLocalStorage(value: string): void {
-    localStorage.setItem(LOCAL_STORAGE_KEY, value);
   }
 }
