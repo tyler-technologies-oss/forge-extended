@@ -3,7 +3,7 @@ import { noChange } from 'lit';
 import { Directive, directive } from 'lit/directive.js';
 
 class LightDomRenderDirective extends Directive {
-  public render(host: HTMLElement, cell: Cell<any, any>) {
+  public render(host: HTMLElement, cell: Cell<any, any>): typeof noChange {
     const slotName = `col-${cell.column.id}:row-${cell.row.id}`;
 
     const container = host.querySelector(`[slot="${slotName}"]`) ?? document.createElement('div');

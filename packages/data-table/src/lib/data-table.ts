@@ -81,29 +81,30 @@ export class DataTableElement<TData extends Row> extends LitElement {
 
   public static override styles = unsafeCSS(styles);
 
-  @property() data: TData[] = [];
-  @property() columns: ColumnDef<TData>[] = [];
-  @property() columnVisibility: VisibilityState = {};
-  @property() columnOrder: ColumnOrderState = [];
-  @property({ type: Boolean, reflect: true }) resizable = false;
-  @property({ type: Boolean, reflect: true }) sortable = false;
-  @property({ type: Boolean, reflect: true }) filterable = false;
-  @property({ type: Boolean, reflect: true, attribute: 'manual-sort' }) manualSort = false;
-  @property({ type: Boolean, reflect: true, attribute: 'manual-filter' }) manualFilter = false;
-  @property({ type: Boolean, reflect: true }) striped = false;
-  @property({ type: Boolean, reflect: true }) hover = false;
-  @property({ type: Boolean, reflect: true }) compact = false;
-  @property({ type: Boolean, reflect: true }) bordered = false;
-  @property({ reflect: true, attribute: 'row-selection' }) rowSelection: RowSelectionType = 'off';
-  @property({ type: Boolean, reflect: true }) reorderable = false;
-  @property({ type: Boolean, reflect: true, attribute: 'allow-row-click' }) allowRowClick = false;
-  @property({ type: Boolean, reflect: true }) expandable = false;
+  @property({ type: Array }) public data: TData[] = [];
+  @property({ type: Array }) public columns: ColumnDef<TData>[] = [];
+  @property({ type: Object }) public columnVisibility: VisibilityState = {};
+  @property({ type: Array }) public columnOrder: ColumnOrderState = [];
+  @property({ type: Boolean, reflect: true }) public resizable = false;
+  @property({ type: Boolean, reflect: true }) public sortable = false;
+  @property({ type: Boolean, reflect: true }) public filterable = false;
+  @property({ type: Boolean, reflect: true, attribute: 'manual-sort' }) public manualSort = false;
+  @property({ type: Boolean, reflect: true, attribute: 'manual-filter' }) public manualFilter = false;
+  @property({ type: Boolean, reflect: true }) public striped = false;
+  @property({ type: Boolean, reflect: true }) public hover = false;
+  @property({ type: Boolean, reflect: true }) public compact = false;
+  @property({ type: Boolean, reflect: true }) public bordered = false;
+  @property({ reflect: true, attribute: 'row-selection' }) public rowSelection: RowSelectionType = 'off';
+  @property({ type: Boolean, reflect: true }) public reorderable = false;
+  @property({ type: Boolean, reflect: true, attribute: 'allow-row-click' }) public allowRowClick = false;
+  @property({ type: Boolean, reflect: true }) public expandable = false;
 
   @state() private _columns: TanstackColumnDef<TData>[] = [];
   @state() private _sorting: SortingState = [];
   @state() private _columnFilters: ColumnFiltersState = [];
   @state() private _rowSelection: Record<string, boolean> = {};
 
+  // eslint-disable-next-line @tylertech-eslint/require-private-modifier
   protected willUpdate(changedProperties: PropertyValues<this>): void {
     // We need to map the columns to the table-core format when the columns property changes
     if (changedProperties.has('columns')) {
@@ -140,7 +141,8 @@ export class DataTableElement<TData extends Row> extends LitElement {
     }
   }
 
-  protected render() {
+  // eslint-disable-next-line @tylertech-eslint/require-private-modifier
+  protected override render(): TemplateResult {
     const renderColumns = [...this._columns];
 
     if (this.rowSelection !== 'off') {
@@ -202,7 +204,7 @@ export class DataTableElement<TData extends Row> extends LitElement {
             return html`
               <th
                 part="head-cell cell"
-                colspan=${header.colSpan > 1 ? header.colSpan : nothing}
+                colspan=${header.colSpan > 1 ? String(header.colSpan) : (nothing as any)}
                 style=${styleMap({ width: this.resizable ? `${header.getSize()}px` : null })}
                 class=${classMap({
                   'sort-asc': header.column.getIsSorted() === 'asc',
@@ -222,7 +224,7 @@ export class DataTableElement<TData extends Row> extends LitElement {
                 <div class="cell-container" part="head-cell-container">
                   ${canReorder
                     ? html`<div
-                        draggable=${canReorder ? 'true' : nothing}
+                        draggable=${canReorder ? 'true' : (nothing as any)}
                         @dragstart=${canReorder
                           ? (evt: DragEvent) => this._columnReorderController?.onDragStart(evt, header.column)
                           : nothing}
@@ -337,7 +339,7 @@ export class DataTableElement<TData extends Row> extends LitElement {
               header => html`
                 <th
                   part="tfoot-cell cell"
-                  colspan=${header.colSpan > 1 ? header.colSpan : null}
+                  colspan=${header.colSpan > 1 ? header.colSpan : (nothing as any)}
                   style=${styleMap({ width: this.resizable ? `${header.getSize()}px` : null })}>
                   <div class="cell-content" part="footer-cell-content cell-content">
                     ${flexRender(header.column.columnDef.footer, header.getContext())}
@@ -467,7 +469,7 @@ export class DataTableElement<TData extends Row> extends LitElement {
     );
   }
 
-  public _onRowClick(evt: MouseEvent, index: number, data: TData): void {
+  private _onRowClick(evt: MouseEvent, index: number, data: TData): void {
     const isProtectedCell = evt
       .composedPath()
       .filter(el => (el as Node).nodeType === Node.ELEMENT_NODE)
@@ -539,7 +541,7 @@ export class DataTableElement<TData extends Row> extends LitElement {
   private _getDateFilter(column: Column<TData, unknown>): TemplateResult {
     return html` <forge-date-picker
       @forge-date-picker-change=${(evt: CustomEvent<Date>) => column.setFilterValue(evt.detail)}
-      .value=${column.getFilterValue() as Date}>
+      .value=${column.getFilterValue() as any}>
       <forge-text-field density="small">
         <input type="text" />
       </forge-text-field>
@@ -550,7 +552,7 @@ export class DataTableElement<TData extends Row> extends LitElement {
     return html` <forge-text-field density="small">
       <input
         .type=${column.columnDef.meta?.filterVariant ?? 'text'}
-        .value=${column.getFilterValue() ?? ''}
+        .value=${(column.getFilterValue() as any) ?? ''}
         @input=${(evt: InputEvent) => column.setFilterValue((evt.target as HTMLInputElement).value)} />
     </forge-text-field>`;
   }

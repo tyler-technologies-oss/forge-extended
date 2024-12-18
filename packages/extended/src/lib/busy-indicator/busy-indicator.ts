@@ -92,20 +92,30 @@ export class BusyIndicatorElement extends LitElement {
   @property({ type: String, reflect: true })
   public direction: BusyIndicatorDirection = 'column';
 
-  public override render(): TemplateResult {
-    const title = this.titleText ? html`<h1 id="title" class="title" part="title">${this.titleText}</h1>` : nothing;
-    const spinner = this.spinner
+  private get _titleTemplate(): TemplateResult | typeof nothing {
+    return this.titleText ? html`<h1 id="title" class="title" part="title">${this.titleText}</h1>` : nothing;
+  }
+
+  private get _messageTemplate(): TemplateResult | typeof nothing {
+    return !!this.message?.trim() ? html`<p id="message" class="message" part="message">${this.message}</p>` : nothing;
+  }
+
+  private get _spinnerTemplate(): TemplateResult | typeof nothing {
+    return this.spinner
       ? html`<forge-circular-progress class="spinner" part="spinner" aria-hidden="true"></forge-circular-progress>`
       : nothing;
-    const cancelButton = this.cancelable
+  }
+
+  private get _cancelButtonTemplate(): TemplateResult | typeof nothing {
+    return this.cancelable
       ? html`<forge-button class="cancel-button" part="cancel-button" @click=${this._onCancel}>
           <slot name="cancel-text">Cancel</slot>
         </forge-button>`
       : nothing;
-    const message = !!this.message?.trim()
-      ? html`<p id="message" class="message" part="message">${this.message}</p>`
-      : nothing;
-    const progressBar = this.progressBar
+  }
+
+  private get _progressBarTemplate(): TemplateResult | typeof nothing {
+    return this.progressBar
       ? html`<div class="progress-container" part="progress-bar-container">
           <forge-linear-progress
             part="progress-bar"
@@ -115,7 +125,9 @@ export class BusyIndicatorElement extends LitElement {
             .progress=${this.progress}></forge-linear-progress>
         </div>`
       : nothing;
+  }
 
+  public override render(): TemplateResult {
     return html`
       <forge-dialog
         persistent
@@ -123,9 +135,11 @@ export class BusyIndicatorElement extends LitElement {
         aria-labelledby=${this.titleText ? 'title' : nothing}
         aria-describedby="message">
         <div class="surface" part="surface">
-          ${title}
-          <div class="message-container" part="message-container">${spinner} ${message} ${cancelButton}</div>
-          ${progressBar}
+          ${this._titleTemplate}
+          <div class="message-container" part="message-container">
+            ${this._spinnerTemplate} ${this._messageTemplate} ${this._cancelButtonTemplate}
+          </div>
+          ${this._progressBarTemplate}
         </div>
       </forge-dialog>
     `;

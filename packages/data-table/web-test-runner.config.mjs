@@ -13,6 +13,7 @@ export const directoryGroup = source =>
  * @type {import('@web/test-runner').TestRunnerConfig}
  */
 export default {
+  files: 'src/lib/**/*.test.ts',
   concurrentBrowsers: 3,
   nodeResolve: true,
   testsFinishTimeout: 60000,
@@ -25,7 +26,8 @@ export default {
   coverageConfig: {
     report: true,
     reportDir: '.coverage',
-    exclude: ['src/*', 'src/stories/**/*', 'src/lib/**/index.ts', 'src/lib/**/*.{scss,json}', '**/node_modules/**'],
+    include: ['**'],
+    exclude: ['**/node_modules/**'],
     threshold: {
       statements: 98.5,
       branches: 95.5,
@@ -33,17 +35,6 @@ export default {
       lines: 98.5
     }
   },
-  groups: [
-    { name: 'lib', files: 'src/lib/**/*.test.ts' },
-    ...directoryGroup('src/lib').reduce((paths, dirName) => {
-      paths.push({
-        name: dirName,
-        files: `src/lib/${dirName}/**/*.test.ts`
-      });
-      return paths;
-    }, [])
-  ],
-  group: 'lib',
   plugins: [
     sendKeysPlugin(),
     sendMousePlugin(),

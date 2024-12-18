@@ -1,38 +1,47 @@
 {
   "name": "forge-extended",
-  "version": "0.1.0",
-  "description": "A library of prebuilt components based on Tyler Forge™ patterns and recipes.",
   "private": true,
   "license": "Apache-2.0",
   "author": "Tyler Technologies, Inc.",
-  "packageManager": "npm@10.0.0",
+  "packageManager": "pnpm@9.15.0",
+  "engines": {
+    "node": ">=18",
+    "pnpm": ">=9"
+  },
   "scripts": {
     "prepare": "husky",
+    "preinstall": "npx only-allow pnpm",
     "build": "turbo run build",
     "lint": "turbo run lint",
     "test": "turbo run test",
     "dev": "turbo run dev",
-    "dev:data-table": "npm run dev -- --filter=@tylertech/data-table",
-    "dev:extended": "npm run dev -- --filter=@tylertech/extended"
+    "dev:data-table": "pnpm run dev --filter=@tylertech/forge-data-table",
+    "dev:extended": "pnpm run dev --filter=@tylertech/forge-extended",
+    "dev:extended-angular": "pnpm run dev --filter=@tylertech/forge-extended-angular",
+    "dev:extended-react": "pnpm run dev --filter=@tylertech/forge-extended-react",
+    "storybook:extended": "turbo run storybook --filter=@tylertech/forge-extended"
+  },
+  "dependencies": {
+    "prettier": "^3.4.2"
   },
   "devDependencies": {
-    "@commitlint/cli": "^19.3.0",
-    "@commitlint/config-conventional": "^19.2.2",
-    "commitlint": "^19.3.0",
-    "husky": "^9.0.11",
-    "lint-staged": "^15.2.7",
-    "turbo": "^2.1.2"
+    "@changesets/cli": "^2.27.10",
+    "@commitlint/cli": "^19.6.1",
+    "@commitlint/config-conventional": "^19.6.0",
+    "@types/node": "^22.10.2",
+    "commitlint": "^19.6.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.2.11",
+    "only-allow": "^1.2.1",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2"
   },
   "lint-staged": {
-    "**/*": "npm run format"
+    "**/*": "pnpm run format"
   },
-  "workspaces": [
-    "packages/data-table",
-    "packages/extended",
-    "packages/extended-angular/dist/forge-angular-extended",
-    "apps/*"
-  ],
-  "dependencies": {
-    "prettier": "^3.3.3"
+  "pnpm": {
+    "overrides": {
+      "reactify-wc>react": ">=17"
+    }
   }
 }

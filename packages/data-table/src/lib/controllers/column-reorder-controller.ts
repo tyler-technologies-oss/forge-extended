@@ -25,7 +25,9 @@ export class ColumnReorderController<TData> implements ReactiveController {
     this.movingColumn = column.id;
     this.targetColumn = null;
 
-    evt.dataTransfer!.effectAllowed = 'move';
+    if (evt.dataTransfer) {
+      evt.dataTransfer.effectAllowed = 'move';
+    }
 
     const thEl = (evt.target as HTMLElement).closest('th') as Element;
     const { height } = thEl.getBoundingClientRect();

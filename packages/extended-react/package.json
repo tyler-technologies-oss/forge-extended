@@ -1,0 +1,55 @@
+{
+  "name": "@tylertech/forge-extended-react",
+  "version": "0.1.0",
+  "description": "A React adapter for Tyler Forge™ Extended UI components.",
+  "repository": "tyler-technologies-oss/forge-extended",
+  "author": "Tyler Technologies, Inc.",
+  "license": "Apache-2.0",
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "predev": "npm run build",
+    "dev": "vite",
+    "build:demo": "vite build",
+    "serve:demo": "vite preview",
+    "clean": "rimraf dist/",
+    "prebuild": "npm run clean",
+    "build": "tsc --project lib/tsconfig-build.json",
+    "lint": "eslint --ext .ts,.tsx ./lib"
+  },
+  "dependencies": {
+    "reactify-wc": "^4.0.0",
+    "tslib": "^2.8.1"
+  },
+  "peerDependencies": {
+    "@tylertech/forge-extended": "workspace:*",
+    "react": ">=17.0.0"
+  },
+  "devDependencies": {
+    "@tylertech-eslint/eslint-plugin": "^2.1.0",
+    "@tylertech/forge": "^3.4.0",
+    "@tylertech/forge-react": "^3.0.1",
+    "@tylertech/forge-extended": "workspace:*",
+    "@tylertech/tyler-icons": "^1.18.1",
+    "@types/node": "^22.10.2",
+    "@types/react": "^17.0.19",
+    "@types/react-dom": "^17.0.9",
+    "@types/react-router": "^5.1.20",
+    "@types/react-router-dom": "^5.3.3",
+    "@vitejs/plugin-react": "^4.3.4",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-error-overlay": "^6.0.11",
+    "react-router": "^5.2.1",
+    "react-router-dom": "^5.2.1",
+    "rimraf": "^6.0.1",
+    "sass": "^1.83.0",
+    "typescript": "~5.4.5",
+    "vite": "^6.0.3",
+    "vite-tsconfig-paths": "^5.1.4"
+  }
+}

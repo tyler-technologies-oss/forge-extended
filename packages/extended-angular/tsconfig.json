@@ -8,9 +8,7 @@
     "strict": true,
     "noImplicitOverride": true,
     "paths": {
-      "@tylertech/forge-angular-extended": [
-        "dist/forge-angular-extended"
-      ]
+      "@tylertech/forge-extended-angular": ["dist/forge-extended-angular"]
     },
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
@@ -24,10 +22,7 @@
     "importHelpers": true,
     "target": "ES2022",
     "module": "es2020",
-    "lib": [
-      "es2020",
-      "dom"
-    ],
+    "lib": ["es2020", "dom"],
     "useDefineForClassFields": false
   },
   "angularCompilerOptions": {

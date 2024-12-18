@@ -10,3 +10,4 @@ README.md
 .gitignore
 .autorc
 .prettierignore
+storybook-static/

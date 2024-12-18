@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "forge-angular-demo": {
+    "forge-extended-angular-demo": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,19 +20,14 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/forge-angular-extended-demo",
+            "outputPath": "dist/forge-extended-angular-demo",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           },
           "configurations": {
@@ -72,10 +67,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "forge-angular-extended-demo:build:production"
+              "buildTarget": "forge-extended-angular-demo:build:production"
             },
             "development": {
-              "buildTarget": "forge-angular-extended-demo:build:development"
+              "buildTarget": "forge-extended-angular-demo:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -83,7 +78,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "forge-angular-extended-demo:build"
+            "buildTarget": "forge-extended-angular-demo:build"
           }
         },
         "test": {
@@ -94,35 +89,30 @@
             "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "karma.conf.js",
             "inlineStyleLanguage": "scss",
-            "assets": [
-              "src/favicon.ico",
-              "src/assets"
-            ],
-            "styles": [
-              "src/styles.scss"
-            ],
+            "assets": ["src/favicon.ico", "src/assets"],
+            "styles": ["src/styles.scss"],
             "scripts": []
           }
         }
       }
     },
-    "forge-angular-extended": {
+    "forge-extended-angular": {
       "projectType": "library",
-      "root": "projects/forge-angular-extended",
-      "sourceRoot": "projects/forge-angular-extended/src",
+      "root": "projects/forge-extended-angular",
+      "sourceRoot": "projects/forge-extended-angular/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
-            "project": "projects/forge-angular-extended/ng-package.json"
+            "project": "projects/forge-extended-angular/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/forge-angular-extended/tsconfig.lib.prod.json"
+              "tsConfig": "projects/forge-extended-angular/tsconfig.lib.prod.json"
             },
             "development": {
-              "tsConfig": "projects/forge-angular-extended/tsconfig.lib.json"
+              "tsConfig": "projects/forge-extended-angular/tsconfig.lib.json"
             }
           },
           "defaultConfiguration": "production"
@@ -130,9 +120,9 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/forge-angular-extended/src/test.ts",
-            "tsConfig": "projects/forge-angular-extended/tsconfig.spec.json",
-            "karmaConfig": "projects/forge-angular-extended/karma.conf.js"
+            "main": "projects/forge-extended-angular/src/test.ts",
+            "tsConfig": "projects/forge-extended-angular/tsconfig.spec.json",
+            "karmaConfig": "projects/forge-extended-angular/karma.conf.js"
           }
         }
       }

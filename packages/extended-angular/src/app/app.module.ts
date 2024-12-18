@@ -18,15 +18,19 @@ import { HeaderComponent } from './components/header/header.component';
 // Pages
 import { HomeComponent } from './views/home/home.component';
 
+import { ForgeExtendedQuantityFieldElementModule } from '@tylertech/forge-extended-angular';
+
 @NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    SidenavComponent,
-    HeaderComponent,
+  declarations: [AppComponent, HomeComponent, SidenavComponent, HeaderComponent],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    HttpClientModule,
+    DemoCardComponent,
+    ForgeModule,
+    ForgeExtendedQuantityFieldElementModule
   ],
-  imports: [BrowserModule, AppRoutingModule, HttpClientModule, DemoCardComponent, ForgeModule],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

@@ -25,7 +25,8 @@ export default {
   coverageConfig: {
     report: true,
     reportDir: '.coverage',
-    exclude: ['src/*', 'src/stories/**/*', 'src/lib/**/index.ts', 'src/lib/**/*.{scss,json}', '**/node_modules/**'],
+    include: ['src/lib/**'],
+    exclude: ['**/node_modules/**'],
     threshold: {
       statements: 98.5,
       branches: 95.5,

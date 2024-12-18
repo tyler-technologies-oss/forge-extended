@@ -1,6 +1,6 @@
 import { defineSelectComponent, defineTextFieldComponent } from '@tylertech/forge';
 
-export function filterModule() {
+export function filterModule(): void {
   defineSelectComponent();
   defineTextFieldComponent();
 }
