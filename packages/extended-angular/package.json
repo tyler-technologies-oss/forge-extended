@@ -20,14 +20,14 @@
     "generate-proxies": "ng generate @tylertech/forge-schematics:custom-elements --config generate-proxies.json --interactive=false && prettier --write ./projects/forge-extended-angular/src/lib/**/*.ts"
   },
   "dependencies": {
-    "@angular/animations": "^17.3.7",
-    "@angular/common": "^17.3.7",
-    "@angular/compiler": "^17.3.7",
-    "@angular/core": "^17.3.7",
-    "@angular/forms": "^17.3.7",
-    "@angular/platform-browser": "^17.3.7",
-    "@angular/platform-browser-dynamic": "^17.3.7",
-    "@angular/router": "^17.3.7",
+    "@angular/animations": "^18.2.13",
+    "@angular/common": "^18.2.13",
+    "@angular/compiler": "^18.2.13",
+    "@angular/core": "^18.2.13",
+    "@angular/forms": "^18.2.13",
+    "@angular/platform-browser": "^18.2.13",
+    "@angular/platform-browser-dynamic": "^18.2.13",
+    "@angular/router": "^18.2.13",
     "@tylertech/forge": "catalog:",
     "@tylertech/forge-angular": "^4.2.0",
     "@tylertech/forge-core": "catalog:",
@@ -38,9 +38,9 @@
     "zone.js": "~0.14.5"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^17.3.11",
-    "@angular/cli": "^17.3.11",
-    "@angular/compiler-cli": "^17.3.7",
+    "@angular-devkit/build-angular": "^18.2.12",
+    "@angular/cli": "^18.2.12",
+    "@angular/compiler-cli": "^18.2.13",
     "@tylertech-eslint/eslint-plugin": "catalog:",
     "@tylertech/forge-schematics": "^1.3.1",
     "@types/jasmine": "~5.1.5",
@@ -51,7 +51,7 @@
     "karma-coverage": "~2.2.1",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "ng-packagr": "^17.3.0",
+    "ng-packagr": "^18.2.1",
     "typescript": "~5.4.5"
   }
 }
