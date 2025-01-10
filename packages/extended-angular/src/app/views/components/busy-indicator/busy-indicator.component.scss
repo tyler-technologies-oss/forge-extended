@@ -1,0 +1,8 @@
+.actions {
+  display: grid;
+  gap: var(--forge-spacing-medium);
+
+  forge-button {
+    width: 256px;
+  }
+}

@@ -12,7 +12,7 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
-import { IExpansionPanelComponent, IListItemSelectEventData, IconRegistry } from '@tylertech/forge';
+import { IExpansionPanelComponent, IconRegistry } from '@tylertech/forge';
 import { tylIconHome, tylIconSettings, tylIconSettingsInputComponent } from '@tylertech/tyler-icons/standard';
 
 IconRegistry.define([tylIconHome, tylIconSettingsInputComponent, tylIconSettings]);
@@ -50,53 +50,8 @@ export class SidenavComponent implements OnInit {
   }
 
   public componentMenuItems: IMenuItem[] = [
-    { label: 'Accordion', value: '/component/accordion' },
-    { label: 'Autocomplete', value: '/component/autocomplete' },
-    { label: 'Avatar', value: '/component/avatar' },
-    { label: 'Banner', value: '/component/banner' },
-    { label: 'Bottom Sheet', value: '/component/bottom-sheet' },
-    { label: 'Button', value: '/component/button' },
-    { label: 'Checkbox', value: '/component/checkbox' },
-    { label: 'Chip Field', value: '/component/chip-field' },
-    { label: 'Chips', value: '/component/chips' },
-    { label: 'Circular Progress', value: '/component/circular-progress' },
-    { label: 'Date picker', value: '/component/date-picker' },
-    { label: 'Date Range Picker', value: '/component/date-range-picker' },
-    { label: 'Dialog', value: '/component/dialog' },
-    { label: 'Expansion Panel', value: '/component/expansion-panel' },
-    { label: 'Floating Action Button', value: '/component/floating-action-button' },
-    { label: 'Icon', value: '/component/icon' },
-    { label: 'Icon Button', value: '/component/icon-button' },
-    { label: 'Inline Message', value: '/component/inline-message' },
-    { label: 'Linear Progress', value: '/component/linear-progress' },
-    { label: 'List', value: '/component/list' },
-    { label: 'Menu', value: '/component/menu' },
-    { label: 'Page State', value: '/component/page-state' },
-    { label: 'Paginator', value: '/component/paginator' },
-    { label: 'Popover', value: '/component/popover' },
-    { label: 'Radio', value: '/component/radio' },
-    { label: 'Scaffold', value: '/component/scaffold' },
-    { label: 'Select', value: '/component/select' },
-    { label: 'Slider', value: '/component/slider' },
-    { label: 'Split View', value: '/component/split-view' },
-    { label: 'Stepper', value: '/component/stepper' },
-    { label: 'Switch', value: '/component/switch' },
-    { label: 'Tab Bar', value: '/component/tab-bar' },
-    { label: 'Table', value: '/component/table' },
-    { label: 'Text Field', value: '/component/text-field' },
-    { label: 'Time Picker', value: '/component/time-picker' },
-    { label: 'Toast', value: '/component/toast' },
-    { label: 'Tooltip', value: '/component/tooltip' },
-    { label: 'View Switcher', value: '/component/view-switcher' }
-  ];
-
-  public exampleMenuItems: IMenuItem[] = [
-    { label: 'Dialog Service', value: '/example/dialog-service' },
-    { label: 'Expansion panel', value: '/example/expansion-panel' },
-    { label: 'Reactive form', value: '/example/reactive-form' },
-    { label: 'Table', value: '/example/table' },
-    { label: 'Toolbar', value: '/example/toolbar-example' },
-    { label: 'Two column layout', value: '/example/two-column-grid' }
+    { label: 'Busy Indicator', value: '/component/busy-indicator' },
+    { label: 'Quantity Field', value: '/component/quantity-field' }
   ];
 
   constructor(
@@ -149,8 +104,6 @@ export class SidenavComponent implements OnInit {
     // Automatically expand a menu item if the active menu item exists within it
     if (path.match(/^\/component\//)) {
       this.componentExpansionPanel.nativeElement.open = true;
-    } else if (path.match(/^\/example\//)) {
-      this.exampleExpansionPanel.nativeElement.open = true;
     }
   }
 }

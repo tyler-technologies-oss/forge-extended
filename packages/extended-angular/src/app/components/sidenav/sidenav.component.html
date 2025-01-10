@@ -44,22 +44,5 @@
         >
       </forge-list-item>
     </forge-expansion-panel>
-    <forge-expansion-panel #exampleExpansionPanel>
-      <forge-list-item slot="header">
-        <forge-icon name="settings" slot="start"></forge-icon>
-        <button>Examples</button>
-        <forge-open-icon slot="end"></forge-open-icon>
-      </forge-list-item>
-      <forge-list-item indented *ngFor="let item of exampleMenuItems" [selected]="exampleLink.isActive">
-        <a
-          [routerLink]="[item.value]"
-          #exampleLink="routerLinkActive"
-          routerLinkActive
-          [routerLinkActiveOptions]="{ exact: true }"
-          ariaCurrentWhenActive="page"
-          >{{ item.label }}</a
-        >
-      </forge-list-item>
-    </forge-expansion-panel>
   </forge-list>
 </ng-template>

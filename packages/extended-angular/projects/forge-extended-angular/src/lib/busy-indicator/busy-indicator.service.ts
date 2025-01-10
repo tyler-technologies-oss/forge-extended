@@ -17,16 +17,23 @@ export class BusyIndicatorService {
     const element = document.createElement('forge-busy-indicator');
     Object.assign(element, config);
     parent.appendChild(element);
+    element.open = true;
     return element;
   }
 
   /**
    * Removes the busy indicator from the DOM.
    */
-  public hide(selector?: string): void {
-    const element = document.querySelector(selector ?? 'forge-busy-indicator');
-    if (element) {
-      element.remove();
+  public hide(selectorOrInstance?: string | BusyIndicatorElement): void {
+    if (typeof selectorOrInstance === 'string') {
+      const element = document.querySelector(selectorOrInstance ?? 'forge-busy-indicator') as BusyIndicatorElement;
+      if (element) {
+        element.open = false;
+        element.remove();
+      }
+    } else if (selectorOrInstance instanceof BusyIndicatorElement) {
+      selectorOrInstance.open = false;
+      selectorOrInstance.remove();
     }
   }
 }
