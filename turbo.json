@@ -5,13 +5,12 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
+    "lint": {},
+    "test:ci": {
+      "outputs": []
+    },
     "dev": {
       "dependsOn": ["^build"],
-      "persistent": true,
-      "cache": false
-    },
-    "lint": {
-      "dependsOn": ["^lint"],
       "persistent": true,
       "cache": false
     },

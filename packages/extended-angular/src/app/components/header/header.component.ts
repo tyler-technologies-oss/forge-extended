@@ -20,11 +20,7 @@ export class HeaderComponent {
   public menuClicked = new EventEmitter<void>();
 
   constructor(private _toastService: ToastService) {
-    IconRegistry.define([
-      tylIconTylerTalkingTLogo,
-      tylIconWbSunny,
-      tylIconBrightness3
-    ]);
+    IconRegistry.define([tylIconTylerTalkingTLogo, tylIconWbSunny, tylIconBrightness3]);
   }
 
   public onMenuClicked(): void {

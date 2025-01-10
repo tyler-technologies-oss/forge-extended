@@ -6,9 +6,6 @@ import { ComponentDemoComponent } from './component-demo.component';
 
 @NgModule({
   declarations: [ComponentDemoComponent],
-  imports: [
-    CommonModule,
-    ComponentDemoRoutingModule
-  ]
+  imports: [CommonModule, ComponentDemoRoutingModule]
 })
-export class ComponentDemoModule { }
+export class ComponentDemoModule {}

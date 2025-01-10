@@ -35,7 +35,7 @@ export class BusyIndicatorElement extends LitElement {
   /**
    * Indicates whether the busy indicator is open.
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public open = false;
 
   /**
@@ -53,25 +53,25 @@ export class BusyIndicatorElement extends LitElement {
   /**
    * Indicates whether the cancel button is displayed.
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public cancelable = false;
 
   /**
    * Indicates whether the spinner is displayed.
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public spinner = true;
 
   /**
    * Indicates whether the progress bar is displayed.
    */
-  @property({ type: Boolean, reflect: true, attribute: 'progress-bar' })
+  @property({ type: Boolean, attribute: 'progress-bar' })
   public progressBar = false;
 
   /**
    * Indicates whether the progress bar is determinate.
    */
-  @property({ type: Boolean, reflect: true, attribute: 'progress-bar-determinate' })
+  @property({ type: Boolean, attribute: 'progress-bar-determinate' })
   public progressBarDeterminate = false;
 
   /**
@@ -83,13 +83,13 @@ export class BusyIndicatorElement extends LitElement {
   /**
    * The buffer amount for the progress bar.
    */
-  @property({ type: Number, reflect: true })
+  @property({ type: Number })
   public buffer = 0;
 
   /**
    * The layout direction of the busy indicator.
    */
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   public direction: BusyIndicatorDirection = 'column';
 
   private get _titleTemplate(): TemplateResult | typeof nothing {

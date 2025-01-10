@@ -1,20 +1,14 @@
 import { esbuildPlugin } from '@web/dev-server-esbuild';
 import { sendKeysPlugin, sendMousePlugin } from '@web/test-runner-commands/plugins';
 import { fileURLToPath } from 'url';
-import { readdirSync } from 'fs';
-
-/** Gets all directory names within a given source directory.  */
-export const directoryGroup = source =>
-  readdirSync(source, { withFileTypes: true })
-    .filter(dirent => dirent.isDirectory())
-    .map(dirent => dirent.name);
 
 /**
  * @type {import('@web/test-runner').TestRunnerConfig}
  */
 export default {
   files: 'src/lib/**/*.test.ts',
-  concurrentBrowsers: 3,
+  port: 8010,
+  concurrentBrowsers: 1,
   nodeResolve: true,
   testsFinishTimeout: 60000,
   testFramework: {

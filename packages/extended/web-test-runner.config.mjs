@@ -14,6 +14,7 @@ export const directoryGroup = source =>
  */
 export default {
   concurrentBrowsers: 3,
+  port: 8000,
   nodeResolve: true,
   testsFinishTimeout: 60000,
   testFramework: {

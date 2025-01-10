@@ -31,25 +31,25 @@ export class QuantityFieldElement extends LitElement {
   /**
    * Indicates whether the field is invalid.
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public invalid = false;
 
   /**
    * Indicates whether the field is required.
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public required = false;
 
   /**
    * The accessible label for the decrement button.
    */
-  @property()
+  @property({ attribute: 'decrement-label' })
   public decrementLabel = 'Decrement';
 
   /**
    * The accessible label for the increment button.
    */
-  @property()
+  @property({ attribute: 'increment-label' })
   public incrementLabel = 'Increment';
 
   public override render(): TemplateResult {

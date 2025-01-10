@@ -34,7 +34,7 @@ import '@tylertech/forge-extended/quantity-field';
 You can also reference types from components modules like so:
 
 ```typescript
-import { type QuantityFieldElement } from  '@tylertech/forge-extended/quantity-field';
+import { type QuantityFieldElement } from '@tylertech/forge-extended/quantity-field';
 ```
 
 > This is useful for strongly typing your custom elements in TypeScript.

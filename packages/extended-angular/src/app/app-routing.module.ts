@@ -5,7 +5,10 @@ import { HomeComponent } from './views/home/home.component';
 
 const routes: Routes = [
   { path: '', pathMatch: 'full', component: HomeComponent },
-  { path: 'component', loadChildren: () => import('./components/component-demo/component-demo.module').then(m => m.ComponentDemoModule) }
+  {
+    path: 'component',
+    loadChildren: () => import('./components/component-demo/component-demo.module').then(m => m.ComponentDemoModule)
+  }
 ];
 
 @NgModule({

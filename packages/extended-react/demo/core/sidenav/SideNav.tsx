@@ -2,7 +2,14 @@ import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IExpansionPanelComponent, IListItemSelectEventData, IconRegistry } from '@tylertech/forge';
 import { tylIconHome, tylIconSettingsInputComponent, tylIconSettings } from '@tylertech/tyler-icons/standard';
-import { ForgeDrawer, ForgeExpansionPanel, ForgeIcon, ForgeList, ForgeListItem, ForgeOpenIcon } from '@tylertech/forge-react';
+import {
+  ForgeDrawer,
+  ForgeExpansionPanel,
+  ForgeIcon,
+  ForgeList,
+  ForgeListItem,
+  ForgeOpenIcon
+} from '@tylertech/forge-react';
 import { useHistory } from 'react-router';
 import routeConfig, { IAppRoute } from '../../route-config';
 
@@ -15,11 +22,7 @@ function SideNav(props: PropsWithChildren<SideNavProps>): JSX.Element {
   const [selectedRoute, setSelectedRoute] = useState(history.location.pathname);
 
   useEffect(() => {
-    IconRegistry.define([
-      tylIconHome,
-      tylIconSettingsInputComponent,
-      tylIconSettings
-    ]);
+    IconRegistry.define([tylIconHome, tylIconSettingsInputComponent, tylIconSettings]);
   }, []);
 
   function onSelect(evt: CustomEvent<IListItemSelectEventData<string>>): void {
@@ -40,7 +43,15 @@ function SideNav(props: PropsWithChildren<SideNavProps>): JSX.Element {
   );
 }
 
-function SideNavRouterRenderer({ config, selectedRoute, parentRoute }: { config: IAppRoute[]; selectedRoute: string; parentRoute?: string }): JSX.Element {
+function SideNavRouterRenderer({
+  config,
+  selectedRoute,
+  parentRoute
+}: {
+  config: IAppRoute[];
+  selectedRoute: string;
+  parentRoute?: string;
+}): JSX.Element {
   return (
     <>
       {config.map(({ path, icon, text, routes }, i) => {
@@ -49,7 +60,9 @@ function SideNavRouterRenderer({ config, selectedRoute, parentRoute }: { config:
           return (
             <ForgeListItem key={i} value={href} indented={!!parentRoute}>
               {icon && <ForgeIcon slot="start" name={icon} />}
-              <Link to={href} aria-current={selectedRoute === href ? 'page' : undefined}>{text}</Link>
+              <Link to={href} aria-current={selectedRoute === href ? 'page' : undefined}>
+                {text}
+              </Link>
             </ForgeListItem>
           );
         }
@@ -63,13 +76,17 @@ function SideNavExpandableItem({ route, selectedRoute }: { route: IAppRoute; sel
   const expPanelRef = useRef<IExpansionPanelComponent>();
 
   return (
-    <ForgeExpansionPanel ref={expPanelRef} open={selectedRoute.startsWith(route.path) ? true : expPanelRef.current?.open ?? false}>
+    <ForgeExpansionPanel
+      ref={expPanelRef}
+      open={selectedRoute.startsWith(route.path) ? true : (expPanelRef.current?.open ?? false)}>
       <ForgeListItem slot="header">
         <ForgeIcon name={route.icon} slot="start" />
         <button>{route.text}</button>
         <ForgeOpenIcon slot="end" />
       </ForgeListItem>
-      {route.routes &&  <SideNavRouterRenderer config={route.routes} selectedRoute={selectedRoute} parentRoute={route.path} />}
+      {route.routes && (
+        <SideNavRouterRenderer config={route.routes} selectedRoute={selectedRoute} parentRoute={route.path} />
+      )}
     </ForgeExpansionPanel>
   );
 }

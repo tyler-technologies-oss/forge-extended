@@ -69,7 +69,7 @@ export interface ColumnDef<TData extends Row = any> {
 const SELECT_COLUMN_ID = 'SELECT_COLUMN_ID';
 
 @customElement('forge-data-table')
-export class DataTableElement<TData extends Row> extends LitElement {
+export class DataTableElement<TData extends Row = any> extends LitElement {
   static {
     defineCheckboxComponent();
     defineDatePickerComponent();
@@ -81,23 +81,107 @@ export class DataTableElement<TData extends Row> extends LitElement {
 
   public static override styles = unsafeCSS(styles);
 
-  @property({ type: Array }) public data: TData[] = [];
-  @property({ type: Array }) public columns: ColumnDef<TData>[] = [];
-  @property({ type: Object }) public columnVisibility: VisibilityState = {};
-  @property({ type: Array }) public columnOrder: ColumnOrderState = [];
-  @property({ type: Boolean, reflect: true }) public resizable = false;
-  @property({ type: Boolean, reflect: true }) public sortable = false;
-  @property({ type: Boolean, reflect: true }) public filterable = false;
-  @property({ type: Boolean, reflect: true, attribute: 'manual-sort' }) public manualSort = false;
-  @property({ type: Boolean, reflect: true, attribute: 'manual-filter' }) public manualFilter = false;
-  @property({ type: Boolean, reflect: true }) public striped = false;
-  @property({ type: Boolean, reflect: true }) public hover = false;
-  @property({ type: Boolean, reflect: true }) public compact = false;
-  @property({ type: Boolean, reflect: true }) public bordered = false;
-  @property({ reflect: true, attribute: 'row-selection' }) public rowSelection: RowSelectionType = 'off';
-  @property({ type: Boolean, reflect: true }) public reorderable = false;
-  @property({ type: Boolean, reflect: true, attribute: 'allow-row-click' }) public allowRowClick = false;
-  @property({ type: Boolean, reflect: true }) public expandable = false;
+  /**
+   * The data to display in the table.
+   */
+  @property({ type: Array })
+  public data: TData[] = [];
+
+  /**
+   * The columns to display in the table.
+   */
+  @property({ type: Array })
+  public columns: ColumnDef<TData>[] = [];
+
+  /**
+   * The current visibility state of the columns.
+   */
+  @property({ type: Object })
+  public columnVisibility: VisibilityState = {};
+
+  /**
+   * The current order of the columns.
+   */
+  @property({ type: Array })
+  public columnOrder: ColumnOrderState = [];
+
+  /**
+   * Whether the columns in the table can be resized.
+   */
+  @property({ type: Boolean })
+  public resizable = false;
+
+  /**
+   * Whether the columns in the table can be sorted.
+   */
+  @property({ type: Boolean })
+  public sortable = false;
+
+  /**
+   * Whether the columns in the table can be filtered.
+   */
+  @property({ type: Boolean })
+  public filterable = false;
+
+  /**
+   * Controls whether the table is sorted manually or automatically.
+   */
+  @property({ type: Boolean, attribute: 'manual-sort' })
+  public manualSort = false;
+
+  /**
+   * Controls whether the table is filtered manually or automatically.
+   */
+  @property({ type: Boolean, attribute: 'manual-filter' })
+  public manualFilter = false;
+
+  /**
+   * Use alternate row styling.
+   */
+  @property({ type: Boolean })
+  public striped = false;
+
+  /**
+   * Use hover styling when hovering over rows with the pointer.
+   */
+  @property({ type: Boolean })
+  public hover = false;
+
+  /**
+   * Use compact row and cell styling.
+   */
+  @property({ type: Boolean })
+  public compact = false;
+
+  /**
+   * Use bordered styling around rows and cells.
+   */
+  @property({ type: Boolean })
+  public bordered = false;
+
+  /**
+   * Allow rows to be selected.
+   */
+  @property({ attribute: 'row-selection' })
+  public rowSelection: RowSelectionType = 'off';
+
+  /**
+   * Allow columns to be reordered.
+   */
+  @property({ type: Boolean })
+  public reorderable = false;
+
+  /**
+   * Allow rows to be clicked.
+   */
+  @property({ type: Boolean, attribute: 'allow-row-click' })
+  public allowRowClick = false;
+
+  /**
+   * Allow rows to be expanded.
+   */
+  @property({ type: Boolean })
+  public expandable = false;
 
   @state() private _columns: TanstackColumnDef<TData>[] = [];
   @state() private _sorting: SortingState = [];
@@ -356,6 +440,7 @@ export class DataTableElement<TData extends Row> extends LitElement {
   private _mapColumnState(): void {
     this._columns = this.columns.map(column => {
       const mappedColumn: TanstackColumnDef<TData> = {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
         id: column.id ?? column.header!.toString().toLowerCase(),
         header: column.header,
         footer:
@@ -417,6 +502,7 @@ export class DataTableElement<TData extends Row> extends LitElement {
       });
       this.addController(this._columnReorderController);
 
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       const columns = this.columns.map(column => column.id ?? column.header!.toString().toLowerCase());
 
       if (this.rowSelection !== 'off') {

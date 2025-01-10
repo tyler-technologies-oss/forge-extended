@@ -3,7 +3,7 @@
   "private": true,
   "license": "Apache-2.0",
   "author": "Tyler Technologies, Inc.",
-  "packageManager": "pnpm@9.15.0",
+  "packageManager": "pnpm@9.15.3",
   "engines": {
     "node": ">=18",
     "pnpm": ">=9"
@@ -11,30 +11,34 @@
   "scripts": {
     "prepare": "husky",
     "preinstall": "npx only-allow pnpm",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "build": "turbo run build",
     "lint": "turbo run lint",
-    "test": "turbo run test",
+    "test:ci": "turbo run test:ci",
+    "test:data-table": "pnpm run --filter=@tylertech/forge-data-table test",
+    "test:extended": "pnpm run --filter=@tylertech/forge-extended test",
+    "test:extended-angular": "pnpm run --filter=@tylertech/forge-extended-angular test",
+    "test:extended-react": "pnpm run --filter=@tylertech/forge-extended-react test ",
     "dev": "turbo run dev",
-    "dev:data-table": "pnpm run dev --filter=@tylertech/forge-data-table",
-    "dev:extended": "pnpm run dev --filter=@tylertech/forge-extended",
-    "dev:extended-angular": "pnpm run dev --filter=@tylertech/forge-extended-angular",
-    "dev:extended-react": "pnpm run dev --filter=@tylertech/forge-extended-react",
+    "dev:data-table": "pnpm run --filter=@tylertech/forge-data-table dev",
+    "dev:extended": "pnpm run --filter=@tylertech/forge-extended dev",
+    "dev:extended-angular": "pnpm run --filter=@tylertech/forge-extended-angular dev",
+    "dev:extended-react": "pnpm run --filter=@tylertech/forge-extended-react dev",
+    "generate-angular-proxies": "turbo run @tylertech/forge-extended-angular#generate-proxies",
     "storybook:extended": "turbo run storybook --filter=@tylertech/forge-extended"
   },
-  "dependencies": {
-    "prettier": "^3.4.2"
-  },
   "devDependencies": {
-    "@changesets/cli": "^2.27.10",
+    "@changesets/cli": "^2.27.11",
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
-    "@types/node": "^22.10.2",
+    "@types/node": "catalog:",
     "commitlint": "^19.6.1",
     "husky": "^9.1.7",
-    "lint-staged": "^15.2.11",
+    "lint-staged": "^15.3.0",
     "only-allow": "^1.2.1",
-    "turbo": "^2.3.3",
-    "typescript": "^5.7.2"
+    "prettier": "^3.4.2",
+    "turbo": "^2.3.3"
   },
   "lint-staged": {
     "**/*": "pnpm run format"

@@ -1,15 +1,21 @@
 import { Location } from '@angular/common';
-import { ChangeDetectorRef, Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import { IExpansionPanelComponent, IListItemSelectEventData, IconRegistry } from '@tylertech/forge';
 import { tylIconHome, tylIconSettings, tylIconSettingsInputComponent } from '@tylertech/tyler-icons/standard';
 
-IconRegistry.define([
-  tylIconHome,
-  tylIconSettingsInputComponent,
-  tylIconSettings
-]);
+IconRegistry.define([tylIconHome, tylIconSettingsInputComponent, tylIconSettings]);
 
 export interface IMenuItem {
   label: string;
@@ -93,7 +99,11 @@ export class SidenavComponent implements OnInit {
     { label: 'Two column layout', value: '/example/two-column-grid' }
   ];
 
-  constructor(router: Router, private _location: Location, private _cd: ChangeDetectorRef) {
+  constructor(
+    router: Router,
+    private _location: Location,
+    private _cd: ChangeDetectorRef
+  ) {
     router.events.pipe(takeUntilDestroyed()).subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (this.open) {

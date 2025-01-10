@@ -3,7 +3,5 @@
   "compilerOptions": {
     "paths": null
   },
-  "files": [
-    "index.ts"
-  ]
+  "files": ["index.ts"]
 }
