@@ -1,6 +1,7 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
 import { QuantityFieldElement } from './quantity-field';
+import sinon from 'sinon';
 
 import './quantity-field';
 
@@ -124,21 +125,18 @@ describe('Quantity Field', () => {
     expect(input.value).to.equal('3');
   });
 
-  // should set required
   it('should set required', async () => {
     const el = await fixture<QuantityFieldElement>(html`<forge-quantity-field required></forge-quantity-field>`);
 
     expect(el.required).to.be.true;
   });
 
-  // should set invalid
   it('should set invalid', async () => {
     const el = await fixture<QuantityFieldElement>(html`<forge-quantity-field invalid></forge-quantity-field>`);
 
     expect(el.invalid).to.be.true;
   });
 
-  // should not render decrement button
   it('should not render decrement button', async () => {
     const el = await fixture<QuantityFieldElement>(html`<forge-quantity-field></forge-quantity-field>`);
 
@@ -148,7 +146,6 @@ describe('Quantity Field', () => {
     expect(decrementButton).to.be.undefined;
   });
 
-  // should not render increment button
   it('should not render increment button', async () => {
     const el = await fixture<QuantityFieldElement>(html`<forge-quantity-field></forge-quantity-field>`);
 
@@ -158,7 +155,6 @@ describe('Quantity Field', () => {
     expect(incrementButton).to.be.undefined;
   });
 
-  // should not render support text
   it('should not render support text', async () => {
     const el = await fixture<QuantityFieldElement>(html`<forge-quantity-field></forge-quantity-field>`);
 
@@ -166,5 +162,51 @@ describe('Quantity Field', () => {
       el.shadowRoot?.querySelector('slot[name="support-text"]') as HTMLSlotElement
     )?.assignedElements()[0];
     expect(supportText).to.be.undefined;
+  });
+
+  it('should dispatch input and change event on decrement', async () => {
+    const el = await fixture<QuantityFieldElement>(
+      html`<forge-quantity-field>
+        <input type="number" value="1" />
+      </forge-quantity-field>`
+    );
+
+    const input = el.querySelector('input') as HTMLInputElement;
+    const decrementButton = el.shadowRoot?.querySelector(
+      'slot[name="decrement-button"] forge-icon-button'
+    ) as HTMLButtonElement;
+
+    const inputSpy = sinon.spy();
+    const changeSpy = sinon.spy();
+    input.addEventListener('input', inputSpy);
+    input.addEventListener('change', changeSpy);
+
+    decrementButton.click();
+
+    expect(inputSpy.called).to.be.true;
+    expect(changeSpy.called).to.be.true;
+  });
+
+  it('should dispatch input and change event on increment', async () => {
+    const el = await fixture<QuantityFieldElement>(
+      html`<forge-quantity-field>
+        <input type="number" value="1" />
+      </forge-quantity-field>`
+    );
+
+    const input = el.querySelector('input') as HTMLInputElement;
+    const incrementButton = el.shadowRoot?.querySelector(
+      'slot[name="increment-button"] forge-icon-button'
+    ) as HTMLButtonElement;
+
+    const inputSpy = sinon.spy();
+    const changeSpy = sinon.spy();
+    input.addEventListener('input', inputSpy);
+    input.addEventListener('change', changeSpy);
+
+    incrementButton.click();
+
+    expect(inputSpy.called).to.be.true;
+    expect(changeSpy.called).to.be.true;
   });
 });

@@ -81,10 +81,16 @@ export class QuantityFieldElement extends LitElement {
   }
 
   private _onDecrement(): void {
-    this._tryGetInput()?.stepDown();
+    const input = this._tryGetInput();
+    input?.stepDown();
+    input?.dispatchEvent(new Event('input', { bubbles: true }));
+    input?.dispatchEvent(new Event('change', { bubbles: true }));
   }
 
   private _onIncrement(): void {
-    this._tryGetInput()?.stepUp();
+    const input = this._tryGetInput();
+    input?.stepUp();
+    input?.dispatchEvent(new Event('input', { bubbles: true }));
+    input?.dispatchEvent(new Event('change', { bubbles: true }));
   }
 }

@@ -70,6 +70,7 @@
     "@tylertech/forge": "catalog:",
     "@tylertech/stylelint-rules": "catalog:",
     "@types/mocha": "catalog:",
+    "@types/sinon": "catalog:",
     "@types/node": "catalog:",
     "@web/dev-server-esbuild": "catalog:",
     "@web/test-runner": "catalog:",

@@ -72,6 +72,9 @@ catalogs:
     '@types/node':
       specifier: 22.10.5
       version: 22.10.5
+    '@types/sinon':
+      specifier: 17.0.3
+      version: 17.0.3
     '@web/dev-server-esbuild':
       specifier: 1.0.3
       version: 1.0.3
@@ -343,6 +346,9 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 22.10.5
+      '@types/sinon':
+        specifier: 'catalog:'
+        version: 17.0.3
       '@web/dev-server-esbuild':
         specifier: 'catalog:'
         version: 1.0.3

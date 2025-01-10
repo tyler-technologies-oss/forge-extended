@@ -19,9 +19,7 @@ export class BusyIndicatorDemoComponent {
   }
 
   public showDynamic(): void {
-    const indicator = this._busyIndicatorService.show({ message: 'Loading...' });
-    setTimeout(() => {
-      this._busyIndicatorService.hide(indicator);
-    }, 3000);
+    const ref = this._busyIndicatorService.show({ message: 'Loading...' });
+    setTimeout(() => ref.hide(), 3000);
   }
 }

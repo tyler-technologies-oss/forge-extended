@@ -1,4 +1,4 @@
-import { Component, model } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-quantity-field-demo',
@@ -6,5 +6,5 @@ import { Component, model } from '@angular/core';
   styleUrls: ['./quantity-field.component.scss']
 })
 export class QuantityFieldDemoComponent {
-  public quantity = model(1);
+  public quantity = 1;
 }

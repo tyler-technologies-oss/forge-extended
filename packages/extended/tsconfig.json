@@ -20,7 +20,7 @@
       "$lib": ["./src/lib"],
       "$lib/*": ["./src/lib/*"]
     },
-    "types": ["vite/client", "mocha", "node"]
+    "types": ["vite/client", "mocha", "node", "sinon"]
   },
   "include": ["src/lib/**/*.ts", "typings/*.d.ts"]
 }
