@@ -1,13 +1,10 @@
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-
-import { BusyIndicatorElement } from './busy-indicator-element.component';
-
-// import '@tylertech/forge-extended/busy-indicator';
+import { ForgeExtendedBusyIndicatorElementProxyModule } from './busy-indicator-element-proxy.module';
+import { BusyIndicatorService } from './busy-indicator.service';
 
 @NgModule({
-  imports: [CommonModule],
-  declarations: [BusyIndicatorElement],
-  exports: [BusyIndicatorElement]
+  providers: [BusyIndicatorService],
+  imports: [ForgeExtendedBusyIndicatorElementProxyModule],
+  exports: [ForgeExtendedBusyIndicatorElementProxyModule]
 })
 export class ForgeExtendedBusyIndicatorModule {}

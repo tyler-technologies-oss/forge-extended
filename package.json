@@ -19,13 +19,12 @@
     "test:data-table": "pnpm run --filter=@tylertech/forge-data-table test",
     "test:extended": "pnpm run --filter=@tylertech/forge-extended test",
     "test:extended-angular": "pnpm run --filter=@tylertech/forge-extended-angular test",
-    "test:extended-react": "pnpm run --filter=@tylertech/forge-extended-react test ",
+    "test:extended-react": "pnpm run --filter=@tylertech/forge-extended-react test",
     "dev": "turbo run dev",
     "dev:data-table": "pnpm run --filter=@tylertech/forge-data-table dev",
     "dev:extended": "pnpm run --filter=@tylertech/forge-extended dev",
     "dev:extended-angular": "pnpm run --filter=@tylertech/forge-extended-angular dev",
     "dev:extended-react": "pnpm run --filter=@tylertech/forge-extended-react dev",
-    "generate-angular-proxies": "turbo run @tylertech/forge-extended-angular#generate-proxies",
     "storybook:extended": "turbo run storybook --filter=@tylertech/forge-extended"
   },
   "devDependencies": {

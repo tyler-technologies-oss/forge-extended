@@ -12,12 +12,12 @@
   "scripts": {
     "start": "pnpm build && ng serve -o",
     "dev": "pnpm start",
-    "build": "ng build forge-extended-angular --configuration production",
+    "build": "pnpm run generate-proxies && ng build forge-extended-angular --configuration production",
     "build:demo": "ng build --configuration production --stats-json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "analyze:bundle": "webpack-bundle-analyzer dist/forge-extended-angular-demo/stats.json",
-    "generate-proxies": "ng generate @tylertech/forge-schematics:custom-elements --config generate-proxies.json --interactive=false"
+    "generate-proxies": "ng generate @tylertech/forge-schematics:custom-elements --config generate-proxies.json --interactive=false && prettier --write ./projects/forge-extended-angular/src/lib/**/*.ts"
   },
   "dependencies": {
     "@angular/animations": "^17.3.7",
