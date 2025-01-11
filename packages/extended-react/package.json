@@ -19,7 +19,7 @@
     "clean": "rimraf dist/",
     "prebuild": "npm run clean",
     "build": "tsc --project lib/tsconfig-build.json",
-    "lint": "eslint -c .eslintrc.json --parser-options tsconfigRootDir:. --ext .ts,.tsx ./lib"
+    "lint": "eslint --parser-options tsconfigRootDir:. --ext .ts,.tsx"
   },
   "dependencies": {
     "reactify-wc": "^4.0.0",
@@ -41,6 +41,7 @@
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.3.4",
+    "eslint": "catalog:",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-error-overlay": "^6.0.11",
