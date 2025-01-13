@@ -1,8 +1,12 @@
 name: Changesets
+
 on:
   push:
     branches:
       - main
+
+concurrency: ${{ github.workflow }}-${{ github.ref }}
+
 env:
   CI: true
   PNPM_CACHE_FOLDER: .pnpm-store
@@ -11,36 +15,38 @@ jobs:
   version:
     timeout-minutes: 15
     runs-on: ubuntu-latest
+
     steps:
-      - name: checkout code repository
+      - name: Checkout Repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
-      - name: setup node.js
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 20
 
-      - name: install pnpm
-        run: npm i pnpm@latest -g
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
 
-      - name: Setup npmrc
+      - name: Setup .npmrc
         run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
 
-      - name: setup pnpm config
+      - name: Setup pnpm
         run: pnpm config set store-dir $PNPM_CACHE_FOLDER
 
-      - name: install dependencies
+      - name: Install Dependencies
         run: pnpm install
 
-      - name: create and publish versions
+      - name: Create Release Pull Request or Publish to npm
+        id: changesets
         uses: changesets/action@v1
         with:
-          version: pnpm ci:version
           commit: "chore: update versions"
-          title: "chore: update versions"
-          publish: pnpm ci:publish
-
+          title: "chore: release"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  
