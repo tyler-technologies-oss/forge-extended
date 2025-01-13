@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="https://cdn.forge.tylertech.com/favicon.ico" sizes="16x16" type="image/x-icon" />
+    <link rel="stylesheet" href="https://cdn.forge.tylertech.com/v1/css/tyler-font.css" />
+    <link rel="stylesheet" href="node_modules/@tylertech/forge/dist/forge-core.css" />
+    <link rel="stylesheet" href="node_modules/@tylertech/forge/dist/forge.css" />
+    <title>Tyler Forge™ Extended</title>
+    <style>
+      .body {
+        margin: 0 auto;
+        padding: var(--forge-spacing-large);
+      }
+
+      .content {
+        width: 1024px;
+      }
+    </style>
+  </head>
+  <body>
+    <forge-scaffold>
+      <forge-app-bar slot="header" title-text="Tyler Forge™ Extended">
+        <forge-icon slot="logo" name="forge_logo"></forge-icon>
+      </forge-app-bar>
+      <main slot="body" class="body">
+        <forge-card class="content">
+          <h1 class="forge-typography--heading4">Demo</h1>
+          <!-- Set up temporary demo here (DO NOT COMMIT CHANGES TO THIS FILE) -->
+        </forge-card>
+      </main>
+    </forge-scaffold>
+    <script type="module">
+      import '@tylertech/forge/esm/scaffold/index.js';
+      import '@tylertech/forge/esm/app-bar/app-bar/index.js';
+      import '@tylertech/forge/esm/card/index.js';
+      import '@tylertech/forge/esm/icon/index.js';
+      import { IconRegistry } from '@tylertech/forge/esm/icon/icon-registry.js';
+      import { tylIconForgeLogo } from '@tylertech/tyler-icons/custom';
+      IconRegistry.define([tylIconForgeLogo]);
+    </script>
+  </body>
+</html>

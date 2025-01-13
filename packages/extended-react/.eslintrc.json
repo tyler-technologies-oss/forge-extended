@@ -1,0 +1,15 @@
+{
+  "root": true,
+  "ignorePatterns": ["dist/**/*"],
+  "overrides": [
+    {
+      "files": ["*.js", "*.ts", "*.tsx"],
+      "parserOptions": {
+        "project": ["tsconfig.json"],
+        "tsconfigRootDir": "./packages/extended-react",
+        "createDefaultProgram": true
+      },
+      "extends": ["plugin:@tylertech-eslint/recommended", "plugin:prettier/recommended"]
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+<app-demo-card headerText="Quantity Field">
+  <div class="actions">
+    <forge-button variant="raised" (click)="showInline()">Show Inline Busy Indicator</forge-button>
+    <forge-button variant="raised" (click)="showDynamic()">Show Dynamic Busy Indicator</forge-button>
+  </div>
+
+  <forge-busy-indicator [open]="open()" message="Loading..."></forge-busy-indicator>
+</app-demo-card>
