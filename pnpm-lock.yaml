@@ -176,9 +176,6 @@ importers:
       husky:
         specifier: ^9.1.7
         version: 9.1.7
-      just-pnpm:
-        specifier: ^1.0.2
-        version: 1.0.2
       lint-staged:
         specifier: ^15.3.0
         version: 15.3.0
@@ -5783,10 +5780,6 @@ packages:
 
   just-extend@6.2.0:
     resolution: {integrity: sha512-cYofQu2Xpom82S6qD778jBDpwvvy39s1l/hrYij2u9AMdQcGRpaBu6kY4mVhuno5kJVi1DAz4aiphA2WI1/OAw==}
-
-  just-pnpm@1.0.2:
-    resolution: {integrity: sha512-a/LtVYjTy1Z1yBl3kFEsic313J8MZ29ZEAFrw1snFOY7/x6Afy1VO2zAgtAlUjIgexOt8TRCRCXo1J+PABIo/Q==}
-    hasBin: true
 
   karma-chrome-launcher@3.2.0:
     resolution: {integrity: sha512-rE9RkUPI7I9mAxByQWkGJFXfFD6lE4gC5nPuZdobf/QdTEJI6EU4yIay/cfU/xV4ZxlM5JiTv7zWYgA64NpS5Q==}
@@ -14768,8 +14761,6 @@ snapshots:
   jsonparse@1.3.1: {}
 
   just-extend@6.2.0: {}
-
-  just-pnpm@1.0.2: {}
 
   karma-chrome-launcher@3.2.0:
     dependencies:
