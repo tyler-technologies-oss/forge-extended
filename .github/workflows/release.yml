@@ -30,9 +30,6 @@ jobs:
       - name: Install pnpm
         uses: pnpm/action-setup@v4
 
-      - name: Setup .npmrc
-        run: echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > .npmrc
-
       - name: Setup pnpm
         run: pnpm config set store-dir $PNPM_CACHE_FOLDER
 
@@ -45,6 +42,7 @@ jobs:
         with:
           commit: "chore: update versions"
           title: "chore: release"
+          publish: pnpm run release
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  
+          NPM_TOKEN: ${{ secrets.FORGE_NPM_TOKEN }}
