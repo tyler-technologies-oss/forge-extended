@@ -6,7 +6,6 @@ on:
  
 env:
   TURBO_TELEMETRY_DISABLED: 1
-  TURBO_SCM_BASE: ${{ github.base_ref }}
 
 jobs:
   build:
@@ -36,8 +35,8 @@ jobs:
         run: pnpm run format:check
  
       - name: Build
-        run: pnpm run build --affected
+        run: pnpm run build
  
       - name: Test
-        run: pnpm run test --affected
+        run: pnpm run test
 
