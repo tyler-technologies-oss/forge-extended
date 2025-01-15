@@ -1,0 +1,9 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+
+@mixin mobile-dialog {
+  .dialog::part(surface) {
+    inset: #{forge-spacing.variable(large)};
+    width: 100%;
+    height: 100%;
+  }
+}
