@@ -3,14 +3,13 @@
   "private": true,
   "license": "Apache-2.0",
   "author": "Tyler Technologies, Inc.",
-  "packageManager": "pnpm@9.15.2",
+  "packageManager": "pnpm@9.15.4",
   "engines": {
     "node": ">=18",
     "pnpm": ">=9"
   },
   "scripts": {
     "prepare": "husky",
-    "preinstall": "npx only-allow pnpm",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "build": "turbo run build",
@@ -18,6 +17,7 @@
     "build:extended-angular": "pnpm run --filter=@tylertech/forge-extended-angular build",
     "build:extended-react": "pnpm run --filter=@tylertech/forge-extended-react build",
     "lint": "turbo run lint",
+    "release": "pnpm run build && changesets publish",
     "test": "turbo run test:ci",
     "test:extended": "pnpm run --filter=@tylertech/forge-extended test",
     "test:extended-angular": "pnpm run --filter=@tylertech/forge-extended-angular test",
@@ -37,7 +37,6 @@
     "eslint": "catalog:",
     "husky": "^9.1.7",
     "lint-staged": "^15.3.0",
-    "only-allow": "^1.2.1",
     "prettier": "^3.4.2",
     "turbo": "^2.3.3"
   },
