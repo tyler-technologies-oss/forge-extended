@@ -17,7 +17,7 @@
     "build:extended-angular": "pnpm run --filter=@tylertech/forge-extended-angular build",
     "build:extended-react": "pnpm run --filter=@tylertech/forge-extended-react build",
     "lint": "turbo run lint",
-    "release": "pnpm run build && changesets publish",
+    "release": "pnpm run build && changeset publish",
     "test": "turbo run test:ci",
     "test:extended": "pnpm run --filter=@tylertech/forge-extended test",
     "test:extended-angular": "pnpm run --filter=@tylertech/forge-extended-angular test",
