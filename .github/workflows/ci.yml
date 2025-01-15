@@ -6,6 +6,7 @@ on:
  
 env:
   TURBO_TELEMETRY_DISABLED: 1
+  TURBO_SCM_BASE: ${{ github.base_ref }}
 
 jobs:
   build:
