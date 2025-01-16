@@ -2,7 +2,6 @@
   "name": "@tylertech/forge-extended-angular",
   "version": "0.1.0",
   "description": "Forge components adapter library for Angular",
-  "private": true,
   "repository": "tyler-technologies-oss/forge-extended",
   "license": "Apache-2.0",
   "publishConfig": {
@@ -12,10 +11,11 @@
   "scripts": {
     "start": "pnpm build && ng serve -o",
     "dev": "pnpm start",
-    "build": "pnpm run generate-proxies && ng build forge-extended-angular --configuration production",
+    "build": "pnpm run sync-version && pnpm run generate-proxies && ng build forge-extended-angular --configuration production",
     "build:demo": "ng build --configuration production --stats-json",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
+    "sync-version": "node ./scripts/sync-version.mjs",
     "analyze:bundle": "webpack-bundle-analyzer dist/forge-extended-angular-demo/stats.json",
     "generate-proxies": "ng generate @tylertech/forge-schematics:custom-elements --config generate-proxies.json --interactive=false && prettier --write ./projects/forge-extended-angular/src/lib/**/*.ts"
   },
