@@ -364,7 +364,7 @@ importers:
         specifier: 'catalog:'
         version: 3.1.0
       '@tylertech/forge-extended':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../extended
       '@tylertech/tyler-icons':
         specifier: 'catalog:'
@@ -442,7 +442,7 @@ importers:
         specifier: 'catalog:'
         version: 3.4.1
       '@tylertech/forge-extended':
-        specifier: workspace:*
+        specifier: workspace:^
         version: link:../extended
       '@tylertech/forge-react':
         specifier: ^3.0.1

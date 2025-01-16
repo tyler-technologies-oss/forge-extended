@@ -12,6 +12,7 @@
     "prepare": "husky",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
+    "changeset:version": "changeset version && turbo run changeset:version",
     "build": "turbo run build",
     "build:extended": "pnpm run --filter=@tylertech/forge-extended build",
     "build:extended-angular": "pnpm run --filter=@tylertech/forge-extended-angular build",

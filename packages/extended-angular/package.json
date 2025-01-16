@@ -16,6 +16,7 @@
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "sync-version": "node ./scripts/sync-version.mjs",
+    "changeset:version": "pnpm run sync-version",
     "analyze:bundle": "webpack-bundle-analyzer dist/forge-extended-angular-demo/stats.json",
     "generate-proxies": "ng generate @tylertech/forge-schematics:custom-elements --config generate-proxies.json --interactive=false && prettier --write ./projects/forge-extended-angular/src/lib/**/*.ts"
   },
@@ -31,7 +32,7 @@
     "@tylertech/forge": "catalog:",
     "@tylertech/forge-angular": "^4.2.0",
     "@tylertech/forge-core": "catalog:",
-    "@tylertech/forge-extended": "workspace:*",
+    "@tylertech/forge-extended": "workspace:^",
     "@tylertech/tyler-icons": "catalog:",
     "rxjs": "~7.5.0",
     "tslib": "^2.8.1",
