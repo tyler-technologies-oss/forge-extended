@@ -26,13 +26,13 @@
     "tslib": "catalog:"
   },
   "peerDependencies": {
-    "@tylertech/forge-extended": "workspace:*",
+    "@tylertech/forge-extended": "workspace:^",
     "react": ">=17.0.0"
   },
   "devDependencies": {
     "@tylertech-eslint/eslint-plugin": "catalog:",
     "@tylertech/forge": "catalog:",
-    "@tylertech/forge-extended": "workspace:*",
+    "@tylertech/forge-extended": "workspace:^",
     "@tylertech/forge-react": "^3.0.1",
     "@tylertech/tyler-icons": "catalog:",
     "@types/node": "catalog:",

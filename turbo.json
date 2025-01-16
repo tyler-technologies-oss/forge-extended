@@ -17,6 +17,7 @@
     "storybook": {
       "persistent": true,
       "cache": false
-    }
+    },
+    "changeset:version": {}
   }
 }
