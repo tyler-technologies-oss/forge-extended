@@ -1,8 +1,0 @@
-/**
- * @license
- * Copyright Tyler Technologies, Inc. 
- * License: Apache-2.0
- */
-export * from './core';
-export * from './split-view-panel';
-export * from './split-view';

@@ -1,3 +1,0 @@
-export declare class ToastConfig<T = any> {
-    data?: T;
-}

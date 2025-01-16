@@ -1,9 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./date-picker.component";
-import * as i2 from "@angular/common";
-export declare class ForgeDatePickerProxyModule {
-    constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeDatePickerProxyModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeDatePickerProxyModule, [typeof i1.DatePickerComponent], [typeof i2.CommonModule], [typeof i1.DatePickerComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeDatePickerProxyModule>;
-}

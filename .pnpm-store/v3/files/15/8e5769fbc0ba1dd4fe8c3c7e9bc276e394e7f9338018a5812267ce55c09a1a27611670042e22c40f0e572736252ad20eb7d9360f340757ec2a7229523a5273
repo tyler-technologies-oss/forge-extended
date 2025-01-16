@@ -1,8 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./autocomplete-value-accessor.directive";
-import * as i2 from "./autocomplete-proxy.module";
-export declare class ForgeAutocompleteModule {
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeAutocompleteModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeAutocompleteModule, [typeof i1.AutocompleteValueAccessor], never, [typeof i1.AutocompleteValueAccessor, typeof i2.ForgeAutocompleteProxyModule]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeAutocompleteModule>;
-}

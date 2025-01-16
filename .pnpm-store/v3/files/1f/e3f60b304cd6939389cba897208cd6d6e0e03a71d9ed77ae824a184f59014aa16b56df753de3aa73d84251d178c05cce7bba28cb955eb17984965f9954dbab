@@ -1,2 +1,0 @@
-/** Constructs a visually hidden element and returns the element instance. */
-export declare function createVisuallyHiddenElement(attr?: string): HTMLElement;
