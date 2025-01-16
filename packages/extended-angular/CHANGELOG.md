@@ -1,5 +1,11 @@
 # @tylertech/forge-extended-angular
 
+## 0.1.2
+
+### Patch Changes
+
+- 0b2e765: Fix peer dependencies
+
 ## 0.1.1
 
 ### Patch Changes
