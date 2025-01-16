@@ -1,0 +1,93 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core/base/base-adapter';
+import { IViewSwitcherComponent } from './view-switcher';
+import { ViewAnimationDirection, ViewSwitcherAnimation } from './view-switcher-constants';
+export interface IViewSwitcherAdapter extends IBaseAdapter {
+    getViewCount(): number;
+    startViewObserver(callback: MutationCallback): void;
+    stopViewObserver(): void;
+    initializeSlideViews(index: number): void;
+    initializeFadeViews(index: number): void;
+    setActiveView(index: number): void;
+    hideInactiveViews(index: number): void;
+    transitionToView(fromIndex: number, toIndex: number, animationType: ViewSwitcherAnimation, direction?: ViewAnimationDirection): Promise<void>;
+    setAnimationType(type: ViewSwitcherAnimation): void;
+}
+export declare class ViewSwitcherAdapter extends BaseAdapter<IViewSwitcherComponent> implements IViewSwitcherAdapter {
+    private _rootElement;
+    private _slotElement;
+    private _viewObserver?;
+    constructor(component: IViewSwitcherComponent);
+    getViewCount(): number;
+    startViewObserver(callback: MutationCallback): void;
+    stopViewObserver(): void;
+    /**
+     * Initializes the views with styles for a slide transition.
+     * @param index The active view index.
+     */
+    initializeSlideViews(index: number): void;
+    /**
+     * Initializes the view styles when using a fade transition.
+     * @param index The active view index.
+     */
+    initializeFadeViews(index: number): void;
+    /**
+     * This is used when no animation type is set to allow for snapping the view into place.
+     * @param index The currently active view index.
+     */
+    setActiveView(index: number): void;
+    /**
+     * This is used when no animation type is specific to hide all non-visible views.
+     * @param index The currently active view index.
+     */
+    hideInactiveViews(index: number): void;
+    /**
+     * Initiates a slide transition from one view to another.
+     * @param fromIndex The view index to transition from.
+     * @param toIndex The view index to transition to.
+     * @param direction The transition animation direction.
+     */
+    transitionToView(fromIndex: number, toIndex: number, animationType: ViewSwitcherAnimation, direction?: ViewAnimationDirection): Promise<void>;
+    /**
+     * Initiates a slide transition from one view to another.
+     * @param fromIndex The view index to transition from.
+     * @param toIndex The view index to transition to.
+     * @param direction The transition animation direction.
+     */
+    private _slideToView;
+    private _fadeToView;
+    /**
+     * Attempts to animate the height of our container element to match that of the next view.
+     * @param fromIndex The view index we are transitioning from.
+     * @param toIndex The view index we are transitioning to.
+     */
+    private _animateHeight;
+    /**
+     * Handles the root container transitionend event.
+     * @param evt The transition event.
+     */
+    private _onRootTransitionEnd;
+    /**
+     * Resets the animation type on the root element.
+     * @param type The animation type.
+     */
+    setAnimationType(type: ViewSwitcherAnimation): void;
+    /**
+     * Get all view elements.
+     */
+    private _getViews;
+    /**
+     * Sets the height on the root container element.
+     * @param viewHeight The new height.
+     */
+    private _setHeight;
+    /**
+     * Calculate the absolute height of a view.
+     * @param view The view to calculate height from.
+     */
+    private _getViewHeight;
+}

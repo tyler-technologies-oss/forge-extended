@@ -1,0 +1,867 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { Platform, debounce, randomChars } from '@tylertech/forge-core';
+import { isSupportedTimeFormat, TWENTY_FOUR_HOUR_TIME_REGEX, tryCoerceTimeString } from '../core/utils/time-utils';
+import { TIME_PICKER_CONSTANTS } from './time-picker-constants';
+import { ListDropdownType } from '../list-dropdown/list-dropdown-constants';
+import { timeStringToMillis, millisToTimeString, minutesToMillis, getCurrentTimeOfDayMillis, millisToMinutes, stripSecondsFromMillis } from './time-picker-utils';
+export class TimePickerCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        // State vars
+        this._value = null;
+        this._masked = true;
+        this._use24HourTime = false;
+        this._showMaskFormat = false;
+        this._min = null;
+        this._max = null;
+        this._restrictedTimes = [];
+        this._startTime = null;
+        this._step = TIME_PICKER_CONSTANTS.numbers.DEFAULT_MINUTE_STEP;
+        this._allowInput = true;
+        this._open = false;
+        this._allowSeconds = false;
+        this._allowInvalidTime = false;
+        this._showNow = false;
+        this._showHourOptions = true;
+        this._customOptions = [];
+        this._disabled = false;
+        this._popupClasses = [];
+        this._allowDropdown = true;
+        // Internal state vars
+        this._isInitialized = false;
+        this._identifier = randomChars(); // This is a unique identifier for this instance of the time picker (used for a11y purposes)
+        // Set up listeners
+        this._inputListener = evt => this._onInput(evt);
+        this._inputKeydownListener = evt => this._onInputKeydown(evt);
+        this._toggleMousedownListener = evt => this._onToggleMousedown(evt);
+        this._inputFocusListener = evt => this._onInputFocus(evt);
+        this._inputBlurListener = evt => this._onInputBlur(evt);
+        this._inputMousedownListener = evt => this._onInputMousedown(evt);
+    }
+    initialize() {
+        this._adapter.initialize();
+        // We require an input element to be a child of this component
+        if (!this._adapter.hasInputElement()) {
+            throw new Error('Unable to locate <input> element to attach to.');
+        }
+        this._adapter.initializeAccessibility(this._identifier);
+        // Detect if a value already exists in the input and set our values based on that
+        if (!this._value) {
+            const inputValue = this._adapter.getInputValue();
+            this._setValue(this._convertTimeStringToMillis(inputValue, this._use24HourTime, this._allowSeconds));
+        }
+        // Attach required listeners
+        this._adapter.addInputListener('focus', this._inputFocusListener);
+        this._adapter.addInputListener('blur', this._inputBlurListener);
+        this._adapter.addInputListener('keydown', this._inputKeydownListener, true);
+        // Ensure our input has the correct time format (make sure not to emit input events manually at this point)
+        this._formatInputValue(false);
+        // Apply our state
+        if (typeof this._value === 'number') {
+            this._applyValue(this._value, false);
+        }
+        this._applyAllowInput();
+        this._applyAllowDropdown();
+        this._applyDisabled();
+        this._applyMask();
+        this._isInitialized = true;
+    }
+    destroy() {
+        this._isInitialized = false;
+        // Remove listeners
+        this._adapter.removeInputListener('input', this._inputListener);
+        this._adapter.removeInputListener('focus', this._inputFocusListener);
+        this._adapter.removeInputListener('blur', this._inputBlurListener);
+        this._adapter.removeToggleListener('mousedown', this._toggleMousedownListener);
+        this._adapter.removeInputListener('keydown', this._inputKeydownListener, true);
+        // If we are using an input mask, let's destroy that now
+        if (this._masked) {
+            this._adapter.destroyMask();
+        }
+        // Ensure we remove our dropdown
+        this._closeDropdown({ destroy: true });
+        // Cleanup any resources used in the adapter
+        this._adapter.destroy();
+    }
+    /** Called when the input mask changes or the `input` event occurs on our `<input>` element. */
+    _onInput(evt) {
+        this._handleInput(this._adapter.getInputValue());
+    }
+    _onInputKeydown(evt) {
+        if (evt.shiftKey) {
+            switch (evt.code) {
+                case 'Backspace':
+                case 'Delete':
+                    evt.preventDefault();
+                    const result = this._trySetValue(null);
+                    if (result) {
+                        this._formatInputValue();
+                    }
+                    return;
+            }
+        }
+        switch (evt.code) {
+            case 'Tab':
+                if (this._open) {
+                    this._selectActiveOption();
+                }
+                break;
+            case 'Esc':
+            case 'Escape':
+                if (this._open) {
+                    evt.preventDefault();
+                    evt.stopPropagation();
+                    this._closeDropdown({ emitCloseEvent: true });
+                }
+                break;
+            case 'Down':
+            case 'ArrowDown':
+                if (this._allowDropdown) {
+                    evt.preventDefault();
+                    if (!this._open) {
+                        this._openDropdown();
+                        if (typeof this._dropdownConfig?.visibleStartIndex === 'number' && this._dropdownConfig.visibleStartIndex >= 0) {
+                            this._adapter.activateOptionByIndex(this._dropdownConfig?.visibleStartIndex);
+                        }
+                        else {
+                            this._adapter.activateFirstOption();
+                        }
+                        // TODO: Should we cycle the hours, minutes, seconds, or meridiem where the cursor is instead of opening the dropdown?
+                    }
+                    else {
+                        if (!this._adapter.hasActiveOption()) {
+                            this._trySetActiveOption();
+                        }
+                        else {
+                            this._adapter.propagateKey(evt.code);
+                        }
+                    }
+                }
+                break;
+            case 'ArrowUp':
+                if (this._allowDropdown) {
+                    evt.preventDefault();
+                    if (this._open) {
+                        if (!this._adapter.hasActiveOption()) {
+                            this._trySetActiveOption();
+                        }
+                        else {
+                            this._adapter.propagateKey(evt.code);
+                        }
+                    }
+                    else {
+                        // TODO: cycle the hours, minutes, seconds, or meridiem where the cursor is
+                    }
+                }
+                break;
+            case 'Enter':
+            case 'NumpadEnter':
+            case 'Home':
+            case 'End':
+                if (this._open) {
+                    if (evt.code === 'Enter' || evt.code === 'NumpadEnter') {
+                        evt.stopPropagation();
+                    }
+                    evt.preventDefault();
+                    this._adapter.propagateKey(evt.code);
+                }
+                break;
+            case 'KeyN':
+                evt.preventDefault();
+                const nowMillis = getCurrentTimeOfDayMillis(this._allowSeconds);
+                if (this._value !== nowMillis) {
+                    const timeString = millisToTimeString(nowMillis, true, this._allowSeconds);
+                    const canContinue = this._emitChangeEvent(timeString);
+                    if (canContinue) {
+                        this._applyValue(nowMillis);
+                        this._selectInputText();
+                    }
+                }
+                break;
+        }
+    }
+    _trySetActiveOption() {
+        if (!this._adapter.hasActiveOption() && typeof this._dropdownConfig?.visibleStartIndex === 'number' && this._dropdownConfig.visibleStartIndex >= 0) {
+            this._adapter.activateOptionByIndex(this._dropdownConfig?.visibleStartIndex);
+        }
+    }
+    _selectActiveOption() {
+        const activeOption = this._adapter.getActiveOption();
+        if (activeOption) {
+            this._onSelect(activeOption.value);
+        }
+    }
+    _onToggleMousedown(evt) {
+        if (this._disabled || !this.allowDropdown) {
+            return;
+        }
+        evt.stopPropagation();
+        if (this._adapter.isInputDisabled()) {
+            return;
+        }
+        evt.preventDefault();
+        if (this._open) {
+            this._closeDropdown({ emitCloseEvent: true });
+        }
+        else {
+            if (!Platform.isMobile) {
+                this._adapter.tryFocusInput();
+            }
+            else {
+                this._adapter.tryBlurInput();
+            }
+            this._openDropdown();
+        }
+    }
+    _onInputFocus(evt) {
+        if (this.masked && this._showMaskFormat) {
+            this._applyMask();
+        }
+        if (this._allowInput) {
+            this._adapter.selectInputText();
+        }
+    }
+    _onInputBlur(evt) {
+        if (this.masked && this._showMaskFormat) {
+            this._applyMask();
+        }
+        this._formatInputValue();
+        if (this._open && !this._adapter.isInputFocused()) {
+            this._closeDropdown({ emitCloseEvent: true });
+        }
+    }
+    _onInputMousedown(evt) {
+        if (!this._allowInput && !this._open) {
+            this._openDropdown();
+            this._adapter.tryFocusInput();
+            window.requestAnimationFrame(() => this._adapter.selectInputText());
+        }
+    }
+    _applyDisabled() {
+        this._adapter.setDisabled(this._disabled);
+    }
+    _applyMask() {
+        if (this._masked && this._allowInput) {
+            this._adapter.destroyMask();
+            const options = {
+                showMaskFormat: this._showMaskFormat && this._adapter.isInputFocused(),
+                use24HourTime: this._use24HourTime,
+                showSeconds: this._allowSeconds,
+                prepareCallback: this._prepareMaskCallback,
+                onChange: debounce((value) => this._handleInput(value), 0, true) // debounce this to avoid multiple callbacks for same value
+            };
+            this._adapter.initializeMask(options);
+        }
+        else {
+            this._adapter.destroyMask();
+            this._formatInputValue();
+        }
+    }
+    _applyAllowInput() {
+        this._adapter.setInputReadonly(!this._allowInput);
+        if (this._allowInput) {
+            this._adapter.removeInputListener('mousedown', this._inputMousedownListener);
+            // If not using an input mask we need to attach our own `input` listener, otherwise
+            // we use the mask to notify us of changes
+            if (!this._masked) {
+                this._adapter.addInputListener('input', this._inputListener);
+            }
+        }
+        else {
+            this._adapter.addInputListener('mousedown', this._inputMousedownListener);
+            this._adapter.removeInputListener('input', this._inputListener);
+        }
+    }
+    _applyAllowDropdown() {
+        this._adapter.setToggleDisabled(!this._allowDropdown);
+        if (this._allowDropdown) {
+            this._adapter.removeToggleListener('mousedown', this._toggleMousedownListener);
+            this._adapter.tryCreateToggle();
+            this._adapter.addToggleListener('mousedown', this._toggleMousedownListener);
+        }
+        else if (this._open) {
+            this._closeDropdown({ emitCloseEvent: true });
+        }
+    }
+    _applyAllowSeconds() {
+        const originalValue = this._value;
+        if (!this._allowSeconds) {
+            // If we are not using seconds, we need to remove our seconds from the value
+            if (typeof this._value !== 'number') {
+                return;
+            }
+            this._setValue(stripSecondsFromMillis(this._value));
+            if (this._isInitialized && originalValue !== this._value) {
+                // We need to emit a change event with our new value which does not include the seconds
+                const timeString = millisToTimeString(this._value, true, false);
+                this._emitChangeEvent(timeString);
+            }
+        }
+        else if (this._isInitialized && originalValue !== this._value) {
+            // We need to emit a change event with our new value which includes the seconds
+            const timeString = millisToTimeString(this._value, true, true);
+            this._emitChangeEvent(timeString);
+        }
+    }
+    _handleInput(value) {
+        const rawValue = value;
+        if (!this._allowInput) {
+            return;
+        }
+        if (this._open) {
+            this._closeDropdown({ emitCloseEvent: true });
+        }
+        // Let's attempt to coerce our time string into a known format to help with ease of entry
+        value = tryCoerceTimeString(value, this._use24HourTime, this._allowSeconds);
+        // If we were provided a custom coercion callback then we need to call that now to perform any further coercion by the consumer
+        if (typeof this._coercionCallback === 'function') {
+            value = this._coercionCallback.call(null, rawValue, value, this._allowSeconds);
+        }
+        // Validate the time format and make sure it's supported
+        if (!this._isValidTimeFormat(value)) {
+            value = '';
+        }
+        // Convert the time string to milliseconds
+        let millis;
+        if (!this._masked && typeof this._parseCallback === 'function') {
+            millis = this._parseCallback.call(null, value);
+        }
+        else {
+            millis = this._convertTimeStringToMillis(value, this._use24HourTime, this._allowSeconds);
+        }
+        // Validate that our time can be chosen as a valid value
+        millis = this._validateMillis(millis);
+        // Update our value
+        this._trySetValue(millis);
+    }
+    _emitChangeEvent(value, force = false) {
+        return this._adapter.emitHostEvent(TIME_PICKER_CONSTANTS.events.CHANGE, value, true, !force);
+    }
+    _trySetValue(millis) {
+        // If our value hasn't changed, we can just return
+        if (millis === this._value) {
+            return false;
+        }
+        // Convert our milliseconds to a 24-hour time string to use as our normalized value
+        const timeString = millisToTimeString(millis, true, this._allowSeconds);
+        // Dispatch our custom input event to let consumers know raw input occurred (before our change event)
+        this._adapter.emitInputEvent(TIME_PICKER_CONSTANTS.events.INPUT, timeString);
+        // Only emit our change event if the value is different
+        if (this._value !== millis) {
+            const canContinue = this._emitChangeEvent(timeString);
+            if (canContinue) {
+                this._setValue(millis);
+                return true;
+            }
+        }
+        return false;
+    }
+    _setValue(value) {
+        this._value = this._normalizeTimeValue(value);
+    }
+    _validateMillis(millis) {
+        // Trap for min/max validation
+        if (typeof millis === 'number') {
+            const isBelowMin = typeof this._min === 'number' && millis < this._min;
+            const isAboveMax = typeof this._max === 'number' && millis > this._max;
+            if (isBelowMin || isAboveMax) {
+                millis = null;
+            }
+        }
+        // Trap for restricted times
+        if (typeof millis === 'number' && this._restrictedTimes.length) {
+            if (this._restrictedTimes.includes(millis)) {
+                millis = null;
+            }
+        }
+        return millis;
+    }
+    _isValidTimeFormat(value) {
+        if (!this._masked && typeof this._validationCallback === 'function') {
+            return this._validationCallback.call(this, value);
+        }
+        return isSupportedTimeFormat(value);
+    }
+    _isValidInputValue(value) {
+        return TWENTY_FOUR_HOUR_TIME_REGEX.test(value);
+    }
+    _onSelect(value) {
+        this._closeDropdown({ emitCloseEvent: true });
+        // Check if the "Now" option was selected
+        if (!value.isCustom && value.metadata === 'now') {
+            value.time = getCurrentTimeOfDayMillis(this._allowSeconds);
+        }
+        // Check if this is a custom option, and then call the provided callback for it
+        if (value.isCustom) {
+            if (typeof value.customCallback === 'function') {
+                const result = value.customCallback.call(null, value.metadata);
+                if (typeof result !== 'number') {
+                    throw new Error('Custom options must provide a time of day value in milliseconds.');
+                }
+                value.time = result;
+            }
+            else {
+                throw new Error('You must implement a `toMilliseconds` callback that returns the time value to use for this custom option.');
+            }
+        }
+        // Make sure the time is different than what is already populated or we can just return
+        if (this._value === value.time) {
+            return;
+        }
+        // Emit the change event
+        const timeString = millisToTimeString(value.time, true, this._allowSeconds);
+        const canContinue = this._emitChangeEvent(timeString);
+        if (!canContinue) {
+            return;
+        }
+        // This will update our state and the UI at once
+        this._applyValue(value.time);
+        // Select full input text
+        this._selectInputText();
+    }
+    _selectInputText() {
+        // We need to select the text of the input in the next cycle to allow time for the UI to update
+        // with the selected text (assuming it still has focus)
+        window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => {
+                if (this._adapter.isInputFocused()) {
+                    this._adapter.selectInputText();
+                }
+            });
+        });
+    }
+    _applyValue(value, emitEvents = true) {
+        this._setValue(value);
+        const formattedValue = this._formatValue(this._value);
+        if (this._adapter.getInputValue() !== formattedValue) {
+            this._adapter.setInputValue(formattedValue, emitEvents);
+        }
+    }
+    _normalizeTimeValue(value) {
+        if (value == null) {
+            return null;
+        }
+        else if (value < 0) {
+            return 0;
+        }
+        else if (value > TIME_PICKER_CONSTANTS.numbers.MAX_DAY_MILLIS) {
+            return TIME_PICKER_CONSTANTS.numbers.MAX_DAY_MILLIS;
+        }
+        return value;
+    }
+    _openDropdown() {
+        const options = this._generateTimeOptions();
+        if (!this.allowDropdown || !options.length || !this._adapter.inputElement) {
+            return;
+        }
+        this._formatInputValue();
+        this._open = true;
+        this._adapter.setHostAttribute(TIME_PICKER_CONSTANTS.attributes.OPEN);
+        const selectableOptions = options.filter(o => !o.divider && !o.disabled);
+        let selectedValues = [];
+        let visibleStartIndex = 0;
+        // Find closest match in list of time options and activate/select it
+        if (options.length) {
+            if (this._value != null) {
+                const optionIndex = this._findClosestOptionIndex(this._value, selectableOptions);
+                if (optionIndex >= 0) {
+                    const isExactMatch = selectableOptions[optionIndex].value.time === this._value;
+                    if (isExactMatch) {
+                        selectedValues = [selectableOptions[optionIndex].value];
+                    }
+                    else {
+                        visibleStartIndex = optionIndex;
+                    }
+                }
+            }
+            else if (typeof this._startTime === 'number') {
+                const optionIndex = this._findClosestOptionIndex(this._startTime, selectableOptions);
+                if (optionIndex >= 0 && optionIndex < selectableOptions.length) {
+                    visibleStartIndex = optionIndex;
+                }
+            }
+            else if (this._startTime == null) {
+                // If we don't have a start time set then let's scroll the closest time to current time into view
+                visibleStartIndex = this._getOptionIndexClosestCurrent(selectableOptions);
+            }
+        }
+        this._dropdownConfig = {
+            id: `forge-time-picker-${this._identifier}`,
+            referenceElement: this._adapter.inputElement,
+            selectedValues,
+            syncWidth: true,
+            visibleStartIndex,
+            popupClasses: this._popupClasses,
+            popupStatic: true,
+            type: ListDropdownType.Standard,
+            options,
+            selectCallback: value => this._onSelect(value),
+            closeCallback: () => this._closeDropdown({ emitCloseEvent: true }),
+            activeChangeCallback: id => this._adapter.setActiveDescendant(id),
+            targetWidthCallback: () => this._adapter.getTargetElementWidth(this._popupTarget)
+        };
+        this._adapter.attachDropdown(this._dropdownConfig);
+        this._adapter.emitHostEvent(TIME_PICKER_CONSTANTS.events.OPEN, undefined, false);
+    }
+    _closeDropdown({ destroy = false, emitCloseEvent = false } = {}) {
+        this._open = false;
+        this._dropdownConfig = undefined;
+        this._adapter.removeHostAttribute(TIME_PICKER_CONSTANTS.attributes.OPEN);
+        this._adapter.detachDropdown({ destroy });
+        if (emitCloseEvent) {
+            this._adapter.emitHostEvent(TIME_PICKER_CONSTANTS.events.CLOSE, true, false);
+        }
+    }
+    _getOptionIndexClosestCurrent(options) {
+        const date = new Date();
+        const currentTimeString = `${String(date.getHours()).padStart(2, '0')}:${String(date.getMinutes()).padStart(2, '0')}`;
+        const currentTimeMillis = timeStringToMillis(currentTimeString, true, false);
+        return this._findClosestOptionIndex(currentTimeMillis, options);
+    }
+    _findClosestOptionIndex(value, options) {
+        const closestItem = options.reduce((prev, curr) => {
+            return Math.abs((curr.value.time || 0) - value) < Math.abs((prev.value.time || 0) - value) ? curr : prev;
+        });
+        return options.indexOf(closestItem);
+    }
+    _formatInputValue(emitEvents = true) {
+        const inputValue = this._adapter.getInputValue();
+        // If we allow invalid times, we can leave the input value as-is (only when unmasked)
+        if (this._allowInvalidTime && !this._masked && inputValue && !this._value) {
+            return;
+        }
+        const formattedValue = this._formatValue(this._value);
+        if (inputValue !== formattedValue) {
+            this._adapter.setInputValue(formattedValue, emitEvents);
+            this._adapter.emitInputEvent(TIME_PICKER_CONSTANTS.events.INPUT, formattedValue);
+        }
+    }
+    _generateTimeOptions() {
+        const minMinutes = this._min != null ? Math.max(millisToMinutes(this._min), 0) : 0;
+        const maxMinutes = this._max != null ? Math.min(millisToMinutes(this._max), TIME_PICKER_CONSTANTS.numbers.MAX_DAY_MINUTES) : TIME_PICKER_CONSTANTS.numbers.MAX_DAY_MINUTES;
+        const minuteStep = this._step;
+        const times = [];
+        let leadingOptions = [];
+        if (this._showHourOptions) {
+            for (let totalMinutes = minMinutes; totalMinutes <= maxMinutes; totalMinutes += minuteStep) {
+                if (totalMinutes === TIME_PICKER_CONSTANTS.numbers.MAX_DAY_MINUTES) {
+                    break;
+                }
+                const millis = minutesToMillis(totalMinutes);
+                const disabled = this._restrictedTimes.includes(millis);
+                const label = millisToTimeString(millis, this._use24HourTime, false) || '';
+                const value = { time: millis };
+                times.push({ label, value, disabled });
+            }
+            // Add divider between AM/PM times
+            const firstPmIndex = times.findIndex(t => t.value.time / 1000 / 60 >= 720);
+            if (firstPmIndex >= 0 && firstPmIndex < times.length - 1) {
+                times.splice(firstPmIndex, 0, { label: '', value: null, divider: true });
+            }
+        }
+        // Check if we need to prepend a "Now" option
+        if (this._showNow) {
+            const value = { time: null, metadata: 'now' };
+            leadingOptions.push({ label: 'Now', value });
+        }
+        // Check for any custom provided options to prepend
+        if (Array.isArray(this._customOptions) && this._customOptions.length) {
+            const options = this._customOptions.map(o => {
+                const value = {
+                    time: null,
+                    metadata: o.value,
+                    isCustom: true,
+                    customCallback: o.toMilliseconds
+                };
+                return { label: o.label, value };
+            });
+            leadingOptions = [...leadingOptions, ...options];
+        }
+        // Append all leading options
+        if (leadingOptions.length) {
+            if (times.length) {
+                times.splice(0, 0, { label: '', value: null, divider: true });
+            }
+            leadingOptions.forEach((o, index) => times.splice(index, 0, o));
+        }
+        return times;
+    }
+    _convertTimeStringToMillis(value, use24HourTime, allowSeconds) {
+        if (!value || !this._isValidTimeFormat(value)) {
+            value = '';
+        }
+        return timeStringToMillis(value, use24HourTime, allowSeconds);
+    }
+    _formatValue(value) {
+        if (!this._masked && typeof this._formatCallback === 'function') {
+            return this._formatCallback.call(null, value, this._use24HourTime, this._allowSeconds);
+        }
+        return millisToTimeString(this._value, this._use24HourTime, this._allowSeconds) || '';
+    }
+    _warnInvalidFormat(value) {
+        console.warn(`The specified value "${value}" does not conform to the required format. The format is "HH:mm", "HH:mm:ss" where HH is 00-23, mm is 00-59, and ss is 00-59.`);
+    }
+    get open() {
+        return this._open;
+    }
+    set open(value) {
+        if (this._open !== value) {
+            if (this._isInitialized) {
+                this._open = value;
+                if (this._open) {
+                    this._openDropdown();
+                }
+                else {
+                    this._closeDropdown();
+                }
+            }
+        }
+    }
+    get masked() {
+        return this._masked;
+    }
+    set masked(value) {
+        if (this._masked !== value) {
+            this._masked = value;
+            if (this._isInitialized) {
+                if (this._masked) {
+                    this._adapter.removeInputListener('input', this._inputListener);
+                    this._applyMask();
+                }
+                else {
+                    this._adapter.destroyMask();
+                    this._formatInputValue();
+                    this._adapter.addInputListener('input', this._inputListener);
+                }
+            }
+        }
+    }
+    get showMaskFormat() {
+        return this._showMaskFormat;
+    }
+    set showMaskFormat(value) {
+        if (this._showMaskFormat !== value) {
+            this._showMaskFormat = value;
+        }
+    }
+    get allowSeconds() {
+        return this._allowSeconds;
+    }
+    set allowSeconds(value) {
+        if (this._allowSeconds !== value) {
+            this._allowSeconds = !!value;
+            this._applyAllowSeconds();
+            if (this._isInitialized) {
+                this._applyMask();
+                this._formatInputValue();
+            }
+            this._adapter.setHostAttribute(TIME_PICKER_CONSTANTS.attributes.ALLOW_SECONDS, `${!!value}`);
+        }
+    }
+    get use24HourTime() {
+        return this._use24HourTime;
+    }
+    set use24HourTime(value) {
+        if (this._use24HourTime !== value) {
+            this._use24HourTime = !!value;
+            if (this._isInitialized) {
+                this._applyMask();
+                this._formatInputValue();
+            }
+            this._adapter.setHostAttribute(TIME_PICKER_CONSTANTS.attributes.USE_24_HOUR_TIME, `${!!value}`);
+        }
+    }
+    get allowInvalidTime() {
+        return this._allowInvalidTime;
+    }
+    set allowInvalidTime(value) {
+        if (this._allowInvalidTime !== value) {
+            this._allowInvalidTime = !!value;
+            this._adapter.setHostAttribute(TIME_PICKER_CONSTANTS.attributes.ALLOW_INVALID_TIME, `${!!value}`);
+        }
+    }
+    get value() {
+        return millisToTimeString(this._value, true, this._allowSeconds);
+    }
+    set value(value) {
+        if (value && !this._isValidInputValue(value)) {
+            this._warnInvalidFormat(value);
+            return;
+        }
+        const millis = this._validateMillis(this._convertTimeStringToMillis(value, true, true));
+        this._setValue(millis);
+        if (this._isInitialized) {
+            this._applyValue(this._value);
+        }
+    }
+    get min() {
+        return millisToTimeString(this._min, true, this._allowSeconds);
+    }
+    set min(value) {
+        if (this._min !== value) {
+            if (value && !this._isValidInputValue(value)) {
+                this._warnInvalidFormat(value);
+                return;
+            }
+            this._min = this._convertTimeStringToMillis(value, true, this._allowSeconds);
+            // Validate and reset our millis to ensure within range
+            const millis = this._validateMillis(this._value);
+            this._setValue(millis);
+            if (this._isInitialized) {
+                this._applyValue(millis);
+            }
+        }
+    }
+    get max() {
+        return millisToTimeString(this._max, true, this._allowSeconds);
+    }
+    set max(value) {
+        if (this._max !== value) {
+            if (value && !this._isValidInputValue(value)) {
+                this._warnInvalidFormat(value);
+                return;
+            }
+            this._max = this._convertTimeStringToMillis(value, true, this._allowSeconds);
+            // Validate and reset our millis to ensure within range
+            const millis = this._validateMillis(this._value);
+            this._setValue(millis);
+            if (this._isInitialized) {
+                this._applyValue(millis);
+            }
+        }
+    }
+    get restrictedTimes() {
+        return this._restrictedTimes.map(t => millisToTimeString(t, true, this._allowSeconds)).filter(v => typeof v === 'string');
+    }
+    set restrictedTimes(value) {
+        if (!Array.isArray(value)) {
+            value = [];
+        }
+        this._restrictedTimes = value
+            .filter(v => typeof v === 'string')
+            .map(v => this._convertTimeStringToMillis(v, true, true))
+            .filter(v => typeof v === 'number');
+    }
+    get startTime() {
+        return millisToTimeString(this._startTime, true, this._allowSeconds);
+    }
+    set startTime(value) {
+        if (this._startTime !== value) {
+            if (value && !this._isValidInputValue(value)) {
+                this._warnInvalidFormat(value);
+                return;
+            }
+            this._startTime = this._convertTimeStringToMillis(value, true, this._allowSeconds);
+        }
+    }
+    get step() {
+        return this._step;
+    }
+    set step(value) {
+        this._step = value;
+    }
+    get allowInput() {
+        return this._allowInput;
+    }
+    set allowInput(value) {
+        if (this._allowInput !== value) {
+            this._allowInput = value;
+            if (this._isInitialized) {
+                this._applyAllowInput();
+                this._applyMask();
+            }
+        }
+    }
+    get popupTarget() {
+        return this._popupTarget;
+    }
+    set popupTarget(value) {
+        if (this._popupTarget !== value) {
+            this._popupTarget = value;
+        }
+    }
+    get showNow() {
+        return this._showNow;
+    }
+    set showNow(value) {
+        if (this._showNow !== value) {
+            this._showNow = value;
+        }
+    }
+    get showHourOptions() {
+        return this._showHourOptions;
+    }
+    set showHourOptions(value) {
+        if (this._showHourOptions !== value) {
+            this._showHourOptions = value;
+        }
+    }
+    get customOptions() {
+        return this._customOptions;
+    }
+    set customOptions(value) {
+        this._customOptions = Array.isArray(value) ? value : [];
+    }
+    set validationCallback(cb) {
+        this._validationCallback = cb;
+        if (this._isInitialized) {
+            this._applyMask();
+        }
+    }
+    set parseCallback(cb) {
+        this._parseCallback = cb;
+    }
+    set formatCallback(cb) {
+        this._formatCallback = cb;
+    }
+    set coercionCallback(cb) {
+        this._coercionCallback = cb;
+    }
+    set prepareMaskCallback(cb) {
+        this._prepareMaskCallback = cb;
+        if (this._isInitialized) {
+            this._applyMask();
+        }
+    }
+    get disabled() {
+        return this._disabled;
+    }
+    set disabled(value) {
+        if (this._disabled !== value) {
+            this._disabled = !!value;
+            if (this._isInitialized) {
+                this._applyDisabled();
+            }
+            this._adapter.toggleHostAttribute(TIME_PICKER_CONSTANTS.attributes.DISABLED, this._disabled);
+        }
+    }
+    get popupClasses() {
+        if (Array.isArray(this._popupClasses)) {
+            return [...this._popupClasses];
+        }
+        return this._popupClasses;
+    }
+    set popupClasses(value) {
+        if (Array.isArray(value)) {
+            this._popupClasses = [...value];
+        }
+        else {
+            this._popupClasses = [value];
+        }
+    }
+    get allowDropdown() {
+        return this._allowDropdown;
+    }
+    set allowDropdown(value) {
+        if (this._allowDropdown !== value) {
+            this._allowDropdown = value;
+            if (this._isInitialized) {
+                this._applyAllowDropdown();
+            }
+        }
+    }
+}

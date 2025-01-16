@@ -1,0 +1,206 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { isDefined } from '@tylertech/forge-core';
+/**
+ * ARIA attributes capable of being reflected to a shadow element.
+ */
+export const REFLECTIVE_ARIA_ATTRIBUTES = [
+    'aria-atomic',
+    'aria-autocomplete',
+    'aria-busy',
+    'aria-checked',
+    'aria-colcount',
+    'aria-colindex',
+    'aria-colspan',
+    'aria-current',
+    'aria-description',
+    'aria-disabled',
+    'aria-expanded',
+    'aria-haspopup',
+    'aria-hidden',
+    'aria-invalid',
+    'aria-keyshortcuts',
+    'aria-label',
+    'aria-level',
+    'aria-live',
+    'aria-modal',
+    'aria-multiline',
+    'aria-multiselectable',
+    'aria-orientation',
+    'aria-placeholder',
+    'aria-posinset',
+    'aria-pressed',
+    'aria-readonly',
+    'aria-relevant',
+    'aria-required',
+    'aria-roledescription',
+    'aria-rowcount',
+    'aria-rowindex',
+    'aria-rowspan',
+    'aria-selected',
+    'aria-setsize',
+    'aria-sort',
+    'aria-valuemax',
+    'aria-valuemin',
+    'aria-valuenow',
+    'aria-valuetext'
+];
+/**
+ * ARIA attributes typically useful for input elements.
+ */
+export const INPUT_ARIA_ATTRIBUTES = ['aria-autocomplete', 'aria-description', 'aria-invalid', 'aria-keyshortcuts', 'aria-label'];
+/**
+ * Property names relevant to input elements.
+ */
+export const INPUT_PROPERTIES = ['checked', 'disabled', 'indeterminate', 'readOnly', 'required', 'value'];
+/**
+ * Attributes for buttons when used within a form.
+ */
+export const BUTTON_FORM_ATTRIBUTES = ['name', 'value', 'formaction', 'formenctype', 'formmethod', 'formnovalidate', 'formtarget'];
+/**
+ * Gets an array of attribute names prefixed by a part name and colon.
+ * @param part The part name of a shadow element.
+ * @param attributes An array of attribute names to prefix.
+ * @returns An array of prefixed attribute name strings.
+ */
+export function getPartPrefixedAttributes(part, attributes) {
+    return attributes.map(attr => `${part}:${attr}`);
+}
+/**
+ * Observes a configured array of attributes set on a source element and forwards them to a
+ * callback function.
+ * @param from The element to forward attributes from.
+ * @param attributes Forwarded attributes.
+ * @param callback A function to handle forwarded attributes.
+ * @returns A `MutationObserver`.
+ */
+export function forwardAttributes(from, attributes, callback, genericize = true) {
+    // Set the source element's role to presentation to prevent duplicated ARIA attributes being
+    // seen by assistive technology
+    if (genericize && attributes.some(attr => attr.toLowerCase().startsWith('aria-'))) {
+        from.setAttribute('role', 'presentation');
+    }
+    // Parses an attribute and sends it to the provided callback
+    const forwardAttribute = (name) => {
+        const nameParts = name.split(':');
+        const partName = nameParts.length === 2 ? nameParts[0] : null;
+        const attrName = nameParts.length === 2 ? nameParts[1] : nameParts[0];
+        const value = from.getAttribute(name);
+        callback.call({}, attrName, value, partName);
+    };
+    // First, forward any attributes already set on the source element
+    attributes.forEach(attr => forwardAttribute(attr));
+    // Forward new and changed attributes as needed
+    const observerConfig = { attributeFilter: attributes };
+    const observerCallback = mutationList => {
+        mutationList.forEach(mutation => forwardAttribute(mutation.attributeName));
+    };
+    const observer = new MutationObserver(observerCallback);
+    observer.observe(from, observerConfig);
+    return observer;
+}
+/**
+ * Clones attributes from one element to another.
+ * @param from The source element to clone attributes from.
+ * @param to The target element to clone attributes to.
+ * @param attributes The list of attributes to clone.
+ */
+export function cloneAttributes(from, to, attributes) {
+    attributes.forEach(attr => {
+        const value = from.getAttribute(attr);
+        if (value !== null) {
+            to.setAttribute(attr, value);
+        }
+    });
+}
+/**
+ * Clones properties from one element to another.
+ * @param from The source element to clone properties from.
+ * @param to The target element to clone properties to.
+ * @param attributes The list of properties to clone.
+ */
+export function cloneProperties(from, to, properties) {
+    properties.forEach(prop => {
+        const value = from[prop];
+        if (isDefined(value)) {
+            to[prop] = value;
+        }
+    });
+}
+/**
+ * Clones the validation message of one input element to another.
+ * @param from The source input element to clone the validation message from.
+ * @param to The target input element to clone the validation message to.
+ */
+export function cloneValidationMessage(from, to) {
+    const message = from.validationMessage;
+    if (message) {
+        to.setCustomValidity(message);
+    }
+}
+/**
+ * A utility class for switching between elements.
+ */
+export class SlottedElementAdapter {
+    /**
+     * Returns the element associated with this adapter.
+     */
+    get el() {
+        return this._el;
+    }
+    /**
+     * Clones the specified attributes from one element to another.
+     *
+     * @param from - The element to clone attributes from.
+     * @param to - The element to clone attributes to.
+     * @param attributes - The names of the attributes to clone.
+     */
+    static cloneAttributes(from, to, attributes) {
+        cloneAttributes(from, to, attributes);
+    }
+    /**
+     * Clones the input specific properties from one element to another.
+     *
+     * @param from - The element to clone properties from.
+     * @param to - The element to clone properties to.
+     */
+    static cloneProperties(from, to, properties) {
+        cloneProperties(from, to, properties);
+    }
+    /**
+     * Clones the validation message from one element to another.
+     *
+     * @param from - The element to clone the validation message from.
+     * @param to - The element to clone the validation message to.
+     */
+    static cloneValidationMessage(from, to) {
+        if (Object.hasOwnProperty.call(from, 'validationMessage') && Object.hasOwnProperty.call(to, 'validationMessage')) {
+            cloneValidationMessage(from, to);
+        }
+        else {
+            console.warn('cloneValidationMessage() requires both elements to be input elements.');
+        }
+    }
+    /**
+     * Initializes the adapter with an initial element and attach callback.
+     *
+     * @param el - The element to associate with the adapter.
+     * @param attachCallback - The callback to invoke when attaching the element.
+     */
+    initialize(el, attachCallback) {
+        this._attachCallback = attachCallback;
+        this._el = el;
+    }
+    /**
+     * Replaces the attached element.
+     *
+     * @param el - The new element to attach.
+     */
+    attachElement(el) {
+        this._attachCallback(el, this._el);
+        this._el = el;
+    }
+}

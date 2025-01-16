@@ -1,0 +1,10 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./icon-button.component";
+import * as i2 from "@angular/common";
+import * as i3 from "../icon/icon.module";
+export declare class ForgeIconButtonModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeIconButtonModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeIconButtonModule, [typeof i1.IconButtonComponent], [typeof i2.CommonModule, typeof i3.ForgeIconModule], [typeof i1.IconButtonComponent, typeof i3.ForgeIconModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeIconButtonModule>;
+}

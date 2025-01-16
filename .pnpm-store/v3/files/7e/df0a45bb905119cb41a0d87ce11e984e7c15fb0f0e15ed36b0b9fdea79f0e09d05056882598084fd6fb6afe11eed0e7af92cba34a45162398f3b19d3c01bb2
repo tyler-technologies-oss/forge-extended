@@ -1,0 +1,91 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { LIST_CONSTANTS } from './list-constants';
+export class ListCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._dense = false;
+        this._indented = false;
+        this._twoLine = false;
+        this._threeLine = false;
+        this._wrap = false;
+        this._noninteractive = false;
+    }
+    initialize() {
+        if (this._selectedValue !== undefined && this._selectedValue !== null) {
+            this._adapter.setSelectedListItems(this._selectedValue);
+        }
+    }
+    get dense() {
+        return this._dense;
+    }
+    set dense(value) {
+        if (this._dense !== value) {
+            this._dense = value;
+            this._adapter.setListItemsProperty('dense', this._dense);
+            this._adapter.toggleHostAttribute(LIST_CONSTANTS.attributes.DENSE, this._dense);
+        }
+    }
+    get indented() {
+        return this._indented;
+    }
+    set indented(value) {
+        if (this._indented !== value) {
+            this._indented = value;
+            this._adapter.setListItemsProperty('indented', this._indented);
+            this._adapter.toggleHostAttribute(LIST_CONSTANTS.attributes.INDENTED, this._indented);
+        }
+    }
+    get selectedValue() {
+        return this._selectedValue;
+    }
+    set selectedValue(value) {
+        if (this._selectedValue !== value) {
+            this._selectedValue = value;
+            this._adapter.setSelectedListItems(this._selectedValue);
+        }
+    }
+    get twoLine() {
+        return this._twoLine;
+    }
+    set twoLine(value) {
+        if (this._twoLine !== value) {
+            this._twoLine = value;
+            this._adapter.setListItemsProperty('twoLine', this._twoLine);
+            this._adapter.toggleHostAttribute(LIST_CONSTANTS.attributes.TWO_LINE, this._twoLine);
+        }
+    }
+    get threeLine() {
+        return this._threeLine;
+    }
+    set threeLine(value) {
+        if (this._threeLine !== value) {
+            this._threeLine = value;
+            this._adapter.setListItemsProperty('threeLine', this._threeLine);
+            this._adapter.toggleHostAttribute(LIST_CONSTANTS.attributes.THREE_LINE, this._threeLine);
+        }
+    }
+    get wrap() {
+        return this._wrap;
+    }
+    set wrap(value) {
+        if (this._wrap !== value) {
+            this._wrap = value;
+            this._adapter.setListItemsProperty('wrap', this._wrap);
+            this._adapter.toggleHostAttribute(LIST_CONSTANTS.attributes.WRAP, this._wrap);
+        }
+    }
+    get noninteractive() {
+        return this._noninteractive;
+    }
+    set noninteractive(value) {
+        if (this._noninteractive !== value) {
+            this._noninteractive = value;
+            this._adapter.setListItemsProperty('noninteractive', this._noninteractive);
+            this._adapter.toggleHostAttribute(LIST_CONSTANTS.attributes.NONINTERACTIVE, this._noninteractive);
+        }
+    }
+}

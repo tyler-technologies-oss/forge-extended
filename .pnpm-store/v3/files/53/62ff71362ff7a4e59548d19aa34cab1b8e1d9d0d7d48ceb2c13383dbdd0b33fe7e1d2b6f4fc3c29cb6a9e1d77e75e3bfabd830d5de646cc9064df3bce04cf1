@@ -1,0 +1,30 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IButtonAreaAdapter } from './button-area-adapter';
+export interface IButtonAreaCore {
+    disabled: boolean;
+}
+export declare class ButtonAreaCore implements IButtonAreaCore {
+    private _adapter;
+    private _disabled;
+    private _clickListener;
+    private _keydownListener;
+    private _pointerdownListener;
+    private _ignoreStateLayerListener;
+    private _slotListener;
+    constructor(_adapter: IButtonAreaAdapter);
+    initialize(): void;
+    destroy(): void;
+    private _handleClick;
+    private _handleKeydown;
+    private _handlePointerdown;
+    private _handleIgnoreStateLayer;
+    private _handleSlotChange;
+    private _handleButtonDisabled;
+    private _shouldIgnoreEvent;
+    get disabled(): boolean;
+    set disabled(value: boolean);
+}

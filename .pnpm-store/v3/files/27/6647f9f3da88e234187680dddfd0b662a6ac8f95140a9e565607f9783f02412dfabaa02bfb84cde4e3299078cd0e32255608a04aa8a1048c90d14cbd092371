@@ -1,0 +1,89 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponent, IBaseComponent } from '../../core/base/base-component';
+import { ITabBarChangeEventData } from './tab-bar-constants';
+export interface ITabBarComponent extends IBaseComponent {
+    disabled: boolean;
+    activeTab: number | null | undefined;
+    vertical: boolean;
+    clustered: boolean;
+    stacked: boolean;
+    /** @deprecated This will be removed in a future version */
+    secondary: boolean;
+    inverted: boolean;
+    autoActivate: boolean;
+    scrollButtons: boolean;
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-tab-bar': ITabBarComponent;
+    }
+    interface HTMLElementEventMap {
+        'forge-tab-bar-change': CustomEvent<ITabBarChangeEventData>;
+    }
+}
+/**
+ * @tag forge-tab-bar
+ *
+ * @summary Tabs organize content across different screens and views.
+ *
+ * @description
+ * Use tabs to group content into helpful categories. Tabs are typically placed
+ * above the content they relate to. Tabs can be used to navigate between screens,
+ * or to group related content within a screen.
+ *
+ * @dependency forge-tab
+ * @dependency forge-icon-button
+ * @dependency forge-icon
+ *
+ * @property {boolean} [disabled=false] - Sets the disabled state of all child tabs.  If true, any new tabs added to the DOM will be disabled by default. This can be used instead of setting individual tab disabled properties, mixing the two methods of disabling is not supported.
+ * @property {number} [activeTab=null] - The index of the active tab.
+ * @property {boolean} [vertical=false] - Controls whether the tab bar is vertical or horizontal.
+ * @property {boolean} [clustered=false] - Controls whether the tabs stretch the full width of their container or cluster together at their minimum width.
+ * @property {boolean} [stacked=false] - Controls whether the tabs are taller to allow for slotted leading/trailing elements.
+ * @property {boolean} [secondary=false] - Deprecated. Controls whether the tabs are styled as secondary tab navigation.
+ * @property {boolean} [inverted=false] - Controls whether the tabs are rendered inverted (tab indicator at top instead of bottom).
+ * @property {boolean} [autoActivate=false] - Controls whether the tabs are automatically activated when receiving focus.
+ * @property {boolean} [scrollButtons=false] - Controls whether scroll buttons are displayed when the tabs overflow their container.
+ *
+ * @attribute {boolean} [disabled=false] - The disabled state of the tab bar.
+ * @attribute {number} [active-tab=null] - The index of the active tab.
+ * @attribute {boolean} [vertical=false] - Controls whether the tab bar is vertical or horizontal.
+ * @attribute {boolean} [clustered=false] - Controls whether the tabs stretch the full width of their container or cluster together at their minimum width.
+ * @attribute {boolean} [stacked=false] - Controls whether the tabs are taller to allow for slotted leading/trailing elements.
+ * @attribute {boolean} [secondary=false] - Deprecated. Controls whether the tabs are styled as secondary tab navigation.
+ * @attribute {boolean} [auto-activate=false] - Controls whether the tabs are automatically activated when receiving focus.
+ * @attribute {boolean} [scroll-buttons=false] - Controls whether scroll buttons are displayed when the tabs overflow their container.
+ * @attribute {string} [data-aria-label] - The ARIA label to forward to the internal tablist element.
+ *
+ * @event {CustomEvent<ITabBarChangeEventData>} forge-tab-bar-change - Dispatches when the active tab changes.
+ *
+ * @cssproperty --forge-tab-bar-justify - The `justify-content` value for the tab bar flex container.
+ * @cssproperty --forge-tab-bar-stretch - The `flex` value for the child `<forge-tab>` elements.
+ * @cssproperty --forge-tab-bar-divider-color - The color of the divider.
+ * @cssproperty --forge-tab-bar-divider-thickness - The thickness of the divider.
+ *
+ * @csspart container - The container element.
+ * @csspart scroll-container - The scroll container element.
+ */
+export declare class TabBarComponent extends BaseComponent implements ITabBarComponent {
+    static get observedAttributes(): string[];
+    private _core;
+    constructor();
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    disabled: boolean;
+    activeTab: number | null | undefined;
+    vertical: boolean;
+    clustered: boolean;
+    stacked: boolean;
+    /** @deprecated This will be removed in a future version */
+    secondary: boolean;
+    inverted: boolean;
+    autoActivate: boolean;
+    scrollButtons: boolean;
+}

@@ -1,0 +1,297 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseOverlayCore } from './base/base-overlay-core';
+import { SUPPORTS_POPOVER, OVERLAY_CONSTANTS } from './overlay-constants';
+export class OverlayCore extends BaseOverlayCore {
+    constructor(adapter) {
+        super(adapter);
+        this._noAnchor = false;
+        this._open = false;
+        this._inline = false;
+        this._placement = 'bottom';
+        this._positionStrategy = 'fixed';
+        this._offset = {};
+        this._shift = false;
+        this._hide = OVERLAY_CONSTANTS.defaults.HIDE;
+        this._flip = OVERLAY_CONSTANTS.defaults.FLIP;
+        this._fallbackPlacements = null;
+        this._persistent = false;
+        this._arrowElementOffset = 0;
+        this._lightDismissListener = this._onLightDismiss.bind(this);
+    }
+    initialize() {
+        this._adapter.tryApplyGlobalConfiguration([
+            'placement',
+            'positionStrategy',
+            'shift',
+            'hide',
+            'flip',
+            'boundaryElement',
+            'fallbackPlacements',
+            'persistent'
+        ]);
+        if (!this._noAnchor && !this._anchorElement && this._anchor) {
+            this._anchorElement = this._adapter.locateAnchorElement(this._anchor);
+        }
+        /* c8 ignore next 3 */
+        if (!SUPPORTS_POPOVER) {
+            this.inline = true;
+        }
+        if (this._adapter.hasHostAttribute(OVERLAY_CONSTANTS.attributes.OPEN)) {
+            this._applyOpen(true);
+        }
+    }
+    destroy() {
+        if (this._open) {
+            this._hideOverlay();
+        }
+    }
+    position() {
+        if (!this._open || this._noAnchor || !this._anchorElement) {
+            return;
+        }
+        this._adapter.positionElement({
+            anchorElement: this._anchorElement,
+            strategy: this._positionStrategy,
+            placement: this._placement,
+            hide: this._hide,
+            offset: this._offset,
+            shift: this._shift,
+            flip: this._flip,
+            boundary: this._boundary,
+            boundaryElement: this._boundaryElement,
+            fallbackPlacements: this._fallbackPlacements ?? undefined
+        });
+    }
+    _onLightDismiss(reason) {
+        const detail = { reason };
+        const evt = new CustomEvent(OVERLAY_CONSTANTS.events.LIGHT_DISMISS, {
+            bubbles: false,
+            cancelable: true,
+            detail
+        });
+        this._adapter.dispatchHostEvent(evt);
+        if (evt.defaultPrevented) {
+            return;
+        }
+        this._applyOpen(false);
+    }
+    _applyOpen(value) {
+        if (!this._adapter.isConnected) {
+            return;
+        }
+        this._open = value;
+        if (this._open) {
+            this._showOverlay();
+        }
+        else {
+            this._hideOverlay();
+        }
+        this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.OPEN, this._open);
+    }
+    _showOverlay() {
+        this._adapter.show();
+        if (!this._persistent) {
+            this._applyLightDismissListener();
+        }
+        if (!this._noAnchor && this._anchorElement) {
+            this.position();
+        }
+    }
+    _hideOverlay() {
+        this._adapter.tryHideDescendantOverlays();
+        this._adapter.hide();
+        this._adapter.removeLightDismissListener();
+    }
+    _applyLightDismissListener() {
+        this._adapter.addLightDismissListener(this._lightDismissListener);
+    }
+    get anchorElement() {
+        return this._anchorElement;
+    }
+    set anchorElement(value) {
+        this._anchorElement = value;
+        if (this._open) {
+            this.position();
+        }
+    }
+    get anchor() {
+        return this._anchor;
+    }
+    set anchor(value) {
+        if (this._anchor !== value) {
+            this._anchor = value;
+            if (this._adapter.isConnected) {
+                this._anchorElement = this._anchor ? this._adapter.locateAnchorElement(this._anchor) : null;
+            }
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.ANCHOR, !!this._anchor, this._anchor);
+        }
+    }
+    get noAnchor() {
+        return this._noAnchor;
+    }
+    set noAnchor(value) {
+        value = Boolean(value);
+        if (this._noAnchor !== value) {
+            this._noAnchor = value;
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.NO_ANCHOR, this._noAnchor);
+        }
+    }
+    get open() {
+        return this._open;
+    }
+    set open(value) {
+        value = Boolean(value);
+        if (this._open !== value) {
+            this._applyOpen(value);
+        }
+    }
+    get arrowElement() {
+        return this._arrowElement;
+    }
+    set arrowElement(value) {
+        this._arrowElement = value;
+        if (this._open) {
+            this.position();
+        }
+    }
+    get arrowElementOffset() {
+        return this._arrowElementOffset;
+    }
+    set arrowElementOffset(value) {
+        this._arrowElementOffset = value;
+        if (this._open) {
+            this.position();
+        }
+    }
+    get inline() {
+        return this._inline;
+    }
+    set inline(value) {
+        // We force inline mode to true when the native Popover API isn't supported
+        value = SUPPORTS_POPOVER ? Boolean(value) : true;
+        if (this._inline !== value) {
+            this._inline = value;
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.INLINE, this._inline);
+        }
+    }
+    get placement() {
+        return this._placement;
+    }
+    set placement(value) {
+        if (this._placement !== value) {
+            this._placement = value;
+            if (this._open) {
+                this.position();
+            }
+            this._adapter.setHostAttribute(OVERLAY_CONSTANTS.attributes.PLACEMENT, this._placement);
+        }
+    }
+    get positionStrategy() {
+        return this._positionStrategy;
+    }
+    set positionStrategy(value) {
+        if (this._positionStrategy !== value) {
+            this._positionStrategy = value;
+            if (this._open) {
+                this.position();
+            }
+            this._adapter.setHostAttribute(OVERLAY_CONSTANTS.attributes.POSITION_STRATEGY, this._positionStrategy);
+        }
+    }
+    get offset() {
+        return this._offset;
+    }
+    set offset(value) {
+        this._offset = value;
+        if (this._open) {
+            this.position();
+        }
+    }
+    get shift() {
+        return this._shift;
+    }
+    set shift(value) {
+        value = Boolean(value);
+        if (this._shift !== value) {
+            this._shift = value;
+            if (this._open) {
+                this.position();
+            }
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.SHIFT, this._shift);
+        }
+    }
+    get hide() {
+        return this._hide;
+    }
+    set hide(value) {
+        if (this._hide !== value) {
+            this._hide = value ?? OVERLAY_CONSTANTS.defaults.HIDE;
+            if (this._open) {
+                this.position();
+            }
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.HIDE, this._hide !== OVERLAY_CONSTANTS.defaults.HIDE, String(this._hide));
+        }
+    }
+    get persistent() {
+        return this._persistent;
+    }
+    set persistent(value) {
+        value = Boolean(value);
+        if (this._persistent !== value) {
+            this._persistent = value;
+            if (this._persistent) {
+                this._adapter.removeLightDismissListener();
+            }
+            else if (this._open) {
+                this._applyLightDismissListener();
+            }
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.PERSISTENT, this._persistent);
+        }
+    }
+    get flip() {
+        return this._flip;
+    }
+    set flip(value) {
+        if (this._flip !== value) {
+            this._flip = value ?? OVERLAY_CONSTANTS.defaults.FLIP;
+            if (this._open) {
+                this.position();
+            }
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.FLIP, this._flip !== OVERLAY_CONSTANTS.defaults.FLIP, String(this._flip));
+        }
+    }
+    get boundary() {
+        return this._boundary;
+    }
+    set boundary(value) {
+        if (this._boundary !== value) {
+            this._boundary = value;
+            if (this._open) {
+                this.position();
+            }
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.BOUNDARY, !!this._boundary, this._boundary);
+        }
+    }
+    get boundaryElement() {
+        return this._boundaryElement;
+    }
+    set boundaryElement(value) {
+        this._boundaryElement = value;
+        if (this._open) {
+            this.position();
+        }
+    }
+    get fallbackPlacements() {
+        return this._fallbackPlacements;
+    }
+    set fallbackPlacements(value) {
+        this._fallbackPlacements = value;
+        if (this._open) {
+            this.position();
+        }
+    }
+}

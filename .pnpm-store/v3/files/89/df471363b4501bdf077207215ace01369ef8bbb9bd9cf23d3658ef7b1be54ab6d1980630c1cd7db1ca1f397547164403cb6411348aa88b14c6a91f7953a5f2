@@ -1,0 +1,45 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getShadowElement } from '@tylertech/forge-core';
+import { CIRCULAR_PROGRESS_CONSTANTS } from './circular-progress-constants';
+import { BaseAdapter } from '../core/base/base-adapter';
+const indeterminateTemplate = '<svg viewBox=\"0 0 4800 4800\"><circle class=\"track-background\" pathLength=\"100\"></circle></svg><div class=\"spinner\"><div class=\"left\"><div class=\"circle\"></div></div><div class=\"right\"><div class=\"circle\"></div></div></div>';
+const determinateTemplate = '<svg viewBox=\"0 0 4800 4800\"><circle class=\"track-background\" pathLength=\"100\"></circle><circle class=\"track\" pathLength=\"100\"></circle><circle class=\"progress\" pathLength=\"100\" stroke-dashoffset=\"100\"></circle></svg>';
+import { setDefaultAria } from '../constants';
+export class CircularProgressAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this._rootElement = getShadowElement(this._component, CIRCULAR_PROGRESS_CONSTANTS.selectors.ROOT);
+    }
+    initialize() {
+        this._component[setDefaultAria]({
+            role: 'progressbar',
+            ariaValueMin: '0',
+            ariaValueMax: '1'
+        });
+    }
+    setDeterminate(value) {
+        this._tryResetTemplate();
+        this._rootElement.classList.toggle(CIRCULAR_PROGRESS_CONSTANTS.classes.INDETERMINATE, !value);
+        if (value) {
+            this._rootElement.insertAdjacentHTML('beforeend', determinateTemplate);
+            this._determinateProgressCircleElement = getShadowElement(this._component, CIRCULAR_PROGRESS_CONSTANTS.selectors.DETERMINATE_PROGRESS_CIRCLE);
+        }
+        else {
+            this._rootElement.insertAdjacentHTML('beforeend', indeterminateTemplate);
+            this._component[setDefaultAria]({ ariaValueNow: null });
+            this._determinateProgressCircleElement = undefined;
+        }
+    }
+    setProgress(value) {
+        this._component[setDefaultAria]({ ariaValueNow: `${value}` });
+        this._determinateProgressCircleElement?.setAttribute('stroke-dashoffset', `${(1 - value) * 100}`);
+    }
+    _tryResetTemplate() {
+        const elements = this._component.shadowRoot?.querySelectorAll(CIRCULAR_PROGRESS_CONSTANTS.selectors.TEMPLATES);
+        elements?.forEach(el => el.remove());
+    }
+}

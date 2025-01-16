@@ -1,0 +1,14 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const SCAFFOLD_CONSTANTS: {
+    elementName: "forge-scaffold";
+    observedAttributes: {
+        VIEWPORT: string;
+    };
+    attributes: {
+        VIEWPORT: string;
+    };
+};

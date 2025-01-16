@@ -1,0 +1,15 @@
+import{forwardRef as e,createElement as t,Component as r,createRef as n}from"react";
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */export default(s,{forceProperty:i=[],forceAttribute:o=[],forceEvent:c=[]}={forceProperty:[],forceAttribute:[],forceEvent:[]})=>{class u extends r{constructor(e){super(e),this.eventHandlers=[],this.ref=this.props.innerRef||n()}setProperty(e,t){this.ref.current[e]=t}setAttribute(e,t){if(!1===t)return this.ref.current.removeAttribute(e);this.ref.current.setAttribute(e,t.toString())}setEvent(e,t){this.eventHandlers.push([e,t]),this.ref.current.addEventListener(e,t)}update(){this.clearEventHandlers(),Object.entries(this.props).forEach(([e,t])=>{let r=!1;if(i.includes(e)&&(this.setProperty(e,t),r=!0),o.includes(e)&&(this.setAttribute(e,t),r=!0),c.includes(e)&&(this.setEvent(e,t),r=!0),!r&&"style"!==e&&"children"!==e){if("classname"===e.toLowerCase())return this.ref.current.className=t;if("string"==typeof t||"number"==typeof t||"boolean"==typeof t)return this.setProperty(e,t),void this.setAttribute(e,t);if("function"==typeof t){if(e.match(/^on[A-Z]/))return this.setEvent(e[2].toLowerCase()+e.substr(3),t);if(e.match(/^on\-[a-z]/))return this.setEvent(e.substr(3),t)}this.setProperty(e,t)}})}componentDidUpdate(){this.update()}componentDidMount(){this.update()}componentWillUnmount(){this.clearEventHandlers()}clearEventHandlers(){this.eventHandlers.forEach(([e,t])=>{this.ref.current.removeEventListener(e,t)}),this.eventHandlers=[]}render(){const{children:e,style:r}=this.props;return t(s,{ref:this.ref,style:r},e)}}return e((e,r)=>{var{children:n}=e,s=function(e,t){var r={};for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&t.indexOf(n)<0&&(r[n]=e[n]);if(null!=e&&"function"==typeof Object.getOwnPropertySymbols){var s=0;for(n=Object.getOwnPropertySymbols(e);s<n.length;s++)t.indexOf(n[s])<0&&Object.prototype.propertyIsEnumerable.call(e,n[s])&&(r[n[s]]=e[n[s]])}return r}(e,["children"]);return t(u,Object.assign({innerRef:r},s),n)})};

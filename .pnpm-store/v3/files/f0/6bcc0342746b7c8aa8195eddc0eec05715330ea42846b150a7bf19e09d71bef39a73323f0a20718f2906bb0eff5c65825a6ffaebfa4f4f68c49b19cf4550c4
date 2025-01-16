@@ -1,0 +1,47 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { Theme } from '../../constants';
+export declare const BUTTON_TOGGLE_GROUP_CONSTANTS: {
+    elementName: "forge-button-toggle-group";
+    observedAttributes: {
+        VALUE: string;
+        MULTIPLE: string;
+        MANDATORY: string;
+        VERTICAL: string;
+        STRETCH: string;
+        DISABLED: string;
+        REQUIRED: string;
+        READONLY: string;
+        DENSE: string;
+        NO_OUTLINE: string;
+        THEME: string;
+    };
+    attributes: {
+        VALUE: string;
+        MULTIPLE: string;
+        MANDATORY: string;
+        VERTICAL: string;
+        STRETCH: string;
+        DISABLED: string;
+        REQUIRED: string;
+        READONLY: string;
+        DENSE: string;
+        NO_OUTLINE: string;
+        THEME: string;
+    };
+    classes: {
+        VERTICAL: string;
+        STRETCH: string;
+    };
+    selectors: {
+        ROOT: string;
+    };
+    events: {
+        CHANGE: string;
+    };
+};
+export type IButtonToggleGroupChangeEventData<T = any> = T;
+export type ButtonToggleGroupTheme = Theme;

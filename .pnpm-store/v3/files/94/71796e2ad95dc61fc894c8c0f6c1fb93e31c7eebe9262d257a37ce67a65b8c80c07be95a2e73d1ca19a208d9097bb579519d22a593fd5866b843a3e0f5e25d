@@ -1,0 +1,36 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ButtonTheme } from '../button/button-constants';
+import { ISplitButtonAdapter } from './split-button-adapter';
+import { SplitButtonVariant } from './split-button-constants';
+export interface ISplitButtonCore {
+    variant: SplitButtonVariant;
+    theme: ButtonTheme;
+    disabled: boolean;
+    dense: boolean;
+    pill: boolean;
+}
+export declare class SplitButtonCore implements ISplitButtonCore {
+    private readonly _adapter;
+    private _variant;
+    private _theme;
+    private _disabled;
+    private _dense;
+    private _pill;
+    constructor(_adapter: ISplitButtonAdapter);
+    initialize(): void;
+    destroy(): void;
+    get variant(): SplitButtonVariant;
+    set variant(value: SplitButtonVariant);
+    get theme(): ButtonTheme;
+    set theme(value: ButtonTheme);
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    get dense(): boolean;
+    set dense(value: boolean);
+    get pill(): boolean;
+    set pill(value: boolean);
+}

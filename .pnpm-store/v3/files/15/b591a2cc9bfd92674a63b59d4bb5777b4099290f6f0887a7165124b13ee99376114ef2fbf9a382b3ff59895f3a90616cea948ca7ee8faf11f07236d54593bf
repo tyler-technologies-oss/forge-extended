@@ -1,0 +1,55 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IOverlayAwareAdapter, OverlayAwareAdapter } from '../overlay/base/overlay-aware-adapter';
+import { IPopoverComponent } from './popover';
+export interface IPopoverAdapter extends IOverlayAwareAdapter<IPopoverComponent> {
+    readonly hostElement: IPopoverComponent;
+    destroy(): void;
+    initializeAnchorElement(): void;
+    cleanupAnchorElement(): void;
+    tryLocateAnchorElement(id: string | null): void;
+    addAnchorListener(type: string, listener: EventListener): void;
+    removeAnchorListener(type: string, listener: EventListener): void;
+    addSurfaceListener(type: string, listener: EventListener): void;
+    removeSurfaceListener(type: string, listener: EventListener): void;
+    hide(): Promise<void>;
+    setOverlayOpen(newState: boolean): void;
+    toggleArrow(value: boolean): void;
+    isChildElement(element: HTMLElement): boolean;
+    tryAutofocus(): void;
+    hasFocus(): boolean;
+    captureFocusedElement(): HTMLElement | null;
+}
+export declare class PopoverAdapter extends OverlayAwareAdapter<IPopoverComponent> implements IPopoverAdapter {
+    private _surfaceElement;
+    private _arrowElement;
+    constructor(component: IPopoverComponent);
+    destroy(): void;
+    protected _initializeOverlayElement(): void;
+    tryLocateAnchorElement(id: string | null): void;
+    initializeAnchorElement(): void;
+    cleanupAnchorElement(): void;
+    addAnchorListener(type: string, listener: EventListener): void;
+    removeAnchorListener(type: string, listener: EventListener): void;
+    addSurfaceListener(type: string, listener: EventListener): void;
+    removeSurfaceListener(type: string, listener: EventListener): void;
+    setOverlayOpen(newState: boolean): void;
+    hide(): Promise<void>;
+    toggleArrow(value: boolean): void;
+    isChildElement(element: HTMLElement): boolean;
+    tryAutofocus(): void;
+    hasFocus(): boolean;
+    captureFocusedElement(): HTMLElement | null;
+    /**
+     * Attempts to find the anchor element by first checking for an element with the provided id, and if not found,
+     * then implicitly assumes the previous element sibling is the anchor.
+     *
+     * @param [id] - The id of the anchor element to locate.
+     * @returns The anchor element if found, otherwise null.
+     */
+    private _tryFindAnchorElement;
+    private _updateAnchorExpandedState;
+}

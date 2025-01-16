@@ -1,0 +1,35 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseDatePickerComponent, IBaseDatePickerComponent } from './base/base-date-picker';
+import { DatePickerCore } from './date-picker-core';
+export interface IDatePickerComponent extends IBaseDatePickerComponent<Date | string | null> {
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-date-picker': IDatePickerComponent;
+    }
+    interface HTMLElementEventMap {
+        'forge-date-picker-change': CustomEvent<Date | string | null>;
+        'forge-date-picker-open': CustomEvent<void>;
+        'forge-date-picker-close': CustomEvent<void>;
+        'forge-date-picker-input': CustomEvent<string>;
+    }
+}
+/**
+ * @tag forge-date-picker
+ *
+ * @attribute {string} [value] - The value of the date picker.
+ *
+ * @event {CustomEvent<Date | string | null>} forge-date-picker-change - Emits when the value of the date picker changes.
+ * @event {CustomEvent<void>} forge-date-picker-open - Emits when the date picker opens.
+ * @event {CustomEvent<void>} forge-date-picker-close - Emits when the date picker closes.
+ * @event {CustomEvent<string>} forge-date-picker-input - Emits when the user inputs a value into the date picker.
+ */
+export declare class DatePickerComponent extends BaseDatePickerComponent<Date | string | undefined, Date, DatePickerCore> implements IDatePickerComponent {
+    static get observedAttributes(): string[];
+    constructor();
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+}

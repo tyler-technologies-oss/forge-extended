@@ -1,0 +1,46 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use './core/styles/theme';
+@use './core/styles/animation';
+@use './core/styles/border';
+@use './core/styles/elevation';
+@use './core/styles/shape';
+@use './core/styles/spacing';
+
+// Color emphasis tokens
+:root {
+  @include theme.color-emphasis-properties;
+}
+
+// Animation
+:root {
+  @include animation.properties;
+}
+
+// Border
+:root {
+  @include border.properties;
+}
+
+// Elevation
+:root {
+  @include elevation.properties;
+}
+
+// z-index layering
+:root {
+  @include elevation.z-index-properties;
+}
+
+// Shape
+:root {
+  @include shape.properties;
+}
+
+// Spacing
+:root {
+  @include spacing.properties;
+}

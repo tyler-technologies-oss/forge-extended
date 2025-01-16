@@ -1,0 +1,10 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./radio-group.component";
+import * as i2 from "@angular/common";
+import * as i3 from "../radio/radio-proxy.module";
+export declare class ForgeRadioGroupModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeRadioGroupModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeRadioGroupModule, [typeof i1.RadioGroupComponent], [typeof i2.CommonModule, typeof i3.ForgeRadioProxyModule], [typeof i1.RadioGroupComponent, typeof i3.ForgeRadioProxyModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeRadioGroupModule>;
+}

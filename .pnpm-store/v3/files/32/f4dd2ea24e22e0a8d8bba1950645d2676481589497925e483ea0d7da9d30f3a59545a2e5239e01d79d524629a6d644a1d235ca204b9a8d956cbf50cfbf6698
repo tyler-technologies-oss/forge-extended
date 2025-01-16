@@ -1,0 +1,79 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core/base/base-adapter';
+import { ISliderComponent } from '../slider';
+export interface ISliderState {
+    startFraction: number;
+    endFraction: number;
+    tickCount: number;
+}
+export interface ISliderAdapter extends IBaseAdapter {
+    addInputListener(type: keyof HTMLElementEventMap, listener: EventListener): void;
+    update(state: ISliderState): void;
+    updateLabels(labelStart: string, labelEnd: string): void;
+    updateHandleLayering(): void;
+    tryHoverStartHandle(coords: {
+        x: number;
+        y: number;
+    }): void;
+    tryHoverEndHandle(coords: {
+        x: number;
+        y: number;
+    }): void;
+    tryDetectOverlap(): void;
+    leaveHandleContainer(): void;
+    syncInputValues(valueStart: number, valueEnd: number): void;
+    setRange(value: boolean): void;
+    setTickmarks(value: boolean): void;
+    setStep(step: number): void;
+    setMin(value: number): void;
+    setMax(value: number): void;
+    setDisabled(value: boolean): void;
+    setReadonly(value: boolean): void;
+    toggleLabels(value: boolean): void;
+    setStartAriaLabel(value: string | null): void;
+    setEndAriaLabel(value: string | null): void;
+}
+export declare class SliderAdapter extends BaseAdapter<ISliderComponent> implements ISliderAdapter {
+    private readonly _rootElement;
+    private readonly _trackElement;
+    private readonly _handleContainerElement;
+    private readonly _endInputElement;
+    private readonly _endHandleElement;
+    private readonly _endHandleThumbElement;
+    private _endLabelContentElement;
+    private _startInputElement;
+    private _startHandleElement;
+    private _startHandleThumbElement;
+    private _startLabelContentElement;
+    constructor(component: ISliderComponent);
+    addInputListener(type: keyof HTMLElementEventMap, listener: EventListener): void;
+    update({ startFraction, endFraction, tickCount }: ISliderState): void;
+    updateLabels(labelStart: string, labelEnd: string): void;
+    updateHandleLayering(): void;
+    tryHoverStartHandle(coords: {
+        x: number;
+        y: number;
+    }): void;
+    tryHoverEndHandle(coords: {
+        x: number;
+        y: number;
+    }): void;
+    tryDetectOverlap(): void;
+    leaveHandleContainer(): void;
+    syncInputValues(valueStart: number, valueEnd: number): void;
+    setRange(value: boolean): void;
+    setTickmarks(value: boolean): void;
+    setStep(step: number): void;
+    setMin(value: number): void;
+    setMax(value: number): void;
+    setDisabled(value: boolean): void;
+    setReadonly(value: boolean): void;
+    toggleLabels(value: boolean): void;
+    setStartAriaLabel(value: string | null): void;
+    setEndAriaLabel(value: string | null): void;
+    private _getInputs;
+}

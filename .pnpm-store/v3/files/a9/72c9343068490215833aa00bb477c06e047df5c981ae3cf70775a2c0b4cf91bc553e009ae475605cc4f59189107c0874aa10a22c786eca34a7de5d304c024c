@@ -1,0 +1,213 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { isDefined, removeElement } from '@tylertech/forge-core';
+import { BaseAdapter } from '../../core/base/base-adapter';
+import { ListDropdown } from '../../list-dropdown';
+import { OPTION_CONSTANTS } from '../option';
+import { OPTION_GROUP_CONSTANTS } from '../option-group';
+import { isOptionGroupObject } from './select-utils';
+import { POPOVER_CONSTANTS } from '../../popover';
+export class BaseSelectAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+    }
+    get popupElement() {
+        return this._listDropdown?.dropdownElement;
+    }
+    getOptions() {
+        const optionGroupElements = Array.from(this._component.querySelectorAll(OPTION_GROUP_CONSTANTS.elementName));
+        if (optionGroupElements.length) {
+            return optionGroupElements.map(optionGroupElement => {
+                const optionElements = Array.from(optionGroupElement.querySelectorAll(OPTION_CONSTANTS.elementName));
+                const options = this._createOptionsFromElements(optionElements);
+                return {
+                    text: optionGroupElement.label,
+                    builder: optionGroupElement.builder,
+                    value: optionGroupElement.value,
+                    options
+                };
+            });
+        }
+        else {
+            const optionElements = Array.from(this._component.querySelectorAll(OPTION_CONSTANTS.elementName));
+            return this._createOptionsFromElements(optionElements);
+        }
+    }
+    _createOptionsFromElements(optionElements) {
+        return optionElements.map(o => {
+            let optionClass = o.hasAttribute(OPTION_CONSTANTS.attributes.OPTION_CLASS)
+                ? o.getAttribute(OPTION_CONSTANTS.attributes.OPTION_CLASS)
+                : o.optionClass;
+            if (typeof optionClass === 'string') {
+                optionClass = optionClass.split(' ');
+            }
+            return {
+                // eslint-disable-next-line @typescript-eslint/no-extra-parens
+                label: o.hasAttribute(OPTION_CONSTANTS.attributes.LABEL)
+                    ? o.getAttribute(OPTION_CONSTANTS.attributes.LABEL)
+                    : isDefined(o.label)
+                        ? o.label
+                        : o.innerText,
+                secondaryLabel: o.hasAttribute(OPTION_CONSTANTS.attributes.SECONDARY_LABEL)
+                    ? o.getAttribute(OPTION_CONSTANTS.attributes.SECONDARY_LABEL)
+                    : isDefined(o.secondaryLabel)
+                        ? o.secondaryLabel
+                        : undefined,
+                value: o.hasAttribute(OPTION_CONSTANTS.attributes.VALUE) ? o.getAttribute(OPTION_CONSTANTS.attributes.VALUE) : o.value,
+                disabled: o.hasAttribute(OPTION_CONSTANTS.attributes.DISABLED),
+                divider: o.hasAttribute(OPTION_CONSTANTS.attributes.DIVIDER),
+                optionClass,
+                leadingIcon: o.hasAttribute(OPTION_CONSTANTS.attributes.LEADING_ICON)
+                    ? o.getAttribute(OPTION_CONSTANTS.attributes.LEADING_ICON)
+                    : o.leadingIcon,
+                leadingIconClass: o.hasAttribute(OPTION_CONSTANTS.attributes.LEADING_ICON_CLASS)
+                    ? o.getAttribute(OPTION_CONSTANTS.attributes.LEADING_ICON_CLASS)
+                    : o.leadingIconClass,
+                leadingIconType: o.hasAttribute(OPTION_CONSTANTS.attributes.LEADING_ICON_TYPE)
+                    ? o.getAttribute(OPTION_CONSTANTS.attributes.LEADING_ICON_TYPE)
+                    : o.leadingIconType,
+                leadingIconComponentProps: o.leadingIconComponentProps,
+                trailingIcon: o.hasAttribute(OPTION_CONSTANTS.attributes.TRAILING_ICON)
+                    ? o.getAttribute(OPTION_CONSTANTS.attributes.TRAILING_ICON)
+                    : o.trailingIcon,
+                trailingIconClass: o.hasAttribute(OPTION_CONSTANTS.attributes.TRAILING_ICON_CLASS)
+                    ? o.getAttribute(OPTION_CONSTANTS.attributes.TRAILING_ICON_CLASS)
+                    : o.trailingIconClass,
+                trailingIconType: o.hasAttribute(OPTION_CONSTANTS.attributes.TRAILING_ICON_TYPE)
+                    ? o.getAttribute(OPTION_CONSTANTS.attributes.TRAILING_ICON_TYPE)
+                    : o.trailingIconType,
+                trailingIconComponentProps: o.trailingIconComponentProps,
+                leadingBuilder: o.leadingBuilder,
+                trailingBuilder: o.trailingBuilder
+            };
+        });
+    }
+    open(config) {
+        this._listDropdown = new ListDropdown(this._targetElement, config);
+        this._listDropdown.open();
+        if (this._component.id) {
+            const listElement = this._listDropdown.dropdownElement?.querySelector('forge-list');
+            listElement?.setAttribute('aria-labelledby', this._component.id);
+        }
+    }
+    async close() {
+        if (this._listDropdown) {
+            await this._listDropdown.close();
+            this.destroyListDropdown();
+        }
+    }
+    destroyListDropdown() {
+        this._listDropdown?.destroy();
+        this._listDropdown = undefined;
+    }
+    setDismissListener(listener) {
+        if (!this._listDropdown || !this._listDropdown.dropdownElement) {
+            return;
+        }
+        this._listDropdown.dropdownElement.addEventListener(POPOVER_CONSTANTS.events.TOGGLE, listener);
+    }
+    toggleOptionMultiple(index, isSelected) {
+        this._listDropdown?.toggleOptionMultiple(index, isSelected);
+    }
+    getActiveOptionIndex() {
+        return this._listDropdown?.getActiveOptionIndex() ?? -1;
+    }
+    activateSelectedOption() {
+        this._listDropdown?.activateSelectedOption();
+    }
+    activateFirstOption() {
+        this._listDropdown?.activateFirstOption();
+    }
+    highlightActiveOption(index) {
+        this._listDropdown?.activateOption(index);
+    }
+    patchSelectedValues(selectedValues) {
+        this._listDropdown?.setSelectedValues(selectedValues);
+    }
+    setOptionsListener(listener) {
+        // Watch for option value property changes
+        const optionValueChangeListener = evt => {
+            evt.stopPropagation();
+            listener(this.getOptions());
+        };
+        this._component.addEventListener(OPTION_CONSTANTS.events.VALUE_CHANGE, optionValueChangeListener);
+        // Watch for DOM changes
+        const observer = new MutationObserver(() => listener(this.getOptions()));
+        observer.observe(this._component, { childList: true, subtree: true });
+        return () => {
+            this._component.removeEventListener(OPTION_CONSTANTS.events.VALUE_CHANGE, optionValueChangeListener);
+            observer.disconnect();
+        };
+    }
+    setOptions(options, clear = true) {
+        if (clear) {
+            this._clearOptions();
+        }
+        for (const opt of options) {
+            if (isOptionGroupObject(opt)) {
+                const optionGroupElement = this._createOptionGroupElement(opt);
+                for (const option of opt.options) {
+                    const optionElement = this._createOptionElement(option);
+                    optionGroupElement.appendChild(optionElement);
+                }
+                this._component.appendChild(optionGroupElement);
+            }
+            else {
+                const optionElement = this._createOptionElement(opt);
+                this._component.appendChild(optionElement);
+            }
+        }
+    }
+    appendDropdownOptions(options) {
+        this._listDropdown?.appendOptions(options);
+    }
+    setDropdownOptions(options) {
+        this._listDropdown?.setOptions(options);
+    }
+    scrollSelectedOptionIntoView() {
+        this._listDropdown?.scrollSelectedOptionIntoView();
+    }
+    isFocusWithinPopup(target) {
+        if (!this._listDropdown || !this._listDropdown.dropdownElement) {
+            return false;
+        }
+        return this._listDropdown.dropdownElement.contains(target);
+    }
+    queueDropdownPositionUpdate() {
+        if (!this.popupElement) {
+            return;
+        }
+        // We need to wait for the next animation frame to ensure that the layout has been updated
+        window.requestAnimationFrame(() => {
+            const dropdownEl = this.popupElement;
+            dropdownEl?.position();
+        });
+    }
+    _clearOptions() {
+        // First we remove all option group elements
+        const existingOptionGroupElements = Array.from(this._component.querySelectorAll(OPTION_GROUP_CONSTANTS.elementName));
+        existingOptionGroupElements.forEach((optGroup) => removeElement(optGroup));
+        // Then find all top-level option elements that aren't inside of a group, and ensure that those are removed as well
+        const existingOptionElements = Array.from(this._component.querySelectorAll(OPTION_CONSTANTS.elementName));
+        existingOptionElements.forEach((o) => removeElement(o));
+    }
+    _createOptionGroupElement(group) {
+        const optionGroupElement = document.createElement('forge-option-group');
+        Object.assign(optionGroupElement, group);
+        return optionGroupElement;
+    }
+    _createOptionElement(option) {
+        const optionElement = document.createElement('forge-option');
+        Object.assign(optionElement, option);
+        optionElement.textContent = option.label;
+        if (option.elementAttributes) {
+            option.elementAttributes.forEach((value, key) => {
+                optionElement.setAttribute(key, value);
+            });
+        }
+        return optionElement;
+    }
+}

@@ -1,0 +1,37 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import IMask, { InputMask, Masked } from 'imask';
+export interface ITimeInputMaskOptions {
+    showMaskFormat?: boolean;
+    use24HourTime?: boolean;
+    showSeconds?: boolean;
+    onChange?: (value: string) => void;
+    prepareCallback?: (value: string, masked: Masked<string>, flags: IMask.AppendFlags, maskInstance: InputMask<IMask.AnyMaskedOptions>) => string;
+}
+export declare const TWELVE_HOUR_TIME_MASK = "0`0{:}`0`0 `AM";
+export declare const TWELVE_HOUR_TIME_MASK_WITH_SECONDS = "0`0{:}`0`0{:}`0`0 `AM";
+export declare const TWENTY_FOUR_HOUR_TIME_MASK = "0`0{:}`0`0";
+export declare const TWENTY_FOUR_HOUR_TIME_MASK_WITH_SECONDS = "0`0{:}`0`0{:}`0`0";
+export declare class TimeInputMask {
+    private _element;
+    private _options;
+    private _mask;
+    private _maskOptions;
+    private _acceptListener;
+    constructor(_element: HTMLInputElement, _options?: ITimeInputMaskOptions);
+    destroy(): void;
+    resolve(value: string): string;
+    update(): void;
+    private _onAccept;
+    private _createOptions;
+    private _prepare;
+    private _prepareDefault;
+    private _getMaskFormat;
+    get maskedValue(): string;
+    set maskedValue(value: string);
+    get unmaskedValue(): string;
+    set unmaskedValue(value: string);
+}

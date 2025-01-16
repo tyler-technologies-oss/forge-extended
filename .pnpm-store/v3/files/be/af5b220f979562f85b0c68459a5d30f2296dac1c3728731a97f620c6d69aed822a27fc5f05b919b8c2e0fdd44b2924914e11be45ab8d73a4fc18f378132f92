@@ -1,0 +1,39 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getLightElement, toggleAttribute } from '@tylertech/forge-core';
+import { forwardAttributes } from '../../core/utils/reflect-utils';
+import { BaseAdapter } from '../../core/base/base-adapter';
+import { MENU_CONSTANTS } from '../../menu';
+import { ICON_BUTTON_CONSTANTS } from '../../icon-button/icon-button-constants';
+import { APP_BAR_HELP_BUTTON_CONSTANTS } from './app-bar-help-button-constants';
+import { ICON_CONSTANTS } from '../../icon';
+export class AppBarHelpButtonAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+    }
+    initialize() {
+        this._menuElement = getLightElement(this._component, MENU_CONSTANTS.elementName);
+        this._iconButtonElement = getLightElement(this._component, ICON_BUTTON_CONSTANTS.elementName);
+        this._iconElement = getLightElement(this._component, ICON_CONSTANTS.elementName);
+        const originalAriaLabelledBy = this._iconButtonElement.getAttribute('aria-labelledby');
+        this._forwardObserver = forwardAttributes(this._component, APP_BAR_HELP_BUTTON_CONSTANTS.forwardedAttributes, (name, value) => {
+            if (name === 'aria-labelledby' && !value) {
+                value = originalAriaLabelledBy;
+            }
+            toggleAttribute(this._iconButtonElement, !!value, name, value ?? undefined);
+        });
+    }
+    destroy() {
+        this._forwardObserver?.disconnect();
+        this._forwardObserver = undefined;
+    }
+    setMenuOptions(options) {
+        this._menuElement.options = options;
+    }
+    setIcon(icon) {
+        this._iconElement.name = icon;
+    }
+}

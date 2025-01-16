@@ -1,0 +1,9 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./switch.component";
+import * as i2 from "@angular/common";
+export declare class ForgeSwitchProxyModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeSwitchProxyModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeSwitchProxyModule, [typeof i1.SwitchComponent], [typeof i2.CommonModule], [typeof i1.SwitchComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeSwitchProxyModule>;
+}

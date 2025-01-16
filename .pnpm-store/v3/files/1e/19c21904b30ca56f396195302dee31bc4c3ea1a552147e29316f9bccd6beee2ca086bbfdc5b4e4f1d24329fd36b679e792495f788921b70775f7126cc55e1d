@@ -1,0 +1,15 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const MODAL_DRAWER_CONSTANTS: {
+    elementName: "forge-modal-drawer";
+    classes: {
+        DISPLAY_NONE: string;
+        SCRIM_CLOSED: string;
+    };
+    events: {
+        CLOSE: string;
+    };
+};

@@ -1,0 +1,11 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export class BaseOverlayCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+    }
+    initialize() { }
+}

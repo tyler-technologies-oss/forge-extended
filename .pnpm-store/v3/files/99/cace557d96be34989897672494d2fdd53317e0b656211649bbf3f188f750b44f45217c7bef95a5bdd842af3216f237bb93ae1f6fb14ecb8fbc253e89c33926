@@ -1,0 +1,73 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { customElement, attachShadowTemplate, coreProperty, coerceBoolean } from '@tylertech/forge-core';
+import { ButtonAreaAdapter } from './button-area-adapter';
+import { ButtonAreaCore } from './button-area-core';
+import { BUTTON_AREA_CONSTANTS } from './button-area-constants';
+import { FocusIndicatorComponent } from '../focus-indicator';
+import { StateLayerComponent } from '../state-layer';
+import { BaseComponent } from '../core/base/base-component';
+const template = '<template><div class=\"forge-button-area\" id=\"root\" part=\"root\"><div class=\"button\" id=\"button\" part=\"button\"><slot name=\"button\"></slot></div><slot id=\"content\"></slot><forge-state-layer target=\"root\" exportparts=\"surface:state-layer\"></forge-state-layer><forge-focus-indicator target=\"button\" part=\"focus-indicator\" inward></forge-focus-indicator></div></template>';
+const styles = ':host{display:block;position:relative}:host .forge-button-area{cursor:var(--_button-area-cursor)}:host([hidden]){display:none}:host([disabled]) .forge-button-area{cursor:var(--_button-area-disabled-cursor)}.forge-button-area{--_button-area-primary-color:var(--forge-button-area-primary-color, var(--forge-theme-primary, #3f51b5));--_button-area-cursor:var(--forge-button-area-cursor, pointer);--_button-area-disabled-cursor:var(--forge-button-area-disabled-cursor, not-allowed);--_button-area-focus-indicator-color:var(--forge-button-area-focus-indicator-color, var(--forge-theme-primary, #3f51b5));--_button-area-focus-indicator-offset:var(--forge-button-area-focus-indicator-offset, 4px)}.forge-button-area{position:relative;overflow:hidden}.forge-button-area .button{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:fixed;width:1px;outline:0;-webkit-appearance:none;-moz-appearance:none}forge-focus-indicator{z-index:1;--forge-focus-indicator-color:var(--_button-area-focus-indicator-color);--forge-focus-indicator-outward-offset:var(--_button-area-focus-indicator-offset)}forge-state-layer{--forge-state-layer-color:var(--_button-area-primary-color);border-radius:inherit}';
+/**
+ * @tag forge-button-area
+ *
+ * @summary Button areas are used to create a clickable area that group related information and actions about a single subject.
+ *
+ * @description
+ * The button area component wraps any arbitrary content with a `<button>` element to enable accessible clickable interfaces including nested controls and other complex content.
+ *
+ * @property {boolean} [disabled=false] - Sets whether the button area and slotted button are disabled. Setting this on one will also set it on the other.
+ *
+ * @attribute {boolean} [disabled=false] - Sets whether the button area and slotted button are disabled. Setting this on one will also set it on the other.
+ *
+ * @event {PointerEvent} click - The button area emits a native HTML click event whenever it or the slotted button is clicked. Add the listener to the `<forge-button-area>` element to receive all events. Note: Set `data-forge-ignore` on any nested buttons or other interactive elements to prevent them from activating the button area.
+ *
+ * @csspart root - The root container element.
+ * @csspart button - The visually hidden slot for the `<button>` element.
+ * @csspart focus-indicator - The focus-indicator indicator element.
+ * @csspart state-layer - The state-layer surface element.
+ *
+ * @cssproperty --forge-button-area-cursor - The cursor.
+ * @cssproperty --forge-button-area-disabled-cursor - The cursor when in the disabled state.
+ *
+ * @slot - Places content within the default (unnamed) slot (main body of the component).
+ * @slot button - Places content within a visually hidden slot. Always place a `<button>` element in this slot.
+ */
+let ButtonAreaComponent = class ButtonAreaComponent extends BaseComponent {
+    static get observedAttributes() {
+        return [BUTTON_AREA_CONSTANTS.attributes.DISABLED];
+    }
+    constructor() {
+        super();
+        attachShadowTemplate(this, template, styles);
+        this._core = new ButtonAreaCore(new ButtonAreaAdapter(this));
+    }
+    connectedCallback() {
+        this._core.initialize();
+    }
+    disconnectedCallback() {
+        this._core.destroy();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case BUTTON_AREA_CONSTANTS.attributes.DISABLED:
+                this.disabled = coerceBoolean(newValue);
+                break;
+        }
+    }
+};
+__decorate([
+    coreProperty()
+], ButtonAreaComponent.prototype, "disabled", void 0);
+ButtonAreaComponent = __decorate([
+    customElement({
+        name: BUTTON_AREA_CONSTANTS.elementName,
+        dependencies: [FocusIndicatorComponent, StateLayerComponent]
+    })
+], ButtonAreaComponent);
+export { ButtonAreaComponent };

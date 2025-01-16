@@ -1,0 +1,306 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { attachShadowTemplate, coerceBoolean, coerceNumber, customElement, coreProperty, toggleAttribute } from '@tylertech/forge-core';
+import { internals } from '../constants';
+import { BaseFormComponent } from '../core/base/base-form-component';
+import { FocusIndicatorComponent } from '../focus-indicator/focus-indicator';
+import { StateLayerComponent } from '../state-layer/state-layer';
+import { SliderAdapter } from './slider-adapter';
+import { SLIDER_CONSTANTS } from './slider-constants';
+import { SliderCore } from './slider-core';
+const template = '<template><div part=\"root\" class=\"forge-slider\"><input type=\"range\" class=\"end\" id=\"end\" min=\"0\" max=\"100\" step=\"1\" aria-valuetext=\"0\"><div class=\"track\" part=\"track\"></div><div class=\"handle-container-padded\"><div class=\"handle-container-block\"><div class=\"handle-container\"><div class=\"handle end\" part=\"handle-end\"><forge-state-layer exportparts=\"surface:state-layer\" target=\"end\"></forge-state-layer><forge-focus-indicator part=\"focus-indicator\" target=\"end\"></forge-focus-indicator><div class=\"handle-thumb\" part=\"handle-end-thumb\"></div><div class=\"handle-label\" part=\"handle-end-label\"><span class=\"handle-label-content\" part=\"handle-end-label-content\"></span></div></div></div></div></div></div></template>';
+const styles = ':host{display:inline-flex;vertical-align:middle;min-inline-size:100%}:host([hidden]){display:none}.forge-slider{--_slider-start-fraction:0;--_slider-end-fraction:0;--_slider-tick-count:100;--_slider-track-height:var(--forge-slider-track-height, 4px);--_slider-active-track-color:var(--forge-slider-active-track-color, var(--forge-theme-primary, #3f51b5));--_slider-active-track-height:var(--forge-slider-active-track-height, var(--_slider-track-height));--_slider-active-track-shape:var(--forge-slider-active-track-shape, calc(var(--forge-shape-full, 9999px) * var(--forge-shape-factor, 1)));--_slider-disabled-active-track-color:var(--forge-slider-disabled-active-track-color, var(--forge-theme-surface-container-high, #9e9e9e));--_slider-disabled-active-track-opacity:var(--forge-slider-disabled-active-track-opacity, 0.38);--_slider-disabled-handle-color:var(--forge-slider-disabled-handle-color, var(--forge-theme-surface-container-high, #9e9e9e));--_slider-disabled-inactive-track-color:var(--forge-slider-disabled-inactive-track-color, var(--forge-theme-surface-container-high, #9e9e9e));--_slider-disabled-inactive-track-opacity:var(--forge-slider-disabled-inactive-track-opacity, 0.12);--_slider-focus-handle-color:var(--forge-slider-focus-handle-color, var(--forge-theme-primary, #3f51b5));--_slider-handle-color:var(--forge-slider-handle-color, var(--forge-theme-primary, #3f51b5));--_slider-handle-height:var(--forge-slider-handle-height, 20px);--_slider-handle-shape:var(--forge-slider-handle-shape, calc(var(--forge-shape-round, 50%) * var(--forge-shape-factor, 1)));--_slider-handle-width:var(--forge-slider-handle-width, 20px);--_slider-hover-handle-color:var(--forge-slider-hover-handle-color, var(--forge-theme-primary, #3f51b5));--_slider-inactive-track-color:var(--forge-slider-inactive-track-color, var(--forge-theme-primary-container, #d1d5ed));--_slider-inactive-track-height:var(--forge-slider-inactive-track-height, var(--_slider-track-height));--_slider-inactive-track-shape:var(--forge-slider-inactive-track-shape, calc(var(--forge-shape-full, 9999px) * var(--forge-shape-factor, 1)));--_slider-label-container-shape:var(--forge-slider-label-container-shape, calc(var(--forge-shape-full, 9999px) * var(--forge-shape-factor, 1)));--_slider-label-container-color:var(--forge-slider-label-container-color, var(--forge-theme-primary, #3f51b5));--_slider-label-container-height:var(--forge-slider-label-container-height, 28px);--_slider-label-text-color:var(--forge-slider-label-text-color, var(--forge-theme-on-primary, #ffffff));--_slider-pressed-handle-color:var(--forge-slider-pressed-handle-color, var(--forge-theme-primary, #3f51b5));--_slider-state-layer-size:var(--forge-slider-state-layer-size, 40px);--_slider-with-overlap-handle-outline-color:var(--forge-slider-with-overlap-handle-outline-color, var(--forge-theme-on-primary, #ffffff));--_slider-with-overlap-handle-outline-width:var(--forge-slider-with-overlap-handle-outline-width, 1px);--_slider-with-tick-marks-active-container-color:var(--forge-slider-with-tick-marks-active-container-color, var(--forge-theme-on-primary, #ffffff));--_slider-with-tick-marks-container-size:var(--forge-slider-with-tick-marks-container-size, 2px);--_slider-with-tick-marks-disabled-active-container-color:var(--forge-slider-with-tick-marks-disabled-active-container-color, var(--forge-theme-on-surface-container-high, #000000));--_slider-with-tick-marks-disabled-inactive-container-color:var(--forge-slider-with-tick-marks-disabled-inactive-container-color, var(--forge-theme-on-surface-container-high, #000000));--_slider-with-tick-marks-inactive-container-color:var(--forge-slider-with-tick-marks-inactive-container-color, var(--forge-theme-primary, #3f51b5))}.forge-slider{flex:1;display:flex;align-items:center;position:relative;block-size:var(--_slider-state-layer-size);pointer-events:none;touch-action:none}.forge-slider.range :host-context([dir=rtl]) input.start{clip-path:inset(0 0 0 calc(100% - (var(--_slider-state-layer-size)/ 2 + (100% - var(--_slider-state-layer-size)) * (var(--_slider-start-fraction) + (var(--_slider-end-fraction) - var(--_slider-start-fraction))/ 2))))}.forge-slider.range :host([dir=rtl]) input.start{clip-path:inset(0 0 0 calc(100% - (var(--_slider-state-layer-size)/ 2 + (100% - var(--_slider-state-layer-size)) * (var(--_slider-start-fraction) + (var(--_slider-end-fraction) - var(--_slider-start-fraction))/ 2))))}.forge-slider.range input.start:dir(rtl){clip-path:inset(0 0 0 calc(100% - (var(--_slider-state-layer-size)/ 2 + (100% - var(--_slider-state-layer-size)) * (var(--_slider-start-fraction) + (var(--_slider-end-fraction) - var(--_slider-start-fraction))/ 2))))}.forge-slider.range input.start{clip-path:inset(0 calc(100% - (var(--_slider-state-layer-size)/ 2 + (100% - var(--_slider-state-layer-size)) * (var(--_slider-start-fraction) + (var(--_slider-end-fraction) - var(--_slider-start-fraction))/ 2))) 0 0)}.forge-slider.range input.end{clip-path:inset(0 0 0 calc(var(--_slider-state-layer-size)/ 2 + (100% - var(--_slider-state-layer-size)) * (var(--_slider-start-fraction) + (var(--_slider-end-fraction) - var(--_slider-start-fraction))/ 2)))}.forge-slider.range :host-context([dir=rtl]) input.end{clip-path:inset(0 calc(var(--_slider-state-layer-size)/ 2 + (100% - var(--_slider-state-layer-size)) * (var(--_slider-start-fraction) + (var(--_slider-end-fraction) - var(--_slider-start-fraction))/ 2)) 0 0)}.forge-slider.range :host([dir=rtl]) input.end{clip-path:inset(0 calc(var(--_slider-state-layer-size)/ 2 + (100% - var(--_slider-state-layer-size)) * (var(--_slider-start-fraction) + (var(--_slider-end-fraction) - var(--_slider-start-fraction))/ 2)) 0 0)}.forge-slider.range input.end:dir(rtl){clip-path:inset(0 calc(var(--_slider-state-layer-size)/ 2 + (100% - var(--_slider-state-layer-size)) * (var(--_slider-start-fraction) + (var(--_slider-end-fraction) - var(--_slider-start-fraction))/ 2)) 0 0)}.track{position:absolute;inset:0;display:flex;align-items:center}.track::after,.track::before{content:\"\";position:absolute;inset-inline-start:calc(var(--_slider-state-layer-size)/ 2 - var(--_slider-with-tick-marks-container-size));inset-inline-end:calc(var(--_slider-state-layer-size)/ 2 - var(--_slider-with-tick-marks-container-size));background-size:calc((100% - var(--_slider-with-tick-marks-container-size) * 2)/ var(--_slider-tick-count)) 100%}.track::before{block-size:var(--_slider-inactive-track-height);border-radius:var(--_slider-inactive-track-shape);background-color:var(--_slider-inactive-track-color)}.track::after{block-size:var(--_slider-active-track-height);border-radius:var(--_slider-active-track-shape);clip-path:inset(0 calc(calc(var(--_slider-with-tick-marks-container-size) * min((1 - var(--_slider-end-fraction)) * 1000000000,1)) + calc(100% - var(--_slider-with-tick-marks-container-size) * 2) * (1 - var(--_slider-end-fraction))) 0 calc(calc(var(--_slider-with-tick-marks-container-size) * min(var(--_slider-start-fraction) * 1000000000,1)) + calc(100% - var(--_slider-with-tick-marks-container-size) * 2) * var(--_slider-start-fraction)));background-color:var(--_slider-active-track-color)}.track.tickmarks::before{background-image:radial-gradient(circle at var(--_slider-with-tick-marks-container-size) center,var(--_slider-with-tick-marks-inactive-container-color) 0,var(--_slider-with-tick-marks-inactive-container-color) calc(var(--_slider-with-tick-marks-container-size)/ 2),transparent calc(var(--_slider-with-tick-marks-container-size)/ 2))}.track.tickmarks::after{background-image:radial-gradient(circle at var(--_slider-with-tick-marks-container-size) center,var(--_slider-with-tick-marks-active-container-color) 0,var(--_slider-with-tick-marks-active-container-color) calc(var(--_slider-with-tick-marks-container-size)/ 2),transparent calc(var(--_slider-with-tick-marks-container-size)/ 2))}.handle-container-block,.handle-container-padded{position:relative;block-size:100%;inline-size:100%}.handle-container-padded{padding-inline:calc(var(--_slider-state-layer-size)/ 2)}.handle-container{position:absolute;inset-block-start:0;inset-block-end:0;inset-inline-start:calc(100% * var(--_slider-start-fraction));inline-size:calc(100% * (var(--_slider-end-fraction) - var(--_slider-start-fraction)))}.handle{position:absolute;block-size:var(--_slider-state-layer-size);inline-size:var(--_slider-state-layer-size);border-radius:var(--_slider-handle-shape);display:grid;place-items:center}.handle.start{inset-inline-start:calc(0px - var(--_slider-state-layer-size)/ 2)}.handle.end{inset-inline-end:calc(0px - var(--_slider-state-layer-size)/ 2)}.handle-thumb{box-shadow:0 2px 1px -1px rgba(0,0,0,.2),0 1px 1px 0 rgba(0,0,0,.14),0 1px 3px 0 rgba(0,0,0,.12);position:absolute;height:var(--_slider-handle-height);width:var(--_slider-handle-width);border-radius:var(--_slider-handle-shape);background:var(--_slider-handle-color)}.handle-label{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-label1-font-family, var(--forge-typography-font-family, \"Roboto\", sans-serif));font-size:var(--forge-typography-label1-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-label-font-size-scale, .75)));line-height:var(--forge-typography-label1-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-label-line-height-scale, 1.25)));letter-spacing:var(--forge-typography-label1-letter-spacing, .0357142857em);text-transform:var(--forge-typography-label1-text-transform,inherit);text-decoration:var(--forge-typography-label1-text-decoration,inherit);position:absolute;box-sizing:border-box;display:grid;padding:4px;place-items:center;border-radius:var(--_slider-label-container-shape);color:var(--_slider-label-text-color);font-weight:500;white-space:nowrap;inset-block-end:100%;min-inline-size:var(--_slider-label-container-height);min-block-size:var(--_slider-label-container-height);background:var(--_slider-label-container-color);transition:transform var(--forge-animation-duration-short2, 100ms) var(--forge-animation-easing-standard, cubic-bezier(.2, 0, 0, 1));transform-origin:center bottom;transform:scale(0)}.handle-label::after,.handle-label::before{content:\"\";position:absolute;display:block;background:inherit}.handle-label::before{inline-size:calc(var(--_slider-label-container-height)/ 2);block-size:calc(var(--_slider-label-container-height)/ 2);bottom:calc(var(--_slider-label-container-height)/ -10);transform:rotate(45deg)}.handle-label::after{inset:0;border-radius:inherit}.handle-label-content{z-index:1}.handle-container.hover .handle-thumb{background:var(--_slider-hover-handle-color)}:host(:not([disabled])) input.end:active~.handle-container-padded .handle.end>.handle-thumb,:host(:not([disabled])) input.start:active~.handle-container-padded .handle.start>.handle-thumb{background:var(--_slider-pressed-handle-color)}:host([disabled]) .handle-thumb{box-shadow:0 0 0 0 rgba(0,0,0,.2),0 0 0 0 rgba(0,0,0,.14),0 0 0 0 rgba(0,0,0,.12);background:var(--_slider-disabled-handle-color)}:host([disabled]) .handle-label{background:var(--_slider-disabled-handle-color)}:host([disabled]) .track::before{opacity:calc(1 / var(--_slider-disabled-active-track-opacity) * var(--_slider-disabled-inactive-track-opacity));background-color:var(--_slider-disabled-inactive-track-color)}:host([disabled]) .track::after{background-color:var(--_slider-disabled-active-track-color)}:host([disabled]) .track.tickmarks::before{background-image:radial-gradient(circle at var(--_slider-with-tick-marks-container-size) center,var(--_slider-with-tick-marks-disabled-inactive-container-color) 0,var(--_slider-with-tick-marks-disabled-inactive-container-color) calc(var(--_slider-with-tick-marks-container-size)/ 2),transparent calc(var(--_slider-with-tick-marks-container-size)/ 2))}:host([disabled]) .track.tickmarks::after{background-image:radial-gradient(circle at var(--_slider-with-tick-marks-container-size) center,var(--_slider-with-tick-marks-disabled-active-container-color) 0,var(--_slider-with-tick-marks-disabled-active-container-color) calc(var(--_slider-with-tick-marks-container-size)/ 2),transparent calc(var(--_slider-with-tick-marks-container-size)/ 2))}:host([disabled]) input[type=range]{cursor:not-allowed}:host-context([dir=rtl]) .track::after{clip-path:inset(0 calc(calc(var(--_slider-with-tick-marks-container-size) * min(var(--_slider-start-fraction) * 1000000000,1)) + calc(100% - var(--_slider-with-tick-marks-container-size) * 2) * var(--_slider-start-fraction)) 0 calc(calc(var(--_slider-with-tick-marks-container-size) * min((1 - var(--_slider-end-fraction)) * 1000000000,1)) + calc(100% - var(--_slider-with-tick-marks-container-size) * 2) * (1 - var(--_slider-end-fraction))))}:host([dir=rtl]) .track::after{clip-path:inset(0 calc(calc(var(--_slider-with-tick-marks-container-size) * min(var(--_slider-start-fraction) * 1000000000,1)) + calc(100% - var(--_slider-with-tick-marks-container-size) * 2) * var(--_slider-start-fraction)) 0 calc(calc(var(--_slider-with-tick-marks-container-size) * min((1 - var(--_slider-end-fraction)) * 1000000000,1)) + calc(100% - var(--_slider-with-tick-marks-container-size) * 2) * (1 - var(--_slider-end-fraction))))}.track:dir(rtl)::after{clip-path:inset(0 calc(calc(var(--_slider-with-tick-marks-container-size) * min(var(--_slider-start-fraction) * 1000000000,1)) + calc(100% - var(--_slider-with-tick-marks-container-size) * 2) * var(--_slider-start-fraction)) 0 calc(calc(var(--_slider-with-tick-marks-container-size) * min((1 - var(--_slider-end-fraction)) * 1000000000,1)) + calc(100% - var(--_slider-with-tick-marks-container-size) * 2) * (1 - var(--_slider-end-fraction))))}input.end:focus~.handle-container-padded .handle.end>.handle-thumb,input.start:focus~.handle-container-padded .handle.start>.handle-thumb{background:var(--_slider-focus-handle-color)}.on-top.overlapping .handle-label,.on-top.overlapping .handle-label::before,.on-top.overlapping .handle-thumb{border:var(--_slider-with-overlap-handle-outline-color) solid var(--_slider-with-overlap-handle-outline-width)}.handle-container.hover .handle-label,:host(:focus-within) .handle-label,:where(:has(input:active)) .handle-label{transform:scale(1)}input[type=range]{opacity:0;-webkit-tap-highlight-color:transparent;position:absolute;box-sizing:border-box;height:100%;width:100%;margin:0;background:0 0;cursor:pointer;pointer-events:auto;appearance:none}input[type=range]:focus{outline:0}input[type=range]::-webkit-slider-runnable-track{-webkit-appearance:none}input[type=range]::-moz-range-track{appearance:none}input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;block-size:var(--_slider-state-layer-size);inline-size:var(--_slider-state-layer-size);transform:scaleX(0);opacity:0;z-index:2}input[type=range]::-moz-range-thumb{appearance:none;block-size:var(--_slider-state-layer-size);inline-size:var(--_slider-state-layer-size);transform:scaleX(0);opacity:0;z-index:2}.on-top{z-index:1}@media (prefers-reduced-motion){.handle-label{transition-duration:0}}forge-focus-indicator{--forge-focus-indicator-shape:50%;--forge-focus-indicator-outward-offset:0px}forge-state-layer{--forge-state-layer-color:var(--_slider-handle-color)}';
+/**
+ * @tag forge-slider
+ *
+ * @summary Sliders allow users to make selections from a range of values.
+ *
+ * @description Use sliders to enable users to select a value from a continuous or discrete range of values.
+ *
+ * @dependency forge-focus-indicator
+ * @dependency forge-state-layer
+ *
+ * @property {number} [value=50] - The current value of the slider.
+ * @property {number} [valueStart=33] - The current start value of the slider.
+ * @property {number} [valueEnd=67] - The current end value of the slider.
+ * @property {string} label - The label text for the slider handle.
+ * @property {string} labelStart - The label text for the start slider handle.
+ * @property {string} labelEnd - The label text for the end slider handle.
+ * @property {SliderLabelBuilder} labelBuilder - A function that returns a label for the slider handle.
+ * @property {number} [min=0] - The minimum value of the slider.
+ * @property {number} [max=100] - The maximum value of the slider.
+ * @property {number} [step=1] - The step value of the slider.
+ * @property {boolean} [range=false] - Controls range mode.
+ * @property {boolean} [tickmarks=false] - Controls if tickmarks are visible.
+ * @property {boolean} [labeled=true] - Controls if labels are visible.
+ * @property {boolean} [disabled=false] - Controls if the slider is disabled.
+ * @property {boolean} [readonly=false] - Controls if the slider is readonly.
+ * @property {string} name - The form control name.
+ * @property {string} nameStart - The form control name for the start handle in range mode.
+ * @property {string} nameEnd - The form control name for the end handle in range mode.
+ *
+ * @attribute {string} data-aria-label - Sets the `aria-label` attribute on the slider handle.
+ * @attribute {string} data-aria-label-start - Sets the `aria-label` attribute on the start handle in range mode.
+ * @attribute {string} data-aria-label-end - Sets the `aria-label` attribute on the end handle in range mode.
+ * @attribute {number} [value=50] - Sets the current value of the slider.
+ * @attribute {number} [value-start=33] - Sets the current start value of the slider in range mode.
+ * @attribute {number} [value-end=67] - Sets the current end value of the slider in range mode.
+ * @attribute {string} label - Sets the label text for the slider handle.
+ * @attribute {string} label-start - Sets the label text for the start slider handle in range mode.
+ * @attribute {string} label-end - Sets the label text for the end slider handle in range mode.
+ * @attribute {number} [min=0] - Sets the minimum value of the slider.
+ * @attribute {number} [max=100] - Sets the maximum value of the slider.
+ * @attribute {number} [step=1] - Sets the step value of the slider.
+ * @attribute {boolean} [range=false] - Controls range mode.
+ * @attribute {boolean} [tickmarks=false] - Controls if tickmarks are visible.
+ * @attribute {boolean} [labeled=true] - Controls if labels are visible.
+ * @attribute {boolean} [disabled=false] - Controls if the slider is disabled.
+ * @attribute {boolean} [readonly=false] - Controls if the slider is readonly.
+ * @attribute {string} name - Controls the form control name.
+ * @attribute {string} name-start - Controls the form control name for the start handle in range mode.
+ * @attribute {string} name-end - Controls the form control name for the end handle in range mode.
+ *
+ * @event {CustomEvent<ISliderChangeEventData>} forge-slider-input - Dispatches when the slider value changes.
+ * @event {CustomEvent<ISliderChangeEventData>} forge-slider-change - Dispatches when the slider value changes and the value has been committed.
+ * @event {CustomEvent<ISliderRangeChangeEventData>} forge-slider-range-input - Dispatches when the slider range values change.
+ * @event {CustomEvent<ISliderRangeChangeEventData>} forge-slider-range-change - Dispatches when the slider range values change and the values have been committed.
+ *
+ * @cssproperty --forge-theme-primary - The primary color of the slider.
+ * @cssproperty --forge-theme-on-primary - The color of elements placed on top of the primary color (the label text for example).
+ * @cssproperty --forge-slider-track-height - The height of the track.
+ * @cssproperty --forge-slider-active-track-color - The color of the active track.
+ * @cssproperty --forge-slider-active-track-height - The height of the active track.
+ * @cssproperty --forge-slider-active-track-shape - The shape of the active track.
+ * @cssproperty --forge-slider-disabled-active-track-color - The color of the active track when disabled.
+ * @cssproperty --forge-slider-disabled-active-track-opacity - The opacity of the active track when disabled.
+ * @cssproperty --forge-slider-disabled-handle-color - The color of the slider handle when disabled.
+ * @cssproperty --forge-slider-disabled-inactive-track-color - The color of the inactive track when disabled.
+ * @cssproperty --forge-slider-disabled-inactive-track-opacity - The opacity of the inactive track when disabled.
+ * @cssproperty --forge-slider-focus-handle-color - The color of the slider handle when focused.
+ * @cssproperty --forge-slider-handle-color - The color of the slider handle.
+ * @cssproperty --forge-slider-handle-height - The height of the slider handle.
+ * @cssproperty --forge-slider-handle-width - The width of the slider handle.
+ * @cssproperty --forge-slider-handle-shape - The shape of the slider handle.
+ * @cssproperty --forge-slider-hover-handle-color - The color of the slider handle when hovered.
+ * @cssproperty --forge-slider-inactive-track-color - The color of the inactive track.
+ * @cssproperty --forge-slider-inactive-track-height - The height of the inactive track.
+ * @cssproperty --forge-slider-inactive-track-shape - The shape of the inactive track.
+ * @cssproperty --forge-slider-label-container-shape - The shape of the label container.
+ * @cssproperty --forge-slider-label-container-color - The color of the label container.
+ * @cssproperty --forge-slider-label-container-height - The height of the label container.
+ * @cssproperty --forge-slider-label-text-color - The color of the label text.
+ * @cssproperty --forge-slider-pressed-handle-color - The color of the slider handle when pressed.
+ * @cssproperty --forge-slider-state-layer-size - The size of the state layer.
+ * @cssproperty --forge-slider-with-overlap-handle-outline-color - The color of the slider handle outline when overlapping.
+ * @cssproperty --forge-slider-with-overlap-handle-outline-width - The width of the slider handle outline when overlapping.
+ * @cssproperty --forge-slider-with-tick-marks-active-container-color - The color of the active tick mark container when tick marks are visible.
+ * @cssproperty --forge-slider-with-tick-marks-container-size - The size of the tick mark container when tick marks are visible.
+ * @cssproperty --forge-slider-with-tick-marks-disabled-active-container-color - The color of the active tick mark container when tick marks are visible and disabled.
+ * @cssproperty --forge-slider-with-tick-marks-disabled-inactive-container-color - The color of the inactive tick mark container when tick marks are visible and disabled.
+ * @cssproperty --forge-slider-with-tick-marks-inactive-container-color - The color of the inactive tick mark container when tick marks are visible.
+ *
+ * @csspart slider - Styles the slider container element.
+ * @csspart track - Styles the track element.
+ * @csspart handle-end - Styles the end handle element.
+ * @csspart handle-end-thumb - Styles the end handle thumb element.
+ * @csspart handle-end-label - Styles the end handle label element.
+ * @csspart handle-end-label-content - Styles the end handle label content element.
+ * @csspart handle-start - Styles the start handle element.
+ * @csspart handle-start-thumb - Styles the start handle thumb element.
+ * @csspart handle-start-label - Styles the start handle label element.
+ * @csspart handle-start-label-content - Styles the start handle label content element.
+ */
+let SliderComponent = class SliderComponent extends BaseFormComponent {
+    static get observedAttributes() {
+        return [
+            SLIDER_CONSTANTS.attributes.ARIA_LABEL,
+            SLIDER_CONSTANTS.attributes.ARIA_LABEL_START,
+            SLIDER_CONSTANTS.attributes.ARIA_LABEL_END,
+            SLIDER_CONSTANTS.attributes.VALUE,
+            SLIDER_CONSTANTS.attributes.VALUE_START,
+            SLIDER_CONSTANTS.attributes.VALUE_END,
+            SLIDER_CONSTANTS.attributes.LABEL,
+            SLIDER_CONSTANTS.attributes.LABEL_START,
+            SLIDER_CONSTANTS.attributes.LABEL_END,
+            SLIDER_CONSTANTS.attributes.MAX,
+            SLIDER_CONSTANTS.attributes.MIN,
+            SLIDER_CONSTANTS.attributes.STEP,
+            SLIDER_CONSTANTS.attributes.TICKMARKS,
+            SLIDER_CONSTANTS.attributes.LABELED,
+            SLIDER_CONSTANTS.attributes.RANGE,
+            SLIDER_CONSTANTS.attributes.DISABLED,
+            SLIDER_CONSTANTS.attributes.READONLY
+        ];
+    }
+    get form() {
+        return this[internals].form;
+    }
+    get labels() {
+        return this[internals].labels;
+    }
+    get name() {
+        return this.getAttribute('name') ?? '';
+    }
+    set name(value) {
+        toggleAttribute(this, !!value, 'name', value ?? '');
+    }
+    get nameStart() {
+        return this.getAttribute('name-start') ?? this.name;
+    }
+    set nameStart(value) {
+        toggleAttribute(this, !!value, 'name-start', value ?? '');
+    }
+    get nameEnd() {
+        return this.getAttribute('name-end') ?? this.nameStart;
+    }
+    set nameEnd(value) {
+        toggleAttribute(this, !!value, 'name-end', value ?? '');
+    }
+    constructor() {
+        super();
+        attachShadowTemplate(this, template, styles);
+        this[internals] = this.attachInternals();
+        this._core = new SliderCore(new SliderAdapter(this));
+    }
+    connectedCallback() {
+        this._core.initialize();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case SLIDER_CONSTANTS.attributes.ARIA_LABEL:
+                this._core.ariaLabel = newValue;
+                break;
+            case SLIDER_CONSTANTS.attributes.ARIA_LABEL_START:
+                this._core.ariaLabelStart = newValue;
+                break;
+            case SLIDER_CONSTANTS.attributes.ARIA_LABEL_END:
+                this._core.ariaLabelEnd = newValue;
+                break;
+            case SLIDER_CONSTANTS.attributes.VALUE:
+                this.value = coerceNumber(newValue);
+                break;
+            case SLIDER_CONSTANTS.attributes.VALUE_START:
+                this.valueStart = coerceNumber(newValue);
+                break;
+            case SLIDER_CONSTANTS.attributes.VALUE_END:
+                this.valueEnd = coerceNumber(newValue);
+                break;
+            case SLIDER_CONSTANTS.attributes.LABEL:
+                this.label = newValue;
+                break;
+            case SLIDER_CONSTANTS.attributes.LABEL_START:
+                this.labelStart = newValue;
+                break;
+            case SLIDER_CONSTANTS.attributes.LABEL_END:
+                this.labelEnd = newValue;
+                break;
+            case SLIDER_CONSTANTS.attributes.MIN:
+                this.min = coerceNumber(newValue);
+                break;
+            case SLIDER_CONSTANTS.attributes.MAX:
+                this.max = coerceNumber(newValue);
+                break;
+            case SLIDER_CONSTANTS.attributes.STEP:
+                this.step = coerceNumber(newValue);
+                break;
+            case SLIDER_CONSTANTS.attributes.TICKMARKS:
+                this.tickmarks = coerceBoolean(newValue);
+                break;
+            case SLIDER_CONSTANTS.attributes.LABELED:
+                this.labeled = coerceBoolean(newValue);
+                break;
+            case SLIDER_CONSTANTS.attributes.RANGE:
+                this.range = coerceBoolean(newValue);
+                break;
+            case SLIDER_CONSTANTS.attributes.DISABLED:
+                this.disabled = coerceBoolean(newValue);
+                break;
+            case SLIDER_CONSTANTS.attributes.READONLY:
+                this.readonly = coerceBoolean(newValue);
+                break;
+        }
+    }
+    formResetCallback() {
+        if (this._core.range) {
+            const valueStart = this.getAttribute('value-start');
+            this.valueStart = valueStart !== null ? Number(valueStart) : SLIDER_CONSTANTS.numbers.DEFAULT_START_VALUE;
+            const valueEnd = this.getAttribute('value-end');
+            this.valueEnd = valueEnd !== null ? Number(valueEnd) : SLIDER_CONSTANTS.numbers.DEFAULT_END_VALUE;
+            return;
+        }
+        const value = this.getAttribute('value');
+        this.value = value !== null ? Number(value) : SLIDER_CONSTANTS.numbers.DEFAULT_VALUE;
+    }
+    formStateRestoreCallback(state) {
+        if (state && state[0] instanceof FormData) {
+            const values = Array.from(state[0]);
+            const [[, valueStart], [, valueEnd]] = values;
+            this.valueStart = Number(valueStart);
+            this.valueEnd = Number(valueEnd);
+            this.range = true;
+            return;
+        }
+        this.value = Number(state);
+        this.range = false;
+    }
+    formDisabledCallback(isDisabled) {
+        this.disabled = isDisabled;
+    }
+};
+SliderComponent.formAssociated = true;
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "value", void 0);
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "valueStart", void 0);
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "valueEnd", void 0);
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "label", void 0);
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "labelStart", void 0);
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "labelEnd", void 0);
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "labelBuilder", void 0);
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "min", void 0);
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "max", void 0);
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "step", void 0);
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "tickmarks", void 0);
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "labeled", void 0);
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "range", void 0);
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "disabled", void 0);
+__decorate([
+    coreProperty()
+], SliderComponent.prototype, "readonly", void 0);
+SliderComponent = __decorate([
+    customElement({
+        name: SLIDER_CONSTANTS.elementName,
+        dependencies: [FocusIndicatorComponent, StateLayerComponent]
+    })
+], SliderComponent);
+export { SliderComponent };

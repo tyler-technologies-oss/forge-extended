@@ -1,0 +1,146 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { attachShadowTemplate, coerceBoolean, customElement, ensureChild, coreProperty, isDefined } from '@tylertech/forge-core';
+import { tylIconArrowRight } from '@tylertech/tyler-icons/standard';
+import { IconRegistry } from '../icon';
+import { ListComponent } from '../list';
+import { ListDropdownAware } from '../list-dropdown/list-dropdown-aware';
+import { PopoverComponent } from '../popover';
+import { MenuAdapter } from './menu-adapter';
+import { MENU_CONSTANTS } from './menu-constants';
+import { MenuCore } from './menu-core';
+const template = '<template><slot></slot></template>';
+const styles = ':host{display:inline-flex}:host([hidden]){display:none}';
+/**
+ * @tag forge-menu
+ *
+ * @dependency forge-popover
+ * @dependency forge-list
+ */
+let MenuComponent = class MenuComponent extends ListDropdownAware {
+    static get observedAttributes() {
+        return [
+            MENU_CONSTANTS.attributes.OPEN,
+            MENU_CONSTANTS.attributes.PLACEMENT,
+            MENU_CONSTANTS.attributes.SELECTED_INDEX,
+            MENU_CONSTANTS.attributes.SELECTED_VALUE,
+            MENU_CONSTANTS.attributes.DENSE,
+            MENU_CONSTANTS.attributes.ICON_CLASS,
+            MENU_CONSTANTS.attributes.PERSIST_SELECTION,
+            MENU_CONSTANTS.attributes.MODE,
+            MENU_CONSTANTS.attributes.SYNC_POPUP_WIDTH,
+            MENU_CONSTANTS.attributes.POPUP_CLASSES,
+            MENU_CONSTANTS.attributes.OPTION_LIMIT,
+            MENU_CONSTANTS.attributes.OBSERVE_SCROLL,
+            MENU_CONSTANTS.attributes.OBSERVE_SCROLL_THRESHOLD
+        ];
+    }
+    constructor() {
+        super();
+        IconRegistry.define(tylIconArrowRight);
+        this._core = new MenuCore(new MenuAdapter(this));
+        attachShadowTemplate(this, template, styles);
+    }
+    connectedCallback() {
+        if (this.querySelector(MENU_CONSTANTS.selectors.TOGGLE)) {
+            this._core.initialize();
+        }
+        else {
+            ensureChild(this, MENU_CONSTANTS.selectors.TOGGLE).then(() => this._core.initialize());
+        }
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        super.attributeChangedCallback(name, oldValue, newValue);
+        switch (name) {
+            case MENU_CONSTANTS.attributes.OPEN:
+                this._core.open = isDefined(newValue);
+                break;
+            case MENU_CONSTANTS.attributes.PLACEMENT:
+                this._core.placement = newValue;
+                break;
+            case MENU_CONSTANTS.attributes.SELECTED_INDEX:
+                this._core.selectedIndex = Number(newValue);
+                break;
+            case MENU_CONSTANTS.attributes.SELECTED_VALUE:
+                this._core.selectedValue = newValue;
+                break;
+            case MENU_CONSTANTS.attributes.DENSE:
+                this._core.dense = coerceBoolean(newValue);
+                break;
+            case MENU_CONSTANTS.attributes.ICON_CLASS:
+                this._core.iconClass = newValue;
+                break;
+            case MENU_CONSTANTS.attributes.PERSIST_SELECTION:
+                this.persistSelection = coerceBoolean(newValue);
+                break;
+            case MENU_CONSTANTS.attributes.MODE:
+                this.mode = newValue;
+                break;
+        }
+    }
+    disconnectedCallback() {
+        this._core.destroy();
+    }
+    /**
+     * Force propagates the key event from another element to this component.
+     */
+    propagateKeyEvent(evt) {
+        this._core.onKeydown(evt);
+    }
+    /**
+     * Activates the first option in the menu when open.
+     */
+    activateFirstOption() {
+        this._core.activateFirstOption();
+    }
+};
+__decorate([
+    coreProperty()
+], MenuComponent.prototype, "open", void 0);
+__decorate([
+    coreProperty()
+], MenuComponent.prototype, "options", void 0);
+__decorate([
+    coreProperty()
+], MenuComponent.prototype, "selectedIndex", void 0);
+__decorate([
+    coreProperty()
+], MenuComponent.prototype, "selectedValue", void 0);
+__decorate([
+    coreProperty()
+], MenuComponent.prototype, "placement", void 0);
+__decorate([
+    coreProperty()
+], MenuComponent.prototype, "fallbackPlacements", void 0);
+__decorate([
+    coreProperty()
+], MenuComponent.prototype, "dense", void 0);
+__decorate([
+    coreProperty()
+], MenuComponent.prototype, "iconClass", void 0);
+__decorate([
+    coreProperty()
+], MenuComponent.prototype, "persistSelection", void 0);
+__decorate([
+    coreProperty()
+], MenuComponent.prototype, "mode", void 0);
+__decorate([
+    coreProperty()
+], MenuComponent.prototype, "popupOffset", void 0);
+__decorate([
+    coreProperty()
+], MenuComponent.prototype, "optionBuilder", void 0);
+__decorate([
+    coreProperty({ set: false })
+], MenuComponent.prototype, "popupElement", void 0);
+MenuComponent = __decorate([
+    customElement({
+        name: MENU_CONSTANTS.elementName,
+        dependencies: [PopoverComponent, ListComponent]
+    })
+], MenuComponent);
+export { MenuComponent };

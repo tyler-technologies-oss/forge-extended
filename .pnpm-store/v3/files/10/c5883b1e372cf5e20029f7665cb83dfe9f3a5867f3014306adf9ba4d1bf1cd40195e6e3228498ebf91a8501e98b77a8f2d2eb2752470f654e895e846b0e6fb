@@ -1,0 +1,10 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use './utils/mixins-core' as *;
+
+body {
+  @include body-base;
+}

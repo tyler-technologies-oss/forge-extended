@@ -1,0 +1,30 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../../core/base/base-adapter';
+import { IAppBarNotificationButtonComponent } from './app-bar-notification-button';
+export interface IAppBarNotificationButtonAdapter extends IBaseAdapter {
+    initialize(): void;
+    destroy(): void;
+    setIcon(icon: string): void;
+    setCount(value: string | number | null | undefined): void;
+    setBadgeType(dot: boolean): void;
+    setBadgeTheme(theme: string): void;
+    setBadgeVisible(isVisible: boolean): void;
+}
+export declare class AppBarNotificationButtonAdapter extends BaseAdapter<IAppBarNotificationButtonComponent> implements IAppBarNotificationButtonAdapter {
+    private _iconButtonElement;
+    private _badgeElement;
+    private _iconElement;
+    private _forwardObserver?;
+    constructor(component: IAppBarNotificationButtonComponent);
+    setIcon(icon: string): void;
+    initialize(): void;
+    destroy(): void;
+    setCount(value: number | string): void;
+    setBadgeType(dot: boolean): void;
+    setBadgeTheme(theme: string): void;
+    setBadgeVisible(isVisible: boolean): void;
+}

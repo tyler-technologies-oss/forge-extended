@@ -1,0 +1,186 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ListDropdownFooterBuilder, ListDropdownHeaderBuilder } from '../list-dropdown';
+import { IListDropdownAwareCore, ListDropdownAwareCore } from '../list-dropdown/list-dropdown-aware-core';
+import { IAutocompleteAdapter } from './autocomplete-adapter';
+import { AutocompleteFilterCallback, AutocompleteMode, AutocompleteOptionBuilder, AutocompleteSelectedTextBuilder, IAutocompleteForceFilterOptions, IAutocompleteOption, IAutocompleteOptionGroup } from './autocomplete-constants';
+export interface IAutocompleteCore extends IListDropdownAwareCore {
+    mode: AutocompleteMode;
+    multiple: boolean;
+    value: string | string[] | IAutocompleteOption | IAutocompleteOption[] | null | undefined;
+    debounce: number;
+    filterOnFocus: boolean;
+    filterFocusFirst: boolean;
+    allowUnmatched: boolean;
+    popupTarget: string;
+    filterText: string;
+    optionBuilder: AutocompleteOptionBuilder | null | undefined;
+    filter: AutocompleteFilterCallback | null | undefined;
+    selectedTextBuilder: AutocompleteSelectedTextBuilder;
+    isInitialized: boolean;
+    open: boolean;
+    matchKey: string | null | undefined;
+    appendOptions(options: IAutocompleteOption[] | IAutocompleteOptionGroup[]): void;
+    beforeValueChange: (value: any) => boolean | Promise<boolean>;
+    forceFilter(opts: IAutocompleteForceFilterOptions): void;
+}
+export declare class AutocompleteCore extends ListDropdownAwareCore implements IAutocompleteCore {
+    private _adapter;
+    private _isInitialized;
+    private _isDropdownOpen;
+    private _mode;
+    private _multiple;
+    private _debounce;
+    private _allowUnmatched;
+    private _popupTarget;
+    private _filterOnFocus;
+    private _filterFocusFirst;
+    private _optionBuilder?;
+    private _filter?;
+    private _selectedTextBuilder;
+    private _options;
+    private _filterText;
+    private _selectedOptions;
+    private _values;
+    private _pendingFilterPromises;
+    private _identifier;
+    private _matchKey?;
+    private _filterFn;
+    private _clickListener;
+    private _focusListener;
+    private _blurListener;
+    private _inputListener;
+    private _keydownListener;
+    private _dropdownIconClickListener;
+    private _dropdownIconMouseDownListener;
+    private _clearButtonListener;
+    private _dropdownScrollEndListener;
+    private _dismissListener;
+    private _activeChangeListener;
+    private _targetWidthCallback;
+    private _beforeValueChange;
+    private _valueChanging;
+    constructor(_adapter: IAutocompleteAdapter);
+    initialize(): Promise<void>;
+    destroy(): void;
+    forceFilter({ preserveValue }: IAutocompleteForceFilterOptions): Promise<void>;
+    private _attachListeners;
+    private _detachListeners;
+    private _setInputListener;
+    private _setFilterCallback;
+    private _initializeAccessibility;
+    private get _flatOptions();
+    private _onClick;
+    private _onDropdownIconMouseDown;
+    private _onDropdownIconClick;
+    private _onClear;
+    private _onDropdownScrollEnd;
+    private _onFocus;
+    private _onBlur;
+    private _applyBlur;
+    private _onInput;
+    private _debounceFilter;
+    private _onKeydown;
+    private _executeFilter;
+    private _onFilterComplete;
+    private _clearValue;
+    private _showDropdown;
+    private _dropdownReady;
+    private _closeDropdown;
+    private _sortSelectedOptions;
+    /**
+     * Handles selecting an item in the dropdown.
+     * @param {string} selectedValue The string value to select.
+     */
+    private _onSelect;
+    private _selectActiveOption;
+    private _emitChangeEvent;
+    private _tryUpdateDropdownPosition;
+    /**
+     * Retrieves the current value(s) from the selected options array based on whether
+     * we are in multi-select mode or not.
+     */
+    private _getValue;
+    /**
+     * Creates the selected text value from the selected label values.
+     */
+    private _getSelectedText;
+    /**
+     * Handles the user dismissing the dropdown. This is only called if the blur event was triggered
+     * from within the popup element itself (in a custom template most likely).
+     * @param keepFocus Keep focus on the dropdown or not.
+     */
+    private _onDismiss;
+    private _applyValue;
+    private _updateSelectedOptions;
+    /** Gets/sets the mode state. */
+    get mode(): AutocompleteMode;
+    set mode(value: AutocompleteMode);
+    /** Gets/sets the multi-select state. */
+    get multiple(): boolean;
+    set multiple(value: boolean);
+    /** Gets/sets the value of the component. */
+    get value(): string | string[] | IAutocompleteOption | IAutocompleteOption[] | null | undefined;
+    set value(value: string | string[] | IAutocompleteOption | IAutocompleteOption[] | null | undefined);
+    /** Gets/sets filter on focus settings which controls whether the dropdown displays automatically when focused. */
+    get filterOnFocus(): boolean;
+    set filterOnFocus(value: boolean);
+    /** Gets/sets whether the first option in the dropdown will be focused automatically when opened or not. */
+    get filterFocusFirst(): boolean;
+    set filterFocusFirst(value: boolean);
+    /** Controls whether unmatched text entered by the user will stay visible an option in the dropdown is not found. */
+    get allowUnmatched(): boolean;
+    set allowUnmatched(value: boolean);
+    /** Gets/sets the property key to match the value to an option.  */
+    get matchKey(): string | null | undefined;
+    set matchKey(value: string | null | undefined);
+    /** Gets/sets the selector that will be used to find an element to attach the popup to. Defaults to the input element. */
+    get popupTarget(): string;
+    set popupTarget(value: string);
+    /**
+     * Gets/sets the filter text.
+     *
+     * Setting the filter text only applies when allowUnmatched is enabled.
+     */
+    get filterText(): string;
+    set filterText(value: string);
+    /** Gets/sets the list of classes to apply to the popup element. */
+    get popupClasses(): string | string[];
+    set popupClasses(value: string | string[]);
+    /** Gets/sets the builder callback to use for the popup header. */
+    set popupHeaderBuilder(value: ListDropdownHeaderBuilder);
+    /** Gets/sets the builder callback to use for the popup footer. */
+    set popupFooterBuilder(value: ListDropdownFooterBuilder);
+    /** Gets/sets whether the popup width is synchronized with the popup target. */
+    get syncPopupWidth(): boolean;
+    set syncPopupWidth(value: boolean);
+    /** Gets/sets the maximum number of options to display in the dropdown. */
+    get optionLimit(): number;
+    set optionLimit(value: number);
+    /** Gets/sets the debounce delay (milliseconds) for keyboard events. */
+    get debounce(): number;
+    set debounce(value: number);
+    /** Sets the item builder callback that will be executed when building the option list in the dropdown. */
+    get optionBuilder(): AutocompleteOptionBuilder | null | undefined;
+    set optionBuilder(fn: AutocompleteOptionBuilder | null | undefined);
+    /** Sets the filter callback that will be executed when fetching options for the autocomplete dropdown. */
+    get filter(): AutocompleteFilterCallback | null | undefined;
+    set filter(cb: AutocompleteFilterCallback | null | undefined);
+    /** Sets the selected text builder callback that will be executed when getting the selected text. */
+    get selectedTextBuilder(): AutocompleteSelectedTextBuilder;
+    set selectedTextBuilder(fn: AutocompleteSelectedTextBuilder);
+    get observeScroll(): boolean;
+    set observeScroll(value: boolean);
+    get observeScrollThreshold(): number;
+    set observeScrollThreshold(value: number);
+    appendOptions(options: IAutocompleteOption[] | IAutocompleteOptionGroup[]): void;
+    get isInitialized(): boolean;
+    get open(): boolean;
+    set open(value: boolean);
+    get beforeValueChange(): (value: any) => boolean | Promise<boolean>;
+    set beforeValueChange(value: (value: any) => boolean | Promise<boolean>);
+    get popupElement(): HTMLElement | null;
+}

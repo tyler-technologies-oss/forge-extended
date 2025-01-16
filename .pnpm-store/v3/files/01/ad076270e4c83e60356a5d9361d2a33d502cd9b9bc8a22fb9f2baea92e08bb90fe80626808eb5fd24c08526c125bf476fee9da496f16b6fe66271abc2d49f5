@@ -1,0 +1,184 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { attachShadowTemplate, coerceBoolean, customElement, coreProperty } from '@tylertech/forge-core';
+import { getFormState, getFormValue, inputType, setDefaultAria } from '../../constants';
+import { BaseComponent } from '../../core/base/base-component';
+import { WithFocusable } from '../../core/mixins/focus/with-focusable';
+import { WithFormAssociation } from '../../core/mixins/form/with-form-associated';
+import { WithDefaultAria } from '../../core/mixins/internals/with-default-aria';
+import { WithElementInternals } from '../../core/mixins/internals/with-element-internals';
+import { WithLabelAwareness } from '../../core/mixins/label/with-label-aware';
+import { FocusIndicatorComponent } from '../../focus-indicator';
+import { StateLayerComponent } from '../../state-layer';
+import { RadioGroupManager } from '../core/radio-group-manager';
+import { RadioAdapter } from './radio-adapter';
+import { RADIO_CONSTANTS, tryCheck } from './radio-constants';
+import { RadioCore } from './radio-core';
+const template = '<template><div id=\"radio\" class=\"forge-radio\" part=\"root\"><div id=\"container\" class=\"container\" aria-hidden=\"true\"><div id=\"background\" class=\"background\" part=\"background\"></div><forge-focus-indicator target=\":host\" part=\"focus-indicator\"></forge-focus-indicator><forge-state-layer exportparts=\"surface:state-layer\"></forge-state-layer></div><span id=\"label\" class=\"label\" for=\"input\" part=\"label\"><slot></slot></span></div></template>';
+const styles = ':host{display:inline-block;-webkit-tap-highlight-color:transparent}:host([hidden]){display:none}:host(:focus){outline:0}.forge-radio{--_radio-primary-color:var(--forge-radio-primary-color, var(--forge-theme-tertiary, #3d5afe));--_radio-inactive-color:var(--forge-radio-inactive-color, var(--forge-theme-surface-container-high, #9e9e9e));--_radio-size:var(--forge-radio-size, 20px);--_radio-mark-size:var(--forge-radio-mark-size, 75%);--_radio-state-layer-size:var(--forge-radio-state-layer-size, 40px);--_radio-state-layer-dense-size:var(--forge-radio-state-layer-dense-size, 24px);--_radio-width:var(--forge-radio-width, var(--_radio-size));--_radio-height:var(--forge-radio-height, var(--_radio-size));--_radio-border-width:var(--forge-radio-border-width, var(--forge-border-medium, 2px));--_radio-unchecked-border-color:var(--forge-radio-unchecked-border-color, var(--_radio-inactive-color));--_radio-checked-border-color:var(--forge-radio-checked-border-color, var(--_radio-primary-color));--_radio-background:var(--forge-radio-background, transparent);--_radio-shape:var(--forge-radio-shape, calc(var(--forge-shape-round, 50%) * var(--forge-shape-factor, 1)));--_radio-mark-width:var(--forge-radio-mark-width, var(--_radio-mark-size));--_radio-mark-height:var(--forge-radio-mark-height, var(--_radio-mark-size));--_radio-mark-color:var(--forge-radio-mark-color, var(--_radio-primary-color));--_radio-gap:var(--forge-radio-gap, 0);--_radio-justify:var(--forge-radio-justify, start);--_radio-direction:var(--forge-radio-direction, initial);--_radio-state-layer-width:var(--forge-radio-state-layer-width, var(--_radio-state-layer-size));--_radio-state-layer-height:var(--forge-radio-state-layer-height, var(--_radio-state-layer-size));--_radio-state-layer-unchecked-color:var(--forge-radio-state-layer-unchecked-color, var(--_radio-color));--_radio-state-layer-checked-color:var(--forge-radio-state-layer-checked-color, var(--_radio-primary-color));--_radio-state-layer-shape:var(--forge-radio-state-layer-shape, var(--_radio-shape));--_radio-state-layer-dense-width:var(--forge-radio-state-layer-dense-width, var(--_radio-state-layer-dense-size));--_radio-state-layer-dense-height:var(--forge-radio-state-layer-dense-height, var(--_radio-state-layer-dense-size));--_radio-disabled-opacity:var(--forge-radio-disabled-opacity, 0.38);--_radio-animation-duration:var(--forge-radio-animation-duration, var(--forge-animation-duration-short4, 200ms));--_radio-animation-timing-function:var(--forge-radio-animation-timing-function, var(--forge-animation-easing-decelerate, cubic-bezier(0, 0, 0, 1)));--_radio-animation-delay:var(--forge-radio-animation-delay, 0ms)}.forge-radio{position:relative;flex-direction:var(--_radio-direction);flex-shrink:0;align-items:center;justify-content:var(--_radio-justify);gap:var(--_radio-gap);display:flex}.forge-radio .container{position:relative;align-items:center;justify-content:center;display:flex;border-radius:var(--_radio-shape);inline-size:var(--_radio-state-layer-width);block-size:var(--_radio-state-layer-height);cursor:pointer}.forge-radio .background{position:relative;display:inline block;overflow:hidden;transition-duration:var(--_radio-animation-duration);transition-delay:var(--_radio-animation-delay);transition-timing-function:var(--_radio-animation-timing-function);transition-property:border-color;box-sizing:border-box;border-radius:var(--_radio-shape);border-width:var(--_radio-border-width);border-style:solid;border-color:var(--_radio-unchecked-border-color);inline-size:var(--_radio-width);block-size:var(--_radio-height);background:var(--_radio-background)}.forge-radio .background::after{content:\"\";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);transform-origin:top left;transition-duration:var(--_radio-animation-duration);transition-delay:var(--_radio-animation-delay);transition-timing-function:var(--_radio-animation-timing-function);transition-property:opacity,scale;border-radius:var(--_radio-shape);inline-size:var(--_radio-mark-width);block-size:var(--_radio-mark-height);background:var(--_radio-mark-color);scale:0.5;opacity:0}.forge-radio .label{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-label2-font-family, var(--forge-typography-font-family, \"Roboto\", sans-serif));font-size:var(--forge-typography-label2-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-label-font-size-scale, .8125)));font-weight:var(--forge-typography-label2-font-weight,400);line-height:var(--forge-typography-label2-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-label-line-height-scale, 1.25)));letter-spacing:var(--forge-typography-label2-letter-spacing, .0096153846em);text-transform:var(--forge-typography-label2-text-transform,inherit);text-decoration:var(--forge-typography-label2-text-decoration,inherit);cursor:default}.forge-radio .label:empty{display:none}:host([checked]) .forge-radio .background{border-color:var(--_radio-checked-border-color)}:host([checked]) .forge-radio .background::after{scale:1;opacity:1}:host([checked]) forge-state-layer{--forge-state-layer-color:var(--_radio-state-layer-checked-color)}:host([dense]) .forge-radio .container{inline-size:var(--_radio-state-layer-dense-width);block-size:var(--_radio-state-layer-dense-height)}:host([disabled]) .forge-radio .container{opacity:var(--_radio-disabled-opacity);cursor:not-allowed}:host([readonly]) .forge-radio .container{cursor:not-allowed}forge-focus-indicator{--forge-focus-indicator-color:var(--_radio-primary-color);--forge-focus-indicator-outward-offset:0px;--forge-focus-indicator-shape:var(--_radio-state-layer-shape)}forge-state-layer{--forge-state-layer-color:var(--_radio-state-layer-unchecked-color)}';
+/**
+ * @tag forge-radio
+ *
+ * @summary The Forge Radio component is used to create a form input where only one out of a set of
+ * values should be selected.
+ *
+ * @cssproperty --forge-radio-primary-color - The primary color of the radio button when checked.
+ * @cssproperty --forge-radio-inactive-color - The color of the radio button when unchecked.
+ * @cssproperty --forge-radio-size - The size of the radio button in the inline and block directions.
+ * @cssproperty --forge-radio-width - The width of the radio button.
+ * @cssproperty --forge-radio-height - The height of the radio button.
+ * @cssproperty --forge-radio-border-width - The width of the radio button's border.
+ * @cssproperty --forge-radio-unchecked-border-color - The color of the radio button's border when unchecked.
+ * @cssproperty --forge-radio-checked-border-color - The color of the radio button's border when checked.
+ * @cssproperty --forge-radio-background - The background of the radio button.
+ * @cssproperty --forge-radio-shape - The shape of the radio button.
+ * @cssproperty --forge-radio-mark-size - The size of the radio button's mark in the inline and block directions.
+ * @cssproperty --forge-radio-mark-width - The width of the radio button's mark.
+ * @cssproperty --forge-radio-mark-height - The height of the radio button's mark.
+ * @cssproperty --forge-radio-mark-color - The color of the radio button's mark.
+ * @cssproperty --forge-radio-gap - The gap between the radio button and its label.
+ * @cssproperty --forge-radio-justify - The alignment of the radio button and its label in the inline direction.
+ * @cssproperty --forge-radio-direction - The direction of the radio button and its label.
+ * @cssproperty --forge-radio-state-layer-size - The size of the radio button's state layer in the inline and block directions.
+ * @cssproperty --forge-radio-state-layer-width - The width of the radio button's state layer.
+ * @cssproperty --forge-radio-state-layer-height - The height of the radio button's state layer.
+ * @cssproperty --forge-radio-state-layer-unchecked - color - The color of the radio button's state layer when unchecked.
+ * @cssproperty --forge-radio-state-layer-checked-color - The color of the radio button's state layer when checked.
+ * @cssproperty --forge-radio-state-layer-shape - The shape of the radio button's state layer.
+ * @cssproperty --forge-radio-state-layer-dense-size - The size of the radio button's state layer when dense.
+ * @cssproperty --forge-radio-state-layer-dense-width - The width of the radio button's state layer when dense.
+ * @cssproperty --forge-radio-state-layer-dense-height - The height of the radio button's state layer when dense.
+ * @cssproperty --forge-radio-disabled-opacity - The opacity of the radio button when disabled.
+ * @cssproperty --forge-radio-animation-duration - The duration of the radio button's animations.
+ * @cssproperty --forge-radio-animation-timing-function - The timing function of the radio button's animations.
+ * @cssproperty --forge-radio-animation-delay - The delay of the radio button's animations.
+ *
+ * @csspart root - Styles the radio's root element.
+ * @csspart background - Styles the border and background of the radio.
+ * @csspart focus-indicator - Styles the focus indicator of the radio.
+ * @csspart state-layer - Styles the state layer of the radio.
+ *
+ * @slot - This is a default/unnamed slot for the label text.
+ *
+ * @cssclass forge-radio - Apply to the root element _(required)_.
+ * @cssclass forge-radio--dense - Makes the radio dense.
+ */
+let RadioComponent = class RadioComponent extends WithFormAssociation(WithLabelAwareness(WithFocusable(WithDefaultAria(WithElementInternals(BaseComponent))))) {
+    static get observedAttributes() {
+        return Object.values(RADIO_CONSTANTS.observedAttributes);
+    }
+    constructor() {
+        super();
+        attachShadowTemplate(this, template, styles);
+        this[inputType] = 'radio';
+        this._core = new RadioCore(new RadioAdapter(this));
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        this[setDefaultAria]({
+            role: 'radio',
+            ariaChecked: this.checked ? 'true' : 'false',
+            ariaDisabled: this.disabled ? 'true' : 'false'
+        });
+        RadioGroupManager.syncRadioFocusableState(this);
+        this._core.initialize();
+        this._rootNode = this.getRootNode();
+    }
+    disconnectedCallback() {
+        RadioGroupManager.syncRadioFocusableState(this, {
+            ignoreSelf: true,
+            rootNode: this._rootNode,
+            form: this._latestAssociatedForm
+        });
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case RADIO_CONSTANTS.attributes.CHECKED:
+                this._core.checked = coerceBoolean(newValue);
+                break;
+            case RADIO_CONSTANTS.attributes.DEFAULT_CHECKED:
+                this._core.defaultChecked = coerceBoolean(newValue);
+                break;
+            case RADIO_CONSTANTS.attributes.VALUE:
+                this.value = newValue;
+                break;
+            case RADIO_CONSTANTS.attributes.DENSE:
+                this.dense = coerceBoolean(newValue);
+                break;
+            case RADIO_CONSTANTS.attributes.DISABLED:
+                this.disabled = coerceBoolean(newValue);
+                break;
+            case RADIO_CONSTANTS.attributes.REQUIRED:
+                this.required = coerceBoolean(newValue);
+                break;
+            case RADIO_CONSTANTS.attributes.READONLY:
+                this.readonly = coerceBoolean(newValue);
+                break;
+            case RADIO_CONSTANTS.attributes.LABEL_POSITION:
+                this.labelPosition = newValue;
+                break;
+        }
+        super.attributeChangedCallback(name, oldValue, newValue);
+    }
+    [getFormValue]() {
+        return this.checked ? this.value : null;
+    }
+    [getFormState]() {
+        return this.checked ? 'checked' : 'unchecked';
+    }
+    formAssociatedCallback(form) {
+        if (form) {
+            this._latestAssociatedForm = form;
+        }
+    }
+    formResetCallback() {
+        RadioGroupManager.requestRadioGroupReset(this);
+    }
+    formStateRestoreCallback(state) {
+        this.checked = state === 'checked';
+    }
+    labelClickedCallback() {
+        this.click();
+    }
+    labelChangedCallback(value) {
+        this[setDefaultAria]({ ariaLabel: value });
+    }
+    [tryCheck]() {
+        return this._core.tryCheck();
+    }
+};
+__decorate([
+    coreProperty()
+], RadioComponent.prototype, "checked", void 0);
+__decorate([
+    coreProperty()
+], RadioComponent.prototype, "defaultChecked", void 0);
+__decorate([
+    coreProperty()
+], RadioComponent.prototype, "value", void 0);
+__decorate([
+    coreProperty()
+], RadioComponent.prototype, "dense", void 0);
+__decorate([
+    coreProperty()
+], RadioComponent.prototype, "disabled", void 0);
+__decorate([
+    coreProperty()
+], RadioComponent.prototype, "required", void 0);
+__decorate([
+    coreProperty()
+], RadioComponent.prototype, "readonly", void 0);
+__decorate([
+    coreProperty()
+], RadioComponent.prototype, "labelPosition", void 0);
+RadioComponent = __decorate([
+    customElement({
+        name: RADIO_CONSTANTS.elementName,
+        dependencies: [FocusIndicatorComponent, StateLayerComponent]
+    })
+], RadioComponent);
+export { RadioComponent };

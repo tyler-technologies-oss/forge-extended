@@ -1,0 +1,9 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./toolbar.component";
+import * as i2 from "@angular/common";
+export declare class ForgeToolbarModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeToolbarModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeToolbarModule, [typeof i1.ToolbarComponent], [typeof i2.CommonModule], [typeof i1.ToolbarComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeToolbarModule>;
+}

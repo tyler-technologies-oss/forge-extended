@@ -1,0 +1,38 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { Theme } from '../constants';
+export declare const BANNER_CONSTANTS: {
+    elementName: "forge-banner";
+    observedAttributes: {
+        DISMISSED: string;
+        PERSISTENT: string;
+        CAN_DISMISS: string;
+        THEME: string;
+    };
+    attributes: {
+        DISMISSED: string;
+        PERSISTENT: string;
+        CAN_DISMISS: string;
+        THEME: string;
+    };
+    classes: {
+        HAS_ICON: string;
+        HAS_BUTTON: string;
+    };
+    selectors: {
+        DISMISS_BUTTON: string;
+        ICON_SLOT: string;
+        BUTTON_SLOT: string;
+    };
+    defaults: {
+        THEME: BannerTheme;
+    };
+    events: {
+        BEFORE_DISMISS: string;
+        DISMISSED: string;
+    };
+};
+export type BannerTheme = Theme | 'danger' | 'info-secondary';

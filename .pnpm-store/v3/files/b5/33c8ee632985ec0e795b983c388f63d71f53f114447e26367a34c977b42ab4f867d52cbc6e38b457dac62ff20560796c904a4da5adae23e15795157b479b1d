@@ -1,0 +1,46 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { FormFieldComponentDelegate, IFormFieldComponentDelegateOptions } from '../core';
+import { IBaseComponentDelegateConfig } from '../core/delegates/base-component-delegate';
+import { ICheckboxComponent } from './checkbox';
+import { CheckboxLabelPosition } from './checkbox-constants';
+export type CheckboxComponentDelegateProps = Partial<ICheckboxComponent>;
+export interface ICheckboxComponentDelegateOptions extends IFormFieldComponentDelegateOptions {
+    id?: string;
+    label?: string;
+}
+export interface ICheckboxComponentDelegateConfig extends IBaseComponentDelegateConfig<ICheckboxComponent, ICheckboxComponentDelegateOptions> {
+}
+export declare class CheckboxComponentDelegate extends FormFieldComponentDelegate<ICheckboxComponent, ICheckboxComponentDelegateOptions> {
+    constructor(config?: ICheckboxComponentDelegateConfig);
+    get value(): string;
+    set value(value: string);
+    get checked(): boolean;
+    set checked(value: boolean);
+    get defaultChecked(): boolean;
+    set defaultChecked(value: boolean);
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    get indeterminate(): boolean;
+    set indeterminate(value: boolean);
+    get dense(): boolean;
+    set dense(value: boolean);
+    get required(): boolean;
+    set required(value: boolean);
+    get readonly(): boolean;
+    set readonly(value: boolean);
+    get name(): string;
+    set name(value: string);
+    get labelPosition(): CheckboxLabelPosition;
+    set labelPosition(value: CheckboxLabelPosition);
+    onChange(listener: (value: boolean) => void): void;
+    onFocus(listener: (evt: Event) => void): void;
+    onBlur(listener: (evt: Event) => void): void;
+    setLabel(text: string | null): void;
+    toggle(force?: boolean): void;
+    protected _build(): ICheckboxComponent;
+    protected _configure(): void;
+}

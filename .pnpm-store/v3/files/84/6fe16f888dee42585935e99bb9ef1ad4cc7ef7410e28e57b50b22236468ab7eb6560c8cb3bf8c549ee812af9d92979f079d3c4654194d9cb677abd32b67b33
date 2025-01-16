@@ -1,0 +1,15 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { defineCustomElement } from '@tylertech/forge-core';
+import { DateRangePickerComponent } from './date-range-picker';
+export * from './date-range-picker';
+export * from './date-range-picker-adapter';
+export * from './date-range-picker-constants';
+export * from './date-range-picker-core';
+export * from './date-range-picker-component-delegate';
+export function defineDateRangePickerComponent() {
+    defineCustomElement(DateRangePickerComponent);
+}

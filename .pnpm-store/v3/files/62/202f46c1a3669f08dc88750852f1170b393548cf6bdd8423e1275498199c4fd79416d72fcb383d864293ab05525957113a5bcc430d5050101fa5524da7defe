@@ -1,0 +1,80 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const tryDismiss: unique symbol;
+export interface IDismissibleStackState<T = string> {
+    [key: string]: T;
+}
+export interface IDismissible {
+    [tryDismiss](state?: IDismissibleStackState): boolean;
+}
+export declare class DismissibleStack<T extends IDismissible> {
+    private _deferredDismiss;
+    /**
+     * A promise that resolves when all elements in the stack have finished dismissing.
+     *
+     * Resolves immediately if there are no elements in the stack.
+     */
+    get dismissing(): Promise<void>;
+    /**
+     * A set of all elements that are currently eligible for dismissal.
+     *
+     * Typically used when a user is force dismissing an element, such as when they click
+     * an element that triggered it to open.
+     */
+    private _dismissibleElements;
+    /**
+     * A map of all elements that are requesting to be dismissed, and the state that they
+     * are requesting to dismiss with.
+     *
+     * This is used to queue up dismiss requests so that we can wait for all other elements
+     * to dispatch their dismiss events, typically used with light dismiss.
+     */
+    private _elementsRequestingDismiss;
+    private constructor();
+    static get instance(): DismissibleStack<IDismissible>;
+    /**
+     * Dismisses all elements in the stack that have been presented after the provided element.
+     * @param el The element to dismiss
+     * @param state The state to pass to the dismiss method of each element
+     */
+    dismiss(el: T, state: IDismissibleStackState): Promise<void>;
+    /**
+     * Queues an element to be dismissed. This allows for us to asynchronously wait for all
+     * other elements to dispatch their dismiss events so that consumers can cancel the dismiss
+     * if they want to, without closing their parent dismissible elements.
+     * @param el
+     * @param dismissState
+     * @returns
+     */
+    requestDismiss(el: T, dismissState: IDismissibleStackState): Promise<void>;
+    /**
+     * Adds an element to the dismissible queue.
+     *
+     * Use this when an element is opened and should be eligible for dismissal in a stack of other
+     * dismissible elements.
+     */
+    add(el: T): void;
+    /**
+     * Removes an element from the dismissible queue.
+     *
+     * Use this when an element is closed and should no longer be eligible for dismissal in a stack.
+     */
+    remove(el: T): void;
+    /**
+     * Checks if an element is in the dismissible queue.
+     */
+    has(el: T): boolean;
+    /**
+     * Checks if an element is requesting to be dismissed.
+     */
+    isRequestingLightDismiss(el: T): boolean;
+    /**
+     * Checks if an element is the most recent element in the dismissible queue.
+     * @param el The element to check.
+     * @returns
+     */
+    isMostRecent(el: T): boolean;
+}

@@ -1,0 +1,45 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core/base/base-adapter';
+import { ITooltipComponent } from './tooltip';
+export interface ITooltipAdapter extends IBaseAdapter<ITooltipComponent> {
+    readonly hostElement: ITooltipComponent;
+    readonly anchorElement: HTMLElement | null;
+    syncAria(): void;
+    detachAria(): void;
+    setAnchorElement(element: HTMLElement | null): void;
+    tryLocateAnchorElement(id: string): void;
+    addAnchorListener(type: string, listener: EventListener, opts?: AddEventListenerOptions): void;
+    removeAnchorListener(type: string, listener: EventListener): void;
+    addLightDismissListener(listener: EventListener): void;
+    removeLightDismissListener(listener: EventListener): void;
+    show(): void;
+    hide(): void;
+}
+export declare class TooltipAdapter extends BaseAdapter<ITooltipComponent> implements ITooltipAdapter {
+    private _contentElement;
+    private _arrowElement;
+    private _anchorElement;
+    private _overlayElement;
+    constructor(component: ITooltipComponent);
+    get anchorElement(): HTMLElement | null;
+    syncAria(): void;
+    detachAria(): void;
+    setAnchorElement(element: HTMLElement | null): void;
+    tryLocateAnchorElement(id: string): void;
+    addAnchorListener(type: string, listener: EventListener, opts?: AddEventListenerOptions): void;
+    removeAnchorListener(type: string, listener: EventListener): void;
+    addLightDismissListener(listener: EventListener): void;
+    removeLightDismissListener(listener: EventListener): void;
+    show(): void;
+    hide(): void;
+    /**
+     * Attempts to find an element with the given id. If no element is found, the previous sibling or parent element is returned.
+     *
+     * For backwards compatibility we allow for `id` to be a selector string, so that is evaluated if no element is found for the id.
+     */
+    private _tryFindAnchorElement;
+}

@@ -1,0 +1,9 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./field.component";
+import * as i2 from "@angular/common";
+export declare class ForgeFieldModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeFieldModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeFieldModule, [typeof i1.FieldComponent], [typeof i2.CommonModule], [typeof i1.FieldComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeFieldModule>;
+}

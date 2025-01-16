@@ -1,0 +1,14 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter } from '../../core/base/base-adapter';
+/**
+ * The DOM adapter behind the `<forge-option>` element.
+ */
+export class OptionAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+    }
+}

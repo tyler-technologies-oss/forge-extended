@@ -1,0 +1,35 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import IMask, { InputMask, Masked } from 'imask';
+export interface IDateInputMaskOptions {
+    showMaskFormat?: boolean;
+    pattern?: string;
+    useBlockCharPlaceholder?: boolean;
+    prepareCallback?: (value: string, masked: Masked<string>, flags: IMask.AppendFlags, maskInstance: InputMask<IMask.MaskedPatternOptions>) => string;
+    onChange?: (value: string) => void;
+}
+export declare const DEFAULT_DATE_MASK = "0`0{/}`0`0{/}`0`0`0`0";
+export declare class DateInputMask {
+    private _element;
+    private _options;
+    private _mask;
+    private _maskOptions;
+    private _acceptListener;
+    constructor(_element: HTMLInputElement, _options?: IDateInputMaskOptions);
+    destroy(): void;
+    resolve(value: string): string;
+    private _onAccept;
+    private get _isDefaultMask();
+    private _createOptions;
+    private _prepare;
+    private _prepareDefault;
+    private _setMaskedValueAdjusted;
+    updateMask(): void;
+    get maskedValue(): string;
+    set maskedValue(value: string);
+    get unmaskedValue(): string;
+    set unmaskedValue(value: string);
+}

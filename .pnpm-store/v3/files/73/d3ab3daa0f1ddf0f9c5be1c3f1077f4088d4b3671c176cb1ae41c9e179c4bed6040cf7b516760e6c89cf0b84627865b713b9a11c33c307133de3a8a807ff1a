@@ -1,0 +1,10 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./expansion-panel.component";
+import * as i2 from "@angular/common";
+import * as i3 from "../open-icon/open-icon.module";
+export declare class ForgeExpansionPanelModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeExpansionPanelModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeExpansionPanelModule, [typeof i1.ExpansionPanelComponent], [typeof i2.CommonModule, typeof i3.ForgeOpenIconModule], [typeof i1.ExpansionPanelComponent, typeof i3.ForgeOpenIconModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeExpansionPanelModule>;
+}

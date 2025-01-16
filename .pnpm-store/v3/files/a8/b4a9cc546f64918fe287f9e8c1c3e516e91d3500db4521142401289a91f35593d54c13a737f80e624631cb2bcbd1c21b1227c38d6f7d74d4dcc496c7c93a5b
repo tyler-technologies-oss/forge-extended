@@ -1,0 +1,101 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { attachShadowTemplate, coerceBoolean, customElement, coreProperty } from '@tylertech/forge-core';
+import { tylIconCancel } from '@tylertech/tyler-icons/standard';
+import { BaseComponent } from '../core/base/base-component';
+import { IconRegistry } from '../icon';
+import { IconButtonComponent } from '../icon-button';
+import { TooltipComponent } from '../tooltip';
+import { BannerAdapter } from './banner-adapter';
+import { BANNER_CONSTANTS } from './banner-constants';
+import { BannerCore } from './banner-core';
+const template = '<template><div class=\"forge-banner\" part=\"root\"><div class=\"inner\"><div class=\"container\"><slot name=\"icon\"></slot><slot></slot><div class=\"button-container\"><slot name=\"button\"></slot></div></div><div class=\"dismiss-button-container\"><slot name=\"dismiss-button\"><forge-icon-button part=\"dismiss-button\"><forge-icon name=\"cancel\"></forge-icon></forge-icon-button><forge-tooltip type=\"label\" placement=\"bottom\"><slot name=\"dismiss-tooltip\">Dismiss</slot></forge-tooltip></slot></div></div></div></template>';
+const styles = ':host{display:block;container-type:inline-size}:host([hidden]){display:none}.forge-banner{--_banner-background:var(--forge-banner-background, var(--forge-theme-info-container, #c7daf0));--_banner-color:var(--forge-banner-color, var(--forge-theme-text-high, rgba(0, 0, 0, 0.87)));--_banner-icon-color:var(--forge-banner-icon-color, var(--forge-theme-on-info-container, #0b3768));--_banner-gap:var(--forge-banner-gap, var(--forge-spacing-small, 12px));--_banner-padding-inline:var(--forge-banner-padding-inline, var(--forge-spacing-large, 24px));--_banner-padding-block:var(--forge-banner-padding-block, var(--forge-spacing-small, 12px));--_banner-transition-duration:var(--forge-banner-transition-duration, var(--forge-animation-duration-short4, 200ms));--_banner-transition-easing:var(--forge-banner-transition-easing, var(--forge-animation-easing-standard, cubic-bezier(0.2, 0, 0, 1)))}.forge-banner{display:grid;grid-template-columns:1fr;grid-template-rows:1fr;overflow:hidden;box-sizing:border-box;transition-property:opacity,grid-template-rows,min-height;transition-duration:var(--_banner-transition-duration);transition-timing-function:var(--_banner-transition-easing);background:var(--_banner-background);color:var(--_banner-color);opacity:1}.forge-banner .inner{display:grid;grid-template-columns:1fr auto;place-items:center;gap:var(--_banner-gap);overflow:hidden;padding-inline:var(--_banner-padding-inline)}.forge-banner .container{display:flex;justify-content:center;align-items:center;gap:var(--_banner-gap);flex:1 1 auto;padding-block:var(--_banner-padding-block)}.forge-banner .dismiss-button-container{display:flex;align-items:center;gap:var(--_banner-gap)}.forge-banner ::slotted(forge-button[slot=dismiss-button]){--forge-button-primary-color:var(--_banner-color)}.forge-banner ::slotted(forge-icon-button[slot=dismiss-button]),.forge-banner forge-icon-button[part=dismiss-button]{color:var(--_banner-icon-color);--forge-icon-button-focus-indicator-color:var(--_banner-color)}::slotted(forge-button[slot=button]){--forge-button-primary-color:var(--_banner-color)}::slotted([slot=icon]){color:var(--_banner-icon-color)}:host([dismissed]) .forge-banner{grid-template-rows:0fr;opacity:0}:host([theme=primary]) .forge-banner{--_banner-background:var(--forge-banner-background, var(--forge-theme-primary-container, #d1d5ed));--_banner-icon-color:var(--forge-banner-icon-color, var(--forge-theme-on-primary-container, #222c62))}:host([theme=secondary]) .forge-banner{--_banner-background:var(--forge-banner-background, var(--forge-theme-secondary-container, #fff0c3));--_banner-icon-color:var(--forge-banner-icon-color, var(--forge-theme-on-secondary-container, #8a6804))}:host([theme=tertiary]) .forge-banner{--_banner-background:var(--forge-banner-background, var(--forge-theme-tertiary-container, #d0d7ff));--_banner-icon-color:var(--forge-banner-icon-color, var(--forge-theme-on-tertiary-container, #213189))}:host([theme=success]) .forge-banner{--_banner-background:var(--forge-banner-background, var(--forge-theme-success-container, #cde0ce));--_banner-icon-color:var(--forge-banner-icon-color, var(--forge-theme-on-success-container, #19441b))}:host([theme=error]) .forge-banner{--_banner-background:var(--forge-banner-background, var(--forge-theme-error-container, #ecc2c9));--_banner-icon-color:var(--forge-banner-icon-color, var(--forge-theme-on-error-container, #5f0011))}:host([theme=warning]) .forge-banner{--_banner-background:var(--forge-banner-background, var(--forge-theme-warning-container, #f4d3c2));--_banner-icon-color:var(--forge-banner-icon-color, var(--forge-theme-on-warning-container, #712700))}:host([theme=danger]) .forge-banner{--_banner-background:var(--forge-banner-background, var(--forge-theme-error-container, #ecc2c9));--_banner-icon-color:var(--forge-banner-icon-color, var(--forge-theme-on-error-container, #5f0011))}:host([theme=info-secondary]) .forge-banner{--_banner-background:var(--forge-banner-background, var(--forge-theme-surface-container, #e0e0e0));--_banner-icon-color:var(--forge-banner-icon-color, var(--forge-theme-on-surface-container, #000000))}@container (max-width:600px){.forge-banner.has-button .container{display:grid;grid-template-rows:[content] 1fr [button] auto;grid-template-columns:[content] 1fr;place-items:normal}.forge-banner.has-button.has-icon .container{grid-template-columns:[icon] auto [content] 1fr}.forge-banner.has-button .inner{place-items:normal}.forge-banner.has-button .button-container{grid-row:button;grid-column:content}.forge-banner.has-button .dismiss-button-container{align-items:flex-start}}';
+/**
+ * @tag forge-banner
+ *
+ * @summary Banners are used to inform users of important information, such as errors, warnings, or success messages.
+ *
+ * @property {boolean} [dismissed=false] - Controls the visibility of the banner.
+ * @property {boolean} [persistent=false] - Controls the visibility of the built-in dismiss button.
+ * @property {BannerTheme} [theme="info"] - The theme of the banner.
+ *
+ * @attribute {boolean} [dismissed=false] - Controls the visibility of the banner.
+ * @attribute {boolean} [persistent=false] - Controls the visibility of the built-in dismiss button.
+ * @attribute {BannerTheme} [theme="info"] - The theme of the banner.
+ *
+ * @event {CustomEvent<void>} forge-banner-before-dismiss - Dispatched before the banner is dismissed. Cancelable to prevent dismissal.
+ * @event {CustomEvent<void>} forge-banner-dismissed - Dispatched when the banner is dismissed.
+ *
+ * @cssproperty --forge-banner-background - The background color of the banner.
+ * @cssproperty --forge-banner-color - The text color of the banner.
+ * @cssproperty --forge-banner-icon-color - The color of the icon.
+ * @cssproperty --forge-banner-gap - The gap between the contents.
+ * @cssproperty --forge-banner-padding-inline - The inline padding.
+ * @cssproperty --forge-banner-padding-block - The block padding.
+ * @cssproperty --forge-banner-transition-duration - The transition duration.
+ * @cssproperty --forge-banner-transition-easing - The transition easing function.
+ *
+ * @slot - The content of the banner.
+ * @slot icon - The icon to display.
+ * @slot button - The optional button to display.
+ *
+ * @cssclass forge-banner - The banner class _(required)_.
+ */
+let BannerComponent = class BannerComponent extends BaseComponent {
+    static get observedAttributes() {
+        return Object.values(BANNER_CONSTANTS.observedAttributes);
+    }
+    constructor() {
+        super();
+        IconRegistry.define(tylIconCancel);
+        attachShadowTemplate(this, template, styles);
+        this._core = new BannerCore(new BannerAdapter(this));
+    }
+    connectedCallback() {
+        this._core.initialize();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case BANNER_CONSTANTS.observedAttributes.DISMISSED:
+                this.dismissed = coerceBoolean(newValue);
+                break;
+            case BANNER_CONSTANTS.observedAttributes.PERSISTENT:
+                this.persistent = coerceBoolean(newValue);
+                break;
+            case BANNER_CONSTANTS.observedAttributes.CAN_DISMISS:
+                this.persistent = coerceBoolean(newValue) === false;
+                break;
+            case BANNER_CONSTANTS.observedAttributes.THEME:
+                this.theme = newValue;
+                break;
+        }
+    }
+    /** @deprecated Use `persistent` instead. */
+    get canDismiss() {
+        return !this.persistent;
+    }
+    set canDismiss(value) {
+        this.persistent = !value;
+    }
+};
+__decorate([
+    coreProperty()
+], BannerComponent.prototype, "dismissed", void 0);
+__decorate([
+    coreProperty()
+], BannerComponent.prototype, "persistent", void 0);
+__decorate([
+    coreProperty()
+], BannerComponent.prototype, "theme", void 0);
+BannerComponent = __decorate([
+    customElement({
+        name: BANNER_CONSTANTS.elementName,
+        dependencies: [IconButtonComponent, TooltipComponent]
+    })
+], BannerComponent);
+export { BannerComponent };

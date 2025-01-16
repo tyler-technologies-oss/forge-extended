@@ -1,0 +1,64 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { DialogComponent as DialogComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class DialogComponent {
+    protected elementRef: ElementRef<DialogComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-dialog element. */
+    readonly nativeElement: DialogComponentCustomElement;
+    /** Indicates whether the dialog is open. */
+    set open(value: DialogComponentCustomElement['open']);
+    get open(): DialogComponentCustomElement['open'];
+    /** The mode of the dialog. */
+    set mode(value: DialogComponentCustomElement['mode']);
+    get mode(): DialogComponentCustomElement['mode'];
+    /** The type of the dialog. */
+    set type(value: DialogComponentCustomElement['type']);
+    get type(): DialogComponentCustomElement['type'];
+    /** The animation type of the dialog. */
+    set animationType(value: DialogComponentCustomElement['animationType']);
+    get animationType(): DialogComponentCustomElement['animationType'];
+    /** The preset design that the dialog will apply. */
+    set preset(value: DialogComponentCustomElement['preset']);
+    get preset(): DialogComponentCustomElement['preset'];
+    /** Indicates whether the dialog is dismissible via escape and backdrop click or not. */
+    set persistent(value: DialogComponentCustomElement['persistent']);
+    get persistent(): DialogComponentCustomElement['persistent'];
+    /** Indicates whether the dialog is fullscreen or not. */
+    set fullscreen(value: DialogComponentCustomElement['fullscreen']);
+    get fullscreen(): DialogComponentCustomElement['fullscreen'];
+    /** The screen width at which the dialog will switch to fullscreen. */
+    set fullscreenThreshold(value: DialogComponentCustomElement['fullscreenThreshold']);
+    get fullscreenThreshold(): DialogComponentCustomElement['fullscreenThreshold'];
+    /** The selector of the element that triggers the dialog. */
+    set trigger(value: DialogComponentCustomElement['trigger']);
+    get trigger(): DialogComponentCustomElement['trigger'];
+    /** The element that triggers the dialog. */
+    set triggerElement(value: DialogComponentCustomElement['triggerElement']);
+    get triggerElement(): DialogComponentCustomElement['triggerElement'];
+    /** Indicates whether the dialog is moveable or not. */
+    set moveable(value: DialogComponentCustomElement['moveable']);
+    get moveable(): DialogComponentCustomElement['moveable'];
+    /** Controls whether the dialog is rendered relative to the viewport or its nearest containing block. */
+    set positionStrategy(value: DialogComponentCustomElement['positionStrategy']);
+    get positionStrategy(): DialogComponentCustomElement['positionStrategy'];
+    /** Controls the block and/or inline size of the dialog. Defaults to the size of the content it contains. */
+    set sizeStrategy(value: DialogComponentCustomElement['sizeStrategy']);
+    get sizeStrategy(): DialogComponentCustomElement['sizeStrategy'];
+    /** The placement of the dialog. */
+    set placement(value: DialogComponentCustomElement['placement']);
+    get placement(): DialogComponentCustomElement['placement'];
+    /** Shows the dialog. */
+    show(...args: Parameters<DialogComponentCustomElement['show']>): ReturnType<DialogComponentCustomElement['show']>;
+    /** Hides the dialog. */
+    hide(...args: Parameters<DialogComponentCustomElement['hide']>): ReturnType<DialogComponentCustomElement['hide']>;
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<DialogComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<DialogComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<DialogComponent, "forge-dialog", never, { "open": { "alias": "open"; "required": false; }; "mode": { "alias": "mode"; "required": false; }; "type": { "alias": "type"; "required": false; }; "animationType": { "alias": "animationType"; "required": false; }; "preset": { "alias": "preset"; "required": false; }; "persistent": { "alias": "persistent"; "required": false; }; "fullscreen": { "alias": "fullscreen"; "required": false; }; "fullscreenThreshold": { "alias": "fullscreenThreshold"; "required": false; }; "trigger": { "alias": "trigger"; "required": false; }; "triggerElement": { "alias": "triggerElement"; "required": false; }; "moveable": { "alias": "moveable"; "required": false; }; "positionStrategy": { "alias": "positionStrategy"; "required": false; }; "sizeStrategy": { "alias": "sizeStrategy"; "required": false; }; "placement": { "alias": "placement"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_open: unknown;
+    static ngAcceptInputType_persistent: unknown;
+    static ngAcceptInputType_fullscreen: unknown;
+    static ngAcceptInputType_fullscreenThreshold: unknown;
+    static ngAcceptInputType_moveable: unknown;
+}

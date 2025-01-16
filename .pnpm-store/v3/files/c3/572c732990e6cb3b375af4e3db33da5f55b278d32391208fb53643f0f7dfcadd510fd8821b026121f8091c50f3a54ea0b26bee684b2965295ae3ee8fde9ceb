@@ -1,0 +1,121 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { customElement, attachShadowTemplate, coreProperty, coerceBoolean } from '@tylertech/forge-core';
+import { IconAdapter } from './icon-adapter';
+import { IconCore } from './icon-core';
+import { ICON_CONSTANTS } from './icon-constants';
+import { BaseComponent } from '../core/base/base-component';
+const template = '<template></template>';
+const styles = ':host{--_icon-color:var(--forge-icon-color, currentColor);--_icon-size:var(--forge-icon-size, 1em);--_icon-width:var(--forge-icon-width, var(--_icon-size));--_icon-height:var(--forge-icon-height, var(--_icon-size));--_icon-font-size:var(--forge-icon-font-size, calc(var(--forge-typography-font-size, 1rem) * 1.5))}:host{display:inline-block;box-sizing:content-box;contain:content;font-size:var(--_icon-font-size)}:host([hidden]){display:none}svg{width:var(--_icon-width);height:var(--_icon-height);display:block;fill:var(--_icon-color);stroke:var(--_icon-color);stroke-width:0}:host([theme=primary]){--_icon-color:var(--forge-icon-color, var(--forge-theme-primary, #3f51b5))}:host([theme=secondary]){--_icon-color:var(--forge-icon-color, var(--forge-theme-secondary, #ffc107))}:host([theme=tertiary]){--_icon-color:var(--forge-icon-color, var(--forge-theme-tertiary, #3d5afe))}:host([theme=success]){--_icon-color:var(--forge-icon-color, var(--forge-theme-success, #2e7d32))}:host([theme=error]){--_icon-color:var(--forge-icon-color, var(--forge-theme-error, #b00020))}:host([theme=warning]){--_icon-color:var(--forge-icon-color, var(--forge-theme-warning, #d14900))}:host([theme=text-medium]){--_icon-color:var(--forge-icon-color, var(--forge-theme-text-medium, rgba(0, 0, 0, 0.6)))}:host([theme=text-low]){--_icon-color:var(--forge-icon-color, var(--forge-theme-text-low, rgba(0, 0, 0, 0.38)))}';
+/**
+ * @tag forge-icon
+ *
+ * @summary Icons are used to represent information visually
+ *
+ * @property {string} name - The name of the icon to render.
+ * @property {string} src - Provides the ability to set the SVG string content directly.
+ * @property {boolean} [lazy=false] - Controls whether the icon will be loaded dynamically when it comes into view. False by default.
+ * @property {boolean} [external=false] - Controls whether external network requests are allowed for this icon. Only pertains for icons that aren't already defined in the registry.
+ * @property {IconExternalType} [externalType="standard"] - The type of icon to load externally. Possible values: "standard" (default), "extended", "custom".
+ * @property {IconUrlBuilder} externalUrlBuilder - A callback that can be provided to generate a URL that will be used to fetch an SVG icon.
+ * @property {string} viewbox - A custom value to apply to the `viewBox` attribute on the internal `<svg>` element.
+ * @property {IconTheme} theme - The theme to apply to the icon.
+ *
+ * @attribute {string} name - The name of the icon to render.
+ * @attribute {string} src - Provides the ability to set the SVG string content directly.
+ * @attribute {boolean} [lazy=false] - Controls whether the icon will be loaded dynamically when it comes into view. False by default.
+ * @attribute {boolean} [external=false] - Controls whether external network requests are allowed for this icon. Only pertains for icons that aren't already defined in the registry.
+ * @attribute {string} viewbox - A custom value to apply to the `viewBox` attribute on the internal `<svg>` element.
+ * @attribute {IconTheme} theme - The theme to apply to the icon.
+ *
+ * @cssproperty --forge-icon-color - The color of the icon.
+ * @cssproperty --forge-icon-size - The size of the icon. Defaults to the font-size of the context it is placed in.
+ * @cssproperty --forge-icon-width - The width of the icon.
+ * @cssproperty --forge-icon-height - The height of the icon.
+ * @cssproperty --forge-icon-font-size - The font size of the icon.
+ *
+ * @csspart svg - The internal SVG element.
+ *
+ * @cssclass forge-icon - The icon element.
+ */
+let IconComponent = class IconComponent extends BaseComponent {
+    static get observedAttributes() {
+        return Object.values(ICON_CONSTANTS.observedAttributes);
+    }
+    constructor() {
+        super();
+        attachShadowTemplate(this, template, styles);
+        this._core = new IconCore(new IconAdapter(this));
+    }
+    connectedCallback() {
+        this._core.initialize();
+    }
+    disconnectedCallback() {
+        this._core.destroy();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case ICON_CONSTANTS.observedAttributes.NAME:
+                this.name = newValue;
+                break;
+            case ICON_CONSTANTS.observedAttributes.SRC:
+                this.src = newValue;
+                break;
+            case ICON_CONSTANTS.observedAttributes.LAZY:
+                this.lazy = coerceBoolean(newValue);
+                break;
+            case ICON_CONSTANTS.observedAttributes.EXTERNAL:
+                this.external = coerceBoolean(newValue);
+                break;
+            case ICON_CONSTANTS.observedAttributes.EXTERNAL_TYPE:
+                this.externalType = newValue;
+                break;
+            case ICON_CONSTANTS.observedAttributes.VIEWBOX:
+                this.viewbox = newValue;
+                break;
+            case ICON_CONSTANTS.observedAttributes.THEME:
+                this.theme = newValue;
+                break;
+        }
+    }
+    /**
+     * Forces a reload of the icon.
+     */
+    layout() {
+        this._core.layout();
+    }
+};
+__decorate([
+    coreProperty()
+], IconComponent.prototype, "name", void 0);
+__decorate([
+    coreProperty()
+], IconComponent.prototype, "src", void 0);
+__decorate([
+    coreProperty()
+], IconComponent.prototype, "lazy", void 0);
+__decorate([
+    coreProperty()
+], IconComponent.prototype, "external", void 0);
+__decorate([
+    coreProperty()
+], IconComponent.prototype, "externalType", void 0);
+__decorate([
+    coreProperty()
+], IconComponent.prototype, "externalUrlBuilder", void 0);
+__decorate([
+    coreProperty()
+], IconComponent.prototype, "viewbox", void 0);
+__decorate([
+    coreProperty()
+], IconComponent.prototype, "theme", void 0);
+IconComponent = __decorate([
+    customElement({
+        name: ICON_CONSTANTS.elementName
+    })
+], IconComponent);
+export { IconComponent };

@@ -1,0 +1,27 @@
+import { ApplicationRef, EnvironmentInjector, NgModuleRef, NgZone, Type } from '@angular/core';
+import { IBottomSheetComponent } from '@tylertech/forge';
+import { BottomSheetConfig } from './bottom-sheet-config';
+import { BottomSheetRef } from './bottom-sheet-ref';
+import * as i0 from "@angular/core";
+export interface IBottomSheetOptions extends Omit<Partial<IBottomSheetComponent>, 'attributes'> {
+    bottomSheetClass?: string;
+    attributes?: Map<string, string>;
+}
+export declare class BottomSheetService {
+    private _appRef;
+    private _injector;
+    private _ngZone;
+    constructor(_appRef: ApplicationRef, _injector: EnvironmentInjector, _ngZone: NgZone);
+    /**
+     * Displays a components within a Forge bottom sheet instance.
+     * @param component The component reference.
+     * @param options The component reference.
+     * @param config The configuration to provide to the dynamic component as an injectable token.
+     * @param moduleRef An NgModuleRef to create the component factory from. (should the injector also inherit from this?)
+     * @param envInjector An environment injector to provide to the component.
+     * @returns A reference for interacting with the created bottom sheet.
+     */
+    show<T, K>(component: Type<T>, options?: IBottomSheetOptions, config?: BottomSheetConfig, moduleRef?: NgModuleRef<K>, envInjector?: EnvironmentInjector): BottomSheetRef<T>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<BottomSheetService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<BottomSheetService>;
+}

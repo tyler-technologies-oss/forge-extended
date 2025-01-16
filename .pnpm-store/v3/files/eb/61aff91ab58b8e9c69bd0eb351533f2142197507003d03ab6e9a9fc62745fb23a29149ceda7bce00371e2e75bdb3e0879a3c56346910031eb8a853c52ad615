@@ -1,0 +1,14 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { defineCustomElement } from '@tylertech/forge-core';
+import { BannerComponent } from './banner';
+export * from './banner-adapter';
+export * from './banner-constants';
+export * from './banner-core';
+export * from './banner';
+export function defineBannerComponent() {
+    defineCustomElement(BannerComponent);
+}

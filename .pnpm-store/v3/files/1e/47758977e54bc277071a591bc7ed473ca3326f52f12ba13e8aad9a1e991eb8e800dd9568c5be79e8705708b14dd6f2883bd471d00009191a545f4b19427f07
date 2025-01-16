@@ -1,0 +1,56 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IStateLayerAdapter } from './state-layer-adapter';
+import { StateLayerCoords } from './state-layer-constants';
+export interface IStateLayerCore {
+    targetElement: HTMLElement | null;
+    target: string | null;
+    disabled: boolean;
+    playAnimation(coords?: StateLayerCoords): void;
+}
+export declare class StateLayerCore implements IStateLayerCore {
+    private _adapter;
+    private _target;
+    private _disabled;
+    private _attached;
+    private _deferred;
+    private _pointerStartEvent;
+    private _pointerState;
+    private _checkBoundsAfterContextMenu;
+    private _pointerEnterListener;
+    private _pointerLeaveListener;
+    private _pointerDownListener;
+    private _pointerUpListener;
+    private _pointerCancelListener;
+    private _clickListener;
+    private _contextmenuListener;
+    constructor(_adapter: IStateLayerAdapter);
+    initialize(): void;
+    destroy(): void;
+    playAnimation(coords?: StateLayerCoords): void;
+    private _deferInitialization;
+    private _applyListeners;
+    private _removeListeners;
+    private _onDeferredInitialize;
+    private _onPointerEnter;
+    private _onPointerLeave;
+    private _onPointerDown;
+    private _onPointerUp;
+    private _onClick;
+    private _onPointerCancel;
+    private _onContextmenu;
+    private _startAnimation;
+    private _endAnimation;
+    private _canHandleEvent;
+    private _isTouch;
+    get isAttached(): boolean;
+    get targetElement(): HTMLElement | null;
+    set targetElement(el: HTMLElement | null);
+    get target(): string | null;
+    set target(value: string | null);
+    get disabled(): boolean;
+    set disabled(value: boolean);
+}

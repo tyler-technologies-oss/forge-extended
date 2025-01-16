@@ -1,0 +1,14 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const RADIO_GROUP_CONSTANTS: {
+    elementName: "forge-radio-group";
+    observedAttributes: {
+        DISABLED: string;
+    };
+    attributes: {
+        DISABLED: string;
+    };
+};

@@ -1,0 +1,255 @@
+export interface IScrollbarVisibility {
+    x: boolean;
+    y: boolean;
+}
+export interface IFontInfo {
+    fontSize?: number;
+    fontFamily?: string;
+}
+/**
+ * Retrieves an element based on the provided root and selector.
+ * @param {Element} root The root element to search within.
+ * @param {string} selector The selector for the child element.
+ * @param {boolean} [allowNull=false] Should the method allow the element to be not found? Default is false.
+ * @returns {HTMLElement}
+ */
+export declare function getElement<T>(root: Element, selector: string, allowNull?: boolean): T;
+/**
+ * Checks if an element is a valid element.
+ * @param {Element} element The node to test
+ * @returns {boolean}
+ */
+export declare function isElement(element: Element): boolean;
+/**
+ * Checks if an element is statically positioned.
+ * @param {Element} element The node to test.
+ * @returns {boolean}
+ */
+export declare function isPositionStatic(element: Element): boolean;
+/**
+ * Parses a style string to a numeric value (removes 'px').
+ * @param {string} value The style string to parse.
+ * @returns {number}
+ */
+export declare function parseStyle(value: string): number;
+/**
+ * Gets the index of an element in the parent element children.
+ * @param {Element} element The element to get the index on.
+ * @returns {number}
+ */
+export declare function elementIndex(element: Element): number;
+/**
+ * Gets an array of parent elements up to the body element.
+ * @param {Element} element The element to get the parents of.
+ * @param {Element=} untilElement Optional element where traversal should stop.
+ * @returns {Array}
+ */
+export declare function elementParents(element: Element, untilElement?: Element): Element[];
+/**
+ * Gets the non-statically positioned parent of an element.
+ * @param element The element to get the offset parent of.
+ * @returns {Element}
+ */
+export declare function offsetParent(element: HTMLElement): HTMLElement;
+/**
+ * Gets the browser scrollbar width.
+ * @returns {number}
+ */
+export declare function scrollbarWidth(): number;
+/**
+ * Checks if an element is scrollable.
+ * @param {Element} element The element to test for scrollability
+ * @returns {boolean}
+ */
+export declare function isScrollable(element: Element): boolean;
+/**
+ * Gets the scroll parent of an element.
+ * @param {Element} element The element to get the scroll parent of.
+ * @param {boolean} [includeSelf=false] Should the element be checked for scrollability.
+ * @returns {Element}
+ */
+export declare function scrollParent(element: Element, includeSelf?: boolean): Element;
+/**
+ * Checks if the elements scroll parent scrollbars are visible.
+ * @param {Element} element The element to check the scroll parent of.
+ * @returns {IScrollbarVisibility}
+ */
+export declare function isScrollbarVisible(element: Element): IScrollbarVisibility;
+/**
+ * Gets the offset from the element to the parent element edges.
+ * If no parentElement is supplied, the documentElement will be used.
+ * @param {Element} element The element to compute the offset for.
+ * @param {Element=} parentElement Optional parent element to measure from.
+ * @returns {DOMRect}
+ */
+export declare function offset(element: Element, parentElement?: Element): Omit<DOMRect, 'x' | 'y' | 'toJSON'>;
+/**
+ * Gets the offset from the element to the parent element viewable edges.
+ * If no parentElement is supplied, the documentElement will be used.
+ * @param {Element} element The element to measure
+ * @param {Element=} parentElement The parent element to measure to.
+ * @returns {DOMRect}
+ */
+export declare function viewportOffset(element: HTMLElement, parentElement?: Element): Omit<DOMRect, 'x' | 'y' | 'toJSON'>;
+/**
+ * Checks if any part of an element is visible in the viewport.
+ * @param {Element} element The element to check.
+ * @returns {boolean}
+ */
+export declare function isElementInViewport(element: Element): boolean;
+/**
+ * Adds an event listener to the document that will call the provided callback function
+ * when an element and it's children no longer have focus.  The blur and touchstart events are used
+ * to evaluate the active element to determine if the callback should be called.
+ *
+ * @param {Element} element The element to add the event listener to.
+ * @param {Function} callback The function to call when the element and children don't have focus.
+ * @param {boolean} [delay=false] Should a RAF cycle occur before the callback is called.
+ * @returns {Function} The function to call to remove the document events.
+ */
+export declare function notChildEventListener(element: HTMLElement, callback: (element: HTMLElement) => void, delay?: boolean): () => void;
+/**
+ * Removes all children from a DOM node.
+ * @param node The DOM node to remove children from.
+ */
+export declare function removeAllChildren(node: Element): void;
+/**
+ * Replaces one child node of the specified node with another.
+ * @param newChild The new node to replace `oldChild`.
+ * @param oldChild The existing node to be replaced.
+ * @returns {Node} The replaced node. Same node as `oldChild`.
+ */
+export declare function replaceElement(newChild: Node, oldChild: Node): Node;
+/**
+ * Adds a class or array of classes to an element.
+ *
+ * @param {string | string[]} name The class(es) to add to the element
+ * @param {Element} element The element to add class(es) to.
+ */
+export declare function addClass(name: string | string[], element: Element): void;
+/**
+ * Removes a class or array of classes to an element.
+ *
+ * @param {string | string[]} name The class(es) to remove from the element
+ * @param {Element} element The element to remove class(es) from.
+ */
+export declare function removeClass(name: string | string[], element: Element): void;
+/** Determines which type of animation event is supported. */
+export declare function getAnimationEvent(): string | undefined;
+/**
+ * A helper method to trigger a keyframe animation via adding a class, and removing the class when the animation completes.
+ * @param {HTMLElement} element The element to play the animation on.
+ * @param {string} className The class to add that triggers the animation.
+ */
+export declare function playKeyframeAnimation(element: HTMLElement, className: string, remove?: boolean): Promise<void>;
+/**
+ * Removes an element from the DOM using the available remove method for that platform.
+ * @param {HTMLElement} element The element to remove.
+ */
+export declare function removeElement(element: HTMLElement): void;
+/**
+ * Returns a width string that is safe for css based on the provided input.
+ * @param {string | number} width
+ * @returns {string | undefined} A width safe for using in CSS.
+ */
+export declare function safeCssWidth(width: string | number): string | undefined;
+/**
+ * Calculates the size of an element that is not attached to the DOM.
+ * @param {HTMLElement} element The element to calc the size of.
+ * @returns {width, height} The size of the element.
+ */
+export declare function calcSizeUnattached(element: HTMLElement): {
+    width: number;
+    height: number;
+};
+/**
+ * Resolves a promise when the provided element has children.
+ * @param {Element} element An element that does or will contain children.
+ */
+export declare function ensureChildren(element: Element): Promise<void>;
+/**
+ * Resolves a promise when the provided element has a child that matches a given selector.
+ * @param {Element} element An element that does or will contain children.
+ * @param {string} selector A CSS selector to use for finding an element.
+ */
+export declare function ensureChild(element: Element, selector: string): Promise<Element>;
+/**
+ * Resolves a promise when the provided host element has an `<input>` element child
+ * @param {HTMLElement} host An element that does or will contain children.
+ */
+export declare function ensureInputElement(host: HTMLElement): Promise<Element>;
+/**
+ * Walks up the tree starting a specific node and stops when the provided matcher function returns true.
+ * @param {Node} node The node to start searching from.
+ * @returns {Node | null} The closest matching ancestor node, or null if not found.
+ */
+export declare function walkUpUntil(node: Node, matcher: (node: Node) => boolean): Node | null;
+/**
+ * Calculates the width of a string given the provided font information.
+ */
+export declare function calculateFontWidth(value: string, info?: IFontInfo): number;
+/**
+ * Generates a CSS text-shadow style value based on the number of iterations and color provided.
+ * @param {number} iterations The number of iterations for how long the shadow should be.
+ * @param {string} color The color of the text shadow. Can be any CSS-safe color format. Ex. hex, rgb, rgba, hsl... etc.
+ */
+export declare function generateTextShadow(iterations: number, color: string): string;
+/**
+ * Checks if an element matches any of the provided selectors.
+ * @param {Element} el The element to match.
+ * @param {string[]} selectors The selectors to check the element against.
+ */
+export declare function matchesSelectors(el: Element | Node, selectors: string | string[]): boolean;
+/**
+ * Walks the DOM tree starting at a root element and checks if any of its children
+ * match the provided selectors. Similar to the native `querySelectorAll` except
+ * that it will traverse the shadow DOM as well as slotted nodes.
+ * @param {Element} rootElement The element to start querying from.
+ * @param {string[]} selectors An array of CSS selectors.
+ * @param {boolean} [checkRootElement] True if the provided root element is to be matched against the selectors.
+ */
+export declare function deepQuerySelectorAll(rootElement: Element, selectors: string | string[], checkRootElement?: boolean): Element[];
+/**
+ * Gets the currently focused element within the document by also traversing shadow roots.
+ * @param {Document} doc The document to get the active element from. Defaults to the current document.
+ * @returns {Element}
+ */
+export declare function getActiveElement(doc?: Document): Element;
+/**
+ * Gets the active element within the provided elements shadow root. If the element
+ * does not have a shadow root, the provided element is returned.
+ * @param {Element} element The active element.
+ */
+export declare function getActiveShadowElement(element: Element): Element;
+/** Toggles a CSS class (or classes) on an element based on a boolean. */
+export declare function toggleClass(el: HTMLElement, hasClass: boolean, className: string | string[]): void;
+/** Toggles a value-less attribute on an element. */
+export declare function toggleAttribute(el: HTMLElement, hasAttribute: boolean, name: string, value?: string): void;
+/** Toggles part of an attribute on an element. */
+export declare function toggleOnAttribute(el: HTMLElement, attribute: string, value: string, force?: boolean): void;
+/** Appends a value to an attribute on an element, first setting it if it doesn't exist. */
+export declare function appendToAttribute(el: HTMLElement, attribute: string, value: string): void;
+/** Removes a value from an attribute on an element, removing the attribute if empty. */
+export declare function removeFromAttribute(el: HTMLElement, attribute: string, value: string): void;
+/**
+ * Attempts to scroll a target element into view within a scrollable parent element, unless already visible within the container.
+ * @param scrollElement The scrollable parent element.
+ * @param targetElement The element to scroll into view.
+ * @param behavior The scroll behavior. Defaults to 'auto'.
+ * @param block The block position to anchor the target element to within the scroll element.
+ */
+export declare function tryScrollIntoView(scrollElement: HTMLElement, targetElement: HTMLElement, behavior?: 'auto' | 'smooth', block?: 'nearest' | 'center'): void;
+/** Calculates the block anchor position for a target element within a scrollable parent element. */
+export declare function calcBlockScroll(block: 'nearest' | 'center', isClippedStart: boolean, targetOffset: number, targetSize: number, scrollOffset: number, scrollSize: number): number;
+/**
+ * Creates an element from an HTML string.
+ */
+export declare function elementFromHTML(html: string): Element | null;
+/**
+ * Observes changes to the provided attributes on a target element and executes a provided callback when changed.
+ * @param element The element to observe.
+ * @param listener The callback to execute when an attribute changes on the element.
+ * @param attributeFilter The attributes to observe.
+ * @returns A `MutationObserver` instasnce.
+ */
+export declare function createElementAttributeObserver(element: HTMLElement, listener: (name: string, value: string | null) => void, attributeFilter: string[] | undefined): MutationObserver;

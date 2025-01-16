@@ -1,0 +1,22 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const TWENTY_FOUR_HOUR_TIME_REGEX: RegExp;
+export declare const TWELVE_HOUR_TIME_REGEX: RegExp;
+export declare const PARSEABLE_TIME_FORMAT: RegExp;
+export declare const HAS_MERIDIEM_REGEX: RegExp;
+export declare function tokenize24HourTimeString(value: string): {
+    hours: string;
+    minutes: string;
+    seconds: string;
+};
+export declare function tokenize12HourTimeString(value: string): {
+    hours: string;
+    minutes: string;
+    seconds: string;
+    meridiem: string;
+};
+export declare function isSupportedTimeFormat(value: string): boolean;
+export declare function tryCoerceTimeString(str: string, use24HourTime: boolean, allowSeconds: boolean): string;

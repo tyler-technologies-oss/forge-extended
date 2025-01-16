@@ -1,0 +1,63 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IListDropdownConfig, IListDropdownOption, IListDropdownOptionGroup } from './list-dropdown-constants';
+export interface IListDropdown {
+    dropdownElement: HTMLElement | undefined;
+    open(): void;
+    close(): Promise<void>;
+    destroy(): void;
+    getActiveOptionIndex(): number;
+    getActiveOption(): IListDropdownOption | undefined;
+    toggleOptionMultiple(index: number, isSelected: boolean): void;
+    activateSelectedOption(): void;
+    activateFirstOption(): number;
+    activateOption(index: number): void;
+    activateInitialOption(): void;
+    clearActiveOption(): void;
+    setSelectedValues(values: any[]): void;
+    setOptions(options: Array<IListDropdownOption | IListDropdownOptionGroup>): void;
+    appendOptions(options: Array<IListDropdownOption | IListDropdownOptionGroup>): void;
+    scrollSelectedOptionIntoView(animate?: boolean): void;
+    setScrollBottomListener(listener: () => void, threshold?: number): void;
+    removeScrollBottomListener(): void;
+    setBusyVisibility(isVisible: boolean): void;
+    handleKey(key: string): void;
+}
+export declare class ListDropdown implements IListDropdown {
+    private _targetElement;
+    private _core;
+    constructor(_targetElement: HTMLElement, config: IListDropdownConfig);
+    destroy(): void;
+    /** Opens the dropdown. */
+    open(): void;
+    /** Closes the dropdown. */
+    close(): Promise<void>;
+    /** Gets the currently highlighted option index in the dropdown. */
+    getActiveOptionIndex(): number;
+    getActiveOption(): IListDropdownOption | undefined;
+    /** Toggles the selected option by index. Only applies when in multiselect mode. */
+    toggleOptionMultiple(index: number, isSelected: boolean): void;
+    /** Activates the first selected option. */
+    activateSelectedOption(): void;
+    /** Activates the first non-disabled option. */
+    activateFirstOption(): number;
+    /** Activates (highlights) an option by index. */
+    activateOption(index: number): void;
+    /** Activates the first activatable option. */
+    activateInitialOption(): void;
+    /** Clears the active option from the dropdown */
+    clearActiveOption(): void;
+    /** Sets the selected values. Only applies when in multiselect mode. */
+    setSelectedValues(values: any[]): void;
+    get dropdownElement(): HTMLElement | undefined;
+    setOptions(options: Array<IListDropdownOption | IListDropdownOptionGroup>): void;
+    appendOptions(options: Array<IListDropdownOption | IListDropdownOptionGroup>): void;
+    scrollSelectedOptionIntoView(animate?: boolean): void;
+    setScrollBottomListener(listener: () => void, threshold?: number): void;
+    removeScrollBottomListener(): void;
+    setBusyVisibility(isVisible: boolean): void;
+    handleKey(key: string): void;
+}

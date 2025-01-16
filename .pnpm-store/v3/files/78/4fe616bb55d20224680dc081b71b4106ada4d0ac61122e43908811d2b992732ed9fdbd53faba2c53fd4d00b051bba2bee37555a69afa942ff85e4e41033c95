@@ -1,0 +1,86 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+/**
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Adapted and influenced from [Material Web](https://github.com/material-components/material-web).
+ * The original source code can be found at: [GitHub](https://github.com/material-components/material-web/blob/main/labs/behaviors/focusable.ts)
+ */
+import { isFocusable } from '../../../constants';
+const _privateIsFocusable = Symbol('privateIsFocusable');
+const _externalTabIndex = Symbol('externalTabIndex');
+const _isUpdatingTabIndex = Symbol('isUpdatingTabIndex');
+const _updateTabIndex = Symbol('updateTabIndex');
+/**
+ * Provides focusable functionality for an element.
+ *
+ * Elements can enable and disable their focusability with the `isFocusable`
+ * symbol property. **Use this instead of changing `tabIndex` directly.**
+ *
+ * This will preserve externally-set tabindices. If an element sets `tabindex="-1"`,
+ * but a user sets `tabindex="0"`, it will still be focusable.
+ *
+ * To remove user overrides and restore focus control to the element, remove the `tabindex` attribute.
+ *
+ * @param base The base component to mix into.
+ * @returns The mixed-in base component.
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export function WithFocusable(base) {
+    var _a, _b, _c;
+    class FocusableComponent extends base {
+        constructor() {
+            super(...arguments);
+            this[_a] = false;
+            this[_b] = null; // Allows for external tabIndex to be stored when internal tabIndex is set to -1
+            this[_c] = false; // Allows for internal tabIndex to be set without triggering attributeChangedCallback
+        }
+        get [isFocusable]() {
+            return this[_privateIsFocusable];
+        }
+        /**
+         * Whether or not the element can be focused.
+         *
+         * Set this from inheriting components **instead** of directly manipulating `tabIndex`.
+         */
+        set [isFocusable](value) {
+            if (this[isFocusable] === value) {
+                return;
+            }
+            this[_privateIsFocusable] = value;
+            this[_updateTabIndex]();
+        }
+        connectedCallback() {
+            // This must be set in the connectedCallback to avoid sprouting a tabindex attribute on the host from the ctor
+            this[isFocusable] = true;
+            super.connectedCallback?.();
+        }
+        attributeChangedCallback(name, oldValue, newValue) {
+            super.attributeChangedCallback?.(name, oldValue, newValue);
+            if (name !== 'tabindex' || this[_isUpdatingTabIndex]) {
+                return;
+            }
+            if (!this.hasAttribute('tabindex')) {
+                // User removed the attribute, can now use internal tabIndex
+                this[_externalTabIndex] = null;
+                this[_updateTabIndex]();
+                return;
+            }
+            this[_externalTabIndex] = this.tabIndex;
+        }
+        [(_a = _privateIsFocusable, _b = _externalTabIndex, _c = _isUpdatingTabIndex, _updateTabIndex)]() {
+            const internalTabIndex = this[isFocusable] ? 0 : -1;
+            const computedTabIndex = this[_externalTabIndex] ?? internalTabIndex;
+            // const computedTabIndex = internalTabIndex === 0 ? this[_externalTabIndex] ?? internalTabIndex : internalTabIndex;
+            this[_isUpdatingTabIndex] = true;
+            this.tabIndex = computedTabIndex;
+            this[_isUpdatingTabIndex] = false;
+        }
+    }
+    return FocusableComponent;
+}

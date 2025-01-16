@@ -1,0 +1,53 @@
+import { Directive, forwardRef, HostListener } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import * as i0 from "@angular/core";
+export const DATEPICKER_VALUE_ACCESSOR = {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => DatePickerValueAccessor),
+    multi: true
+};
+export class DatePickerValueAccessor {
+    datePickerChange(event) {
+        this.change(event.detail);
+    }
+    blur() {
+        this.onTouched();
+    }
+    constructor(_elementRef, _renderer) {
+        this._elementRef = _elementRef;
+        this._renderer = _renderer;
+        this.onChange = (_) => { };
+        this.onTouched = () => { };
+    }
+    writeValue(value) {
+        this._renderer.setProperty(this._elementRef.nativeElement, 'value', value);
+    }
+    registerOnChange(fn) {
+        this.onChange = fn;
+    }
+    registerOnTouched(fn) {
+        this.onTouched = fn;
+    }
+    setDisabledState(isDisabled) {
+        this._renderer.setProperty(this._elementRef.nativeElement, 'disabled', isDisabled);
+    }
+    change(value) {
+        this.onChange(value);
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: DatePickerValueAccessor, deps: [{ token: i0.ElementRef }, { token: i0.Renderer2 }], target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "17.3.7", type: DatePickerValueAccessor, selector: "forge-date-picker[formControlName],forge-date-picker[formControl],forge-date-picker[ngModel]", host: { listeners: { "forge-date-picker-change": "datePickerChange($event)", "focusout": "blur()" } }, providers: [DATEPICKER_VALUE_ACCESSOR], ngImport: i0 }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: DatePickerValueAccessor, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: 'forge-date-picker[formControlName],forge-date-picker[formControl],forge-date-picker[ngModel]',
+                    providers: [DATEPICKER_VALUE_ACCESSOR]
+                }]
+        }], ctorParameters: () => [{ type: i0.ElementRef }, { type: i0.Renderer2 }], propDecorators: { datePickerChange: [{
+                type: HostListener,
+                args: ['forge-date-picker-change', ['$event']]
+            }], blur: [{
+                type: HostListener,
+                args: ['focusout']
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGF0ZS1waWNrZXItdmFsdWUtYWNjZXNzb3IuZGlyZWN0aXZlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvZm9yZ2UtYW5ndWxhci9zcmMvbGliL2RhdGUtcGlja2VyL2RhdGUtcGlja2VyLXZhbHVlLWFjY2Vzc29yLmRpcmVjdGl2ZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsU0FBUyxFQUF5QixVQUFVLEVBQUUsWUFBWSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBRTNGLE9BQU8sRUFBd0IsaUJBQWlCLEVBQUUsTUFBTSxnQkFBZ0IsQ0FBQzs7QUFHekUsTUFBTSxDQUFDLE1BQU0seUJBQXlCLEdBQW1CO0lBQ3ZELE9BQU8sRUFBRSxpQkFBaUI7SUFDMUIsV0FBVyxFQUFFLFVBQVUsQ0FBQyxHQUFHLEVBQUUsQ0FBQyx1QkFBdUIsQ0FBQztJQUN0RCxLQUFLLEVBQUUsSUFBSTtDQUNaLENBQUM7QUFNRixNQUFNLE9BQU8sdUJBQXVCO0lBRTNCLGdCQUFnQixDQUFDLEtBQW9EO1FBQzFFLElBQUksQ0FBQyxNQUFNLENBQUMsS0FBSyxDQUFDLE1BQU0sQ0FBQyxDQUFDO0lBQzVCLENBQUM7SUFHTSxJQUFJO1FBQ1QsSUFBSSxDQUFDLFNBQVMsRUFBRSxDQUFDO0lBQ25CLENBQUM7SUFLRCxZQUFvQixXQUE2QyxFQUFVLFNBQW9CO1FBQTNFLGdCQUFXLEdBQVgsV0FBVyxDQUFrQztRQUFVLGNBQVMsR0FBVCxTQUFTLENBQVc7UUFIeEYsYUFBUSxHQUFHLENBQUMsQ0FBTSxFQUFRLEVBQUUsR0FBRSxDQUFDLENBQUM7UUFDaEMsY0FBUyxHQUFHLEdBQVMsRUFBRSxHQUFFLENBQUMsQ0FBQztJQUVnRSxDQUFDO0lBRTVGLFVBQVUsQ0FBQyxLQUFVO1FBQzFCLElBQUksQ0FBQyxTQUFTLENBQUMsV0FBVyxDQUFDLElBQUksQ0FBQyxXQUFXLENBQUMsYUFBYSxFQUFFLE9BQU8sRUFBRSxLQUFLLENBQUMsQ0FBQztJQUM3RSxDQUFDO0lBRU0sZ0JBQWdCLENBQUMsRUFBd0I7UUFDOUMsSUFBSSxDQUFDLFFBQVEsR0FBRyxFQUFFLENBQUM7SUFDckIsQ0FBQztJQUVNLGlCQUFpQixDQUFDLEVBQWM7UUFDckMsSUFBSSxDQUFDLFNBQVMsR0FBRyxFQUFFLENBQUM7SUFDdEIsQ0FBQztJQUVNLGdCQUFnQixDQUFDLFVBQW1CO1FBQ3pDLElBQUksQ0FBQyxTQUFTLENBQUMsV0FBVyxDQUFDLElBQUksQ0FBQyxXQUFXLENBQUMsYUFBYSxFQUFFLFVBQVUsRUFBRSxVQUFVLENBQUMsQ0FBQztJQUNyRixDQUFDO0lBRU0sTUFBTSxDQUFDLEtBQXVDO1FBQ25ELElBQUksQ0FBQyxRQUFRLENBQUMsS0FBSyxDQUFDLENBQUM7SUFDdkIsQ0FBQzs4R0FsQ1UsdUJBQXVCO2tHQUF2Qix1QkFBdUIsOE5BRnZCLENBQUMseUJBQXlCLENBQUM7OzJGQUUzQix1QkFBdUI7a0JBSm5DLFNBQVM7bUJBQUM7b0JBQ1QsUUFBUSxFQUFFLDhGQUE4RjtvQkFDeEcsU0FBUyxFQUFFLENBQUMseUJBQXlCLENBQUM7aUJBQ3ZDO3VHQUdRLGdCQUFnQjtzQkFEdEIsWUFBWTt1QkFBQywwQkFBMEIsRUFBRSxDQUFDLFFBQVEsQ0FBQztnQkFNN0MsSUFBSTtzQkFEVixZQUFZO3VCQUFDLFVBQVUiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBEaXJlY3RpdmUsIFJlbmRlcmVyMiwgRWxlbWVudFJlZiwgZm9yd2FyZFJlZiwgSG9zdExpc3RlbmVyIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBTdGF0aWNQcm92aWRlciB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuaW1wb3J0IHsgQ29udHJvbFZhbHVlQWNjZXNzb3IsIE5HX1ZBTFVFX0FDQ0VTU09SIH0gZnJvbSAnQGFuZ3VsYXIvZm9ybXMnO1xuaW1wb3J0IHsgSURhdGVQaWNrZXJDb21wb25lbnQgfSBmcm9tICdAdHlsZXJ0ZWNoL2ZvcmdlJztcblxuZXhwb3J0IGNvbnN0IERBVEVQSUNLRVJfVkFMVUVfQUNDRVNTT1I6IFN0YXRpY1Byb3ZpZGVyID0ge1xuICBwcm92aWRlOiBOR19WQUxVRV9BQ0NFU1NPUixcbiAgdXNlRXhpc3Rpbmc6IGZvcndhcmRSZWYoKCkgPT4gRGF0ZVBpY2tlclZhbHVlQWNjZXNzb3IpLFxuICBtdWx0aTogdHJ1ZVxufTtcblxuQERpcmVjdGl2ZSh7XG4gIHNlbGVjdG9yOiAnZm9yZ2UtZGF0ZS1waWNrZXJbZm9ybUNvbnRyb2xOYW1lXSxmb3JnZS1kYXRlLXBpY2tlcltmb3JtQ29udHJvbF0sZm9yZ2UtZGF0ZS1waWNrZXJbbmdNb2RlbF0nLFxuICBwcm92aWRlcnM6IFtEQVRFUElDS0VSX1ZBTFVFX0FDQ0VTU09SXVxufSlcbmV4cG9ydCBjbGFzcyBEYXRlUGlja2VyVmFsdWVBY2Nlc3NvciBpbXBsZW1lbnRzIENvbnRyb2xWYWx1ZUFjY2Vzc29yIHtcbiAgQEhvc3RMaXN0ZW5lcignZm9yZ2UtZGF0ZS1waWNrZXItY2hhbmdlJywgWyckZXZlbnQnXSlcbiAgcHVibGljIGRhdGVQaWNrZXJDaGFuZ2UoZXZlbnQ6IEN1c3RvbUV2ZW50PHN0cmluZyB8IERhdGUgfCBudWxsIHwgdW5kZWZpbmVkPik6IHZvaWQge1xuICAgIHRoaXMuY2hhbmdlKGV2ZW50LmRldGFpbCk7XG4gIH1cblxuICBASG9zdExpc3RlbmVyKCdmb2N1c291dCcpXG4gIHB1YmxpYyBibHVyKCk6IHZvaWQge1xuICAgIHRoaXMub25Ub3VjaGVkKCk7XG4gIH1cblxuICBwdWJsaWMgb25DaGFuZ2UgPSAoXzogYW55KTogdm9pZCA9PiB7fTtcbiAgcHVibGljIG9uVG91Y2hlZCA9ICgpOiB2b2lkID0+IHt9O1xuXG4gIGNvbnN0cnVjdG9yKHByaXZhdGUgX2VsZW1lbnRSZWY6IEVsZW1lbnRSZWY8SURhdGVQaWNrZXJDb21wb25lbnQ+LCBwcml2YXRlIF9yZW5kZXJlcjogUmVuZGVyZXIyKSB7fVxuXG4gIHB1YmxpYyB3cml0ZVZhbHVlKHZhbHVlOiBhbnkpOiB2b2lkIHtcbiAgICB0aGlzLl9yZW5kZXJlci5zZXRQcm9wZXJ0eSh0aGlzLl9lbGVtZW50UmVmLm5hdGl2ZUVsZW1lbnQsICd2YWx1ZScsIHZhbHVlKTtcbiAgfVxuXG4gIHB1YmxpYyByZWdpc3Rlck9uQ2hhbmdlKGZuOiAoXzogYm9vbGVhbikgPT4gdm9pZCk6IHZvaWQge1xuICAgIHRoaXMub25DaGFuZ2UgPSBmbjtcbiAgfVxuXG4gIHB1YmxpYyByZWdpc3Rlck9uVG91Y2hlZChmbjogKCkgPT4gdm9pZCk6IHZvaWQge1xuICAgIHRoaXMub25Ub3VjaGVkID0gZm47XG4gIH1cblxuICBwdWJsaWMgc2V0RGlzYWJsZWRTdGF0ZShpc0Rpc2FibGVkOiBib29sZWFuKTogdm9pZCB7XG4gICAgdGhpcy5fcmVuZGVyZXIuc2V0UHJvcGVydHkodGhpcy5fZWxlbWVudFJlZi5uYXRpdmVFbGVtZW50LCAnZGlzYWJsZWQnLCBpc0Rpc2FibGVkKTtcbiAgfVxuXG4gIHB1YmxpYyBjaGFuZ2UodmFsdWU6IHN0cmluZyB8IERhdGUgfCBudWxsIHwgdW5kZWZpbmVkKTogdm9pZCB7XG4gICAgdGhpcy5vbkNoYW5nZSh2YWx1ZSk7XG4gIH1cbn1cbiJdfQ==

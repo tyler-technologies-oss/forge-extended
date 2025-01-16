@@ -1,0 +1,28 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const DEPRECATED_ICON_BUTTON_CONSTANTS: {
+    elementName: "forge-deprecated-icon-button";
+    observedAttributes: {
+        DISABLED: string;
+        TOGGLE: string;
+        IS_ON: string;
+        DENSITY_LEVEL: string;
+    };
+    attributes: {
+        ON_ICON: string;
+        DISABLED: string;
+        TOGGLE: string;
+        IS_ON: string;
+        DENSITY_LEVEL: string;
+    };
+    selectors: {
+        BUTTON: string;
+        ICON_LIKE: string;
+    };
+    events: {
+        TOGGLE: string;
+    };
+};

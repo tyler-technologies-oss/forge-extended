@@ -1,0 +1,5 @@
+/**
+ * Converts a JavaScript object to a URI encoded query string.
+ * @param {any} obj The parameters for the query string.
+ */
+export declare function createQueryString(obj: any): string | null;

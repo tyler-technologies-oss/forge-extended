@@ -1,0 +1,12 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { defineCustomElement } from '@tylertech/forge-core';
+import { ChipSetComponent } from './chip-set';
+export * from './chip-set-constants';
+export * from './chip-set';
+export function defineChipSetComponent() {
+    defineCustomElement(ChipSetComponent);
+}

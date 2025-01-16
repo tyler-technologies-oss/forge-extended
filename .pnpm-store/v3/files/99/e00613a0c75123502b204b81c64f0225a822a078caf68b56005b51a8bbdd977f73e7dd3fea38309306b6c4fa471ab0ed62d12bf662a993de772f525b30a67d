@@ -1,0 +1,79 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const STATE_LAYER_CONSTANTS: {
+    elementName: string;
+    attributes: {
+        TARGET: string;
+        DISABLED: string;
+    };
+    selectors: {
+        SURFACE: string;
+    };
+    classes: {
+        HOVERED: string;
+        PRESSED: string;
+    };
+};
+export declare class StateLayerCoords {
+    x: number;
+    y: number;
+    constructor(x: number, y: number);
+    static fromPointerEvent(event: PointerEvent): StateLayerCoords;
+}
+export declare const TOUCH_DELAY_MS = 150;
+export declare const PRESS_GROW_MS = 450;
+export declare const MINIMUM_PRESS_MS = 225;
+export declare const INITIAL_ORIGIN_SCALE = 0.2;
+export declare const PADDING = 10;
+export declare const SOFT_EDGE_MINIMUM_SIZE = 75;
+export declare const SOFT_EDGE_CONTAINER_RATIO = 0.35;
+export declare const PRESS_PSEUDO = "::after";
+export declare const ANIMATION_FILL = "forwards";
+export declare const EASING = "cubic-bezier(0.2, 0, 0, 1)";
+/**
+ * Interaction states for the state layer.
+ *
+ * On Touch:
+ *  - `INACTIVE -> TOUCH_DELAY -> WAITING_FOR_CLICK -> INACTIVE`
+ *  - `INACTIVE -> TOUCH_DELAY -> HOLDING -> WAITING_FOR_CLICK -> INACTIVE`
+ *
+ * On Mouse or Pen:
+ *   - `INACTIVE -> WAITING_FOR_CLICK -> INACTIVE`
+ */
+export declare enum PointerState {
+    /**
+     * Initial state of the control, no touch in progress.
+     *
+     * Transitions:
+     *   - on touch down: transition to `TOUCH_DELAY`.
+     *   - on mouse down: transition to `WAITING_FOR_CLICK`.
+     */
+    INACTIVE = 0,
+    /**
+     * Touch down has been received, waiting to determine if it's a swipe or
+     * scroll.
+     *
+     * Transitions:
+     *   - on touch up: begin press; transition to `WAITING_FOR_CLICK`.
+     *   - on cancel: transition to `INACTIVE`.
+     *   - after `TOUCH_DELAY_MS`: begin press; transition to `HOLDING`.
+     */
+    TOUCH_DELAY = 1,
+    /**
+     * A touch has been deemed to be a press
+     *
+     * Transitions:
+     *  - on up: transition to `WAITING_FOR_CLICK`.
+     */
+    HOLDING = 2,
+    /**
+     * The user touch has finished, transition into rest state.
+     *
+     * Transitions:
+     *   - on click end press; transition to `INACTIVE`.
+     */
+    WAITING_FOR_CLICK = 3
+}

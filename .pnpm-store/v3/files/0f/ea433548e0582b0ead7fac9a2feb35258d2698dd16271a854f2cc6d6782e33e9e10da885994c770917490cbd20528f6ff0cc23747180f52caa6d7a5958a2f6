@@ -1,0 +1,39 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { Theme } from '../constants';
+export declare const ICON_CONSTANTS: {
+    elementName: "forge-icon";
+    observedAttributes: {
+        NAME: string;
+        SRC: string;
+        LAZY: string;
+        EXTERNAL: string;
+        EXTERNAL_TYPE: string;
+        VIEWBOX: string;
+        THEME: string;
+    };
+    attributes: {
+        NAME: string;
+        SRC: string;
+        LAZY: string;
+        EXTERNAL: string;
+        EXTERNAL_TYPE: string;
+        VIEWBOX: string;
+        THEME: string;
+    };
+    numbers: {
+        LAZY_ROOT_MARGIN: number;
+        DEFAULT_WIDTH: number;
+        DEFAULT_HEIGHT: number;
+    };
+    strings: {
+        DEFAULT_NETWORK_BASE_URL: string;
+    };
+};
+export declare const ICON_REGISTRY_KEY = "forgeIcons";
+export type IconUrlBuilder = (name: string, type: IconExternalType) => string;
+export type IconExternalType = '' | 'custom' | 'standard' | 'extended';
+export type IconTheme = Theme | 'text-medium' | 'text-low';

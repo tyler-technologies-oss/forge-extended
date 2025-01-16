@@ -1,0 +1,38 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { FieldLabelPosition } from '../field';
+import { BaseFieldCore, IBaseFieldCore } from '../field/base/base-field-core';
+import { ITextFieldAdapter, TextFieldAdapter } from './text-field-adapter';
+export interface ITextFieldCore extends IBaseFieldCore {
+    readonly popoverTargetElement: HTMLElement;
+    showClear: boolean;
+}
+export declare class TextFieldCore extends BaseFieldCore<ITextFieldAdapter> implements ITextFieldCore {
+    protected _adapter: TextFieldAdapter;
+    private _showClear;
+    private _slotChangeListener;
+    private _inputAttributeListener;
+    private _valueChangeListener;
+    private _inputListener;
+    private _clearButtonClickListener;
+    constructor(_adapter: TextFieldAdapter);
+    initialize(): void;
+    destroy(): void;
+    get popoverTargetElement(): HTMLElement;
+    private _initializeSlots;
+    private _onSlotChange;
+    private _handleSlotChange;
+    private _onInputAttributeChange;
+    private _onClearButtonClick;
+    private _onValueChange;
+    private _toggleClearButtonVisibility;
+    get showClear(): boolean;
+    set showClear(value: boolean);
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    get labelPosition(): FieldLabelPosition;
+    set labelPosition(value: FieldLabelPosition);
+}

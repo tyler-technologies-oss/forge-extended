@@ -1,0 +1,55 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IFieldComponent } from '../field';
+import { BaseFieldAdapter, IBaseFieldAdapter } from '../field/base/base-field-adapter';
+import { ITextFieldComponent } from './text-field';
+import { TextFieldInputAttributeObserver, TextFieldValueChangeListener } from './text-field-constants';
+export interface ITextFieldAdapter extends IBaseFieldAdapter {
+    readonly popoverTargetElement: HTMLElement;
+    addRootListener(name: keyof HTMLElementEventMap, listener: EventListener): void;
+    removeRootListener(name: keyof HTMLElementEventMap, listener: EventListener): void;
+    disableInput(disabled: boolean): void;
+    handleDefaultSlotChange(listener: TextFieldInputAttributeObserver): void;
+    tryAddValueChangeListener(context: unknown, listener: TextFieldValueChangeListener): void;
+    removeValueChangeListener(): void;
+    tryFloatLabel(force?: boolean): void;
+    tryConnectSlottedLabel(): void;
+    connectClearButton(listener: EventListener): void;
+    disconnectClearButton(listener: EventListener): void;
+    toggleClearButtonVisibility(visible: boolean): void;
+    clearInput(): void;
+    getAllSlotElements(): HTMLSlotElement[];
+}
+export declare class TextFieldAdapter extends BaseFieldAdapter implements ITextFieldAdapter {
+    protected readonly _fieldElement: IFieldComponent;
+    private readonly _clearButtonSlotElement;
+    private readonly _defaultSlotElement;
+    private readonly _labelSlotElement;
+    private _popoverTargetElement;
+    private _inputElements;
+    private _inputMutationObserver?;
+    private _destroyValueChangerListeners;
+    get hasValue(): boolean;
+    get hasPlaceholder(): boolean;
+    get popoverTargetElement(): HTMLElement;
+    constructor(component: ITextFieldComponent);
+    addRootListener(name: keyof HTMLElementEventMap, listener: EventListener): void;
+    removeRootListener(name: keyof HTMLElementEventMap, listener: EventListener): void;
+    disableInput(disabled: boolean): void;
+    inputIsDisabled(): boolean;
+    click(): void;
+    applyLabel(value: string | null): void;
+    handleDefaultSlotChange(listener: TextFieldInputAttributeObserver): void;
+    tryAddValueChangeListener(context: unknown, listener: TextFieldValueChangeListener): void;
+    removeValueChangeListener(): void;
+    tryFloatLabel(force?: boolean): void;
+    tryConnectSlottedLabel(): void;
+    connectClearButton(listener: EventListener): void;
+    disconnectClearButton(listener: EventListener): void;
+    toggleClearButtonVisibility(visible: boolean): void;
+    clearInput(): void;
+    getAllSlotElements(): HTMLSlotElement[];
+}

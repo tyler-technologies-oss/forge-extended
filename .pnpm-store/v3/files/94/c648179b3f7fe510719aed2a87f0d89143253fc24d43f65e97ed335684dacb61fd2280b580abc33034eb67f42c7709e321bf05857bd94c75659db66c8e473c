@@ -1,0 +1,25 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use './core';
+
+.forge-badge {
+  @include core.tokens;
+}
+
+.forge-badge {
+  @include core.base;
+  @include core.content;
+
+  &--dot {
+    @include core.dot;
+  }
+
+  forge-icon,
+  .forge-icon,
+  .forge-badge__icon {
+    font-size: inherit;
+  }
+}

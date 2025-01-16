@@ -1,0 +1,8 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./select-value-accessor.directive";
+import * as i2 from "./select-proxy.module";
+export declare class ForgeSelectModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeSelectModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeSelectModule, [typeof i1.SelectValueAccessor], never, [typeof i1.SelectValueAccessor, typeof i2.ForgeSelectProxyModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeSelectModule>;
+}

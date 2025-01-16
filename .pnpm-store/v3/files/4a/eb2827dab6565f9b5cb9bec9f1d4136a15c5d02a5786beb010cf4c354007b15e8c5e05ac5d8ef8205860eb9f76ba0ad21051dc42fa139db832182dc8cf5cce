@@ -1,0 +1,14 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { defineCustomElement } from '@tylertech/forge-core';
+import { ColorPickerComponent } from './color-picker';
+export * from './color-picker-adapter';
+export * from './color-picker-constants';
+export * from './color-picker-core';
+export * from './color-picker';
+export function defineColorPickerComponent() {
+    defineCustomElement(ColorPickerComponent);
+}

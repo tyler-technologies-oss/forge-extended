@@ -1,0 +1,10 @@
+/**
+ * Gets the node path from where the event originated from.
+ * @param evt The event.
+ */
+export declare function getEventPath(evt: Event): HTMLElement[];
+/**
+ * Equivalent to path/composedPath.
+ * Note: Slots and shadow roots are detected, but aren't needed as they are virtually invisible anyway...
+ */
+export declare function composedPath(el: HTMLElement): HTMLElement[];

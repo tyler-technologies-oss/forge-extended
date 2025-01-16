@@ -1,0 +1,28 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { OptionGroupComponent as OptionGroupComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class OptionGroupComponent {
+    protected elementRef: ElementRef<OptionGroupComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-option-group element. */
+    readonly nativeElement: OptionGroupComponentCustomElement;
+    /** Gets/sets the label of this option group. */
+    set label(value: OptionGroupComponentCustomElement['label']);
+    get label(): OptionGroupComponentCustomElement['label'];
+    /** The child options of this group. */
+    set options(value: OptionGroupComponentCustomElement['options']);
+    get options(): OptionGroupComponentCustomElement['options'];
+    /** The builder function for the group content. */
+    set builder(value: OptionGroupComponentCustomElement['builder']);
+    get builder(): OptionGroupComponentCustomElement['builder'];
+    /** Gets/sets the optional group value. */
+    set value(value: OptionGroupComponentCustomElement['value']);
+    get value(): OptionGroupComponentCustomElement['value'];
+    /** The text content for the group. */
+    set text(value: OptionGroupComponentCustomElement['text']);
+    get text(): OptionGroupComponentCustomElement['text'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<OptionGroupComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<OptionGroupComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<OptionGroupComponent, "forge-option-group", never, { "label": { "alias": "label"; "required": false; }; "options": { "alias": "options"; "required": false; }; "builder": { "alias": "builder"; "required": false; }; "value": { "alias": "value"; "required": false; }; "text": { "alias": "text"; "required": false; }; }, {}, never, ["*"], false, never>;
+}

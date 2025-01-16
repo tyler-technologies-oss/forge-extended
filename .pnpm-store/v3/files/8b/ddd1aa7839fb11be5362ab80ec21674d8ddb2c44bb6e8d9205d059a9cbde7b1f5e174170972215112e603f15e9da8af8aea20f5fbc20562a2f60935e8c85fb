@@ -1,0 +1,57 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { customElement, attachShadowTemplate } from '@tylertech/forge-core';
+import { BaseComponent } from '../core/base/base-component';
+import { PAGE_STATE_CONSTANTS } from './page-state-constants';
+const template = '<template><div class=\"forge-page-state\" part=\"root\"><div class=\"graphic\" part=\"graphic-container\"><slot name=\"graphic\"></slot></div><div class=\"title\" part=\"title-container\"><slot name=\"title\"></slot></div><div class=\"message\" part=\"message-container\"><slot name=\"message\"></slot></div><div class=\"actions\" part=\"actions-container\"><slot name=\"action\"></slot></div></div></template>';
+const styles = ':host{--_page-state-width:var(--forge-page-state-width, 576px);--_page-state-height:var(--forge-page-state-height, auto);--_page-state-spacing:var(--forge-page-state-spacing, var(--forge-spacing-xxxlarge, 56px));--_page-state-mobile-width:var(--forge-page-state-mobile-width, 70%);--_page-state-graphic-height:var(--forge-page-state-graphic-height, 296px);--_page-state-graphic-spacing:var(--forge-page-state-graphic-spacing, var(--forge-spacing-xxxlarge, 56px));--_page-state-mobile-graphic-height:var(--forge-page-state-mobile-graphic-height, auto);--_page-state-title-color:var(--forge-page-state-title-color, var(--forge-theme-text-medium, rgba(0, 0, 0, 0.6)));--_page-state-title-spacing:var(--forge-page-state-title-spacing, var(--forge-spacing-xxxlarge, 56px));--_page-state-title-spacing-mobile:var(--forge-page-state-title-spacing-mobile, var(--forge-spacing-large, 24px));--_page-state-message-color:var(--forge-page-state-message-color, var(--forge-theme-text-high, rgba(0, 0, 0, 0.87)));--_page-state-message-spacing:var(--forge-page-state-message-spacing, var(--forge-spacing-xxxlarge, 56px));--_page-state-message-spacing-mobile:var(--forge-page-state-message-spacing-mobile, var(--forge-spacing-large, 24px));--_page-state-actions-spacing:var(--forge-page-state-actions-spacing, 16px)}:host{display:flex;justify-content:center;align-items:center;width:100%;container-type:inline-size}:host([hidden]){display:none}.forge-page-state{width:var(--_page-state-width);margin-block:var(--_page-state-spacing);text-align:center}.forge-page-state .graphic{display:flex;justify-content:center;align-items:center;height:var(--_page-state-graphic-height);width:100%;margin-block-end:var(--_page-state-graphic-spacing)}.forge-page-state .graphic ::slotted([slot=graphic]){height:100%;width:100%}.forge-page-state .title{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-heading8-font-family, var(--forge-typography-font-family, \"Roboto\", sans-serif));font-size:var(--forge-typography-heading8-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-heading8-font-size-scale, 2.25)));font-weight:var(--forge-typography-heading8-font-weight,500);line-height:var(--forge-typography-heading8-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-heading8-line-height-scale, 2.625)));letter-spacing:var(--forge-typography-heading8-letter-spacing, -.0027777778em);text-transform:var(--forge-typography-heading8-text-transform,inherit);text-decoration:var(--forge-typography-heading8-text-decoration,inherit);--_page-state-title-spacing:var(--_page-state-title-spacing-mobile);color:var(--_page-state-title-color);margin-block:var(--_page-state-title-spacing)}.forge-page-state .message{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-body4-font-family, var(--forge-typography-font-family, \"Roboto\", sans-serif));font-size:var(--forge-typography-body4-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-body-font-size-scale, 1.25)));font-weight:var(--forge-typography-body4-font-weight,400);line-height:var(--forge-typography-body4-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-body-line-height-scale, 1.75)));letter-spacing:var(--forge-typography-body4-letter-spacing, .005em);text-transform:var(--forge-typography-body4-text-transform,inherit);text-decoration:var(--forge-typography-body4-text-decoration,inherit);--_page-state-message-spacing:var(--_page-state-message-spacing-mobile);color:var(--_page-state-message-color);margin-block-end:var(--_page-state-message-spacing)}.forge-page-state .actions{display:grid;justify-content:center;grid-auto-flow:column;gap:var(--_page-state-actions-spacing)}@container (max-width:599px){.forge-page-state{--_page-state-width:var(--_page-state-mobile-width)}.forge-page-state .graphic{--_page-state-graphic-height:var(--_page-state-mobile-graphic-height);--_page-state-graphic-spacing:var(--forge-page-state-graphic-spacing, 0)}.forge-page-state .title{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-heading5-font-family, var(--forge-typography-font-family, \"Roboto\", sans-serif));font-size:var(--forge-typography-heading5-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-heading5-font-size-scale, 1.5)));font-weight:var(--forge-typography-heading5-font-weight,500);line-height:var(--forge-typography-heading5-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-heading5-line-height-scale, 1.75)));letter-spacing:var(--forge-typography-heading5-letter-spacing, 0);text-transform:var(--forge-typography-heading5-text-transform,inherit);text-decoration:var(--forge-typography-heading5-text-decoration,inherit)}.forge-page-state .message{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-body2-font-family, var(--forge-typography-font-family, \"Roboto\", sans-serif));font-size:var(--forge-typography-body2-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-body-font-size-scale, 1)));font-weight:var(--forge-typography-body2-font-weight,400);line-height:var(--forge-typography-body2-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-body-line-height-scale, 1.375)));letter-spacing:var(--forge-typography-body2-letter-spacing, .015625em);text-transform:var(--forge-typography-body2-text-transform,inherit);text-decoration:var(--forge-typography-body2-text-decoration,inherit)}.forge-page-state .actions{grid-auto-flow:row}}';
+/**
+ *
+ * @tag forge-page-state
+ *
+ * @cssproperty --forge-page-state-width - The width of the page state.
+ * @cssproperty --forge-page-state-height - The height of the page state.
+ * @cssproperty --forge-page-state-spacing - The spacing of the page state.
+ * @cssproperty --forge-page-state-mobile-width - The mobile width of the page state.
+ * @cssproperty --forge-page-state-graphic-height - The graphic height of the page state.
+ * @cssproperty --forge-page-state-graphic-spacing - The graphic spacing of the page state.
+ * @cssproperty --forge-page-state-mobile-graphic-height - The mobile graphic height of the page state.
+ * @cssproperty --forge-page-state-title-color - The title color of the page state.
+ * @cssproperty --forge-page-state-title-spacing - The title spacing of the page state.
+ * @cssproperty --forge-page-state-message-color - The message color of the page state.
+ * @cssproperty --forge-page-state-message-spacing - The message spacing of the page state.
+ * @cssproperty --forge-page-state-actions-spacing - The actions spacing of the page state.
+ *
+ * @csspart root - The root container element.
+ * @csspart graphic-container - The graphic container element.
+ * @csspart title-container - The title container element.
+ * @csspart message-container - The message container element.
+ * @csspart actions-container - The actions container element.
+ *
+ * @cssclass forge-page-state - The page state layout container.
+ * @cssclass forge-page-state__graphic - The graphic to display.
+ * @cssclass forge-page-state__title - The title to display.
+ * @cssclass forge-page-state__message - The message to display.
+ * @cssclass forge-page-state__actions - The container element for optional actions.
+ *
+ * @slot graphic - The slot where the graphic will be rendered.
+ * @slot title - The slot where the title will be rendered.
+ * @slot message - The slot where the message will be rendered.
+ * @slot actions - The slot where the actions will be rendered.
+ */
+let PageStateComponent = class PageStateComponent extends BaseComponent {
+    constructor() {
+        super();
+        attachShadowTemplate(this, template, styles);
+    }
+};
+PageStateComponent = __decorate([
+    customElement({
+        name: PAGE_STATE_CONSTANTS.elementName
+    })
+], PageStateComponent);
+export { PageStateComponent };

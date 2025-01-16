@@ -1,0 +1,10 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./chip-field.component";
+import * as i2 from "@angular/common";
+import * as i3 from "../chip/chip-proxy.module";
+export declare class ForgeChipFieldModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeChipFieldModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeChipFieldModule, [typeof i1.ChipFieldComponent], [typeof i2.CommonModule, typeof i3.ForgeChipProxyModule], [typeof i1.ChipFieldComponent, typeof i3.ForgeChipProxyModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeChipFieldModule>;
+}

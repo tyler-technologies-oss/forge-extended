@@ -1,0 +1,14 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { defineCustomElement } from '@tylertech/forge-core';
+import { StateLayerComponent } from './state-layer';
+export * from './state-layer-adapter';
+export * from './state-layer-constants';
+export * from './state-layer-core';
+export * from './state-layer';
+export function defineStateLayerComponent() {
+    defineCustomElement(StateLayerComponent);
+}

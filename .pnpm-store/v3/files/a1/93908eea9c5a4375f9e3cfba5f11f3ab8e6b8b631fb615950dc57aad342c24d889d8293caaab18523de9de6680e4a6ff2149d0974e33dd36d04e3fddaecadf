@@ -1,0 +1,21 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponentDelegate, IBaseComponentDelegateConfig, IBaseComponentDelegateOptions } from '../core/delegates/base-component-delegate';
+import { ICalendarComponent } from './calendar';
+import { CalendarView, ICalendarDateSelectEventData, ICalendarFocusChangeEventData, ICalendarMonthChangeEventData } from './calendar-constants';
+export type CalendarComponentDelegateProps = Partial<ICalendarComponent>;
+export interface ICalendarComponentDelegateOptions extends IBaseComponentDelegateOptions {
+}
+export interface ICalendarComponentDelegateConfig extends IBaseComponentDelegateConfig<ICalendarComponent, ICalendarComponentDelegateOptions> {
+}
+export declare class CalendarComponentDelegate extends BaseComponentDelegate<ICalendarComponent, ICalendarComponentDelegateOptions> {
+    constructor(config?: ICalendarComponentDelegateConfig);
+    protected _build(): ICalendarComponent;
+    onDateSelect(listener: (evt: CustomEvent<ICalendarDateSelectEventData>) => void): void;
+    onFocusChange(listener: (evt: CustomEvent<ICalendarFocusChangeEventData>) => void): void;
+    onMonthChange(listener: (evt: CustomEvent<ICalendarMonthChangeEventData>) => void): void;
+    onViewChange(listener: (evt: CustomEvent<CalendarView>) => void): void;
+}

@@ -1,0 +1,41 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const FILE_PICKER_CONSTANTS: {
+    elementName: "forge-file-picker";
+    attributes: {
+        ACCEPT: string;
+        MAX_SIZE: string;
+        CAPTURE: string;
+        MULTIPLE: string;
+        DISABLED: string;
+        COMPACT: string;
+        BORDERLESS: string;
+    };
+    classes: {
+        HIGHLIGHT: string;
+        DISABLED: string;
+        COMPACT: string;
+        BORDERLESS: string;
+    };
+    ids: {
+        CONTAINER: string;
+        BUTTON: string;
+        INPUT: string;
+    };
+    selectors: {
+        CONTAINER: string;
+        BUTTON: string;
+        INPUT: string;
+        BUTTON_SLOT: string;
+    };
+    events: {
+        FILES_CHANGED: string;
+    };
+};
+export interface IFilePickerChangeEventData {
+    legalFiles?: File[];
+    illegalFiles?: File[];
+}

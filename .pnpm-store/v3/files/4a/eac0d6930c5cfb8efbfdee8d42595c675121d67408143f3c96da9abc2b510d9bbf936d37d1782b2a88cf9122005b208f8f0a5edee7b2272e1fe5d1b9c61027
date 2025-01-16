@@ -1,0 +1,15 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponentDelegate } from '../core/delegates/base-component-delegate';
+import { BADGE_CONSTANTS } from './badge-constants';
+export class BadgeComponentDelegate extends BaseComponentDelegate {
+    constructor(config) {
+        super(config);
+    }
+    _build() {
+        return document.createElement(BADGE_CONSTANTS.elementName);
+    }
+}

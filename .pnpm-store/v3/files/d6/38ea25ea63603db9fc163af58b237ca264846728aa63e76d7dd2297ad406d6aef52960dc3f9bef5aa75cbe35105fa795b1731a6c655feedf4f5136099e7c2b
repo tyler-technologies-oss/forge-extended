@@ -1,0 +1,98 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { SplitViewOrientation } from '../split-view/split-view-constants';
+export declare const SPLIT_VIEW_PANEL_CONSTANTS: {
+    elementName: "forge-split-view-panel";
+    attributes: {
+        RESIZABLE: string;
+        SIZE: string;
+        MIN: string;
+        MAX: string;
+        OPEN: string;
+        ACCESSIBLE_LABEL: string;
+        DISABLED: string;
+        ALLOW_CLOSE: string;
+        AUTO_CLOSE: string;
+        AUTO_CLOSE_THRESHOLD: string;
+        ORIENTATION: string;
+    };
+    classes: {
+        ROOT: string;
+        GRABBED: string;
+        HANDLE: string;
+        ICON: string;
+        CONTENT: string;
+        CLOSED: string;
+        CLOSING: string;
+        OPENING: string;
+        DISABLED: string;
+        OVERLAY: string;
+    };
+    ids: {
+        ROOT: string;
+        HANDLE: string;
+        ICON: string;
+        STATE_LAYER: string;
+        CONTENT: string;
+    };
+    selectors: {
+        ROOT: string;
+        HANDLE: string;
+        ICON: string;
+        STATE_LAYER: string;
+        CONTENT: string;
+    };
+    events: {
+        WILL_RESIZE: string;
+        RESIZE_START: string;
+        RESIZE_END: string;
+        RESIZE: string;
+        DID_OPEN: string;
+        DID_CLOSE: string;
+        WILL_OPEN: string;
+        WILL_CLOSE: string;
+    };
+    numbers: {
+        STATE_LAYER_ACTIVATION_WAIT: number;
+    };
+    customCssProperties: {
+        SIZE: string;
+        CURSOR: string;
+    };
+};
+export type SplitViewPanelResizable = 'start' | 'end' | 'off';
+export type SplitViewInputDeviceType = 'pointer' | 'keyboard';
+export declare enum SplitViewAnimatingLayer {
+    Under = 1,
+    Active = 2,
+    Above = 3
+}
+export interface ISplitViewPanelCursorConfig {
+    resizable: SplitViewPanelResizable;
+    boundary: 'min' | 'max' | 'none';
+}
+export interface ISplitViewPanelState {
+    orientation: SplitViewOrientation;
+    resizable: SplitViewPanelResizable;
+    arrowKeyHeld: boolean;
+    startPoint?: number;
+    startSize?: number;
+    currentSize?: number;
+    availableSpace?: number;
+    siblingSize?: number;
+    keyboardDelta: number;
+    isAtMin: boolean;
+    isAtMax: boolean;
+    min: number;
+    max?: number;
+}
+export interface ISplitViewPanelWillResizeEvent {
+    inputDeviceType: SplitViewInputDeviceType;
+}
+export interface ISplitViewPanelOpenEvent {
+    auto: boolean;
+    userInitiated: boolean;
+}

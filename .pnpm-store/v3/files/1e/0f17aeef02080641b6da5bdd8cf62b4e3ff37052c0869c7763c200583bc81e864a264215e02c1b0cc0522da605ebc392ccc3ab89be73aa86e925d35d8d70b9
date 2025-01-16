@@ -1,0 +1,29 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const BUTTON_TOGGLE_CONSTANTS: {
+    elementName: "forge-button-toggle";
+    observedAttributes: {
+        SELECTED: string;
+        VALUE: string;
+        DISABLED: string;
+        READONLY: string;
+        TABINDEX: string;
+    };
+    attributes: {
+        SELECTED: string;
+        VALUE: string;
+        DISABLED: string;
+        READONLY: string;
+        TABINDEX: string;
+    };
+    events: {
+        SELECT: string;
+    };
+};
+export interface IButtonToggleSelectEventData<T = any> {
+    value: T;
+    selected: boolean;
+}

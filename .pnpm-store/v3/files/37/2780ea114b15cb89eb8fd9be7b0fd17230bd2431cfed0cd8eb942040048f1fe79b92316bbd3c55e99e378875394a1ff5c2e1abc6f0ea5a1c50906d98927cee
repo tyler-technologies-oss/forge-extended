@@ -1,0 +1,68 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IKeyboardShortcutAdapter } from './keyboard-shortcut-adapter';
+import { KeyboardShortcutActivateCallback } from './keyboard-shortcut-constants';
+export interface IKeyboardShortcutCore {
+    key: string | null | undefined;
+    target: string;
+    global: boolean;
+    allowWhileTyping: boolean;
+    preventDefault: boolean;
+    capture: boolean;
+    useCode: boolean;
+    disabled: boolean;
+    activateCallback: KeyboardShortcutActivateCallback | null | undefined;
+}
+export declare class KeyboardShortcutCore implements IKeyboardShortcutCore {
+    private _adapter;
+    private _key;
+    private _target;
+    private _global;
+    private _allowWhileTyping;
+    private _preventDefault;
+    private _capture;
+    private _useCode;
+    private _disabled;
+    private _activateCallback;
+    private _keyCombinations;
+    private _keyDownListener;
+    constructor(_adapter: IKeyboardShortcutAdapter);
+    initialize(): void;
+    destroy(): void;
+    private _initializeTargetElement;
+    private _connectTargetElement;
+    private _disconnectTargetElement;
+    private _onKeyDown;
+    /** Sets the key combinations. */
+    private _setKeyCombinations;
+    /** Gets/sets the key binding. */
+    get key(): string | null | undefined;
+    set key(value: string | null | undefined);
+    /** Gets/sets the target element selector. */
+    get target(): string;
+    set target(value: string);
+    /** Gets/sets the global listener state. */
+    get global(): boolean;
+    set global(value: boolean);
+    /** Gets/sets whether the callback will be trigger while a text input has focus. */
+    get allowWhileTyping(): boolean;
+    set allowWhileTyping(value: boolean);
+    /** Gets/sets whether to prevent default on keyboard events. */
+    get preventDefault(): boolean;
+    set preventDefault(value: boolean);
+    /** Gets/sets whether to use capturing on keyboard events. */
+    get capture(): boolean;
+    set capture(value: boolean);
+    /** Gets/sets whether to match codes instead of keys on keyboard events. */
+    get useCode(): boolean;
+    set useCode(value: boolean);
+    /** Gets/sets whether the event will be emitted. */
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    /** Gets/sets the activation callback. */
+    get activateCallback(): KeyboardShortcutActivateCallback | null | undefined;
+    set activateCallback(value: KeyboardShortcutActivateCallback | null | undefined);
+}

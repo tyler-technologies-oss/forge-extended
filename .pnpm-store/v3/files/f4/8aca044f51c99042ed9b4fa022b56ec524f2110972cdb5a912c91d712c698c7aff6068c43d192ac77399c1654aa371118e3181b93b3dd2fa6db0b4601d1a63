@@ -1,0 +1,182 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { attachShadowTemplate, coerceBoolean, coerceNumber, customElement, coreProperty } from '@tylertech/forge-core';
+import { PopoverAdapter } from './popover-adapter';
+import { POPOVER_CONSTANTS } from './popover-constants';
+import { PopoverCore } from './popover-core';
+import { OverlayComponent, OVERLAY_CONSTANTS } from '../overlay';
+import { OverlayAware } from '../overlay/base/overlay-aware';
+import { coerceStringToArray } from '../core/utils/utils';
+import { tryDismiss } from '../core/utils/dismissible-stack';
+const template = '<template><forge-overlay exportparts=\"root:overlay\"><div class=\"forge-popover\" part=\"surface\"><slot></slot></div></forge-overlay></template>';
+const styles = '@keyframes zoomin{from{transform:scale(.8)}to{transform:scale(1)}}@keyframes zoomout{from{transform:scale(1)}to{transform:scale(.8)}}@keyframes slidein{from{transform:translateX(var(--_popover-slidein-x)) translateY(var(--_popover-slidein-y))}to{transform:translateX(0) translateY(0)}}@keyframes slideout{from{transform:translateX(0) translateY(0)}to{transform:translateX(var(--_popover-slidein-x)) translateY(var(--_popover-slidein-y))}}@keyframes fadein{from{opacity:0}to{opacity:1}}@keyframes fadeout{from{opacity:1}to{opacity:0}}@layer base,animation,preset,reduced-motion; @layer base{:host{display:contents;--forge-theme-surface:var(--forge-theme-surface-bright, #ffffff)}:host([hidden]){display:none}forge-overlay{--_popover-width:var(--forge-popover-width, auto);--_popover-height:var(--forge-popover-height, auto);--_popover-min-width:var(--forge-popover-min-width, none);--_popover-max-width:var(--forge-popover-max-width, none);--_popover-min-height:var(--forge-popover-min-height, none);--_popover-max-height:var(--forge-popover-max-height, none);--_popover-background:var(--forge-popover-background, var(--forge-theme-surface-bright, #ffffff));--_popover-border-radius:var(--forge-popover-border-radius, calc(var(--forge-shape-medium, 4px) * var(--forge-shape-factor, 1)));--_popover-box-shadow:var(--forge-popover-box-shadow, var(--forge-theme-surface-bright-shadow, 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12)));--_popover-border-width:var(--forge-popover-border-width, 0);--_popover-border-style:var(--forge-popover-border-style, solid);--_popover-border-color:var(--forge-popover-border-color, var(--forge-theme-outline, #e0e0e0));--_popover-overflow:var(--forge-popover-overflow, initial);--_popover-arrow-size:var(--forge-popover-arrow-size, 12px);--_popover-arrow-height:var(--forge-popover-arrow-height, var(--_popover-arrow-size));--_popover-arrow-width:var(--forge-popover-arrow-width, var(--_popover-arrow-size));--_popover-arrow-background-color:var(--forge-popover-arrow-background-color, var(--_popover-background));--_popover-arrow-top-rotation:var(--forge-popover-arrow-top-rotation, 135deg);--_popover-arrow-right-rotation:var(--forge-popover-arrow-right-rotation, 225deg);--_popover-arrow-bottom-rotation:var(--forge-popover-arrow-bottom-rotation, 315deg);--_popover-arrow-left-rotation:var(--forge-popover-arrow-left-rotation, 45deg);--_popover-arrow-border-width:var(--forge-popover-arrow-border-width, var(--forge-border-thin, 1px));--_popover-animation-enter-duration:var(--forge-popover-animation-enter-duration, var(--forge-animation-duration-short3, 150ms));--_popover-animation-enter-timing:var(--forge-popover-animation-enter-timing, var(--forge-animation-easing-decelerate, cubic-bezier(0, 0, 0, 1)));--_popover-animation-exit-duration:var(--forge-popover-animation-exit-duration, var(--forge-animation-duration-short2, 100ms));--_popover-animation-exit-timing:var(--forge-popover-animation-exit-timing, var(--forge-animation-easing-accelerate, cubic-bezier(0.3, 0, 1, 1)));--_popover-zoom-enter-duration:var(--forge-popover-zoom-enter-duration, var(--_popover-animation-enter-duration));--_popover-zoom-enter-timing:var(--forge-popover-zoom-enter-timing, var(--_popover-animation-enter-timing));--_popover-zoom-exit-duration:var(--forge-popover-zoom-exit-duration, var(--_popover-animation-exit-duration));--_popover-zoom-exit-timing:var(--forge-popover-zoom-exit-timing, var(--_popover-animation-exit-timing));--_popover-slide-enter-duration:var(--forge-popover-slide-enter-duration, var(--_popover-animation-enter-duration));--_popover-slide-enter-timing:var(--forge-popover-slide-enter-timing, var(--_popover-animation-enter-timing));--_popover-slide-exit-duration:var(--forge-popover-slide-exit-duration, var(--_popover-animation-exit-duration));--_popover-slide-exit-timing:var(--forge-popover-slide-exit-timing, var(--_popover-animation-exit-timing));--_popover-slide-offset:var(--forge-popover-slide-offset, 24px);--_popover-fade-enter-duration:var(--forge-popover-fade-enter-duration, var(--forge-animation-duration-medium2, 300ms));--_popover-fade-enter-timing:var(--forge-popover-fade-enter-timing, var(--_popover-animation-enter-timing));--_popover-fade-exit-duration:var(--forge-popover-fade-exit-duration, var(--_popover-animation-exit-duration));--_popover-fade-exit-timing:var(--forge-popover-fade-exit-timing, var(--_popover-animation-exit-timing));--_popover-position-inline-start:var(--forge-popover-position-inline-start, auto);--_popover-position-inline-end:var(--forge-popover-position-inline-end, auto);--_popover-position-block-start:var(--forge-popover-position-block-start, auto);--_popover-position-block-end:var(--forge-popover-position-block-end, auto);--_popover-preset-dropdown-max-height:var(--forge-popover-preset-dropdown-max-height, 256px);--_popover-preset-dropdown-overflow:var(--forge-popover-preset-dropdown-overflow, auto visible);--_popover-preset-dropdown-padding-block:var(--forge-popover-preset-dropdown-padding-block, var(--forge-spacing-xsmall, 8px));--_popover-preset-list-padding-block:var(--forge-popover-preset-list-padding-block, var(--forge-spacing-xsmall, 8px))}.forge-popover{--_popover-arrow-translate-x:0;--_popover-arrow-translate-y:0;--_popover-arrow-rotation:0;--_popover-slidein-x:0;--_popover-slidein-y:0;--_popover-zoomin-origin:50% 50% 0;--_popover-arrow-clip-path:polygon(calc(var(--_popover-border-width) * -1) calc(var(--_popover-border-width) * -1), calc(100% + var(--_popover-border-width)) calc(var(--_popover-border-width) * -1), calc(100% + var(--_popover-border-width)) calc(100% + var(--_popover-border-width)))}.forge-popover{position:relative;overflow:var(--_popover-overflow);box-sizing:border-box;background:var(--_popover-background);border-radius:var(--_popover-border-radius);box-shadow:var(--_popover-box-shadow);border-width:var(--_popover-border-width);border-style:var(--_popover-border-style);border-color:var(--_popover-border-color);width:var(--_popover-width);height:var(--_popover-height);min-width:var(--_popover-min-width);max-width:var(--_popover-max-width);min-height:var(--_popover-min-height);max-height:var(--_popover-max-height)}.forge-popover::-webkit-scrollbar{height:var(--forge-scrollbar-height,16px);width:var(--forge-scrollbar-width,16px)}.forge-popover::-webkit-scrollbar-track{background-color:var(--forge-scrollbar-track-container,var(--forge-theme-surface-container-low,#ebebeb))}.forge-popover::-webkit-scrollbar-track:hover{background-color:var(--forge-scrollbar-track-container-hover,var(--forge-theme-surface-container-low,#ebebeb))}.forge-popover::-webkit-scrollbar-corner{background-color:var(--forge-scrollbar-track-container,var(--forge-theme-surface-container-low,#ebebeb))}.forge-popover::-webkit-scrollbar-thumb{height:var(--forge-scrollbar-thumb-min-height,32px);width:var(--forge-scrollbar-thumb-min-width,32px);border-radius:var(--forge-scrollbar-border-radius,calc(var(--forge-shape-full,9999px) * var(--forge-shape-factor,1)));border-width:var(--forge-scrollbar-border-width,3px);border-style:solid;border-color:transparent;background-color:var(--forge-scrollbar-thumb-container,var(--forge-theme-surface-container-medium,#c2c2c2));background-clip:content-box}.forge-popover::-webkit-scrollbar-thumb:hover{background-color:var(--forge-scrollbar-thumb-container-hover,var(--forge-theme-surface-container-high,#9e9e9e))}:host([open][no-anchor]) forge-overlay{--forge-overlay-position-inline-start:var(--_popover-position-inline-start);--forge-overlay-position-inline-end:var(--_popover-position-inline-end);--forge-overlay-position-block-start:var(--_popover-position-block-start);--forge-overlay-position-block-end:var(--_popover-position-block-end)}:host([arrow]) .forge-popover{--_popover-border-width:var(--_popover-arrow-border-width)}:host([arrow]) .arrow{position:absolute;background-color:var(--_popover-arrow-background-color);height:var(--_popover-arrow-height);width:var(--_popover-arrow-width);box-shadow:var(--_popover-box-shadow);border-width:var(--_popover-border-width);border-style:var(--_popover-border-style);border-color:var(--_popover-border-color);transform:translate(var(--_popover-arrow-translate-x),var(--_popover-arrow-translate-y)) rotate(var(--_popover-arrow-rotation));clip-path:var(--_popover-arrow-clip-path)}:host([arrow]) forge-overlay[position-placement^=top] .arrow{--_popover-arrow-translate-y:var(--forge-popover-arrow-translate-y, calc(var(--_popover-border-width) * -1));--_popover-arrow-rotation:var(--forge-popover-arrow-rotation, var(--_popover-arrow-top-rotation))}:host([arrow]) forge-overlay[position-placement^=right] .arrow{--_popover-arrow-translate-x:var(--forge-popover-arrow-translate-x, var(--_popover-border-width));--_popover-arrow-rotation:var(--forge-popover-arrow-rotation, var(--_popover-arrow-right-rotation))}:host([arrow]) forge-overlay[position-placement^=bottom] .arrow{--_popover-arrow-translate-y:var(--forge-popover-arrow-translate-y, var(--_popover-border-width));--_popover-arrow-rotation:var(--forge-popover-arrow-rotation, var(--_popover-arrow-bottom-rotation))}:host([arrow]) forge-overlay[position-placement^=left] .arrow{--_popover-arrow-translate-x:var(--forge-popover-arrow-translate-x, calc(var(--_popover-border-width) * -1));--_popover-arrow-rotation:var(--forge-popover-arrow-rotation, var(--_popover-arrow-left-rotation))}}@layer preset{:host([preset=dropdown]) .forge-popover{--_popover-max-height:var(--_popover-preset-dropdown-max-height);--_popover-overflow:var(--_popover-preset-dropdown-overflow);padding-block:var(--_popover-preset-dropdown-padding-block)}:host([preset=list]) .forge-popover{padding-block:var(--_popover-preset-list-padding-block)}:host([constrain-viewport-width]) .forge-popover{--_popover-max-width:var(--forge-popover-max-width, 100vw)}}@layer animation{:host(:not([animation-type])) .forge-popover,:host([animation-type=zoom]) .forge-popover{animation-duration:var(--_popover-zoom-enter-duration);animation-timing-function:var(--_popover-zoom-enter-timing);animation-name:fadein,zoomin;transform-origin:var(--_popover-zoomin-origin)}:host(:not([animation-type])) forge-overlay[open][position-placement^=top]:not([position-placement*=\"-\"]) .forge-popover,:host([animation-type=zoom]) forge-overlay[open][position-placement^=top]:not([position-placement*=\"-\"]) .forge-popover{--_popover-zoomin-origin:var(--forge-popover-zoomin-origin, bottom center)}:host(:not([animation-type])) forge-overlay[open][position-placement^=top][position-placement$=-start] .forge-popover,:host([animation-type=zoom]) forge-overlay[open][position-placement^=top][position-placement$=-start] .forge-popover{--_popover-zoomin-origin:var(--forge-popover-zoomin-origin, bottom left)}:host(:not([animation-type])) forge-overlay[open][position-placement^=top][position-placement$=-end] .forge-popover,:host([animation-type=zoom]) forge-overlay[open][position-placement^=top][position-placement$=-end] .forge-popover{--_popover-zoomin-origin:var(--forge-popover-zoomin-origin, bottom right)}:host(:not([animation-type])) forge-overlay[open][position-placement^=right]:not([position-placement*=\"-\"]) .forge-popover,:host([animation-type=zoom]) forge-overlay[open][position-placement^=right]:not([position-placement*=\"-\"]) .forge-popover{--_popover-zoomin-origin:var(--forge-popover-zoomin-origin, left center)}:host(:not([animation-type])) forge-overlay[open][position-placement^=right][position-placement$=-start] .forge-popover,:host([animation-type=zoom]) forge-overlay[open][position-placement^=right][position-placement$=-start] .forge-popover{--_popover-zoomin-origin:var(--forge-popover-zoomin-origin, left top)}:host(:not([animation-type])) forge-overlay[open][position-placement^=right][position-placement$=-end] .forge-popover,:host([animation-type=zoom]) forge-overlay[open][position-placement^=right][position-placement$=-end] .forge-popover{--_popover-zoomin-origin:var(--forge-popover-zoomin-origin, left bottom)}:host(:not([animation-type])) forge-overlay[open][position-placement^=bottom]:not([position-placement*=\"-\"]) .forge-popover,:host([animation-type=zoom]) forge-overlay[open][position-placement^=bottom]:not([position-placement*=\"-\"]) .forge-popover{--_popover-zoomin-origin:var(--forge-popover-zoomin-origin, top center)}:host(:not([animation-type])) forge-overlay[open][position-placement^=bottom][position-placement$=-start] .forge-popover,:host([animation-type=zoom]) forge-overlay[open][position-placement^=bottom][position-placement$=-start] .forge-popover{--_popover-zoomin-origin:var(--forge-popover-zoomin-origin, top left)}:host(:not([animation-type])) forge-overlay[open][position-placement^=bottom][position-placement$=-end] .forge-popover,:host([animation-type=zoom]) forge-overlay[open][position-placement^=bottom][position-placement$=-end] .forge-popover{--_popover-zoomin-origin:var(--forge-popover-zoomin-origin, top right)}:host(:not([animation-type])) forge-overlay[open][position-placement^=left]:not([position-placement*=\"-\"]) .forge-popover,:host([animation-type=zoom]) forge-overlay[open][position-placement^=left]:not([position-placement*=\"-\"]) .forge-popover{--_popover-zoomin-origin:var(--forge-popover-zoomin-origin, right center)}:host(:not([animation-type])) forge-overlay[open][position-placement^=left][position-placement$=-start] .forge-popover,:host([animation-type=zoom]) forge-overlay[open][position-placement^=left][position-placement$=-start] .forge-popover{--_popover-zoomin-origin:var(--forge-popover-zoomin-origin, right top)}:host(:not([animation-type])) forge-overlay[open][position-placement^=left][position-placement$=-end] .forge-popover,:host([animation-type=zoom]) forge-overlay[open][position-placement^=left][position-placement$=-end] .forge-popover{--_popover-zoomin-origin:var(--forge-popover-zoomin-origin, right bottom)}:host(:not([animation-type])) forge-overlay[open] .forge-popover.exiting,:host([animation-type=zoom]) forge-overlay[open] .forge-popover.exiting{animation-duration:var(--_popover-zoom-exit-duration);animation-timing-function:var(--_popover-zoom-exit-timing);animation-name:fadeout,zoomout}:host([animation-type=slide]) .forge-popover{animation-duration:var(--_popover-slide-enter-duration);animation-timing-function:var(--_popover-slide-enter-timing);animation-name:fadein,slidein}:host([animation-type=slide]) forge-overlay[open][position-placement^=top] .forge-popover{--_popover-slidein-y:var(--forge-popover-slidein-y, var(--_popover-slide-offset))}:host([animation-type=slide]) forge-overlay[open][position-placement^=right] .forge-popover{--_popover-slidein-x:var(--forge-popover-slidein-x, calc(var(--_popover-slide-offset) * -1))}:host([animation-type=slide]) forge-overlay[open][position-placement^=bottom] .forge-popover{--_popover-slidein-y:var(--forge-popover-slidein-y, calc(var(--_popover-slide-offset) * -1))}:host([animation-type=slide]) forge-overlay[open][position-placement^=left] .forge-popover{--_popover-slidein-x:var(--forge-popover-slidein-x, var(--_popover-slide-offset))}:host([animation-type=slide]) forge-overlay[open] .forge-popover.exiting{animation-duration:var(--_popover-slide-exit-duration);animation-timing-function:var(--_popover-slide-exit-timing);animation-name:fadeout,slideout}:host([animation-type=fade]) .forge-popover{animation-duration:var(--_popover-fade-enter-duration);animation-timing-function:var(--_popover-fade-enter-timing);animation-name:fadein}:host([animation-type=fade]) .forge-popover.exiting{animation-duration:var(--_popover-fade-exit-duration);animation-timing-function:var(--_popover-fade-exit-timing);animation-name:fadeout}}forge-overlay[clipped-x] .forge-popover{width:auto;min-width:0;max-width:100vw;overflow-x:auto}forge-overlay[clipped-y] .forge-popover{height:auto;min-height:0;max-height:100vh;overflow-y:auto}@layer reduced-motion{@media (prefers-reduced-motion:reduce){.forge-popover{animation:none}.forge-popover.exiting{animation:none}}}';
+/**
+ * @tag forge-popover
+ *
+ * @summary Popovers are used to render content in an element that is above all other content on the page.
+ *
+ * @dependency forge-overlay
+ *
+ * @property {boolean} [arrow=false] - Whether or not the popover should render an arrow.
+ * @property {PopoverAnimationType} [animationType="zoom"] - The animation type to use for the popover. Valid values are `'none'`, `'fade'`, `'slide'`, and `'zoom'` (default).
+ * @property {PopoverTriggerType | PopoverTriggerType[]} [triggerType="click"] - The trigger type(s) to use for the popover. Valid values are `'click'` (default), `'hover'`, `'focus'`, and `'longpress'`. Multiple can be specified.
+ * @property {number} [longpressDelay=500] - The delay in milliseconds before a longpress event is detected.
+ * @property {boolean} [persistentHover=false] - Whether or not the popover should remain open when the user hovers outside the popover.
+ * @property {number} [hoverDismissDelay=500] - The delay in milliseconds before the popover is dismissed when the user hovers outside of the popover.
+ * @property {number} [hoverDelay=0] - The delay in milliseconds before the popover is shown.
+ * @property {PopoverPreset} [preset="popover"] - The preset to use for the popover.
+ *
+ * @globalconfig placement
+ * @globalconfig animationType
+ * @globalconfig positionStrategy
+ * @globalconfig shift
+ * @globalconfig hide
+ * @globalconfig flip
+ * @globalconfig boundaryElement
+ * @globalconfig fallbackPlacements
+ * @globalconfig persistent
+ * @globalconfig arrow
+ *
+ * @attribute {string} [arrow=false] - Whether or not the popover should render an arrow.
+ * @attribute {string} [animation-type="zoom"] - The animation type to use for the popover. Valid values are `'none'`, `'fade'`, `'slide'`, and `'zoom'` (default).
+ * @attribute {string} [trigger-type="click"] - The trigger type(s) to use for the popover. Valid values are `'click'` (default), `'hover'`, `'focus'`, and `'longpress'`. Multiple can be specified.
+ * @attribute {string} [longpress-delay=500] - The delay in milliseconds before a longpress event is detected.
+ * @attribute {string} [persistent-hover=false] - Whether or not the popover should remain open when the user hovers outside the popover.
+ * @attribute {string} [hover-dismiss-delay=500] - The delay in milliseconds before the popover is dismissed when the user hovers outside of the popover.
+ * @attribute {number} [hover-delay=0] - The delay in milliseconds before the popover is shown.
+ * @attribute {string} [preset="popover"] - The preset to use for the popover.
+ *
+ * @event {CustomEvent<IPopoverToggleEventData>} forge-popover-beforetoggle - Dispatches before the popover is toggled, and is cancelable.
+ * @event {CustomEvent<IPopoverToggleEventData>} forge-popover-toggle - Dispatches after the popover is toggled.
+ *
+ * @cssproperty --forge-popover-background - The background color of the popover surface.
+ * @cssproperty --forge-popover-border-radius - The border radius of the popover surface.
+ * @cssproperty --forge-popover-box-shadow - The box shadow of the popover surface.
+ * @cssproperty --forge-popover-border-width - The border width of the popover surface.
+ * @cssproperty --forge-popover-border-style - The border style of the popover surface.
+ * @cssproperty --forge-popover-border-color - The border color of the popover surface.
+ * @cssproperty --forge-popover-width - The width of the popover surface. Defaults to `auto`.
+ * @cssproperty --forge-popover-height - The height of the popover surface. Defaults to `auto`.
+ * @cssproperty --forge-popover-min-width - The minimum width of the popover surface. Defaults to `none`.
+ * @cssproperty --forge-popover-max-width - The maximum width of the popover surface. Defaults to `none`.
+ * @cssproperty --forge-popover-min-height - The minimum height of the popover surface. Defaults to `none`.
+ * @cssproperty --forge-popover-max-height - The maximum height of the popover surface. Defaults to `none`.
+ * @cssproperty --forge-popover-arrow-size - The size of the arrow.
+ * @cssproperty --forge-popover-arrow-height - The height of the arrow.
+ * @cssproperty --forge-popover-arrow-width - The width of the arrow.
+ * @cssproperty --forge-popover-arrow-background-color - The background color of the arrow. Defaults to the background color of the popover surface.
+ * @cssproperty --forge-popover-arrow-top-rotation - The rotation of the arrow when the popover is placed on the top.
+ * @cssproperty --forge-popover-arrow-right-rotation - The rotation of the arrow when the popover is placed on the right.
+ * @cssproperty --forge-popover-arrow-bottom-rotation - The rotation of the arrow when the popover is placed on the bottom.
+ * @cssproperty --forge-popover-arrow-left-rotation - The rotation of the arrow when the popover is placed on the left.
+ * @cssproperty --forge-popover-arrow-border-width - The border width of the popover surface and arrow when an arrow is applied.
+ * @cssproperty --forge-popover-arrow-clip-path - The clip path to use for the arrow element.
+ * @cssproperty --forge-popover-animation-timing - The animation timing function to use for the popover animation.
+ * @cssproperty --forge-popover-zoom-duration - The duration of the zoom animation.
+ * @cssproperty --forge-popover-zoom-timing - The timing function to use for the zoom animation.
+ * @cssproperty --forge-popover-slide-duration - The duration of the slide animation.
+ * @cssproperty --forge-popover-slide-timing - The timing function to use for the slide animation.
+ * @cssproperty --forge-popover-slide-offset - The start offset to use for the slide animation.
+ * @cssproperty --forge-popover-fade-duration - The duration of the fade animation.
+ * @cssproperty --forge-popover-fade-timing - The timing function to use for the fade animation.
+ * @cssproperty --forge-popover-position-block-start - The `block-start` position of the popover.
+ * @cssproperty --forge-popover-position-block-end - The `block-end` position of the popover.
+ * @cssproperty --forge-popover-position-inline-start - The `inline-start` position of the popover.
+ * @cssproperty --forge-popover-position-inline-end - The `inline-end` position of the popover.
+ * @cssproperty --forge-popover-preset-dropdown-max-height - The maximum height of the popover when using `preset="dropdown"`. Defaults to `256px`.
+ * @cssproperty --forge-popover-preset-dropdown-overflow - The overflow behavior of the popover when using `preset="dropdown"`. Defaults to `auto visible` (vertical scrolling only).
+ *
+ * @slot - The content to render inside the popover.
+ *
+ * @csspart overlay - The overlay root element.
+ * @csspart surface - The surface container element for the slotted content.
+ */
+let PopoverComponent = class PopoverComponent extends OverlayAware {
+    static get observedAttributes() {
+        return [...Object.values(OVERLAY_CONSTANTS.observedAttributes), ...Object.values(POPOVER_CONSTANTS.observedAttributes)];
+    }
+    [tryDismiss](state) {
+        return this._core.dispatchBeforeToggleEvent(state);
+    }
+    constructor() {
+        super();
+        attachShadowTemplate(this, template, styles);
+        this._core = new PopoverCore(new PopoverAdapter(this));
+    }
+    connectedCallback() {
+        this._core.initialize();
+    }
+    disconnectedCallback() {
+        this._core.destroy();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case POPOVER_CONSTANTS.observedAttributes.ARROW:
+                this.arrow = coerceBoolean(newValue);
+                return;
+            case POPOVER_CONSTANTS.observedAttributes.ANIMATION_TYPE:
+                this.animationType = newValue;
+                return;
+            case POPOVER_CONSTANTS.observedAttributes.TRIGGER_TYPE:
+                this.triggerType = newValue?.trim() ? coerceStringToArray(newValue) : POPOVER_CONSTANTS.defaults.TRIGGER_TYPE;
+                return;
+            case POPOVER_CONSTANTS.observedAttributes.LONGPRESS_DELAY:
+                this.longpressDelay = coerceNumber(newValue);
+                return;
+            case POPOVER_CONSTANTS.observedAttributes.PERSISTENT_HOVER:
+                this.persistentHover = coerceBoolean(newValue);
+                return;
+            case POPOVER_CONSTANTS.observedAttributes.HOVER_DELAY:
+                this.hoverDelay = coerceNumber(newValue);
+                return;
+            case POPOVER_CONSTANTS.observedAttributes.HOVER_DISMISS_DELAY:
+                this.hoverDismissDelay = coerceNumber(newValue);
+                return;
+            case POPOVER_CONSTANTS.observedAttributes.PRESET:
+                this.preset = newValue;
+                return;
+        }
+        super.attributeChangedCallback(name, oldValue, newValue);
+    }
+    /**
+     * Hides the popover, and returns a `Promise` that resolves when the hide animation is complete.
+     */
+    hideAsync() {
+        return this._core.hideAsync();
+    }
+};
+__decorate([
+    coreProperty()
+], PopoverComponent.prototype, "arrow", void 0);
+__decorate([
+    coreProperty()
+], PopoverComponent.prototype, "animationType", void 0);
+__decorate([
+    coreProperty()
+], PopoverComponent.prototype, "triggerType", void 0);
+__decorate([
+    coreProperty()
+], PopoverComponent.prototype, "longpressDelay", void 0);
+__decorate([
+    coreProperty()
+], PopoverComponent.prototype, "persistentHover", void 0);
+__decorate([
+    coreProperty()
+], PopoverComponent.prototype, "hoverDelay", void 0);
+__decorate([
+    coreProperty()
+], PopoverComponent.prototype, "hoverDismissDelay", void 0);
+__decorate([
+    coreProperty()
+], PopoverComponent.prototype, "preset", void 0);
+PopoverComponent = __decorate([
+    customElement({
+        name: POPOVER_CONSTANTS.elementName,
+        dependencies: [OverlayComponent]
+    })
+], PopoverComponent);
+export { PopoverComponent };

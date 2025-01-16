@@ -1,0 +1,16 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { readoptStyles } from '@tylertech/forge-core';
+export class BaseComponent extends HTMLElement {
+    adoptedCallback() {
+        // Attempt to readopt constructed CSSStyleSheet instances to the shadow root to ensure that
+        // they are created against the new document because CSSStyleSheet instances cannot be shared
+        // across documents.
+        if (this.shadowRoot) {
+            readoptStyles(this);
+        }
+    }
+}

@@ -1,0 +1,17 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { ScaffoldComponent as ScaffoldComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class ScaffoldComponent {
+    protected elementRef: ElementRef<ScaffoldComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-scaffold element. */
+    readonly nativeElement: ScaffoldComponentCustomElement;
+    /** Whether the scaffold should be full viewport height. */
+    set viewport(value: ScaffoldComponentCustomElement['viewport']);
+    get viewport(): ScaffoldComponentCustomElement['viewport'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<ScaffoldComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<ScaffoldComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ScaffoldComponent, "forge-scaffold", never, { "viewport": { "alias": "viewport"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_viewport: unknown;
+}

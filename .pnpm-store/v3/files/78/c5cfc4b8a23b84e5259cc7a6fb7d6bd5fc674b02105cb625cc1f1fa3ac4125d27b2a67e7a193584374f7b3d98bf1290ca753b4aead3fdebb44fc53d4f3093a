@@ -1,0 +1,29 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { StateLayerComponent as StateLayerComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class StateLayerComponent {
+    protected elementRef: ElementRef<StateLayerComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-state-layer element. */
+    readonly nativeElement: StateLayerComponentCustomElement;
+    /** The element to attach the state layer to. */
+    set targetElement(value: StateLayerComponentCustomElement['targetElement']);
+    get targetElement(): StateLayerComponentCustomElement['targetElement'];
+    /** The id of the element to attach the state layer to. */
+    set target(value: StateLayerComponentCustomElement['target']);
+    get target(): StateLayerComponentCustomElement['target'];
+    /** Controls whether the state layer is disabled. */
+    set disabled(value: StateLayerComponentCustomElement['disabled']);
+    get disabled(): StateLayerComponentCustomElement['disabled'];
+    /**
+     * Triggers the animation to run.
+     *
+     * Note: If coordinates are not provided, the transition will originate from the center of the target element.
+     */
+    playAnimation(...args: Parameters<StateLayerComponentCustomElement['playAnimation']>): ReturnType<StateLayerComponentCustomElement['playAnimation']>;
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<StateLayerComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<StateLayerComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<StateLayerComponent, "forge-state-layer", never, { "targetElement": { "alias": "targetElement"; "required": false; }; "target": { "alias": "target"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_disabled: unknown;
+}

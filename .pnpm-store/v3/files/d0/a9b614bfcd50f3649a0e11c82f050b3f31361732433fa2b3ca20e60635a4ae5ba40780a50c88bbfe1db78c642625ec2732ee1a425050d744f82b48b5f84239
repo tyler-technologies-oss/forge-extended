@@ -1,0 +1,75 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { COMPONENT_NAME_PREFIX } from '../constants';
+import { supportsPopover } from '../core';
+const elementName = `${COMPONENT_NAME_PREFIX}overlay`;
+const observedAttributes = {
+    ANCHOR: 'anchor',
+    NO_ANCHOR: 'no-anchor',
+    OPEN: 'open',
+    INLINE: 'inline',
+    PLACEMENT: 'placement',
+    POSITION_STRATEGY: 'position-strategy',
+    HIDE: 'hide',
+    PERSISTENT: 'persistent',
+    SHIFT: 'shift',
+    FLIP: 'flip',
+    BOUNDARY: 'boundary',
+    FALLBACK_PLACEMENTS: 'fallback-placements'
+};
+const attributes = {
+    ...observedAttributes,
+    POSITION_PLACEMENT: 'position-placement',
+    CLIPPED_X: 'clipped-x',
+    CLIPPED_Y: 'clipped-y'
+};
+const classes = {
+    OVERLAY: 'forge-overlay'
+};
+const selectors = {
+    ROOT: `.${classes.OVERLAY}`
+};
+const events = {
+    LIGHT_DISMISS: `${elementName}-light-dismiss`,
+    DESCENDANT_TEST: `${elementName}-descendant-test`
+};
+const defaults = {
+    HIDE: 'anchor-hidden',
+    FLIP: 'auto'
+};
+export const OVERLAY_CONSTANTS = {
+    elementName,
+    observedAttributes,
+    attributes,
+    classes,
+    selectors,
+    events,
+    defaults
+};
+export const SUPPORTS_POPOVER = supportsPopover();
+export const overlayStack = Symbol('overlayStack');
+/**
+ * This is a map of fallback placements for each placement. The fallback placements are used when the
+ * original placement is not possible due to the boundary or other constraints.
+ */
+export const OVERLAY_FALLBACK_PLACEMENT_MAP = {
+    // Left
+    left: ['right', 'bottom', 'top', 'top-start', 'top-end', 'left-start', 'left-end', 'right-start', 'right-end'],
+    'left-start': ['left-end', 'right-start', 'right-end', 'bottom', 'top'],
+    'left-end': ['left-start', 'right-end', 'right-start', 'bottom', 'top', 'bottom-start', 'bottom-end'],
+    // Right
+    right: ['left', 'bottom', 'top', 'top-start', 'top-end', 'left-start', 'left-end', 'right-start', 'right-end'],
+    'right-start': ['right-end', 'left-start', 'left-end', 'bottom', 'top'],
+    'right-end': ['right-start', 'left-end', 'left-start', 'bottom', 'top', 'bottom-start', 'bottom-end'],
+    // Top
+    top: ['bottom', 'left', 'right', 'bottom-start', 'left-start', 'left-end', 'right-start', 'right-end'],
+    'top-start': ['bottom-start', 'left', 'right', 'left-start', 'left-end', 'right-start', 'right-end'],
+    'top-end': ['bottom-end', 'left', 'right', 'right-start', 'right-end', 'left-start', 'left-end'],
+    // Bottom
+    bottom: ['top', 'left', 'right', 'top-start', 'left-start', 'left-end', 'right-start', 'right-end'],
+    'bottom-start': ['top-start', 'left', 'right', 'left-start', 'left-end', 'right-start', 'right-end'],
+    'bottom-end': ['top-end', 'left', 'right', 'right-start', 'right-end', 'left-start', 'left-end']
+};

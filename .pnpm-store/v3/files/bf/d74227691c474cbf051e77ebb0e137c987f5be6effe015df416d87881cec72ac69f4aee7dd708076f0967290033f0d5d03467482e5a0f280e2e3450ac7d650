@@ -1,0 +1,211 @@
+import { Subject } from '../observable';
+import { getBooleanValue, getMatchingValue, getMatchingValues, getRangeQuery, validateName } from './media-observer-utils';
+import { mediaFeatureValues } from './types';
+/**
+ * A Subject that tracks the value of a media feature and exposes it synchronously and
+ * asynchronously.
+ */
+export class MediaObserver extends Subject {
+    /**
+     * Returns a new media observer tracking a discrete feature.
+     * @param feature The name of a discrete media feature.
+     * @param options An options object with the following properties:
+     * - `name`: The name to track the observer by. The feature name is used if unsupplied.
+     * - `track`: Whether to make the observer available globally.
+     * @returns A `DiscreteMediaObserver` tracking the given feature.
+     */
+    static observeDiscrete(feature, options) {
+        const name = validateName(options?.name) ?? feature;
+        const existing = MediaObserver._getObserver(name);
+        if (existing && options?.track !== false) {
+            return existing;
+        }
+        return DiscreteMediaObserver.create(feature);
+    }
+    /** Returns a media observer tracking a range feature. */
+    /**
+     * Returns a new media observer tracking a range feature.
+     * @param feature The name of a range media feature.
+     * @param constraints One or more ranges to track. A range includes the following properties:
+     * - `name`: A label for the range used to set the observer's value.
+     * - `min`: The lowest value in the range (optional).
+     * - `max`: The highest value in the range (optional).
+     * - `equals`: A single value to match, supersedes `min` and `max` (optional).
+     * @param options An options object with the following properties:
+     * - `name`: The name to track the observer by. The feature name is used if unsupplied.
+     * - `track`: Whether to make the observer available globally.
+     * @returns A `RangeMediaObserver` tracking the given feature.
+     */
+    static observeRange(feature, constraints, options) {
+        const name = validateName(options?.name) ?? feature;
+        const existing = MediaObserver._getObserver(name);
+        if (existing && options?.track !== false) {
+            return existing;
+        }
+        return RangeMediaObserver.create(feature, Array.isArray(constraints) ? constraints : [constraints], options);
+    }
+    /**
+     * Returns a media observer tracking a feature that evaluates to a boolean value.
+     * @param feature The name of a media feature that can be expressed as a boolean.
+     * @param options An options object with the following properties:
+     * - `name`: The name to track the observer by. The feature name plus '-bool' is used if unsupplied.
+     * - `track`: Whether to make the observer available globally.
+     * @returns A `BooleanMediaObserver` tracking the given feature.
+     */
+    static observeBoolean(feature, options) {
+        const name = validateName(options?.name) ?? `${feature}-bool`;
+        const existing = MediaObserver._getObserver(name);
+        if (existing && options?.track !== false) {
+            return existing;
+        }
+        return BooleanMediaObserver.create(feature, options);
+    }
+    /** Returns a media observer tracking any media query. */
+    /**
+     * Returns a media observer tracking any media query.
+     * @param query Any media query.
+     * @param options An options object with the following properties:
+     * - `name`: The name to track the observer by. The entire query string is used if unsupplied.
+     * - `track`: Whether to make the observer available globally.
+     * @returns A `CustomMediaObserver` tracking the given query.
+     */
+    static observeCustom(query, options) {
+        const name = validateName(options?.name) ?? query;
+        const existing = MediaObserver._getObserver(name);
+        if (existing && options?.track !== false) {
+            return existing;
+        }
+        return CustomMediaObserver.create(query, options);
+    }
+    static _getObserver(name) {
+        const existing = MediaObserver._observers[name];
+        if (existing) {
+            return existing;
+        }
+        return undefined;
+    }
+    get name() {
+        return this._name;
+    }
+    // eslint-disable-next-line @tylertech-eslint/require-private-modifier
+    constructor(name, namedQueries, value, track = true) {
+        super(value);
+        this._queries = [];
+        this._name = name;
+        this._queries = this._attachMediaQueries(namedQueries);
+        if (track) {
+            MediaObserver._observers[name] = this;
+        }
+    }
+    /** Removes the `MediaObserver` and all created event listeners. */
+    destroy() {
+        for (const query of this._queries) {
+            query.queryList.removeEventListener('change', query.handler);
+        }
+        this._queries = [];
+        delete MediaObserver._observers[this.name];
+    }
+    _attachMediaQueries(namedQueries) {
+        return namedQueries.map(({ name, query }) => {
+            const queryList = window.matchMedia(query);
+            const handler = (event) => this.setValue(event, name);
+            handler(queryList);
+            queryList.addEventListener('change', handler);
+            return { queryList, handler };
+        });
+    }
+}
+/**
+ * STATIC MEMBERS
+ */
+/** A collection of all managed media observers. */
+MediaObserver._observers = {};
+/**
+ * A media observer that tracks one feature with multiple discrete keyword values.
+ */
+export class DiscreteMediaObserver extends MediaObserver {
+    static create(feature, options) {
+        const namedQueries = mediaFeatureValues[feature].map(featureValue => ({ name: featureValue.toString(), query: `(${feature}: ${featureValue})` }));
+        const value = getMatchingValue(namedQueries);
+        const name = validateName(options?.name) ?? feature;
+        return new DiscreteMediaObserver(name, namedQueries, value, options?.track !== false);
+    }
+    // eslint-disable-next-line @tylertech-eslint/require-private-modifier
+    setValue(value, name) {
+        if (!value.matches) {
+            return;
+        }
+        this.next(name);
+    }
+}
+/**
+ * A media observer that tracks one feature with comparable range values.
+ */
+export class RangeMediaObserver extends MediaObserver {
+    static create(feature, constraints, options) {
+        const namedQueries = constraints.map(constraint => ({ query: getRangeQuery(feature, constraint), name: constraint.name }));
+        const value = getMatchingValues(namedQueries);
+        const name = validateName(options?.name) ?? feature;
+        return new RangeMediaObserver(name, namedQueries, value, options?.track !== false);
+    }
+    // eslint-disable-next-line @tylertech-eslint/require-private-modifier
+    constructor(name, namedQueries, value, track = true) {
+        super(name, namedQueries, value, track);
+        this._isAwaitingQueries = false;
+        this._valueQueue = [];
+        this._isInitialized = true;
+    }
+    // eslint-disable-next-line @tylertech-eslint/require-private-modifier
+    setValue(value, name) {
+        if (!this._isInitialized) {
+            return;
+        }
+        if (!this._isAwaitingQueries) {
+            setTimeout(() => {
+                this.next([...this._valueQueue]);
+                this._valueQueue = [];
+                this._isAwaitingQueries = false;
+            });
+            this._valueQueue = [...this.source];
+            this._isAwaitingQueries = true;
+        }
+        const index = this._valueQueue.findIndex(queued => queued === name);
+        if (value.matches && index === -1) {
+            this._valueQueue.push(name);
+        }
+        else if (!value.matches && index > -1) {
+            this._valueQueue.splice(index, 1);
+        }
+    }
+}
+/**
+ * A media observer that tracks one feature that can be coerced to a boolean value. `none` and 0
+ * values evaluate to `true`.
+ */
+export class BooleanMediaObserver extends MediaObserver {
+    static create(feature, options) {
+        const namedQuery = [{ query: `(${feature})`, name: '' }];
+        const value = getBooleanValue(namedQuery[0]);
+        const name = validateName(options?.name) ?? `${feature}-bool`;
+        return new BooleanMediaObserver(name, namedQuery, value, options?.track !== false);
+    }
+    // eslint-disable-next-line @tylertech-eslint/require-private-modifier
+    setValue(value, _) {
+        this.next(value.matches);
+    }
+}
+/**
+ * A media observer that tracks any query.
+ */
+export class CustomMediaObserver extends MediaObserver {
+    static create(query, options) {
+        const namedQuery = [{ query, name: '' }];
+        const value = window.matchMedia(query);
+        const name = validateName(options?.name) ?? query;
+        return new CustomMediaObserver(name, namedQuery, value, options?.track !== false);
+    }
+    // eslint-disable-next-line @tylertech-eslint/require-private-modifier
+    setValue(value, _) {
+        this.next(value);
+    }
+}

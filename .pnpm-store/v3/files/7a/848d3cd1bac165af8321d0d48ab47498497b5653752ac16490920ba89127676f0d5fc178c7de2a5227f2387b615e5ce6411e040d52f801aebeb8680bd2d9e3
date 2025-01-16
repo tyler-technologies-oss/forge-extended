@@ -1,0 +1,136 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { coerceBoolean, coreProperty } from '@tylertech/forge-core';
+import { BaseComponent } from '../../core/base/base-component';
+import { OVERLAY_CONSTANTS } from '../overlay-constants';
+/**
+ * @property {HTMLElement | VirtualElement | null} anchorElement - The anchor element to position the overlay relative to.
+ * @property {string | null} anchor - The IDREF of the anchor element to position the overlay relative to.
+ * @property {boolean} [noAnchor=false] - Whether the overlay should not be anchored to an element. This allows for custom positioning.
+ * @property {boolean} [open=false] - Whether the overlay is open.
+ * @property {boolean} [inline=false] - Whether the overlay is inline (not in the top-layer).
+ * @property {OverlayPlacement} [placement="bottom"] - The placement of the overlay.
+ * @property {OverlayPositionStrategy} [positionStrategy="fixed"] - The position strategy of the overlay.
+ * @property {IOverlayOffset} [offset={}] - The offset of the overlay.
+ * @property {boolean} [shift=false] - Whether the overlay should shift to fit within the viewport.
+ * @property {OverlayHideState} [hide="anchor-hidden"] - The hide state of the overlay.
+ * @property {boolean} [persistent=false] - Whether the overlay should persist when the anchor is removed.
+ * @property {OverlayFlipState} [flip="auto"] - Whether the overlay should flip placements to another side fit within the viewport.
+ * @property {string | null} boundary - An IDREF to boundary element to constrain the overlay within.
+ * @property {HTMLElement | null} boundaryElement - The boundary element instance to constrain the overlay within.
+ * @property {PositionPlacement[] | null} fallbackPlacements - The fallback placements of the overlay.
+ * @property {IOverlayComponent} overlay - A readonly reference to the internal `<forge-overlay>` element instance.
+ *
+ * @attribute {string | null} anchor - The IDREF of the anchor element to position the overlay relative to.
+ * @attribute {boolean} [no-anchor=false] - Whether the overlay should not be anchored to an element. This allows for custom positioning.
+ * @attribute {boolean} [open=false] - Whether the overlay is open.
+ * @attribute {boolean} [inline=false] - Whether the overlay is inline.
+ * @attribute {OverlayPlacement} [placement="bottom"] - The placement of the overlay.
+ * @attribute {OverlayPositionStrategy} [position-strategy="fixed"] - The position strategy of the overlay.
+ * @attribute {IOverlayOffset} offset - The offset of the overlay.
+ * @attribute {boolean} [shift=false] - Whether the overlay should shift to fit within the viewport.
+ * @attribute {OverlayHideState} [hide="anchor-hidden"] - The hide state of the overlay.
+ * @attribute {boolean} [persistent=false] - Whether the overlay should persist when the anchor is removed.
+ * @attribute {OverlayFlipState} [flip="auto"] - Whether the overlay should flip placements to another side fit within the viewport.
+ * @attribute {string | null} boundary - An IDREF to boundary element to constrain the overlay within.
+ */
+export class OverlayAware extends BaseComponent {
+    constructor() {
+        super();
+    }
+    /**
+     * Forces the overlay to reposition itself.
+     */
+    position() {
+        this._core.position();
+    }
+    attributeChangedCallback(name, _oldValue, newValue) {
+        switch (name) {
+            case OVERLAY_CONSTANTS.observedAttributes.ANCHOR:
+                this.anchor = newValue;
+                break;
+            case OVERLAY_CONSTANTS.observedAttributes.NO_ANCHOR:
+                this.noAnchor = coerceBoolean(newValue);
+                break;
+            case OVERLAY_CONSTANTS.observedAttributes.OPEN:
+                this.open = coerceBoolean(newValue);
+                break;
+            case OVERLAY_CONSTANTS.observedAttributes.INLINE:
+                this.inline = coerceBoolean(newValue);
+                break;
+            case OVERLAY_CONSTANTS.observedAttributes.PLACEMENT:
+                this.placement = newValue;
+                break;
+            case OVERLAY_CONSTANTS.observedAttributes.POSITION_STRATEGY:
+                this.positionStrategy = newValue;
+                break;
+            case OVERLAY_CONSTANTS.observedAttributes.HIDE:
+                this.hide = newValue;
+                break;
+            case OVERLAY_CONSTANTS.observedAttributes.PERSISTENT:
+                this.persistent = coerceBoolean(newValue);
+                break;
+            case OVERLAY_CONSTANTS.observedAttributes.SHIFT:
+                this.shift = coerceBoolean(newValue);
+                break;
+            case OVERLAY_CONSTANTS.observedAttributes.FLIP:
+                this.flip = newValue;
+                break;
+            case OVERLAY_CONSTANTS.observedAttributes.BOUNDARY:
+                this.boundary = newValue;
+                break;
+        }
+    }
+    get overlay() {
+        return this._core.overlayElement;
+    }
+}
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "anchorElement", void 0);
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "anchor", void 0);
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "noAnchor", void 0);
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "open", void 0);
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "inline", void 0);
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "placement", void 0);
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "positionStrategy", void 0);
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "offset", void 0);
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "shift", void 0);
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "hide", void 0);
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "persistent", void 0);
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "flip", void 0);
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "boundary", void 0);
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "boundaryElement", void 0);
+__decorate([
+    coreProperty()
+], OverlayAware.prototype, "fallbackPlacements", void 0);

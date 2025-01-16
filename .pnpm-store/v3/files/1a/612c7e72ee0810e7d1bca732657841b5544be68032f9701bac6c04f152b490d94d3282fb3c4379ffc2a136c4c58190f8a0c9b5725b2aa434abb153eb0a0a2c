@@ -1,0 +1,58 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { Density, Theme } from '../../constants';
+export declare const BASE_FIELD_CONSTANTS: {
+    observedAttributes: {
+        LABEL_POSITION: string;
+        LABEL_ALIGNMENT: string;
+        INVALID: string;
+        REQUIRED: string;
+        OPTIONAL: string;
+        DISABLED: string;
+        FLOAT_LABEL: string;
+        VARIANT: string;
+        THEME: string;
+        SHAPE: string;
+        DENSITY: string;
+        DENSE: string;
+        POPOVER_ICON: string;
+        POPOVER_EXPANDED: string;
+        SUPPORT_TEXT_INSET: string;
+    };
+    attributes: {
+        LABEL_POSITION: string;
+        LABEL_ALIGNMENT: string;
+        INVALID: string;
+        REQUIRED: string;
+        OPTIONAL: string;
+        DISABLED: string;
+        FLOAT_LABEL: string;
+        VARIANT: string;
+        THEME: string;
+        SHAPE: string;
+        DENSITY: string;
+        DENSE: string;
+        POPOVER_ICON: string;
+        POPOVER_EXPANDED: string;
+        SUPPORT_TEXT_INSET: string;
+    };
+    defaults: {
+        DEFAULT_VARIANT: FieldVariant;
+        DEFAULT_THEME: FieldTheme;
+        DEFAULT_SHAPE: FieldShape;
+        DEFAULT_DENSITY: FieldDensity;
+        DEFAULT_LABEL_POSITION: FieldLabelPosition;
+        DEFAULT_LABEL_ALIGNMENT: FieldLabelAlignment;
+        DEFAULT_SUPPORT_TEXT_INSET: FieldSupportTextInset;
+    };
+};
+export type FieldVariant = 'plain' | 'outlined' | 'tonal' | 'filled' | 'raised';
+export type FieldTheme = Theme | 'default';
+export type FieldShape = 'default' | 'rounded' | 'squared';
+export type FieldDensity = Density | 'extra-small' | 'extra-large' | 'default';
+export type FieldLabelPosition = 'inline-start' | 'inline-end' | 'block-start' | 'inset' | 'none';
+export type FieldLabelAlignment = 'default' | 'center' | 'baseline' | 'start' | 'end';
+export type FieldSupportTextInset = 'start' | 'end' | 'both' | 'none';

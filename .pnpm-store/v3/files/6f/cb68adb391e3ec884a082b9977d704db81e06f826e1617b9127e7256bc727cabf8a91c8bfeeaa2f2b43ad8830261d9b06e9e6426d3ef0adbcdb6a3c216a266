@@ -1,0 +1,23 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { OpenIconComponent as OpenIconComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class OpenIconComponent {
+    protected elementRef: ElementRef<OpenIconComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-open-icon element. */
+    readonly nativeElement: OpenIconComponentCustomElement;
+    /** Whether the icon is open or closed. */
+    set open(value: OpenIconComponentCustomElement['open']);
+    get open(): OpenIconComponentCustomElement['open'];
+    /** The orientation of the rotation. */
+    set orientation(value: OpenIconComponentCustomElement['orientation']);
+    get orientation(): OpenIconComponentCustomElement['orientation'];
+    /** The rotation amount. */
+    set rotation(value: OpenIconComponentCustomElement['rotation']);
+    get rotation(): OpenIconComponentCustomElement['rotation'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<OpenIconComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<OpenIconComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<OpenIconComponent, "forge-open-icon", never, { "open": { "alias": "open"; "required": false; }; "orientation": { "alias": "orientation"; "required": false; }; "rotation": { "alias": "rotation"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_open: unknown;
+}

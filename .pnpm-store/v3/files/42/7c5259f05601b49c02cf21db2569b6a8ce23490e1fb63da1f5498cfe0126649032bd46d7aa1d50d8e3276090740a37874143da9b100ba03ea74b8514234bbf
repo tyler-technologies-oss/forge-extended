@@ -1,0 +1,47 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { Theme } from '../constants';
+import { PositionPlacement } from '../core/utils/position-utils';
+export declare const TOAST_CONSTANTS: {
+    elementName: "forge-toast";
+    observedAttributes: {
+        OPEN: string;
+        DURATION: string;
+        PLACEMENT: string;
+        ACTION_TEXT: string;
+        DISMISSIBLE: string;
+        DISMISS_LABEL: string;
+        THEME: string;
+    };
+    attributes: {
+        OPEN: string;
+        DURATION: string;
+        PLACEMENT: string;
+        ACTION_TEXT: string;
+        DISMISSIBLE: string;
+        DISMISS_LABEL: string;
+        THEME: string;
+    };
+    classes: {
+        EXITING: string;
+    };
+    selectors: {
+        SURFACE: string;
+        ACTION_BUTTON: string;
+        CLOSE_BUTTON: string;
+    };
+    defaults: {
+        PLACEMENT: import("@floating-ui/utils").Placement;
+        DURATION: number;
+        THEME: ToastTheme;
+    };
+    events: {
+        ACTION: string;
+        CLOSE: string;
+    };
+};
+export type ToastPlacement = PositionPlacement;
+export type ToastTheme = 'default' | Theme;

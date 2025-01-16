@@ -1,0 +1,30 @@
+import { Directive } from '@angular/core';
+import * as i0 from "@angular/core";
+import * as i1 from "@angular/router";
+export class AppBarRouterNavigateDirective {
+    constructor(_elementRef, _router) {
+        this._elementRef = _elementRef;
+        this._router = _router;
+        this._listener = this._onNavigate.bind(this);
+    }
+    ngOnInit() {
+        this._elementRef.nativeElement.addEventListener('forge-app-bar-navigate', this._listener);
+    }
+    _onNavigate(event) {
+        const target = event.target;
+        if (!target.href) {
+            return;
+        }
+        event.preventDefault();
+        this._router.navigate([target.href]);
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: AppBarRouterNavigateDirective, deps: [{ token: i0.ElementRef }, { token: i1.Router }], target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "17.3.7", type: AppBarRouterNavigateDirective, selector: "forge-app-bar[href]", ngImport: i0 }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: AppBarRouterNavigateDirective, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: 'forge-app-bar[href]'
+                }]
+        }], ctorParameters: () => [{ type: i0.ElementRef }, { type: i1.Router }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXBwLWJhci1yb3V0ZXItbmF2aWdhdGUuZGlyZWN0aXZlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvZm9yZ2UtYW5ndWxhci9zcmMvbGliL2FwcC1iYXIvYXBwLWJhci1yb3V0ZXItbmF2aWdhdGUuZGlyZWN0aXZlLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLE9BQU8sRUFBRSxTQUFTLEVBQWMsTUFBTSxlQUFlLENBQUM7OztBQU90RCxNQUFNLE9BQU8sNkJBQTZCO0lBR3hDLFlBQW9CLFdBQXlDLEVBQVUsT0FBZTtRQUFsRSxnQkFBVyxHQUFYLFdBQVcsQ0FBOEI7UUFBVSxZQUFPLEdBQVAsT0FBTyxDQUFRO1FBRjlFLGNBQVMsR0FBcUMsSUFBSSxDQUFDLFdBQVcsQ0FBQyxJQUFJLENBQUMsSUFBSSxDQUFDLENBQUM7SUFFTyxDQUFDO0lBRW5GLFFBQVE7UUFDYixJQUFJLENBQUMsV0FBVyxDQUFDLGFBQWEsQ0FBQyxnQkFBZ0IsQ0FBQyx3QkFBK0IsRUFBRSxJQUFJLENBQUMsU0FBUyxDQUFDLENBQUM7SUFDbkcsQ0FBQztJQUVPLFdBQVcsQ0FBQyxLQUF3QjtRQUMxQyxNQUFNLE1BQU0sR0FBRyxLQUFLLENBQUMsTUFBMkIsQ0FBQztRQUNqRCxJQUFJLENBQUMsTUFBTSxDQUFDLElBQUksRUFBRSxDQUFDO1lBQ2pCLE9BQU87UUFDVCxDQUFDO1FBQ0QsS0FBSyxDQUFDLGNBQWMsRUFBRSxDQUFDO1FBQ3ZCLElBQUksQ0FBQyxPQUFPLENBQUMsUUFBUSxDQUFDLENBQUMsTUFBTSxDQUFDLElBQUksQ0FBQyxDQUFDLENBQUM7SUFDdkMsQ0FBQzs4R0FoQlUsNkJBQTZCO2tHQUE3Qiw2QkFBNkI7OzJGQUE3Qiw2QkFBNkI7a0JBSHpDLFNBQVM7bUJBQUM7b0JBQ1QsUUFBUSxFQUFFLHFCQUFxQjtpQkFDaEMiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBEaXJlY3RpdmUsIEVsZW1lbnRSZWYgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IFJvdXRlciB9IGZyb20gJ0Bhbmd1bGFyL3JvdXRlcic7XG5pbXBvcnQgeyBJQXBwQmFyQ29tcG9uZW50IH0gZnJvbSAnQHR5bGVydGVjaC9mb3JnZSc7XG5cbkBEaXJlY3RpdmUoe1xuICBzZWxlY3RvcjogJ2ZvcmdlLWFwcC1iYXJbaHJlZl0nXG59KVxuZXhwb3J0IGNsYXNzIEFwcEJhclJvdXRlck5hdmlnYXRlRGlyZWN0aXZlIHtcbiAgcHJpdmF0ZSBfbGlzdGVuZXI6IChldnQ6IEN1c3RvbUV2ZW50PHZvaWQ+KSA9PiB2b2lkID0gdGhpcy5fb25OYXZpZ2F0ZS5iaW5kKHRoaXMpO1xuXG4gIGNvbnN0cnVjdG9yKHByaXZhdGUgX2VsZW1lbnRSZWY6IEVsZW1lbnRSZWY8SUFwcEJhckNvbXBvbmVudD4sIHByaXZhdGUgX3JvdXRlcjogUm91dGVyKSB7fVxuXG4gIHB1YmxpYyBuZ09uSW5pdCgpOiB2b2lkIHtcbiAgICB0aGlzLl9lbGVtZW50UmVmLm5hdGl2ZUVsZW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignZm9yZ2UtYXBwLWJhci1uYXZpZ2F0ZScgYXMgYW55LCB0aGlzLl9saXN0ZW5lcik7XG4gIH1cblxuICBwcml2YXRlIF9vbk5hdmlnYXRlKGV2ZW50OiBDdXN0b21FdmVudDx2b2lkPik6IHZvaWQge1xuICAgIGNvbnN0IHRhcmdldCA9IGV2ZW50LnRhcmdldCBhcyBIVE1MQW5jaG9yRWxlbWVudDtcbiAgICBpZiAoIXRhcmdldC5ocmVmKSB7XG4gICAgICByZXR1cm47XG4gICAgfVxuICAgIGV2ZW50LnByZXZlbnREZWZhdWx0KCk7XG4gICAgdGhpcy5fcm91dGVyLm5hdmlnYXRlKFt0YXJnZXQuaHJlZl0pO1xuICB9XG59XG4iXX0=

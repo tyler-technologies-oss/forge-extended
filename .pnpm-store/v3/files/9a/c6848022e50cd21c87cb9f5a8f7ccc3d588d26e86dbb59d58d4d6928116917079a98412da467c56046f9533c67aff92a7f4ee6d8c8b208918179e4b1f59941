@@ -1,0 +1,21 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ButtonVariant } from '../button';
+export declare const SPLIT_BUTTON_CONSTANTS: {
+    elementName: "forge-split-button";
+    attributes: {
+        VARIANT: string;
+        THEME: string;
+        DISABLED: string;
+        DENSE: string;
+        PILL: string;
+    };
+    defaults: {
+        DEFAULT_VARIANT: SplitButtonVariant;
+        DEFAULT_THEME: import("../constants").Theme;
+    };
+};
+export type SplitButtonVariant = Extract<ButtonVariant, 'text' | 'outlined' | 'tonal' | 'filled' | 'raised'>;

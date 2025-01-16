@@ -1,0 +1,120 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use '../../core/styles/typography';
+@use './token-utils' as *;
+
+@forward './token-utils';
+
+@mixin host {
+  display: inline-block;
+  -webkit-tap-highlight-color: transparent;
+}
+
+@mixin radio {
+  position: relative;
+  flex-direction: #{token(direction)};
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: #{token(justify)};
+  gap: #{token(gap)};
+
+  display: flex;
+}
+
+@mixin radio-disabled {
+  opacity: #{token(disabled-opacity)};
+}
+
+@mixin container {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+
+  display: flex;
+
+  border-radius: #{token(shape)};
+  inline-size: #{token(state-layer-width)};
+  block-size: #{token(state-layer-height)};
+
+  cursor: pointer;
+}
+
+@mixin container-dense {
+  inline-size: #{token(state-layer-dense-width)};
+  block-size: #{token(state-layer-dense-height)};
+}
+
+@mixin container-disabled {
+  cursor: not-allowed;
+}
+
+@mixin container-readonly {
+  cursor: not-allowed;
+}
+
+@mixin background {
+  position: relative;
+  display: inline block;
+  overflow: hidden;
+
+  transition-duration: #{token(animation-duration)};
+  transition-delay: #{token(animation-delay)};
+  transition-timing-function: #{token(animation-timing-function)};
+  transition-property: border-color;
+
+  box-sizing: border-box;
+  border-radius: #{token(shape)};
+  border-width: #{token(border-width)};
+  border-style: solid;
+  border-color: #{token(unchecked-border-color)};
+  inline-size: #{token(width)};
+  block-size: #{token(height)};
+
+  background: #{token(background)};
+
+  &::after {
+    content: '';
+
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform-origin: top left;
+    transition-duration: #{token(animation-duration)};
+    transition-delay: #{token(animation-delay)};
+    transition-timing-function: #{token(animation-timing-function)};
+    transition-property: opacity, scale;
+
+    border-radius: #{token(shape)};
+    inline-size: #{token(mark-width)};
+    block-size: #{token(mark-height)};
+
+    background: #{token(mark-color)};
+
+    scale: 0.5;
+    opacity: 0;
+  }
+}
+
+@mixin background-checked {
+  border-color: #{token(checked-border-color)};
+
+  &::after {
+    scale: 1;
+    opacity: 1;
+  }
+}
+
+@mixin label {
+  @include typography.style(label2);
+
+  cursor: default;
+
+  &:empty {
+    display: none;
+  }
+}

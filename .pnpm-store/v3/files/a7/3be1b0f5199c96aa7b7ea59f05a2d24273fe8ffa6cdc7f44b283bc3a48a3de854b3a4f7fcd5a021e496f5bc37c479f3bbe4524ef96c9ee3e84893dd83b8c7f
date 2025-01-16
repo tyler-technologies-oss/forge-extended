@@ -1,0 +1,71 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponent } from '../../core/base/base-component';
+import { ExperimentalFocusOptions } from '../../constants';
+import { IBaseButtonAdapter } from './base-button-adapter';
+import { ButtonType } from './base-button-constants';
+import { BaseButtonCore } from './base-button-core';
+import { IWithLabelAwareness } from '../../core/mixins/label/with-label-aware';
+import { IWithElementInternals } from '../../core/mixins/internals/with-element-internals';
+import { IWithDefaultAria } from '../../core/mixins/internals/with-default-aria';
+export interface IBaseButton extends IWithLabelAwareness, IWithElementInternals, IWithDefaultAria {
+    type: ButtonType;
+    disabled: boolean;
+    popoverIcon: boolean;
+    name: string;
+    value: string;
+    dense: boolean;
+    form: HTMLFormElement | null;
+    popoverTargetElement: HTMLElement | null;
+    popoverTargetAction: 'click' | 'hover';
+    focus(options?: ExperimentalFocusOptions): void;
+}
+declare const BaseButton_base: import("../../constants").AbstractConstructor<import("../../core/mixins/internals/with-default-aria").WithDefaultAriaContract> & import("../../constants").AbstractConstructor<import("../../core/mixins/internals/with-element-internals").WithElementInternalsContract> & import("../../constants").AbstractConstructor<import("../../core/mixins/label/with-label-aware").WithLabelAwarenessContract> & typeof BaseComponent;
+/**
+ * @property {ButtonType} [type="button"] - Sets the type of the button. Possible values are `button`, `submit`, and `reset`.
+ * @property {boolean} [disabled=false] - Disables the button.
+ * @property {boolean} [popoverIcon=false] - Shows a popover icon on the button.
+ * @property {boolean} [dense=false] - Sets the density of the button.
+ * @property {string} [name=""] - The name of the button.
+ * @property {string} [value=""] - The value of the button.
+ *
+ * @attribute {ButtonType} [type="button"] - Sets the type of the button. Possible values are `button`, `submit`, and `reset`.
+ * @attribute {boolean} [disabled=false] - Disables the button.
+ * @attribute {boolean} [popover-icon=false] - Shows a popover icon on the button.
+ * @attribute {boolean} [dense=false] - Sets the density of the button.
+ * @attribute {string} [name=""] - The name of the button.
+ * @attribute {string} [value=""] - The value of the button.
+ *
+ * @fires {PointerEvent} click - Fires when the button is clicked.
+ */
+export declare abstract class BaseButton<T extends BaseButtonCore<IBaseButtonAdapter<IBaseButton>>> extends BaseButton_base implements IBaseButton {
+    static get observedAttributes(): string[];
+    static readonly formAssociated = true;
+    /** @ignore */
+    popoverTargetElement: HTMLElement | null;
+    /** @ignore */
+    popoverTargetAction: 'click' | 'hover';
+    protected abstract _core: T;
+    constructor();
+    connectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    labelClickedCallback(): void;
+    labelChangedCallback(value: string | null): void;
+    get form(): HTMLFormElement | null;
+    get name(): string;
+    set name(name: string);
+    get value(): string;
+    set value(value: string);
+    type: ButtonType;
+    disabled: boolean;
+    popoverIcon: boolean;
+    dense: boolean;
+    /** Clicks the button. */
+    click(): void;
+    /** Focuses the button. */
+    focus(options: ExperimentalFocusOptions): void;
+}
+export {};

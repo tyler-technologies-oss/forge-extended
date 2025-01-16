@@ -1,0 +1,4 @@
+type Options = string[];
+export declare const RULE_NAME = "require-private-underscore";
+declare const _default: import("@typescript-eslint/utils/dist/ts-eslint").RuleModule<"requirePrivateUnderscore", Options, import("@typescript-eslint/utils/dist/ts-eslint").RuleListener>;
+export default _default;

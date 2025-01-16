@@ -1,0 +1,27 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+const observedAttributes = {
+    VALUE: 'value',
+    MULTIPLE: 'multiple',
+    OBSERVE_SCROLL: 'observe-scroll',
+    OBSERVE_SCROLL_THRESHOLD: 'observe-scroll-threshold',
+    POPUP_CLASSES: 'popup-classes',
+    OPTION_LIMIT: 'option-limit',
+    SYNC_POPUP_WIDTH: 'sync-popup-width',
+    CONSTRAIN_POPUP_WIDTH: 'constrain-popup-width',
+    WRAP_OPTION_TEXT: 'wrap-option-text'
+};
+const attributes = {
+    ...observedAttributes
+};
+const events = {
+    CHANGE: 'change'
+};
+export const BASE_SELECT_CONSTANTS = {
+    observedAttributes,
+    attributes,
+    events
+};

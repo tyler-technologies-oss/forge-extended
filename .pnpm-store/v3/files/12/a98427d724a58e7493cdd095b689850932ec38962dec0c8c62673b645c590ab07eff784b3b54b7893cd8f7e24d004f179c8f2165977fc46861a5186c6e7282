@@ -1,0 +1,16 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const SELECT_DROPDOWN_CONSTANTS: {
+    elementName: "forge-select-dropdown";
+    attributes: {
+        TARGET: string;
+        SELECTED_TEXT_TARGET: string;
+        SYNC_SELECTED_TEXT: string;
+    };
+    events: {
+        SCROLLED_BOTTOM: string;
+    };
+};

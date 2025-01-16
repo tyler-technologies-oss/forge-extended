@@ -1,0 +1,42 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const ISO_8601_REGEX: RegExp;
+export declare const ISO_TIMEZONE_REGEX: RegExp;
+/**
+ * Parses a date string value to a `Date` object in local time.
+ * @param str The date string value.
+ */
+export declare function parseDateString(value: string): Date | null;
+/**
+ * Formats a `Date` to a specified format.
+ * @param str The date string value.
+ */
+export declare function formatDate(date: Date): string;
+/**
+ * Determines if two date objects are equal.
+ *
+ * Note: Time values are ignored.
+ * @param first The date to compare.
+ * @param second The date to compare the first date to.
+ * @returns A boolean whether the two dates are equivalent.
+ */
+export declare function isSameDate(first?: Date | null, second?: Date | null): boolean;
+/**
+ * Returns the last date on a month.
+ *
+ * @param month The month.
+ * @param year The year of the month, needed for February otherwise optional.
+ * @returns The last date of the given month.
+ */
+export declare function getLastDateOfMonth(month: number, year?: number): Date;
+/**
+ * Returns the number of days in a month.
+ *
+ * @param month The month to find the length of.
+ * @param year The year to check within, needed for February otherwise optional.
+ * @returns The number of days in the month.
+ */
+export declare function getMonthLength(month: number, year?: number): number;

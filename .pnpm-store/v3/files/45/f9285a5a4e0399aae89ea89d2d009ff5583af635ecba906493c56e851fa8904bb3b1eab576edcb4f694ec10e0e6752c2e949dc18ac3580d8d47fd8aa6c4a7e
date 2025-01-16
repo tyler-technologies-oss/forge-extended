@@ -1,0 +1,8 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const DRAWER_CONSTANTS: {
+    elementName: "forge-drawer";
+};

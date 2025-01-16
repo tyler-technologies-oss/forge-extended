@@ -1,0 +1,205 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { attachShadowTemplate, coerceBoolean, customElement, coreProperty } from '@tylertech/forge-core';
+import { WithFormAssociation } from '../../core/mixins/form/with-form-associated';
+import { WithLabelAwareness } from '../../core/mixins/label/with-label-aware';
+import { WithElementInternals } from '../../core/mixins/internals/with-element-internals';
+import { WithFormValidity } from '../../core/mixins/form/with-form-validity';
+import { BaseComponent } from '../../core/base/base-component';
+import { ButtonToggleComponent } from '../button-toggle/button-toggle';
+import { ButtonToggleGroupAdapter } from './button-toggle-group-adapter';
+import { BUTTON_TOGGLE_GROUP_CONSTANTS } from './button-toggle-group-constants';
+import { ButtonToggleGroupCore } from './button-toggle-group-core';
+import { getFormState, getFormValue, inputType, setDefaultAria } from '../../constants';
+import { WithDefaultAria } from '../../core/mixins/internals/with-default-aria';
+const template = '<template><div class=\"forge-button-toggle-group\" part=\"root\"><slot></slot></div></template>';
+const styles = ':host{--_button-toggle-group-display:var(--forge-button-toggle-group-display, inline-flex)}:host{display:var(--_button-toggle-group-display)}:host([hidden]){display:none}.forge-button-toggle-group{--_button-toggle-group-gap:var(--forge-button-toggle-group-gap, 4px);--_button-toggle-group-padding:var(--forge-button-toggle-group-padding, 4px);--_button-toggle-group-padding-block:var(--forge-button-toggle-group-padding-block, var(--_button-toggle-group-padding));--_button-toggle-group-padding-inline:var(--forge-button-toggle-group-padding-inline, var(--_button-toggle-group-padding));--_button-toggle-group-height:var(--forge-button-toggle-group-height, var(--forge-button-height, 36px));--_button-toggle-group-dense-height:var(--forge-button-toggle-group-dense-height, var(--forge-button-dense-height, 24px));--_button-toggle-group-outline-width:var(--forge-button-toggle-group-outline-width, var(--forge-border-thin, 1px));--_button-toggle-group-outline-style:var(--forge-button-toggle-group-outline-style, solid);--_button-toggle-group-outline-color:var(--forge-button-toggle-group-outline-color, var(--forge-theme-outline-low, #9e9e9e));--_button-toggle-group-outline-color-active:var(--forge-button-toggle-group-outline-color-active, var(--forge-theme-outline-medium, #757575));--_button-toggle-group-shape:var(--forge-button-toggle-group-shape, calc(var(--forge-shape-medium, 4px) * var(--forge-shape-factor, 1)));--_button-toggle-group-shape-start-start:var(--forge-button-toggle-group-shape-start-start, var(--_button-toggle-group-shape));--_button-toggle-group-shape-start-end:var(--forge-button-toggle-group-shape-start-end, var(--_button-toggle-group-shape));--_button-toggle-group-shape-end-start:var(--forge-button-toggle-group-shape-end-start, var(--_button-toggle-group-shape));--_button-toggle-group-shape-end-end:var(--forge-button-toggle-group-shape-end-end, var(--_button-toggle-group-shape));--_button-toggle-group-transition-duration:var(--forge-button-toggle-group-transition-duration, var(--forge-button-toggle-transition-duration, var(--forge-animation-duration-short3, 150ms)));--_button-toggle-group-transition-timing:var(--forge-button-toggle-group-transition-timing, var(--forge-button-toggle-transition-timing, var(--forge-animation-easing-standard, cubic-bezier(0.2, 0, 0, 1))))}.forge-button-toggle-group{display:flex;align-items:center;gap:var(--_button-toggle-group-gap);height:var(--_button-toggle-group-height);border-width:var(--_button-toggle-group-outline-width);border-style:var(--_button-toggle-group-outline-style);border-color:var(--_button-toggle-group-outline-color);border-start-start-radius:var(--_button-toggle-group-shape-start-start);border-start-end-radius:var(--_button-toggle-group-shape-start-end);border-end-start-radius:var(--_button-toggle-group-shape-end-start);border-end-end-radius:var(--_button-toggle-group-shape-end-end);padding-block:var(--_button-toggle-group-padding-block);padding-inline:var(--_button-toggle-group-padding-inline);transition-property:border-color;transition-duration:var(--_button-toggle-group-transition-duration);transition-timing-function:var(--_button-toggle-group-transition-timing)}:host(:not([disabled]):not([no-outline])) .forge-button-toggle-group:focus-within,:host(:not([disabled]):not([no-outline])) .forge-button-toggle-group:hover{--_button-toggle-group-outline-color:var(--_button-toggle-group-outline-color-active)}:host([no-outline]) .forge-button-toggle-group{--_button-toggle-group-padding:var(--forge-button-toggle-group-padding, 0);--_button-toggle-group-outline-style:var(--forge-button-toggle-group-outline-style, none)}:host(:is([dense],[density=dense])) .forge-button-toggle-group{--_button-toggle-group-height:var(--_button-toggle-group-dense-height)}:host([vertical]) .forge-button-toggle-group{height:auto;flex-direction:column}:host([vertical]) ::slotted(forge-button-toggle){height:var(--_button-toggle-group-height);width:100%}:host([vertical]) ::slotted(forge-divider:not([vertical])){margin-inline:4px;width:100%}::slotted(forge-divider[vertical]){margin-block:4px}:host([stretch]){display:block}:host([stretch]) .forge-button-toggle-group{width:100%}:host(:not([vertical])[stretch]) ::slotted(forge-button-toggle){flex:1}:host([theme=primary]) ::slotted(forge-button-toggle){--forge-button-toggle-selected-background:var(--forge-theme-primary-container, #d1d5ed);--forge-button-toggle-selected-color:var(--forge-theme-on-primary-container, #222c62);--forge-button-toggle-focus-indicator-color:var(--forge-theme-primary, #3f51b5)}:host([theme=secondary]) ::slotted(forge-button-toggle){--forge-button-toggle-selected-background:var(--forge-theme-secondary-container, #fff0c3);--forge-button-toggle-selected-color:var(--forge-theme-on-secondary-container, #8a6804);--forge-button-toggle-focus-indicator-color:var(--forge-theme-secondary, #ffc107)}:host([theme=success]) ::slotted(forge-button-toggle){--forge-button-toggle-selected-background:var(--forge-theme-success-container, #cde0ce);--forge-button-toggle-selected-color:var(--forge-theme-on-success-container, #19441b);--forge-button-toggle-focus-indicator-color:var(--forge-theme-success, #2e7d32)}:host([theme=error]) ::slotted(forge-button-toggle){--forge-button-toggle-selected-background:var(--forge-theme-error-container, #ecc2c9);--forge-button-toggle-selected-color:var(--forge-theme-on-error-container, #5f0011);--forge-button-toggle-focus-indicator-color:var(--forge-theme-error, #b00020)}:host([theme=warning]) ::slotted(forge-button-toggle){--forge-button-toggle-selected-background:var(--forge-theme-warning-container, #f4d3c2);--forge-button-toggle-selected-color:var(--forge-theme-on-warning-container, #712700);--forge-button-toggle-focus-indicator-color:var(--forge-theme-warning, #d14900)}:host([theme=info]) ::slotted(forge-button-toggle){--forge-button-toggle-selected-background:var(--forge-theme-info-container, #c7daf0);--forge-button-toggle-selected-color:var(--forge-theme-on-info-container, #0b3768);--forge-button-toggle-focus-indicator-color:var(--forge-theme-info, #1565c0)}';
+/**
+ * @tag forge-button-toggle-group
+ *
+ * @description Button toggle groups allow users to select one or more options from a set of related options.
+ *
+ * @property {any} value - The value of the selected button toggle(s).
+ * @property {boolean} [outlined=true] - Whether or not the group should be outlined.
+ * @property {boolean} [multiple=false] - Whether or not the group should allow multiple selections.
+ * @property {boolean} [stretch=false] - Whether or not the group should stretch to fill the available width.
+ * @property {boolean} [mandatory=false] - Whether or not the group should require a selection once a button has been toggled on.
+ * @property {boolean} [vertical=false] - Whether or not the group should be displayed vertically.
+ * @property {boolean} [disabled=false] - Whether or not the group should be disabled.
+ * @property {boolean} [readonly=false] - Whether or not the group should be readonly.
+ * @property {boolean} [dense=false] - Whether or not the group should be dense.
+ * @property {ButtonToggleGroupTheme} theme - The theme to use for the group.
+ *
+ * @attribute {any} value - The value of the selected button toggle(s).
+ * @attribute {boolean} [outlined=false] - Whether or not the group should be outlined.
+ * @attribute {boolean} [multiple=false] - Whether or not the group should allow multiple selections.
+ * @attribute {boolean} [stretch=false] - Whether or not the group should stretch to fill the available width.
+ * @attribute {boolean} [mandatory=false] - Whether or not the group should require a selection once a button has been toggled on.
+ * @attribute {boolean} [vertical=false] - Whether or not the group should be displayed vertically.
+ * @attribute {boolean} [disabled=false] - Whether or not the group should be disabled.
+ * @attribute {boolean} [readonly=false] - Whether or not the group should be readonly.
+ * @attribute {boolean} [dense=false] - Whether or not the group should be dense.
+ * @attribute {ButtonToggleGroupTheme} theme - The theme to use for the group.
+ *
+ * @event {CustomEvent<IButtonToggleGroupChangeEventData>} forge-button-toggle-group-change - Dispatches when the value of the group changes.
+ *
+ * @cssproperty --forge-button-toggle-group-display - The `display` of the group container elements.
+ * @cssproperty --forge-button-toggle-group-gap - The space between button toggle elements.
+ * @cssproperty --forge-button-toggle-group-padding - The padding around the button toggle elements when outlined.
+ * @cssproperty --forge-button-toggle-group-padding-block - The block padding around the button toggle elements when outlined.
+ * @cssproperty --forge-button-toggle-group-padding-inline - The inline padding around the button toggle elements when outlined.
+ * @cssproperty --forge-button-toggle-group-height - The height of the group element.
+ * @cssproperty --forge-button-toggle-group-dense-height - The height of the group element when dense.
+ * @cssproperty --forge-button-toggle-group-outline-width - The width of the outline around the group element.
+ * @cssproperty --forge-button-toggle-group-outline-style - The style of the outline around the group element.
+ * @cssproperty --forge-button-toggle-group-outline-color - The color of the outline around the group element.
+ * @cssproperty --forge-button-toggle-group-outline-color-active - The color of the outline around the group element when hovered or focused.
+ * @cssproperty --forge-button-toggle-group-shape - The shape radius of the group container element.
+ * @cssproperty --forge-button-toggle-group-shape-start-start - The start-start shape radius.
+ * @cssproperty --forge-button-toggle-group-shape-start-end - The start-end shape radius.
+ * @cssproperty --forge-button-toggle-group-shape-end-start - The end-start shape radius.
+ * @cssproperty --forge-button-toggle-group-shape-end-end - The end-end shape radius.
+ * @cssproperty --forge-button-toggle-group-transition-duration - The transition duration for all animations on the group.
+ * @cssproperty --forge-button-toggle-group-transition-timing - The transition timing for all animations on the group.
+ *
+ * @csspart root - The root container element for the group.
+ *
+ * @slot - The is a default/unnamed slot for child button toggle elements.
+ */
+let ButtonToggleGroupComponent = class ButtonToggleGroupComponent extends WithLabelAwareness(WithFormAssociation(WithFormValidity(WithDefaultAria(WithElementInternals(BaseComponent))))) {
+    static get observedAttributes() {
+        return Object.values(BUTTON_TOGGLE_GROUP_CONSTANTS.observedAttributes);
+    }
+    constructor() {
+        super();
+        attachShadowTemplate(this, template, styles);
+        this._core = new ButtonToggleGroupCore(new ButtonToggleGroupAdapter(this));
+        this[inputType] = 'radio'; // Used for form validity message to match radio button
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        this[setDefaultAria]({ role: 'group' }, { setAttribute: !this.hasAttribute('role') });
+        this._core.initialize();
+    }
+    disconnectedCallback() {
+        this._core.destroy();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case BUTTON_TOGGLE_GROUP_CONSTANTS.observedAttributes.VALUE:
+                this.value = newValue;
+                break;
+            case BUTTON_TOGGLE_GROUP_CONSTANTS.observedAttributes.NO_OUTLINE:
+                this.outlined = !coerceBoolean(newValue);
+                break;
+            case BUTTON_TOGGLE_GROUP_CONSTANTS.observedAttributes.MULTIPLE:
+                this.multiple = coerceBoolean(newValue);
+                break;
+            case BUTTON_TOGGLE_GROUP_CONSTANTS.observedAttributes.MANDATORY:
+                this.mandatory = coerceBoolean(newValue);
+                break;
+            case BUTTON_TOGGLE_GROUP_CONSTANTS.observedAttributes.VERTICAL:
+                this.vertical = coerceBoolean(newValue);
+                break;
+            case BUTTON_TOGGLE_GROUP_CONSTANTS.observedAttributes.STRETCH:
+                this.stretch = coerceBoolean(newValue);
+                break;
+            case BUTTON_TOGGLE_GROUP_CONSTANTS.observedAttributes.DENSE:
+                this.dense = coerceBoolean(newValue);
+                break;
+            case BUTTON_TOGGLE_GROUP_CONSTANTS.observedAttributes.DISABLED:
+                this.disabled = coerceBoolean(newValue);
+                break;
+            case BUTTON_TOGGLE_GROUP_CONSTANTS.observedAttributes.REQUIRED:
+                this.required = coerceBoolean(newValue);
+                break;
+            case BUTTON_TOGGLE_GROUP_CONSTANTS.observedAttributes.READONLY:
+                this.readonly = coerceBoolean(newValue);
+                break;
+            case BUTTON_TOGGLE_GROUP_CONSTANTS.observedAttributes.THEME:
+                this.theme = newValue;
+                break;
+        }
+    }
+    [getFormValue]() {
+        const hasValue = Array.isArray(this.value) ? this.value.length > 0 : !!this.value;
+        let data = null;
+        if (hasValue) {
+            const value = Array.isArray(this.value) ? this.value : [this.value];
+            if (value.length) {
+                data = new FormData();
+                value.forEach(v => data?.append(this.name, v));
+            }
+        }
+        return data;
+    }
+    [getFormState]() {
+        const state = new FormData();
+        const value = Array.isArray(this.value) ? this.value : this.value != null ? [this.value] : [];
+        state.append('multiple', String(this.multiple));
+        value.forEach(v => state.append('value', v));
+        return state;
+    }
+    formStateRestoreCallback(state, reason) {
+        if (reason === 'restore' && state instanceof FormData) {
+            const multiple = state.get('multiple') === 'true';
+            const value = state.getAll('value');
+            if (multiple) {
+                this.multiple = multiple;
+                this.value = value;
+                return;
+            }
+            this.value = value[0] ?? null;
+        }
+    }
+    formResetCallback() {
+        this.value = this.getAttribute('value');
+    }
+    labelChangedCallback(value) {
+        this[setDefaultAria]({ ariaLabel: value ?? undefined });
+    }
+};
+__decorate([
+    coreProperty()
+], ButtonToggleGroupComponent.prototype, "value", void 0);
+__decorate([
+    coreProperty()
+], ButtonToggleGroupComponent.prototype, "outlined", void 0);
+__decorate([
+    coreProperty()
+], ButtonToggleGroupComponent.prototype, "multiple", void 0);
+__decorate([
+    coreProperty()
+], ButtonToggleGroupComponent.prototype, "mandatory", void 0);
+__decorate([
+    coreProperty()
+], ButtonToggleGroupComponent.prototype, "vertical", void 0);
+__decorate([
+    coreProperty()
+], ButtonToggleGroupComponent.prototype, "stretch", void 0);
+__decorate([
+    coreProperty()
+], ButtonToggleGroupComponent.prototype, "dense", void 0);
+__decorate([
+    coreProperty()
+], ButtonToggleGroupComponent.prototype, "disabled", void 0);
+__decorate([
+    coreProperty()
+], ButtonToggleGroupComponent.prototype, "required", void 0);
+__decorate([
+    coreProperty()
+], ButtonToggleGroupComponent.prototype, "readonly", void 0);
+__decorate([
+    coreProperty()
+], ButtonToggleGroupComponent.prototype, "theme", void 0);
+ButtonToggleGroupComponent = __decorate([
+    customElement({
+        name: BUTTON_TOGGLE_GROUP_CONSTANTS.elementName,
+        dependencies: [ButtonToggleComponent]
+    })
+], ButtonToggleGroupComponent);
+export { ButtonToggleGroupComponent };

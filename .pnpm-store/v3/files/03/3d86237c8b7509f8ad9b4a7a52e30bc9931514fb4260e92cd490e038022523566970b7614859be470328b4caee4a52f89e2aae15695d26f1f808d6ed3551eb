@@ -1,0 +1,44 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { COMPONENT_NAME_PREFIX } from '../../constants';
+const elementName = `${COMPONENT_NAME_PREFIX}chip`;
+const observedAttributes = {
+    TYPE: 'type',
+    VALUE: 'value',
+    SELECTED: 'selected',
+    INVALID: 'invalid',
+    DISABLED: 'disabled',
+    DENSE: 'dense',
+    THEME: 'theme',
+    HREF: 'href',
+    TARGET: 'target',
+    DOWNLOAD: 'download',
+    REL: 'rel'
+};
+const attributes = {
+    ...observedAttributes
+};
+const selectors = {
+    ROOT: '.forge-chip',
+    TRIGGER: '#trigger'
+};
+const events = {
+    DELETE: `${elementName}-delete`,
+    SELECT: `${elementName}-select`,
+    NAVIGATE: `${elementName}-navigate`
+};
+const defaults = {
+    TYPE: 'action',
+    THEME: 'primary'
+};
+export const CHIP_CONSTANTS = {
+    elementName,
+    observedAttributes,
+    attributes,
+    selectors,
+    events,
+    defaults
+};

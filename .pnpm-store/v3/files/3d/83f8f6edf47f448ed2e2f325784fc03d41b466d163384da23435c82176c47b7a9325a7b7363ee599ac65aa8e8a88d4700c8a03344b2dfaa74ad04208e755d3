@@ -1,0 +1,40 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use './core' as *;
+
+//
+// Host
+//
+
+:host {
+  @include host;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+//
+// Base
+//
+
+.forge-chip-set {
+  @include tokens;
+}
+
+.forge-chip-set {
+  @include base;
+}
+
+//
+// Vertical
+//
+
+:host([vertical]) {
+  .forge-chip-set {
+    @include vertical;
+  }
+}

@@ -1,0 +1,112 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "my-element.js",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "variable",
+          "type": {
+            "text": "string"
+          },
+          "default": "'var'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "IamDepricated",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "deprecated": "true",
+          "customElement": true
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "IamDepricatedWithReason",
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "deprecated": "the reason for the deprecation.",
+          "customElement": true
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "IncludeMe",
+          "members": [
+            {
+              "kind": "field",
+              "name": "included",
+              "type": {
+                "text": "string"
+              },
+              "default": "'hello world'"
+            },
+            {
+              "kind": "method",
+              "name": "imDeprecated",
+              "deprecated": "true"
+            },
+            {
+              "kind": "method",
+              "name": "imDeprecatedWithReason",
+              "deprecated": "the reason for the deprecation."
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "tagName": "include-me",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "variable",
+          "declaration": {
+            "name": "variable",
+            "module": "my-element.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "IamDepricated",
+          "declaration": {
+            "name": "IamDepricated",
+            "module": "my-element.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "IamDepricatedWithReason",
+          "declaration": {
+            "name": "IamDepricatedWithReason",
+            "module": "my-element.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "IncludeMe",
+          "declaration": {
+            "name": "IncludeMe",
+            "module": "my-element.js"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "include-me",
+          "declaration": {
+            "name": "IncludeMe",
+            "module": "my-element.js"
+          }
+        }
+      ]
+    }
+  ]
+}

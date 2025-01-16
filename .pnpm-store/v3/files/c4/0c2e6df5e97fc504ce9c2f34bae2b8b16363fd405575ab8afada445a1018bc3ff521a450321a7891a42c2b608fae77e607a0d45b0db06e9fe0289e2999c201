@@ -1,0 +1,30 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core/base/base-adapter';
+import type { IBannerComponent } from './banner';
+export interface IBannerAdapter extends IBaseAdapter {
+    initialize(): void;
+    setDismissButtonVisibility(visible: boolean): void;
+    addDismissListener(callback: EventListener): void;
+    removeDismissListener(callback: EventListener): void;
+    startDismissCompleteListener(): Promise<void>;
+    setDismissed(value: boolean): void;
+}
+export declare class BannerAdapter extends BaseAdapter<IBannerComponent> implements IBannerAdapter {
+    private _rootElement;
+    private _dismissButtonElement;
+    private _iconSlotElement;
+    private _buttonSlotElement;
+    constructor(component: IBannerComponent);
+    initialize(): void;
+    setDismissButtonVisibility(visible: boolean): void;
+    addDismissListener(callback: EventListener): void;
+    removeDismissListener(callback: EventListener): void;
+    setDismissed(value: boolean): void;
+    startDismissCompleteListener(): Promise<void>;
+    private _onIconSlotChange;
+    private _onButtonSlotChange;
+}

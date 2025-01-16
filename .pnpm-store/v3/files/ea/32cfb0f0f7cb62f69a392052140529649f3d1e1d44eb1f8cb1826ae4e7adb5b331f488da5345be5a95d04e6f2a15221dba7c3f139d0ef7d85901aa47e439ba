@@ -1,0 +1,28 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core';
+import { ICheckboxComponent } from './checkbox';
+import { CheckboxLabelPosition, CheckboxState } from './checkbox-constants';
+export interface ICheckboxAdapter extends IBaseAdapter {
+    setChecked(value: boolean): void;
+    setDisabled(value: boolean): void;
+    setRequired(value: boolean): void;
+    setReadonly(value: boolean): void;
+    setLabelPosition(value: CheckboxLabelPosition): void;
+    syncValue(value: string | null, state: CheckboxState): void;
+}
+export declare class CheckboxAdapter extends BaseAdapter<ICheckboxComponent> implements ICheckboxAdapter {
+    private readonly _rootElement;
+    private readonly _labelElement;
+    private readonly _stateLayerElement;
+    constructor(component: ICheckboxComponent);
+    setChecked(value: boolean): void;
+    setDisabled(value: boolean): void;
+    setRequired(value: boolean): void;
+    setReadonly(value: boolean): void;
+    setLabelPosition(value: CheckboxLabelPosition): void;
+    syncValue(value: string | null, state: CheckboxState): void;
+}

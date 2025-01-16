@@ -1,0 +1,129 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ISelectOption, ISelectOptionGroup, SelectSelectedTextBuilder, SelectOptionBuilder, SelectBeforeValueChangeCallback } from './base-select-constants';
+import { ListDropdownHeaderBuilder, ListDropdownFooterBuilder } from '../../list-dropdown/list-dropdown-constants';
+import { IBaseSelectAdapter } from './base-select-adapter';
+import { IListDropdownAwareCore, ListDropdownAwareCore } from '../../list-dropdown/list-dropdown-aware-core';
+export interface IBaseSelectCore extends IListDropdownAwareCore {
+    value: any;
+    selectedIndex: number | number[];
+    options: ISelectOption[] | ISelectOptionGroup[];
+    multiple: boolean;
+    open: boolean;
+    popupElement: HTMLElement | undefined;
+    optionBuilder: SelectOptionBuilder;
+    selectedTextBuilder: SelectSelectedTextBuilder;
+    beforeValueChange: SelectBeforeValueChangeCallback<any>;
+    appendOptions(options: ISelectOption[] | ISelectOptionGroup[]): void;
+    selectAll(): void;
+    deselectAll(): void;
+    initialize(): void;
+    initializeTarget(): void;
+    destroy(): void;
+}
+export declare abstract class BaseSelectCore<T extends IBaseSelectAdapter> extends ListDropdownAwareCore implements IBaseSelectCore {
+    protected _adapter: T;
+    protected _options: ISelectOption[] | ISelectOptionGroup[];
+    protected _value: any;
+    protected _multiple: boolean;
+    protected _open: boolean;
+    protected _optionBuilder: SelectOptionBuilder;
+    protected _selectedTextBuilder: SelectSelectedTextBuilder;
+    protected _selectedValues: string[];
+    protected _selectedLabels: string[];
+    protected _selectedIndexes: number[];
+    protected _filterTimeout: number | undefined;
+    protected _filterString: string;
+    protected _identifier: string;
+    protected _targetWidthCallback: () => number;
+    protected _beforeValueChange: SelectBeforeValueChangeCallback<unknown>;
+    private _focusListener;
+    private _blurListener;
+    private _clickListener;
+    private _keydownListener;
+    private _optionsChangedListener;
+    private _optionListenerDestructor;
+    private _activeChangeListener;
+    private _dropdownScrollEndListener;
+    private _valueChanging;
+    private _dismissListener;
+    constructor(_adapter: T);
+    protected abstract _onDropdownScrollEnd(): void;
+    protected _onFocus(evt: Event): void;
+    initialize(): void;
+    initializeTarget(): void;
+    destroy(): void;
+    appendOptions(options: ISelectOption[] | ISelectOptionGroup[]): void;
+    selectAll(): void;
+    deselectAll(): void;
+    protected get _flatOptions(): ISelectOption[];
+    private get _nonDividerOptions();
+    protected _initializeValue(): void;
+    protected _onClick(evt: MouseEvent): void;
+    protected _onBlur(evt: FocusEvent): void;
+    protected _openDropdown(): void;
+    /**
+     * Closes the dropdown.
+     */
+    protected _closeDropdown(): void;
+    /**
+     * Handles selecting an item in the dropdown.
+     * @param {ISelectOption} option The selected option.
+     * @param {number} optionIndex The index of the selected option.
+     */
+    protected _onSelect(option: ISelectOption, optionIndex: number, closeDropdown?: boolean): Promise<boolean>;
+    private _selectActiveOption;
+    protected _tryUpdateDropdownPosition(): void;
+    protected _reset(): void;
+    protected _applyValue(value: string | string[]): void;
+    /**
+     * Handles the user dismissing the dropdown.
+     */
+    protected _onDismiss(): void;
+    /** Creates the selected text value from the selected label values. */
+    protected _getSelectedText(): string;
+    private _onKeydown;
+    private _getFirstSelectedOptionIndex;
+    private _getPreviousHighlightableOptionIndex;
+    private _getNextHighlightableOptionIndex;
+    private _filter;
+    private _onOptionsChanged;
+    private _onActiveOptionChanged;
+    /** Gets/sets the value of the component. */
+    get value(): any;
+    set value(value: any);
+    /** Gets/sets the selected index(s). */
+    get selectedIndex(): number | number[];
+    set selectedIndex(indexes: number | number[]);
+    /** Gets/sets the available options. */
+    get options(): ISelectOption[] | ISelectOptionGroup[];
+    set options(value: ISelectOption[] | ISelectOptionGroup[]);
+    /** Gets/sets the multiple select state. */
+    get multiple(): boolean;
+    set multiple(value: boolean);
+    /** Gets/sets the open state of the dropdown. */
+    get open(): boolean;
+    set open(value: boolean);
+    /** Gets/sets the builder callback to use when building options. */
+    get optionBuilder(): SelectOptionBuilder;
+    set optionBuilder(value: SelectOptionBuilder);
+    /** Sets the selected text builder callback that will be executed when getting the selected text to display in the field. */
+    get selectedTextBuilder(): SelectSelectedTextBuilder;
+    set selectedTextBuilder(fn: SelectSelectedTextBuilder);
+    get optionLimit(): number;
+    set optionLimit(value: number);
+    get popupClasses(): string | string[];
+    set popupClasses(value: string | string[]);
+    get popupHeaderBuilder(): ListDropdownHeaderBuilder;
+    set popupHeaderBuilder(value: ListDropdownHeaderBuilder);
+    get popupFooterBuilder(): ListDropdownFooterBuilder;
+    set popupFooterBuilder(value: ListDropdownFooterBuilder);
+    /** Gets the currently active popup element when the dropdown is open. */
+    get popupElement(): HTMLElement | undefined;
+    /** Sets the callback to be executed when the user selects a value. */
+    get beforeValueChange(): SelectBeforeValueChangeCallback<any>;
+    set beforeValueChange(value: SelectBeforeValueChangeCallback<any>);
+}

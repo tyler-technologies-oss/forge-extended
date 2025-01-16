@@ -1,0 +1,49 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../../core/base/base-adapter';
+import { IFocusIndicatorComponent } from '../../focus-indicator';
+import { IStateLayerComponent } from '../../state-layer';
+import { IBaseButton } from './base-button';
+import { IBaseComponent } from '../../core';
+export interface IBaseButtonAdapter<T extends IBaseComponent> extends IBaseAdapter<T> {
+    readonly hasSlottedAnchor: boolean;
+    initialize(): void;
+    setDisabled(value: boolean): void;
+    clickHost(): void;
+    clickFormButton(type: string): void;
+    forceFocusVisible(): void;
+    hasPopoverTarget(): boolean;
+    managePopover(): boolean;
+    toggleDefaultPopoverIcon(value: boolean): void;
+    animateStateLayer(): void;
+    addDefaultSlotChangeListener(listener: EventListener): void;
+}
+export declare abstract class BaseButtonAdapter<T extends IBaseButton> extends BaseAdapter<T> implements IBaseButtonAdapter<T> {
+    protected readonly _rootElement: HTMLElement;
+    protected readonly _focusIndicatorElement: IFocusIndicatorComponent;
+    protected readonly _stateLayerElement: IStateLayerComponent;
+    protected readonly _defaultSlotElement: HTMLSlotElement;
+    protected readonly _endSlotElement: HTMLSlotElement;
+    constructor(component: T);
+    get hasSlottedAnchor(): boolean;
+    get getSlottedAnchor(): HTMLAnchorElement | undefined;
+    initialize(): void;
+    setDisabled(value: boolean): void;
+    clickHost(): void;
+    forceFocusVisible(): void;
+    clickFormButton(type: string): void;
+    hasPopoverTarget(): boolean;
+    /**
+     * We are emulating native behavior here since custom elements do not support integrating with the
+     * native popover element. This method will attempt to find the popover target element and handle
+     * its `popovertargetaction`
+     */
+    managePopover(): boolean;
+    toggleDefaultPopoverIcon(value: boolean): void;
+    animateStateLayer(): void;
+    addDefaultSlotChangeListener(listener: EventListener): void;
+    private _locatePopoverTargetElement;
+}

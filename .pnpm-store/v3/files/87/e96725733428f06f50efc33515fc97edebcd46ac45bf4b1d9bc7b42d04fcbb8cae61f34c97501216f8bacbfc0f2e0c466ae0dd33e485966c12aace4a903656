@@ -1,0 +1,13 @@
+import { Observable } from 'rxjs';
+import { IBottomSheetComponent } from '@tylertech/forge';
+export declare class BottomSheetRef<TComponent = any, TResult = any> {
+    private readonly _elementRef;
+    private readonly _afterClosed;
+    afterClosed: Observable<TResult | undefined>;
+    private readonly _beforeClose;
+    beforeClose: Observable<CustomEvent<void>>;
+    componentInstance: TComponent;
+    constructor(instance: IBottomSheetComponent);
+    close(result?: TResult): void;
+    get nativeElement(): IBottomSheetComponent;
+}

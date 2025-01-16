@@ -1,0 +1,36 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+/* prettier-ignore */
+.forge-icon {
+  --_icon-color: var(--forge-icon-color, currentColor);
+  --_icon-size: var(--forge-icon-size, 1em);
+  --_icon-width: var(--forge-icon-width, var(--_icon-size));
+  --_icon-height: var(--forge-icon-height, var(--_icon-size));
+  --_icon-font-size: var(--forge-icon-font-size, calc(var(--forge-typography-font-size, 1rem) * 1.5));
+}
+
+img.forge-icon,
+svg.forge-icon {
+  display: inline-block;
+  box-sizing: content-box;
+  contain: content;
+  font-size: var(--_icon-font-size);
+  display: inline-block;
+}
+
+img.forge-icon {
+  width: var(--_icon-width);
+  height: var(--_icon-height);
+}
+
+svg {
+  width: var(--_icon-width);
+  height: var(--_icon-height);
+  display: block;
+  fill: var(--_icon-color);
+  stroke: var(--_icon-color);
+  stroke-width: 0;
+}

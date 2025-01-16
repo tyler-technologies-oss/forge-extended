@@ -1,0 +1,59 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const LIST_ITEM_CONSTANTS: {
+    elementName: string;
+    observedAttributes: {
+        SELECTED: string;
+        ACTIVE: string;
+        VALUE: string;
+        DENSE: string;
+        INDENTED: string;
+        TWO_LINE: string;
+        THREE_LINE: string;
+        WRAP: string;
+        NONINTERACTIVE: string;
+        FOCUS_PROPAGATION: string;
+    };
+    attributes: {
+        SELECTED: string;
+        ACTIVE: string;
+        VALUE: string;
+        DENSE: string;
+        INDENTED: string;
+        TWO_LINE: string;
+        THREE_LINE: string;
+        WRAP: string;
+        NONINTERACTIVE: string;
+        FOCUS_PROPAGATION: string;
+    };
+    classes: {
+        ROOT: string;
+        DISABLED: string;
+        INTERACTIVE: string;
+        INTERNAL_ANCHOR: string;
+    };
+    selectors: {
+        ROOT: string;
+        FORM_CONTROL_LIKE: string;
+        BUTTON_LIKE: string;
+        IGNORE: string;
+        INTERNAL_ANCHOR: string;
+        SLOTTED_START_END: string;
+    };
+    ids: {
+        INTERNAL_ANCHOR: string;
+    };
+    events: {
+        SELECT: string;
+    };
+    defaults: {
+        FOCUS_PROPAGATION: ListItemFocusPropagation;
+    };
+};
+export interface IListItemSelectEventData<T = any> {
+    value: T;
+}
+export type ListItemFocusPropagation = 'allow' | 'off';

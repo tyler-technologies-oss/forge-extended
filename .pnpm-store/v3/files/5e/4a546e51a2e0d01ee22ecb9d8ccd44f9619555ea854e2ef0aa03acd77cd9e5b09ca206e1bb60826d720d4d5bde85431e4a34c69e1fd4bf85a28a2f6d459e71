@@ -1,0 +1,35 @@
+import { ElementRef, TemplateRef, ViewContainerRef } from '@angular/core';
+import { OnDestroy } from '@angular/core';
+import { OverlayPlacement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**
+ * Allows for declaratively specifying an element that should display a Forge popover
+ * from the provided `TemplateRef`.
+ */
+export declare class PopoverDirective implements OnDestroy {
+    private _elementRef;
+    private _viewContainerRef;
+    private _popoverElement?;
+    private _contentRef?;
+    /** The TemplateRef to use as the embedded view for the popover. */
+    forgePopover: TemplateRef<any>;
+    /** The popover placement around the `ElementRef`. */
+    forgePopoverPlacement: OverlayPlacement;
+    /**
+     * @deprecated Use static property instead.
+     */
+    set forgePopoverCloseOnBlur(value: boolean);
+    /** Controls whether the popover closes when it loses focus. */
+    persistent: boolean;
+    /** Adds a custom class the `<forge-popover>` element that is created by this directive. */
+    forgePopoverClass: string;
+    get popoverElement(): HTMLElement | undefined;
+    constructor(_elementRef: ElementRef<HTMLElement>, _viewContainerRef: ViewContainerRef);
+    /** Creates and renders a TemplateRef inside of a Forge popover. */
+    open(): void;
+    /** Closes the Forge popover and destroys the embedded view. */
+    close(): void;
+    ngOnDestroy(): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PopoverDirective, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<PopoverDirective, "[forgePopover]", ["forgePopover"], { "forgePopover": { "alias": "forgePopover"; "required": false; }; "forgePopoverPlacement": { "alias": "forgePopoverPlacement"; "required": false; }; "forgePopoverCloseOnBlur": { "alias": "forgePopoverCloseOnBlur"; "required": false; }; "persistent": { "alias": "persistent"; "required": false; }; "forgePopoverClass": { "alias": "forgePopoverClass"; "required": false; }; }, {}, never, never, false, never>;
+}

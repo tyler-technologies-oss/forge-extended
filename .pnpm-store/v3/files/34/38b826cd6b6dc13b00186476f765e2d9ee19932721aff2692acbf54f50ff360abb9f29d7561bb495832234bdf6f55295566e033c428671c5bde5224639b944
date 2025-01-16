@@ -1,0 +1,47 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../../core/base/base-adapter';
+import { IAppBarProfileButtonComponent } from './app-bar-profile-button';
+import { IAppBarProfileCardConfig } from './app-bar-profile-button-constants';
+import { IPopoverComponent } from '../../popover';
+export interface IAppBarProfileButtonAdapter extends IBaseAdapter {
+    popupElement: IPopoverComponent | undefined;
+    initialize(): void;
+    destroy(): void;
+    setClickListener(listener: (evt: MouseEvent) => void): void;
+    removeClickListener(listener: (evt: MouseEvent) => void): void;
+    openPopup(profileCardConfig: IAppBarProfileCardConfig, dismissListener: () => void, profileListener: () => void, signOutListener: () => void, profileCardContent?: HTMLElement): () => void;
+    closePopup(): void;
+    focusButtonElement(): void;
+    setAvatarText(value: string): void;
+    setAvatarIcon(value: string): void;
+    setAvatarLetterCount(value: number): void;
+    setAvatarImageUrl(value: string): void;
+    setSignOutButtonText(value: string): void;
+    setProfileButtonText(value: string): void;
+}
+export declare class AppBarProfileButtonAdapter extends BaseAdapter<IAppBarProfileButtonComponent> implements IAppBarProfileButtonAdapter {
+    private _avatarElement;
+    private _iconButtonElement;
+    private _popupElement?;
+    private _profileCardElement?;
+    private _forwardObserver?;
+    constructor(component: IAppBarProfileButtonComponent);
+    get popupElement(): IPopoverComponent | undefined;
+    initialize(): void;
+    destroy(): void;
+    setClickListener(listener: (evt: MouseEvent) => void): void;
+    removeClickListener(listener: (evt: MouseEvent) => void): void;
+    openPopup(profileCardConfig: IAppBarProfileCardConfig, dismissListener: () => void, profileListener: () => void, signOutListener: () => void, profileCardContent?: HTMLElement): () => void;
+    closePopup(): Promise<void>;
+    focusButtonElement(): void;
+    setAvatarText(value: string): void;
+    setAvatarIcon(value: string): void;
+    setAvatarLetterCount(value: number): void;
+    setAvatarImageUrl(value: string): void;
+    setSignOutButtonText(value: string): void;
+    setProfileButtonText(value: string): void;
+}

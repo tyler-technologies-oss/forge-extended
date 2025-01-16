@@ -1,0 +1,69 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use './core' as *;
+@use './animations';
+
+//
+// Host
+//
+
+:host {
+  @include tokens;
+}
+
+:host {
+  @include host;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+//
+// Base
+//
+
+.forge-skeleton {
+  @include base;
+
+  &::after {
+    @include gradient;
+
+    content: '';
+  }
+}
+
+//
+// Variants
+//
+
+:host([avatar]) {
+  @include avatar;
+}
+
+:host([list-item]) {
+  @include list-item;
+}
+
+:host([text]) {
+  @include text;
+}
+
+:host([stretch]) {
+  @include stretch;
+}
+
+:host([chip]) {
+  @include chip;
+}
+
+:host([button]) {
+  @include button;
+}
+
+:host([form-field]) {
+  @include form-field;
+}

@@ -1,0 +1,9 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./stack.component";
+import * as i2 from "@angular/common";
+export declare class ForgeStackModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeStackModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeStackModule, [typeof i1.StackComponent], [typeof i2.CommonModule], [typeof i1.StackComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeStackModule>;
+}

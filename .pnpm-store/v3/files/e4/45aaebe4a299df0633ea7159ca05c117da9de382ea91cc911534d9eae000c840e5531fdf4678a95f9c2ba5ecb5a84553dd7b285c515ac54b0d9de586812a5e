@@ -1,0 +1,43 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../../core';
+import { CalendarMenuAnimationType, ICalendarMenuOption } from './calendar-menu-constants';
+import { ICalendarMenuComponent } from './calendar-menu';
+export interface ICalendarMenuAdapter extends IBaseAdapter {
+    appendListItemsToEnd(options: ICalendarMenuOption[]): void;
+    appendListItemsToStart(options: ICalendarMenuOption[]): void;
+    animateInFromLeft(options: ICalendarMenuOption[], callback?: () => void): void;
+    animateInFromRight(options: ICalendarMenuOption[], callback?: () => void): void;
+    registerClickListener(listener: (evt: Event) => void): void;
+    registerIntersectionObserver(callback: IntersectionObserverCallback): void;
+    setAnimationType(value: CalendarMenuAnimationType): void;
+    setClosed(): void;
+    setFocusAtIndex(index: number, setFocus: boolean, preventFocus: boolean): void;
+    setOpenAsGrid(options: ICalendarMenuOption[], focusedIndex: number, setFocus: boolean, preventFocus: boolean, replace?: boolean): void;
+    setOpenAsList(options: ICalendarMenuOption[], focusedIndex: number, setFocus: boolean, preventFocus: boolean, replace?: boolean): void;
+    unregisterClickListener(listener: (evt: Event) => void): void;
+    unregisterIntersectionObserver(): void;
+}
+export declare class CalendarMenuAdapter extends BaseAdapter<ICalendarMenuComponent> implements ICalendarMenuAdapter {
+    private component;
+    private _container;
+    private _intersectionObserver;
+    constructor(component: ICalendarMenuComponent);
+    registerClickListener(listener: (evt: Event) => void): void;
+    unregisterClickListener(listener: (evt: Event) => void): void;
+    registerIntersectionObserver(callback: IntersectionObserverCallback): void;
+    unregisterIntersectionObserver(): void;
+    setAnimationType(value: CalendarMenuAnimationType): void;
+    setClosed(): void;
+    setOpenAsGrid(options: ICalendarMenuOption[], focusedIndex: number, setFocus: boolean, preventFocus: boolean, replace?: boolean): void;
+    setOpenAsList(options: ICalendarMenuOption[], focusedIndex: number, setFocus: boolean, preventFocus: boolean, replace?: boolean): void;
+    appendListItemsToStart(options: ICalendarMenuOption[]): void;
+    appendListItemsToEnd(options: ICalendarMenuOption[]): void;
+    animateInFromLeft(options: ICalendarMenuOption[], callback?: () => void): void;
+    animateInFromRight(options: ICalendarMenuOption[], callback?: () => void): void;
+    setFocusAtIndex(index: number, setFocus: boolean, preventFocus: boolean): void;
+    private _scrollItemIntoView;
+}

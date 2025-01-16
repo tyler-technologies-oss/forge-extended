@@ -1,0 +1,53 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { customElement } from '@tylertech/forge-core';
+import { BaseComponent } from '../../core/base/base-component';
+import { OPTION_GROUP_CONSTANTS } from './option-group-constants';
+/**
+ * @tag forge-option-group
+ */
+let OptionGroupComponent = class OptionGroupComponent extends BaseComponent {
+    static get observedAttributes() {
+        return [OPTION_GROUP_CONSTANTS.attributes.LABEL];
+    }
+    constructor() {
+        super();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case OPTION_GROUP_CONSTANTS.attributes.LABEL:
+                this.label = newValue;
+                break;
+        }
+    }
+    /** Gets/sets the label of this option group. */
+    get label() {
+        return this._label;
+    }
+    set label(value) {
+        if (this._label !== value) {
+            this._label = value || '';
+            this.setAttribute(OPTION_GROUP_CONSTANTS.attributes.LABEL, this._label);
+        }
+    }
+    /**
+     * The text content for the group.
+     * @attribute
+     */
+    get text() {
+        return this._label;
+    }
+    set text(value) {
+        this.label = value;
+    }
+};
+OptionGroupComponent = __decorate([
+    customElement({
+        name: OPTION_GROUP_CONSTANTS.elementName
+    })
+], OptionGroupComponent);
+export { OptionGroupComponent };

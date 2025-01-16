@@ -1,0 +1,35 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { ChipSetComponent as ChipSetComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class ChipSetComponent {
+    protected elementRef: ElementRef<ChipSetComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-chip-set element. */
+    readonly nativeElement: ChipSetComponentCustomElement;
+    /** Whether the chip set is vertical. */
+    set vertical(value: ChipSetComponentCustomElement['vertical']);
+    get vertical(): ChipSetComponentCustomElement['vertical'];
+    /** The type of chip. */
+    set type(value: ChipSetComponentCustomElement['type']);
+    get type(): ChipSetComponentCustomElement['type'];
+    /** Whether the chip set is dense. */
+    set dense(value: ChipSetComponentCustomElement['dense']);
+    get dense(): ChipSetComponentCustomElement['dense'];
+    /** Whether the chip set is disabled. */
+    set disabled(value: ChipSetComponentCustomElement['disabled']);
+    get disabled(): ChipSetComponentCustomElement['disabled'];
+    /** Whether the chip set is invalid. */
+    set invalid(value: ChipSetComponentCustomElement['invalid']);
+    get invalid(): ChipSetComponentCustomElement['invalid'];
+    /** The theme of the chip set. */
+    set theme(value: ChipSetComponentCustomElement['theme']);
+    get theme(): ChipSetComponentCustomElement['theme'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<ChipSetComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<ChipSetComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ChipSetComponent, "forge-chip-set", never, { "vertical": { "alias": "vertical"; "required": false; }; "type": { "alias": "type"; "required": false; }; "dense": { "alias": "dense"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "invalid": { "alias": "invalid"; "required": false; }; "theme": { "alias": "theme"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_vertical: unknown;
+    static ngAcceptInputType_dense: unknown;
+    static ngAcceptInputType_disabled: unknown;
+    static ngAcceptInputType_invalid: unknown;
+}

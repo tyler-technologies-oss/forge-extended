@@ -1,0 +1,77 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core/base/base-adapter';
+import { ISelectOption } from '../select';
+import { IPaginatorComponent } from './paginator';
+export type PaginatorFieldIdentifier = 'first' | 'last' | 'previous' | 'next' | 'page-size';
+export interface IPaginatorAdapter extends IBaseAdapter {
+    setLabel(value: string): void;
+    setPageSizeOptions(options: ISelectOption[]): void;
+    setPageSize(value: number): void;
+    setRangeLabel(value: string): void;
+    hasFirstPageButton(): boolean;
+    showFirstPageButton(): void;
+    hideFirstPageButton(): void;
+    hasLastPageButton(): boolean;
+    showLastPageButton(): void;
+    hideLastPageButton(): void;
+    attachPageSizeChangeListener(listener: (evt: CustomEvent) => void): void;
+    detachPageSizeChangeListener(listener: (evt: CustomEvent) => void): void;
+    attachFirstPageListener(listener: EventListener): void;
+    attachPreviousPageListener(listener: EventListener): void;
+    attachNextPageListener(listener: EventListener): void;
+    attachLastPageListener(listener: EventListener): void;
+    setFirstPageButtonEnabled(enabled: boolean): void;
+    setPreviousPageButtonEnabled(enabled: boolean): void;
+    setNextPageButtonEnabled(enabled: boolean): void;
+    setLastPageButtonEnabled(enabled: boolean): void;
+    setPageSizeSelectEnabled(enabled: boolean): void;
+    setPageSizeVisibility(visible: boolean): void;
+    setFocus(options?: FocusOptions): void;
+    tryDisableFields(fieldsToDisable: PaginatorFieldIdentifier[]): void;
+}
+export declare class PaginatorAdapter extends BaseAdapter<IPaginatorComponent> implements IPaginatorAdapter {
+    private _labelElement;
+    private _pageSizeSelect;
+    private _rangeLabel;
+    private _rangeLabelAlternative;
+    private _firstPageButton;
+    private _firstPageContainer;
+    private _previousPageButton;
+    private _previousPageContainer;
+    private _nextPageButton;
+    private _nextPageContainer;
+    private _lastPageButton;
+    private _lastPageContainer;
+    private _firstPagePlaceholder;
+    private _lastPagePlaceholder;
+    constructor(component: IPaginatorComponent);
+    setLabel(value: string): void;
+    setPageSizeOptions(options: ISelectOption[]): void;
+    setPageSize(value: number): void;
+    setRangeLabel(value: string): void;
+    hasFirstPageButton(): boolean;
+    showFirstPageButton(): void;
+    hideFirstPageButton(): void;
+    hasLastPageButton(): boolean;
+    showLastPageButton(): void;
+    hideLastPageButton(): void;
+    attachPageSizeChangeListener(listener: (evt: CustomEvent) => void): void;
+    detachPageSizeChangeListener(listener: (evt: CustomEvent) => void): void;
+    attachFirstPageListener(listener: EventListener): void;
+    attachPreviousPageListener(listener: EventListener): void;
+    attachNextPageListener(listener: EventListener): void;
+    attachLastPageListener(listener: EventListener): void;
+    setFirstPageButtonEnabled(enabled: boolean): void;
+    setPreviousPageButtonEnabled(enabled: boolean): void;
+    setNextPageButtonEnabled(enabled: boolean): void;
+    setLastPageButtonEnabled(enabled: boolean): void;
+    setPageSizeSelectEnabled(enabled: boolean): void;
+    setPageSizeVisibility(visible: boolean): void;
+    setFocus(options?: FocusOptions): void;
+    tryDisableFields(fieldsToDisable: PaginatorFieldIdentifier[]): void;
+    private _tryFocus;
+}

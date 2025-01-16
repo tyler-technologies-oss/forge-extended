@@ -1,0 +1,16 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IKeyCombination } from './keyboard-shortcut-constants';
+/** Checks if an HTML element allows text input */
+export declare function elementAcceptsTextInput(el: any): boolean;
+/** Parses a string of key combinations into an array of keys and modifiers */
+export declare function parseKeyCombinations(keys: string | null | undefined, useCode?: boolean): IKeyCombination[];
+/** Checks a keyboard event for a matching key combination */
+export declare function matchKeyCombination(evt: KeyboardEvent, keyCombinations: IKeyCombination[], useCode?: boolean): boolean;
+/** Returns an array of active modifier keys from a keyboard event */
+export declare function getModiferKeysString(evt: KeyboardEvent): string;
+/** Returns a reserved key character from its alias */
+export declare function fixKey(key: string): string;

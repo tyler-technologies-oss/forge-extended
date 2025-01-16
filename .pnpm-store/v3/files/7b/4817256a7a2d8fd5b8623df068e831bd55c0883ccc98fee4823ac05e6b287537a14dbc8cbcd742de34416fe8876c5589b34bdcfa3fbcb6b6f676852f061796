@@ -1,0 +1,11 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponentDelegate } from './base-component-delegate';
+export class FormFieldComponentDelegate extends BaseComponentDelegate {
+    constructor(config) {
+        super(config);
+    }
+}

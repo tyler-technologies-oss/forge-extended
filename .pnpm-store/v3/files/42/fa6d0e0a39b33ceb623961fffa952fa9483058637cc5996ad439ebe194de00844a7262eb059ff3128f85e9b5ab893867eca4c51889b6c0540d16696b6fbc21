@@ -1,0 +1,43 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { RadioComponent as RadioComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class RadioComponent {
+    protected elementRef: ElementRef<RadioComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-radio element. */
+    readonly nativeElement: RadioComponentCustomElement;
+    /** Gets/sets whether the radio is checked. */
+    set checked(value: RadioComponentCustomElement['checked']);
+    get checked(): RadioComponentCustomElement['checked'];
+    /** Gets/sets whether the radio is checked by default. */
+    set defaultChecked(value: RadioComponentCustomElement['defaultChecked']);
+    get defaultChecked(): RadioComponentCustomElement['defaultChecked'];
+    /** Gets/sets the value of the radio when submitted as part of a form. */
+    set value(value: RadioComponentCustomElement['value']);
+    get value(): RadioComponentCustomElement['value'];
+    /** Controls whether the radio is dense. */
+    set dense(value: RadioComponentCustomElement['dense']);
+    get dense(): RadioComponentCustomElement['dense'];
+    /** Controls whether the radio is disabled. */
+    set disabled(value: RadioComponentCustomElement['disabled']);
+    get disabled(): RadioComponentCustomElement['disabled'];
+    /** Controls whether the radio is required. */
+    set required(value: RadioComponentCustomElement['required']);
+    get required(): RadioComponentCustomElement['required'];
+    /** Controls whether the radio is read-only. */
+    set readonly(value: RadioComponentCustomElement['readonly']);
+    get readonly(): RadioComponentCustomElement['readonly'];
+    /** Controls whether the label appears before or after the radio. */
+    set labelPosition(value: RadioComponentCustomElement['labelPosition']);
+    get labelPosition(): RadioComponentCustomElement['labelPosition'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<RadioComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<RadioComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<RadioComponent, "forge-radio", never, { "checked": { "alias": "checked"; "required": false; }; "defaultChecked": { "alias": "defaultChecked"; "required": false; }; "value": { "alias": "value"; "required": false; }; "dense": { "alias": "dense"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "required": { "alias": "required"; "required": false; }; "readonly": { "alias": "readonly"; "required": false; }; "labelPosition": { "alias": "labelPosition"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_checked: unknown;
+    static ngAcceptInputType_defaultChecked: unknown;
+    static ngAcceptInputType_dense: unknown;
+    static ngAcceptInputType_disabled: unknown;
+    static ngAcceptInputType_required: unknown;
+    static ngAcceptInputType_readonly: unknown;
+}

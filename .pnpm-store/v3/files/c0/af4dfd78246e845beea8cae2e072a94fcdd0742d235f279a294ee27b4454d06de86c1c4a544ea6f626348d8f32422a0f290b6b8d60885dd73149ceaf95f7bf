@@ -1,0 +1,18 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { Theme } from '../constants';
+export declare const INLINE_MESSAGE_CONSTANTS: {
+    elementName: "forge-inline-message";
+    attributes: {
+        THEME: string;
+    };
+    defaults: {
+        THEME: string;
+    };
+};
+type LegacyInlineMessageThemes = 'info-secondary' | 'danger';
+export type InlineMessageTheme = Theme | LegacyInlineMessageThemes;
+export {};

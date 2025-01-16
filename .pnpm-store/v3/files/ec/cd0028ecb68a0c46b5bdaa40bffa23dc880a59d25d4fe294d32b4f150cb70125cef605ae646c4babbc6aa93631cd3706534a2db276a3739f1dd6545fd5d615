@@ -1,0 +1,80 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponent, IBaseComponent } from '../../core/base/base-component';
+import { ISplitViewUpdateConfig, SplitViewOrientation } from './split-view-constants';
+import { ISplitViewPanelComponent } from '../split-view-panel';
+import { ISplitViewBase } from '../core/split-view-base';
+export interface ISplitViewComponent extends ISplitViewBase, IBaseComponent {
+    orientation: SplitViewOrientation;
+    layerSlottedPanels(target: ISplitViewPanelComponent): void;
+    unlayerSlottedPanels(): void;
+    update(config: ISplitViewUpdateConfig): void;
+    refit(): void;
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-split-view': ISplitViewComponent;
+    }
+}
+/**
+ * @tag forge-split-view
+ */
+export declare class SplitViewComponent extends BaseComponent implements ISplitViewComponent {
+    static get observedAttributes(): string[];
+    private _core;
+    constructor();
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    /**
+     * Whether child split view panels are laid out and resize horizontally or vertically.
+     * @attribute
+     * @default "horizontal"
+     */
+    orientation: SplitViewOrientation;
+    /**
+     * Whether child split view panels have resize interactions disabled or enabled.
+     * @attribute
+     * @default false
+     */
+    disabled: boolean;
+    /**
+     * Whether child split view panels can be closed via keyboard interaction.
+     * @attribute allow-close
+     * @default false
+     */
+    allowClose: boolean;
+    /**
+     * Whether child split view panels automatically close when they reach a size of 0.
+     * @attribute auto-close
+     * @default false
+     */
+    autoClose: boolean;
+    /**
+     * The size at which panels auto close.
+     * @attribute auto-close-threshold
+     * @default 0
+     */
+    autoCloseThreshold: number;
+    /**
+     * Arranges split view panels to avoid overlapping during animations.
+     * @param target The originating split view panel component.
+     */
+    layerSlottedPanels(target: ISplitViewPanelComponent): void;
+    /**
+     * Removes presentation data set during an animation.
+     */
+    unlayerSlottedPanels(): void;
+    /**
+     * Updates the provided characteristics of each slotted panel.
+     * @param config An update configuration.
+     */
+    update(config: ISplitViewUpdateConfig): void;
+    /**
+     * Resizes panels within the split view to avoid overflow.
+     */
+    refit(): void;
+}

@@ -1,0 +1,41 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+const attributes = {
+    POPUP_CLASSES: 'popup-classes',
+    OPTION_LIMIT: 'option-limit',
+    OBSERVE_SCROLL: 'observe-scroll',
+    OBSERVE_SCROLL_THRESHOLD: 'observe-scroll-threshold',
+    SYNC_POPUP_WIDTH: 'sync-popup-width',
+    CONSTRAIN_POPUP_WIDTH: 'constrain-popup-width',
+    WRAP_OPTION_TEXT: 'wrap-option-text',
+    // Internal
+    CHECKBOX_ELEMENT: 'data-list-dropdown-checkbox',
+    DATA_ALLOW_FOCUS: 'data-list-dropdown-allow-focus'
+};
+const classes = {
+    GROUP_WRAPPER: 'forge-list-dropdown__group-wrapper'
+};
+export const LIST_DROPDOWN_CONSTANTS = {
+    attributes,
+    classes
+};
+export const DEFAULT_LIST_DROPDOWN_CONFIG = {
+    options: [],
+    syncWidth: false,
+    selectedValues: [],
+    multiple: false
+};
+export var ListDropdownType;
+(function (ListDropdownType) {
+    ListDropdownType["None"] = "none";
+    ListDropdownType["Standard"] = "standard";
+    ListDropdownType["Menu"] = "menu";
+})(ListDropdownType || (ListDropdownType = {}));
+export var ListDropdownAsyncStyle;
+(function (ListDropdownAsyncStyle) {
+    ListDropdownAsyncStyle["Spinner"] = "spinner";
+    ListDropdownAsyncStyle["Skeleton"] = "skeleton";
+})(ListDropdownAsyncStyle || (ListDropdownAsyncStyle = {}));

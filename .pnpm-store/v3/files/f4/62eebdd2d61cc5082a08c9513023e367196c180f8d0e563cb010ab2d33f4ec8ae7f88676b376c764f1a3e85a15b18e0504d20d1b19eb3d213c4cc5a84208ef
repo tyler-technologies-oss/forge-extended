@@ -1,0 +1,341 @@
+import { escapeRegExp, normalizePrepare, DIRECTION } from '../core/utils.js';
+import ChangeDetails from '../core/change-details.js';
+import Masked from './base.js';
+import IMask from '../core/holder.js';
+import '../core/continuous-tail-details.js';
+
+/**
+  Number mask
+  @param {Object} opts
+  @param {string} opts.radix - Single char
+  @param {string} opts.thousandsSeparator - Single char
+  @param {Array<string>} opts.mapToRadix - Array of single chars
+  @param {number} opts.min
+  @param {number} opts.max
+  @param {number} opts.scale - Digits after point
+  @param {boolean} opts.signed - Allow negative
+  @param {boolean} opts.normalizeZeros - Flag to remove leading and trailing zeros in the end of editing
+  @param {boolean} opts.padFractionalZeros - Flag to pad trailing zeros after point in the end of editing
+*/
+class MaskedNumber extends Masked {
+  /** Single char */
+
+  /** Single char */
+
+  /** Array of single chars */
+
+  /** */
+
+  /** */
+
+  /** Digits after point */
+
+  /** */
+
+  /** Flag to remove leading and trailing zeros in the end of editing */
+
+  /** Flag to pad trailing zeros after point in the end of editing */
+
+  constructor(opts) {
+    super(Object.assign({}, MaskedNumber.DEFAULTS, opts));
+  }
+
+  /**
+    @override
+  */
+  _update(opts) {
+    super._update(opts);
+    this._updateRegExps();
+  }
+
+  /** */
+  _updateRegExps() {
+    let start = '^' + (this.allowNegative ? '[+|\\-]?' : '');
+    let mid = '\\d*';
+    let end = (this.scale ? "(".concat(escapeRegExp(this.radix), "\\d{0,").concat(this.scale, "})?") : '') + '$';
+    this._numberRegExp = new RegExp(start + mid + end);
+    this._mapToRadixRegExp = new RegExp("[".concat(this.mapToRadix.map(escapeRegExp).join(''), "]"), 'g');
+    this._thousandsSeparatorRegExp = new RegExp(escapeRegExp(this.thousandsSeparator), 'g');
+  }
+
+  /** */
+  _removeThousandsSeparators(value) {
+    return value.replace(this._thousandsSeparatorRegExp, '');
+  }
+
+  /** */
+  _insertThousandsSeparators(value) {
+    // https://stackoverflow.com/questions/2901102/how-to-print-a-number-with-commas-as-thousands-separators-in-javascript
+    const parts = value.split(this.radix);
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, this.thousandsSeparator);
+    return parts.join(this.radix);
+  }
+
+  /**
+    @override
+  */
+  doPrepare(ch) {
+    let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    ch = this._removeThousandsSeparators(this.scale && this.mapToRadix.length && (
+    /*
+      radix should be mapped when
+      1) input is done from keyboard = flags.input && flags.raw
+      2) unmasked value is set = !flags.input && !flags.raw
+      and should not be mapped when
+      1) value is set = flags.input && !flags.raw
+      2) raw value is set = !flags.input && flags.raw
+    */
+    flags.input && flags.raw || !flags.input && !flags.raw) ? ch.replace(this._mapToRadixRegExp, this.radix) : ch);
+    const [prepCh, details] = normalizePrepare(super.doPrepare(ch, flags));
+    if (ch && !prepCh) details.skip = true;
+    return [prepCh, details];
+  }
+
+  /** */
+  _separatorsCount(to) {
+    let extendOnSeparators = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : false;
+    let count = 0;
+    for (let pos = 0; pos < to; ++pos) {
+      if (this._value.indexOf(this.thousandsSeparator, pos) === pos) {
+        ++count;
+        if (extendOnSeparators) to += this.thousandsSeparator.length;
+      }
+    }
+    return count;
+  }
+
+  /** */
+  _separatorsCountFromSlice() {
+    let slice = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this._value;
+    return this._separatorsCount(this._removeThousandsSeparators(slice).length, true);
+  }
+
+  /**
+    @override
+  */
+  extractInput() {
+    let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+    let flags = arguments.length > 2 ? arguments[2] : undefined;
+    [fromPos, toPos] = this._adjustRangeWithSeparators(fromPos, toPos);
+    return this._removeThousandsSeparators(super.extractInput(fromPos, toPos, flags));
+  }
+
+  /**
+    @override
+  */
+  _appendCharRaw(ch) {
+    let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    if (!this.thousandsSeparator) return super._appendCharRaw(ch, flags);
+    const prevBeforeTailValue = flags.tail && flags._beforeTailState ? flags._beforeTailState._value : this._value;
+    const prevBeforeTailSeparatorsCount = this._separatorsCountFromSlice(prevBeforeTailValue);
+    this._value = this._removeThousandsSeparators(this.value);
+    const appendDetails = super._appendCharRaw(ch, flags);
+    this._value = this._insertThousandsSeparators(this._value);
+    const beforeTailValue = flags.tail && flags._beforeTailState ? flags._beforeTailState._value : this._value;
+    const beforeTailSeparatorsCount = this._separatorsCountFromSlice(beforeTailValue);
+    appendDetails.tailShift += (beforeTailSeparatorsCount - prevBeforeTailSeparatorsCount) * this.thousandsSeparator.length;
+    appendDetails.skip = !appendDetails.rawInserted && ch === this.thousandsSeparator;
+    return appendDetails;
+  }
+
+  /** */
+  _findSeparatorAround(pos) {
+    if (this.thousandsSeparator) {
+      const searchFrom = pos - this.thousandsSeparator.length + 1;
+      const separatorPos = this.value.indexOf(this.thousandsSeparator, searchFrom);
+      if (separatorPos <= pos) return separatorPos;
+    }
+    return -1;
+  }
+  _adjustRangeWithSeparators(from, to) {
+    const separatorAroundFromPos = this._findSeparatorAround(from);
+    if (separatorAroundFromPos >= 0) from = separatorAroundFromPos;
+    const separatorAroundToPos = this._findSeparatorAround(to);
+    if (separatorAroundToPos >= 0) to = separatorAroundToPos + this.thousandsSeparator.length;
+    return [from, to];
+  }
+
+  /**
+    @override
+  */
+  remove() {
+    let fromPos = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 0;
+    let toPos = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : this.value.length;
+    [fromPos, toPos] = this._adjustRangeWithSeparators(fromPos, toPos);
+    const valueBeforePos = this.value.slice(0, fromPos);
+    const valueAfterPos = this.value.slice(toPos);
+    const prevBeforeTailSeparatorsCount = this._separatorsCount(valueBeforePos.length);
+    this._value = this._insertThousandsSeparators(this._removeThousandsSeparators(valueBeforePos + valueAfterPos));
+    const beforeTailSeparatorsCount = this._separatorsCountFromSlice(valueBeforePos);
+    return new ChangeDetails({
+      tailShift: (beforeTailSeparatorsCount - prevBeforeTailSeparatorsCount) * this.thousandsSeparator.length
+    });
+  }
+
+  /**
+    @override
+  */
+  nearestInputPos(cursorPos, direction) {
+    if (!this.thousandsSeparator) return cursorPos;
+    switch (direction) {
+      case DIRECTION.NONE:
+      case DIRECTION.LEFT:
+      case DIRECTION.FORCE_LEFT:
+        {
+          const separatorAtLeftPos = this._findSeparatorAround(cursorPos - 1);
+          if (separatorAtLeftPos >= 0) {
+            const separatorAtLeftEndPos = separatorAtLeftPos + this.thousandsSeparator.length;
+            if (cursorPos < separatorAtLeftEndPos || this.value.length <= separatorAtLeftEndPos || direction === DIRECTION.FORCE_LEFT) {
+              return separatorAtLeftPos;
+            }
+          }
+          break;
+        }
+      case DIRECTION.RIGHT:
+      case DIRECTION.FORCE_RIGHT:
+        {
+          const separatorAtRightPos = this._findSeparatorAround(cursorPos);
+          if (separatorAtRightPos >= 0) {
+            return separatorAtRightPos + this.thousandsSeparator.length;
+          }
+        }
+    }
+    return cursorPos;
+  }
+
+  /**
+    @override
+  */
+  doValidate(flags) {
+    // validate as string
+    let valid = Boolean(this._removeThousandsSeparators(this.value).match(this._numberRegExp));
+    if (valid) {
+      // validate as number
+      const number = this.number;
+      valid = valid && !isNaN(number) && (
+      // check min bound for negative values
+      this.min == null || this.min >= 0 || this.min <= this.number) && (
+      // check max bound for positive values
+      this.max == null || this.max <= 0 || this.number <= this.max);
+    }
+    return valid && super.doValidate(flags);
+  }
+
+  /**
+    @override
+  */
+  doCommit() {
+    if (this.value) {
+      const number = this.number;
+      let validnum = number;
+
+      // check bounds
+      if (this.min != null) validnum = Math.max(validnum, this.min);
+      if (this.max != null) validnum = Math.min(validnum, this.max);
+      if (validnum !== number) this.unmaskedValue = this.doFormat(validnum);
+      let formatted = this.value;
+      if (this.normalizeZeros) formatted = this._normalizeZeros(formatted);
+      if (this.padFractionalZeros && this.scale > 0) formatted = this._padFractionalZeros(formatted);
+      this._value = formatted;
+    }
+    super.doCommit();
+  }
+
+  /** */
+  _normalizeZeros(value) {
+    const parts = this._removeThousandsSeparators(value).split(this.radix);
+
+    // remove leading zeros
+    parts[0] = parts[0].replace(/^(\D*)(0*)(\d*)/, (match, sign, zeros, num) => sign + num);
+    // add leading zero
+    if (value.length && !/\d$/.test(parts[0])) parts[0] = parts[0] + '0';
+    if (parts.length > 1) {
+      parts[1] = parts[1].replace(/0*$/, ''); // remove trailing zeros
+      if (!parts[1].length) parts.length = 1; // remove fractional
+    }
+
+    return this._insertThousandsSeparators(parts.join(this.radix));
+  }
+
+  /** */
+  _padFractionalZeros(value) {
+    if (!value) return value;
+    const parts = value.split(this.radix);
+    if (parts.length < 2) parts.push('');
+    parts[1] = parts[1].padEnd(this.scale, '0');
+    return parts.join(this.radix);
+  }
+
+  /** */
+  doSkipInvalid(ch) {
+    let flags = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
+    let checkTail = arguments.length > 2 ? arguments[2] : undefined;
+    const dropFractional = this.scale === 0 && ch !== this.thousandsSeparator && (ch === this.radix || ch === MaskedNumber.UNMASKED_RADIX || this.mapToRadix.includes(ch));
+    return super.doSkipInvalid(ch, flags, checkTail) && !dropFractional;
+  }
+
+  /**
+    @override
+  */
+  get unmaskedValue() {
+    return this._removeThousandsSeparators(this._normalizeZeros(this.value)).replace(this.radix, MaskedNumber.UNMASKED_RADIX);
+  }
+  set unmaskedValue(unmaskedValue) {
+    super.unmaskedValue = unmaskedValue;
+  }
+
+  /**
+    @override
+  */
+  get typedValue() {
+    return this.doParse(this.unmaskedValue);
+  }
+  set typedValue(n) {
+    this.rawInputValue = this.doFormat(n).replace(MaskedNumber.UNMASKED_RADIX, this.radix);
+  }
+
+  /** Parsed Number */
+  get number() {
+    return this.typedValue;
+  }
+  set number(number) {
+    this.typedValue = number;
+  }
+
+  /**
+    Is negative allowed
+    @readonly
+  */
+  get allowNegative() {
+    return this.signed || this.min != null && this.min < 0 || this.max != null && this.max < 0;
+  }
+
+  /**
+    @override
+  */
+  typedValueEquals(value) {
+    // handle  0 -> '' case (typed = 0 even if value = '')
+    // for details see https://github.com/uNmAnNeR/imaskjs/issues/134
+    return (super.typedValueEquals(value) || MaskedNumber.EMPTY_VALUES.includes(value) && MaskedNumber.EMPTY_VALUES.includes(this.typedValue)) && !(value === 0 && this.value === '');
+  }
+}
+MaskedNumber.UNMASKED_RADIX = '.';
+MaskedNumber.DEFAULTS = {
+  radix: ',',
+  thousandsSeparator: '',
+  mapToRadix: [MaskedNumber.UNMASKED_RADIX],
+  scale: 2,
+  signed: false,
+  normalizeZeros: true,
+  padFractionalZeros: false,
+  parse: Number,
+  format: n => n.toLocaleString('en-US', {
+    useGrouping: false,
+    maximumFractionDigits: 20
+  })
+};
+MaskedNumber.EMPTY_VALUES = [...Masked.EMPTY_VALUES, 0];
+IMask.MaskedNumber = MaskedNumber;
+
+export { MaskedNumber as default };

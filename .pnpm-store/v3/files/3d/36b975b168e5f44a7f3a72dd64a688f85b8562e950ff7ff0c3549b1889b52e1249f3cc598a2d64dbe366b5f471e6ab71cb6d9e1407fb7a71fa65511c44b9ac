@@ -1,0 +1,61 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { addClass, getShadowElement, removeClass } from '@tylertech/forge-core';
+import { proxyShadowScrollEvent } from '../../core/utils/event-utils';
+import { BaseAdapter } from '../../core/base/base-adapter';
+import { BASE_DRAWER_CONSTANTS } from './base-drawer-constants';
+export class BaseDrawerAdapter extends BaseAdapter {
+    constructor(_component) {
+        super(_component);
+        this._component = _component;
+        this._drawerElement = getShadowElement(this._component, BASE_DRAWER_CONSTANTS.selectors.DRAWER);
+    }
+    proxyScrollEvent() {
+        // We proxy the scroll event because our internal scroll container does not dispatch this event outside of the shadow root to any listeners.
+        // This is a problem because if we have any components that need to react to the scroll event, such as our popup elements, they will not be
+        // notified. This will ensure we always proxy this event out from the host.
+        this.tryUnproxyScrollEvent();
+        this._unproxyScrollEventCb = proxyShadowScrollEvent(this._component.shadowRoot, this._component);
+    }
+    tryUnproxyScrollEvent() {
+        if (this._unproxyScrollEventCb) {
+            this._unproxyScrollEventCb();
+        }
+    }
+    setDirection(direction) {
+        switch (direction) {
+            case 'left':
+                this._drawerElement.classList.remove(BASE_DRAWER_CONSTANTS.classes.RIGHT);
+                this._drawerElement.classList.add(BASE_DRAWER_CONSTANTS.classes.LEFT);
+                break;
+            case 'right':
+                this._drawerElement.classList.remove(BASE_DRAWER_CONSTANTS.classes.LEFT);
+                this._drawerElement.classList.add(BASE_DRAWER_CONSTANTS.classes.RIGHT);
+                break;
+        }
+    }
+    removeDrawerClass(className) {
+        removeClass(className, this._drawerElement);
+    }
+    setDrawerClass(className) {
+        addClass(className, this._drawerElement);
+    }
+    listenTransitionComplete(listener) {
+        if (this._activeTransitionListener) {
+            this._drawerElement.removeEventListener('transitionend', this._activeTransitionListener);
+        }
+        this._activeTransitionListener = (evt) => {
+            if (evt.propertyName === 'transform') {
+                if (this._activeTransitionListener) {
+                    this._drawerElement.removeEventListener('transitionend', this._activeTransitionListener);
+                    this._activeTransitionListener = undefined;
+                }
+                listener();
+            }
+        };
+        this._drawerElement.addEventListener('transitionend', this._activeTransitionListener);
+    }
+}

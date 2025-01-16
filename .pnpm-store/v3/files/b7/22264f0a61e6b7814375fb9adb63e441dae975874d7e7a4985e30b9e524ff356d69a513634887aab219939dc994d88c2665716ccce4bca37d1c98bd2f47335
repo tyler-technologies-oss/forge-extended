@@ -1,0 +1,104 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { FormFieldComponentDelegate } from '../core';
+import { SWITCH_CONSTANTS } from './switch-constants';
+export class SwitchComponentDelegate extends FormFieldComponentDelegate {
+    constructor(config) {
+        super(config);
+    }
+    get value() {
+        return this._element.value;
+    }
+    set value(value) {
+        this._element.value = value;
+    }
+    get on() {
+        return this._element.on;
+    }
+    set on(value) {
+        this._element.on = value;
+    }
+    get selected() {
+        return this._element.selected;
+    }
+    set selected(value) {
+        this._element.selected = value;
+    }
+    get defaultOn() {
+        return this._element.defaultOn;
+    }
+    set defaultOn(value) {
+        this._element.defaultOn = value;
+    }
+    get icon() {
+        return this._element.icon;
+    }
+    set icon(value) {
+        this._element.icon = value;
+    }
+    get disabled() {
+        return this._element.disabled;
+    }
+    set disabled(value) {
+        this._element.disabled = value;
+    }
+    get dense() {
+        return this._element.dense;
+    }
+    set dense(value) {
+        this._element.dense = value;
+    }
+    get required() {
+        return this._element.required;
+    }
+    set required(value) {
+        this._element.required = value;
+    }
+    get readonly() {
+        return this._element.readonly;
+    }
+    set readonly(value) {
+        this._element.readonly = value;
+    }
+    get name() {
+        return this._element.name;
+    }
+    set name(value) {
+        this._element.name = value;
+    }
+    get labelPosition() {
+        return this._element.labelPosition;
+    }
+    set labelPosition(value) {
+        this._element.labelPosition = value;
+    }
+    onChange(listener) {
+        this._element.addEventListener(SWITCH_CONSTANTS.events.CHANGE, ({ detail }) => listener(detail));
+    }
+    onFocus(listener) {
+        this._element.addEventListener('focus', evt => listener(evt));
+    }
+    onBlur(listener) {
+        this._element.addEventListener('blur', evt => listener(evt));
+    }
+    setLabel(text) {
+        this._element.innerText = text ?? '';
+    }
+    toggle(force) {
+        this._element.toggle(force);
+    }
+    _build() {
+        return document.createElement(SWITCH_CONSTANTS.elementName);
+    }
+    _configure() {
+        if (this._config.options?.id) {
+            this._element.id = this._config.options.id;
+        }
+        if (this._config.options?.label) {
+            this._element.innerText = this._config.options.label;
+        }
+    }
+}

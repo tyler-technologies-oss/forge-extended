@@ -1,0 +1,86 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ITabBarAdapter } from './tab-bar-adapter';
+export interface ITabBarCore {
+    disabled: boolean;
+    activeTab: number | null | undefined;
+    vertical: boolean;
+    clustered: boolean;
+    stacked: boolean;
+    secondary: boolean;
+    inverted: boolean;
+    autoActivate: boolean;
+    scrollButtons: boolean;
+    initialize(): void;
+    destroy(): void;
+}
+export declare class TabBarCore implements ITabBarCore {
+    private _adapter;
+    private _isInitialized;
+    private _activeTab;
+    private _disabled;
+    private _vertical;
+    private _clustered;
+    private _stacked;
+    private _secondary;
+    private _inverted;
+    private _autoActivate;
+    private _scrollButtons;
+    private _tabs;
+    private _scrollButtonsVisible;
+    private _tabScrollAnimationFrame;
+    private _tabsChangedListener;
+    private _tabSelectedListener;
+    private _keydownListener;
+    private _resizeListener;
+    private _scrollListener;
+    private _scrollBackwardButtonListener;
+    private _scrollForwardButtonListener;
+    constructor(_adapter: ITabBarAdapter);
+    initialize(): void;
+    destroy(): void;
+    private _onTabsChanged;
+    private _onTabSelected;
+    private _onKeydown;
+    private _selectTab;
+    /**
+     * Ensures that all tabs have the correct state based on the tab bar state.
+     *
+     * This is called whenever a child tab is added to the DOM.
+     */
+    private _syncTabState;
+    /** Called when the container size changes, but only if scroll buttons are enabled. */
+    private _onResize;
+    /** Called when the scroll container scrolls, but only if scroll buttons are enabled. */
+    private _onScroll;
+    /** Handles clicking the scroll backward button. */
+    private _onScrollBackward;
+    /** Handles clicking the scroll forward button. */
+    private _onScrollForward;
+    /** Determines whether scroll buttons should be displayed based on the size of the container. */
+    private _detectScrollableStatus;
+    /** Updates the enabled/disabled state of the scroll buttons. */
+    private _updateScrollState;
+    private _tryScrollActiveTabIntoView;
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    get activeTab(): number | null | undefined;
+    set activeTab(value: number | null | undefined);
+    get vertical(): boolean;
+    set vertical(value: boolean);
+    get clustered(): boolean;
+    set clustered(value: boolean);
+    get stacked(): boolean;
+    set stacked(value: boolean);
+    get secondary(): boolean;
+    set secondary(value: boolean);
+    get inverted(): boolean;
+    set inverted(value: boolean);
+    get autoActivate(): boolean;
+    set autoActivate(value: boolean);
+    get scrollButtons(): boolean;
+    set scrollButtons(value: boolean);
+}

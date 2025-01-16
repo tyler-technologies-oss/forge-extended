@@ -1,0 +1,47 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core';
+import { IButtonAreaComponent } from './button-area';
+export interface IButtonAreaAdapter extends IBaseAdapter {
+    destroy(): void;
+    setDisabled(value: boolean): void;
+    addListener(type: string, listener: EventListener, capture?: boolean): void;
+    removeListener(type: string, listener: EventListener, capture?: boolean): void;
+    addButtonSlotListener(type: string, listener: EventListener): void;
+    removeButtonSlotListener(type: string, listener: EventListener): void;
+    addContentSlotListener(type: string, listener: EventListener): void;
+    removeContentSlotListener(type: string, listener: EventListener): void;
+    animateStateLayer(): void;
+    startButtonObserver(callback: MutationCallback): void;
+    stopButtonObserver(): void;
+    detectSlottedButton(): void;
+    isButtonDisabled(): boolean;
+    requestDisabledButtonFrame(): void;
+}
+export declare class ButtonAreaAdapter extends BaseAdapter<IButtonAreaComponent> implements IButtonAreaAdapter {
+    private _rootElement;
+    private _buttonSlotElement;
+    private _contentSlotElement;
+    private _buttonElement?;
+    private _buttonObserver?;
+    private _focusIndicatorElement;
+    private _stateLayerElement;
+    constructor(component: IButtonAreaComponent);
+    destroy(): void;
+    setDisabled(value: boolean): void;
+    addListener(type: string, listener: EventListener, capture?: boolean): void;
+    removeListener(type: string, listener: EventListener, capture?: boolean): void;
+    addButtonSlotListener(type: string, listener: EventListener): void;
+    removeButtonSlotListener(type: string, listener: EventListener): void;
+    addContentSlotListener(type: string, listener: EventListener): void;
+    removeContentSlotListener(type: string, listener: EventListener): void;
+    animateStateLayer(): void;
+    startButtonObserver(callback: MutationCallback): void;
+    stopButtonObserver(): void;
+    detectSlottedButton(): void;
+    isButtonDisabled(): boolean;
+    requestDisabledButtonFrame(): void;
+}

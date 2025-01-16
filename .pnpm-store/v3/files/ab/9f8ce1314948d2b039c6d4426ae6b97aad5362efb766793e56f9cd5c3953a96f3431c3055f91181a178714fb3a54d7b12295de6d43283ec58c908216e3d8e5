@@ -1,0 +1,15 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { defineCustomElement } from '@tylertech/forge-core';
+import { FieldComponent } from './field';
+export * from './field';
+export * from './field-adapter';
+export * from './field-constants';
+export * from './field-core';
+export * from './base';
+export function defineFieldComponent() {
+    defineCustomElement(FieldComponent);
+}

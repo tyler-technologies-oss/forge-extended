@@ -1,0 +1,55 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { DialogMode } from '../dialog';
+export declare const BOTTOM_SHEET_CONSTANTS: {
+    elementName: "forge-bottom-sheet";
+    observedAttributes: {
+        PERSISTENT: string;
+        MODE: string;
+        OPEN: string;
+        FULLSCREEN: string;
+    };
+    attributes: {
+        PERSISTENT: string;
+        MODE: string;
+        OPEN: string;
+        FULLSCREEN: string;
+    };
+    classes: {
+        DRAGGING: string;
+        FULLSCREEN: string;
+    };
+    selectors: {
+        DIALOG: "forge-dialog";
+        SURFACE: string;
+        CONTENT_BODY: string;
+        INITIAL_FOCUS: string;
+    };
+    events: {
+        BEFORE_CLOSE: string;
+        CLOSE: string;
+        OPEN: string;
+        READY: string;
+        DRAG_START: string;
+        DRAGGED: string;
+        DRAG_END: string;
+        DRAG_CANCEL: string;
+        FULLSCREEN: string;
+    };
+    defaults: {
+        mode: DialogMode;
+    };
+};
+export interface IBottomSheetDragEventData {
+    y: number;
+}
+export interface IBottomSheetDragStartEventData extends IBottomSheetDragEventData {
+}
+export interface IBottomSheetDragContext {
+    top: number;
+    height: number;
+}
+export type BottomSheetMode = DialogMode;

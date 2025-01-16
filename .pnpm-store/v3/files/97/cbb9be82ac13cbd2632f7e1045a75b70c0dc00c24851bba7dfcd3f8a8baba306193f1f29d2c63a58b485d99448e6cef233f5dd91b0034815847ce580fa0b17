@@ -1,0 +1,58 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { PositionPlacement } from '../core/utils/position-utils';
+import { OverlayFlipState } from '../overlay/overlay-constants';
+export declare const TOOLTIP_CONSTANTS: {
+    elementName: "forge-tooltip";
+    observedAttributes: {
+        readonly ID: "id";
+        readonly OPEN: "open";
+        readonly TYPE: "type";
+        readonly ANCHOR: "anchor";
+        readonly TARGET: "target";
+        readonly PLACEMENT: "placement";
+        readonly POSITION: "position";
+        readonly DELAY: "delay";
+        readonly OFFSET: "offset";
+        readonly FLIP: "flip";
+        readonly BOUNDARY: "boundary";
+        readonly FALLBACK_PLACEMENTS: "fallback-placements";
+        readonly TRIGGER_TYPE: "trigger-type";
+    };
+    attributes: {
+        readonly ID: "id";
+        readonly OPEN: "open";
+        readonly TYPE: "type";
+        readonly ANCHOR: "anchor";
+        readonly TARGET: "target";
+        readonly PLACEMENT: "placement";
+        readonly POSITION: "position";
+        readonly DELAY: "delay";
+        readonly OFFSET: "offset";
+        readonly FLIP: "flip";
+        readonly BOUNDARY: "boundary";
+        readonly FALLBACK_PLACEMENTS: "fallback-placements";
+        readonly TRIGGER_TYPE: "trigger-type";
+    };
+    numbers: {
+        LONGPRESS_VISIBILITY_DURATION: number;
+    };
+    defaults: {
+        DELAY: number;
+        OFFSET: number;
+        FLIP: OverlayFlipState;
+        TYPE: TooltipType;
+        PLACEMENT: import("@floating-ui/utils").Placement;
+        TRIGGER_TYPES: TooltipTriggerType[];
+    };
+    selectors: {
+        readonly CONTENT: ".forge-tooltip";
+        readonly ARROW: ".arrow";
+    };
+};
+export type TooltipType = 'presentation' | 'label' | 'description';
+export type TooltipPlacement = PositionPlacement;
+export type TooltipTriggerType = 'hover' | 'longpress' | 'focus';

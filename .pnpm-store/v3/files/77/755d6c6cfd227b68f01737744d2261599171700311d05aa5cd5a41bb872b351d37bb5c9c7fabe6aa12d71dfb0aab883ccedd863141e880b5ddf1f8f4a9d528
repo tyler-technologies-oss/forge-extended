@@ -1,0 +1,15 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter } from '../../core';
+export class OverlayAwareAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this._initializeOverlayElement();
+    }
+    get overlayElement() {
+        return this._overlayElement;
+    }
+}

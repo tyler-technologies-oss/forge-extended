@@ -1,0 +1,85 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { canUserHoverElements } from '../../../../constants';
+/**
+ * The delay in milliseconds before a longpress event is detected.
+ */
+export const LONGPRESS_TRIGGER_DELAY = 500;
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export function WithLongpressListener(base = class {
+}) {
+    class LongpressListener extends base {
+        constructor() {
+            super(...arguments);
+            this._longpressStartListener = this._onLongpressStart.bind(this);
+            this._longpressEndListener = this._onLongpressEnd.bind(this);
+            this._longpressContextMenuListener = this._onLongpressContextMenu.bind(this);
+            this._longpressClickPrevent = this._onLongpressClickPrevent.bind(this);
+            this._longpressDelay = LONGPRESS_TRIGGER_DELAY;
+        }
+        _startLongpressListener(el) {
+            const type = canUserHoverElements ? 'pointerdown' : 'touchstart';
+            el.addEventListener(type, this._longpressStartListener);
+        }
+        _stopLongpressListener(el) {
+            const type = canUserHoverElements ? 'pointerdown' : 'touchstart';
+            el.removeEventListener(type, this._longpressStartListener);
+            this._unlistenLongpressEnd(el);
+        }
+        _onLongpressStart(evt) {
+            evt.target.setPointerCapture(evt.pointerId);
+            this._listenLongpressEnd(evt.target);
+            this._longpressTimeout = window.setTimeout(() => {
+                this._onLongpress();
+                if (!canUserHoverElements) {
+                    navigator.vibrate(1);
+                }
+                // We need to prevent any ghost click events from firing after a longpress is detected
+                evt.target.addEventListener('click', this._longpressClickPrevent, {
+                    capture: true,
+                    once: true
+                });
+            }, this._longpressDelay);
+        }
+        _onLongpressClickPrevent(evt) {
+            evt.stopPropagation();
+        }
+        _onLongpressEnd(evt) {
+            this._clearTimeout();
+            this._unlistenLongpressEnd(evt.target);
+        }
+        _onLongpressContextMenu(evt) {
+            this._clearTimeout();
+            evt.target.removeEventListener('click', this._longpressClickPrevent, { capture: true });
+            this._unlistenLongpressEnd(evt.target);
+        }
+        _listenLongpressEnd(el) {
+            if (!canUserHoverElements) {
+                el.addEventListener('touchend', this._longpressEndListener);
+            }
+            else {
+                el.addEventListener('pointerup', this._longpressEndListener);
+                el.addEventListener('pointercancel', this._longpressEndListener);
+                el.addEventListener('contextmenu', this._longpressContextMenuListener);
+            }
+        }
+        _unlistenLongpressEnd(el) {
+            if (!canUserHoverElements) {
+                el.removeEventListener('touchend', this._longpressEndListener);
+            }
+            else {
+                el.removeEventListener('pointerup', this._longpressEndListener);
+                el.removeEventListener('pointercancel', this._longpressEndListener);
+                el.removeEventListener('contextmenu', this._longpressContextMenuListener);
+            }
+        }
+        _clearTimeout() {
+            window.clearTimeout(this._longpressTimeout);
+            this._longpressTimeout = undefined;
+        }
+    }
+    return LongpressListener;
+}

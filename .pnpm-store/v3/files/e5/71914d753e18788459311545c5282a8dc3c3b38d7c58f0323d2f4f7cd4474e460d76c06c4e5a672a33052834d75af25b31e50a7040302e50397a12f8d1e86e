@@ -1,0 +1,48 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseButtonCore } from '../button/base/base-button-core';
+import { FLOATING_ACTION_BUTTON_CONSTANTS } from './floating-action-button-constants';
+export class FloatingActionButtonCore extends BaseButtonCore {
+    constructor(adapter) {
+        super(adapter);
+        this._theme = FLOATING_ACTION_BUTTON_CONSTANTS.defaults.DEFAULT_THEME;
+        this._density = FLOATING_ACTION_BUTTON_CONSTANTS.defaults.DEFAULT_DENSITY;
+        this._elevation = FLOATING_ACTION_BUTTON_CONSTANTS.defaults.DEFAULT_ELEVATION;
+    }
+    destroy() {
+        this._adapter.destroy();
+    }
+    get theme() {
+        return this._theme;
+    }
+    set theme(value) {
+        if (this._theme !== value) {
+            this._theme = value ?? FLOATING_ACTION_BUTTON_CONSTANTS.defaults.DEFAULT_THEME;
+            const hasAttr = this._theme !== FLOATING_ACTION_BUTTON_CONSTANTS.defaults.DEFAULT_THEME;
+            this._adapter.toggleHostAttribute(FLOATING_ACTION_BUTTON_CONSTANTS.attributes.THEME, hasAttr, this._theme);
+        }
+    }
+    get density() {
+        return this._density;
+    }
+    set density(value) {
+        if (this._density !== value) {
+            this._density = value ?? FLOATING_ACTION_BUTTON_CONSTANTS.defaults.DEFAULT_DENSITY;
+            const hasAttr = this._density !== FLOATING_ACTION_BUTTON_CONSTANTS.defaults.DEFAULT_DENSITY;
+            this._adapter.toggleHostAttribute(FLOATING_ACTION_BUTTON_CONSTANTS.attributes.DENSITY, hasAttr, this._density);
+        }
+    }
+    get elevation() {
+        return this._elevation;
+    }
+    set elevation(value) {
+        if (this._elevation !== value) {
+            this._elevation = value ?? FLOATING_ACTION_BUTTON_CONSTANTS.defaults.DEFAULT_ELEVATION;
+            const hasAttr = this._elevation !== FLOATING_ACTION_BUTTON_CONSTANTS.defaults.DEFAULT_ELEVATION;
+            this._adapter.toggleHostAttribute(FLOATING_ACTION_BUTTON_CONSTANTS.attributes.ELEVATION, hasAttr, this._elevation);
+        }
+    }
+}

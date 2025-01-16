@@ -1,0 +1,91 @@
+export const DISCRETE_MEDIA_FEATURES = [
+    'any-hover',
+    'any-pointer',
+    'color-gamut',
+    'display-mode',
+    'dynamic-range',
+    'forced-colors',
+    'grid',
+    'hover',
+    'inverted-colors',
+    'orientation',
+    'overflow-block',
+    'overflow-inline',
+    'pointer',
+    'prefers-contrast',
+    'prefers-color-scheme',
+    'prefers-reduced-motion',
+    'scripting',
+    'update',
+    'video-dynamic-range'
+];
+export const RANGE_MEDIA_FEATURES = [
+    'aspect-ratio',
+    'color',
+    'color-index',
+    'height',
+    'monochrome',
+    'resolution',
+    'width'
+];
+export const ALL_MEDIA_FEATURES = [...DISCRETE_MEDIA_FEATURES, ...RANGE_MEDIA_FEATURES];
+export const BOOLEAN_MEDIA_FEATURES = [
+    'any-hover',
+    'any-pointer',
+    'color',
+    'color-index',
+    'dynamic-range',
+    'forced-colors',
+    'grid',
+    'height',
+    'hover',
+    'inverted-colors',
+    'monochrome',
+    'overflow-block',
+    'overflow-inline',
+    'pointer',
+    'prefers-contrast',
+    'prefers-reduced-motion',
+    'scripting',
+    'update',
+    'video-dynamic-range',
+    'width'
+];
+export const colorGamutValues = ['srbg', 'p3', 'rec2020'];
+export const displayModeValues = ['fullscreen', 'standalone', 'minimal-ui', 'browser', 'window-controls-overlay'];
+export const dynamicRangeValues = ['standard', 'high'];
+export const forcedColorsValues = ['none', 'active'];
+export const gridValues = [0, 1];
+export const hoverValues = ['none', 'hover'];
+export const invertedColorsValues = ['none', 'inverted'];
+export const orientationValues = ['portrait', 'landscape'];
+export const overflowBlockValues = ['none', 'scroll', 'optional-paged', 'paged'];
+export const overflowInlineValues = ['none', 'scroll'];
+export const pointerValues = ['none', 'coarse', 'fine'];
+export const prefersContrastValues = ['no-preference', 'more', 'less', 'custom'];
+export const prefersColorSchemeValues = ['light', 'dark'];
+export const prefersReducedMotionValues = ['no-preference', 'reduce'];
+export const scriptingValues = ['none', 'initial-only', 'enabled'];
+export const updateValues = ['none', 'slow', 'fast'];
+export const videoDynamicRangeValues = ['standard', 'high'];
+export const mediaFeatureValues = {
+    'any-hover': Array.from(hoverValues.values()),
+    'any-pointer': Array.from(pointerValues.values()),
+    'color-gamut': Array.from(colorGamutValues.values()),
+    'display-mode': Array.from(displayModeValues.values()),
+    'dynamic-range': Array.from(dynamicRangeValues.values()),
+    'forced-colors': Array.from(forcedColorsValues.values()),
+    'grid': Array.from(gridValues.values()),
+    'hover': Array.from(hoverValues.values()),
+    'inverted-colors': Array.from(invertedColorsValues.values()),
+    'orientation': Array.from(orientationValues.values()),
+    'overflow-block': Array.from(overflowBlockValues.values()),
+    'overflow-inline': Array.from(overflowInlineValues.values()),
+    'pointer': Array.from(pointerValues.values()),
+    'prefers-contrast': Array.from(prefersContrastValues.values()),
+    'prefers-color-scheme': Array.from(prefersColorSchemeValues.values()),
+    'prefers-reduced-motion': Array.from(prefersReducedMotionValues.values()),
+    'scripting': Array.from(scriptingValues.values()),
+    'update': Array.from(updateValues.values()),
+    'video-dynamic-range': Array.from(videoDynamicRangeValues.values())
+};

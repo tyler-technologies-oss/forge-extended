@@ -1,0 +1,65 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IListItemAdapter } from './list-item-adapter';
+import { ListItemFocusPropagation } from './list-item-constants';
+export interface IListItemCore {
+    selected: boolean;
+    active: boolean;
+    value: unknown;
+    dense: boolean;
+    indented: boolean;
+    twoLine: boolean;
+    threeLine: boolean;
+    wrap: boolean;
+    noninteractive: boolean;
+    focusPropagation: ListItemFocusPropagation;
+}
+export declare class ListItemCore implements IListItemCore {
+    private _adapter;
+    private _selected;
+    private _active;
+    private _value;
+    private _dense;
+    private _indented;
+    private _twoLine;
+    private _threeLine;
+    private _wrap;
+    private _noninteractive;
+    private _focusPropagation;
+    private _interactiveStateChangeListener;
+    private _mousedownListener;
+    private _clickListener;
+    private _keydownListener;
+    constructor(_adapter: IListItemAdapter);
+    initialize(): void;
+    destroy(): void;
+    private _onMousedown;
+    private _onKeydown;
+    private _onClick;
+    private _clickInteractiveElement;
+    private _onInteractiveStateChange;
+    private _dispatchSelectEvent;
+    get selected(): boolean;
+    set selected(value: boolean);
+    get active(): boolean;
+    set active(value: boolean);
+    get value(): unknown;
+    set value(value: unknown);
+    get dense(): boolean;
+    set dense(value: boolean);
+    get indented(): boolean;
+    set indented(value: boolean);
+    get twoLine(): boolean;
+    set twoLine(value: boolean);
+    get threeLine(): boolean;
+    set threeLine(value: boolean);
+    get wrap(): boolean;
+    set wrap(value: boolean);
+    get noninteractive(): boolean;
+    set noninteractive(value: boolean);
+    get focusPropagation(): ListItemFocusPropagation;
+    set focusPropagation(value: ListItemFocusPropagation);
+}

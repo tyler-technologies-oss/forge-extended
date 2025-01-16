@@ -1,0 +1,76 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export class ListDropdownAwareCore {
+    constructor() {
+        this._popupClasses = [];
+        this._syncPopupWidth = false;
+        this._optionLimit = 0;
+        this._observeScroll = false;
+        this._observeScrollThreshold = 0;
+        this._constrainPopupWidth = true;
+        this._wrapOptionText = false;
+    }
+    get syncPopupWidth() {
+        return this._syncPopupWidth;
+    }
+    set syncPopupWidth(value) {
+        this._syncPopupWidth = value;
+    }
+    get popupClasses() {
+        return this._popupClasses;
+    }
+    set popupClasses(value) {
+        if (typeof value === 'string') {
+            value = [value];
+        }
+        if (Array.isArray(value)) {
+            this._popupClasses = value;
+        }
+    }
+    get observeScroll() {
+        return this._observeScroll;
+    }
+    set observeScroll(value) {
+        this._observeScroll = value;
+    }
+    get observeScrollThreshold() {
+        return this._observeScrollThreshold;
+    }
+    set observeScrollThreshold(value) {
+        this._observeScrollThreshold = value;
+    }
+    get optionLimit() {
+        return this._optionLimit;
+    }
+    set optionLimit(value) {
+        this._optionLimit = value;
+    }
+    get popupHeaderBuilder() {
+        return this._popupHeaderBuilder;
+    }
+    set popupHeaderBuilder(value) {
+        this._popupHeaderBuilder = value;
+    }
+    get popupFooterBuilder() {
+        return this._popupFooterBuilder;
+    }
+    set popupFooterBuilder(value) {
+        this._popupFooterBuilder = value;
+    }
+    get constrainPopupWidth() {
+        return this._constrainPopupWidth;
+    }
+    set constrainPopupWidth(value) {
+        this._constrainPopupWidth = value;
+    }
+    get wrapOptionText() {
+        return this._wrapOptionText;
+    }
+    set wrapOptionText(value) {
+        this._wrapOptionText = value;
+    }
+    _applySelection() { }
+}

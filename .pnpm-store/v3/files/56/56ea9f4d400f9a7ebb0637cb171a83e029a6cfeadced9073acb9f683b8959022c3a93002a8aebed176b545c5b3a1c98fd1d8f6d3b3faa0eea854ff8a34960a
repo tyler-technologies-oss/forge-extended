@@ -1,0 +1,76 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponent, IBaseComponent } from '../../core/base/base-component';
+export interface IListProperties<T = unknown> {
+    dense: boolean;
+    indented: boolean;
+    selectedValue: T;
+    twoLine: boolean;
+    threeLine: boolean;
+    wrap: boolean;
+    noninteractive: boolean;
+}
+export interface IListComponent<T = unknown> extends IListProperties<T>, IBaseComponent {
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-list': IListComponent;
+    }
+}
+declare const ListComponent_base: import("../../constants").AbstractConstructor<import("../../core/mixins/internals/with-element-internals").WithElementInternalsContract> & import("../../constants").AbstractConstructor<import("../../core/mixins/internals/with-default-aria").WithDefaultAriaContract> & typeof BaseComponent;
+/**
+ * @tag forge-list
+ *
+ * @summary Lists are vertical groupings of related content.
+ *
+ * @csspart root - The component's root container element.
+ *
+ * @slot - The default/unnamed slot for child list items.
+ *
+ * @cssproperty --forge-list-container-color - The background color of the list surface.
+ * @cssproperty --forge-list-spacing - The spacing between the list items.
+ *
+ * @property {boolean} [dense=false] - Whether the list has all dense items or not.
+ * @property {boolean} [indented=false] - Whether the list items within this list are indented. Default is false.
+ * @property {unknown | unknown[]} selectedValue - The selected list item value(s).
+ * @property {boolean} [twoLine=false] - Whether the list has all two-line items or not.
+ * @property {boolean} [threeLine=false] - Whether the list has all three-line items or not.
+ * @property {boolean} [wrap=false] - Whether the list has all items that wrap their text or not.
+ * @property {boolean} [noninteractive=false] - Controls whether the list items will automatically attach themselves to interactive slotted elements or not.
+ *
+ * @attribute {boolean} [dense=false] - Whether the list has all dense items or not.
+ * @attribute {string} selected-value - The selected list item value(s).
+ * @attribute {boolean} [indented=false] - Whether the list items within this list are indented. Default is false.
+ * @attribute {boolean} [two-line=false] - Whether the list has all two-line items or not.
+ * @attribute {boolean} [three-line=false] - Whether the list has all three-line items or not.
+ * @attribute {boolean} [wrap=false] - Whether the list has all items that wrap their text or not.
+ * @attribute {boolean} [navlist=false] - Controls whether the list is styled a navigation list or not.
+ * @attribute {boolean} [noninteractive=false] - Controls whether the list items will automatically attach themselves to interactive slotted elements or not.
+ *
+ * @cssclass forge-list - The list container element.
+ * @cssclass forge-list--dense - Applies a dense style to the list items.
+ * @cssclass forge-list--navlist - Applies a navigation style to the list items. Use this when placed in a drawer or other side-navigation.
+ * @cssclass forge-list--two-line - Applies a two-line style to the list items.
+ * @cssclass forge-list--three-line - Applies a three-line style to the list items.
+ * @cssclass forge-list--indented - Indents the list items.
+ * @cssclass forge-list--wrap - Wraps the text of the list items.
+ * @cssclass forge-list--disabled - Applies a disabled style to the list items.
+ */
+export declare class ListComponent extends ListComponent_base implements IListComponent {
+    static get observedAttributes(): string[];
+    private _core;
+    constructor();
+    connectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    dense: boolean;
+    indented: boolean;
+    selectedValue: any;
+    twoLine: boolean;
+    threeLine: boolean;
+    wrap: boolean;
+    noninteractive: boolean;
+}
+export {};

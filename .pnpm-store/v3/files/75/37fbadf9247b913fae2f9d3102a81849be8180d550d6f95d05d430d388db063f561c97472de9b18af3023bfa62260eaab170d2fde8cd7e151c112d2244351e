@@ -1,0 +1,21 @@
+import { Renderer2, ElementRef } from '@angular/core';
+import { StaticProvider } from '@angular/core';
+import { ControlValueAccessor } from '@angular/forms';
+import * as i0 from "@angular/core";
+export declare const SWITCH_VALUE_ACCESSOR: StaticProvider;
+export declare class SwitchValueAccessor implements ControlValueAccessor {
+    private _elementRef;
+    private _renderer;
+    switchChange(evt: CustomEvent<boolean>): void;
+    blur(): void;
+    onChange: (_: any) => void;
+    onTouched: () => void;
+    constructor(_elementRef: ElementRef, _renderer: Renderer2);
+    writeValue(value: boolean): void;
+    registerOnChange(fn: (_: boolean) => void): void;
+    registerOnTouched(fn: () => void): void;
+    setDisabledState(value: boolean): void;
+    change(value: boolean): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<SwitchValueAccessor, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<SwitchValueAccessor, "forge-switch[formControlName],forge-switch[formControl],forge-switch[ngModel]", never, {}, {}, never, never, false, never>;
+}

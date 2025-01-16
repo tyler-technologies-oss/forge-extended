@@ -1,0 +1,49 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IBaseAdapter } from '../../core';
+import { PositionPlacement, VirtualElement } from '../../core/utils/position-utils';
+import { IOverlayOffset, OverlayFlipState, OverlayHideState, OverlayPlacement, OverlayPositionStrategy } from '../overlay-constants';
+export interface IBaseOverlayCore {
+    initialize(): void;
+    destroy(): void;
+    position(): void;
+    anchorElement: HTMLElement | VirtualElement | null;
+    anchor: string | null;
+    open: boolean;
+    inline: boolean;
+    placement: OverlayPlacement;
+    positionStrategy: OverlayPositionStrategy;
+    offset: IOverlayOffset;
+    hide: OverlayHideState;
+    persistent: boolean;
+    shift: boolean;
+    flip: OverlayFlipState;
+    boundary: string | null;
+    boundaryElement: HTMLElement | null;
+    fallbackPlacements: PositionPlacement[] | null;
+}
+export declare abstract class BaseOverlayCore<T extends IBaseAdapter> implements IBaseOverlayCore {
+    protected _adapter: T;
+    constructor(_adapter: T);
+    initialize(): void;
+    abstract destroy(): void;
+    abstract position(): void;
+    abstract anchorElement: HTMLElement | VirtualElement | null;
+    abstract anchor: string | null;
+    abstract noAnchor: boolean;
+    abstract open: boolean;
+    abstract inline: boolean;
+    abstract placement: OverlayPlacement;
+    abstract positionStrategy: OverlayPositionStrategy;
+    abstract offset: IOverlayOffset;
+    abstract hide: OverlayHideState;
+    abstract persistent: boolean;
+    abstract shift: boolean;
+    abstract flip: OverlayFlipState;
+    abstract boundary: string | null;
+    abstract boundaryElement: HTMLElement | null;
+    abstract fallbackPlacements: PositionPlacement[] | null;
+}

@@ -1,0 +1,9 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./app-bar-notification-button.component";
+import * as i2 from "@angular/common";
+export declare class ForgeAppBarNotificationButtonModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeAppBarNotificationButtonModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeAppBarNotificationButtonModule, [typeof i1.AppBarNotificationButtonComponent], [typeof i2.CommonModule], [typeof i1.AppBarNotificationButtonComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeAppBarNotificationButtonModule>;
+}

@@ -1,0 +1,61 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ILabelAdapter } from './label-adapter';
+import { ILabelAware } from './label-aware';
+export interface ILabelCore {
+    for: string | null | undefined;
+    forElement: HTMLElement | null | undefined;
+    dynamic: boolean;
+    nonInteractive: boolean;
+    legend: boolean;
+    destroy(): void;
+    update(): void;
+    updateTarget(target: HTMLElement & ILabelAware): boolean;
+}
+export declare class LabelCore implements ILabelCore {
+    private _adapter;
+    private _for;
+    private _forElement;
+    private _clickTarget;
+    private _dynamic;
+    private _nonInteractive;
+    private _legend;
+    private _isConnected;
+    private readonly _clickListener;
+    private readonly _slotChangeListener;
+    private readonly _mutationCallback;
+    constructor(_adapter: ILabelAdapter);
+    initialize(): void;
+    destroy(): void;
+    update(): void;
+    updateTarget(target: HTMLElement & ILabelAware): boolean;
+    /**
+     * Emit an event to give ancestor elements a chance to connect
+     */
+    private _initializeAsLegend;
+    /**
+     * Search for child or id-targetted elements to connect to
+     */
+    private _initializeAsLabel;
+    private _handleClick;
+    private _handleSlotChange;
+    private _handleMutation;
+    private _connect;
+    private _disconnect;
+    private _tryConnect;
+    get for(): string | null | undefined;
+    set for(value: string | null | undefined);
+    get forElement(): HTMLElement | null | undefined;
+    set forElement(value: HTMLElement | null | undefined);
+    get clickTarget(): HTMLElement | null | undefined;
+    set clickTarget(value: HTMLElement | null | undefined);
+    get dynamic(): boolean;
+    set dynamic(value: boolean);
+    get nonInteractive(): boolean;
+    set nonInteractive(value: boolean);
+    get legend(): boolean;
+    set legend(value: boolean);
+}

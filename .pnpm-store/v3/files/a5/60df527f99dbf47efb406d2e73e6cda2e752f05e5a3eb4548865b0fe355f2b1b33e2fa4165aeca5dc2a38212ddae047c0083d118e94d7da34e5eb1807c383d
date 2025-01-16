@@ -1,0 +1,14 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseButtonAdapter, IBaseButtonAdapter } from './base/base-button-adapter';
+import { IButtonComponent } from './button';
+export interface IButtonAdapter extends IBaseButtonAdapter<IButtonComponent> {
+    toggleStateLayer(value: boolean): void;
+}
+export declare class ButtonAdapter extends BaseButtonAdapter<IButtonComponent> implements IButtonAdapter {
+    constructor(component: IButtonComponent);
+    toggleStateLayer(value: boolean): void;
+}

@@ -1,0 +1,23 @@
+import { NgModule } from '@angular/core';
+import { RadioValueAccessor } from './radio-value-accessor.directive';
+import { ForgeRadioProxyModule } from './radio-proxy.module';
+import * as i0 from "@angular/core";
+export class ForgeRadioModule {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: ForgeRadioModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "17.3.7", ngImport: i0, type: ForgeRadioModule, declarations: [RadioValueAccessor], exports: [RadioValueAccessor,
+            ForgeRadioProxyModule] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: ForgeRadioModule, imports: [ForgeRadioProxyModule] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: ForgeRadioModule, decorators: [{
+            type: NgModule,
+            args: [{
+                    declarations: [
+                        RadioValueAccessor
+                    ],
+                    exports: [
+                        RadioValueAccessor,
+                        ForgeRadioProxyModule
+                    ]
+                }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicmFkaW8ubW9kdWxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvZm9yZ2UtYW5ndWxhci9zcmMvbGliL3JhZGlvL3JhZGlvLm1vZHVsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBRXpDLE9BQU8sRUFBRSxrQkFBa0IsRUFBRSxNQUFNLGtDQUFrQyxDQUFDO0FBQ3RFLE9BQU8sRUFBRSxxQkFBcUIsRUFBRSxNQUFNLHNCQUFzQixDQUFDOztBQVc3RCxNQUFNLE9BQU8sZ0JBQWdCOzhHQUFoQixnQkFBZ0I7K0dBQWhCLGdCQUFnQixpQkFQekIsa0JBQWtCLGFBR2xCLGtCQUFrQjtZQUNsQixxQkFBcUI7K0dBR1osZ0JBQWdCLFlBSHpCLHFCQUFxQjs7MkZBR1osZ0JBQWdCO2tCQVQ1QixRQUFRO21CQUFDO29CQUNSLFlBQVksRUFBRTt3QkFDWixrQkFBa0I7cUJBQ25CO29CQUNELE9BQU8sRUFBRTt3QkFDUCxrQkFBa0I7d0JBQ2xCLHFCQUFxQjtxQkFDdEI7aUJBQ0YiLCJzb3VyY2VzQ29udGVudCI6WyJpbXBvcnQgeyBOZ01vZHVsZSB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuXG5pbXBvcnQgeyBSYWRpb1ZhbHVlQWNjZXNzb3IgfSBmcm9tICcuL3JhZGlvLXZhbHVlLWFjY2Vzc29yLmRpcmVjdGl2ZSc7XG5pbXBvcnQgeyBGb3JnZVJhZGlvUHJveHlNb2R1bGUgfSBmcm9tICcuL3JhZGlvLXByb3h5Lm1vZHVsZSc7XG5cbkBOZ01vZHVsZSh7XG4gIGRlY2xhcmF0aW9uczogW1xuICAgIFJhZGlvVmFsdWVBY2Nlc3NvclxuICBdLFxuICBleHBvcnRzOiBbXG4gICAgUmFkaW9WYWx1ZUFjY2Vzc29yLFxuICAgIEZvcmdlUmFkaW9Qcm94eU1vZHVsZVxuICBdXG59KVxuZXhwb3J0IGNsYXNzIEZvcmdlUmFkaW9Nb2R1bGUge31cbiJdfQ==

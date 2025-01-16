@@ -1,0 +1,122 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { customElement, attachShadowTemplate, coreProperty } from '@tylertech/forge-core';
+import { AppBarAdapter } from './app-bar-adapter';
+import { AppBarCore } from './app-bar-core';
+import { APP_BAR_CONSTANTS } from './app-bar-constants';
+import { BaseComponent } from '../../core/base/base-component';
+const template = '<template><div class=\"forge-app-bar\" part=\"root\"><div class=\"row\"><div class=\"section\"><slot name=\"start\"></slot><div class=\"logo-title-container\"><slot name=\"logo\"></slot><slot name=\"title\"></slot></div></div><div id=\"center-section\" class=\"section\"><slot name=\"center\"></slot></div><div class=\"section\"><slot name=\"end\"></slot></div></div><div><slot name=\"bottom\"></slot></div></div></template>';
+const styles = ':host{--_app-bar-background:var(--forge-app-bar-background, var(--forge-theme-brand, #283593));--_app-bar-foreground:var(--forge-app-bar-foreground, var(--forge-theme-on-brand, #ffffff))}:host{display:block}:host([hidden]){display:none}:host(:not([theme])){--forge-theme-primary:var(--_app-bar-foreground);--forge-theme-on-primary:rgba(0, 0, 0, 0.87);--forge-theme-text-high:rgba(255, 255, 255, 0.87);--forge-theme-text-medium:rgba(255, 255, 255, 0.54);--forge-theme-text-low:rgba(255, 255, 255, 0.38);--forge-theme-outline-high:rgba(255, 255, 255, 0.87);--forge-theme-outline-medium:rgba(255, 255, 255, 0.54);--forge-theme-outline-low:rgba(255, 255, 255, 0.38)}.forge-app-bar{--_app-bar-z-index:var(--forge-app-bar-z-index, var(--forge-z-index-header, 4));--_app-bar-elevation:var(--forge-app-bar-elevation, 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12));--_app-bar-height:var(--forge-app-bar-height, 56px);--_app-bar-row-padding:var(--forge-app-bar-row-padding, var(--forge-spacing-xxsmall, 4px));--_app-bar-logo-gap:var(--forge-app-bar-logo-gap, var(--forge-spacing-medium, 16px));--_app-bar-logo-font-size:var(--forge-app-bar-logo-font-size, calc(var(--forge-typography-font-size, 1rem) * 2.5));--_app-bar-title-padding:var(--forge-app-bar-title-padding, var(--forge-spacing-xsmall, 8px));--_app-bar-columns:var(--forge-app-bar-columns, 1fr 1fr 1fr);--_app-bar-transition-duration:var(--forge-app-bar-transition-duration, var(--forge-animation-duration-short4, 200ms));--_app-bar-transition-timing:var(--forge-app-bar-transition-timing, var(--forge-animation-easing-standard, cubic-bezier(0.2, 0, 0, 1)))}.forge-app-bar{background:var(--_app-bar-background);color:var(--_app-bar-foreground);position:relative;z-index:var(--_app-bar-z-index);display:grid;grid-template-rows:1fr auto;transition-property:box-shadow,background-color;transition-duration:var(--_app-bar-transition-duration);transition-timing-function:var(--_app-bar-transition-timing);box-sizing:border-box;width:100%}.forge-app-bar .row{display:grid;align-items:center;grid-template-columns:var(--_app-bar-columns);height:var(--_app-bar-height);padding-inline:var(--_app-bar-row-padding)}.forge-app-bar.no-center .row{grid-template-columns:1fr auto}.forge-app-bar .section{display:inline-flex;flex:1 1 auto;align-items:center;box-sizing:border-box;min-width:0;height:100%}.forge-app-bar .section:not(:last-child):not(:first-child){justify-content:center}.forge-app-bar .section:last-child{justify-self:end}.forge-app-bar h1{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-heading4-font-family, var(--forge-typography-font-family, \"Roboto\", sans-serif));font-size:var(--forge-typography-heading4-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-heading4-font-size-scale, 1.25)));font-weight:var(--forge-typography-heading4-font-weight,500);line-height:var(--forge-typography-heading4-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-heading4-line-height-scale, 1.5)));letter-spacing:var(--forge-typography-heading4-letter-spacing, .005em);text-transform:var(--forge-typography-heading4-text-transform,inherit);text-decoration:var(--forge-typography-heading4-text-decoration,inherit);margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.forge-app-bar a{outline:0;text-decoration:none;color:inherit;box-sizing:border-box;height:100%}.forge-app-bar a forge-state-layer{--forge-state-layer-color:var(--_app-bar-foreground)}.forge-app-bar a forge-focus-indicator{--forge-focus-indicator-color:var(--_app-bar-foreground);--forge-focus-indicator-shape:4px;--forge-focus-indicator-offset-block:4px}.forge-app-bar .logo-title-container{position:relative;display:flex;align-items:center;gap:var(--_app-bar-logo-gap);min-width:0;padding-inline:var(--_app-bar-title-padding)}:host(:is(:not([elevation]),[elevation=raised])) .forge-app-bar{box-shadow:var(--_app-bar-elevation)}::slotted(forge-tab-bar){--forge-tab-bar-divider-thickness:0}::slotted([slot=logo]){font-size:var(--_app-bar-logo-font-size);height:1em;width:1em}::slotted(forge-app-bar-search[slot=center]){width:100%}:host([theme=white]){--forge-theme-primary:black;--forge-theme-on-primary:rgba(255, 255, 255, 0.87);--forge-theme-text-medium:rgba(0, 0, 0, 0.54)}:host([theme=white]) .forge-app-bar{--_app-bar-background:var(--forge-app-bar-background, white);--_app-bar-foreground:var(--forge-app-bar-foreground, black)}';
+/**
+ * @tag forge-app-bar
+ *
+ * @description App bars are a collection of components placed as a horizontal bar at the top of the screen. They typically contain a logo, title, and optional application-wide actions.
+ *
+ * @property {string} titleText - The text to display in the title.
+ * @property {AppBarElevation} [elevation="raised"] - The elevation of the app bar.
+ * @property {AppBarTheme} theme - The theme of the app bar.
+ * @property {string} href - The href that will be used to make the logo and title area a clickable link.
+ * @property {string} target - The `<a>` target of the logo + title area link when `href` is set.
+ *
+ * @attribute {string} title-text - The text to display in the title.
+ * @attribute {string} [elevation="raised"] - The elevation of the app bar.
+ * @attribute {string} theme - The theme of the app bar.
+ * @attribute {string} href - The href that will be used to make the logo and title area a clickable link
+ * @attribute {string} target - The `<a>` target of the logo + title area link when `href` is set.
+ *
+ * @cssproperty --forge-app-bar-background - The background color of the app bar.
+ * @cssproperty --forge-app-bar-foreground - The text color of the app bar.
+ * @cssproperty --forge-app-bar-z-index - The `z-index` of the app bar.
+ * @cssproperty --forge-app-bar-elevation - The elevation of the app bar.
+ * @cssproperty --forge-app-bar-height - The height of the app bar.
+ * @cssproperty --forge-app-bar-row-padding - The inline padding of the app bar.
+ * @cssproperty --forge-app-bar-logo-gap - The space between the logo and title.
+ * @cssproperty --forge-app-bar-title-padding - The padding around the title element.
+ * @cssproperty --forge-app-bar-columns - The grid column track sizes.
+ * @cssproperty --forge-app-bar-transition-duration - The transition duration for animations.
+ * @cssproperty --forge-app-bar-transition-timing - The transition timing function for animations.
+ *
+ * @event {CustomEvent<void>} forge-app-bar-navigate - Fires when the app bar is clicked.
+ *
+ * @csspart root - The root container element.
+ * @csspart title - The title element.
+ *
+ * @slot logo - Reserved for the brand logo.
+ * @slot title - Reserved for the application title. This will overwrite the `titleText` property/attribute.
+ * @slot start - Places content at the beginning of the app bar.
+ * @slot center - Places content in the center of the app bar.
+ * @slot end - Places content at the end of the app bar.
+ *
+ * @cssclass forge-app-bar - The app bar container element _(required)_.
+ * @cssclass forge-app-bar--raised - The app bar container element when raised.
+ * @cssclass forge-app-bar__logo - The logo container element.
+ * @cssclass forge-app-bar__title - The title container element.
+ * @cssclass forge-app-bar__logo-title-container - The container for the logo and title.
+ * @cssclass forge-app-bar__section - A section of the app bar.
+ * @cssclass forge-app-bar__section-start - The start section of the app bar.
+ * @cssclass forge-app-bar__section-center - The center section of the app bar.
+ * @cssclass forge-app-bar__section-end - The end section of the app bar.
+ */
+let AppBarComponent = class AppBarComponent extends BaseComponent {
+    static get observedAttributes() {
+        return [
+            APP_BAR_CONSTANTS.attributes.TITLE_TEXT,
+            APP_BAR_CONSTANTS.attributes.ELEVATION,
+            APP_BAR_CONSTANTS.attributes.THEME,
+            APP_BAR_CONSTANTS.attributes.HREF,
+            APP_BAR_CONSTANTS.attributes.TARGET
+        ];
+    }
+    constructor() {
+        super();
+        attachShadowTemplate(this, template, styles);
+        this._core = new AppBarCore(new AppBarAdapter(this));
+    }
+    connectedCallback() {
+        this._core.initialize();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case APP_BAR_CONSTANTS.attributes.TITLE_TEXT:
+                this.titleText = newValue;
+                break;
+            case APP_BAR_CONSTANTS.attributes.ELEVATION:
+                this.elevation = newValue;
+                break;
+            case APP_BAR_CONSTANTS.attributes.THEME:
+                this.theme = newValue;
+                break;
+            case APP_BAR_CONSTANTS.attributes.HREF:
+                this.href = newValue;
+                break;
+            case APP_BAR_CONSTANTS.attributes.TARGET:
+                this.target = newValue;
+                break;
+        }
+    }
+};
+__decorate([
+    coreProperty()
+], AppBarComponent.prototype, "titleText", void 0);
+__decorate([
+    coreProperty()
+], AppBarComponent.prototype, "elevation", void 0);
+__decorate([
+    coreProperty()
+], AppBarComponent.prototype, "theme", void 0);
+__decorate([
+    coreProperty()
+], AppBarComponent.prototype, "href", void 0);
+__decorate([
+    coreProperty()
+], AppBarComponent.prototype, "target", void 0);
+AppBarComponent = __decorate([
+    customElement({
+        name: APP_BAR_CONSTANTS.elementName
+    })
+], AppBarComponent);
+export { AppBarComponent };

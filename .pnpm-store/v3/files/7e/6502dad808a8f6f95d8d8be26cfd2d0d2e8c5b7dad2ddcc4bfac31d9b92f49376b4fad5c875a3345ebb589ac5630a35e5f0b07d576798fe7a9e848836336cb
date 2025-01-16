@@ -1,0 +1,53 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { StepComponent as StepComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class StepComponent {
+    protected elementRef: ElementRef<StepComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-step element. */
+    readonly nativeElement: StepComponentCustomElement;
+    /** Whether the step is in the alternative style. */
+    set alternative(value: StepComponentCustomElement['alternative']);
+    get alternative(): StepComponentCustomElement['alternative'];
+    /** The index of the step. */
+    set index(value: StepComponentCustomElement['index']);
+    get index(): StepComponentCustomElement['index'];
+    /** Whether the step is editable. */
+    set editable(value: StepComponentCustomElement['editable']);
+    get editable(): StepComponentCustomElement['editable'];
+    /** Whether the step is completed. */
+    set completed(value: StepComponentCustomElement['completed']);
+    get completed(): StepComponentCustomElement['completed'];
+    /** Whether the step has an error. */
+    set error(value: StepComponentCustomElement['error']);
+    get error(): StepComponentCustomElement['error'];
+    /** Whether the step is selected. */
+    set selected(value: StepComponentCustomElement['selected']);
+    get selected(): StepComponentCustomElement['selected'];
+    /** Whether the step is disabled. */
+    set disabled(value: StepComponentCustomElement['disabled']);
+    get disabled(): StepComponentCustomElement['disabled'];
+    /** Whether the step is in vertical mode. */
+    set vertical(value: StepComponentCustomElement['vertical']);
+    get vertical(): StepComponentCustomElement['vertical'];
+    /** Whether the step is expanded. */
+    set expanded(value: StepComponentCustomElement['expanded']);
+    get expanded(): StepComponentCustomElement['expanded'];
+    /** Whether the step should ignore user expansion. */
+    set ignoreUserExpansion(value: StepComponentCustomElement['ignoreUserExpansion']);
+    get ignoreUserExpansion(): StepComponentCustomElement['ignoreUserExpansion'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<StepComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<StepComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<StepComponent, "forge-step", never, { "alternative": { "alias": "alternative"; "required": false; }; "index": { "alias": "index"; "required": false; }; "editable": { "alias": "editable"; "required": false; }; "completed": { "alias": "completed"; "required": false; }; "error": { "alias": "error"; "required": false; }; "selected": { "alias": "selected"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "vertical": { "alias": "vertical"; "required": false; }; "expanded": { "alias": "expanded"; "required": false; }; "ignoreUserExpansion": { "alias": "ignoreUserExpansion"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_alternative: unknown;
+    static ngAcceptInputType_index: unknown;
+    static ngAcceptInputType_editable: unknown;
+    static ngAcceptInputType_completed: unknown;
+    static ngAcceptInputType_error: unknown;
+    static ngAcceptInputType_selected: unknown;
+    static ngAcceptInputType_disabled: unknown;
+    static ngAcceptInputType_vertical: unknown;
+    static ngAcceptInputType_expanded: unknown;
+    static ngAcceptInputType_ignoreUserExpansion: unknown;
+}

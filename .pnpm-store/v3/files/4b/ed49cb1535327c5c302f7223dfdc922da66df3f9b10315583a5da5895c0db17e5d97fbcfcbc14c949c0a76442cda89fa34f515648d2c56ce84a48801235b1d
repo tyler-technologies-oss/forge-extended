@@ -1,0 +1,31 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../../core/base/base-adapter';
+import type { ITabComponent } from './tab';
+export interface ITabAdapter extends IBaseAdapter {
+    initialize(): void;
+    activateFocusIndicator(): void;
+    addInteractionListener(type: string, listener: EventListener): void;
+    setDisabled(value: boolean): void;
+    setSelected(value: boolean): void;
+    animateSelected(): void;
+    animateStateLayer(): void;
+}
+export declare class TabAdapter extends BaseAdapter<ITabComponent> implements ITabAdapter {
+    private readonly _tabIndicatorElement;
+    private readonly _focusIndicatorElement;
+    private readonly _stateLayerElement;
+    constructor(component: ITabComponent);
+    initialize(): void;
+    activateFocusIndicator(): void;
+    addInteractionListener(type: string, listener: EventListener): void;
+    setDisabled(value: boolean): void;
+    setSelected(value: boolean): void;
+    animateSelected(): void;
+    animateStateLayer(): void;
+    private _getKeyframes;
+    private _getSelectedTabIndicator;
+}

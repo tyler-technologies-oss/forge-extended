@@ -1,0 +1,186 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { attachShadowTemplate, coerceBoolean, coerceNumber, customElement, ensureChild, coreProperty } from '@tylertech/forge-core';
+import { tylIconArrowDropDown, tylIconCheckBox, tylIconCheckBoxOutlineBlank } from '@tylertech/tyler-icons/standard';
+import { DividerComponent } from '../divider';
+import { IconComponent, IconRegistry } from '../icon';
+import { LinearProgressComponent } from '../linear-progress';
+import { ListComponent, ListItemComponent } from '../list';
+import { ListDropdownAware } from '../list-dropdown/list-dropdown-aware';
+import { PopoverComponent } from '../popover/popover';
+import { SkeletonComponent } from '../skeleton';
+import { TextFieldComponent } from '../text-field';
+import { AutocompleteAdapter } from './autocomplete-adapter';
+import { AUTOCOMPLETE_CONSTANTS } from './autocomplete-constants';
+import { AutocompleteCore } from './autocomplete-core';
+const template = '<template><slot></slot></template>';
+const styles = ':host{display:block}:host([hidden]){display:none}';
+/**
+ * @tag forge-autocomplete
+ *
+ * @event {CustomEvent<any>} forge-autocomplete-change - Fired when the value changes.
+ * @event {CustomEvent<IAutocompleteSelectEventData>} forge-autocomplete-select -  Fired when an option is selected. Only applies when in "stateless" `mode`.
+ * @event {CustomEvent<void>} forge-autocomplete-scrolled-bottom - Fired when the dropdown is scrolled to the bottom. Only applies when `observe-scroll` is enabled.
+ */
+let AutocompleteComponent = class AutocompleteComponent extends ListDropdownAware {
+    static get observedAttributes() {
+        return [
+            AUTOCOMPLETE_CONSTANTS.attributes.MODE,
+            AUTOCOMPLETE_CONSTANTS.attributes.MULTIPLE,
+            AUTOCOMPLETE_CONSTANTS.attributes.DEBOUNCE,
+            AUTOCOMPLETE_CONSTANTS.attributes.FILTER_ON_FOCUS,
+            AUTOCOMPLETE_CONSTANTS.attributes.FILTER_FOCUS_FIRST,
+            AUTOCOMPLETE_CONSTANTS.attributes.ALLOW_UNMATCHED,
+            AUTOCOMPLETE_CONSTANTS.attributes.POPUP_TARGET,
+            AUTOCOMPLETE_CONSTANTS.attributes.POPUP_CLASSES,
+            AUTOCOMPLETE_CONSTANTS.attributes.OBSERVE_SCROLL,
+            AUTOCOMPLETE_CONSTANTS.attributes.OBSERVE_SCROLL_THRESHOLD,
+            AUTOCOMPLETE_CONSTANTS.attributes.OPTION_LIMIT,
+            AUTOCOMPLETE_CONSTANTS.attributes.SYNC_POPUP_WIDTH,
+            AUTOCOMPLETE_CONSTANTS.attributes.OPEN,
+            AUTOCOMPLETE_CONSTANTS.attributes.MATCH_KEY,
+            AUTOCOMPLETE_CONSTANTS.attributes.FILTER_TEXT
+        ];
+    }
+    constructor() {
+        super();
+        IconRegistry.define([tylIconArrowDropDown, tylIconCheckBox, tylIconCheckBoxOutlineBlank]);
+        attachShadowTemplate(this, template, styles);
+        this._core = new AutocompleteCore(new AutocompleteAdapter(this));
+    }
+    connectedCallback() {
+        if (this.querySelector(AUTOCOMPLETE_CONSTANTS.selectors.INPUT)) {
+            this._core.initialize();
+        }
+        else {
+            ensureChild(this, AUTOCOMPLETE_CONSTANTS.selectors.INPUT).then(() => this._core.initialize());
+        }
+    }
+    disconnectedCallback() {
+        this._core.destroy();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        super.attributeChangedCallback(name, oldValue, newValue);
+        switch (name) {
+            case AUTOCOMPLETE_CONSTANTS.attributes.MODE:
+                this.mode = newValue;
+                break;
+            case AUTOCOMPLETE_CONSTANTS.attributes.MULTIPLE:
+                this.multiple = coerceBoolean(newValue);
+                break;
+            case AUTOCOMPLETE_CONSTANTS.attributes.DEBOUNCE:
+                this.debounce = coerceNumber(newValue);
+                break;
+            case AUTOCOMPLETE_CONSTANTS.attributes.FILTER_ON_FOCUS:
+                this.filterOnFocus = coerceBoolean(newValue);
+                break;
+            case AUTOCOMPLETE_CONSTANTS.attributes.FILTER_FOCUS_FIRST:
+                this.filterFocusFirst = coerceBoolean(newValue);
+                break;
+            case AUTOCOMPLETE_CONSTANTS.attributes.ALLOW_UNMATCHED:
+                this.allowUnmatched = coerceBoolean(newValue);
+                break;
+            case AUTOCOMPLETE_CONSTANTS.attributes.POPUP_TARGET:
+                this.popupTarget = newValue;
+                break;
+            case AUTOCOMPLETE_CONSTANTS.attributes.OPEN:
+                this.open = coerceBoolean(newValue);
+                break;
+            case AUTOCOMPLETE_CONSTANTS.attributes.MATCH_KEY:
+                this.matchKey = newValue;
+                break;
+            case AUTOCOMPLETE_CONSTANTS.attributes.FILTER_TEXT:
+                this.filterText = newValue;
+                break;
+        }
+    }
+    /** Adds options to the dropdown while it is open. Has no effect if the dropdown is closed.  */
+    appendOptions(options) {
+        this._core.appendOptions(options);
+    }
+    /** Opens the dropdown. */
+    openDropdown() {
+        this.open = true;
+    }
+    /** Closes the dropdown. */
+    closeDropdown() {
+        this.open = false;
+    }
+    /**
+     * Forces the filter callback to be executed to update the current selection state with new options.
+     */
+    forceFilter(opts = { preserveValue: false }) {
+        this._core.forceFilter(opts);
+    }
+};
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "mode", void 0);
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "multiple", void 0);
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "value", void 0);
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "debounce", void 0);
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "filterOnFocus", void 0);
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "filterFocusFirst", void 0);
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "allowUnmatched", void 0);
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "popupTarget", void 0);
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "filterText", void 0);
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "optionBuilder", void 0);
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "filter", void 0);
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "selectedTextBuilder", void 0);
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "open", void 0);
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "matchKey", void 0);
+__decorate([
+    coreProperty({ set: false })
+], AutocompleteComponent.prototype, "isInitialized", void 0);
+__decorate([
+    coreProperty({ set: false })
+], AutocompleteComponent.prototype, "popupElement", void 0);
+__decorate([
+    coreProperty()
+], AutocompleteComponent.prototype, "beforeValueChange", void 0);
+AutocompleteComponent = __decorate([
+    customElement({
+        name: AUTOCOMPLETE_CONSTANTS.elementName,
+        dependencies: [
+            TextFieldComponent,
+            PopoverComponent,
+            ListComponent,
+            ListItemComponent,
+            DividerComponent,
+            SkeletonComponent,
+            LinearProgressComponent,
+            IconComponent
+        ]
+    })
+], AutocompleteComponent);
+export { AutocompleteComponent };

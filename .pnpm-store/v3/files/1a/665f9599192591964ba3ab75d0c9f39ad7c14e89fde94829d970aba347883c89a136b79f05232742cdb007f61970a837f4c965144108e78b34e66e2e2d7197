@@ -1,0 +1,88 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BANNER_CONSTANTS } from './banner-constants';
+export class BannerCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._dismissed = false;
+        this._persistent = false;
+        this._theme = BANNER_CONSTANTS.defaults.THEME;
+        this._dismissListener = this._onDismiss.bind(this);
+    }
+    initialize() {
+        this._adapter.initialize();
+        if (!this._persistent) {
+            this._addDismissListener();
+        }
+    }
+    async _onDismiss() {
+        if (this._dismissed || this._persistent) {
+            return;
+        }
+        const originalDismissed = this._dismissed;
+        this._dismissed = !this._dismissed;
+        const evt = new CustomEvent(BANNER_CONSTANTS.events.BEFORE_DISMISS, {
+            bubbles: true,
+            composed: true,
+            cancelable: true
+        });
+        this._adapter.dispatchHostEvent(evt);
+        this._dismissed = originalDismissed;
+        if (evt.defaultPrevented) {
+            return;
+        }
+        const dismissComplete = this._adapter.startDismissCompleteListener();
+        this.dismissed = !this._dismissed;
+        await dismissComplete;
+        this._adapter.dispatchHostEvent(new CustomEvent(BANNER_CONSTANTS.events.DISMISSED, { bubbles: true, composed: true }));
+    }
+    _addDismissListener() {
+        this._adapter.addDismissListener(this._dismissListener);
+    }
+    _removeDismissEventListener() {
+        this._adapter.removeDismissListener(this._dismissListener);
+    }
+    _applyPersistent() {
+        this._adapter.setDismissButtonVisibility(!this._persistent);
+        if (this._persistent) {
+            this._removeDismissEventListener();
+        }
+        else {
+            this._addDismissListener();
+        }
+    }
+    get dismissed() {
+        return this._dismissed;
+    }
+    set dismissed(value) {
+        value = Boolean(value);
+        if (this.dismissed !== value) {
+            this._dismissed = value;
+            this._adapter.setDismissed(this._dismissed);
+            this._adapter.toggleHostAttribute(BANNER_CONSTANTS.attributes.DISMISSED, this.dismissed);
+        }
+    }
+    get persistent() {
+        return this._persistent;
+    }
+    set persistent(value) {
+        value = Boolean(value);
+        if (this._persistent !== value) {
+            this._persistent = value;
+            this._applyPersistent();
+            this._adapter.toggleHostAttribute(BANNER_CONSTANTS.attributes.PERSISTENT, this._persistent);
+        }
+    }
+    get theme() {
+        return this._theme;
+    }
+    set theme(value) {
+        if (this._theme !== value) {
+            this._theme = value ?? BANNER_CONSTANTS.defaults.THEME;
+            this._adapter.setHostAttribute(BANNER_CONSTANTS.attributes.THEME, this._theme);
+        }
+    }
+}

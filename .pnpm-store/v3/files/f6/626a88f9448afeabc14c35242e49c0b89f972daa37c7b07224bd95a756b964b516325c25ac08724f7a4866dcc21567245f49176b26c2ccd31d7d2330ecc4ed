@@ -1,0 +1,29 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+/**
+ * Represents a deferred promise.
+ *
+ * Use deferred promises when you need to return a promise but you don't have the result yet.
+ */
+export declare class Deferred<T = void> {
+    /**
+     * The promise to be resolved or rejected.
+     */
+    readonly promise: Promise<T>;
+    private _resolveFn;
+    private _rejectFn;
+    constructor();
+    /**
+     * Resolves the promise.
+     * @param param The value to resolve the promise with.
+     */
+    resolve(param: T): void;
+    /**
+     * Rejects the promise.
+     * @param reason The reason for rejecting the promise.
+     */
+    reject(reason?: any): void;
+}

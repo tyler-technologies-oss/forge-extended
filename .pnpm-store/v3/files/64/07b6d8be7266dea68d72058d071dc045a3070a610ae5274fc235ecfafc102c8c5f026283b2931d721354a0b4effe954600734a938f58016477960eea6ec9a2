@@ -1,0 +1,61 @@
+import { Directive, forwardRef, HostListener } from '@angular/core';
+import { NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AUTOCOMPLETE_CONSTANTS } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+export const AUTOCOMPLETE_VALUE_ACCESSOR = {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => AutocompleteValueAccessor),
+    multi: true
+};
+export class AutocompleteValueAccessor {
+    autocompleteChange(event) {
+        this.change(event.detail);
+    }
+    blur() {
+        this.onTouched();
+    }
+    constructor(_elementRef, _renderer) {
+        this._elementRef = _elementRef;
+        this._renderer = _renderer;
+        this.onChange = (_) => { };
+        this.onTouched = () => { };
+    }
+    writeValue(value) {
+        this._renderer.setProperty(this._elementRef.nativeElement, 'value', value);
+    }
+    registerOnChange(fn) {
+        this.onChange = fn;
+    }
+    registerOnTouched(fn) {
+        this.onTouched = fn;
+    }
+    setDisabledState(isDisabled) {
+        const inputEl = this._elementRef.nativeElement.querySelector('input');
+        if (inputEl) {
+            this._renderer.setProperty(inputEl, 'disabled', isDisabled);
+        }
+        const clearButtonEl = this._elementRef.nativeElement.querySelector(AUTOCOMPLETE_CONSTANTS.selectors.CLEAR_BUTTON);
+        if (clearButtonEl) {
+            this._renderer.setProperty(clearButtonEl, 'disabled', isDisabled);
+        }
+    }
+    change(value) {
+        this.onChange(value);
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: AutocompleteValueAccessor, deps: [{ token: i0.ElementRef }, { token: i0.Renderer2 }], target: i0.ɵɵFactoryTarget.Directive }); }
+    static { this.ɵdir = i0.ɵɵngDeclareDirective({ minVersion: "14.0.0", version: "17.3.7", type: AutocompleteValueAccessor, selector: "forge-autocomplete[formControlName],forge-autocomplete[formControl],forge-autocomplete[ngModel]", host: { listeners: { "forge-autocomplete-change": "autocompleteChange($event)", "focusout": "blur()" } }, providers: [AUTOCOMPLETE_VALUE_ACCESSOR], ngImport: i0 }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: AutocompleteValueAccessor, decorators: [{
+            type: Directive,
+            args: [{
+                    selector: 'forge-autocomplete[formControlName],forge-autocomplete[formControl],forge-autocomplete[ngModel]',
+                    providers: [AUTOCOMPLETE_VALUE_ACCESSOR]
+                }]
+        }], ctorParameters: () => [{ type: i0.ElementRef }, { type: i0.Renderer2 }], propDecorators: { autocompleteChange: [{
+                type: HostListener,
+                args: ['forge-autocomplete-change', ['$event']]
+            }], blur: [{
+                type: HostListener,
+                args: ['focusout']
+            }] } });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYXV0b2NvbXBsZXRlLXZhbHVlLWFjY2Vzc29yLmRpcmVjdGl2ZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL2ZvcmdlLWFuZ3VsYXIvc3JjL2xpYi9hdXRvY29tcGxldGUvYXV0b2NvbXBsZXRlLXZhbHVlLWFjY2Vzc29yLmRpcmVjdGl2ZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsU0FBUyxFQUF5QixVQUFVLEVBQUUsWUFBWSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBRTNGLE9BQU8sRUFBd0IsaUJBQWlCLEVBQUUsTUFBTSxnQkFBZ0IsQ0FBQztBQUN6RSxPQUFPLEVBQUUsc0JBQXNCLEVBQW1DLE1BQU0sa0JBQWtCLENBQUM7O0FBRTNGLE1BQU0sQ0FBQyxNQUFNLDJCQUEyQixHQUFtQjtJQUN6RCxPQUFPLEVBQUUsaUJBQWlCO0lBQzFCLFdBQVcsRUFBRSxVQUFVLENBQUMsR0FBRyxFQUFFLENBQUMseUJBQXlCLENBQUM7SUFDeEQsS0FBSyxFQUFFLElBQUk7Q0FDWixDQUFDO0FBTUYsTUFBTSxPQUFPLHlCQUF5QjtJQUU3QixrQkFBa0IsQ0FBQyxLQUFrQjtRQUMxQyxJQUFJLENBQUMsTUFBTSxDQUFDLEtBQUssQ0FBQyxNQUFNLENBQUMsQ0FBQztJQUM1QixDQUFDO0lBR00sSUFBSTtRQUNULElBQUksQ0FBQyxTQUFTLEVBQUUsQ0FBQztJQUNuQixDQUFDO0lBS0QsWUFBb0IsV0FBK0MsRUFBVSxTQUFvQjtRQUE3RSxnQkFBVyxHQUFYLFdBQVcsQ0FBb0M7UUFBVSxjQUFTLEdBQVQsU0FBUyxDQUFXO1FBSDFGLGFBQVEsR0FBRyxDQUFDLENBQU0sRUFBUSxFQUFFLEdBQUUsQ0FBQyxDQUFDO1FBQ2hDLGNBQVMsR0FBRyxHQUFTLEVBQUUsR0FBRSxDQUFDLENBQUM7SUFHbEMsQ0FBQztJQUVNLFVBQVUsQ0FBQyxLQUFVO1FBQzFCLElBQUksQ0FBQyxTQUFTLENBQUMsV0FBVyxDQUFDLElBQUksQ0FBQyxXQUFXLENBQUMsYUFBYSxFQUFFLE9BQU8sRUFBRSxLQUFLLENBQUMsQ0FBQztJQUM3RSxDQUFDO0lBRU0sZ0JBQWdCLENBQUMsRUFBd0I7UUFDOUMsSUFBSSxDQUFDLFFBQVEsR0FBRyxFQUFFLENBQUM7SUFDckIsQ0FBQztJQUVNLGlCQUFpQixDQUFDLEVBQWM7UUFDckMsSUFBSSxDQUFDLFNBQVMsR0FBRyxFQUFFLENBQUM7SUFDdEIsQ0FBQztJQUVNLGdCQUFnQixDQUFDLFVBQW1CO1FBQ3pDLE1BQU0sT0FBTyxHQUFHLElBQUksQ0FBQyxXQUFXLENBQUMsYUFBYSxDQUFDLGFBQWEsQ0FBQyxPQUFPLENBQUMsQ0FBQztRQUN0RSxJQUFJLE9BQU8sRUFBRSxDQUFDO1lBQ1osSUFBSSxDQUFDLFNBQVMsQ0FBQyxXQUFXLENBQUMsT0FBTyxFQUFFLFVBQVUsRUFBRSxVQUFVLENBQUMsQ0FBQztRQUM5RCxDQUFDO1FBRUQsTUFBTSxhQUFhLEdBQUcsSUFBSSxDQUFDLFdBQVcsQ0FBQyxhQUFhLENBQUMsYUFBYSxDQUFDLHNCQUFzQixDQUFDLFNBQVMsQ0FBQyxZQUFZLENBQUMsQ0FBQztRQUNsSCxJQUFJLGFBQWEsRUFBRSxDQUFDO1lBQ2xCLElBQUksQ0FBQyxTQUFTLENBQUMsV0FBVyxDQUFDLGFBQWEsRUFBRSxVQUFVLEVBQUUsVUFBVSxDQUFDLENBQUM7UUFDcEUsQ0FBQztJQUNILENBQUM7SUFFTSxNQUFNLENBQUMsS0FBd0M7UUFDcEQsSUFBSSxDQUFDLFFBQVEsQ0FBQyxLQUFLLENBQUMsQ0FBQztJQUN2QixDQUFDOzhHQTNDVSx5QkFBeUI7a0dBQXpCLHlCQUF5QixvT0FGekIsQ0FBQywyQkFBMkIsQ0FBQzs7MkZBRTdCLHlCQUF5QjtrQkFKckMsU0FBUzttQkFBQztvQkFDVCxRQUFRLEVBQUUsaUdBQWlHO29CQUMzRyxTQUFTLEVBQUUsQ0FBQywyQkFBMkIsQ0FBQztpQkFDekM7dUdBR1Esa0JBQWtCO3NCQUR4QixZQUFZO3VCQUFDLDJCQUEyQixFQUFFLENBQUMsUUFBUSxDQUFDO2dCQU05QyxJQUFJO3NCQURWLFlBQVk7dUJBQUMsVUFBVSIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IERpcmVjdGl2ZSwgUmVuZGVyZXIyLCBFbGVtZW50UmVmLCBmb3J3YXJkUmVmLCBIb3N0TGlzdGVuZXIgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IFN0YXRpY1Byb3ZpZGVyIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5pbXBvcnQgeyBDb250cm9sVmFsdWVBY2Nlc3NvciwgTkdfVkFMVUVfQUNDRVNTT1IgfSBmcm9tICdAYW5ndWxhci9mb3Jtcyc7XG5pbXBvcnQgeyBBVVRPQ09NUExFVEVfQ09OU1RBTlRTLCBJQXV0b2NvbXBsZXRlQ29tcG9uZW50LCBJT3B0aW9uIH0gZnJvbSAnQHR5bGVydGVjaC9mb3JnZSc7XG5cbmV4cG9ydCBjb25zdCBBVVRPQ09NUExFVEVfVkFMVUVfQUNDRVNTT1I6IFN0YXRpY1Byb3ZpZGVyID0ge1xuICBwcm92aWRlOiBOR19WQUxVRV9BQ0NFU1NPUixcbiAgdXNlRXhpc3Rpbmc6IGZvcndhcmRSZWYoKCkgPT4gQXV0b2NvbXBsZXRlVmFsdWVBY2Nlc3NvciksXG4gIG11bHRpOiB0cnVlXG59O1xuXG5ARGlyZWN0aXZlKHtcbiAgc2VsZWN0b3I6ICdmb3JnZS1hdXRvY29tcGxldGVbZm9ybUNvbnRyb2xOYW1lXSxmb3JnZS1hdXRvY29tcGxldGVbZm9ybUNvbnRyb2xdLGZvcmdlLWF1dG9jb21wbGV0ZVtuZ01vZGVsXScsXG4gIHByb3ZpZGVyczogW0FVVE9DT01QTEVURV9WQUxVRV9BQ0NFU1NPUl1cbn0pXG5leHBvcnQgY2xhc3MgQXV0b2NvbXBsZXRlVmFsdWVBY2Nlc3NvciBpbXBsZW1lbnRzIENvbnRyb2xWYWx1ZUFjY2Vzc29yIHtcbiAgQEhvc3RMaXN0ZW5lcignZm9yZ2UtYXV0b2NvbXBsZXRlLWNoYW5nZScsIFsnJGV2ZW50J10pXG4gIHB1YmxpYyBhdXRvY29tcGxldGVDaGFuZ2UoZXZlbnQ6IEN1c3RvbUV2ZW50KTogdm9pZCB7XG4gICAgdGhpcy5jaGFuZ2UoZXZlbnQuZGV0YWlsKTtcbiAgfVxuXG4gIEBIb3N0TGlzdGVuZXIoJ2ZvY3Vzb3V0JylcbiAgcHVibGljIGJsdXIoKTogdm9pZCB7XG4gICAgdGhpcy5vblRvdWNoZWQoKTtcbiAgfVxuXG4gIHB1YmxpYyBvbkNoYW5nZSA9IChfOiBhbnkpOiB2b2lkID0+IHt9O1xuICBwdWJsaWMgb25Ub3VjaGVkID0gKCk6IHZvaWQgPT4ge307XG5cbiAgY29uc3RydWN0b3IocHJpdmF0ZSBfZWxlbWVudFJlZjogRWxlbWVudFJlZjxJQXV0b2NvbXBsZXRlQ29tcG9uZW50PiwgcHJpdmF0ZSBfcmVuZGVyZXI6IFJlbmRlcmVyMikge1xuICB9XG5cbiAgcHVibGljIHdyaXRlVmFsdWUodmFsdWU6IGFueSk6IHZvaWQge1xuICAgIHRoaXMuX3JlbmRlcmVyLnNldFByb3BlcnR5KHRoaXMuX2VsZW1lbnRSZWYubmF0aXZlRWxlbWVudCwgJ3ZhbHVlJywgdmFsdWUpO1xuICB9XG5cbiAgcHVibGljIHJlZ2lzdGVyT25DaGFuZ2UoZm46IChfOiBib29sZWFuKSA9PiB2b2lkKTogdm9pZCB7XG4gICAgdGhpcy5vbkNoYW5nZSA9IGZuO1xuICB9XG5cbiAgcHVibGljIHJlZ2lzdGVyT25Ub3VjaGVkKGZuOiAoKSA9PiB2b2lkKTogdm9pZCB7XG4gICAgdGhpcy5vblRvdWNoZWQgPSBmbjtcbiAgfVxuXG4gIHB1YmxpYyBzZXREaXNhYmxlZFN0YXRlKGlzRGlzYWJsZWQ6IGJvb2xlYW4pOiB2b2lkIHtcbiAgICBjb25zdCBpbnB1dEVsID0gdGhpcy5fZWxlbWVudFJlZi5uYXRpdmVFbGVtZW50LnF1ZXJ5U2VsZWN0b3IoJ2lucHV0Jyk7XG4gICAgaWYgKGlucHV0RWwpIHtcbiAgICAgIHRoaXMuX3JlbmRlcmVyLnNldFByb3BlcnR5KGlucHV0RWwsICdkaXNhYmxlZCcsIGlzRGlzYWJsZWQpO1xuICAgIH1cblxuICAgIGNvbnN0IGNsZWFyQnV0dG9uRWwgPSB0aGlzLl9lbGVtZW50UmVmLm5hdGl2ZUVsZW1lbnQucXVlcnlTZWxlY3RvcihBVVRPQ09NUExFVEVfQ09OU1RBTlRTLnNlbGVjdG9ycy5DTEVBUl9CVVRUT04pO1xuICAgIGlmIChjbGVhckJ1dHRvbkVsKSB7XG4gICAgICB0aGlzLl9yZW5kZXJlci5zZXRQcm9wZXJ0eShjbGVhckJ1dHRvbkVsLCAnZGlzYWJsZWQnLCBpc0Rpc2FibGVkKTtcbiAgICB9XG4gIH1cblxuICBwdWJsaWMgY2hhbmdlKHZhbHVlOiBhbnkgfCBhbnlbXSB8IElPcHRpb24gfCBJT3B0aW9uW10pOiB2b2lkIHtcbiAgICB0aGlzLm9uQ2hhbmdlKHZhbHVlKTtcbiAgfVxufVxuIl19

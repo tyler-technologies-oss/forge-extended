@@ -1,0 +1,10 @@
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.UPDATE_DARK_MODE_EVENT_NAME = exports.DARK_MODE_EVENT_NAME = void 0;
+var DARK_MODE_EVENT_NAME = 'DARK_MODE';
+exports.DARK_MODE_EVENT_NAME = DARK_MODE_EVENT_NAME;
+var UPDATE_DARK_MODE_EVENT_NAME = 'UPDATE_DARK_MODE';
+exports.UPDATE_DARK_MODE_EVENT_NAME = UPDATE_DARK_MODE_EVENT_NAME;

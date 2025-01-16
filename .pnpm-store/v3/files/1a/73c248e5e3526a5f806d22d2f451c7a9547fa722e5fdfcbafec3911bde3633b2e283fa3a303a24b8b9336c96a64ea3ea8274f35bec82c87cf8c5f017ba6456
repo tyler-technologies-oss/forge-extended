@@ -1,0 +1,79 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getShadowElement } from '@tylertech/forge-core';
+import { BaseAdapter } from '../core';
+import { FOCUS_INDICATOR_CONSTANTS } from '../focus-indicator';
+import { STATE_LAYER_CONSTANTS } from '../state-layer';
+import { BUTTON_AREA_CONSTANTS } from './button-area-constants';
+export class ButtonAreaAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this._rootElement = getShadowElement(component, BUTTON_AREA_CONSTANTS.selectors.ROOT);
+        this._buttonSlotElement = getShadowElement(component, BUTTON_AREA_CONSTANTS.selectors.BUTTON_SLOT);
+        this._contentSlotElement = getShadowElement(component, BUTTON_AREA_CONSTANTS.selectors.CONTENT_SLOT);
+        this._focusIndicatorElement = getShadowElement(component, FOCUS_INDICATOR_CONSTANTS.elementName);
+        this._stateLayerElement = getShadowElement(component, STATE_LAYER_CONSTANTS.elementName);
+    }
+    destroy() { }
+    setDisabled(value) {
+        this._buttonElement?.toggleAttribute(BUTTON_AREA_CONSTANTS.attributes.DISABLED, value);
+        if (value) {
+            this._focusIndicatorElement.remove();
+            this._stateLayerElement.remove();
+        }
+        else {
+            this._rootElement.append(this._focusIndicatorElement, this._stateLayerElement);
+        }
+    }
+    addListener(type, listener, capture) {
+        this._rootElement.addEventListener(type, listener, { capture });
+    }
+    removeListener(type, listener, capture) {
+        this._rootElement.removeEventListener(type, listener, { capture });
+    }
+    addButtonSlotListener(type, listener) {
+        this._buttonSlotElement.addEventListener(type, listener);
+    }
+    removeButtonSlotListener(type, listener) {
+        this._buttonSlotElement.removeEventListener(type, listener);
+    }
+    addContentSlotListener(type, listener) {
+        this._contentSlotElement.addEventListener(type, listener);
+    }
+    removeContentSlotListener(type, listener) {
+        this._contentSlotElement.removeEventListener(type, listener);
+    }
+    animateStateLayer() {
+        this._stateLayerElement.playAnimation();
+    }
+    startButtonObserver(callback) {
+        if (this._buttonElement) {
+            this._buttonObserver = new MutationObserver(callback);
+            this._buttonObserver.observe(this._buttonElement, {
+                attributeFilter: [BUTTON_AREA_CONSTANTS.attributes.DISABLED]
+            });
+        }
+    }
+    stopButtonObserver() {
+        if (this._buttonObserver) {
+            this._buttonObserver.disconnect();
+            this._buttonObserver = undefined;
+        }
+    }
+    detectSlottedButton() {
+        this._buttonElement = this._buttonSlotElement.assignedElements()[0];
+    }
+    isButtonDisabled() {
+        return this._buttonElement?.disabled ?? true;
+    }
+    requestDisabledButtonFrame() {
+        if (this._buttonElement) {
+            this._buttonElement.disabled = true;
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+            requestAnimationFrame(() => (this._buttonElement.disabled = false));
+        }
+    }
+}

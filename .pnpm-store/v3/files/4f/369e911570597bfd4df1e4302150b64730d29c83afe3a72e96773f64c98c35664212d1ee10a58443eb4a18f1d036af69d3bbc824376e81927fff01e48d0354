@@ -1,0 +1,45 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ExperimentalFocusOptions } from '../../constants';
+import { ITabAdapter } from './tab-adapter';
+export interface ITabCore {
+    disabled: boolean;
+    selected: boolean;
+    vertical: boolean;
+    stacked: boolean;
+    secondary: boolean;
+    inverted: boolean;
+    setFocus(options?: ExperimentalFocusOptions): void;
+}
+export declare class TabCore implements ITabCore {
+    private _adapter;
+    private _selected;
+    private _disabled;
+    private _vertical;
+    private _stacked;
+    private _secondary;
+    private _inverted;
+    private _clickListener;
+    private _keydownListener;
+    constructor(_adapter: ITabAdapter);
+    initialize(): void;
+    setFocus(options?: ExperimentalFocusOptions): void;
+    private _onClick;
+    private _onKeydown;
+    private _dispatchSelectEvent;
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    get selected(): boolean;
+    set selected(value: boolean);
+    get vertical(): boolean;
+    set vertical(value: boolean);
+    get stacked(): boolean;
+    set stacked(value: boolean);
+    get secondary(): boolean;
+    set secondary(value: boolean);
+    get inverted(): boolean;
+    set inverted(value: boolean);
+}

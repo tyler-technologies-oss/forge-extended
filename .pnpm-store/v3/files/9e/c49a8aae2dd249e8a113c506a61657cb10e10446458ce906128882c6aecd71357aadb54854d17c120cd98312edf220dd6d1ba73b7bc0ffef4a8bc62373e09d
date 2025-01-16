@@ -1,0 +1,106 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { customElement, attachShadowTemplate, coreProperty, coerceBoolean, coerceNumber } from '@tylertech/forge-core';
+import { BaseComponent } from '../../core/base/base-component';
+import { SplitViewAdapter } from './split-view-adapter';
+import { SplitViewCore } from './split-view-core';
+import { SPLIT_VIEW_CONSTANTS } from './split-view-constants';
+import { SplitViewPanelComponent } from '../split-view-panel';
+const template = '<template><div class=\"forge-split-view\" id=\"root\" part=\"root\"><slot></slot></div></template>';
+const styles = '.forge-split-view{display:flex;width:100%;height:100%}:host{--forge-split-view-handle-width:8px;display:block;height:100%;width:100%;overflow:hidden;contain:paint size}:host([hidden]){display:none}:host([orientation=horizontal]) .forge-split-view{flex-direction:row}:host([orientation=vertical]) .forge-split-view{flex-direction:column}';
+/**
+ * @tag forge-split-view
+ */
+let SplitViewComponent = class SplitViewComponent extends BaseComponent {
+    static get observedAttributes() {
+        return [
+            SPLIT_VIEW_CONSTANTS.attributes.ORIENTATION,
+            SPLIT_VIEW_CONSTANTS.attributes.DISABLED,
+            SPLIT_VIEW_CONSTANTS.attributes.ALLOW_CLOSE,
+            SPLIT_VIEW_CONSTANTS.attributes.AUTO_CLOSE,
+            SPLIT_VIEW_CONSTANTS.attributes.AUTO_CLOSE_THRESHOLD
+        ];
+    }
+    constructor() {
+        super();
+        attachShadowTemplate(this, template, styles);
+        this._core = new SplitViewCore(new SplitViewAdapter(this));
+    }
+    connectedCallback() {
+        this._core.initialize();
+    }
+    disconnectedCallback() {
+        this._core.destroy();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case SPLIT_VIEW_CONSTANTS.attributes.ORIENTATION:
+                this.orientation = newValue;
+                break;
+            case SPLIT_VIEW_CONSTANTS.attributes.DISABLED:
+                this.disabled = coerceBoolean(newValue);
+                break;
+            case SPLIT_VIEW_CONSTANTS.attributes.ALLOW_CLOSE:
+                this.allowClose = coerceBoolean(newValue);
+                break;
+            case SPLIT_VIEW_CONSTANTS.attributes.AUTO_CLOSE:
+                this.autoClose = coerceBoolean(newValue);
+                break;
+            case SPLIT_VIEW_CONSTANTS.attributes.AUTO_CLOSE_THRESHOLD:
+                this.autoCloseThreshold = coerceNumber(newValue);
+                break;
+        }
+    }
+    /**
+     * Arranges split view panels to avoid overlapping during animations.
+     * @param target The originating split view panel component.
+     */
+    layerSlottedPanels(target) {
+        this._core.layerSlottedPanels(target);
+    }
+    /**
+     * Removes presentation data set during an animation.
+     */
+    unlayerSlottedPanels() {
+        this._core.unlayerSlottedPanels();
+    }
+    /**
+     * Updates the provided characteristics of each slotted panel.
+     * @param config An update configuration.
+     */
+    update(config) {
+        this._core.update(config);
+    }
+    /**
+     * Resizes panels within the split view to avoid overflow.
+     */
+    refit() {
+        this._core.refitSlottedPanels();
+    }
+};
+__decorate([
+    coreProperty()
+], SplitViewComponent.prototype, "orientation", void 0);
+__decorate([
+    coreProperty()
+], SplitViewComponent.prototype, "disabled", void 0);
+__decorate([
+    coreProperty()
+], SplitViewComponent.prototype, "allowClose", void 0);
+__decorate([
+    coreProperty()
+], SplitViewComponent.prototype, "autoClose", void 0);
+__decorate([
+    coreProperty()
+], SplitViewComponent.prototype, "autoCloseThreshold", void 0);
+SplitViewComponent = __decorate([
+    customElement({
+        name: SPLIT_VIEW_CONSTANTS.elementName,
+        dependencies: [SplitViewPanelComponent]
+    })
+], SplitViewComponent);
+export { SplitViewComponent };

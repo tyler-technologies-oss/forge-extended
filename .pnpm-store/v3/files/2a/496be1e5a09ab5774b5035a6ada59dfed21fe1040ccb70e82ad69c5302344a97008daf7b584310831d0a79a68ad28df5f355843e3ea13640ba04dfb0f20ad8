@@ -1,0 +1,52 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IBottomSheetAdapter } from './bottom-sheet-adapter';
+import { BottomSheetMode } from './bottom-sheet-constants';
+export interface IBottomSheetCore {
+    mode: BottomSheetMode;
+    open: boolean;
+    persistent: boolean;
+    fullscreen: boolean;
+}
+export declare class BottomSheetCore implements IBottomSheetCore {
+    _adapter: IBottomSheetAdapter;
+    private _open;
+    private _mode;
+    private _persistent;
+    private _fullscreen;
+    private _isDragging;
+    private _dragContext;
+    private _lastPosition;
+    private _bodyScrollHandler;
+    private _dragStartHandler;
+    private _dragMoveHandler;
+    private _dragEndHandler;
+    private _dragCancelHandler;
+    private _dialogDismissListener;
+    private _dialogBeforeCloseListener;
+    constructor(_adapter: IBottomSheetAdapter);
+    initialize(): void;
+    private _openBottomSheet;
+    private _closeBottomSheet;
+    private _onDialogDismiss;
+    private _onDialogBeforeClose;
+    /** If scrollable, allow drag to/from fullscreen, and make fullscreen on scroll. */
+    private _initScrollableHandlers;
+    private _onBodyScroll;
+    private _onDragStart;
+    private _onDragMove;
+    private _onDragEnd;
+    private _onDragCancel;
+    private _dragComplete;
+    get open(): boolean;
+    set open(value: boolean);
+    get mode(): BottomSheetMode;
+    set mode(value: BottomSheetMode);
+    get persistent(): boolean;
+    set persistent(value: boolean);
+    get fullscreen(): boolean;
+    set fullscreen(value: boolean);
+}

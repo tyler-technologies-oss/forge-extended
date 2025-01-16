@@ -1,0 +1,59 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponent, IBaseComponent } from '../core/base/base-component';
+import { IColorPickerChangeEventData, IHSVA, IRGBA } from './color-picker-constants';
+export interface IColorPickerComponent extends IBaseComponent {
+    value: string | null | undefined;
+    rgba: IRGBA | null | undefined;
+    hsva: IHSVA | null | undefined;
+    opacity: number | null | undefined;
+    allowOpacity: boolean;
+    debounceChangeEvent: boolean;
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-color-picker': IColorPickerComponent;
+    }
+    interface HTMLElementEventMap {
+        'forge-color-picker-change': CustomEvent<IColorPickerChangeEventData>;
+    }
+}
+/**
+ * @tag forge-color-picker
+ *
+ * @property {boolean} [allowOpacity=false] Gets/sets whether opacity is displayed and allowed be to changed.
+ * @property {boolean} [debounceChangeEvent=false] Gets/sets whether change event has a debounce applied to avoid successive updates.
+ * @property {string | null | undefined} value Gets/sets the value using hex format only.
+ * @property {IRGBA | null | undefined} rgba Gets/sets the value using rgba format.
+ * @property {IHSVA | null | undefined} hsva Gets/sets the value using hsva format.
+ * @property {number | null | undefined} [opacity=1] Gets/sets the opacity value, if `allowOpacity` is true.
+ *
+ * @attribute {boolean} [allow-opacity=false] Gets/sets whether opacity is displayed and allowed be to changed.
+ * @attribute {boolean} [debounce-change-event=false] Gets/sets whether change event has a debounce applied to avoid successive updates.
+ * @attribute {string | null | undefined} value Gets/sets the value using hex format only.
+ *
+ * @event {CustomEvent<IColorPickerChangeEventData>} forge-color-picker-change - Emits when the color value changed.
+ */
+export declare class ColorPickerComponent extends BaseComponent implements IColorPickerComponent {
+    static get observedAttributes(): string[];
+    private _core;
+    constructor();
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    /** Gets/sets the value using hex format only. */
+    value: string | null | undefined;
+    /** Gets/sets the value using rgba format. */
+    rgba: IRGBA | null | undefined;
+    /** Gets/sets the value using hsva format. */
+    hsva: IHSVA | null | undefined;
+    /** Gets/sets the opacity value, if `allowOpacity` is true. */
+    opacity: number | null | undefined;
+    /** Gets/sets whether opacity is displayed and allowed be to changed. */
+    allowOpacity: boolean;
+    /** Gets/sets whether change event has a debounce applied to avoid successive updates. Defaults to `false`. */
+    debounceChangeEvent: boolean;
+}

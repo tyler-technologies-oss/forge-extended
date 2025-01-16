@@ -1,0 +1,10 @@
+import { ReactComponentOrElements } from '../utils';
+export type UseDynamicComponentResult<T extends keyof HTMLElementTagNameMap, K> = {
+    show: (options?: K) => HTMLElementTagNameMap[T];
+    hide: () => void;
+};
+export interface UseDynamicComponentDelegate<T, K = any> {
+    show?: (instance: T, options?: K) => void;
+    hide?: (instance: T, unmountReadyCallback?: () => void) => void | Promise<void>;
+}
+export declare function useDynamicForgeComponent<T extends keyof HTMLElementTagNameMap, K = any>(tagName: T, component?: ReactComponentOrElements, componentProps?: any, delegate?: UseDynamicComponentDelegate<HTMLElementTagNameMap[T]>, parentElement?: HTMLElement): UseDynamicComponentResult<T, K>;

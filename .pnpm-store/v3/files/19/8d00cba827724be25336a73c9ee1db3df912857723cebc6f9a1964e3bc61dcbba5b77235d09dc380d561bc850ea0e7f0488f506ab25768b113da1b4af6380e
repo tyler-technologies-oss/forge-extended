@@ -1,0 +1,101 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { isDefined, isString } from '@tylertech/forge-core';
+import { AVATAR_CONSTANTS } from './avatar-constants';
+export class AvatarCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._text = '';
+        this._letterCount = AVATAR_CONSTANTS.numbers.DEFAULT_LETTER_COUNT;
+        this._initialized = false;
+    }
+    initialize() {
+        this._render();
+        this._initialized = true;
+    }
+    destroy() {
+        this._initialized = false;
+    }
+    _render() {
+        this._setText();
+        this._setBackgroundImageUrl();
+    }
+    async _setBackgroundImageUrl() {
+        if (this._imageUrl) {
+            if (await this._adapter.setBackgroundImageUrl(this._imageUrl)) {
+                this._adapter.clearText();
+            }
+        }
+        else {
+            this._adapter.removeBackgroundImage();
+        }
+    }
+    _setText() {
+        const data = this._getTextContent(this._text, this._letterCount);
+        if (data) {
+            this._adapter.setText(data);
+        }
+        else {
+            this._adapter.clearText();
+        }
+    }
+    /**
+     * Gets the text content to display in the avatar.
+     * @param {string} value The text to parse.
+     */
+    _getTextContent(value, count) {
+        if (!value || !isString(value) || count <= 0) {
+            return '';
+        }
+        let text;
+        if (count === 1) {
+            text = value[0].toUpperCase();
+        }
+        else {
+            const words = value.match(/\S+/g) || [];
+            text = words.slice(0, count).reduce((prev, curr) => (prev += curr[0].toUpperCase()), '');
+        }
+        return text;
+    }
+    /** Gets/sets the text to display. */
+    get text() {
+        return this._text;
+    }
+    set text(value) {
+        if (this._text !== value) {
+            this._text = value || '';
+            this._adapter.setHostAttribute(AVATAR_CONSTANTS.attributes.TEXT, this._text);
+            if (this._initialized) {
+                this._render();
+            }
+        }
+    }
+    /** Controls the number of letters to display from the text. By default the text is split on spaces and the first character of each word is used. */
+    get letterCount() {
+        return this._letterCount;
+    }
+    set letterCount(value) {
+        if (this._letterCount !== value) {
+            this._letterCount = value;
+            this._adapter.setHostAttribute(AVATAR_CONSTANTS.attributes.LETTER_COUNT, isDefined(this._letterCount) ? this._letterCount.toString() : '');
+            if (this._initialized) {
+                this._render();
+            }
+        }
+    }
+    /** Sets the background image URL to use. */
+    get imageUrl() {
+        return this._imageUrl;
+    }
+    set imageUrl(value) {
+        if (this._imageUrl !== value) {
+            this._imageUrl = value;
+            if (this._initialized) {
+                this._render();
+            }
+        }
+    }
+}

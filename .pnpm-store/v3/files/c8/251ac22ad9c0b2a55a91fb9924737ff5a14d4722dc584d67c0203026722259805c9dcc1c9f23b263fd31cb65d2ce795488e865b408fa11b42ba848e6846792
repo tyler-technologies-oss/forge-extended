@@ -1,0 +1,22 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const LABEL_VALUE_CONSTANTS: {
+    elementName: "forge-label-value";
+    observedAttributes: {
+        EMPTY: string;
+        ELLIPSIS: string;
+        INLINE: string;
+        /** @deprecated Use `inset` instead. */
+        DENSE: string;
+    };
+    attributes: {
+        EMPTY: string;
+        ELLIPSIS: string;
+        INLINE: string;
+        /** @deprecated Use `inset` instead. */
+        DENSE: string;
+    };
+};

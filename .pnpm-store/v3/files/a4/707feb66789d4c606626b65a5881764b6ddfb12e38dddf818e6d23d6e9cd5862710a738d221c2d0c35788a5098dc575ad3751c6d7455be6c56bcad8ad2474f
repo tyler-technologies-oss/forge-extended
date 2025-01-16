@@ -1,0 +1,14 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+/**
+ * Creates an SVG element from a string.
+ */
+export declare function createSvgFromString(svgContent: string, defaultViewBox?: string): SVGElement | null;
+/**
+ * Determines if the provided element is a safe SVG to use.
+ * @param el The element reference to test.
+ */
+export declare function isSafeSvg(el: Element): boolean;

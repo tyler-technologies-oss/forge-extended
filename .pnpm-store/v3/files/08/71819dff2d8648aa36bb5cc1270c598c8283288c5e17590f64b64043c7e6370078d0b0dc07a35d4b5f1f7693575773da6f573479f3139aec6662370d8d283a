@@ -1,0 +1,35 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { CalendarMode, ICalendarDateSelectEventData } from '../calendar';
+import { BaseDatePickerCore, IBaseDatePickerCore } from './base/base-date-picker-core';
+import { IDatePickerAdapter } from './date-picker-adapter';
+export interface IDatePickerCore extends IBaseDatePickerCore<Date | string> {
+}
+export declare class DatePickerCore extends BaseDatePickerCore<IDatePickerAdapter, Date | string | null | undefined, Date> implements IDatePickerCore {
+    protected _mode: CalendarMode;
+    constructor(adapter: IDatePickerAdapter);
+    protected _initializeState(): void;
+    protected _emitChangeEvent(value: Date | null | undefined, force?: boolean): boolean;
+    protected _emitOpenEvent(): void;
+    protected _emitCloseEvent(): void;
+    protected _onToday(): void;
+    protected _onClear(): void;
+    protected _getCurrentValue(): Date | null | undefined;
+    protected _setFormattedInputValue(suppressValueChanges?: boolean): void;
+    protected _setValue(value?: Date | null): void;
+    protected _onDateSelected(event: ICalendarDateSelectEventData): void;
+    protected _openCalendar(emitOpenEvent?: boolean): void;
+    protected _applyMin(): void;
+    protected _applyMax(): void;
+    protected _applyDisabledDates(): void;
+    protected _applyDisabledDaysOfWeek(): void;
+    protected _handleInput(value: string): void;
+    protected _onInputValueChanged(value: string): void;
+    private _tryMergeCurrentTime;
+    private _applyValue;
+    get value(): Date | string | null | undefined;
+    set value(value: Date | string | null | undefined);
+}

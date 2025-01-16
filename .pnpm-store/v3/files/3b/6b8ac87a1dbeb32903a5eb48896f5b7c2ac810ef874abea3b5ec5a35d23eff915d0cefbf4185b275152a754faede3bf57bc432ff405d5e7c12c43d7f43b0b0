@@ -1,0 +1,118 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { COLOR_PICKER_CONSTANTS } from './color-picker-constants';
+import { relativeCoords } from './color-picker-utils';
+export class ColorPickerSlider {
+    constructor(_rootElement, _changeListener) {
+        this._rootElement = _rootElement;
+        this._changeListener = _changeListener;
+        this._percent = 1;
+        this._min = 0;
+        this._max = 1;
+        this._step = 0.01;
+        this._keydownListener = evt => this._onKeydown(evt);
+        this._downListener = evt => this._onDown(evt);
+        this._moveListener = evt => this._onMove(evt);
+        this._upListener = evt => this._onUp(evt);
+        this._initialize();
+    }
+    destroy() {
+        this._unlisten();
+    }
+    setValue(value) {
+        this._percent = value;
+        this._setThumbPosition(this._percent);
+    }
+    _initialize() {
+        this._thumbElement = this._rootElement.querySelector(COLOR_PICKER_CONSTANTS.selectors.SLIDER_THUMB);
+        this._listen();
+        this._setThumbPosition(this._percent);
+    }
+    _listen() {
+        this._thumbElement.addEventListener('keydown', this._keydownListener);
+        this._rootElement.addEventListener('mousedown', this._downListener);
+        this._rootElement.addEventListener('touchstart', this._downListener);
+    }
+    _unlisten() {
+        this._thumbElement.removeEventListener('keydown', this._keydownListener);
+        this._rootElement.removeEventListener('mousedown', this._downListener);
+        this._rootElement.removeEventListener('touchstart', this._downListener);
+        document.removeEventListener('mousemove', this._moveListener);
+        document.removeEventListener('touchmove', this._moveListener);
+        document.removeEventListener('mouseup', this._upListener);
+        document.removeEventListener('touchend', this._upListener);
+    }
+    _onKeydown(evt) {
+        const isArrowLeftKey = evt.key === 'ArrowLeft' || evt.keyCode === 37;
+        const isArrowRightKey = evt.key === 'ArrowRight' || evt.keyCode === 39;
+        const isHomeKey = evt.key === 'Home' || evt.keyCode === 36;
+        const isEndKey = evt.key === 'End' || evt.keyCode === 35;
+        if (isArrowLeftKey) {
+            evt.preventDefault();
+            this._percent -= this._step;
+        }
+        else if (isArrowRightKey) {
+            evt.preventDefault();
+            this._percent += this._step;
+        }
+        else if (isHomeKey) {
+            evt.preventDefault();
+            this._percent = this._min;
+        }
+        else if (isEndKey) {
+            evt.preventDefault();
+            this._percent = this._max;
+        }
+        if (this._percent < this._min) {
+            this._percent = this._min;
+        }
+        else if (this._percent > this._max) {
+            this._percent = this._max;
+        }
+        this._setThumbPosition(this._percent);
+        this._notify();
+    }
+    _onDown(evt) {
+        evt.preventDefault();
+        document.addEventListener('mousemove', this._moveListener);
+        document.addEventListener('touchmove', this._moveListener);
+        document.addEventListener('mouseup', this._upListener);
+        document.addEventListener('touchend', this._upListener);
+        this._updateThumbPosition(evt);
+    }
+    _onMove(evt) {
+        evt.preventDefault();
+        this._thumbElement.classList.add(COLOR_PICKER_CONSTANTS.classes.SLIDER_THUMB_ACTIVE);
+        this._updateThumbPosition(evt);
+    }
+    _onUp(evt) {
+        this._thumbElement.classList.remove(COLOR_PICKER_CONSTANTS.classes.SLIDER_THUMB_ACTIVE);
+        document.removeEventListener('mousemove', this._moveListener);
+        document.removeEventListener('touchmove', this._moveListener);
+        document.removeEventListener('mouseup', this._upListener);
+        document.removeEventListener('touchend', this._upListener);
+        this._updateThumbPosition(evt);
+        this._thumbElement.focus();
+    }
+    _updateThumbPosition(evt) {
+        const x = /^mouse/.test(evt.type) ? evt.clientX : evt.changedTouches[0].clientX;
+        this._percent = this._calculateSliderPercent(x);
+        this._setThumbPosition(this._percent);
+        this._notify();
+    }
+    _calculateSliderPercent(absX) {
+        const coords = relativeCoords(absX, 0, this._rootElement);
+        return parseFloat((coords.x / coords.width).toFixed(2));
+    }
+    _setThumbPosition(percent) {
+        this._thumbElement.style.left = `${percent * 100}%`;
+    }
+    _notify() {
+        if (typeof this._changeListener === 'function') {
+            this._changeListener(this._percent);
+        }
+    }
+}

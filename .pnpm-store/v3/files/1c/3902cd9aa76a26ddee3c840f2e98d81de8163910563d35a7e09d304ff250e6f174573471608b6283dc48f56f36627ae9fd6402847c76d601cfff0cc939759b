@@ -1,0 +1,48 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ButtonComponentDelegate } from '../button/button-component-delegate';
+import { BaseComponentDelegate } from '../core/delegates/base-component-delegate';
+import { FILE_PICKER_CONSTANTS } from './file-picker-constants';
+export class FilePickerComponentDelegate extends BaseComponentDelegate {
+    constructor(config) {
+        super(config);
+    }
+    _build() {
+        return document.createElement(FILE_PICKER_CONSTANTS.elementName);
+    }
+    _configure() {
+        if (this._config.options?.primaryText) {
+            const primarySpan = document.createElement('span');
+            primarySpan.slot = 'primary';
+            primarySpan.textContent = this._config.options.primaryText;
+            this._element.appendChild(primarySpan);
+        }
+        if (this._config.options?.secondaryText) {
+            const secondarySpan = document.createElement('span');
+            secondarySpan.slot = 'secondary';
+            secondarySpan.textContent = this._config.options.secondaryText;
+            this._element.appendChild(secondarySpan);
+        }
+        if (this._config.options?.buttonText) {
+            new ButtonComponentDelegate({
+                options: {
+                    parent: this._element,
+                    text: this._config.options.buttonText
+                },
+                props: { variant: 'outlined' }
+            });
+        }
+        if (this._config.options?.helperText) {
+            const helperTextSpan = document.createElement('span');
+            helperTextSpan.slot = 'helper-text';
+            helperTextSpan.textContent = this._config.options.helperText;
+            this._element.appendChild(helperTextSpan);
+        }
+    }
+    onChange(cb) {
+        this._element.addEventListener(FILE_PICKER_CONSTANTS.events.FILES_CHANGED, (evt) => cb(evt.detail));
+    }
+}

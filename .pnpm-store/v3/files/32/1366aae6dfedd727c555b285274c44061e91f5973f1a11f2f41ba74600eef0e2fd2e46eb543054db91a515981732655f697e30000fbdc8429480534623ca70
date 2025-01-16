@@ -1,0 +1,20 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use '../core/styles/theme';
+@use '../core/styles/scrollbar';
+
+// Root theme properties
+:root {
+  @include theme.properties;
+}
+
+// Custom scrollbar styles
+* {
+  @include scrollbar.base;
+}
+
+// Utility classes for all theme tokens
+@include theme.classes;

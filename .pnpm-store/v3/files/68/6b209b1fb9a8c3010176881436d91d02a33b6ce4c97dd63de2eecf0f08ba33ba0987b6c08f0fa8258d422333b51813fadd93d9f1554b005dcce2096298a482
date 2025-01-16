@@ -1,0 +1,329 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { TOOLTIP_CONSTANTS } from './tooltip-constants';
+import { WithLongpressListener } from '../core/mixins/interactions/longpress/with-longpress-listener';
+import { canUserHoverElements } from '../constants';
+import { DismissibleStack } from '../core/utils/dismissible-stack';
+export class TooltipCore extends WithLongpressListener(Object) {
+    constructor(_adapter) {
+        super();
+        this._adapter = _adapter;
+        this._open = false;
+        this._type = TOOLTIP_CONSTANTS.defaults.TYPE;
+        this._delay = TOOLTIP_CONSTANTS.defaults.DELAY;
+        this._placement = TOOLTIP_CONSTANTS.defaults.PLACEMENT;
+        this._offset = TOOLTIP_CONSTANTS.defaults.OFFSET;
+        this._flip = TOOLTIP_CONSTANTS.defaults.FLIP;
+        this._boundary = null;
+        this._boundaryElement = null;
+        this._fallbackPlacements = null;
+        this._triggerTypes = TOOLTIP_CONSTANTS.defaults.TRIGGER_TYPES;
+        // Hover trigger type
+        this._hoverStartListener = this._onHoverStart.bind(this);
+        this._hoverEndListener = this._onHoverEnd.bind(this);
+        // Focus trigger type
+        this._focusListener = this._onFocus.bind(this);
+        this._blurListener = this._onBlur.bind(this);
+        // Dismiss/hide triggers
+        this._scrollListener = this._onTryHide.bind(this);
+        this._mouseDownListener = this._onTryHide.bind(this);
+        this._dragListener = this._onTryHide.bind(this);
+        this._lightDismissListener = this._onTryHide.bind(this);
+    }
+    initialize() {
+        this._adapter.tryApplyGlobalConfiguration(['type', 'delay', 'placement', 'offset', 'flip', 'boundaryElement', 'fallbackPlacements', 'triggerType']);
+        if (!this._adapter.anchorElement) {
+            this._adapter.tryLocateAnchorElement(this._anchor);
+        }
+        this._adapter.syncAria();
+        this._attachAnchorListeners();
+        if (this._open) {
+            this._show();
+        }
+    }
+    destroy() {
+        if (this._open) {
+            this._hide();
+        }
+        this._adapter.detachAria();
+        this._detachAnchorListeners();
+    }
+    syncTooltipAria() {
+        this._adapter.syncAria();
+    }
+    _attachAnchorListeners() {
+        if (!this._adapter.anchorElement) {
+            return;
+        }
+        const triggerTypes = [...this._triggerTypes];
+        // If the users input mechanism doesn't support hover, then we need to force longpress as their alternative
+        /* c8 ignore next 4 */
+        if (!canUserHoverElements) {
+            triggerTypes.splice(triggerTypes.indexOf('hover'), 1);
+            triggerTypes.push('longpress');
+        }
+        const triggerInitializers = {
+            hover: () => this._adapter.addAnchorListener('mouseenter', this._hoverStartListener),
+            longpress: () => this._startLongpressListener(this._adapter.anchorElement),
+            focus: () => this._adapter.addAnchorListener('focusin', this._focusListener)
+        };
+        triggerTypes.forEach(triggerType => triggerInitializers[triggerType]());
+    }
+    _detachAnchorListeners() {
+        if (!this._adapter.anchorElement) {
+            return;
+        }
+        const triggerTypes = [...this._triggerTypes];
+        /* c8 ignore next 3 */
+        if (!canUserHoverElements) {
+            triggerTypes.push('longpress');
+        }
+        const triggerRemovers = {
+            hover: () => {
+                this._adapter.removeAnchorListener('mouseenter', this._hoverStartListener);
+                this._adapter.removeAnchorListener('mousedown', this._hoverEndListener);
+                this._adapter.removeAnchorListener('mouseleave', this._hoverEndListener);
+            },
+            longpress: () => this._stopLongpressListener(this._adapter.anchorElement),
+            focus: () => {
+                this._adapter.removeAnchorListener('focusin', this._focusListener);
+                this._adapter.removeAnchorListener('focusout', this._blurListener);
+            }
+        };
+        triggerTypes.forEach(triggerType => triggerRemovers[triggerType]());
+    }
+    _show() {
+        this._open = true;
+        this._adapter.show();
+        DismissibleStack.instance.add(this._adapter.hostElement);
+        this._attachDismissListeners();
+        this._adapter.toggleHostAttribute(TOOLTIP_CONSTANTS.attributes.OPEN, this._open);
+    }
+    _hide() {
+        window.clearTimeout(this._hoverTimeout);
+        window.clearTimeout(this._longpressVisibilityTimeout);
+        this._open = false;
+        this._adapter.hide();
+        DismissibleStack.instance.remove(this._adapter.hostElement);
+        this._detachDismissListeners();
+        this._adapter.toggleHostAttribute(TOOLTIP_CONSTANTS.attributes.OPEN, this._open);
+    }
+    _attachDismissListeners() {
+        this._adapter.addAnchorListener('mousedown', this._mouseDownListener);
+        this._adapter.addAnchorListener('dragstart', this._dragListener);
+        this._adapter.addDocumentListener('scroll', this._scrollListener);
+        this._adapter.addDocumentListener('wheel', this._scrollListener);
+        this._adapter.addLightDismissListener(this._lightDismissListener);
+    }
+    _detachDismissListeners() {
+        this._adapter.removeAnchorListener('mousedown', this._mouseDownListener);
+        this._adapter.removeAnchorListener('dragstart', this._dragListener);
+        this._adapter.removeDocumentListener('scroll', this._scrollListener);
+        this._adapter.removeDocumentListener('wheel', this._scrollListener);
+        this._adapter.removeLightDismissListener(this._lightDismissListener);
+    }
+    _onHoverStart(_evt) {
+        /* c8 ignore next 3 */
+        if (this._open) {
+            return;
+        }
+        this._adapter.addAnchorListener('mousedown', this._hoverEndListener);
+        this._adapter.addAnchorListener('mouseleave', this._hoverEndListener);
+        if (this._delay) {
+            this._hoverTimeout = window.setTimeout(() => {
+                this._onTryShow();
+            }, this._delay);
+        }
+        else {
+            this._onTryShow();
+        }
+    }
+    _onHoverEnd(_evt) {
+        this._adapter.removeAnchorListener('mousedown', this._hoverEndListener);
+        this._adapter.removeAnchorListener('mouseleave', this._hoverEndListener);
+        window.clearTimeout(this._hoverTimeout);
+        this._onTryHide();
+    }
+    _onFocus(_evt) {
+        /* c8 ignore next 3 */
+        if (this._open) {
+            return;
+        }
+        this._adapter.addAnchorListener('focusout', this._blurListener);
+        this._onTryShow();
+    }
+    _onBlur(_evt) {
+        this._adapter.removeAnchorListener('focusout', this._blurListener);
+        this._onTryHide();
+    }
+    _onLongpress() {
+        this._onTryShow();
+    }
+    _onLongpressEnd(evt) {
+        super._onLongpressEnd(evt);
+        // We only start the timeout to hide the tooltip after the user lifts the pointer
+        this._longpressVisibilityTimeout = window.setTimeout(() => {
+            this._onTryHide();
+        }, TOOLTIP_CONSTANTS.numbers.LONGPRESS_VISIBILITY_DURATION);
+    }
+    _onTryShow() {
+        if (!this._open) {
+            this._show();
+        }
+    }
+    _onTryHide() {
+        if (this._open) {
+            this._hide();
+        }
+    }
+    get open() {
+        return this._open;
+    }
+    set open(value) {
+        value = Boolean(value);
+        if (this._open !== value) {
+            if (this._adapter.isConnected) {
+                if (!this._open) {
+                    this._show();
+                }
+                else {
+                    this._hide();
+                }
+            }
+            else {
+                this._open = value;
+            }
+        }
+    }
+    get type() {
+        return this._type;
+    }
+    set type(value) {
+        value ?? (value = TOOLTIP_CONSTANTS.defaults.TYPE);
+        if (this._type !== value) {
+            this._type = value;
+            if (this._adapter.isConnected) {
+                this._adapter.syncAria();
+            }
+            this._adapter.toggleHostAttribute(TOOLTIP_CONSTANTS.attributes.TYPE, this._type !== TOOLTIP_CONSTANTS.defaults.TYPE, this._type);
+        }
+    }
+    get anchor() {
+        return this._anchor;
+    }
+    set anchor(value) {
+        if (this._anchor !== value) {
+            this._anchor = value;
+            if (this._adapter.isConnected) {
+                this._detachAnchorListeners();
+                this._adapter.detachAria();
+                this._adapter.tryLocateAnchorElement(this._anchor);
+                this._adapter.syncAria();
+                this._attachAnchorListeners();
+            }
+            this._adapter.toggleHostAttribute(TOOLTIP_CONSTANTS.attributes.ANCHOR, !!this._anchor, this._anchor);
+        }
+    }
+    get anchorElement() {
+        return this._adapter.anchorElement;
+    }
+    set anchorElement(element) {
+        if (this._adapter.anchorElement !== element) {
+            if (this._adapter.isConnected) {
+                this._detachAnchorListeners();
+                this._adapter.detachAria();
+            }
+            this._adapter.setAnchorElement(element);
+            if (this._adapter.isConnected) {
+                this._adapter.syncAria();
+                this._attachAnchorListeners();
+            }
+        }
+    }
+    get delay() {
+        return this._delay;
+    }
+    set delay(value) {
+        if (this._delay !== value) {
+            this._delay = value;
+            this._adapter.setHostAttribute(TOOLTIP_CONSTANTS.attributes.DELAY, String(this._delay));
+        }
+    }
+    get placement() {
+        return this._placement;
+    }
+    set placement(value) {
+        value ?? (value = TOOLTIP_CONSTANTS.defaults.PLACEMENT);
+        if (this._placement !== value) {
+            this._placement = value;
+            this._adapter.setHostAttribute(TOOLTIP_CONSTANTS.attributes.PLACEMENT, String(this._placement));
+        }
+    }
+    get offset() {
+        return this._offset;
+    }
+    set offset(value) {
+        value ?? (value = TOOLTIP_CONSTANTS.defaults.OFFSET);
+        if (this._offset !== value) {
+            this._offset = value;
+            this._adapter.toggleHostAttribute(TOOLTIP_CONSTANTS.attributes.OFFSET, this._offset !== TOOLTIP_CONSTANTS.defaults.OFFSET, String(this._offset));
+        }
+    }
+    get flip() {
+        return this._flip;
+    }
+    set flip(value) {
+        value ?? (value = TOOLTIP_CONSTANTS.defaults.FLIP);
+        if (this._flip !== value) {
+            this._flip = value;
+            this._adapter.toggleHostAttribute(TOOLTIP_CONSTANTS.attributes.FLIP, this._flip !== TOOLTIP_CONSTANTS.defaults.FLIP, String(this._flip));
+        }
+    }
+    get boundary() {
+        return this._boundary;
+    }
+    set boundary(value) {
+        if (this._boundary !== value) {
+            this._boundary = value;
+            this._adapter.toggleHostAttribute(TOOLTIP_CONSTANTS.attributes.BOUNDARY, !!this._boundary, this._boundary);
+        }
+    }
+    get boundaryElement() {
+        return this._boundaryElement;
+    }
+    set boundaryElement(element) {
+        if (this._boundaryElement !== element) {
+            this._boundaryElement = element;
+            this._adapter.toggleHostAttribute(TOOLTIP_CONSTANTS.attributes.BOUNDARY, !!this._boundaryElement, this._boundaryElement?.id);
+        }
+    }
+    get fallbackPlacements() {
+        return this._fallbackPlacements;
+    }
+    set fallbackPlacements(value) {
+        if (this._fallbackPlacements !== value) {
+            this._fallbackPlacements = value;
+        }
+    }
+    get triggerType() {
+        return this._triggerTypes.length === 1 ? this._triggerTypes[0] : this._triggerTypes;
+    }
+    set triggerType(value) {
+        if (this._triggerTypes !== value) {
+            if (this._adapter.isConnected) {
+                this._detachAnchorListeners();
+            }
+            this._triggerTypes = Array.isArray(value) ? value : [value];
+            this._triggerTypes = this._triggerTypes.filter(type => !!type);
+            if (!this._triggerTypes.length) {
+                this._triggerTypes = TOOLTIP_CONSTANTS.defaults.TRIGGER_TYPES;
+            }
+            if (this._adapter.isConnected) {
+                this._attachAnchorListeners();
+            }
+        }
+    }
+}

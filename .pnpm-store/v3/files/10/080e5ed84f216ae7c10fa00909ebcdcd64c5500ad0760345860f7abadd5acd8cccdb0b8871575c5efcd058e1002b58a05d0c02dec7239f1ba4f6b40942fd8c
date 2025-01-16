@@ -1,0 +1,22 @@
+import { Renderer2, ElementRef } from '@angular/core';
+import { StaticProvider } from '@angular/core';
+import { ControlValueAccessor } from '@angular/forms';
+import { IDatePickerComponent } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+export declare const DATEPICKER_VALUE_ACCESSOR: StaticProvider;
+export declare class DatePickerValueAccessor implements ControlValueAccessor {
+    private _elementRef;
+    private _renderer;
+    datePickerChange(event: CustomEvent<string | Date | null | undefined>): void;
+    blur(): void;
+    onChange: (_: any) => void;
+    onTouched: () => void;
+    constructor(_elementRef: ElementRef<IDatePickerComponent>, _renderer: Renderer2);
+    writeValue(value: any): void;
+    registerOnChange(fn: (_: boolean) => void): void;
+    registerOnTouched(fn: () => void): void;
+    setDisabledState(isDisabled: boolean): void;
+    change(value: string | Date | null | undefined): void;
+    static ɵfac: i0.ɵɵFactoryDeclaration<DatePickerValueAccessor, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<DatePickerValueAccessor, "forge-date-picker[formControlName],forge-date-picker[formControl],forge-date-picker[ngModel]", never, {}, {}, never, never, false, never>;
+}

@@ -1,0 +1,38 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter } from '../core/base';
+import { EXPANSION_PANEL_CONSTANTS } from '../expansion-panel';
+import { elementParents } from '@tylertech/forge-core';
+export class AccordionAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+    }
+    /**
+     * Determines if the given expansion panel element is nested within another expansion panel.
+     * @param element The expansion panel element to test.
+     */
+    isNestedPanel(element) {
+        /* c8 ignore next 3 */
+        if (!element || !this._component.contains(element)) {
+            return false;
+        }
+        const parents = elementParents(element, this._component);
+        return parents.some(el => el.tagName.toLocaleLowerCase() === EXPANSION_PANEL_CONSTANTS.elementName);
+    }
+    /**
+     * Finds all child `<forge-expansion-panel>` components within the host element.
+     * @returns An array of `ExpansionPanelComponent` child instances.
+     */
+    getChildPanels(selector) {
+        if (selector) {
+            return Array.from(this._component.querySelectorAll(selector));
+        }
+        else {
+            const children = Array.from(this._component.children);
+            return children.filter(child => child.tagName.toLocaleLowerCase() === EXPANSION_PANEL_CONSTANTS.elementName);
+        }
+    }
+}

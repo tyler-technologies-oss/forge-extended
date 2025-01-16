@@ -1,0 +1,546 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ICalendarAdapter } from './calendar-adapter';
+import { CalendarDateBuilder, CalendarDateSelectCallback, CalendarDayBuilder, CalendarEventBuilder, CalendarMode, CalendarTooltipBuilder, CalendarView, DayOfWeek, ICalendarEvent } from './calendar-constants';
+import { CalendarMenuAnimationType } from './calendar-menu';
+import { ICalendarBase } from './core/calendar-base';
+import { DateRange } from './core/date-range';
+export interface ICalendarCore extends ICalendarBase {
+    mode: CalendarMode;
+    view: CalendarView;
+    preventFocus: boolean;
+    selectionFollowsMonth: boolean;
+    showHeader: boolean;
+    menuAnimation: CalendarMenuAnimationType;
+    clearButton: boolean;
+    todayButton: boolean;
+    clearCallback: (() => void) | undefined;
+    todayCallback: (() => void) | undefined;
+    tooltipBuilder: CalendarTooltipBuilder | undefined;
+    clear(): void;
+    today(): void;
+    selectDate(date: Date, setFocus?: boolean): void;
+    deselectDate(date: Date, setFocus?: boolean): void;
+    toggleDate(date: Date, force?: boolean): void;
+    goToDate(date: Date, setFocus?: boolean): void;
+    setActiveDate(date: Date, setFocus?: boolean): boolean;
+    handleExternalKeyEvent(evt: KeyboardEvent): void;
+    layout(): void;
+}
+export declare class CalendarCore implements ICalendarCore {
+    private _adapter;
+    private _dates;
+    private _month;
+    private _year;
+    private _focusedDate;
+    private _showToday;
+    private _showOtherMonths;
+    private _fixedHeight;
+    private _events;
+    private _dateBuilder;
+    private _dayBuilder;
+    private _tooltipBuilder;
+    private _eventBuilder;
+    private _value;
+    private _mode;
+    private _readonly;
+    private _selectionFollowsMonth;
+    private _dateSelectCallback;
+    private _rangeSelectionStore;
+    private _rangeSelectionState;
+    private _allowSingleDateRange;
+    private _min;
+    private _max;
+    private _minAttribute;
+    private _maxAttribute;
+    private _disabledDates;
+    private _disabledDaysOfWeek;
+    private _constrainToEnabled;
+    private _disabledDateBuilder;
+    private _showHeader;
+    private _clearButton;
+    private _todayButton;
+    private _clearCallback;
+    private _todayCallback;
+    private _view;
+    private _menuAnimation;
+    private _menuYear;
+    private _listYears;
+    private _menuIncludedYear;
+    private _menuYearsInView;
+    private _yearRange;
+    private _minYear;
+    private _maxYear;
+    private _locale;
+    private _firstDayOfWeek;
+    private _weekendDays;
+    private _localeFirstDayOfWeek;
+    private _localeWeekendDays;
+    private _rtl;
+    private _preventFocus;
+    private _isInitialized;
+    private _clearButtonListener;
+    private _dateClickListener;
+    private _hoverListener;
+    private _keydownListener;
+    private _menuFocusChangeListener;
+    private _menuListener;
+    private _monthButtonListener;
+    private _nextButtonListener;
+    private _preventFocusListener;
+    private _previousButtonListener;
+    private _todayButtonListener;
+    private _yearButtonListener;
+    constructor(_adapter: ICalendarAdapter);
+    initialize(): void;
+    destroy(): void;
+    private _onMonthButtonClicked;
+    private _toggleMonthMenu;
+    private _onYearButtonClicked;
+    private _toggleYearMenu;
+    private _onMenuFocusChange;
+    private _onMenuSelect;
+    private _onNextButtonClicked;
+    private _onPreviousButtonClicked;
+    private _onHover;
+    private _onDateClick;
+    private _onKeydown;
+    /**
+     * Runs locale specific logic to handle focus on an arrow key event.
+     * @param evt A keyboard event containing an arrow key
+     */
+    private _handleArrowKey;
+    /** Moves between months and years if allowed.
+     * @param evt A keyboard evt containing the page up, page down, home, or end key
+     */
+    private _handleNavigationKey;
+    /**
+     * Selects or deselects the focused date or menu option if allowed.
+     * @param evt A keyboard event containing the enter or space key
+     */
+    private _handleEnterOrSpaceKey;
+    private _onMonthSelected;
+    private _onYearSelected;
+    private _onClearClicked;
+    private _onTodayClicked;
+    /** Attempts to the month and year of the value in single mode, then emits a selection event  */
+    private _trySetValueMonthAndYear;
+    /** Sets initial date tabindex and focus to today or the first enabled date in view */
+    private _setInitialDateFocus;
+    /** Attempts to move the tabindex to the most recently focused date, returning whether the date was found in view */
+    private _resumeTabindexOnDate;
+    /** Moves the tabindex to the next date */
+    private _moveFocusToNextDate;
+    /** Moves the tabindex to the previous date */
+    private _moveFocusToPreviousDate;
+    /** Moves the tabindex to the next week */
+    private _moveFocusToNextWeek;
+    /** Moves the tabindex to the previous week */
+    private _moveFocusToPreviousWeek;
+    /** Moves the tabindex to the first selectable date of the week containing the current tabindex */
+    private _moveFocusToFirstOfWeek;
+    /** Moves the tabindex to the last selectable date of the week containing the current tabindex */
+    private _moveFocusToLastOfWeek;
+    /** Moves the tabindex to the first date of the month */
+    private _moveFocusToFirstOfMonth;
+    /** Moves the tabindex to the last date of the month */
+    private _moveFocusToLastOfMonth;
+    /** Moves the tabindex to the same day and week of the next month */
+    private _moveFocusToNextMonth;
+    /** Moves the tabindex to the same day and week of the previous month */
+    private _moveFocusToPreviousMonth;
+    /** Moves the tabindex to the same day, week, and month of the next year */
+    private _moveFocusToNextYear;
+    /** Moves the tabindex to the same day, week, and month of the previous year */
+    private _moveFocusToPreviousYear;
+    /** Sets the focusable date when a new month comes into view */
+    private _setFocusInMonth;
+    /** Selects or deselects the focused date */
+    private _setSelectOnFocusedDate;
+    /** Emits a focus change event */
+    private _emitFocusChangeEvent;
+    /**
+     * Finds the previous enabled date.
+     * @param start The date to search backward from
+     * @param step A number of dates to skip at each step, defaults to 1
+     * @param stepOnce Whether to use the step amount once and then continue sequentially, defaults to false
+     * @param includeStart Whether to first check and potentially return the start date, defaults to false
+     * @returns The previous enabled date or null if none found
+     */
+    private _getPreviousEnabledDate;
+    /**
+     * Finds the previous enabled date.
+     * @param start The date to search forward from
+     * @param step A number of dates to skip at each step, defaults to 1
+     * @param stepOnce Whether to use the step amount once and then continue sequentially, defaults to false
+     * @param includeStart Whether to first check and potentially return the start date, defaults to false
+     * @returns The next enabled date or null if none found
+     */
+    private _getNextEnabledDate;
+    /**
+     * Finds the closest enabled date.
+     * @param start The date to begin searching from
+     * @param includeStart Whether to first check and potentially return the start date, defaults to false
+     * @returns The closest enabled date or null if none found
+     */
+    private _getClosestEnabledDate;
+    /**
+     * Finds the first enabled date of a week.
+     * @param date A date that falls in the requested week
+     * @returns The first enabled date of the week or null if none found
+     */
+    private _getFirstEnabledDayOfWeek;
+    /**
+     * Finds the last enabled date of a week.
+     * @param date A date that falls in the requested week
+     * @returns The last enabled date of the week or null if none found
+     */
+    private _getLastEnabledDayOfWeek;
+    /**
+     * Finds an enabled date with the same index in another month, skipping forward or back one week if that date falls in an adjacent month.
+     * @param index The index to look up
+     * @param month The month to look up
+     * @param year The year of the month
+     * @returns An enabled date with the same index plus or minus a week, the nearest enabled date, or null if no enabled date was found
+     */
+    private _getDateAtIndexInMonth;
+    /**
+     * Finds the first enabled date.
+     * @returns This first enabled date or null if a min date isn't set
+     */
+    private _getFirstEnabledDate;
+    /**
+     * Finds the last enabled date.
+     * @returns This last enabled date or null if a max date isn't set
+     */
+    private _getLastEnabledDate;
+    /**
+     * Moves the month in view to a date, sets focus on the date, and emits a focus change event.
+     * @param date The date to focus or null if focus should not move
+     * @param setFocus Whether to truly focus the date element versus just setting its tabindex
+     * @returns Void
+     */
+    private _setFocusedDate;
+    /**
+     * Gets disabled date params.
+     * @param otherMonth Whether the date is outside the month in view - only set if needed
+     * @returns An ICalendarDisabledDateParams object
+     */
+    private _getDisabledDateParams;
+    /**
+     * Builds dates for the period in view, sets them to the DOM, and enables focus on one of them.
+     */
+    private _createDateView;
+    /**
+     * Initiates month navigation and opens the month menu on the year in view.
+     */
+    private _openMonthMenu;
+    /**
+     * Initiates year navigation and opens the year menu.
+     */
+    private _openYearMenu;
+    /**
+     * Gets the months to display in the menu.
+     * @returns An array of ICalendarMenuOptions containing months
+     */
+    private _getMonthsForMenu;
+    /**
+     * Gets the years to display in the menu, either a slice of visible years or all possible years.
+     * @returns An array of ICalendarMenuOptions containing years
+     */
+    private _getYearsForMenu;
+    /**
+     * Closes the menu and reapplies labels and focus for the date view.
+     * @param valueSelected Whether the user made a selection that requires the date view to be rebuilt
+     */
+    private _closeMenu;
+    /**
+     * Sets the labels on the previous and next buttons appropriate for the view.
+     */
+    private _setNavButtonLabels;
+    /**
+     * Rebuilds all dates and resets the date grid.
+     * */
+    private _resetDateGrid;
+    /**
+     * Creates a date config object from the given date.
+     * @param date The date
+     * @returns A date config
+     */
+    private _getDateConfig;
+    /**
+     * Creates a calendar date object from the given date.
+     * @param date The date
+     * @returns A calendar date object
+     */
+    private _getCalendarDate;
+    /**
+     * Sets events to display on a date in the DOM, including overflow and tooltips.
+     * @param date The date to set events on
+     */
+    private _setEventsOnDate;
+    /**
+     * Provides a hook to intercept date selection events.
+     * @param date The date that was selected
+     * */
+    private _beforeDateSelected;
+    /**
+     * Runs mode dependent logic to manage selected dates and emit selection events.
+     * @param date The date that was selected
+     * @param force Whether the date should be selected or deselected, regardless of its prior state (optional)
+     * */
+    private _onDateSelected;
+    /**
+     * Emits a date select event with range data.
+     * @param date The selected date.
+     * @returns True if the event was not cancelled.
+     */
+    private _emitRangeSelectionEvent;
+    /**
+     * Manages the current selection state and value from a selection when in range mode.
+     * @param date The selected date
+     * */
+    private _applyRangeSelection;
+    /**
+     * Sets the properties to display range selections.
+     * @param toDate The date that the range preview should end on if an end date isn't already selected (optional)
+     * */
+    private _setRangePreview;
+    /**
+     * Removes the range preview.
+     */
+    private _clearRangePreview;
+    /**
+     * Adds a date to the value array and sets it selected in the adapter.
+     * @param date The date to select
+     * */
+    private _selectDate;
+    /**
+     * Removes a date from the value array and sets it deselected in the adapter.
+     * @param date The date to deselect
+     * */
+    private _deselectDate;
+    /**
+     * Clears the value array and sets all dates deselected in the adapter.
+     * */
+    private _deselectAllDates;
+    /**
+     * Moves to and sets tabindex on the given date.
+     * @param date The destination date
+     * @param setFocus Whether focus should be set on the date
+     */
+    private _goToDate;
+    /**
+     * Moves forward one month and rebuilds the calendar dates to match.
+     * */
+    private _goToNextMonth;
+    /**
+     * Moves backward one month and rebuilds the calendar dates to match.
+     * */
+    private _goToPreviousMonth;
+    /**
+     * Moves forward one year.
+     * */
+    private _goToNextYear;
+    /**
+     * Moves backward one year.
+     * */
+    private _goToPreviousYear;
+    /**
+     * Moves to the next set of selectable years in grid view.
+     * */
+    private _goToNextSetOfYears;
+    /**
+     * Move to the previous set of selectable years in grid view.
+     * */
+    private _goToPreviousSetOfYears;
+    /**
+     * Checks whether the minimum navigable date occurs before the current period.
+     * @param forceConstrain Whether to ignore the ability to view dates before the min
+     * @returns Whether periods before the one in view are navigable
+     */
+    private _canGoBackward;
+    /**
+     * Checks whether the maximum navigable date occurs after the current period.
+     * @param forceConstrain Whether to ignore the ability to view dates after the max
+     * @returns Whether periods after the one in view are navigable
+     */
+    private _canGoForward;
+    /**
+     * Enables or disabled navigation buttons based on whether they would lead outside the range of enabled dates.
+     */
+    private _setNavigationButtonStates;
+    /**
+     * Sets the month text and attribute in the adapter.
+     * @param userSelected Whether the month was explicitly selected by the user (optional)
+     * */
+    private _setMonth;
+    /**
+     * Sets the year text and attribute in the adapter.
+     * @param userSelected Whether the year was explicity selected by the user (optional)
+     * */
+    private _setYear;
+    /**
+     * Sets the year currently visible in the menu.
+     * */
+    private _setMenuYear;
+    private _applyAllowSingleDateRange;
+    private _applyClearButton;
+    private _applyConstrainToEnabled;
+    private _applyDateBuilder;
+    private _applyDayBuilder;
+    private _applyDisabledDates;
+    private _applyEvents;
+    private _applyFirstDayOfWeek;
+    private _applyFixedHeight;
+    private _applyListYears;
+    private _applyLocale;
+    private _applyMenuAnimation;
+    private _applyMin;
+    private _applyMax;
+    private _applyMode;
+    private _applySingleMode;
+    private _applyMultipleMode;
+    private _applyRangeMode;
+    private _applyMonth;
+    private _applyPreventFocus;
+    private _applyReadOnly;
+    private _applyRtl;
+    private _applySelectionFollowsMonth;
+    private _applyShowHeader;
+    private _applyShowOtherMonths;
+    private _applyShowToday;
+    private _applyTodayButton;
+    private _applyTooltipBuilder;
+    private _applyWeekendDays;
+    private _applyValue;
+    private _applyView;
+    private _applyYear;
+    private _applyYearRange;
+    /** Get the currently focused date */
+    get activeDate(): Date;
+    /** Get/set whether single date ranges are allowed */
+    get allowSingleDateRange(): boolean;
+    set allowSingleDateRange(value: boolean);
+    /** Get/set whether to show the clear button */
+    get clearButton(): boolean;
+    set clearButton(value: boolean);
+    get clearCallback(): (() => void) | undefined;
+    set clearCallback(value: (() => void) | undefined);
+    /** Get/set whether to constain navigation to enabled dates */
+    get constrainToEnabled(): boolean;
+    set constrainToEnabled(value: boolean);
+    /** Get/set date builder */
+    get dateBuilder(): CalendarDateBuilder | undefined;
+    set dateBuilder(value: CalendarDateBuilder | undefined);
+    /** Get/set date select callback */
+    get dateSelectCallback(): CalendarDateSelectCallback | undefined;
+    set dateSelectCallback(value: CalendarDateSelectCallback | undefined);
+    /** Get/set day builder */
+    get dayBuilder(): CalendarDayBuilder | undefined;
+    set dayBuilder(value: CalendarDayBuilder | undefined);
+    /** Get/set disabled date builder */
+    get disabledDateBuilder(): ((date: Date) => boolean) | undefined;
+    set disabledDateBuilder(value: ((date: Date) => boolean) | undefined);
+    /** Get/set disabled dates */
+    get disabledDates(): Date | Date[] | null | undefined;
+    set disabledDates(value: Date | Date[] | null | undefined);
+    /** Get/set disabled days of week */
+    get disabledDaysOfWeek(): DayOfWeek | DayOfWeek[] | null | undefined;
+    set disabledDaysOfWeek(value: DayOfWeek | DayOfWeek[] | null | undefined);
+    /** Get/set the event builder */
+    get eventBuilder(): CalendarEventBuilder | undefined;
+    set eventBuilder(value: CalendarEventBuilder | undefined);
+    /** Get/set events */
+    get events(): ICalendarEvent[] | null | undefined;
+    set events(value: ICalendarEvent[] | null | undefined);
+    /** Get/set first day of week */
+    get firstDayOfWeek(): DayOfWeek | undefined;
+    set firstDayOfWeek(value: DayOfWeek | undefined);
+    /** Get/set fixed height */
+    get fixedHeight(): boolean;
+    set fixedHeight(value: boolean);
+    /** Get/set list years */
+    get listYears(): boolean;
+    set listYears(value: boolean);
+    /** Get/set locale */
+    get locale(): string | undefined;
+    set locale(value: string | undefined);
+    /** Get/set max date */
+    get max(): Date | string | null | undefined;
+    set max(value: Date | string | null | undefined);
+    /** Get/set menu animation type */
+    get menuAnimation(): CalendarMenuAnimationType;
+    set menuAnimation(value: CalendarMenuAnimationType);
+    /** Get/set min date */
+    get min(): Date | string | null | undefined;
+    set min(value: Date | string | null | undefined);
+    /** Get/set mode */
+    get mode(): CalendarMode;
+    set mode(value: CalendarMode);
+    /** Get/set month */
+    get month(): number;
+    set month(value: number);
+    /** Get/set prevent focus */
+    get preventFocus(): boolean;
+    set preventFocus(value: boolean);
+    /** Get/set readonly */
+    get readonly(): boolean;
+    set readonly(value: boolean);
+    /** Get/set selection follows month */
+    get selectionFollowsMonth(): boolean;
+    set selectionFollowsMonth(value: boolean);
+    /** Get/set show nav */
+    get showHeader(): boolean;
+    set showHeader(value: boolean);
+    /** Get/set show other months */
+    get showOtherMonths(): boolean;
+    set showOtherMonths(value: boolean);
+    /** Get/set show today */
+    get showToday(): boolean;
+    set showToday(value: boolean);
+    /** Get/set whether to show the today button */
+    get todayButton(): boolean;
+    set todayButton(value: boolean);
+    get todayCallback(): (() => void) | undefined;
+    set todayCallback(value: (() => void) | undefined);
+    /** Get/set the tooltip builder */
+    get tooltipBuilder(): CalendarTooltipBuilder | undefined;
+    set tooltipBuilder(value: CalendarTooltipBuilder | undefined);
+    /** Get/set value */
+    get value(): Date | Date[] | DateRange | null | undefined;
+    set value(value: Date | Date[] | DateRange | null | undefined);
+    /** Get/set view */
+    get view(): CalendarView;
+    set view(value: CalendarView);
+    /** Get/set weekend days */
+    get weekendDays(): DayOfWeek[] | null | undefined;
+    set weekendDays(value: DayOfWeek[] | null | undefined);
+    /** Get/set year */
+    get year(): number;
+    set year(value: number);
+    /** Get/set year range */
+    get yearRange(): string;
+    set yearRange(value: string);
+    /** Deselect all dates */
+    clear(): void;
+    /** Deselect a date */
+    deselectDate(date: Date, setFocus?: boolean): void;
+    /** Go to a date and optionally set focus on it */
+    goToDate(date: Date, setFocus?: boolean): void;
+    /** Handle an external keyboard event */
+    handleExternalKeyEvent(evt: KeyboardEvent): void;
+    /** Reinitialize the calendar */
+    layout(): void;
+    /** Select a date */
+    selectDate(date: Date, setFocus?: boolean): void;
+    /** Sets the active date if in view */
+    setActiveDate(date: Date, setFocus?: boolean): boolean;
+    /** Go to today */
+    today(): void;
+    /** Toggles a date selected or unselected */
+    toggleDate(date: Date, force?: boolean): void;
+}

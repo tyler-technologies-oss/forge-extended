@@ -1,0 +1,9 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./list-item.component";
+import * as i2 from "@angular/common";
+export declare class ForgeListItemModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeListItemModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeListItemModule, [typeof i1.ListItemComponent], [typeof i2.CommonModule], [typeof i1.ListItemComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeListItemModule>;
+}

@@ -1,0 +1,60 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { ButtonToggleGroupComponent as ButtonToggleGroupComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class ButtonToggleGroupComponent {
+    protected elementRef: ElementRef<ButtonToggleGroupComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-button-toggle-group element. */
+    readonly nativeElement: ButtonToggleGroupComponentCustomElement;
+    /** The value of the selected button toggle(s). */
+    set value(value: ButtonToggleGroupComponentCustomElement['value']);
+    get value(): ButtonToggleGroupComponentCustomElement['value'];
+    /** Whether or not the group should be outlined. */
+    set outlined(value: ButtonToggleGroupComponentCustomElement['outlined']);
+    get outlined(): ButtonToggleGroupComponentCustomElement['outlined'];
+    /** Whether or not the group should allow multiple selections. */
+    set multiple(value: ButtonToggleGroupComponentCustomElement['multiple']);
+    get multiple(): ButtonToggleGroupComponentCustomElement['multiple'];
+    /** Whether or not the group should require a selection once a button has been toggled on. */
+    set mandatory(value: ButtonToggleGroupComponentCustomElement['mandatory']);
+    get mandatory(): ButtonToggleGroupComponentCustomElement['mandatory'];
+    /** Whether or not the group should be displayed vertically. */
+    set vertical(value: ButtonToggleGroupComponentCustomElement['vertical']);
+    get vertical(): ButtonToggleGroupComponentCustomElement['vertical'];
+    /** Whether or not the group should stretch to fill the available width. */
+    set stretch(value: ButtonToggleGroupComponentCustomElement['stretch']);
+    get stretch(): ButtonToggleGroupComponentCustomElement['stretch'];
+    /** Whether or not the group should be dense. */
+    set dense(value: ButtonToggleGroupComponentCustomElement['dense']);
+    get dense(): ButtonToggleGroupComponentCustomElement['dense'];
+    /** Whether or not the group should be disabled. */
+    set disabled(value: ButtonToggleGroupComponentCustomElement['disabled']);
+    get disabled(): ButtonToggleGroupComponentCustomElement['disabled'];
+    set required(value: ButtonToggleGroupComponentCustomElement['required']);
+    get required(): ButtonToggleGroupComponentCustomElement['required'];
+    /** Whether or not the group should be readonly. */
+    set readonly(value: ButtonToggleGroupComponentCustomElement['readonly']);
+    get readonly(): ButtonToggleGroupComponentCustomElement['readonly'];
+    /** The theme to use for the group. */
+    set theme(value: ButtonToggleGroupComponentCustomElement['theme']);
+    get theme(): ButtonToggleGroupComponentCustomElement['theme'];
+    get validity(): ButtonToggleGroupComponentCustomElement['validity'];
+    get validationMessage(): ButtonToggleGroupComponentCustomElement['validationMessage'];
+    get willValidate(): ButtonToggleGroupComponentCustomElement['willValidate'];
+    checkValidity(...args: Parameters<ButtonToggleGroupComponentCustomElement['checkValidity']>): ReturnType<ButtonToggleGroupComponentCustomElement['checkValidity']>;
+    reportValidity(...args: Parameters<ButtonToggleGroupComponentCustomElement['reportValidity']>): ReturnType<ButtonToggleGroupComponentCustomElement['reportValidity']>;
+    setCustomValidity(...args: Parameters<ButtonToggleGroupComponentCustomElement['setCustomValidity']>): ReturnType<ButtonToggleGroupComponentCustomElement['setCustomValidity']>;
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<ButtonToggleGroupComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<ButtonToggleGroupComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ButtonToggleGroupComponent, "forge-button-toggle-group", never, { "value": { "alias": "value"; "required": false; }; "outlined": { "alias": "outlined"; "required": false; }; "multiple": { "alias": "multiple"; "required": false; }; "mandatory": { "alias": "mandatory"; "required": false; }; "vertical": { "alias": "vertical"; "required": false; }; "stretch": { "alias": "stretch"; "required": false; }; "dense": { "alias": "dense"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "required": { "alias": "required"; "required": false; }; "readonly": { "alias": "readonly"; "required": false; }; "theme": { "alias": "theme"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_outlined: unknown;
+    static ngAcceptInputType_multiple: unknown;
+    static ngAcceptInputType_mandatory: unknown;
+    static ngAcceptInputType_vertical: unknown;
+    static ngAcceptInputType_stretch: unknown;
+    static ngAcceptInputType_dense: unknown;
+    static ngAcceptInputType_disabled: unknown;
+    static ngAcceptInputType_required: unknown;
+    static ngAcceptInputType_readonly: unknown;
+}

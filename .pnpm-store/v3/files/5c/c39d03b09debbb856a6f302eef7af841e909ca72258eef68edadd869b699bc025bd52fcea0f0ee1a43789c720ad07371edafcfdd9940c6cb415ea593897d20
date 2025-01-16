@@ -1,0 +1,64 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { FlipOptions, ShiftOptions, HideOptions, Placement, Strategy, OffsetOptions, MiddlewareData, ArrowOptions } from '@floating-ui/dom';
+export type PositionPlacement = Placement;
+export type PositionStrategy = Strategy;
+export declare const DEFAULT_FALLBACK_PLACEMENTS: PositionPlacement[];
+export interface IPositionElementResult {
+    x: number;
+    y: number;
+    hidden: boolean;
+    placement: PositionPlacement;
+    arrow?: MiddlewareData['arrow'];
+}
+export declare class VirtualElement {
+    x: number;
+    y: number;
+    height: number;
+    width: number;
+    constructor(x: number, y: number, height?: number, width?: number);
+    getBoundingClientRect(): DOMRect;
+    static fromElement(element: HTMLElement): VirtualElement;
+    static fromEvent(event: MouseEvent | TouchEvent): VirtualElement;
+}
+export interface IPositionElementConfig {
+    /** The element to apply position to. */
+    element: HTMLElement;
+    /** The anchor element to position `element` around. */
+    anchorElement: HTMLElement | VirtualElement;
+    /** The placement position. */
+    placement: PositionPlacement;
+    /** Whether the position values should be applied to the `element` or not. Default is `true`. */
+    apply?: boolean;
+    /** Should the element flip to the opposite placement when not enough room. */
+    flip?: boolean;
+    /** Options to provide to the flip middleware. */
+    flipOptions?: Partial<FlipOptions>;
+    /** Should the element stay visible at the same placement when scrolling. */
+    shift?: boolean;
+    /** Options to provide to the shift middleware. */
+    shiftOptions?: Partial<ShiftOptions>;
+    /** Should the element hide itself when the anchor element is out of the view. */
+    hide?: boolean;
+    /** Options to provide to the hide middleware. */
+    hideOptions?: Partial<HideOptions>;
+    /** Should any offset values be applied to the element. */
+    offset?: boolean;
+    /** The options provide to the offset middleware. */
+    offsetOptions?: Partial<OffsetOptions>;
+    /** The element to use as an arrow. */
+    arrowElement?: HTMLElement;
+    /** Options to provide to the arrow middleware. */
+    arrowOptions?: Partial<ArrowOptions>;
+    /** The positioning strategy. */
+    strategy?: PositionStrategy;
+}
+/**
+ * Calculates an elements position relative to another element.
+ * @param {IPositionElementConfig} config Configuration to provide when positioning the element.
+ * @returns {IPositionElementResult} The result of the positioning logic.
+ */
+export declare function positionElementAsync({ element, anchorElement, placement, offset, offsetOptions, strategy, apply, flip, flipOptions, shift, shiftOptions, hide, hideOptions, arrowElement, arrowOptions }: IPositionElementConfig): Promise<IPositionElementResult>;

@@ -1,0 +1,54 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core/base/base-adapter';
+import type { IDialogComponent } from '../dialog/dialog';
+import { IBottomSheetComponent } from './bottom-sheet';
+export interface IBottomSheetAdapter extends IBaseAdapter {
+    initialize(): void;
+    setDialogProperty<K extends keyof IDialogComponent>(property: K, value: IDialogComponent[K]): void;
+    addDialogListener(type: string, listener: EventListener): void;
+    removeDialogListener(type: string, listener: EventListener): void;
+    open(): void;
+    close(): void;
+    trySetInitialFocus: () => void;
+    isScrollable(): boolean;
+    isContentChild(el: HTMLElement): boolean;
+    setDragging(isDragging: boolean): void;
+    setFullscreen(value: boolean): void;
+    isFullscreen(): boolean;
+    setContainerHeight(height: number | null): void;
+    getContainerBounds(): DOMRect;
+    setDragTargetHandler(type: string, listener: EventListener): void;
+    removeDragTargetHandler(type: string, listener: EventListener): void;
+    setBodyScrollHandler(listener: (evt: Event) => void): void;
+    setBodyListener(type: string, listener: EventListener, options?: AddEventListenerOptions): void;
+    removeBodyListener(type: string, listener: EventListener): void;
+}
+export declare class BottomSheetAdapter extends BaseAdapter<IBottomSheetComponent> implements IBottomSheetAdapter {
+    private _dialogElement;
+    private _surfaceElement;
+    constructor(component: IBottomSheetComponent);
+    setDialogProperty<K extends keyof IDialogComponent>(property: K, value: IDialogComponent[K]): void;
+    addDialogListener(type: string, listener: EventListener): void;
+    removeDialogListener(type: string, listener: EventListener): void;
+    initialize(): void;
+    open(): void;
+    close(): void;
+    trySetInitialFocus(): void;
+    isScrollable(): boolean;
+    isContentChild(el: HTMLElement): boolean;
+    setDragging(isDragging: boolean): void;
+    setFullscreen(value: boolean): void;
+    isFullscreen(): boolean;
+    setContainerHeight(height: number | null): void;
+    getContainerBounds(): DOMRect;
+    setDragTargetHandler(type: string, listener: EventListener): void;
+    removeDragTargetHandler(type: string, listener: EventListener): void;
+    setBodyScrollHandler(listener: EventListener): void;
+    private _getContentElement;
+    setBodyListener(type: string, listener: EventListener, options?: AddEventListenerOptions): void;
+    removeBodyListener(type: string, listener: EventListener): void;
+}

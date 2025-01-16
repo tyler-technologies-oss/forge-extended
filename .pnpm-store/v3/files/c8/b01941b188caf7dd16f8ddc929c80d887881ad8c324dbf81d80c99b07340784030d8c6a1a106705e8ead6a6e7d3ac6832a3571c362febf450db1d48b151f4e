@@ -1,0 +1,58 @@
+import { Injectable, ViewContainerRef } from '@angular/core';
+import * as i0 from "@angular/core";
+export class DynamicComponentService {
+    constructor(_cfr, _injector, _appRef) {
+        this._cfr = _cfr;
+        this._injector = _injector;
+        this._appRef = _appRef;
+    }
+    /**
+     * Creates an Angular component dynamically, and optionally attaches the component instance to a given element.
+     * @param component The component to create.
+     * @param target Optional target element to attach the component element to.
+     * @param moduleRef Optional module to create the component factory from.
+     */
+    create(component, target, injector, moduleRef) {
+        const cfr = moduleRef ? moduleRef.componentFactoryResolver : this._cfr;
+        const componentFactory = this._isComponentFactory(component) ? component : cfr.resolveComponentFactory(component);
+        injector = injector || this._injector;
+        if (target instanceof ViewContainerRef) {
+            const ref = target.createComponent(componentFactory, undefined, injector);
+            return {
+                instance: ref.instance,
+                componentRef: ref,
+                destroy: () => {
+                    target.detach();
+                    componentRef.destroy();
+                }
+            };
+        }
+        const componentRef = componentFactory.create(injector);
+        this._appRef.attachView(componentRef.hostView);
+        const componentElement = componentRef.hostView.rootNodes[0];
+        if (target) {
+            target.appendChild(componentElement);
+        }
+        return {
+            instance: componentRef.instance,
+            componentRef,
+            componentElement,
+            destroy: () => {
+                this._appRef.detachView(componentRef.hostView);
+                componentRef.destroy();
+            }
+        };
+    }
+    _isComponentFactory(component) {
+        return component.create !== undefined;
+    }
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: DynamicComponentService, deps: [{ token: i0.ComponentFactoryResolver }, { token: i0.Injector }, { token: i0.ApplicationRef }], target: i0.ɵɵFactoryTarget.Injectable }); }
+    static { this.ɵprov = i0.ɵɵngDeclareInjectable({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: DynamicComponentService, providedIn: 'root' }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: DynamicComponentService, decorators: [{
+            type: Injectable,
+            args: [{
+                    providedIn: 'root'
+                }]
+        }], ctorParameters: () => [{ type: i0.ComponentFactoryResolver }, { type: i0.Injector }, { type: i0.ApplicationRef }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZHluYW1pYy1jb21wb25lbnQuc2VydmljZS5qcyIsInNvdXJjZVJvb3QiOiIiLCJzb3VyY2VzIjpbIi4uLy4uLy4uLy4uLy4uLy4uL3Byb2plY3RzL2ZvcmdlLWFuZ3VsYXIvc3JjL2xpYi9jb3JlL2R5bmFtaWMtY29tcG9uZW50L2R5bmFtaWMtY29tcG9uZW50LnNlcnZpY2UudHMiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEsT0FBTyxFQUFFLFVBQVUsRUFBc0QsZ0JBQWdCLEVBQUUsTUFBTSxlQUFlLENBQUM7O0FBYWpILE1BQU0sT0FBTyx1QkFBdUI7SUFDbEMsWUFBb0IsSUFBOEIsRUFBVSxTQUFtQixFQUFVLE9BQXVCO1FBQTVGLFNBQUksR0FBSixJQUFJLENBQTBCO1FBQVUsY0FBUyxHQUFULFNBQVMsQ0FBVTtRQUFVLFlBQU8sR0FBUCxPQUFPLENBQWdCO0lBQUcsQ0FBQztJQUVwSDs7Ozs7T0FLRztJQUNJLE1BQU0sQ0FBTyxTQUF3QyxFQUFFLE1BQXVDLEVBQUUsUUFBbUIsRUFBRSxTQUEwQjtRQUNwSixNQUFNLEdBQUcsR0FBRyxTQUFTLENBQUMsQ0FBQyxDQUFDLFNBQVMsQ0FBQyx3QkFBd0IsQ0FBQyxDQUFDLENBQUMsSUFBSSxDQUFDLElBQUksQ0FBQztRQUN2RSxNQUFNLGdCQUFnQixHQUFHLElBQUksQ0FBQyxtQkFBbUIsQ0FBQyxTQUFTLENBQUMsQ0FBQyxDQUFDLENBQUMsU0FBUyxDQUFDLENBQUMsQ0FBQyxHQUFHLENBQUMsdUJBQXVCLENBQUMsU0FBUyxDQUFDLENBQUM7UUFDbEgsUUFBUSxHQUFHLFFBQVEsSUFBSSxJQUFJLENBQUMsU0FBUyxDQUFDO1FBRXRDLElBQUksTUFBTSxZQUFZLGdCQUFnQixFQUFFLENBQUM7WUFDdkMsTUFBTSxHQUFHLEdBQUcsTUFBTSxDQUFDLGVBQWUsQ0FBQyxnQkFBZ0IsRUFBRSxTQUFTLEVBQUUsUUFBUSxDQUFDLENBQUM7WUFDMUUsT0FBTztnQkFDTCxRQUFRLEVBQUUsR0FBRyxDQUFDLFFBQVE7Z0JBQ3RCLFlBQVksRUFBRSxHQUFHO2dCQUNqQixPQUFPLEVBQUUsR0FBRyxFQUFFO29CQUNaLE1BQU0sQ0FBQyxNQUFNLEVBQUUsQ0FBQztvQkFDaEIsWUFBWSxDQUFDLE9BQU8sRUFBRSxDQUFDO2dCQUN6QixDQUFDO2FBQ0YsQ0FBQztRQUNKLENBQUM7UUFFRCxNQUFNLFlBQVksR0FBRyxnQkFBZ0IsQ0FBQyxNQUFNLENBQUMsUUFBUSxDQUFDLENBQUM7UUFDdkQsSUFBSSxDQUFDLE9BQU8sQ0FBQyxVQUFVLENBQUMsWUFBWSxDQUFDLFFBQVEsQ0FBQyxDQUFDO1FBQy9DLE1BQU0sZ0JBQWdCLEdBQUksWUFBWSxDQUFDLFFBQWlDLENBQUMsU0FBUyxDQUFDLENBQUMsQ0FBZ0IsQ0FBQztRQUVyRyxJQUFJLE1BQU0sRUFBRSxDQUFDO1lBQ1gsTUFBTSxDQUFDLFdBQVcsQ0FBQyxnQkFBZ0IsQ0FBQyxDQUFDO1FBQ3ZDLENBQUM7UUFFRCxPQUFPO1lBQ0wsUUFBUSxFQUFFLFlBQVksQ0FBQyxRQUFRO1lBQy9CLFlBQVk7WUFDWixnQkFBZ0I7WUFDaEIsT0FBTyxFQUFFLEdBQUcsRUFBRTtnQkFDWixJQUFJLENBQUMsT0FBTyxDQUFDLFVBQVUsQ0FBQyxZQUFZLENBQUMsUUFBUSxDQUFDLENBQUM7Z0JBQy9DLFlBQVksQ0FBQyxPQUFPLEVBQUUsQ0FBQztZQUN6QixDQUFDO1NBQ0YsQ0FBQztJQUNKLENBQUM7SUFFTyxtQkFBbUIsQ0FBSSxTQUF3QztRQUNyRSxPQUFRLFNBQWlDLENBQUMsTUFBTSxLQUFLLFNBQVMsQ0FBQztJQUNqRSxDQUFDOzhHQS9DVSx1QkFBdUI7a0hBQXZCLHVCQUF1QixjQUZ0QixNQUFNOzsyRkFFUCx1QkFBdUI7a0JBSG5DLFVBQVU7bUJBQUM7b0JBQ1YsVUFBVSxFQUFFLE1BQU07aUJBQ25CIiwic291cmNlc0NvbnRlbnQiOlsiaW1wb3J0IHsgSW5qZWN0YWJsZSwgQ29tcG9uZW50RmFjdG9yeVJlc29sdmVyLCBBcHBsaWNhdGlvblJlZiwgSW5qZWN0b3IsIFZpZXdDb250YWluZXJSZWYgfSBmcm9tICdAYW5ndWxhci9jb3JlJztcbmltcG9ydCB7IFR5cGUsIEVtYmVkZGVkVmlld1JlZiwgTmdNb2R1bGVSZWYsIENvbXBvbmVudFJlZiwgQ29tcG9uZW50RmFjdG9yeSB9IGZyb20gJ0Bhbmd1bGFyL2NvcmUnO1xuXG5leHBvcnQgaW50ZXJmYWNlIElEeW5hbWljQ29tcG9uZW50UmVmPFQ+IHtcbiAgaW5zdGFuY2U6IFQ7XG4gIGNvbXBvbmVudFJlZjogQ29tcG9uZW50UmVmPFQ+O1xuICBjb21wb25lbnRFbGVtZW50PzogSFRNTEVsZW1lbnQ7XG4gIGRlc3Ryb3koKTogdm9pZDtcbn1cblxuQEluamVjdGFibGUoe1xuICBwcm92aWRlZEluOiAncm9vdCdcbn0pXG5leHBvcnQgY2xhc3MgRHluYW1pY0NvbXBvbmVudFNlcnZpY2Uge1xuICBjb25zdHJ1Y3Rvcihwcml2YXRlIF9jZnI6IENvbXBvbmVudEZhY3RvcnlSZXNvbHZlciwgcHJpdmF0ZSBfaW5qZWN0b3I6IEluamVjdG9yLCBwcml2YXRlIF9hcHBSZWY6IEFwcGxpY2F0aW9uUmVmKSB7fVxuXG4gIC8qKlxuICAgKiBDcmVhdGVzIGFuIEFuZ3VsYXIgY29tcG9uZW50IGR5bmFtaWNhbGx5LCBhbmQgb3B0aW9uYWxseSBhdHRhY2hlcyB0aGUgY29tcG9uZW50IGluc3RhbmNlIHRvIGEgZ2l2ZW4gZWxlbWVudC5cbiAgICogQHBhcmFtIGNvbXBvbmVudCBUaGUgY29tcG9uZW50IHRvIGNyZWF0ZS5cbiAgICogQHBhcmFtIHRhcmdldCBPcHRpb25hbCB0YXJnZXQgZWxlbWVudCB0byBhdHRhY2ggdGhlIGNvbXBvbmVudCBlbGVtZW50IHRvLlxuICAgKiBAcGFyYW0gbW9kdWxlUmVmIE9wdGlvbmFsIG1vZHVsZSB0byBjcmVhdGUgdGhlIGNvbXBvbmVudCBmYWN0b3J5IGZyb20uXG4gICAqL1xuICBwdWJsaWMgY3JlYXRlPFQsIEs+KGNvbXBvbmVudDogVHlwZTxUPiB8IENvbXBvbmVudEZhY3Rvcnk8VD4sIHRhcmdldD86IFZpZXdDb250YWluZXJSZWYgfCBIVE1MRWxlbWVudCwgaW5qZWN0b3I/OiBJbmplY3RvciwgbW9kdWxlUmVmPzogTmdNb2R1bGVSZWY8Sz4pOiBJRHluYW1pY0NvbXBvbmVudFJlZjxUPiB7XG4gICAgY29uc3QgY2ZyID0gbW9kdWxlUmVmID8gbW9kdWxlUmVmLmNvbXBvbmVudEZhY3RvcnlSZXNvbHZlciA6IHRoaXMuX2NmcjtcbiAgICBjb25zdCBjb21wb25lbnRGYWN0b3J5ID0gdGhpcy5faXNDb21wb25lbnRGYWN0b3J5KGNvbXBvbmVudCkgPyBjb21wb25lbnQgOiBjZnIucmVzb2x2ZUNvbXBvbmVudEZhY3RvcnkoY29tcG9uZW50KTtcbiAgICBpbmplY3RvciA9IGluamVjdG9yIHx8IHRoaXMuX2luamVjdG9yO1xuXG4gICAgaWYgKHRhcmdldCBpbnN0YW5jZW9mIFZpZXdDb250YWluZXJSZWYpIHtcbiAgICAgIGNvbnN0IHJlZiA9IHRhcmdldC5jcmVhdGVDb21wb25lbnQoY29tcG9uZW50RmFjdG9yeSwgdW5kZWZpbmVkLCBpbmplY3Rvcik7XG4gICAgICByZXR1cm4ge1xuICAgICAgICBpbnN0YW5jZTogcmVmLmluc3RhbmNlLFxuICAgICAgICBjb21wb25lbnRSZWY6IHJlZixcbiAgICAgICAgZGVzdHJveTogKCkgPT4ge1xuICAgICAgICAgIHRhcmdldC5kZXRhY2goKTtcbiAgICAgICAgICBjb21wb25lbnRSZWYuZGVzdHJveSgpO1xuICAgICAgICB9XG4gICAgICB9O1xuICAgIH1cblxuICAgIGNvbnN0IGNvbXBvbmVudFJlZiA9IGNvbXBvbmVudEZhY3RvcnkuY3JlYXRlKGluamVjdG9yKTtcbiAgICB0aGlzLl9hcHBSZWYuYXR0YWNoVmlldyhjb21wb25lbnRSZWYuaG9zdFZpZXcpO1xuICAgIGNvbnN0IGNvbXBvbmVudEVsZW1lbnQgPSAoY29tcG9uZW50UmVmLmhvc3RWaWV3IGFzIEVtYmVkZGVkVmlld1JlZjxhbnk+KS5yb290Tm9kZXNbMF0gYXMgSFRNTEVsZW1lbnQ7XG5cbiAgICBpZiAodGFyZ2V0KSB7XG4gICAgICB0YXJnZXQuYXBwZW5kQ2hpbGQoY29tcG9uZW50RWxlbWVudCk7XG4gICAgfVxuXG4gICAgcmV0dXJuIHtcbiAgICAgIGluc3RhbmNlOiBjb21wb25lbnRSZWYuaW5zdGFuY2UsXG4gICAgICBjb21wb25lbnRSZWYsXG4gICAgICBjb21wb25lbnRFbGVtZW50LFxuICAgICAgZGVzdHJveTogKCkgPT4ge1xuICAgICAgICB0aGlzLl9hcHBSZWYuZGV0YWNoVmlldyhjb21wb25lbnRSZWYuaG9zdFZpZXcpO1xuICAgICAgICBjb21wb25lbnRSZWYuZGVzdHJveSgpO1xuICAgICAgfVxuICAgIH07XG4gIH1cblxuICBwcml2YXRlIF9pc0NvbXBvbmVudEZhY3Rvcnk8VD4oY29tcG9uZW50OiBUeXBlPFQ+IHwgQ29tcG9uZW50RmFjdG9yeTxUPik6IGNvbXBvbmVudCBpcyBDb21wb25lbnRGYWN0b3J5PFQ+IHtcbiAgICByZXR1cm4gKGNvbXBvbmVudCBhcyBDb21wb25lbnRGYWN0b3J5PFQ+KS5jcmVhdGUgIT09IHVuZGVmaW5lZDtcbiAgfVxufVxuIl19

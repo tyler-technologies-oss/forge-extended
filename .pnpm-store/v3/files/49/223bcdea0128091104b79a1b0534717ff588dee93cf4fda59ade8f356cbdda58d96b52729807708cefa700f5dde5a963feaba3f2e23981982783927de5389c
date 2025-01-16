@@ -1,0 +1,30 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { AbstractConstructor, MixinBase } from '../../../../constants';
+export interface IWithMoveableMoveContext {
+    top: number;
+    left: number;
+    height: number;
+    width: number;
+}
+export declare abstract class WithMoveableContract {
+    stopMoveListener(): void;
+    protected _movePointerDownListener: EventListener;
+    protected abstract _getMoveableBounds(): {
+        top: number;
+        left: number;
+        height: number;
+        width: number;
+    };
+    protected abstract _updatePosition(x: string | null, y: string | null): void;
+    protected abstract _onMoveStart(): boolean;
+    protected abstract _onMove(position: {
+        x: number;
+        y: number;
+    }): boolean;
+    protected abstract _onMoveEnd(): void;
+}
+export declare function WithMoveable<TBase extends MixinBase<object>>(base?: TBase): AbstractConstructor<WithMoveableContract> & TBase;

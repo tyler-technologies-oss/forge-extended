@@ -1,0 +1,150 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IOverlayAwareCore, OverlayAwareCore } from '../overlay/base/overlay-aware-core';
+import { OverlayLightDismissEventData } from '../overlay/overlay-constants';
+import { IPopoverAdapter } from './popover-adapter';
+import { PopoverAnimationType, PopoverTriggerType, PopoverPreset } from './popover-constants';
+import { IDismissibleStackState } from '../core/utils/dismissible-stack';
+import { VirtualElement } from '../core/utils/position-utils';
+export interface IPopoverCore extends IOverlayAwareCore {
+    arrow: boolean;
+    animationType: PopoverAnimationType;
+    triggerType: PopoverTriggerType | PopoverTriggerType[];
+    longpressDelay: number;
+    persistentHover: boolean;
+    hoverDismissDelay: number;
+    hoverDelay: number;
+    preset: PopoverPreset;
+    hideAsync(): Promise<void>;
+    dispatchBeforeToggleEvent(state: IDismissibleStackState): boolean;
+}
+declare const PopoverCore_base: import("..").AbstractConstructor<import("../core/mixins/interactions/longpress/with-longpress-listener").WithLongpressListenerContract> & (abstract new (_adapter: IPopoverAdapter) => OverlayAwareCore<IPopoverAdapter>);
+export declare class PopoverCore extends PopoverCore_base implements IPopoverCore {
+    private _anchor;
+    private _arrow;
+    private _animationType;
+    private _triggerTypes;
+    private _persistentHover;
+    private _hoverDismissDelay;
+    private _hoverDelay;
+    private _preset;
+    private _previouslyFocusedElement;
+    private _hoverAnchorLeaveTimeout;
+    private _popoverMouseleaveTimeout;
+    private _currentHoverCoords;
+    private _hoverTimeout;
+    private _anchorClickListener;
+    private _anchorDoubleClickListener;
+    private _anchorMouseenterListener;
+    private _anchorMouseleaveListener;
+    private _popoverMouseenterListener;
+    private _popoverMouseleaveListener;
+    private _mousemoveListener;
+    private _anchorFocusListener;
+    private _anchorBlurListener;
+    private _popoverBlurListener;
+    private _contextmenuListener;
+    constructor(adapter: IPopoverAdapter);
+    initialize(): void;
+    destroy(): void;
+    hideAsync(): Promise<void>;
+    protected _onOverlayLightDismiss(evt: CustomEvent<OverlayLightDismissEventData>): Promise<void>;
+    dispatchBeforeToggleEvent({ reason }: IDismissibleStackState): boolean;
+    private _openPopover;
+    private _closePopover;
+    private _dispatchBeforetoggleEvent;
+    private _dispatchToggleEvent;
+    private _initializeTriggerListeners;
+    private _removeTriggerListeners;
+    private _startHoverListeners;
+    private _tryRemoveHoverListeners;
+    private _requestDismiss;
+    private _requestClose;
+    private _onHoverClose;
+    /**
+     * Handles `click` events on the anchor element.
+     *
+     * Only called when using the "click" (default) trigger type.
+     */
+    private _onAnchorClick;
+    /**
+     * Handles `dblclick` events on the anchor element.
+     */
+    private _onAnchorDoubleClick;
+    /**
+     * Handles `mouseenter` events on the anchor element. This is used to determine if the popover should be opened.
+     *
+     * Only called when using the "hover" trigger type.
+     */
+    private _onAnchorMouseenter;
+    /**
+     * Handles `mouseleave` events on the anchor element. This is used to determine if the popover should be closed.
+     *
+     * Only called when using the "hover" trigger type.
+     *
+     * We use a timeout here to allow for the user to take an indirect path toward the popover.
+     */
+    private _onAnchorMouseleave;
+    /**
+     * Handles `mouseenter` events on the popover element. This is used to determine if the mouse has entered the popover element,
+     * only after the mouse leaves the anchor element..
+     */
+    private _onPopoverMouseenter;
+    /**
+     * Handles `mouseleave` events on the popover element. This is used to determine if the mouse has moved outside of the popover.
+     *
+     * Only called when using the "hover" trigger type.
+     *
+     * We use a timeout here to allow for the user to take an indirect path toward an open child menu.
+     * This allows for the popup to stay open while the user is moving their mouse to it to avoid closing immediately.
+     */
+    private _onPopoverMouseleave;
+    /**
+     * Handles `mousemove` events on the document. This is used to determine if the mouse has moved outside of the popover.
+     *
+     * This listener is only initialized once the mouse leaves the anchor element.
+     *
+     * Only called when using the "hover" trigger type.
+     */
+    private _onMousemove;
+    /**
+     * Handles `focusin` events on the anchor element. This is used to determine if focus has been received on the anchor element when using the "focus" trigger type.
+     */
+    private _onAnchorFocus;
+    /**
+     * Handles `focusout` events on the anchor element. This is used to determine if focus has been moved outside of the anchor element when using the "focus" trigger type.
+     */
+    private _onAnchorBlur;
+    private _onPopoverBlur;
+    protected _onLongpress(): void;
+    private _onContextmenu;
+    /**
+     * Public API
+     */
+    get open(): boolean;
+    set open(value: boolean);
+    get anchorElement(): HTMLElement | VirtualElement | null;
+    set anchorElement(value: HTMLElement | VirtualElement | null);
+    get anchor(): string | null;
+    set anchor(value: string | null);
+    get arrow(): boolean;
+    set arrow(value: boolean);
+    get animationType(): PopoverAnimationType;
+    set animationType(value: PopoverAnimationType);
+    get triggerType(): PopoverTriggerType | PopoverTriggerType[];
+    set triggerType(value: PopoverTriggerType | PopoverTriggerType[]);
+    get longpressDelay(): number;
+    set longpressDelay(value: number);
+    get persistentHover(): boolean;
+    set persistentHover(value: boolean);
+    get hoverDelay(): number;
+    set hoverDelay(value: number);
+    get hoverDismissDelay(): number;
+    set hoverDismissDelay(value: number);
+    get preset(): PopoverPreset;
+    set preset(value: PopoverPreset);
+}
+export {};

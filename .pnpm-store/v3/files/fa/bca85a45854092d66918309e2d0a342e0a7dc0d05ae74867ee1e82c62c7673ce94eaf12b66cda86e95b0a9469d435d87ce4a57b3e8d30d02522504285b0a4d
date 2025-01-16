@@ -1,0 +1,41 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IListAdapter } from './list-adapter';
+export interface IListCore {
+    dense: boolean;
+    indented: boolean;
+    selectedValue: unknown | unknown[];
+    twoLine: boolean;
+    threeLine: boolean;
+    wrap: boolean;
+    noninteractive: boolean;
+}
+export declare class ListCore implements IListCore {
+    private _adapter;
+    private _dense;
+    private _indented;
+    private _selectedValue;
+    private _twoLine;
+    private _threeLine;
+    private _wrap;
+    private _noninteractive;
+    constructor(_adapter: IListAdapter);
+    initialize(): void;
+    get dense(): boolean;
+    set dense(value: boolean);
+    get indented(): boolean;
+    set indented(value: boolean);
+    get selectedValue(): unknown | unknown[];
+    set selectedValue(value: unknown | unknown[]);
+    get twoLine(): boolean;
+    set twoLine(value: boolean);
+    get threeLine(): boolean;
+    set threeLine(value: boolean);
+    get wrap(): boolean;
+    set wrap(value: boolean);
+    get noninteractive(): boolean;
+    set noninteractive(value: boolean);
+}

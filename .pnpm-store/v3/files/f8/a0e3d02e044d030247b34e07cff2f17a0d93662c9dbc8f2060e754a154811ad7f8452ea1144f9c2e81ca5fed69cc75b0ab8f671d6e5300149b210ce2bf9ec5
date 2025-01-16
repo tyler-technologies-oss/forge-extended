@@ -1,0 +1,76 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const STEP_CONSTANTS: {
+    elementName: "forge-step";
+    classes: {
+        STEP: string;
+        STEP_CONTAINER: string;
+        ERROR: string;
+        SELECTED: string;
+        COMPLETED: string;
+        EDITABLE: string;
+        ALTERNATIVE: string;
+        ICON_CONTENT: string;
+        ICON: string;
+        LABEL_CONTAINER: string;
+        LABEL: string;
+        OPTIONAL_LABEL: string;
+        INDEX: string;
+        CLUSTERED: string;
+        DISABLED: string;
+        VERTICAL: string;
+        EXPANDED: string;
+        EXPANDABLE: string;
+        EXPANSION_PANEL: string;
+        EXPANSION_ICON: string;
+        EXPANSION_ICON_EXPANDED: string;
+        EXPANSION_CONTENT: string;
+    };
+    selectors: {
+        STEP: string;
+        STEP_CONTAINER: string;
+        INDEX: string;
+        ICON: string;
+        ICON_CONTENT: string;
+        EXPANSION_SLOT: string;
+        EXPANSION_PANEL: string;
+        EXPANSION_ICON: string;
+    };
+    attributes: {
+        SELECTED: string;
+        INDEX: string;
+        EDITABLE: string;
+        COMPLETED: string;
+        ERROR: string;
+        ALTERNATIVE: string;
+        FIRST: string;
+        LAST: string;
+        ARIA_SELECTED: string;
+        CLUSTERED: string;
+        DISABLED: string;
+        VERTICAL: string;
+        EXPANDED: string;
+        EXPANDABLE: string;
+        IGNORE_USER_EXPANSION: string;
+    };
+    events: {
+        SELECT: string;
+        EXPANDED_CONTENT_FOCUSIN: string;
+        EXPANDED_CONTENT_FOCUSOUT: string;
+    };
+    strings: {
+        ARROW_LEFT_KEY: string;
+        ARROW_RIGHT_KEY: string;
+        ARROW_UP_KEY: string;
+        ARROW_DOWN_KEY: string;
+        END_KEY: string;
+        ENTER_KEY: string;
+        HOME_KEY: string;
+        SPACE_KEY: string;
+        EXPANSION_CONTENT_SLOT_NAME: string;
+    };
+};
+export type StepIcons = 'check' | 'block' | 'mode_edit' | 'warning' | '';

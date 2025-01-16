@@ -1,0 +1,98 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getShadowElement } from '@tylertech/forge-core';
+import { BaseAdapter } from '../core/base/base-adapter';
+import { locateTargetHeuristic, createUserInteractionListener } from '../core/utils/utils';
+import { ANIMATION_FILL, EASING, MINIMUM_PRESS_MS, PRESS_GROW_MS, PRESS_PSEUDO, STATE_LAYER_CONSTANTS } from './state-layer-constants';
+import { calcRippleSize, getTranslationCoordinates, isInBounds } from './state-layer-utils';
+export class StateLayerAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this._targetElement = null;
+        this._surfaceElement = getShadowElement(component, STATE_LAYER_CONSTANTS.selectors.SURFACE);
+    }
+    destroy() {
+        if (typeof this._destroyDeferListener === 'function') {
+            this._destroyDeferListener();
+            this._destroyDeferListener = undefined;
+        }
+        this._targetElement = null;
+    }
+    async deferInitialization(listener) {
+        if (!this._targetElement) {
+            return;
+        }
+        const { userInteraction, destroy } = createUserInteractionListener(this._targetElement);
+        this._destroyDeferListener = destroy;
+        const evt = await userInteraction;
+        listener(evt.type === 'pointerenter' ? evt : undefined);
+    }
+    addTargetListener(type, listener) {
+        this._targetElement?.addEventListener(type, listener);
+    }
+    removeTargetListener(type, listener) {
+        this._targetElement?.removeEventListener(type, listener);
+    }
+    setHovered(hovered) {
+        this._surfaceElement.classList.toggle(STATE_LAYER_CONSTANTS.classes.HOVERED, hovered);
+    }
+    setPressed(pressed) {
+        this._surfaceElement.classList.toggle(STATE_LAYER_CONSTANTS.classes.PRESSED, pressed);
+    }
+    getTargetElement() {
+        return this._targetElement;
+    }
+    setTargetElement(el) {
+        this._targetElement = el;
+    }
+    trySetTarget(value) {
+        this._targetElement = locateTargetHeuristic(this._component, value);
+    }
+    startAnimation(coords) {
+        if (!this._surfaceElement) {
+            return;
+        }
+        this.setPressed(true);
+        this._rippleAnimation?.cancel();
+        const { rippleSize, rippleScale, initialSize } = calcRippleSize(this._component);
+        if (rippleScale === 'Infinity') {
+            return;
+        }
+        const { startPoint, endPoint } = getTranslationCoordinates(this._component, initialSize, coords);
+        const translateStart = `${startPoint.x}px, ${startPoint.y}px`;
+        const translateEnd = `${endPoint.x}px, ${endPoint.y}px`;
+        this._rippleAnimation = this._surfaceElement.animate({
+            top: [0, 0],
+            left: [0, 0],
+            height: [rippleSize, rippleSize],
+            width: [rippleSize, rippleSize],
+            transform: [`translate(${translateStart}) scale(1)`, `translate(${translateEnd}) scale(${rippleScale})`]
+        }, {
+            pseudoElement: PRESS_PSEUDO,
+            duration: PRESS_GROW_MS,
+            easing: EASING,
+            fill: ANIMATION_FILL
+        });
+    }
+    async endAnimation() {
+        const animation = this._rippleAnimation;
+        const pressAnimationPlayState = animation?.currentTime ?? Infinity;
+        if (pressAnimationPlayState >= MINIMUM_PRESS_MS) {
+            this.setPressed(false);
+            return;
+        }
+        await new Promise(resolve => {
+            setTimeout(resolve, MINIMUM_PRESS_MS - pressAnimationPlayState);
+        });
+        if (this._rippleAnimation !== animation) {
+            return;
+        }
+        this.setPressed(false);
+    }
+    inBounds(x, y) {
+        return isInBounds(this._component, x, y);
+    }
+}

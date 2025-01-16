@@ -1,0 +1,150 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { TOAST_CONSTANTS } from './toast-constants';
+export class ToastCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._open = false;
+        this._duration = TOAST_CONSTANTS.defaults.DURATION;
+        this._placement = TOAST_CONSTANTS.defaults.PLACEMENT;
+        this._dismissible = false;
+        this._theme = TOAST_CONSTANTS.defaults.THEME;
+        this._actionListener = this._onAction.bind(this);
+        this._closeListener = this._onClose.bind(this);
+    }
+    initialize() {
+        this._adapter.tryApplyGlobalConfiguration(['duration', 'placement', 'dismissible']);
+        if (this._open) {
+            this.show();
+        }
+    }
+    show() {
+        this._adapter.show();
+        if (isFinite(this._duration) && this._duration > 0) {
+            /* c8 ignore next 3 */
+            if (this._hideTimeout) {
+                window.clearTimeout(this._hideTimeout);
+            }
+            this._hideTimeout = window.setTimeout(() => this.hide(), this._duration);
+        }
+        this._open = true;
+        this._adapter.toggleHostAttribute(TOAST_CONSTANTS.attributes.OPEN, this._open);
+    }
+    async hide({ dispatchEvent = true } = {}) {
+        if (this._hideTimeout) {
+            window.clearTimeout(this._hideTimeout);
+            this._hideTimeout = undefined;
+        }
+        await this._adapter.hide();
+        this._open = false;
+        this._adapter.toggleHostAttribute(TOAST_CONSTANTS.attributes.OPEN, this._open);
+        if (dispatchEvent) {
+            this._adapter.dispatchHostEvent(new CustomEvent(TOAST_CONSTANTS.events.CLOSE, { bubbles: true }));
+        }
+    }
+    _onAction(evt) {
+        evt.stopPropagation();
+        this._adapter.dispatchHostEvent(new CustomEvent(TOAST_CONSTANTS.events.ACTION, { bubbles: true }));
+    }
+    _onClose(_evt) {
+        this.hide();
+    }
+    get open() {
+        return this._open;
+    }
+    set open(value) {
+        value = Boolean(value);
+        if (this._open !== value) {
+            if (this._adapter.isConnected) {
+                if (value) {
+                    this.show();
+                }
+                else {
+                    this.hide({ dispatchEvent: false });
+                }
+            }
+            else {
+                this._open = value;
+            }
+            this._adapter.toggleHostAttribute(TOAST_CONSTANTS.attributes.OPEN, this._open);
+        }
+    }
+    get duration() {
+        return this._duration;
+    }
+    set duration(value) {
+        if (this._duration !== value) {
+            this._duration = value;
+            if (this._hideTimeout) {
+                window.clearTimeout(this._hideTimeout);
+                if (isFinite(this._duration) && this._duration > 0) {
+                    this._hideTimeout = window.setTimeout(() => this.hide(), this._duration);
+                }
+            }
+        }
+    }
+    get placement() {
+        return this._placement;
+    }
+    set placement(value) {
+        if (this._placement !== value) {
+            this._placement = value;
+            this._adapter.setHostAttribute(TOAST_CONSTANTS.attributes.PLACEMENT, this._placement);
+        }
+    }
+    get actionText() {
+        return this._actionText;
+    }
+    set actionText(value) {
+        value = value?.trim() ?? '';
+        if (this._actionText !== value) {
+            this._actionText = value;
+            this._adapter.setActionText(this._actionText);
+            if (!!this._actionText) {
+                this._adapter.addActionListener(this._actionListener);
+            }
+            else {
+                this._adapter.removeActionListener(this._actionListener);
+            }
+            this._adapter.toggleHostAttribute(TOAST_CONSTANTS.attributes.ACTION_TEXT, !!this._actionText, this._actionText);
+        }
+    }
+    get dismissible() {
+        return this._dismissible;
+    }
+    set dismissible(value) {
+        value = Boolean(value);
+        if (this._dismissible !== value) {
+            this._dismissible = value;
+            if (this._dismissible) {
+                this._adapter.addCloseListener(this._closeListener);
+            }
+            else {
+                this._adapter.removeCloseListener(this._closeListener);
+            }
+            this._adapter.toggleHostAttribute(TOAST_CONSTANTS.attributes.DISMISSIBLE, this._dismissible);
+        }
+    }
+    get dismissLabel() {
+        return this._dismissLabel;
+    }
+    set dismissLabel(value) {
+        if (this._dismissLabel !== value) {
+            this._dismissLabel = value;
+            this._adapter.setDismissLabel(this._dismissLabel);
+        }
+    }
+    get theme() {
+        return this._theme;
+    }
+    set theme(value) {
+        value ?? (value = TOAST_CONSTANTS.defaults.THEME);
+        if (this._theme !== value) {
+            this._theme = value;
+            this._adapter.setHostAttribute(TOAST_CONSTANTS.attributes.THEME, this._theme);
+        }
+    }
+}

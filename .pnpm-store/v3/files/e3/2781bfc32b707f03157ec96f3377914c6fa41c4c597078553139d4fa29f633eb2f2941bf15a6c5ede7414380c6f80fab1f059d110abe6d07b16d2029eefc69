@@ -1,0 +1,156 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { CHECKBOX_CONSTANTS } from './checkbox-constants';
+export class CheckboxCore {
+    get _submittedValue() {
+        return this._checked ? this._value : null;
+    }
+    get _formState() {
+        return this._checked ? (this._indeterminate ? 'checked-indeterminate' : 'checked') : this._indeterminate ? 'unchecked-indeterminate' : 'unchecked';
+    }
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        // State
+        this._checked = false;
+        this._defaultChecked = false;
+        this._indeterminate = false;
+        this._value = 'on';
+        this._dense = false;
+        this._disabled = false;
+        this._required = false;
+        this._readonly = false;
+        this._labelPosition = 'end';
+        // Listeners
+        this._clickListener = (_evt) => this._handleChange();
+        this._keydownListener = (evt) => this._handleKeydown(evt);
+        this._keyupListener = (evt) => this._handleKeyup(evt);
+    }
+    initialize() {
+        this._adapter.addHostListener('click', this._clickListener, { capture: true });
+        this._adapter.addHostListener('keydown', this._keydownListener);
+        this._adapter.addHostListener('keyup', this._keyupListener, { capture: true });
+        this._adapter.syncValue(this._submittedValue, this._formState);
+    }
+    _handleKeydown(evt) {
+        if (evt.key === ' ') {
+            evt.preventDefault();
+        }
+    }
+    _handleKeyup(evt) {
+        if (evt.key === ' ') {
+            this._handleChange();
+        }
+    }
+    _handleChange() {
+        if (this._readonly) {
+            return;
+        }
+        const oldValue = this._checked;
+        const newValue = !this._checked;
+        this._checked = newValue;
+        const event = new Event('change', { cancelable: true, bubbles: true });
+        this._adapter.dispatchHostEvent(event);
+        this._checked = oldValue;
+        if (event.defaultPrevented) {
+            return;
+        }
+        this.checked = newValue;
+        // Toggle indeterminate off after a user action
+        this._indeterminate = false;
+        this._adapter.toggleHostAttribute(CHECKBOX_CONSTANTS.attributes.INDETERMINATE, this._indeterminate);
+    }
+    get checked() {
+        return this._checked;
+    }
+    set checked(value) {
+        if (this._checked !== value) {
+            this._checked = value;
+            this._adapter.setChecked(this._checked);
+            this._adapter.syncValue(this._submittedValue, this._formState);
+            this._adapter.toggleHostAttribute(CHECKBOX_CONSTANTS.attributes.CHECKED, this._checked);
+        }
+    }
+    get defaultChecked() {
+        return this._defaultChecked;
+    }
+    set defaultChecked(value) {
+        if (this._defaultChecked !== value) {
+            this._defaultChecked = value;
+            this._adapter.toggleHostAttribute(CHECKBOX_CONSTANTS.attributes.DEFAULT_CHECKED, this._defaultChecked);
+        }
+    }
+    get indeterminate() {
+        return this._indeterminate;
+    }
+    set indeterminate(value) {
+        if (this._indeterminate !== value) {
+            this._indeterminate = value;
+            this._adapter.syncValue(this._submittedValue, this._formState);
+            this._adapter.toggleHostAttribute(CHECKBOX_CONSTANTS.attributes.INDETERMINATE, this._indeterminate);
+        }
+    }
+    get value() {
+        return this._value;
+    }
+    set value(value) {
+        if (this._value !== value) {
+            this._value = value;
+            this._adapter.syncValue(this._submittedValue, this._formState);
+            if (typeof this._value === 'string' || this._value == null) {
+                this._adapter.setHostAttribute(CHECKBOX_CONSTANTS.attributes.VALUE, this._value);
+            }
+        }
+    }
+    get dense() {
+        return this._dense;
+    }
+    set dense(value) {
+        if (this._dense !== value) {
+            this._dense = value;
+            this._adapter.toggleHostAttribute(CHECKBOX_CONSTANTS.attributes.DENSE, this._dense);
+        }
+    }
+    get disabled() {
+        return this._disabled;
+    }
+    set disabled(value) {
+        if (this._disabled !== value) {
+            this._disabled = value;
+            this._adapter.setDisabled(this.disabled);
+            this._adapter.toggleHostAttribute(CHECKBOX_CONSTANTS.attributes.DISABLED, this._disabled);
+        }
+    }
+    get required() {
+        return this._required;
+    }
+    set required(value) {
+        if (this._required !== value) {
+            this._required = value;
+            this._adapter.setRequired(this._required);
+            this._adapter.toggleHostAttribute(CHECKBOX_CONSTANTS.attributes.REQUIRED, this._required);
+        }
+    }
+    get readonly() {
+        return this._readonly;
+    }
+    set readonly(value) {
+        if (this._readonly !== value) {
+            this._readonly = value;
+            this._adapter.setReadonly(this._readonly);
+            this._adapter.toggleHostAttribute(CHECKBOX_CONSTANTS.attributes.READONLY, this._readonly);
+        }
+    }
+    get labelPosition() {
+        return this._labelPosition;
+    }
+    set labelPosition(value) {
+        if (this.labelPosition !== value) {
+            this._labelPosition = value;
+            this._adapter.setLabelPosition(this._labelPosition);
+            this._adapter.setHostAttribute(CHECKBOX_CONSTANTS.attributes.LABEL_POSITION, this._labelPosition);
+        }
+    }
+}

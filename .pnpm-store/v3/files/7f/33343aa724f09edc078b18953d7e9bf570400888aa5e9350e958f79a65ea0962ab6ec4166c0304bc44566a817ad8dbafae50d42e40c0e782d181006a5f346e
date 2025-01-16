@@ -1,0 +1,70 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { coerceBoolean, coreProperty } from '@tylertech/forge-core';
+import { BASE_SELECT_CONSTANTS } from './base-select-constants';
+import { ListDropdownAware } from '../../list-dropdown/list-dropdown-aware';
+export class BaseSelectComponent extends ListDropdownAware {
+    constructor() {
+        super();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        super.attributeChangedCallback(name, oldValue, newValue);
+        switch (name) {
+            case BASE_SELECT_CONSTANTS.attributes.MULTIPLE:
+                this.multiple = coerceBoolean(newValue);
+                break;
+            case BASE_SELECT_CONSTANTS.attributes.VALUE:
+                this.value = newValue;
+                break;
+        }
+    }
+    /** Dynamically appends options to the dropdown while it's open. */
+    appendOptions(options) {
+        this._core.appendOptions(options);
+    }
+    /** Selects all options. */
+    selectAll() {
+        this._core.selectAll();
+    }
+    /** Deselects all options. */
+    deselectAll() {
+        this._core.deselectAll();
+    }
+    connectedCallback() {
+        this._core.initialize();
+    }
+    disconnectedCallback() {
+        this._core.destroy();
+    }
+}
+__decorate([
+    coreProperty()
+], BaseSelectComponent.prototype, "value", void 0);
+__decorate([
+    coreProperty()
+], BaseSelectComponent.prototype, "selectedIndex", void 0);
+__decorate([
+    coreProperty()
+], BaseSelectComponent.prototype, "options", void 0);
+__decorate([
+    coreProperty()
+], BaseSelectComponent.prototype, "multiple", void 0);
+__decorate([
+    coreProperty()
+], BaseSelectComponent.prototype, "open", void 0);
+__decorate([
+    coreProperty()
+], BaseSelectComponent.prototype, "optionBuilder", void 0);
+__decorate([
+    coreProperty()
+], BaseSelectComponent.prototype, "selectedTextBuilder", void 0);
+__decorate([
+    coreProperty()
+], BaseSelectComponent.prototype, "beforeValueChange", void 0);
+__decorate([
+    coreProperty({ set: false })
+], BaseSelectComponent.prototype, "popupElement", void 0);

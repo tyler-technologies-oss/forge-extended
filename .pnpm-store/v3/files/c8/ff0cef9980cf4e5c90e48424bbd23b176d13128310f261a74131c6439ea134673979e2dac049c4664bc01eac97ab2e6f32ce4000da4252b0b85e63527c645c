@@ -1,0 +1,87 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { customElement, attachShadowTemplate, coerceNumber, coreProperty } from '@tylertech/forge-core';
+import { AvatarAdapter } from './avatar-adapter';
+import { AvatarCore } from './avatar-core';
+import { AVATAR_CONSTANTS } from './avatar-constants';
+import { BaseComponent } from '../core/base/base-component';
+const template = '<template><div class=\"forge-avatar\" aria-hidden=\"true\" part=\"root\"><slot></slot></div></template>';
+const styles = ':host{contain:content;display:inline-block}:host([hidden]){display:none}.forge-avatar{--_avatar-size:var(--forge-avatar-size, 40px);--_avatar-background:var(--forge-avatar-background, var(--forge-theme-tertiary, #3d5afe));--_avatar-color:var(--forge-avatar-color, var(--forge-theme-on-tertiary, #ffffff));--_avatar-transition-duration:var(--forge-avatar-transition-duration, var(--forge-animation-duration-short4, 200ms));--_avatar-transition-timing:var(--forge-avatar-transition-timing, var(--forge-animation-easing-standard, cubic-bezier(0.2, 0, 0, 1)));--_avatar-shape:var(--forge-avatar-shape, calc(var(--forge-shape-round, 50%) * var(--forge-shape-factor, 1)))}.forge-avatar{display:flex;align-items:center;justify-content:center;overflow:hidden;transition:height var(--_avatar-transition-duration) var(--_avatar-transition-timing),width var(--_avatar-transition-duration) var(--_avatar-transition-timing);border-radius:var(--_avatar-shape);box-sizing:border-box;width:var(--_avatar-size);height:var(--_avatar-size);background-color:var(--_avatar-background);background-position:center;background-repeat:no-repeat;background-size:cover;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-subheading2-font-family, var(--forge-typography-font-family, \"Roboto\", sans-serif));font-size:var(--forge-typography-subheading2-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-subheading2-font-size-scale, 1)));font-weight:var(--forge-typography-subheading2-font-weight,400);line-height:var(--forge-typography-subheading2-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-subheading2-line-height-scale, 1.25)));letter-spacing:var(--forge-typography-subheading2-letter-spacing, normal);text-transform:var(--forge-typography-subheading2-text-transform,inherit);text-decoration:var(--forge-typography-subheading2-text-decoration,inherit);color:var(--_avatar-color)}.forge-avatar--image{background-color:inherit}';
+/**
+ * @tag forge-avatar
+ *
+ * @summary Avatars represent an entity via text or image.
+ *
+ * @description The avatar component allows you to provide text or images to display that represent an entity. By default, the
+ * avatar will display textual content as single characters (character count is configurable), or display an image or
+ * icon based on the URL provided to it.
+ *
+ * @property {string} [text=""] - The text to display in the avatar.
+ * @property {number} [letterCount=2] - Controls the number of letters to display from the text. By default the text is split on spaces and the first character of each word is used.
+ * @property {string} imageUrl - The background image URL to use.
+ *
+ * @attribute {string} [text=""] - The text to display in the avatar.
+ * @attribute {string} [letter-count=2] - Controls the number of letters to display from the text. By default the text is split on spaces and the first character of each word is used.
+ * @attribute {string} image-url - The background image URL to use.
+ *
+ * @cssproperty {string} --forge-avatar-background - The background color of the avatar.
+ * @cssproperty {number} --forge-avatar-shape - The border radius of the avatar, defaults to 50%.
+ * @cssproperty {color} --forge-avatar-color - The text color of the avatar.
+ * @cssproperty {number} --forge-avatar-size - The height and width of the avatar.
+ * @cssproperty {number} --forge-avatar-transition-duration - The transition duration for animations.
+ * @cssproperty {string} --forge-avatar-transition-timing - The transition timing function for animations.
+ *
+ * @csspart root - The root container element.
+ *
+ * @slot - The default slot for avatar content if not provided via text/imageUrl.
+ *
+ * @cssclass forge-avatar - The avatar class _(required)_.
+ */
+let AvatarComponent = class AvatarComponent extends BaseComponent {
+    static get observedAttributes() {
+        return [AVATAR_CONSTANTS.attributes.TEXT, AVATAR_CONSTANTS.attributes.LETTER_COUNT, AVATAR_CONSTANTS.attributes.IMAGE_URL];
+    }
+    constructor() {
+        super();
+        attachShadowTemplate(this, template, styles);
+        this._core = new AvatarCore(new AvatarAdapter(this));
+    }
+    connectedCallback() {
+        this._core.initialize();
+    }
+    disconnectedCallback() {
+        this._core.destroy();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case AVATAR_CONSTANTS.attributes.TEXT:
+                this.text = newValue;
+                break;
+            case AVATAR_CONSTANTS.attributes.LETTER_COUNT:
+                this.letterCount = coerceNumber(newValue);
+                break;
+            case AVATAR_CONSTANTS.attributes.IMAGE_URL:
+                this.imageUrl = newValue;
+                break;
+        }
+    }
+};
+__decorate([
+    coreProperty()
+], AvatarComponent.prototype, "text", void 0);
+__decorate([
+    coreProperty()
+], AvatarComponent.prototype, "letterCount", void 0);
+__decorate([
+    coreProperty()
+], AvatarComponent.prototype, "imageUrl", void 0);
+AvatarComponent = __decorate([
+    customElement({
+        name: AVATAR_CONSTANTS.elementName
+    })
+], AvatarComponent);
+export { AvatarComponent };

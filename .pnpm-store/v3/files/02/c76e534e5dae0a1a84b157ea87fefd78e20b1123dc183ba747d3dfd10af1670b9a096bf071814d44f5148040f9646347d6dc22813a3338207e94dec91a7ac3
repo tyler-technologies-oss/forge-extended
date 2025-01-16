@@ -1,0 +1,62 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { FormFieldComponentDelegate } from '../core/delegates/form-field-component-delegate';
+import { TextFieldComponentDelegate } from '../text-field';
+import { TIME_PICKER_CONSTANTS } from './time-picker-constants';
+export class TimePickerComponentDelegate extends FormFieldComponentDelegate {
+    constructor(config) {
+        super(config);
+    }
+    _build() {
+        const timePicker = document.createElement(TIME_PICKER_CONSTANTS.elementName);
+        this._attachTextField(timePicker);
+        return timePicker;
+    }
+    get inputElement() {
+        return this._textFieldDelegate.inputElement;
+    }
+    get textFieldElement() {
+        return this._textFieldDelegate.element;
+    }
+    get value() {
+        return this._element.value;
+    }
+    set value(value) {
+        this._element.value = value;
+    }
+    get disabled() {
+        return this._element.disabled;
+    }
+    set disabled(value) {
+        this._element.disabled = value;
+    }
+    get invalid() {
+        return this._textFieldDelegate.invalid || false;
+    }
+    set invalid(value) {
+        this._textFieldDelegate.invalid = value;
+    }
+    onChange(listener) {
+        this._element.addEventListener(TIME_PICKER_CONSTANTS.events.CHANGE, (evt) => listener(evt.detail ?? ''));
+    }
+    onInput(listener) {
+        this._element.addEventListener(TIME_PICKER_CONSTANTS.events.INPUT, (evt) => listener(evt.detail ?? ''));
+    }
+    onFocus(listener) {
+        this._textFieldDelegate.inputElement.addEventListener('focus', (evt) => listener(evt));
+    }
+    onBlur(listener) {
+        this._textFieldDelegate.inputElement.addEventListener('blur', (evt) => listener(evt));
+    }
+    _attachTextField(component) {
+        const textFieldConfig = {
+            props: { ...this._config.options?.textFieldDelegateConfig?.props },
+            options: { ...this._config.options?.textFieldDelegateConfig?.options }
+        };
+        this._textFieldDelegate = new TextFieldComponentDelegate(textFieldConfig);
+        component.appendChild(this._textFieldDelegate.element);
+    }
+}

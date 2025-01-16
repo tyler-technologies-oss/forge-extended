@@ -1,0 +1,35 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { COMPONENT_NAME_PREFIX } from '../constants';
+const elementName = `${COMPONENT_NAME_PREFIX}icon-button`;
+const observedAttributes = {
+    TOGGLE: 'toggle',
+    ON: 'on',
+    VARIANT: 'variant',
+    THEME: 'theme',
+    SHAPE: 'shape',
+    DENSITY: 'density'
+};
+const attributes = {
+    ...observedAttributes,
+    ARIA_PRESSED: 'aria-pressed'
+};
+const events = {
+    TOGGLE: `${elementName}-toggle`
+};
+const defaults = {
+    DEFAULT_VARIANT: 'icon',
+    DEFAULT_THEME: 'default',
+    DEFAULT_SHAPE: 'circular',
+    DEFAULT_DENSITY: 'large'
+};
+export const ICON_BUTTON_CONSTANTS = {
+    elementName,
+    observedAttributes,
+    attributes,
+    events,
+    defaults
+};

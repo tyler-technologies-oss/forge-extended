@@ -1,0 +1,43 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ListDropdownOptionGroupBuilder } from '../../list-dropdown/list-dropdown-constants';
+import { BaseComponent, IBaseComponent } from '../../core/base/base-component';
+import { ISelectOption, ISelectOptionGroup } from '../core';
+export interface IOptionGroupComponent extends Required<ISelectOptionGroup>, IBaseComponent {
+    label: string;
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-option-group': IOptionGroupComponent;
+    }
+}
+/**
+ * @tag forge-option-group
+ */
+export declare class OptionGroupComponent extends BaseComponent implements IOptionGroupComponent {
+    static get observedAttributes(): string[];
+    private _label;
+    constructor();
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    /** Gets/sets the label of this option group. */
+    get label(): string;
+    set label(value: string);
+    /** The child options of this group. */
+    options: ISelectOption[];
+    /** The builder function for the group content. */
+    builder: ListDropdownOptionGroupBuilder;
+    /**
+     * Gets/sets the optional group value.
+     * @attribute
+     */
+    value: any;
+    /**
+     * The text content for the group.
+     * @attribute
+     */
+    get text(): string;
+    set text(value: string);
+}

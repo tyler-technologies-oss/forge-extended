@@ -1,0 +1,42 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+/* prettier-ignore */
+.forge-avatar {
+  --_avatar-size: var(--forge-avatar-size, 40px);
+  --_avatar-background: var(--forge-avatar-background, var(--forge-theme-tertiary, #3d5afe));
+  --_avatar-color: var(--forge-avatar-color, var(--forge-theme-on-tertiary, #ffffff));
+  --_avatar-transition-duration: var(--forge-avatar-transition-duration, var(--forge-animation-duration-short4, 200ms));
+  --_avatar-transition-timing: var(--forge-avatar-transition-timing, var(--forge-animation-easing-standard, cubic-bezier(0.2, 0, 0, 1)));
+  --_avatar-shape: var(--forge-avatar-shape, calc(var(--forge-shape-round, 50%) * var(--forge-shape-factor, 1)));
+}
+
+.forge-avatar {
+  contain: content;
+  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: height var(--_avatar-transition-duration) var(--_avatar-transition-timing), width var(--_avatar-transition-duration) var(--_avatar-transition-timing);
+  border-radius: var(--_avatar-shape);
+  box-sizing: border-box;
+  width: var(--_avatar-size);
+  height: var(--_avatar-size);
+  background-color: var(--_avatar-background);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  font-family: var(--forge-typography-subheading2-font-family, var(--forge-typography-font-family, "Roboto", sans-serif));
+  font-size: var(--forge-typography-subheading2-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-subheading2-font-size-scale, 1)));
+  font-weight: var(--forge-typography-subheading2-font-weight, 400);
+  line-height: var(--forge-typography-subheading2-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-subheading2-line-height-scale, 1.25)));
+  letter-spacing: var(--forge-typography-subheading2-letter-spacing, normal);
+  text-transform: var(--forge-typography-subheading2-text-transform, inherit);
+  text-decoration: var(--forge-typography-subheading2-text-decoration, inherit);
+  color: var(--_avatar-color);
+}

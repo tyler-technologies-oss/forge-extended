@@ -1,0 +1,387 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { coerceNumber, isArray, isDefined } from '@tylertech/forge-core';
+import { PAGINATOR_CONSTANTS } from './paginator-constants';
+export class PaginatorCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._pageIndex = PAGINATOR_CONSTANTS.numbers.DEFAULT_PAGE_INDEX;
+        this._pageSize = PAGINATOR_CONSTANTS.numbers.DEFAULT_PAGE_SIZE;
+        this._offset = 0;
+        this._total = PAGINATOR_CONSTANTS.numbers.DEFAULT_TOTAL;
+        this._pageSizeOptions = PAGINATOR_CONSTANTS.numbers.DEFAULT_PAGE_SIZE_OPTIONS.map(o => ({
+            label: `${o}`,
+            value: `${o}`
+        }));
+        this._label = PAGINATOR_CONSTANTS.strings.DEFAULT_LABEL;
+        this._firstLast = false;
+        this._first = false;
+        this._disabled = false;
+        this._alternative = false;
+        this._firstPageListener = this._onFirstPage.bind(this);
+        this._previousPageListener = this._onPreviousPage.bind(this);
+        this._nextPageListener = this._onNextPage.bind(this);
+        this._lastPageListener = this._onLastPage.bind(this);
+        this._pageSizeListener = this._onPageSizeChanged.bind(this);
+    }
+    initialize() {
+        this._updateRangeLabel();
+        this._adapter.setLabel(this._label);
+        this._adapter.setPageSizeOptions(this._pageSizeOptions);
+        this._adapter.setPageSize(this._pageSize);
+        this._attachListeners();
+        this._toggleFirstLastButtons();
+        this._syncInteractionState();
+    }
+    focus(options) {
+        this._adapter.setFocus(options);
+    }
+    _attachListeners() {
+        this._adapter.attachPageSizeChangeListener(this._pageSizeListener);
+        this._adapter.attachFirstPageListener(this._firstPageListener);
+        this._adapter.attachPreviousPageListener(this._previousPageListener);
+        this._adapter.attachNextPageListener(this._nextPageListener);
+        this._adapter.attachLastPageListener(this._lastPageListener);
+    }
+    _onFirstPage(evt) {
+        evt.stopPropagation();
+        /* c8 ignore next 3 */
+        if (!this._hasFirstPage()) {
+            return;
+        }
+        const firstPage = 0;
+        const canPage = this._dispatchChangeEvent('first-page', { pageIndex: firstPage });
+        if (canPage) {
+            this._applyPageIndex(firstPage);
+        }
+    }
+    _onPreviousPage(evt) {
+        evt.stopPropagation();
+        /* c8 ignore next 3 */
+        if (!this._hasPreviousPage()) {
+            return;
+        }
+        const prevPage = this._pageIndex - 1;
+        const canPage = this._dispatchChangeEvent('previous-page', { pageIndex: prevPage });
+        if (canPage) {
+            this._applyPageIndex(prevPage);
+        }
+    }
+    _onNextPage(evt) {
+        evt.stopPropagation();
+        /* c8 ignore next 3 */
+        if (!this._hasNextPage()) {
+            return;
+        }
+        const nextPage = this._pageIndex + 1;
+        const canPage = this._dispatchChangeEvent('next-page', { pageIndex: nextPage });
+        if (canPage) {
+            this._applyPageIndex(nextPage);
+        }
+    }
+    _onLastPage(evt) {
+        evt.stopPropagation();
+        /* c8 ignore next 3 */
+        if (!this._hasLastPage()) {
+            return;
+        }
+        const lastPage = this._getMaxPages();
+        const canPage = this._dispatchChangeEvent('last-page', { pageIndex: lastPage });
+        if (canPage) {
+            this._applyPageIndex(lastPage);
+        }
+    }
+    _onPageSizeChanged(evt) {
+        evt.stopPropagation();
+        const pageSize = Number(evt.detail);
+        const canPage = this._dispatchChangeEvent('page-size', { pageIndex: 0, pageSize });
+        if (canPage) {
+            this._applyPageIndex(0);
+            this._applyPageSize(pageSize);
+        }
+        else {
+            evt.preventDefault();
+        }
+    }
+    _dispatchChangeEvent(type, { pageSize = this._pageSize, pageIndex = this._pageIndex } = {}) {
+        const offset = pageIndex * pageSize;
+        const detail = { type, pageSize, pageIndex, offset };
+        const event = new CustomEvent(PAGINATOR_CONSTANTS.events.CHANGE, { detail, bubbles: true, cancelable: true });
+        this._adapter.dispatchHostEvent(event);
+        return !event.defaultPrevented;
+    }
+    _getMaxPages() {
+        return Math.ceil(this._total / this._pageSize) - 1;
+    }
+    _updateRangeLabel() {
+        let rangeLabel;
+        if (typeof this._rangeLabelCallback === 'function') {
+            const state = {
+                pageSize: this._pageSize,
+                pageIndex: this._pageIndex,
+                offset: this._offset,
+                pageStart: this._pageIndex * this._pageSize + 1,
+                pageEnd: Math.min((this._pageIndex + 1) * this._pageSize, this._total),
+                total: this._total
+            };
+            rangeLabel = this._rangeLabelCallback.call(null, state);
+        }
+        else {
+            if (this.pageSize > 1) {
+                const startIndex = this._pageIndex * this._pageSize;
+                const indexStart = Math.floor(startIndex / this._pageSize) || 0;
+                const pageStart = indexStart * this._pageSize + 1;
+                const pageEnd = startIndex < this._total ? Math.min(startIndex + this._pageSize, this._total) : startIndex + this._pageSize;
+                rangeLabel = `${pageStart}-${pageEnd} ${PAGINATOR_CONSTANTS.strings.RANGE_SEPARATOR_LABEL} ${this._total}`;
+            }
+            else {
+                rangeLabel = `${this._pageIndex + 1} ${PAGINATOR_CONSTANTS.strings.RANGE_SEPARATOR_LABEL} ${this._total}`;
+            }
+        }
+        this._adapter.setRangeLabel(rangeLabel);
+    }
+    _syncInteractionState() {
+        if (this._disabled) {
+            return;
+        }
+        this._adapter.setFirstPageButtonEnabled(true);
+        this._adapter.setPreviousPageButtonEnabled(true);
+        this._adapter.setNextPageButtonEnabled(true);
+        this._adapter.setLastPageButtonEnabled(true);
+        const fieldsToDisable = [];
+        if (!this._hasFirstPage()) {
+            fieldsToDisable.push('first');
+        }
+        if (!this._hasPreviousPage()) {
+            fieldsToDisable.push('previous');
+        }
+        if (!this._hasNextPage()) {
+            fieldsToDisable.push('next');
+        }
+        if (!this._hasLastPage()) {
+            fieldsToDisable.push('last');
+        }
+        this._adapter.tryDisableFields(fieldsToDisable);
+    }
+    _toggleFirstLastButtons() {
+        this._toggleFirstButton();
+        if (this._firstLast) {
+            if (!this._adapter.hasLastPageButton()) {
+                this._adapter.showLastPageButton();
+            }
+        }
+        else {
+            if (this._adapter.hasLastPageButton()) {
+                this._adapter.hideLastPageButton();
+            }
+        }
+    }
+    _toggleFirstButton() {
+        if (this._first || this._firstLast) {
+            if (!this._adapter.hasFirstPageButton()) {
+                this._adapter.showFirstPageButton();
+            }
+        }
+        else {
+            if (this._adapter.hasFirstPageButton()) {
+                this._adapter.hideFirstPageButton();
+            }
+        }
+    }
+    _hasFirstPage() {
+        return this._hasPreviousPage();
+    }
+    _hasPreviousPage() {
+        return this._pageIndex > 0 && this._pageSize > 0;
+    }
+    _hasNextPage() {
+        const maxPages = this._getMaxPages();
+        return this._pageIndex < maxPages && this._pageSize > 0;
+    }
+    _hasLastPage() {
+        return this._hasNextPage();
+    }
+    _computePageIndexFromOffset(value) {
+        if (value >= this._total) {
+            if (this._total >= this._pageSize) {
+                value = this._total - this._pageSize;
+            }
+            else {
+                value = 0;
+            }
+        }
+        const clampedValue = Math.min(Math.max(value, 0), this._total);
+        const pageIndex = Math.floor(clampedValue / this._pageSize);
+        this._applyPageIndex(pageIndex);
+    }
+    _computeOffset() {
+        if (this._total > 0) {
+            this._offset = this._pageIndex * this._pageSize;
+        }
+    }
+    _applyPageIndex(value) {
+        this._pageIndex = value;
+        this._computeOffset();
+        this._updateRangeLabel();
+        this._syncInteractionState();
+        this._adapter.toggleHostAttribute(PAGINATOR_CONSTANTS.attributes.PAGE_INDEX, this._pageIndex != null, this._pageIndex.toString());
+    }
+    _applyPageSize(value) {
+        this._pageSize = value;
+        this._adapter.setPageSize(this._pageSize);
+        this._computeOffset();
+        this._updateRangeLabel();
+        this._syncInteractionState();
+    }
+    _applyTotal(value) {
+        this._total = value;
+        this._updateRangeLabel();
+        if (this._offset > 0 && this._total > 0) {
+            this._computePageIndexFromOffset(this._offset);
+        }
+        this._syncInteractionState();
+    }
+    _applyDisabled(disabled) {
+        this._disabled = disabled;
+        if (disabled) {
+            this._adapter.setPageSizeSelectEnabled(false);
+            this._adapter.setFirstPageButtonEnabled(false);
+            this._adapter.setPreviousPageButtonEnabled(false);
+            this._adapter.setNextPageButtonEnabled(false);
+            this._adapter.setLastPageButtonEnabled(false);
+        }
+        else {
+            this._adapter.setPageSizeSelectEnabled(true);
+            this._syncInteractionState();
+        }
+    }
+    get pageIndex() {
+        return this._pageIndex;
+    }
+    set pageIndex(value) {
+        if (this._pageIndex !== value) {
+            if (isDefined(value)) {
+                this._applyPageIndex(value);
+            }
+            else {
+                this._adapter.removeHostAttribute(PAGINATOR_CONSTANTS.attributes.PAGE_INDEX);
+            }
+        }
+    }
+    get pageSize() {
+        return this._pageSize;
+    }
+    set pageSize(value) {
+        if (this._pageSize !== value) {
+            this._applyPageSize(value);
+            this._adapter.setHostAttribute(PAGINATOR_CONSTANTS.attributes.PAGE_SIZE, `${this._pageSize}`);
+        }
+    }
+    get offset() {
+        return this._offset;
+    }
+    set offset(value) {
+        if (this._offset !== value) {
+            this._offset = value;
+            this._computePageIndexFromOffset(value);
+        }
+    }
+    get total() {
+        return this._total;
+    }
+    set total(value) {
+        if (this._total !== value) {
+            this._applyTotal(value);
+            this._adapter.setHostAttribute(PAGINATOR_CONSTANTS.attributes.TOTAL, `${this._total}`);
+        }
+    }
+    get pageSizeOptions() {
+        return this._pageSizeOptions.map(o => Number(o.value));
+    }
+    set pageSizeOptions(options) {
+        if (isArray(options) && options.length) {
+            this._pageSizeOptions = options
+                .map(o => ({ label: o.toString(), value: o.toString() }))
+                .sort((a, b) => coerceNumber(a.value) - coerceNumber(b.value));
+            this._adapter.setPageSizeOptions(this._pageSizeOptions);
+            this._adapter.attachPageSizeChangeListener(this._pageSizeListener);
+            this._adapter.setPageSizeVisibility(true);
+            if (isDefined(this._pageSize) && this._pageSizeOptions.length && !this._pageSizeOptions.find(o => coerceNumber(o.value) === this._pageSize)) {
+                const pageSize = coerceNumber(this._pageSizeOptions[0].value);
+                this._applyPageSize(pageSize);
+            }
+        }
+        else if (!options?.length) {
+            this._adapter.detachPageSizeChangeListener(this._pageSizeListener);
+            this._adapter.setPageSizeVisibility(false);
+        }
+    }
+    get label() {
+        return this._label;
+    }
+    set label(value) {
+        if (this._label !== value) {
+            this._label = value;
+            this._adapter.setLabel(this._label);
+            const hasLabelAttr = isDefined(this._label) && this._label.length;
+            if (hasLabelAttr) {
+                this._adapter.setHostAttribute(PAGINATOR_CONSTANTS.attributes.LABEL, String(this._label));
+            }
+            else {
+                this._adapter.removeHostAttribute(PAGINATOR_CONSTANTS.attributes.LABEL);
+            }
+        }
+    }
+    get firstLast() {
+        return this._firstLast;
+    }
+    set firstLast(value) {
+        value = Boolean(value);
+        if (this._firstLast !== value) {
+            this._firstLast = value;
+            this._toggleFirstLastButtons();
+            this._adapter.toggleHostAttribute(PAGINATOR_CONSTANTS.attributes.FIRST_LAST, this._firstLast);
+        }
+    }
+    get first() {
+        return this._first;
+    }
+    set first(value) {
+        value = Boolean(value);
+        if (this._first !== value) {
+            this._first = value;
+            this._toggleFirstButton();
+            this._adapter.toggleHostAttribute(PAGINATOR_CONSTANTS.attributes.FIRST, this._first);
+        }
+    }
+    get disabled() {
+        return this._disabled;
+    }
+    set disabled(value) {
+        value = Boolean(value);
+        if (this._disabled !== value) {
+            this._applyDisabled(value);
+            this._adapter.toggleHostAttribute(PAGINATOR_CONSTANTS.attributes.DISABLED, this._disabled);
+        }
+    }
+    get alternative() {
+        return this._alternative;
+    }
+    set alternative(value) {
+        value = Boolean(value);
+        if (value !== this._alternative) {
+            this._alternative = value;
+            this._adapter.toggleHostAttribute(PAGINATOR_CONSTANTS.attributes.ALTERNATIVE, this._alternative);
+        }
+    }
+    get rangeLabelCallback() {
+        return this._rangeLabelCallback;
+    }
+    set rangeLabelCallback(value) {
+        this._rangeLabelCallback = value;
+        this._updateRangeLabel();
+    }
+}

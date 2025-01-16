@@ -1,0 +1,13 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { ViewComponent as ViewComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class ViewComponent {
+    protected elementRef: ElementRef<ViewComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-view element. */
+    readonly nativeElement: ViewComponentCustomElement;
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<ViewComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<ViewComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ViewComponent, "forge-view", never, {}, {}, never, ["*"], false, never>;
+}

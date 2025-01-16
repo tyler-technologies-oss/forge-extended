@@ -1,0 +1,26 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { StateLayerCoords } from './state-layer-constants';
+export declare function calcRippleSize(hostEl: HTMLElement): {
+    rippleScale: string;
+    rippleSize: string;
+    initialSize: number;
+};
+export declare function getTranslationCoordinates(hostEl: HTMLElement, initialSize: number, coords?: StateLayerCoords): {
+    startPoint: {
+        x: number;
+        y: number;
+    };
+    endPoint: {
+        x: number;
+        y: number;
+    };
+};
+export declare function toNormalizedCoords(hostEl: HTMLElement, coords: StateLayerCoords): {
+    x: number;
+    y: number;
+};
+export declare function isInBounds(hostEl: HTMLElement, x: number, y: number): boolean;

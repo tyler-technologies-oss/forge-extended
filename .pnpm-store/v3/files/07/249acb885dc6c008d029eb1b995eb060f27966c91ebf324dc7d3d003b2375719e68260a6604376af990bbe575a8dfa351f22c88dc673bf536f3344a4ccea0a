@@ -1,0 +1,84 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { attachShadowTemplate, coerceBoolean, customElement, coreProperty, toggleAttribute } from '@tylertech/forge-core';
+import { internals, setDefaultAria } from '../../constants';
+import { BaseComponent } from '../../core/base/base-component';
+import { WithDefaultAria } from '../../core/mixins/internals/with-default-aria';
+import { WithElementInternals } from '../../core/mixins/internals/with-element-internals';
+import { WithLabelAwareness } from '../../core/mixins/label/with-label-aware';
+import { RadioComponent } from '../radio/radio';
+import { RadioGroupAdapter } from './radio-group-adapter';
+import { RADIO_GROUP_CONSTANTS } from './radio-group-constants';
+import { RadioGroupCore } from './radio-group-core';
+const template = '<template><slot></slot></template>';
+/**
+ * @tag forge-radio-group
+ *
+ * @dependency forge-radio
+ *
+ * @summary The Forge Radio Group component groups a set of radio buttons together.
+ */
+let RadioGroupComponent = class RadioGroupComponent extends WithLabelAwareness(WithDefaultAria(WithElementInternals(BaseComponent))) {
+    /** @ignore */
+    get form() {
+        return this[internals].form;
+    }
+    /** @ignore */
+    get labels() {
+        return this[internals].labels;
+    }
+    /** @ignore */
+    get name() {
+        return this.getAttribute('name') ?? '';
+    }
+    /** @ignore */
+    set name(value) {
+        toggleAttribute(this, !!value, 'name', value);
+    }
+    static get observedAttributes() {
+        return Object.values(RADIO_GROUP_CONSTANTS.observedAttributes);
+    }
+    constructor() {
+        super();
+        attachShadowTemplate(this, template);
+        this._core = new RadioGroupCore(new RadioGroupAdapter(this));
+    }
+    connectedCallback() {
+        super.connectedCallback();
+        this[setDefaultAria]({
+            role: 'radiogroup',
+            ariaDisabled: this.disabled ? 'true' : null
+        });
+        this._core.initialize();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case RADIO_GROUP_CONSTANTS.attributes.DISABLED:
+                this.disabled = coerceBoolean(newValue);
+                break;
+        }
+    }
+    formDisabledCallback(isDisabled) {
+        this.disabled = isDisabled;
+    }
+    labelChangedCallback(value) {
+        this[setDefaultAria]({
+            ariaLabel: value ?? null
+        });
+    }
+};
+RadioGroupComponent.formAssociated = true;
+__decorate([
+    coreProperty()
+], RadioGroupComponent.prototype, "disabled", void 0);
+RadioGroupComponent = __decorate([
+    customElement({
+        name: RADIO_GROUP_CONSTANTS.elementName,
+        dependencies: [RadioComponent]
+    })
+], RadioGroupComponent);
+export { RadioGroupComponent };

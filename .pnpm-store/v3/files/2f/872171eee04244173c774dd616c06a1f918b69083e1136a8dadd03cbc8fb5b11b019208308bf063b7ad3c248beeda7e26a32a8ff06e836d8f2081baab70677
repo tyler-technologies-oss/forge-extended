@@ -1,0 +1,204 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { FILE_PICKER_CONSTANTS } from './file-picker-constants';
+export class FilePickerCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._isInitialized = false;
+        this._accept = null;
+        this._maxSize = null;
+        this._capture = null;
+        this._multiple = false;
+        this._disabled = false;
+        this._compact = false;
+        this._borderless = false;
+        this._buttonSlotListener = evt => this._onButtonSlotChanged(evt);
+        this._inputChangeListener = evt => this._onInputChange(evt);
+        this._dragEnterListener = evt => this._onDragEnter(evt);
+        this._dragLeaveListener = evt => this._onDragLeave(evt);
+        this._dragOverListener = evt => this._onDragOver(evt);
+        this._dropListener = evt => this._onDrop(evt);
+        this._adapter.registerButtonSlotListener(this._buttonSlotListener);
+        this._adapter.registerInputChangeListener(this._inputChangeListener);
+        if (!this._compact) {
+            this._registerDragListeners();
+        }
+    }
+    initialize() {
+        this._adapter.initializeButton();
+        this._adapter.setDisabled(this._disabled);
+        this._isInitialized = true;
+    }
+    destroy() {
+        this._isInitialized = false;
+    }
+    _onButtonSlotChanged(evt) {
+        this._adapter.initializeButton();
+    }
+    _onInputChange(evt) {
+        const files = evt.target.files;
+        if (files) {
+            this._handleFiles(files);
+        }
+    }
+    _onDragEnter(evt) {
+        this._handleDragEvent(evt, true);
+    }
+    _onDragLeave(evt) {
+        this._handleDragEvent(evt, false);
+    }
+    _onDragOver(evt) {
+        this._handleDragEvent(evt, true);
+    }
+    _onDrop(evt) {
+        this._handleDragEvent(evt, false);
+        if (!this._disabled) {
+            const dataTransfer = evt.dataTransfer;
+            if (dataTransfer) {
+                const files = dataTransfer.files;
+                this._handleFiles(files);
+            }
+        }
+    }
+    _registerDragListeners() {
+        this._adapter.registerDragEnterListener(this._dragEnterListener);
+        this._adapter.registerDragLeaveListener(this._dragLeaveListener);
+        this._adapter.registerDragOverListener(this._dragOverListener);
+        this._adapter.registerDropListener(this._dropListener);
+    }
+    _removeDragListeners() {
+        this._adapter.removeDragEnterListener(this._dragEnterListener);
+        this._adapter.removeDragLeaveListener(this._dragLeaveListener);
+        this._adapter.removeDragOverListener(this._dragOverListener);
+        this._adapter.removeDropListener(this._dropListener);
+    }
+    _handleFiles(fileList) {
+        let data = {};
+        if (fileList) {
+            const sortedFiles = this._sortFiles(fileList);
+            let files = sortedFiles.legalFiles || null;
+            // Ensure that we can only drop 1 file if not in multiple mode
+            if (!this._multiple && files && files.length > 1) {
+                files = files.splice(1);
+            }
+            data = sortedFiles;
+        }
+        this._adapter.emitHostEvent(FILE_PICKER_CONSTANTS.events.FILES_CHANGED, data);
+    }
+    _sortFiles(files) {
+        let legalFiles = [];
+        const illegalFiles = [];
+        if (!this._accept && !this.maxSize) {
+            legalFiles = Array.from(files);
+            return { legalFiles, illegalFiles };
+        }
+        const formats = this._accept ? this._accept.split(',').map(f => f.trim().toLowerCase()) : [''];
+        // eslint-disable-next-line @typescript-eslint/prefer-for-of
+        for (let i = 0; i < files.length; i++) {
+            if (!formats.some(f => {
+                return files[i].type.toLowerCase().match(f) || files[i].name.toLowerCase().match('\\' + f);
+            }) ||
+                (this._maxSize && files[i].size > this._maxSize)) {
+                illegalFiles.push(files[i]);
+            }
+            else {
+                legalFiles.push(files[i]);
+            }
+        }
+        return { legalFiles, illegalFiles };
+    }
+    _handleDragEvent(evt, isOverTarget) {
+        if (!this._disabled) {
+            evt.preventDefault();
+            evt.stopPropagation();
+            this._adapter.setHighlightState(isOverTarget);
+        }
+    }
+    /** Get and set the allowed file types */
+    get accept() {
+        return this._accept;
+    }
+    set accept(value) {
+        if (this._accept !== value) {
+            this._accept = value;
+            this._adapter.setAccept(value);
+            this._adapter.toggleHostAttribute(FILE_PICKER_CONSTANTS.attributes.ACCEPT, !!value, String(value));
+        }
+    }
+    /** Get and set the maximum allowed file size */
+    get maxSize() {
+        return this._maxSize;
+    }
+    set maxSize(value) {
+        if (this._maxSize !== value) {
+            this._maxSize = value;
+            this._adapter.toggleHostAttribute(FILE_PICKER_CONSTANTS.attributes.MAX_SIZE, !!value, String(value));
+        }
+    }
+    /** Get and set the camera to use when capturing video or images */
+    get capture() {
+        return this._capture;
+    }
+    set capture(value) {
+        if (this._capture !== value) {
+            this._capture = value;
+            this._adapter.setCapture(value);
+            this._adapter.toggleHostAttribute(FILE_PICKER_CONSTANTS.attributes.CAPTURE, !!value, String(value));
+        }
+    }
+    /** Get and set whether multiple files are allowed */
+    get multiple() {
+        return this._multiple;
+    }
+    set multiple(value) {
+        if (this._multiple !== value) {
+            this._multiple = value;
+            this._adapter.setMultiple(value);
+            this._adapter.toggleHostAttribute(FILE_PICKER_CONSTANTS.attributes.MULTIPLE, value);
+        }
+    }
+    /** Get and set whether the file picker is disabled */
+    get disabled() {
+        return this._disabled;
+    }
+    set disabled(value) {
+        if (this._disabled !== value) {
+            this._disabled = value;
+            if (this._isInitialized) {
+                this._adapter.setDisabled(value);
+            }
+            this._adapter.toggleHostAttribute(FILE_PICKER_CONSTANTS.attributes.DISABLED, value);
+        }
+    }
+    /** Get and set whether the file picker is compact */
+    get compact() {
+        return this._compact;
+    }
+    set compact(value) {
+        if (this._compact !== value) {
+            this._compact = value;
+            this._adapter.setCompact(value);
+            if (value) {
+                this._removeDragListeners();
+            }
+            else {
+                this._registerDragListeners();
+            }
+            this._adapter.toggleHostAttribute(FILE_PICKER_CONSTANTS.attributes.COMPACT, value);
+        }
+    }
+    /** Get and set whether the file picker is borderless */
+    get borderless() {
+        return this._borderless;
+    }
+    set borderless(value) {
+        if (this._borderless !== value) {
+            this._borderless = value;
+            this._adapter.setBorderless(value);
+            this._adapter.toggleHostAttribute(FILE_PICKER_CONSTANTS.attributes.BORDERLESS, value);
+        }
+    }
+}

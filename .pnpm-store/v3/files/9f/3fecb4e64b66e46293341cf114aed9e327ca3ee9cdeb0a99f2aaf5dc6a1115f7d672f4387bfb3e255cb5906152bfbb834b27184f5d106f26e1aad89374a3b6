@@ -1,0 +1,50 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use './core' as *;
+
+//
+// Host
+//
+
+:host {
+  @include host;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+//
+// Base
+//
+
+.forge-card {
+  @include tokens;
+}
+
+.forge-card {
+  @include base;
+}
+
+//
+// Raised
+//
+
+:host([raised]) {
+  .forge-card {
+    @include raised;
+  }
+}
+
+//
+// Padding
+//
+
+:host([no-padding]) {
+  .forge-card {
+    @include override(padding, 0, value);
+  }
+}

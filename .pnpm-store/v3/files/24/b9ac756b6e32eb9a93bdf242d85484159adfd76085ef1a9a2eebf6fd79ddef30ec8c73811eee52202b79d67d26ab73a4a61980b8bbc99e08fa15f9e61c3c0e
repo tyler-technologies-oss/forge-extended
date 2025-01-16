@@ -1,0 +1,9 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./tab.component";
+import * as i2 from "@angular/common";
+export declare class ForgeTabModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeTabModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeTabModule, [typeof i1.TabComponent], [typeof i2.CommonModule], [typeof i1.TabComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeTabModule>;
+}

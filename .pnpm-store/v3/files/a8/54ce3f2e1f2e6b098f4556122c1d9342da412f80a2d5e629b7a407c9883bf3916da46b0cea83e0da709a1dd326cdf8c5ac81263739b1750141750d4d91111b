@@ -1,0 +1,34 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponent, IBaseComponent } from '../core/base/base-component';
+export interface IAccordionComponent extends IBaseComponent {
+    panelSelector: string;
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-accordion': IAccordionComponent;
+    }
+}
+/**
+ * @tag forge-accordion
+ *
+ * @dependency forge-expansion-panel
+ *
+ * @fires {CustomEvent<IExpansionPanelComponent>} forge-accordion-toggle - Dispatched when a child expansion panel is toggled. Includes the related expansion panel element in the event detail.
+ */
+export declare class AccordionComponent extends BaseComponent implements IAccordionComponent {
+    static get observedAttributes(): string[];
+    private _core;
+    constructor();
+    connectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    /**
+     * Gets/sets the selector to use for finding the child expansion panels. Defaults to searching the direct children for `<forge-expansion-panel>` elements.
+     * Use this if you need to scope this accordion to a specific set of expansion panels, or your expansion panels are not direct children of the accordion.
+     * @attribute panel-selector
+     */
+    panelSelector: string;
+}

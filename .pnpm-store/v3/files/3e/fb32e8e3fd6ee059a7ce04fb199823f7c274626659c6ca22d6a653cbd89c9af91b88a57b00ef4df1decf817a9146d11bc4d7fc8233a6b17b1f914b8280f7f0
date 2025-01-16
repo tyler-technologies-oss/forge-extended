@@ -1,0 +1,12 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export * from './deprecated-button';
+export * from './deprecated-button-component-delegate';
+export * from './deprecated-button-constants';
+/**
+ * @deprecated Use `defineButtonComponent()` instead for the `<forge-button>` element.
+ */
+export declare function defineDeprecatedButtonComponent(): void;

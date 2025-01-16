@@ -1,0 +1,35 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ISelectDropdownAdapter } from './select-dropdown-adapter';
+import { BaseSelectCore, IBaseSelectCore } from '../core/base-select-core';
+export interface ISelectDropdownCore extends IBaseSelectCore {
+    target: string;
+    selectedTextTarget: string;
+    syncSelectedText: boolean;
+}
+export declare class SelectDropdownCore extends BaseSelectCore<ISelectDropdownAdapter> implements ISelectDropdownCore {
+    private _target;
+    private _selectedTextTarget;
+    private _syncSelectedText;
+    private _originalTargetText;
+    private _targetDisconnectedListener;
+    private _targetDisconnectedDestructor;
+    constructor(adapter: ISelectDropdownAdapter);
+    initialize(): void;
+    destroy(): void;
+    protected _onDropdownScrollEnd(): void;
+    protected _applyValue(value: string | string[]): void;
+    protected _applySelection(): void;
+    private _tryAttach;
+    private _detach;
+    private _onTargetDisconnected;
+    get target(): string;
+    set target(value: string);
+    get selectedTextTarget(): string;
+    set selectedTextTarget(value: string);
+    get syncSelectedText(): boolean;
+    set syncSelectedText(value: boolean);
+}

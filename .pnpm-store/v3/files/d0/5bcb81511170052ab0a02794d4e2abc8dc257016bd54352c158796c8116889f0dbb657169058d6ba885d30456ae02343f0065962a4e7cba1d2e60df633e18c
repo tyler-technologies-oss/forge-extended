@@ -1,0 +1,81 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { STACK_CONSTANTS } from './stack-constants';
+export class StackCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._inline = false;
+        this._wrap = false;
+        this._stretch = false;
+        this._gap = STACK_CONSTANTS.strings.DEFAULT_GAP;
+        this._alignment = 'start';
+        this._justify = 'start';
+    }
+    /** Controls the direction of the stack. */
+    get inline() {
+        return this._inline;
+    }
+    set inline(value) {
+        value = Boolean(value);
+        if (this._inline !== value) {
+            this._inline = value;
+            this._adapter.toggleHostAttribute(STACK_CONSTANTS.attributes.INLINE, this._inline);
+        }
+    }
+    /** Controls the direction of the stack. */
+    get wrap() {
+        return this._wrap;
+    }
+    set wrap(value) {
+        value = Boolean(value);
+        if (this._wrap !== value) {
+            this._wrap = value;
+            this._adapter.toggleHostAttribute(STACK_CONSTANTS.attributes.WRAP, this._wrap);
+        }
+    }
+    /** Controls if the children within the stack should stretch in width */
+    get stretch() {
+        return this._stretch;
+    }
+    set stretch(value) {
+        value = Boolean(value);
+        if (this._stretch !== value) {
+            this._stretch = value;
+            this._adapter.toggleHostAttribute(STACK_CONSTANTS.attributes.STRETCH, this._stretch);
+        }
+    }
+    /** Controls the gap amount between the children */
+    get gap() {
+        return this._gap;
+    }
+    set gap(value) {
+        if (this._gap !== value) {
+            this._gap = value;
+            this._adapter.setGap(this._gap);
+            this._adapter.setHostAttribute(STACK_CONSTANTS.attributes.GAP, this._gap);
+        }
+    }
+    /** Controls the alignment of children */
+    get alignment() {
+        return this._alignment;
+    }
+    set alignment(value) {
+        if (this._alignment !== value) {
+            this._alignment = value;
+            this._adapter.setHostAttribute(STACK_CONSTANTS.attributes.ALIGNMENT, this._alignment);
+        }
+    }
+    /** Controls the justify-content of children */
+    get justify() {
+        return this._justify;
+    }
+    set justify(value) {
+        if (this._justify !== value) {
+            this._justify = value;
+            this._adapter.setHostAttribute(STACK_CONSTANTS.attributes.JUSTIFY, this._justify);
+        }
+    }
+}

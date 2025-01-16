@@ -1,0 +1,13 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare function simulateHover(targetEl: HTMLElement, { pointerType, isPrimary }?: {
+    pointerType?: string | undefined;
+    isPrimary?: boolean | undefined;
+}): void;
+export declare function simulateLeave(targetEl: HTMLElement): void;
+export declare function simulatePressed(targetEl: HTMLElement, { pointerType }?: PointerEventInit): Promise<void>;
+export declare function simulatePressAndHold(container: HTMLElement, { pointerType }?: PointerEventInit): Promise<void>;
+export declare function createMouseEventInit(element: HTMLElement): PointerEventInit;

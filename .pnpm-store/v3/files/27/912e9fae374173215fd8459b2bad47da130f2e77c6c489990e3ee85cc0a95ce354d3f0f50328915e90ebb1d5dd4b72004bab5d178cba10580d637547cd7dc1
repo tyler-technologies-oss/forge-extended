@@ -1,0 +1,32 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const elementName: keyof HTMLElementTagNameMap;
+export declare const APP_BAR_CONSTANTS: {
+    elementName: "forge-app-bar";
+    selectors: {
+        ROOT: string;
+        LOGO_TITLE_CONTAINER: string;
+        CENTER_SLOT: string;
+        CENTER_SECTION: string;
+    };
+    attributes: {
+        TITLE_TEXT: string;
+        ELEVATION: string;
+        THEME: string;
+        HREF: string;
+        TARGET: string;
+    };
+    classes: {
+        NO_CENTER: string;
+        LOGO_TITLE_CONTAINER: string;
+        TITLE: string;
+    };
+    events: {
+        NAVIGATE: string;
+    };
+};
+export type AppBarElevation = 'none' | 'raised';
+export type AppBarTheme = 'white' | 'custom' | '';

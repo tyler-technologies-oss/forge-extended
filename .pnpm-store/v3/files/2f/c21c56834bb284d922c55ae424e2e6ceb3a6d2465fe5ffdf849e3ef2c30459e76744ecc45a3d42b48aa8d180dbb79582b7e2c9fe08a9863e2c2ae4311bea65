@@ -1,0 +1,20 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../../core/base/';
+import { LabelComponent } from '../../label';
+import { IRadioGroupComponent } from './radio-group';
+export interface IRadioGroupAdapter extends IBaseAdapter {
+    attachLabel(label: LabelComponent): void;
+    setDisabled(value: boolean): void;
+    trySetRequired(): void;
+}
+export declare class RadioGroupAdapter extends BaseAdapter<IRadioGroupComponent> implements IRadioGroupAdapter {
+    constructor(component: IRadioGroupComponent);
+    attachLabel(label: LabelComponent): void;
+    setDisabled(value: boolean): void;
+    trySetRequired(): void;
+    private _disableRadios;
+}

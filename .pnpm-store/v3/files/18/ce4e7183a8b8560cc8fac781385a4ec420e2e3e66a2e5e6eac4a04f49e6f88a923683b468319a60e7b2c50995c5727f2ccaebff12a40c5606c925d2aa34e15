@@ -1,0 +1,12 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { defineCustomElement } from '@tylertech/forge-core';
+import { CardComponent } from './card';
+export * from './card-constants';
+export * from './card';
+export function defineCardComponent() {
+    defineCustomElement(CardComponent);
+}

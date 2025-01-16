@@ -1,0 +1,42 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ExperimentalFocusOptions } from '../../constants';
+import { IButtonToggleAdapter } from './button-toggle-adapter';
+export interface IButtonToggleCore {
+    value: unknown;
+    selected: boolean;
+    disabled: boolean;
+    readonly: boolean;
+    destroy(): void;
+    focus(options?: ExperimentalFocusOptions): void;
+    click(): void;
+}
+export declare class ButtonToggleCore implements IButtonToggleCore {
+    private _adapter;
+    private _value;
+    private _selected;
+    private _disabled;
+    private _readonly;
+    private _clickListener;
+    private _keydownListener;
+    constructor(_adapter: IButtonToggleAdapter);
+    initialize(): void;
+    destroy(): void;
+    focus(options?: ExperimentalFocusOptions): void;
+    click(): void;
+    private _applyListeners;
+    private _removeListeners;
+    private _onClick;
+    private _onKeyDown;
+    get value(): unknown;
+    set value(value: unknown);
+    get selected(): boolean;
+    set selected(value: boolean);
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    get readonly(): boolean;
+    set readonly(value: boolean);
+}

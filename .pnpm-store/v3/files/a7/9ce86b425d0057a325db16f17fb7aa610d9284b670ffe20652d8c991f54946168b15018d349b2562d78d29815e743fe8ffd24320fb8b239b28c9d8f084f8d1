@@ -1,0 +1,51 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { COMPONENT_NAME_PREFIX, KEYSTROKE_DEBOUNCE_THRESHOLD } from '../constants';
+const elementName = `${COMPONENT_NAME_PREFIX}autocomplete`;
+const attributes = {
+    MODE: 'mode',
+    MULTIPLE: 'multiple',
+    DEBOUNCE: 'debounce',
+    FILTER_ON_FOCUS: 'filter-on-focus',
+    FILTER_FOCUS_FIRST: 'filter-focus-first',
+    ALLOW_UNMATCHED: 'allow-unmatched',
+    POPUP_TARGET: 'popup-target',
+    POPUP_CLASSES: 'popup-classes',
+    OPTION_LIMIT: 'option-limit',
+    OBSERVE_SCROLL: 'observe-scroll',
+    OBSERVE_SCROLL_THRESHOLD: 'observe-scroll-threshold',
+    SYNC_POPUP_WIDTH: 'sync-popup-width',
+    OPEN: 'open',
+    MATCH_KEY: 'match-key',
+    FILTER_TEXT: 'filter-text',
+    DROPDOWN_ICON_OPEN: 'data-forge-dropdown-icon-open'
+};
+const selectors = {
+    INPUT: 'input',
+    DROPDOWN_ICON: '[data-forge-dropdown-icon],[data-forge-dropdown-icon],[forge-dropdown-icon],.forge-dropdown-icon',
+    CLEAR_BUTTON: '[data-forge-autocomplete-clear],[forge-autocomplete-clear]'
+};
+const numbers = {
+    DEFAULT_DEBOUNCE_TIME: KEYSTROKE_DEBOUNCE_THRESHOLD,
+    NUM_SKELETON_ITEMS: 3
+};
+const events = {
+    CHANGE: `${elementName}-change`,
+    SELECT: `${elementName}-select`,
+    SCROLLED_BOTTOM: `${elementName}-scrolled-bottom`
+};
+export const AUTOCOMPLETE_CONSTANTS = {
+    elementName,
+    attributes,
+    selectors,
+    numbers,
+    events
+};
+export var AutocompleteMode;
+(function (AutocompleteMode) {
+    AutocompleteMode["Default"] = "default";
+    AutocompleteMode["Stateless"] = "stateless";
+})(AutocompleteMode || (AutocompleteMode = {}));

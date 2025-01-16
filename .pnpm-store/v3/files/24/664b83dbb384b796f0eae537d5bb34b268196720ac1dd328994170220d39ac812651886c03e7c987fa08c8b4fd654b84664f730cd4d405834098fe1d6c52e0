@@ -1,0 +1,20 @@
+{
+  "name": "@tylertech/tyler-icons",
+  "version": "1.18.1",
+  "description": "The tree-shakable Tyler SVG icon library.",
+  "author": "Tyler Technologies, Inc.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/tyler-technologies-oss/tyler-icons.git"
+  },
+  "sideEffects": false,
+  "keywords": [
+    "tyler",
+    "icons",
+    "svg",
+    "custom",
+    "extended",
+    "standard"
+  ]
+}

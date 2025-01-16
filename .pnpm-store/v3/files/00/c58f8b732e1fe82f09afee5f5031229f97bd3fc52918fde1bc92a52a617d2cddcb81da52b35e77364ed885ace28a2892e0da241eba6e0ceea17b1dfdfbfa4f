@@ -1,0 +1,41 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use './core' as *;
+@use '../core/styles/theme';
+
+//
+// Host
+//
+
+:host {
+  @include tokens;
+}
+
+:host {
+  @include host;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+//
+// Base
+//
+
+svg {
+  @include svg;
+}
+
+//
+// Theme
+//
+
+@each $theme in [primary secondary tertiary success error warning text-medium text-low] {
+  :host([theme='#{$theme}']) {
+    @include override(color, theme.variable($theme), value);
+  }
+}

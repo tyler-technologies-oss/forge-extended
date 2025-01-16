@@ -1,0 +1,27 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use 'sass:list';
+
+@mixin animation($animate...) {
+  $max: list.length($animate);
+  $animations: '';
+
+  @for $i from 1 through $max {
+    $animations: #{$animations + list.nth($animate, $i)};
+
+    @if $i < $max {
+      $animations: #{$animations + ', '};
+    }
+  }
+
+  animation: #{$animations};
+}
+
+@mixin keyframes($animationName) {
+  @keyframes #{$animationName} {
+    @content;
+  }
+}

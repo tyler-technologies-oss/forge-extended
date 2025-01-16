@@ -1,0 +1,43 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { FormFieldComponentDelegate, IBaseComponentDelegateConfig, IFormFieldComponentDelegateOptions } from '../../core';
+import { IRadioComponent } from './radio';
+import { RadioLabelPosition } from './radio-constants';
+export type RadioComponentDelegateProps = Partial<IRadioComponent>;
+export interface IRadioComponentDelegateOptions extends IFormFieldComponentDelegateOptions {
+    id?: string;
+    label?: string;
+}
+export interface IRadioComponentDelegateConfig extends IBaseComponentDelegateConfig<IRadioComponent, IRadioComponentDelegateOptions> {
+}
+export declare class RadioComponentDelegate extends FormFieldComponentDelegate<IRadioComponent, IRadioComponentDelegateOptions> {
+    constructor(config?: IRadioComponentDelegateConfig);
+    get value(): string;
+    set value(value: string);
+    get checked(): boolean;
+    set checked(value: boolean);
+    get defaultChecked(): boolean;
+    set defaultChecked(value: boolean);
+    get dense(): boolean;
+    set dense(value: boolean);
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    get required(): boolean;
+    set required(value: boolean);
+    get readonly(): boolean;
+    set readonly(value: boolean);
+    get name(): string;
+    set name(value: string);
+    get labelPosition(): RadioLabelPosition;
+    set labelPosition(value: RadioLabelPosition);
+    onChange(listener: (evt: Event) => void): void;
+    onInput(listener: (evt: Event) => void): void;
+    onFocus(listener: (evt: Event) => void): void;
+    onBlur(listener: (evt: Event) => void): void;
+    setLabel(text: string | null): void;
+    protected _build(): IRadioComponent;
+    protected _configure(): void;
+}

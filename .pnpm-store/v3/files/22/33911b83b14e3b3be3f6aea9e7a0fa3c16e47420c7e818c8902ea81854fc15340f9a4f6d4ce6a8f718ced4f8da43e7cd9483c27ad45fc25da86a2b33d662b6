@@ -1,0 +1,39 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const CHECKBOX_CONSTANTS: {
+    elementName: "forge-checkbox";
+    selectors: {
+        ROOT: string;
+        LABEL: string;
+        STATE_LAYER: string;
+    };
+    observedAttributes: {
+        CHECKED: string;
+        DEFAULT_CHECKED: string;
+        INDETERMINATE: string;
+        VALUE: string;
+        DENSE: string;
+        DISABLED: string;
+        REQUIRED: string;
+        READONLY: string;
+        LABEL_POSITION: string;
+        TABINDEX: string;
+    };
+    attributes: {
+        CHECKED: string;
+        DEFAULT_CHECKED: string;
+        INDETERMINATE: string;
+        VALUE: string;
+        DENSE: string;
+        DISABLED: string;
+        REQUIRED: string;
+        READONLY: string;
+        LABEL_POSITION: string;
+        TABINDEX: string;
+    };
+};
+export type CheckboxState = 'checked' | 'unchecked' | 'checked-indeterminate' | 'unchecked-indeterminate';
+export type CheckboxLabelPosition = 'start' | 'end';

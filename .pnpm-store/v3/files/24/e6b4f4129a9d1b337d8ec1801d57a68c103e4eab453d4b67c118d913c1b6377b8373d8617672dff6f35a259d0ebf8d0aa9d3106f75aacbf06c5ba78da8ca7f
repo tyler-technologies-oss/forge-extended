@@ -1,0 +1,115 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { emitEvent, toggleAttribute } from '@tylertech/forge-core';
+import { GlobalConfiguration } from '../configuration/global-configuration';
+export class BaseAdapter {
+    constructor(_component) {
+        this._component = _component;
+    }
+    get hostElement() {
+        return this._component;
+    }
+    hasHostAttribute(name) {
+        return this._component.hasAttribute(name);
+    }
+    getHostAttribute(name) {
+        return this._component.getAttribute(name);
+    }
+    setHostAttribute(name, value = '') {
+        this._component.setAttribute(name, value);
+    }
+    removeHostAttribute(name) {
+        this._component.removeAttribute(name);
+    }
+    toggleHostAttribute(name, hasAttribute, value) {
+        toggleAttribute(this._component, hasAttribute, name, value);
+    }
+    redispatchEvent(event, options) {
+        const isFromLightDom = !(event.target?.getRootNode() instanceof ShadowRoot);
+        if (event.bubbles && (event.composed || isFromLightDom)) {
+            event.stopPropagation();
+        }
+        const eventCopy = {
+            ...event,
+            detail: event.detail ?? null,
+            bubbles: options?.bubbles ?? event.bubbles,
+            cancelable: options?.cancelable ?? event.cancelable,
+            composed: options?.composed ?? event.composed
+        };
+        const newEvent = Reflect.construct(event.constructor, [event.type, eventCopy]);
+        const isCancelled = !this._component.dispatchEvent(newEvent);
+        if (isCancelled) {
+            event.preventDefault();
+        }
+        return !isCancelled;
+    }
+    /** @deprecated Use `dispatchHostEvent` instead. */
+    emitHostEvent(type, data = null, bubble = true, cancelable) {
+        return emitEvent(this._component, type, data, bubble, cancelable);
+    }
+    dispatchHostEvent(event) {
+        return !this._component.dispatchEvent(event);
+    }
+    toggleHostListener(event, listener, value, options) {
+        if (value) {
+            this.addHostListener(event, listener, options);
+        }
+        else {
+            this.removeHostListener(event, listener, options);
+        }
+    }
+    addHostListener(event, callback, options) {
+        this._component.addEventListener(event, callback, options);
+    }
+    removeHostListener(event, callback, options) {
+        this._component.removeEventListener(event, callback, options);
+    }
+    addWindowListener(event, callback, options) {
+        window.addEventListener(event, callback, options);
+    }
+    removeWindowListener(event, callback, options) {
+        window.removeEventListener(event, callback, options);
+    }
+    addDocumentListener(event, callback, options) {
+        this._component.ownerDocument.addEventListener(event, callback, options);
+    }
+    removeDocumentListener(event, callback, options) {
+        this._component.ownerDocument.removeEventListener(event, callback, options);
+    }
+    getScreenWidth() {
+        return window.innerWidth;
+    }
+    setBodyAttribute(name, value) {
+        this._component.ownerDocument.body.setAttribute(name, value);
+    }
+    removeBodyAttribute(name) {
+        this._component.ownerDocument.body.removeAttribute(name);
+    }
+    focusHost(options) {
+        HTMLElement.prototype.focus.call(this._component, options);
+    }
+    clickHost() {
+        HTMLElement.prototype.click.call(this._component);
+    }
+    get isConnected() {
+        return this._component.isConnected;
+    }
+    tryApplyGlobalConfiguration(properties) {
+        const tagName = this._component.tagName.toLowerCase();
+        const entry = GlobalConfiguration.get(tagName);
+        if (!entry) {
+            return;
+        }
+        for (const property of properties) {
+            if (entry.has(property)) {
+                const value = entry.valueOf(property);
+                if (value) {
+                    this._component[property] = value;
+                }
+            }
+        }
+    }
+}

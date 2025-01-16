@@ -1,0 +1,8 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./chip-value-accessor.directive";
+import * as i2 from "./chip-proxy.module";
+export declare class ForgeChipModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeChipModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeChipModule, [typeof i1.ChipValueAccessor], never, [typeof i1.ChipValueAccessor, typeof i2.ForgeChipProxyModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeChipModule>;
+}

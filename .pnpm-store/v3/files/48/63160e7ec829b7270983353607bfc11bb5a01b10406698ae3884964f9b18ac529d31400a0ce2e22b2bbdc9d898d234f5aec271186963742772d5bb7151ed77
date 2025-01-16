@@ -1,0 +1,32 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { MixinBase, setDefaultAria, AbstractConstructor } from '../../../constants';
+import { ARIAMixinStrict, DefaultAriaOptions } from '../../utils/a11y-utils';
+import { IBaseComponent } from '../../base/base-component';
+/**
+ * A component with support for setting default ARIA.
+ */
+export interface IWithDefaultAria extends IBaseComponent {
+    /**
+     * Sets the default ARIA of the component using Element Internals if supported or sprouting
+     * ARIA attributes if not.
+     *
+     * @param properties The ARIA properties and values to set.
+     * @param options Whether or not to overwrite existing ARIA attributes. This only takes effect
+     * if Element Internals are not supported and a new attribute will be sprouted.
+     */
+    [setDefaultAria](properties: Partial<ARIAMixinStrict>, options?: DefaultAriaOptions): void;
+}
+export declare abstract class WithDefaultAriaContract {
+    [setDefaultAria](properties: Partial<ARIAMixinStrict>, options?: DefaultAriaOptions): void;
+}
+/**
+ * Mixes in Element Internals functionality into a base component.
+ *
+ * @param base The base component to mix into.
+ * @returns The mixed-in base component.
+ */
+export declare function WithDefaultAria<TBase extends MixinBase>(base: TBase): AbstractConstructor<WithDefaultAriaContract> & TBase;

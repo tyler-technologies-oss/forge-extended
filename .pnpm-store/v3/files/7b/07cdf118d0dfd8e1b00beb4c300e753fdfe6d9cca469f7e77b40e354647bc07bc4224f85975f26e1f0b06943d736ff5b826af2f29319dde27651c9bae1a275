@@ -1,0 +1,93 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const DIALOG_CONSTANTS: {
+    elementName: "forge-dialog";
+    observedAttributes: {
+        OPEN: string;
+        VISIBLE: string;
+        MODE: string;
+        TYPE: string;
+        ANIMATION_TYPE: string;
+        PRESET: string;
+        PERSISTENT: string;
+        FULLSCREEN: string;
+        FULLSCREEN_THRESHOLD: string;
+        TRIGGER: string;
+        MOVEABLE: string;
+        MOVE_TARGET: string;
+        POSITION_STRATEGY: string;
+        PLACEMENT: string;
+        SIZE_STRATEGY: string;
+    };
+    classes: {
+        MOVED: string;
+        MOVING: string;
+    };
+    attributes: {
+        OPEN: string;
+        VISIBLE: string;
+        MODE: string;
+        TYPE: string;
+        ANIMATION_TYPE: string;
+        PRESET: string;
+        PERSISTENT: string;
+        FULLSCREEN: string;
+        FULLSCREEN_THRESHOLD: string;
+        TRIGGER: string;
+        MOVEABLE: string;
+        MOVE_TARGET: string;
+        POSITION_STRATEGY: string;
+        PLACEMENT: string;
+        SIZE_STRATEGY: string;
+    };
+    selectors: {
+        DIALOG: string;
+        SURFACE: string;
+        MOVE_HANDLE: string;
+        AUTOFOCUS: string;
+    };
+    events: {
+        BEFORE_CLOSE: string;
+        OPEN: string;
+        CLOSE: string;
+        MOVE_START: string;
+        MOVE: string;
+        MOVE_END: string;
+        FULLSCREEN_CHANGE: string;
+    };
+    defaults: {
+        MODE: DialogMode;
+        TYPE: DialogType;
+        ANIMATION_TYPE: DialogAnimationType;
+        PRESET: DialogPreset;
+        SIZE_STRATEGY: DialogSizeStrategy;
+        POSITION_STRATEGY: DialogPositionStrategy;
+        PLACEMENT: DialogPlacement;
+        FULLSCREEN_THRESHOLD: number;
+    };
+};
+export interface IDialogMoveEventData {
+    x: number;
+    y: number;
+}
+export interface IDialogMoveContext {
+    top: number;
+    left: number;
+    height: number;
+    width: number;
+}
+export interface IDialogMoveStartEventData extends IDialogMoveEventData {
+}
+export type DialogMode = 'modal' | 'inline-modal' | 'nonmodal';
+export type DialogType = 'dialog' | 'alertdialog';
+export type DialogAnimationType = 'none' | 'zoom' | 'fade' | 'slide' | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right';
+export type DialogPositionStrategy = 'viewport' | 'container';
+export type DialogPlacement = 'custom' | 'center' | 'top' | 'right' | 'bottom' | 'left' | 'top-right' | 'top-left' | 'bottom-right' | 'bottom-left';
+export type DialogSizeStrategy = 'content' | 'container-inline' | 'container-block';
+export type DialogPreset = 'dialog' | 'bottom-sheet' | 'top-sheet' | 'left-sheet' | 'right-sheet';
+export declare const hideBackdrop: unique symbol;
+export declare const showBackdrop: unique symbol;
+export declare const dialogStack: unique symbol;

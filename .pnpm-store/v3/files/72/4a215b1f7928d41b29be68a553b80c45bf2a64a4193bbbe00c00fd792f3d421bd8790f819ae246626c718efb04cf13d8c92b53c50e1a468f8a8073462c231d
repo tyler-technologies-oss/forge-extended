@@ -1,0 +1,37 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IViewSwitcherAdapter } from './view-switcher-adapter';
+import { ViewSwitcherAnimation } from './view-switcher-constants';
+export interface IViewSwitcherCore {
+    index: number;
+    animationType: ViewSwitcherAnimation;
+    next(): void;
+    previous(): void;
+    goToStart(): void;
+    goToEnd(): void;
+}
+export declare class ViewSwitcherCore implements IViewSwitcherCore {
+    private _adapter;
+    private _viewCount;
+    private _viewIndex;
+    private _animationType;
+    private _viewsChangedListener;
+    constructor(_adapter: IViewSwitcherAdapter);
+    initialize(): void;
+    destroy(): void;
+    private _initializeAnimationType;
+    private _onViewsChanged;
+    private _goToView;
+    private _clampedViewIndex;
+    next(): void;
+    previous(): void;
+    goToStart(): void;
+    goToEnd(): void;
+    get index(): number;
+    set index(value: number);
+    get animationType(): ViewSwitcherAnimation;
+    set animationType(value: ViewSwitcherAnimation);
+}

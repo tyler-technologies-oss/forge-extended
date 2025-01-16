@@ -1,0 +1,34 @@
+import { ForgeResizeObserverCallback, IResizeObserverOptions } from './resize-types';
+/**
+ * Provides a set of methods for observing and responding to resizing of elements.
+ */
+export declare abstract class ForgeResizeObserver {
+    private static _observer?;
+    private static _targets;
+    /**
+     * Initiates the observing of a specified `Element`. Calling with an already observed `Element`
+     * overwrites the exisiting observation. It is expected that the consumer will eventually
+     * {@link unobserve} the `Element` to avoid memory leaks.
+     *
+     * @param target An `Element` reference.
+     * @param callback A function that accepts a `ResizeObserverEntry` for the `Element`.
+     * @param options An options object allowing you to set options for the observation.
+     */
+    static observe(target: Element, callback: ForgeResizeObserverCallback, options?: IResizeObserverOptions): void;
+    /**
+     * Ends the observing of a specified `Element`.
+     *
+     * @param target An `Element` reference.
+     */
+    static unobserve(target: Element): void;
+    /**
+     * Creates or destroys the `ResizeObserver` based on whether targets exist.
+     */
+    private static _countTargets;
+    /**
+     * Runs the callback function of targets when they are resized.
+     *
+     * @param entries An array of `ResizeObserverEntry`s.
+     */
+    private static _handleResize;
+}

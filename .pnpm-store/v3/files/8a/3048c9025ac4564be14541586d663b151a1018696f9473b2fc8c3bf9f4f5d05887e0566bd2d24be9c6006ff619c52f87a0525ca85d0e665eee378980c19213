@@ -1,0 +1,112 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { PositionPlacement } from '../core/utils/position-utils';
+import { CascadingListDropdownAwareCore } from '../list-dropdown';
+import type { IOverlayOffset } from '../overlay/overlay-constants';
+import { IMenuOption } from './index';
+import { IMenuAdapter } from './menu-adapter';
+import { IMenuOptionGroup, IMenuSelectEventData, MenuMode, MenuOptionBuilder, MenuOptionFactory } from './menu-constants';
+export interface IMenuCore {
+    initialize(): void;
+    destroy(): void;
+    onKeydown(evt: KeyboardEvent): void;
+    open: boolean;
+    options: Array<IMenuOption | IMenuOptionGroup>;
+    optionsFactory: MenuOptionFactory | undefined;
+    selectedIndex: number;
+    selectedValue: any;
+    placement: PositionPlacement;
+    fallbackPlacements: PositionPlacement[];
+    dense: boolean;
+    iconClass: string;
+    persistSelection: boolean;
+    mode: MenuMode;
+    popupOffset: IOverlayOffset;
+    optionBuilder: MenuOptionBuilder | undefined;
+    activateFirstOption(): void;
+}
+export declare class MenuCore extends CascadingListDropdownAwareCore<IMenuOption | IMenuOptionGroup> implements IMenuCore {
+    private _adapter;
+    private _optionsFactory;
+    private _placement;
+    private _fallbackPlacements;
+    private _dense;
+    private _selectedValue;
+    private _iconClass;
+    private _persistSelection;
+    private _mode;
+    private _popupOffset;
+    private _optionBuilder;
+    private _identifier;
+    private _clickListener;
+    private _blurListener;
+    private _selectListener;
+    private _keydownListener;
+    private _activeChangeListener;
+    constructor(_adapter: IMenuAdapter);
+    initialize(): void;
+    destroy(): void;
+    activateFirstOption(): void;
+    private _applyMode;
+    private _initializeInteractionListeners;
+    private _destroyInteractionListeners;
+    protected _attachCascadingListeners(): void;
+    protected _detachCascadingListeners(): void;
+    private get _nonDividerOptions();
+    private get _flatOptions();
+    private _flattenOptions;
+    private _onTargetClick;
+    private _onTargetBlur;
+    private _onActiveOptionChanged;
+    onKeydown(evt: KeyboardEvent): void;
+    private _openMenu;
+    private _closeMenu;
+    private _loadOptionsAsync;
+    private _handleSelectEvent;
+    private _selectActiveOption;
+    private _selectOptionByIndex;
+    private _getSelectedValues;
+    /** Called when a child menu option is selected. */
+    protected _onCascadingOptionSelected(data: IMenuSelectEventData): void;
+    /** Called when a child menu is opened off of one of our menu options. */
+    protected _onCascadingChildOpen(index: number): void;
+    /** Called when a child menu is closed off of one of our menu options. */
+    protected _onCascadingChildClose(index: number): void;
+    protected _closeDropdown(): void;
+    protected _openDropdown({ fromKeyboard }?: {
+        fromKeyboard?: boolean;
+    }): void;
+    protected _setCascadeTargetInactive(): void;
+    protected _isOwnElement(element: Element): boolean;
+    private _createCascadingElement;
+    private _mapIconToLeadingIcon;
+    get open(): boolean;
+    set open(value: boolean);
+    set options(options: IMenuOption[]);
+    get options(): IMenuOption[];
+    set optionsFactory(factory: MenuOptionFactory | undefined);
+    set selectedIndex(value: number);
+    get selectedIndex(): number;
+    set selectedValue(value: any);
+    get selectedValue(): any;
+    get placement(): PositionPlacement;
+    set placement(value: PositionPlacement);
+    get fallbackPlacements(): PositionPlacement[];
+    set fallbackPlacements(value: PositionPlacement[]);
+    get dense(): boolean;
+    set dense(value: boolean);
+    get iconClass(): string;
+    set iconClass(value: string);
+    get persistSelection(): boolean;
+    set persistSelection(value: boolean);
+    get mode(): MenuMode;
+    set mode(value: MenuMode);
+    get popupOffset(): IOverlayOffset;
+    set popupOffset(value: IOverlayOffset);
+    get optionBuilder(): MenuOptionBuilder | undefined;
+    set optionBuilder(cb: MenuOptionBuilder | undefined);
+    get popupElement(): HTMLElement | null;
+}

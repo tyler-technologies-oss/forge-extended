@@ -1,0 +1,37 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { TabComponent as TabComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class TabComponent {
+    protected elementRef: ElementRef<TabComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-tab element. */
+    readonly nativeElement: TabComponentCustomElement;
+    /** The disabled state of the tab. Should not be set if using the disabled property on `forge-tab-bar`. */
+    set disabled(value: TabComponentCustomElement['disabled']);
+    get disabled(): TabComponentCustomElement['disabled'];
+    /** The selected state of the tab. */
+    set selected(value: TabComponentCustomElement['selected']);
+    get selected(): TabComponentCustomElement['selected'];
+    /** Controls whether the tab is vertical or horizontal. */
+    set vertical(value: TabComponentCustomElement['vertical']);
+    get vertical(): TabComponentCustomElement['vertical'];
+    /** Controls whether the tab is taller to allow for slotted leading/trailing elements. */
+    set stacked(value: TabComponentCustomElement['stacked']);
+    get stacked(): TabComponentCustomElement['stacked'];
+    /** Controls whether the tab is styled as secondary tab navigation. */
+    set secondary(value: TabComponentCustomElement['secondary']);
+    get secondary(): TabComponentCustomElement['secondary'];
+    /** Controls whether the tab indicator is rendered on the opposite side of the tab. */
+    set inverted(value: TabComponentCustomElement['inverted']);
+    get inverted(): TabComponentCustomElement['inverted'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<TabComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<TabComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<TabComponent, "forge-tab", never, { "disabled": { "alias": "disabled"; "required": false; }; "selected": { "alias": "selected"; "required": false; }; "vertical": { "alias": "vertical"; "required": false; }; "stacked": { "alias": "stacked"; "required": false; }; "secondary": { "alias": "secondary"; "required": false; }; "inverted": { "alias": "inverted"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_disabled: unknown;
+    static ngAcceptInputType_selected: unknown;
+    static ngAcceptInputType_vertical: unknown;
+    static ngAcceptInputType_stacked: unknown;
+    static ngAcceptInputType_secondary: unknown;
+    static ngAcceptInputType_inverted: unknown;
+}

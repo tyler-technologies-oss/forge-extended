@@ -1,0 +1,40 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { ListComponent as ListComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class ListComponent {
+    protected elementRef: ElementRef<ListComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-list element. */
+    readonly nativeElement: ListComponentCustomElement;
+    /** Whether the list has all dense items or not. */
+    set dense(value: ListComponentCustomElement['dense']);
+    get dense(): ListComponentCustomElement['dense'];
+    /** Whether the list items within this list are indented. Default is false. */
+    set indented(value: ListComponentCustomElement['indented']);
+    get indented(): ListComponentCustomElement['indented'];
+    /** The selected list item value(s). */
+    set selectedValue(value: ListComponentCustomElement['selectedValue']);
+    get selectedValue(): ListComponentCustomElement['selectedValue'];
+    /** Whether the list has all two-line items or not. */
+    set twoLine(value: ListComponentCustomElement['twoLine']);
+    get twoLine(): ListComponentCustomElement['twoLine'];
+    /** Whether the list has all three-line items or not. */
+    set threeLine(value: ListComponentCustomElement['threeLine']);
+    get threeLine(): ListComponentCustomElement['threeLine'];
+    /** Whether the list has all items that wrap their text or not. */
+    set wrap(value: ListComponentCustomElement['wrap']);
+    get wrap(): ListComponentCustomElement['wrap'];
+    /** Controls whether the list items will automatically attach themselves to interactive slotted elements or not. */
+    set noninteractive(value: ListComponentCustomElement['noninteractive']);
+    get noninteractive(): ListComponentCustomElement['noninteractive'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<ListComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<ListComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ListComponent, "forge-list", never, { "dense": { "alias": "dense"; "required": false; }; "indented": { "alias": "indented"; "required": false; }; "selectedValue": { "alias": "selectedValue"; "required": false; }; "twoLine": { "alias": "twoLine"; "required": false; }; "threeLine": { "alias": "threeLine"; "required": false; }; "wrap": { "alias": "wrap"; "required": false; }; "noninteractive": { "alias": "noninteractive"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_dense: unknown;
+    static ngAcceptInputType_indented: unknown;
+    static ngAcceptInputType_twoLine: unknown;
+    static ngAcceptInputType_threeLine: unknown;
+    static ngAcceptInputType_wrap: unknown;
+    static ngAcceptInputType_noninteractive: unknown;
+}

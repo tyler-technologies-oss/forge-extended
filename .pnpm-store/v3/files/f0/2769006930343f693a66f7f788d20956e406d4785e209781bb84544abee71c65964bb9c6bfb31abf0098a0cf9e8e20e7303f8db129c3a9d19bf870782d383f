@@ -1,0 +1,230 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { isFunction } from '@tylertech/forge-core';
+import { AVATAR_CONSTANTS } from '../../avatar';
+import { PROFILE_CARD_CONSTANTS } from '../../profile-card';
+import { APP_BAR_PROFILE_BUTTON_CONSTANTS } from './app-bar-profile-button-constants';
+export class AppBarProfileButtonCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._avatarLetterCount = AVATAR_CONSTANTS.numbers.DEFAULT_LETTER_COUNT;
+        this._showSignOutButton = PROFILE_CARD_CONSTANTS.defaults.SHOW_SIGN_OUT_BUTTON;
+        this._showProfileButton = PROFILE_CARD_CONSTANTS.defaults.SHOW_PROFILE_BUTTON;
+        this._signOutButtonText = PROFILE_CARD_CONSTANTS.defaults.SIGN_OUT_BUTTON_TEXT;
+        this._profileButtonText = PROFILE_CARD_CONSTANTS.defaults.PROFILE_BUTTON_TEXT;
+        this._open = false;
+        this._isInitialized = false;
+        this._clickListener = this._onClick.bind(this);
+        this._dismissListener = this._onDismiss.bind(this);
+        this._keydownListener = this._onKeydown.bind(this);
+        this._profileButtonListener = this._onProfileButtonClick.bind(this);
+        this._signOutButtonListener = this._onSignOutButtonClick.bind(this);
+    }
+    initialize() {
+        this._adapter.initialize();
+        this._adapter.setClickListener(this._clickListener);
+        this._adapter.setAvatarImageUrl(this._avatarImageUrl);
+        this._adapter.setAvatarLetterCount(this._avatarLetterCount);
+        this._adapter.setAvatarText(this._avatarText);
+        this._adapter.setAvatarIcon(this._avatarIcon);
+        this._isInitialized = true;
+    }
+    destroy() {
+        this._adapter.removeDocumentListener('keydown', this._keydownListener);
+        this._adapter.removeClickListener(this._clickListener);
+        this._adapter.destroy();
+        this._isInitialized = false;
+    }
+    _onClick(_evt) {
+        if (!this._open) {
+            this._openDropdown();
+        }
+        else {
+            this._closeDropdown();
+        }
+    }
+    _onKeydown(evt) {
+        if (evt.key === 'Escape') {
+            this._closeDropdown();
+            this._adapter.focusButtonElement();
+        }
+    }
+    _onDismiss() {
+        this._closeDropdown();
+    }
+    _onProfileButtonClick() {
+        this._adapter.dispatchHostEvent(new CustomEvent(PROFILE_CARD_CONSTANTS.events.PROFILE, { bubbles: true, composed: true }));
+        this._closeDropdown();
+    }
+    _onSignOutButtonClick() {
+        this._adapter.dispatchHostEvent(new CustomEvent(PROFILE_CARD_CONSTANTS.events.SIGN_OUT, { bubbles: true, composed: true }));
+        this._closeDropdown();
+    }
+    _openDropdown() {
+        /* c8 ignore next 3 */
+        if (this._open) {
+            return;
+        }
+        const profileCardConfig = {
+            fullName: this._fullName,
+            email: this._email,
+            signOut: this._showSignOutButton,
+            profile: this._showProfileButton,
+            signOutButtonText: this._signOutButtonText,
+            profileButtonText: this._profileButtonText,
+            avatarText: this._avatarText,
+            avatarIcon: this._avatarIcon,
+            avatarImageUrl: this._avatarImageUrl,
+            avatarLetterCount: this._avatarLetterCount
+        };
+        const profileCardContent = this._profileCardBuilder ? this._profileCardBuilder() : undefined;
+        this._cancelDismissListener = this._adapter.openPopup(profileCardConfig, this._dismissListener, this._profileButtonListener, this._signOutButtonListener, profileCardContent);
+        this._adapter.addDocumentListener('keydown', this._keydownListener);
+        this._open = true;
+        this._adapter.toggleHostAttribute(APP_BAR_PROFILE_BUTTON_CONSTANTS.attributes.OPEN, this._open);
+    }
+    _closeDropdown() {
+        /* c8 ignore next 3 */
+        if (!this._open) {
+            return;
+        }
+        if (this._cancelDismissListener && isFunction(this._cancelDismissListener)) {
+            this._cancelDismissListener();
+            this._cancelDismissListener = undefined;
+        }
+        this._open = false;
+        this._adapter.closePopup();
+        this._adapter.toggleHostAttribute(APP_BAR_PROFILE_BUTTON_CONSTANTS.attributes.OPEN, this._open);
+    }
+    get fullName() {
+        return this._fullName;
+    }
+    set fullName(value) {
+        if (this._fullName !== value) {
+            this._fullName = value;
+            this.avatarText = this._fullName;
+            this._adapter.setHostAttribute(APP_BAR_PROFILE_BUTTON_CONSTANTS.attributes.FULL_NAME, this._fullName);
+        }
+    }
+    get email() {
+        return this._email;
+    }
+    set email(value) {
+        if (this._email !== value) {
+            this._email = value;
+            this._adapter.setHostAttribute(APP_BAR_PROFILE_BUTTON_CONSTANTS.attributes.EMAIL, this._email);
+        }
+    }
+    get avatarImageUrl() {
+        return this._avatarImageUrl;
+    }
+    set avatarImageUrl(value) {
+        if (this._avatarImageUrl !== value) {
+            this._avatarImageUrl = value;
+            if (this._isInitialized) {
+                this._adapter.setAvatarImageUrl(this._avatarImageUrl);
+                this._adapter.setHostAttribute(APP_BAR_PROFILE_BUTTON_CONSTANTS.attributes.AVATAR_IMAGE_URL, this._avatarImageUrl);
+            }
+        }
+    }
+    get avatarLetterCount() {
+        return this._avatarLetterCount;
+    }
+    set avatarLetterCount(value) {
+        if (this._avatarLetterCount !== value) {
+            this._avatarLetterCount = value;
+            if (this._isInitialized) {
+                this._adapter.setAvatarLetterCount(this._avatarLetterCount);
+                this._adapter.setHostAttribute(APP_BAR_PROFILE_BUTTON_CONSTANTS.attributes.AVATAR_LETTER_COUNT, String(this._avatarLetterCount));
+            }
+        }
+    }
+    get avatarText() {
+        return this._avatarText;
+    }
+    set avatarText(value) {
+        if (this._avatarText !== value) {
+            this._avatarText = value;
+            if (this._isInitialized) {
+                this._adapter.setAvatarText(this._avatarText);
+                this._adapter.toggleHostAttribute(APP_BAR_PROFILE_BUTTON_CONSTANTS.attributes.AVATAR_TEXT, !!this._avatarText, this._avatarText);
+            }
+        }
+    }
+    get avatarIcon() {
+        return this._avatarIcon;
+    }
+    set avatarIcon(value) {
+        if (this._avatarIcon !== value) {
+            this._avatarIcon = value;
+            if (this._isInitialized) {
+                this._adapter.setAvatarIcon(this._avatarIcon);
+                this._adapter.toggleHostAttribute(APP_BAR_PROFILE_BUTTON_CONSTANTS.attributes.AVATAR_ICON, !!this._avatarIcon, this._avatarIcon);
+            }
+        }
+    }
+    get signOutButton() {
+        return this._showSignOutButton;
+    }
+    set signOutButton(value) {
+        value = Boolean(value);
+        if (this._showSignOutButton !== value) {
+            this._showSignOutButton = value;
+            this._adapter.toggleHostAttribute(APP_BAR_PROFILE_BUTTON_CONSTANTS.attributes.SIGN_OUT_BUTTON, this._showSignOutButton);
+        }
+    }
+    get profileButton() {
+        return this._showProfileButton;
+    }
+    set profileButton(value) {
+        value = Boolean(value);
+        if (this._showProfileButton !== value) {
+            this._showProfileButton = value;
+            this._adapter.toggleHostAttribute(APP_BAR_PROFILE_BUTTON_CONSTANTS.attributes.PROFILE_BUTTON, this._showProfileButton);
+        }
+    }
+    get signOutButtonText() {
+        return this._signOutButtonText;
+    }
+    set signOutButtonText(value) {
+        if (this._signOutButtonText !== value) {
+            this._signOutButtonText = value;
+            this._adapter.setSignOutButtonText(value);
+        }
+    }
+    get profileButtonText() {
+        return this._profileButtonText;
+    }
+    set profileButtonText(value) {
+        if (this._profileButtonText !== value) {
+            this._profileButtonText = value;
+            this._adapter.setProfileButtonText(value);
+        }
+    }
+    get open() {
+        return this._open;
+    }
+    set open(value) {
+        value = Boolean(value);
+        if (this._open !== value) {
+            if (value) {
+                this._openDropdown();
+            }
+            else {
+                this._closeDropdown();
+            }
+        }
+    }
+    get popupElement() {
+        return this._adapter.popupElement;
+    }
+    get profileCardBuilder() {
+        return this._profileCardBuilder;
+    }
+    set profileCardBuilder(fn) {
+        this._profileCardBuilder = fn;
+    }
+}

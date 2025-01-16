@@ -1,0 +1,26 @@
+/**
+ * @license
+ * Copyright Google LLC All Rights Reserved.
+ *
+ * Use of this source code is governed by an MIT-style license that can be
+ * found in the LICENSE file at https://angular.io/license
+ */
+/**
+ * Class used to detect the current platform by comparing the userAgent strings and
+ * checking browser-specific global properties.
+ * @docs-private
+ */
+export declare class Platform {
+    static get isBrowser(): boolean;
+    static get isMobile(): boolean;
+    /** Layout Engines */
+    static get EDGE(): boolean;
+    static get TRIDENT(): boolean;
+    static get BLINK(): boolean;
+    static get WEBKIT(): boolean;
+    /** Browsers and Platform Types */
+    static get IOS(): boolean;
+    static get FIREFOX(): boolean;
+    static get ANDROID(): boolean;
+    SAFARI(): boolean;
+}

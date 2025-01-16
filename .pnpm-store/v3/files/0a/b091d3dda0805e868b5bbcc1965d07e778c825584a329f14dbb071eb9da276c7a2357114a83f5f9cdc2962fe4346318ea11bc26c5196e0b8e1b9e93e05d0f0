@@ -1,0 +1,19 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponent, IBaseComponent } from '../../core/base/base-component';
+export interface IViewComponent extends IBaseComponent {
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-view': IViewComponent;
+    }
+}
+/**
+ * @tag forge-view
+ */
+export declare class ViewComponent extends BaseComponent implements IViewComponent {
+    constructor();
+}

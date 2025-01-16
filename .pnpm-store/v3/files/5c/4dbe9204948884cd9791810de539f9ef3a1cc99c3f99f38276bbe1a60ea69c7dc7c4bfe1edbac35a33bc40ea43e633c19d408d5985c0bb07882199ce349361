@@ -1,0 +1,209 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { elementFromHTML, getShadowElement, toggleAttribute, walkUpUntil } from '@tylertech/forge-core';
+import { BaseAdapter } from '../../core/base/base-adapter';
+import { FOCUS_INDICATOR_CONSTANTS } from '../../focus-indicator';
+import { STATE_LAYER_CONSTANTS } from '../../state-layer';
+import { CHIP_SET_CONSTANTS } from '../chip-set/chip-set-constants';
+import { CHIP_CONSTANTS } from './chip-constants';
+const checkmarkTemplate = '<div class=\"checkmark\" aria-hidden=\"true\"><svg viewBox=\"-2 -3 30 30\"><path fill=\"none\" stroke=\"black\" d=\"M1.73,12.91 8.1,19.28 22.79,4.59\"/></svg></div>';
+import { replaceElement } from '../../core/utils/utils';
+export class ChipAdapter extends BaseAdapter {
+    constructor(_component) {
+        super(_component);
+        this._component = _component;
+        this._rootElement = getShadowElement(this._component, CHIP_CONSTANTS.selectors.ROOT);
+        this._triggerElement = getShadowElement(this._component, CHIP_CONSTANTS.selectors.TRIGGER);
+        this._startSlotElement = getShadowElement(this._component, 'slot[name=start]');
+        this._focusIndicatorElement = getShadowElement(this._component, FOCUS_INDICATOR_CONSTANTS.elementName);
+        this._stateLayerElement = getShadowElement(this._component, STATE_LAYER_CONSTANTS.elementName);
+    }
+    get removeButtonElement() {
+        return this._removeButtonElement;
+    }
+    get isAnchor() {
+        return this._triggerElement.localName === 'a';
+    }
+    clickTrigger() {
+        this._triggerElement.click();
+    }
+    addRootListener(type, listener) {
+        this._rootElement.addEventListener(type, listener);
+    }
+    removeRootListener(type, listener) {
+        this._rootElement.removeEventListener(type, listener);
+    }
+    setAnchor(value) {
+        if (value) {
+            if (this._triggerElement.localName === 'button') {
+                const anchor = this._createAnchorElement();
+                this._triggerElement = replaceElement(this._triggerElement, anchor);
+            }
+        }
+        else {
+            if (this._triggerElement.localName === 'a') {
+                const button = this._createButtonElement();
+                this._triggerElement = replaceElement(this._triggerElement, button);
+            }
+        }
+        if (this._stateLayerElement.targetElement !== this._triggerElement) {
+            this._stateLayerElement.targetElement = this._triggerElement;
+        }
+        if (this._focusIndicatorElement.targetElement !== this._triggerElement) {
+            this._focusIndicatorElement.targetElement = this._triggerElement;
+        }
+    }
+    setAnchorProperty(name, value) {
+        if (!(this._triggerElement.localName === 'a')) {
+            return;
+        }
+        if (this._triggerElement instanceof HTMLAnchorElement) {
+            this._triggerElement[name] = value;
+        }
+    }
+    setCheckmarkVisibility(value) {
+        if (value) {
+            if (!this._checkmarkElement) {
+                this._checkmarkElement = elementFromHTML(checkmarkTemplate);
+            }
+            this._rootElement.insertBefore(this._checkmarkElement, this._rootElement.firstChild);
+        }
+        else if (this._checkmarkElement && this._checkmarkElement.isConnected) {
+            this._checkmarkElement.remove();
+        }
+    }
+    setDisabled(value) {
+        if (this._triggerElement instanceof HTMLAnchorElement) {
+            if (!this._focusIndicatorElement.isConnected) {
+                this._rootElement.append(this._focusIndicatorElement);
+            }
+            if (!this._stateLayerElement.isConnected) {
+                this._rootElement.append(this._stateLayerElement);
+            }
+            return;
+        }
+        if (this._removeButtonElement) {
+            this._removeButtonElement.disabled = value;
+        }
+        this._triggerElement.disabled = value;
+        this._triggerElement.tabIndex = value ? -1 : 0;
+        if (value) {
+            this._focusIndicatorElement.remove();
+            this._stateLayerElement.remove();
+        }
+        else {
+            this._rootElement.append(this._focusIndicatorElement, this._stateLayerElement);
+        }
+    }
+    setSelected(value) {
+        if (this._triggerElement instanceof HTMLAnchorElement) {
+            return;
+        }
+        toggleAttribute(this._triggerElement, value, 'aria-pressed', String(value));
+    }
+    toggleFieldVariant(value) {
+        if (value) {
+            if (!this._stateLayerElement.isConnected) {
+                this._rootElement.append(this._stateLayerElement);
+            }
+            if (this._focusIndicatorElement.targetElement !== this._triggerElement) {
+                this._focusIndicatorElement.targetElement = this._triggerElement;
+            }
+        }
+        else {
+            this._stateLayerElement.remove();
+        }
+    }
+    setDeleteButtonVisibility(value) {
+        if (value) {
+            if (!this._removeButtonElement) {
+                this._removeButtonElement = this._createRemoveButton();
+            }
+            this._rootElement.appendChild(this._removeButtonElement);
+        }
+        else {
+            this._removeButtonElement?.remove();
+        }
+    }
+    setStartSlotVisibility(value) {
+        this._startSlotElement.style.display = value ? '' : 'none';
+    }
+    getChipSetState() {
+        let state = null;
+        const chipSet = walkUpUntil(this._component, node => node && node.nodeName === CHIP_SET_CONSTANTS.elementName.toUpperCase());
+        if (chipSet) {
+            state = {
+                type: chipSet.type,
+                disabled: chipSet.disabled,
+                dense: chipSet.dense
+            };
+        }
+        return state;
+    }
+    focusTrigger(options) {
+        this._triggerElement.focus({ preventScroll: true, ...options });
+    }
+    tryFocusRemoveButton() {
+        if (this._removeButtonElement) {
+            this._removeButtonElement.focus({ preventScroll: true, focusVisible: true });
+        }
+        else {
+            this.focusTrigger();
+        }
+    }
+    clickRemoveButton() {
+        this._removeButtonElement?.click();
+    }
+    animateStateLayer() {
+        this._stateLayerElement.playAnimation();
+    }
+    _createRemoveButton() {
+        const buttonEl = document.createElement('forge-icon-button');
+        buttonEl.density = 'small';
+        buttonEl.id = 'remove-button';
+        buttonEl.classList.add('remove');
+        buttonEl.tabIndex = -1;
+        buttonEl.setAttribute('aria-label', `Remove ${this._component.innerText}`);
+        buttonEl.setAttribute('part', 'remove-button');
+        const iconEl = document.createElement('forge-icon');
+        iconEl.name = 'close';
+        buttonEl.appendChild(iconEl);
+        return buttonEl;
+    }
+    _createAnchorElement() {
+        const anchor = document.createElement('a');
+        anchor.id = 'trigger';
+        anchor.setAttribute('part', 'trigger');
+        anchor.classList.add('trigger');
+        if (this._component.href) {
+            anchor.href = this._component.href;
+        }
+        if (this._component.target) {
+            anchor.target = this._component.target;
+        }
+        if (this._component.download) {
+            anchor.download = this._component.download;
+        }
+        if (this._component.rel) {
+            anchor.rel = this._component.rel;
+        }
+        return anchor;
+    }
+    _createButtonElement() {
+        const buttonEl = document.createElement('button');
+        buttonEl.type = 'button';
+        buttonEl.id = 'trigger';
+        buttonEl.setAttribute('part', 'trigger');
+        buttonEl.classList.add('trigger');
+        if (this._component.disabled) {
+            buttonEl.disabled = true;
+        }
+        if (this._component.selected) {
+            buttonEl.setAttribute('aria-pressed', 'true');
+        }
+        return buttonEl;
+    }
+}

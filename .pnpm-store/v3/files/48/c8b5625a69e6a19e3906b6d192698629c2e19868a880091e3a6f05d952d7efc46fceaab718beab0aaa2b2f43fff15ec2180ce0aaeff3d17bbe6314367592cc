@@ -1,0 +1,51 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponentDelegate } from '../core/delegates/base-component-delegate';
+import { LABEL_VALUE_CONSTANTS } from './label-value-constants';
+export class LabelValueComponentDelegate extends BaseComponentDelegate {
+    constructor(config) {
+        super(config);
+    }
+    get labelElement() {
+        return this._labelElement;
+    }
+    get valueElement() {
+        return this._valueElement;
+    }
+    get labelText() {
+        return this._labelElement.textContent ?? '';
+    }
+    set labelText(value) {
+        this._labelElement.textContent = value;
+    }
+    get valueText() {
+        return this._valueElement.textContent ?? '';
+    }
+    set valueText(value) {
+        this._valueElement.textContent = value;
+    }
+    _build() {
+        return document.createElement(LABEL_VALUE_CONSTANTS.elementName);
+    }
+    _configure() {
+        if (this._config.options?.labelText) {
+            this._labelElement = this._createTextElement(this._config.options.labelText, 'label');
+        }
+        if (this._config.options?.valueText) {
+            this._valueElement = this._createTextElement(this._config.options.valueText, 'value');
+        }
+        if (this._config.options?.iconElement) {
+            this._element.appendChild(this._config.options.iconElement);
+        }
+    }
+    _createTextElement(text, slot) {
+        const span = document.createElement('span');
+        span.textContent = text;
+        span.slot = slot;
+        this._element.appendChild(span);
+        return span;
+    }
+}

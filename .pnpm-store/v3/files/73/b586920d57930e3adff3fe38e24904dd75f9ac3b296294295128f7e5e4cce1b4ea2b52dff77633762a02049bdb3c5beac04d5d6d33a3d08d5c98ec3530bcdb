@@ -1,0 +1,145 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IListDropdownAware, ListDropdownAware } from '../list-dropdown/list-dropdown-aware';
+import { AutocompleteFilterCallback, AutocompleteMode, AutocompleteOptionBuilder, AutocompleteSelectedTextBuilder, IAutocompleteForceFilterOptions, IAutocompleteOption, IAutocompleteOptionGroup, IAutocompleteSelectEventData } from './autocomplete-constants';
+export interface IAutocompleteComponent extends IListDropdownAware {
+    mode: `${AutocompleteMode}`;
+    multiple: boolean;
+    value: any;
+    debounce: number;
+    filterOnFocus: boolean;
+    filterFocusFirst: boolean;
+    allowUnmatched: boolean;
+    matchKey: string | null | undefined;
+    popupTarget: string;
+    filterText: string;
+    filter: AutocompleteFilterCallback | null | undefined;
+    optionBuilder: AutocompleteOptionBuilder | null | undefined;
+    selectedTextBuilder: AutocompleteSelectedTextBuilder;
+    popupElement: HTMLElement | null;
+    beforeValueChange: (value: any) => boolean | Promise<boolean>;
+    isInitialized: boolean;
+    open: boolean;
+    appendOptions(options: IAutocompleteOption[] | IAutocompleteOptionGroup[]): void;
+    openDropdown(): void;
+    closeDropdown(): void;
+    forceFilter(opts?: IAutocompleteForceFilterOptions): void;
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-autocomplete': IAutocompleteComponent;
+    }
+    interface HTMLElementEventMap {
+        'forge-autocomplete-change': CustomEvent<any>;
+        'forge-autocomplete-select': CustomEvent<IAutocompleteSelectEventData>;
+        'forge-autocomplete-scrolled-bottom': CustomEvent<void>;
+    }
+}
+/**
+ * @tag forge-autocomplete
+ *
+ * @event {CustomEvent<any>} forge-autocomplete-change - Fired when the value changes.
+ * @event {CustomEvent<IAutocompleteSelectEventData>} forge-autocomplete-select -  Fired when an option is selected. Only applies when in "stateless" `mode`.
+ * @event {CustomEvent<void>} forge-autocomplete-scrolled-bottom - Fired when the dropdown is scrolled to the bottom. Only applies when `observe-scroll` is enabled.
+ */
+export declare class AutocompleteComponent extends ListDropdownAware implements IAutocompleteComponent {
+    static get observedAttributes(): string[];
+    private _core;
+    constructor();
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    /**
+     * Gets/sets the interaction mode.
+     * @default 'default'
+     * @attribute
+     */
+    mode: `${AutocompleteMode}`;
+    /**
+     * Gets/sets the multi-select state.
+     * @default false
+     * @attribute
+     */
+    multiple: boolean;
+    /**
+     * Gets/sets the value.
+     */
+    value: any;
+    /**
+     * Gets/sets the debounce delay (milliseconds) for keyboard events.
+     * @default 500
+     * @attribute
+     */
+    debounce: number;
+    /**
+     * Gets/sets filter on focus settings which controls whether the dropdown displays automatically when focused.
+     * @default true
+     * @attribute filter-on-focus
+     */
+    filterOnFocus: boolean;
+    /**
+     * Gets/sets whether the first option in the dropdown will be focused automatically when opened or not.
+     * @default true
+     * @attribute filter-focus-first
+     */
+    filterFocusFirst: boolean;
+    /**
+     * Controls whether unmatched text entered by the user will stay visible an option in the dropdown is not found.
+     * @default false
+     * @attribute allow-unmatched
+     */
+    allowUnmatched: boolean;
+    /**
+     * Gets/sets the selector that will be used to find an element to attach the popup to. Defaults to the input element.
+     * @attribute popup-target
+     */
+    popupTarget: string;
+    /**
+     * Gets/sets the filter text.
+     *
+     * Setting the filter text only applies when allowUnmatched is enabled.
+     */
+    filterText: string;
+    /** Sets the option builder callback that will be executed when building the option list in the dropdown. */
+    optionBuilder: AutocompleteOptionBuilder | null | undefined;
+    /** Sets the filter callback that will be executed when fetching options for the autocomplete dropdown. */
+    filter: AutocompleteFilterCallback | null | undefined;
+    /** Sets the selected text builder callback that will be executed when getting the selected text. */
+    selectedTextBuilder: AutocompleteSelectedTextBuilder;
+    /**
+     * Controls the open state of the dropdown.
+     * @default false
+     * @attribute
+     */
+    open: boolean;
+    /**
+     * Gets/sets the property key to match the value to an option.
+     * @attribute match-key
+     */
+    matchKey: string | null | undefined;
+    /**
+     * Returns whether the component has been initialized or not yet.
+     * @readonly
+     */
+    isInitialized: boolean;
+    /**
+     * Gets the currently active popup element when the dropdown is open.
+     * @readonly
+     */
+    popupElement: HTMLElement | null;
+    /** Sets the callback to be executed when the user selects an option, before the UI is updated to allow for validation. */
+    beforeValueChange: (value: any) => boolean | Promise<boolean>;
+    /** Adds options to the dropdown while it is open. Has no effect if the dropdown is closed.  */
+    appendOptions(options: IAutocompleteOption[] | IAutocompleteOptionGroup[]): void;
+    /** Opens the dropdown. */
+    openDropdown(): void;
+    /** Closes the dropdown. */
+    closeDropdown(): void;
+    /**
+     * Forces the filter callback to be executed to update the current selection state with new options.
+     */
+    forceFilter(opts?: IAutocompleteForceFilterOptions): void;
+}

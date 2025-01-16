@@ -1,0 +1,30 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { setDefaultAria } from '../../constants';
+import { BaseAdapter } from '../../core/base/';
+import { RADIO_CONSTANTS } from '../radio/radio-constants';
+export class RadioGroupAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+    }
+    attachLabel(label) {
+        label.nonInteractive = true;
+        label.forElement = this._component;
+    }
+    setDisabled(value) {
+        this._component[setDefaultAria]({ ariaDisabled: value ? 'true' : null });
+        this._disableRadios(value);
+    }
+    trySetRequired() {
+        const required = Array.from(this._component.querySelectorAll(RADIO_CONSTANTS.elementName)).some(radio => radio.required);
+        this._component[setDefaultAria]({ ariaRequired: required ? 'true' : null });
+    }
+    _disableRadios(value) {
+        this._component.querySelectorAll(RADIO_CONSTANTS.elementName).forEach(radio => {
+            radio.disabled = value;
+        });
+    }
+}

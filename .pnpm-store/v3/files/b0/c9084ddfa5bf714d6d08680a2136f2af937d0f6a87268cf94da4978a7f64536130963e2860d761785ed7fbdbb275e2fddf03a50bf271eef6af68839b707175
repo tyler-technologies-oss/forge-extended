@@ -1,0 +1,99 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const FIELD_CONSTANTS: {
+    elementName: "forge-field";
+    observedAttributes: {
+        MULTILINE: string;
+        FOCUS_INDICATOR_ALLOW_FOCUS: string;
+        FOCUS_INDICATOR_FOCUS_MODE: string;
+        LABEL_POSITION: string;
+        LABEL_ALIGNMENT: string;
+        INVALID: string;
+        REQUIRED: string;
+        OPTIONAL: string;
+        DISABLED: string;
+        FLOAT_LABEL: string;
+        VARIANT: string;
+        THEME: string;
+        SHAPE: string;
+        DENSITY: string;
+        DENSE: string;
+        POPOVER_ICON: string;
+        POPOVER_EXPANDED: string;
+        SUPPORT_TEXT_INSET: string;
+    };
+    attributes: {
+        MULTI_INPUT_SEPARATOR: string;
+        MULTILINE: string;
+        FOCUS_INDICATOR_ALLOW_FOCUS: string;
+        FOCUS_INDICATOR_FOCUS_MODE: string;
+        LABEL_POSITION: string;
+        LABEL_ALIGNMENT: string;
+        INVALID: string;
+        REQUIRED: string;
+        OPTIONAL: string;
+        DISABLED: string;
+        FLOAT_LABEL: string;
+        VARIANT: string;
+        THEME: string;
+        SHAPE: string;
+        DENSITY: string;
+        DENSE: string;
+        POPOVER_ICON: string;
+        POPOVER_EXPANDED: string;
+        SUPPORT_TEXT_INSET: string;
+    };
+    classes: {
+        FLOATING_IN: string;
+        FLOATING_OUT: string;
+        HAS_LABEL: string;
+        HAS_START: string;
+        HAS_END: string;
+        HAS_ACCESSORY: string;
+        HAS_SUPPORT_START: string;
+        HAS_SUPPORT_END: string;
+    };
+    selectors: {
+        ROOT: string;
+        CONTAINER: string;
+        INPUT_CONTAINER: string;
+        LABEL: string;
+        LABEL_SLOT: string;
+        POPOVER_ICON: string;
+        LABEL_ELEMENTS: string;
+        POPOVER_TARGET: string;
+    };
+    parts: {
+        ROOT: string;
+        LABEL: string;
+        SURFACE: string;
+        START: string;
+        INPUT: string;
+        END: string;
+        POPOVER_ICON: string;
+        ACCESSORY: string;
+        SUPPORT_TEXT: string;
+        SUPPORT_TEXT_END: string;
+        FOCUS_INDICATOR: string;
+    };
+    events: {
+        POPOVER_ICON_CLICK: string;
+        POPOVER_ICON_MOUSEDOWN: string;
+    };
+    defaults: {
+        DEFAULT_VARIANT: import("./base/base-field-constants").FieldVariant;
+        DEFAULT_THEME: import("./base/base-field-constants").FieldTheme;
+        DEFAULT_SHAPE: import("./base/base-field-constants").FieldShape;
+        DEFAULT_DENSITY: import("./base/base-field-constants").FieldDensity;
+        DEFAULT_LABEL_POSITION: import("./base/base-field-constants").FieldLabelPosition;
+        DEFAULT_LABEL_ALIGNMENT: import("./base/base-field-constants").FieldLabelAlignment;
+        DEFAULT_SUPPORT_TEXT_INSET: import("./base/base-field-constants").FieldSupportTextInset;
+    };
+    animations: {
+        FLOAT_IN_LABEL: string;
+        FLOAT_OUT_LABEL: string;
+    };
+};

@@ -1,0 +1,147 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getShadowElement, toggleClass } from '@tylertech/forge-core';
+import { BaseAdapter } from '../../core/base';
+import { StepperUtils } from '../core/stepper-utils';
+import { STEP_CONSTANTS } from '../step/step-constants';
+import { STEPPER_CONSTANTS } from './stepper-constants';
+export class StepperAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this._rootElement = getShadowElement(component, STEPPER_CONSTANTS.selectors.STEPPER);
+        this._slotElement = this._rootElement.querySelector('slot');
+    }
+    initializeAccessibility() {
+        if (!this._component.hasAttribute('role')) {
+            this._component.setAttribute('role', 'tablist');
+        }
+    }
+    patchSafari() {
+        this._applyToSteps(s => s.setAttribute('safari', ''));
+    }
+    addSlotChangeListener(listener) {
+        this._slotElement.addEventListener('slotchange', listener);
+    }
+    removeSlotChangeListener(listener) {
+        this._slotElement.addEventListener('slotchange', listener);
+    }
+    getLastStep() {
+        const steps = this._getSteps();
+        return steps.item(steps.length - 1);
+    }
+    setSelected(step) {
+        this._getSteps().forEach(s => {
+            if (s === step) {
+                s.selected = true;
+            }
+            else {
+                s.selected = false;
+            }
+        });
+    }
+    assignIndices() {
+        const steps = this._getSteps();
+        steps.forEach((tab, index) => {
+            tab.index = index;
+        });
+    }
+    assignFirstLastStep() {
+        const steps = this._getSteps();
+        if (steps && steps.length > 1) {
+            steps[0].setAttribute('first', '');
+            steps[steps.length - 1].setAttribute('last', '');
+        }
+    }
+    setLayoutAlign(layoutAlign) {
+        StepperUtils.setLayoutAlign(this._rootElement, layoutAlign);
+    }
+    setLayoutMode(layoutMode) {
+        StepperUtils.setLayoutMode(this._rootElement, layoutMode);
+        this._applyToSteps(s => s.setAttribute(STEP_CONSTANTS.attributes.CLUSTERED, ''));
+    }
+    setAlternativeState(alternative) {
+        StepperUtils.setAlternativeState(this._rootElement, alternative);
+        this._applyToSteps(step => (step.alternative = alternative));
+    }
+    setVertical(vertical) {
+        toggleClass(this._rootElement, vertical, STEPPER_CONSTANTS.classes.VERTICAL);
+        this._applyToSteps(step => (step.vertical = vertical));
+    }
+    setLinearState(linear) {
+        StepperUtils.setLinearState(this._rootElement, linear);
+    }
+    removeRootListener(event, listener) {
+        this._rootElement.removeEventListener('click', listener);
+    }
+    addRootListener(event, listener) {
+        this._rootElement.addEventListener(event, listener);
+    }
+    setSelectedByIndex(index) {
+        this._applyToSteps(step => {
+            if (step.selected && step.index !== index) {
+                step.selected = false;
+            }
+            if (step.index === index) {
+                step.selected = true;
+            }
+        });
+    }
+    applyConfiguredSteps(steps) {
+        this._component.querySelectorAll(STEP_CONSTANTS.elementName).forEach(n => {
+            this._component.removeChild(n);
+        });
+        steps.forEach(s => this._component.appendChild(s));
+    }
+    tryGetFocusedStep() {
+        let focusedStep;
+        this._applyToSteps(step => {
+            if (step.matches(':focus-within')) {
+                focusedStep = step;
+            }
+        });
+        return focusedStep;
+    }
+    getFocusedOrSelectedStep() {
+        let focusedStep = this.tryGetFocusedStep();
+        if (!focusedStep) {
+            focusedStep = this._getSteps()[0];
+            focusedStep.focus();
+        }
+        return focusedStep;
+    }
+    getStep(index) {
+        let realIndex = 0;
+        const steps = this._getSteps();
+        if (index < 0) {
+            return steps.item(steps.length - 1);
+        }
+        if (steps.length > index) {
+            realIndex = index;
+        }
+        return steps.item(realIndex);
+    }
+    toggleDisabled(disabled) {
+        this._applyToSteps(s => (s.disabled = disabled));
+    }
+    toggleRootClass(className, show) {
+        toggleClass(this._rootElement, show, className);
+    }
+    isStepperFocused() {
+        return this._rootElement.classList.contains(STEPPER_CONSTANTS.classes.FOCUSED);
+    }
+    setStepsListener(event, listener) {
+        this._applyToSteps(s => s.addEventListener(event, listener));
+    }
+    removeStepsListener(event, listener) {
+        this._applyToSteps(s => s.removeEventListener(event, listener));
+    }
+    _applyToSteps(action) {
+        this._getSteps().forEach(action);
+    }
+    _getSteps() {
+        return this._component.querySelectorAll(STEP_CONSTANTS.elementName);
+    }
+}

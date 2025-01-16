@@ -1,0 +1,33 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../../core/base/base-adapter';
+import { ISplitViewPanelComponent } from '../split-view-panel';
+import { ISplitViewComponent } from './split-view';
+import { SplitViewOrientation } from './split-view-constants';
+export interface ISplitViewAdapter extends IBaseAdapter {
+    registerSlotListener(listener: (evt: Event) => void): void;
+    registerDidOpenListener(listener: () => void): void;
+    registerDidCloseListener(listener: () => void): void;
+    observeResize(callback: (entry: ResizeObserverEntry) => void): void;
+    unobserveResize(): void;
+    getSlottedPanels(): ISplitViewPanelComponent[];
+    refitSlottedPanels(orientation: SplitViewOrientation): void;
+}
+export declare class SplitViewAdapter extends BaseAdapter<ISplitViewComponent> implements ISplitViewAdapter {
+    private _root;
+    constructor(component: ISplitViewComponent);
+    registerSlotListener(listener: (evt: Event) => void): void;
+    registerDidOpenListener(listener: () => void): void;
+    registerDidCloseListener(listener: () => void): void;
+    observeResize(callback: (entry: ResizeObserverEntry) => void): void;
+    unobserveResize(): void;
+    /**
+     * Gets all child panels.
+     * @returns All child panels.
+     */
+    getSlottedPanels(): ISplitViewPanelComponent[];
+    refitSlottedPanels(orientation: SplitViewOrientation): void;
+}

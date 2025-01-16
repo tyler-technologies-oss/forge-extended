@@ -1,0 +1,34 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare class DatePickerRange implements IDatePickerRange {
+    from?: Date | string | null;
+    to?: Date | string | null;
+    constructor(range?: IDatePickerRange);
+    copy(): DatePickerRange;
+}
+export interface IDatePickerRange {
+    from?: Date | string | null;
+    to?: Date | string | null;
+}
+export declare const DATE_RANGE_PICKER_CONSTANTS: {
+    elementName: "forge-date-range-picker";
+    selectors: {
+        INPUT: string;
+    };
+    events: {
+        CHANGE: string;
+        OPEN: string;
+        CLOSE: string;
+        INPUT: string;
+    };
+    observedAttributes: {
+        FROM: string;
+        TO: string;
+        END_VALUE: string;
+    };
+};
+export interface IDateRangePickerChangeEventData extends DatePickerRange {
+}

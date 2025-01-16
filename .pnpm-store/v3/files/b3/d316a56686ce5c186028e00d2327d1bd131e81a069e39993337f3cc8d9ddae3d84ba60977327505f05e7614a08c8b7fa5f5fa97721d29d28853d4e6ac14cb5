@@ -1,0 +1,275 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ITableAdapter } from './table-adapter';
+import { IColumnConfiguration, TableLayoutType, TableViewTemplate, TableRowCreatedCallback, TableCellCreatedCallback, TableHeaderSelectAllTemplate, CellAlign, TableSelectTooltipCallback } from './types';
+export interface ITableCore {
+    data: any[];
+    columnConfigurations: IColumnConfiguration[];
+    dense: boolean;
+    select: boolean;
+    multiselect: boolean;
+    selectKey: string | string[];
+    fixedHeaders: boolean;
+    layoutType: TableLayoutType;
+    wrapContent: boolean;
+    resizable: boolean;
+    minResizeWidth: number;
+    allowRowClick: boolean;
+    multiColumnSort: boolean;
+    rowCreated: TableRowCreatedCallback;
+    cellCreated: TableCellCreatedCallback;
+    initialize(): void;
+    initialize(): void;
+    hideColumn(columnIndex: number): void;
+    showColumn(columnIndex: number): void;
+    isColumnHidden(columnIndex: number): boolean;
+    getSelectedRows(): any[];
+    selectRows(data: any[], clearCurrentSelections: boolean): void;
+    deselectRows(data: any[]): void;
+    clearSelections(): void;
+    render(): void;
+    expandRow(rowIndex: number, template: TableViewTemplate): Promise<void>;
+    collapseRow(rowIndex: number): Promise<void>;
+    isRowExpanded(rowIndex: number): boolean;
+    isRowSelected(rowData: {
+        [key: string]: any;
+    }): boolean;
+    selectRowsByIndex(indexes: number | number[], preserveExisting?: boolean): void;
+    deselectRowsByIndex(indexes: number[]): void;
+    selectAllTemplate: TableHeaderSelectAllTemplate;
+    selectCheckboxAlignment: CellAlign;
+    tooltipSelect: string | TableSelectTooltipCallback;
+    tooltipSelectAll: string;
+}
+export declare class TableCore implements ITableCore {
+    private _adapter;
+    private _tableRows;
+    private _data;
+    private _columnConfigurations;
+    private _select;
+    private _multiselect;
+    private _selectKey;
+    private _originalSelectKey;
+    private _dense;
+    private _roomy;
+    private _filter;
+    private _fixedHeaders;
+    private _layoutType;
+    private _wrapContent;
+    private _resizable;
+    private _minResizeWidth;
+    private _multiColumnSort;
+    private _selectCheckboxAlignment;
+    private _tooltipSelect;
+    private _tooltipSelectAll;
+    private _rowCreatedCallback;
+    private _cellCreatedCallback;
+    private _selectAllTemplate;
+    private _rowClickListener;
+    private _rowDoubleClickListener;
+    private _selectRowListener;
+    private _selectAllListener;
+    private _sortableHeadCellKeydownListener;
+    private _headRowMouseDownListener;
+    private _headRowContextMenuListener;
+    private _documentMouseMoveListener;
+    private _documentMouseUpListener;
+    private _filterListener;
+    private _isAllSelected;
+    private _sortedColumnIndex;
+    private _sortDirection;
+    private _rendered;
+    private _resizeDescriptor;
+    private _headCellMouseDownIndex;
+    private _allowRowClick;
+    private _previouslyClickedRow;
+    private _multiSortManager;
+    private _selectionManager;
+    private _hiddenColumnManager;
+    constructor(_adapter: ITableAdapter);
+    /** Called when the component is connected to the DOM. */
+    initialize(): void;
+    destroy(): void;
+    /** The data to be displayed in the table body. */
+    set data(value: any[]);
+    get data(): any[];
+    /** The column configuration options. */
+    set columnConfigurations(value: IColumnConfiguration[]);
+    get columnConfigurations(): IColumnConfiguration[];
+    /** Gets the visible column configurations. */
+    private get _visibleColumnConfigurations();
+    /** Gets the table configuration. */
+    private get _tableConfiguration();
+    /** Controls the visibility of the select column. */
+    set select(value: boolean);
+    get select(): boolean;
+    /** Controls the visibility of the select all checkbox. */
+    set multiselect(value: boolean);
+    get multiselect(): boolean;
+    /** The row key for matching data to selections. */
+    get selectKey(): string | string[];
+    set selectKey(value: string | string[]);
+    /** Controls whether the table is dense or not. False by default. */
+    get dense(): boolean;
+    set dense(value: boolean);
+    get roomy(): boolean;
+    set roomy(value: boolean);
+    /** Controls whether the table filters are visible or not. */
+    set filter(value: boolean);
+    get filter(): boolean;
+    /** Controls whether the table has fixed headers or not. */
+    set fixedHeaders(value: boolean);
+    get fixedHeaders(): boolean;
+    /** Controls the table layout algorithm */
+    get layoutType(): TableLayoutType;
+    set layoutType(value: TableLayoutType);
+    /** Controls whether the content in each cell wraps or not */
+    get wrapContent(): boolean;
+    set wrapContent(value: boolean);
+    /** Controls whether the columns are resizable or not. */
+    get resizable(): boolean;
+    set resizable(value: boolean);
+    /** Gets/sets the minimum width that a column can be resized to by the user dragging the resize handle. */
+    get minResizeWidth(): number;
+    set minResizeWidth(value: number);
+    /** Gets/sets whether the rows respond to click events or not. */
+    get allowRowClick(): boolean;
+    set allowRowClick(value: boolean);
+    /** Gets/sets whether the table can sort multiple columns. */
+    get multiColumnSort(): boolean;
+    set multiColumnSort(value: boolean);
+    get selectCheckboxAlignment(): CellAlign;
+    set selectCheckboxAlignment(value: CellAlign);
+    get tooltipSelect(): string | TableSelectTooltipCallback;
+    set tooltipSelect(value: string | TableSelectTooltipCallback);
+    get tooltipSelectAll(): string;
+    set tooltipSelectAll(value: string);
+    get selectAllTemplate(): TableHeaderSelectAllTemplate;
+    set selectAllTemplate(value: TableHeaderSelectAllTemplate);
+    get rowCreated(): TableRowCreatedCallback;
+    set rowCreated(value: TableRowCreatedCallback);
+    get cellCreated(): TableCellCreatedCallback;
+    set cellCreated(value: TableCellCreatedCallback);
+    isRowSelected(rowData: {
+        [key: string]: any;
+    }): boolean;
+    /** Returns the selected row instances. */
+    getSelectedRows(): any[];
+    /**
+     * Sets the selected items in the table.
+     * @param {any[]} data The data to select.
+     * @param {boolean} clearCurrentSelections True to clear the current selections before setting the new selections.
+     */
+    selectRows(data: any[], clearCurrentSelections: boolean): void;
+    /**
+     * Deselects rows from in the table data.
+     * @param {any[]} data The array of items to deselect.
+     */
+    deselectRows(data: any[]): void;
+    /**
+     * Clears all selections from the table.
+     */
+    clearSelections(): void;
+    /**
+     * Hides a table column.
+     * @param {number} columnIndex The index of the column to hide.
+     */
+    hideColumn(columnIndex: number): void;
+    /**
+     * Shows a column that is currently hidden.
+     * @param {number} columnIndex The index of the column to show.
+     */
+    showColumn(columnIndex: number): void;
+    /**
+     * Determines if a column at the given index is hidden or not.
+     * @param {number} columnIndex The index of the column.
+     * @returns {boolean} `true` if the column is hidden, `false` otherwise.
+     */
+    isColumnHidden(columnIndex: number): boolean;
+    /**
+     * Creates and renders the table with the current column configuration and data.
+     */
+    render(): void;
+    /**
+     * Renders the table body only.
+     */
+    private _renderBody;
+    private _renderSelections;
+    /**
+     * Expands a collapsed row.
+     * @param rowIndex The index of the row to expand.
+     */
+    expandRow(rowIndex: number, template: TableViewTemplate): Promise<void>;
+    /**
+     * Collapses an expanded row.
+     * @param rowIndex The index of the row to expand.
+     */
+    collapseRow(rowIndex: number): Promise<void>;
+    /**
+     * Check if a row is expanded or not.
+     * @param rowIndex The row index to check.
+     */
+    isRowExpanded(rowIndex: number): boolean;
+    /**
+     * Selects the rows by the index or indexes.
+     * @param indexes The row indexes to select
+     * @param preserveExisting Whether or not the existing selections should be preserved
+     */
+    selectRowsByIndex(indexes: number[], preserveExisting?: boolean): void;
+    /**
+     * Selects the rows by the index or indexes.
+     * @param indexes The row indexes to deselect
+     */
+    deselectRowsByIndex(indexes: number[]): void;
+    /**
+     * Determines if every row is selected or not.
+     */
+    private _getSelectAllState;
+    /**
+     * Updates the internal selection state as well as UI state.
+     * @param {boolean} preserveExisting Should existing selections be preserved when updating selection state.
+     */
+    private _updateSelections;
+    /** Handles a row being single clicked. */
+    private _onRowClick;
+    /** Handles a row being double clicked. */
+    private _onRowDoubleClick;
+    /**
+     * Handles a row being selected/deselected.
+     */
+    private _onRowSelected;
+    /**
+     * Determines which row was chosen from the given event.
+     * @param {Event} evt The click event.
+     */
+    private _getSelectedRowFromEvent;
+    private _getNonExpandedRows;
+    /**
+     * Handles the select all checkbox being checked/unchecked.
+     */
+    private _onSelectAll;
+    private _onHeadRowContextMenu;
+    private _onHeadRowMouseDown;
+    private _onMouseMove;
+    private _onMouseUp;
+    private _onSortableHeadCellKeydown;
+    /**
+     * Called when a click event is triggered on the table header row.
+     * We use this to capture all click events on the row, and determine which
+     * header cell was clicked.
+     */
+    private _onSort;
+    private _onMultiSort;
+    /**
+     * Handles filter events and emits the filter information event.
+     * @param evt The event.
+     */
+    private _onFilter;
+    private _shiftSelectRows;
+    private _isIndeterminate;
+    private _applyRoomy;
+    private _refreshTableSort;
+}

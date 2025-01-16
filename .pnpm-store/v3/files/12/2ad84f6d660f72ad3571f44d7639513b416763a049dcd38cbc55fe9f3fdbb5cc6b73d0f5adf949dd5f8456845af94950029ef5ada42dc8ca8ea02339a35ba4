@@ -1,0 +1,40 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const KEYBOARD_SHORTCUT_CONSTANTS: {
+    elementName: "forge-keyboard-shortcut";
+    observedAttributes: {
+        KEY: string;
+        TARGET: string;
+        GLOBAL: string;
+        ALLOW_WHILE_TYPING: string;
+        USE_CODE: string;
+        PREVENT_DEFAULT: string;
+        CAPTURE: string;
+        DISABLED: string;
+    };
+    attributes: {
+        KEY: string;
+        TARGET: string;
+        GLOBAL: string;
+        ALLOW_WHILE_TYPING: string;
+        USE_CODE: string;
+        PREVENT_DEFAULT: string;
+        CAPTURE: string;
+        DISABLED: string;
+    };
+    selectors: {
+        TOOLTIP: string;
+    };
+    events: {
+        ACTIVATE: string;
+    };
+};
+export declare const textInputTypes: string[];
+export type KeyboardShortcutActivateCallback = (event: KeyboardEvent) => void;
+export interface IKeyCombination {
+    key: string;
+    modifier?: string;
+}

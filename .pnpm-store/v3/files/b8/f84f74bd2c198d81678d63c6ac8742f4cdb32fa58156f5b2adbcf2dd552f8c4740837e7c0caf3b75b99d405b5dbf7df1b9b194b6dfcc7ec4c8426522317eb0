@@ -1,0 +1,10 @@
+import { IToastComponent, IToastPresentConfiguration } from '@tylertech/forge';
+import { ReactComponentOrElements } from '../utils';
+export interface ForgeToastOptions extends Partial<IToastPresentConfiguration> {
+    actionHandler?: () => void;
+}
+export type UseForgeToastResult = [
+    (options?: ForgeToastOptions, dismissCallback?: () => void) => IToastComponent,
+    () => void
+];
+export declare const useForgeToast: (component?: ReactComponentOrElements, componentProps?: any) => UseForgeToastResult;

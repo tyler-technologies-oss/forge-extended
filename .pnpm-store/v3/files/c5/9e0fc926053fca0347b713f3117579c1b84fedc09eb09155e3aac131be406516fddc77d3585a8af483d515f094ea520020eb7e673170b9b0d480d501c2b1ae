@@ -1,0 +1,60 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IListDropdownOption } from '../list-dropdown/list-dropdown-constants';
+import IMask, { Masked, InputMask } from 'imask';
+export declare const TIME_PICKER_CONSTANTS: {
+    elementName: "forge-time-picker";
+    attributes: {
+        TOGGLE: string;
+        VALUE: string;
+        OPEN: string;
+        ALLOW_SECONDS: string;
+        MASKED: string;
+        SHOW_MASK_FORMAT: string;
+        USE_24_HOUR_TIME: string;
+        ALLOW_INVALID_TIME: string;
+        MIN: string;
+        MAX: string;
+        START_TIME: string;
+        STEP: string;
+        ALLOW_INPUT: string;
+        SHOW_NOW: string;
+        SHOW_HOUR_OPTIONS: string;
+        DISABLED: string;
+        POPUP_CLASSES: string;
+        ALLOW_DROPDOWN: string;
+    };
+    selectors: {
+        INPUT: string;
+        TOGGLE: string;
+    };
+    events: {
+        OPEN: string;
+        CLOSE: string;
+        INPUT: string;
+        CHANGE: string;
+    };
+    numbers: {
+        DEFAULT_MINUTE_STEP: number;
+        MAX_DAY_MILLIS: number;
+        MAX_DAY_MINUTES: number;
+    };
+};
+export type TimePickerValidationCallback = (time: string) => boolean;
+export type TimePickerParseCallback = (time: string) => number | null;
+export type TimePickerFormatCallback = (value: number | null) => string;
+export type TimePickerCustomOptionCallback<T> = (value: T, use24HourTime: boolean, allowSeconds: boolean) => number;
+export type TimePickerCoercionCallback = (rawValue: string, coercedValue: string, allowSeconds: boolean) => string;
+export type TimePickerPrepareMaskCallback = (value: string, masked: Masked<string>, flags: IMask.AppendFlags, maskInstance: InputMask<IMask.AnyMaskedOptions>) => string;
+export interface ITimePickerOption<T = any> extends IListDropdownOption<T> {
+    toMilliseconds: TimePickerCustomOptionCallback<T>;
+}
+export interface ITimePickerOptionValue {
+    time: number | null;
+    metadata?: any;
+    isCustom?: boolean;
+    customCallback?: TimePickerCustomOptionCallback<any>;
+}

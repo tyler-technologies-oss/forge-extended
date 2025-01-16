@@ -1,0 +1,202 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use './core' as *;
+@use '../focus-indicator';
+@use '../state-layer';
+
+:host {
+  @include host;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.forge-switch {
+  @include tokens;
+}
+
+// Off
+.forge-switch {
+  @include switch;
+
+  #{declare(current-state-layer-width)}: #{token(state-layer-width)};
+  #{declare(current-state-layer-height)}: #{token(state-layer-height)};
+
+  .container {
+    @include container;
+  }
+
+  .input {
+    @include input;
+  }
+
+  .track {
+    @include track;
+  }
+
+  .handle {
+    @include handle;
+  }
+
+  .icon {
+    @include icon;
+
+    // TODO: Use when icon supports tokens
+    // @include icon.provide-theme((
+    //   font-size: #{token(icon-size)}
+    // ));
+    --forge-icon-font-size: #{token(icon-off-size)};
+
+    &__on {
+      // TODO: Use when icon supports tokens
+      // @include icon.provide-theme((
+      //   font-size: #{token(icon-on-size)}
+      // ));
+      --forge-icon-font-size: #{token(icon-on-size)};
+
+      @include icon-on;
+      @include icon-hidden;
+    }
+
+    &__off {
+      @include icon-off-shown;
+    }
+  }
+
+  .label {
+    @include label;
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  ::slotted([slot='input']) {
+    @include input;
+  }
+}
+
+// On
+:host([on]) {
+  .track {
+    @include track-on;
+  }
+
+  .handle {
+    @include handle-on;
+
+    .icon {
+      &__on {
+        @include icon-on-shown;
+      }
+
+      &__off {
+        @include icon-hidden;
+      }
+    }
+  }
+
+  forge-state-layer {
+    @include state-layer.provide-theme(
+      (
+        color: #{token(state-layer-on-color)}
+      )
+    );
+  }
+}
+
+// Active
+:host(:not([disabled]):not([readonly])) {
+  .forge-switch {
+    .container:active {
+      .track {
+        @include track-active;
+      }
+
+      .handle {
+        @include handle-active;
+
+        .icon {
+          @include icon-active;
+        }
+      }
+    }
+  }
+}
+:host(:not([disabled]):not([readonly])[on]) {
+  .forge-switch {
+    .container:active {
+      .track {
+        @include track-active-on;
+      }
+
+      .handle {
+        @include handle-active-on;
+
+        .icon {
+          @include icon-active-on;
+        }
+      }
+    }
+  }
+}
+
+// Dense
+:host([dense]) {
+  .forge-switch {
+    // Set the state layer width and height for use in calculations of other properties
+    #{declare(current-state-layer-width)}: #{token(state-layer-dense-width)};
+    #{declare(current-state-layer-height)}: #{token(state-layer-dense-height)};
+  }
+}
+
+// Disabled
+:host([disabled]) {
+  .forge-switch {
+    .container {
+      @include switch-disabled;
+      @include container-disabled;
+    }
+
+    .handle {
+      @include handle-disabled;
+    }
+  }
+}
+
+// Readonly
+:host([readonly]) {
+  .forge-switch {
+    .container {
+      @include container-disabled;
+    }
+  }
+}
+
+// Reduced motion
+@media (prefers-reduced-motion) {
+  .switch {
+    @include override(animation-duration, 0s, value);
+  }
+}
+
+forge-state-layer {
+  @include state-layer.provide-theme(
+    (
+      color: #{token(state-layer-off-color)}
+    )
+  );
+}
+
+forge-focus-indicator {
+  @include focus-indicator.provide-theme(
+    (
+      shape: #{token(track-shape)},
+      outward-offset: 0px // Requires unit
+    )
+  );
+}

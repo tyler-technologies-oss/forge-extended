@@ -1,0 +1,88 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseSelectCore } from '../core/base-select-core';
+import { SELECT_DROPDOWN_CONSTANTS } from './select-dropdown-constants';
+export class SelectDropdownCore extends BaseSelectCore {
+    constructor(adapter) {
+        super(adapter);
+        this._syncSelectedText = false;
+        this._originalTargetText = '';
+        this._targetDisconnectedListener = () => this._onTargetDisconnected();
+    }
+    initialize() {
+        this._tryAttach();
+        super.initialize();
+    }
+    destroy() {
+        super.destroy();
+        if (this._adapter.isAttached()) {
+            this._detach();
+        }
+    }
+    _onDropdownScrollEnd() {
+        this._adapter.emitHostEvent(SELECT_DROPDOWN_CONSTANTS.events.SCROLLED_BOTTOM);
+    }
+    _applyValue(value) {
+        super._applyValue(value);
+        this._applySelection();
+    }
+    _applySelection() {
+        super._applySelection();
+        if (this._syncSelectedText || typeof this._selectedTextBuilder === 'function') {
+            let text = this._getSelectedText();
+            if (!text) {
+                text = this._originalTargetText;
+            }
+            this._adapter.setTargetText(text || '', this._selectedTextTarget);
+        }
+    }
+    _tryAttach() {
+        this._adapter.attach(this._target);
+        if (this._adapter.isAttached()) {
+            this._targetDisconnectedDestructor = this._adapter.setTargetDisconnectedListener(this._targetDisconnectedListener);
+            this._originalTargetText = this._adapter.getTargetText(this._selectedTextTarget);
+            this.initializeTarget();
+        }
+    }
+    _detach() {
+        this._adapter.detach();
+        if (this._targetDisconnectedDestructor) {
+            this._targetDisconnectedDestructor();
+            this._targetDisconnectedDestructor = undefined;
+        }
+    }
+    _onTargetDisconnected() {
+        this._adapter.detach();
+    }
+    get target() {
+        return this._target;
+    }
+    set target(value) {
+        if (this._target !== value) {
+            this._target = value;
+            if (this._adapter.isAttached()) {
+                this._detach();
+            }
+            this._tryAttach();
+        }
+    }
+    get selectedTextTarget() {
+        return this._selectedTextTarget;
+    }
+    set selectedTextTarget(value) {
+        if (this._selectedTextTarget !== value) {
+            this._selectedTextTarget = value;
+        }
+    }
+    get syncSelectedText() {
+        return this._syncSelectedText;
+    }
+    set syncSelectedText(value) {
+        if (this._syncSelectedText !== value) {
+            this._syncSelectedText = value;
+        }
+    }
+}

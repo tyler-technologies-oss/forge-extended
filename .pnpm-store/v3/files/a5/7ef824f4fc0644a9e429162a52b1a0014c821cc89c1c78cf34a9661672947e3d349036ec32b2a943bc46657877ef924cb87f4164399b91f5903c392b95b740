@@ -1,0 +1,29 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { LabelValueComponent as LabelValueComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class LabelValueComponent {
+    protected elementRef: ElementRef<LabelValueComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-label-value element. */
+    readonly nativeElement: LabelValueComponentCustomElement;
+    /** If true, the value will be displayed in an alternative emphasized style. */
+    set empty(value: LabelValueComponentCustomElement['empty']);
+    get empty(): LabelValueComponentCustomElement['empty'];
+    /** If true, the value will be truncated with an ellipsis if it overflows its container. */
+    set ellipsis(value: LabelValueComponentCustomElement['ellipsis']);
+    get ellipsis(): LabelValueComponentCustomElement['ellipsis'];
+    /** If true, the label and value will be displayed on the same line. */
+    set inline(value: LabelValueComponentCustomElement['inline']);
+    get inline(): LabelValueComponentCustomElement['inline'];
+    /** Deprecated. Use `inline` instead. */
+    set dense(value: LabelValueComponentCustomElement['dense']);
+    get dense(): LabelValueComponentCustomElement['dense'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<LabelValueComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<LabelValueComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<LabelValueComponent, "forge-label-value", never, { "empty": { "alias": "empty"; "required": false; }; "ellipsis": { "alias": "ellipsis"; "required": false; }; "inline": { "alias": "inline"; "required": false; }; "dense": { "alias": "dense"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_empty: unknown;
+    static ngAcceptInputType_ellipsis: unknown;
+    static ngAcceptInputType_inline: unknown;
+    static ngAcceptInputType_dense: unknown;
+}

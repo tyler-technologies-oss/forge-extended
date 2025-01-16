@@ -1,0 +1,82 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const SLIDER_CONSTANTS: {
+    elementName: "forge-slider";
+    attributes: {
+        ARIA_LABEL: string;
+        ARIA_LABEL_START: string;
+        ARIA_LABEL_END: string;
+        VALUE: string;
+        VALUE_START: string;
+        VALUE_END: string;
+        LABEL: string;
+        LABEL_START: string;
+        LABEL_END: string;
+        MIN: string;
+        MAX: string;
+        STEP: string;
+        TICKMARKS: string;
+        LABELED: string;
+        RANGE: string;
+        DISABLED: string;
+        READONLY: string;
+    };
+    selectors: {
+        ROOT: string;
+        TRACK: string;
+        HANDLE_CONTAINER: string;
+        START_INPUT: string;
+        END_INPUT: string;
+        START_HANDLE: string;
+        START_HANDLE_THUMB: string;
+        END_HANDLE: string;
+        END_HANDLE_THUMB: string;
+        START_LABEL: string;
+        START_LABEL_CONTENT: string;
+        END_LABEL: string;
+        END_LABEL_CONTENT: string;
+        LABEL: string;
+        INPUT: string;
+    };
+    classes: {
+        RANGE: string;
+        TICKMARKS: string;
+        ON_TOP: string;
+        OVERLAPPING: string;
+        HOVER: string;
+        HANDLE: string;
+        HANDLE_THUMB: string;
+        HANDLE_START: string;
+        HANDLE_LABEL: string;
+        LABEL: string;
+        LABEL_CONTENT: string;
+    };
+    events: {
+        INPUT: string;
+        CHANGE: string;
+        RANGE_INPUT: string;
+        RANGE_CHANGE: string;
+    };
+    numbers: {
+        DEFAULT_STEP: number;
+        DEFAULT_VALUE: number;
+        DEFAULT_START_VALUE: number;
+        DEFAULT_END_VALUE: number;
+    };
+    cssCustomProperties: {
+        START_FRACTION: string;
+        END_FRACTION: string;
+        TICK_COUNT: string;
+    };
+};
+export interface ISliderChangeEventData {
+    value: number;
+}
+export interface ISliderRangeChangeEventData {
+    valueStart: number;
+    valueEnd: number;
+}
+export type SliderLabelBuilder = (value: number, which?: 'start' | 'end') => string;

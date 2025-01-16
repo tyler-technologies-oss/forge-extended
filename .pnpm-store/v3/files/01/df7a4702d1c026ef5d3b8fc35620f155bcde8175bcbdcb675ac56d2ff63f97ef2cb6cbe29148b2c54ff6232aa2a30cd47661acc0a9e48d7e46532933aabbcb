@@ -1,0 +1,14 @@
+export var ScrollDirection;
+(function (ScrollDirection) {
+    ScrollDirection["Up"] = "up";
+    ScrollDirection["Down"] = "down";
+    ScrollDirection["Left"] = "left";
+    ScrollDirection["Right"] = "right";
+})(ScrollDirection || (ScrollDirection = {}));
+export var ScrollEvents;
+(function (ScrollEvents) {
+    ScrollEvents["Scroll"] = "scroll";
+    ScrollEvents["Scrolled"] = "scrolled";
+    ScrollEvents["ScrolledStart"] = "scrolled-start";
+    ScrollEvents["ScrolledEnd"] = "scrolled-end";
+})(ScrollEvents || (ScrollEvents = {}));

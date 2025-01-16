@@ -1,0 +1,116 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { AutocompleteComponent as AutocompleteComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class AutocompleteComponent {
+    protected elementRef: ElementRef<AutocompleteComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-autocomplete element. */
+    readonly nativeElement: AutocompleteComponentCustomElement;
+    /** Gets/sets the interaction mode. */
+    set mode(value: AutocompleteComponentCustomElement['mode']);
+    get mode(): AutocompleteComponentCustomElement['mode'];
+    /** Gets/sets the multi-select state. */
+    set multiple(value: AutocompleteComponentCustomElement['multiple']);
+    get multiple(): AutocompleteComponentCustomElement['multiple'];
+    /** Gets/sets the value. */
+    set value(value: AutocompleteComponentCustomElement['value']);
+    get value(): AutocompleteComponentCustomElement['value'];
+    /** Gets/sets the debounce delay (milliseconds) for keyboard events. */
+    set debounce(value: AutocompleteComponentCustomElement['debounce']);
+    get debounce(): AutocompleteComponentCustomElement['debounce'];
+    /** Gets/sets filter on focus settings which controls whether the dropdown displays automatically when focused. */
+    set filterOnFocus(value: AutocompleteComponentCustomElement['filterOnFocus']);
+    get filterOnFocus(): AutocompleteComponentCustomElement['filterOnFocus'];
+    /** Gets/sets whether the first option in the dropdown will be focused automatically when opened or not. */
+    set filterFocusFirst(value: AutocompleteComponentCustomElement['filterFocusFirst']);
+    get filterFocusFirst(): AutocompleteComponentCustomElement['filterFocusFirst'];
+    /** Controls whether unmatched text entered by the user will stay visible an option in the dropdown is not found. */
+    set allowUnmatched(value: AutocompleteComponentCustomElement['allowUnmatched']);
+    get allowUnmatched(): AutocompleteComponentCustomElement['allowUnmatched'];
+    /** Gets/sets the selector that will be used to find an element to attach the popup to. Defaults to the input element. */
+    set popupTarget(value: AutocompleteComponentCustomElement['popupTarget']);
+    get popupTarget(): AutocompleteComponentCustomElement['popupTarget'];
+    /**
+     * Gets/sets the filter text.
+     *
+     * Setting the filter text only applies when allowUnmatched is enabled.
+     */
+    set filterText(value: AutocompleteComponentCustomElement['filterText']);
+    get filterText(): AutocompleteComponentCustomElement['filterText'];
+    /** Sets the option builder callback that will be executed when building the option list in the dropdown. */
+    set optionBuilder(value: AutocompleteComponentCustomElement['optionBuilder']);
+    get optionBuilder(): AutocompleteComponentCustomElement['optionBuilder'];
+    /** Sets the filter callback that will be executed when fetching options for the autocomplete dropdown. */
+    set filter(value: AutocompleteComponentCustomElement['filter']);
+    get filter(): AutocompleteComponentCustomElement['filter'];
+    /** Sets the selected text builder callback that will be executed when getting the selected text. */
+    set selectedTextBuilder(value: AutocompleteComponentCustomElement['selectedTextBuilder']);
+    get selectedTextBuilder(): AutocompleteComponentCustomElement['selectedTextBuilder'];
+    /** Controls the open state of the dropdown. */
+    set open(value: AutocompleteComponentCustomElement['open']);
+    get open(): AutocompleteComponentCustomElement['open'];
+    /** Gets/sets the property key to match the value to an option. */
+    set matchKey(value: AutocompleteComponentCustomElement['matchKey']);
+    get matchKey(): AutocompleteComponentCustomElement['matchKey'];
+    /** Returns whether the component has been initialized or not yet. */
+    get isInitialized(): AutocompleteComponentCustomElement['isInitialized'];
+    /** Gets the currently active popup element when the dropdown is open. */
+    get popupElement(): AutocompleteComponentCustomElement['popupElement'];
+    /** Sets the callback to be executed when the user selects an option, before the UI is updated to allow for validation. */
+    set beforeValueChange(value: AutocompleteComponentCustomElement['beforeValueChange']);
+    get beforeValueChange(): AutocompleteComponentCustomElement['beforeValueChange'];
+    /** Gets/sets the list of classes to apply to the popup element. */
+    set popupClasses(value: AutocompleteComponentCustomElement['popupClasses']);
+    get popupClasses(): AutocompleteComponentCustomElement['popupClasses'];
+    /** Gets/sets the callback function for generating header content within the popup. */
+    set popupHeaderBuilder(value: AutocompleteComponentCustomElement['popupHeaderBuilder']);
+    get popupHeaderBuilder(): AutocompleteComponentCustomElement['popupHeaderBuilder'];
+    /** Gets/sets the callback function for generating header content within the popup. */
+    set popupFooterBuilder(value: AutocompleteComponentCustomElement['popupFooterBuilder']);
+    get popupFooterBuilder(): AutocompleteComponentCustomElement['popupFooterBuilder'];
+    /** Gets/sets whether the popup width is synchronized with the popup target width. */
+    set syncPopupWidth(value: AutocompleteComponentCustomElement['syncPopupWidth']);
+    get syncPopupWidth(): AutocompleteComponentCustomElement['syncPopupWidth'];
+    /** Gets/sets the maximum number of options to display in the dropdown. */
+    set optionLimit(value: AutocompleteComponentCustomElement['optionLimit']);
+    get optionLimit(): AutocompleteComponentCustomElement['optionLimit'];
+    /** Controls the observation of scroll events on the dropdown. */
+    set observeScroll(value: AutocompleteComponentCustomElement['observeScroll']);
+    get observeScroll(): AutocompleteComponentCustomElement['observeScroll'];
+    /** The number of pixels from the bottom to trigger the scroll bottom event. Only applicable if `observeScroll` is true. */
+    set observeScrollThreshold(value: AutocompleteComponentCustomElement['observeScrollThreshold']);
+    get observeScrollThreshold(): AutocompleteComponentCustomElement['observeScrollThreshold'];
+    /** Gets/sets whether the popup width will be constrained to a max width of the viewport width (default: `100vw`). */
+    set constrainPopupWidth(value: AutocompleteComponentCustomElement['constrainPopupWidth']);
+    get constrainPopupWidth(): AutocompleteComponentCustomElement['constrainPopupWidth'];
+    /**
+     * Gets/sets whether the options will wrap their text or not.
+     * This only applies if `constrainPopupWidth` is `true`, if there is an explicit width set via CSS.
+     */
+    set wrapOptionText(value: AutocompleteComponentCustomElement['wrapOptionText']);
+    get wrapOptionText(): AutocompleteComponentCustomElement['wrapOptionText'];
+    /** Adds options to the dropdown while it is open. Has no effect if the dropdown is closed. */
+    appendOptions(...args: Parameters<AutocompleteComponentCustomElement['appendOptions']>): ReturnType<AutocompleteComponentCustomElement['appendOptions']>;
+    /** Opens the dropdown. */
+    openDropdown(...args: Parameters<AutocompleteComponentCustomElement['openDropdown']>): ReturnType<AutocompleteComponentCustomElement['openDropdown']>;
+    /** Closes the dropdown. */
+    closeDropdown(...args: Parameters<AutocompleteComponentCustomElement['closeDropdown']>): ReturnType<AutocompleteComponentCustomElement['closeDropdown']>;
+    /** Forces the filter callback to be executed to update the current selection state with new options. */
+    forceFilter(...args: Parameters<AutocompleteComponentCustomElement['forceFilter']>): ReturnType<AutocompleteComponentCustomElement['forceFilter']>;
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<AutocompleteComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<AutocompleteComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<AutocompleteComponent, "forge-autocomplete", never, { "mode": { "alias": "mode"; "required": false; }; "multiple": { "alias": "multiple"; "required": false; }; "value": { "alias": "value"; "required": false; }; "debounce": { "alias": "debounce"; "required": false; }; "filterOnFocus": { "alias": "filterOnFocus"; "required": false; }; "filterFocusFirst": { "alias": "filterFocusFirst"; "required": false; }; "allowUnmatched": { "alias": "allowUnmatched"; "required": false; }; "popupTarget": { "alias": "popupTarget"; "required": false; }; "filterText": { "alias": "filterText"; "required": false; }; "optionBuilder": { "alias": "optionBuilder"; "required": false; }; "filter": { "alias": "filter"; "required": false; }; "selectedTextBuilder": { "alias": "selectedTextBuilder"; "required": false; }; "open": { "alias": "open"; "required": false; }; "matchKey": { "alias": "matchKey"; "required": false; }; "beforeValueChange": { "alias": "beforeValueChange"; "required": false; }; "popupClasses": { "alias": "popupClasses"; "required": false; }; "popupHeaderBuilder": { "alias": "popupHeaderBuilder"; "required": false; }; "popupFooterBuilder": { "alias": "popupFooterBuilder"; "required": false; }; "syncPopupWidth": { "alias": "syncPopupWidth"; "required": false; }; "optionLimit": { "alias": "optionLimit"; "required": false; }; "observeScroll": { "alias": "observeScroll"; "required": false; }; "observeScrollThreshold": { "alias": "observeScrollThreshold"; "required": false; }; "constrainPopupWidth": { "alias": "constrainPopupWidth"; "required": false; }; "wrapOptionText": { "alias": "wrapOptionText"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_multiple: unknown;
+    static ngAcceptInputType_debounce: unknown;
+    static ngAcceptInputType_filterOnFocus: unknown;
+    static ngAcceptInputType_filterFocusFirst: unknown;
+    static ngAcceptInputType_allowUnmatched: unknown;
+    static ngAcceptInputType_open: unknown;
+    static ngAcceptInputType_syncPopupWidth: unknown;
+    static ngAcceptInputType_optionLimit: unknown;
+    static ngAcceptInputType_observeScroll: unknown;
+    static ngAcceptInputType_observeScrollThreshold: unknown;
+    static ngAcceptInputType_constrainPopupWidth: unknown;
+    static ngAcceptInputType_wrapOptionText: unknown;
+}

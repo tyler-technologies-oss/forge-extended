@@ -1,0 +1,162 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getShadowElement, playKeyframeAnimation, removeAllChildren, tryScrollIntoView } from '@tylertech/forge-core';
+import { BaseAdapter } from '../../core';
+import { CALENDAR_MENU_CONSTANTS } from './calendar-menu-constants';
+import { getGrid, getList, getListItems, removeAllExceptLastChild } from './calendar-menu-utils';
+export class CalendarMenuAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this.component = component;
+        this._container = getShadowElement(component, CALENDAR_MENU_CONSTANTS.selectors.CONTAINER);
+    }
+    registerClickListener(listener) {
+        this._container.addEventListener('click', listener);
+    }
+    unregisterClickListener(listener) {
+        this._container.removeEventListener('click', listener);
+    }
+    registerIntersectionObserver(callback) {
+        const root = this._container.querySelector(CALENDAR_MENU_CONSTANTS.selectors.LIST_WRAPPER);
+        if (!root) {
+            return;
+        }
+        const options = {
+            root
+        };
+        this._intersectionObserver = new IntersectionObserver(callback, options);
+        const scrollSpyBottom = this._container.querySelector(CALENDAR_MENU_CONSTANTS.selectors.SCROLL_SPY_BOTTOM);
+        const scrollSpyTop = this._container.querySelector(CALENDAR_MENU_CONSTANTS.selectors.SCROLL_SPY_TOP);
+        if (scrollSpyBottom) {
+            this._intersectionObserver.observe(scrollSpyBottom);
+        }
+        if (scrollSpyTop) {
+            this._intersectionObserver.observe(scrollSpyTop);
+        }
+    }
+    unregisterIntersectionObserver() {
+        if (this._intersectionObserver) {
+            this._intersectionObserver.disconnect();
+            this._intersectionObserver = undefined;
+        }
+    }
+    setAnimationType(value) {
+        this._container.setAttribute(CALENDAR_MENU_CONSTANTS.attributes.DATA_ANIMATION, value);
+    }
+    setClosed() {
+        this._container.classList.remove(CALENDAR_MENU_CONSTANTS.classes.OPEN);
+        this._container.classList.add(CALENDAR_MENU_CONSTANTS.classes.CLOSING);
+        playKeyframeAnimation(this._container, CALENDAR_MENU_CONSTANTS.classes.CLOSING, true).then(() => {
+            removeAllChildren(this._container);
+            this.toggleHostAttribute('hidden', true);
+        });
+    }
+    setOpenAsGrid(options, focusedIndex, setFocus, preventFocus, replace) {
+        const element = getGrid(options);
+        if (replace) {
+            playKeyframeAnimation(this._container, CALENDAR_MENU_CONSTANTS.classes.REPLACING_VIEW, true).then(() => {
+                removeAllExceptLastChild(this._container);
+                this.setFocusAtIndex(focusedIndex, setFocus, preventFocus);
+            });
+        }
+        this._container.appendChild(element);
+        this.toggleHostAttribute('hidden', false);
+        this._container.classList.add(CALENDAR_MENU_CONSTANTS.classes.OPEN);
+        if (!replace) {
+            this.setFocusAtIndex(focusedIndex, setFocus, preventFocus);
+        }
+    }
+    setOpenAsList(options, focusedIndex, setFocus, preventFocus, replace) {
+        const element = getList(options);
+        if (replace) {
+            playKeyframeAnimation(this._container, CALENDAR_MENU_CONSTANTS.classes.REPLACING_VIEW, true).then(() => {
+                removeAllExceptLastChild(this._container);
+                this.setFocusAtIndex(focusedIndex, setFocus, preventFocus);
+            });
+        }
+        this._container.appendChild(element);
+        this.toggleHostAttribute('hidden', false);
+        this._container.classList.add(CALENDAR_MENU_CONSTANTS.classes.OPEN);
+        this._scrollItemIntoView('selected');
+        if (!replace) {
+            this.setFocusAtIndex(focusedIndex, setFocus, preventFocus);
+        }
+    }
+    appendListItemsToStart(options) {
+        const wrapper = this._container.querySelector(CALENDAR_MENU_CONSTANTS.selectors.LIST_WRAPPER);
+        const list = this._container.querySelector(CALENDAR_MENU_CONSTANTS.selectors.LIST);
+        const firstItem = list?.querySelector(CALENDAR_MENU_CONSTANTS.selectors.ITEM);
+        if (wrapper && list && firstItem) {
+            const oldScrollTop = wrapper.scrollTop;
+            const oldScroll = wrapper.scrollHeight - wrapper.clientHeight;
+            getListItems(options).forEach(l => {
+                list.insertBefore(l, firstItem);
+            });
+            const newScroll = wrapper.scrollHeight - wrapper.clientHeight;
+            wrapper.scrollTop = oldScrollTop + (newScroll - oldScroll);
+        }
+    }
+    appendListItemsToEnd(options) {
+        const list = this._container.querySelector(CALENDAR_MENU_CONSTANTS.selectors.LIST);
+        const scrollSpyBottom = this._container.querySelector(CALENDAR_MENU_CONSTANTS.selectors.SCROLL_SPY_BOTTOM);
+        if (list && scrollSpyBottom) {
+            getListItems(options).forEach(l => {
+                list.insertBefore(l, scrollSpyBottom);
+            });
+        }
+    }
+    animateInFromLeft(options, callback) {
+        playKeyframeAnimation(this._container, CALENDAR_MENU_CONSTANTS.classes.SLIDE_RIGHT, true).then(() => {
+            removeAllExceptLastChild(this._container);
+            if (callback) {
+                callback();
+            }
+        });
+        const element = getGrid(options);
+        this._container.appendChild(element);
+    }
+    animateInFromRight(options, callback) {
+        playKeyframeAnimation(this._container, CALENDAR_MENU_CONSTANTS.classes.SLIDE_LEFT, true).then(() => {
+            removeAllExceptLastChild(this._container);
+            if (callback) {
+                callback();
+            }
+        });
+        const element = getGrid(options);
+        this._container.appendChild(element);
+    }
+    setFocusAtIndex(index, setFocus, preventFocus) {
+        const previouslyFocusedElement = this._container.querySelector(CALENDAR_MENU_CONSTANTS.selectors.FOCUSED);
+        previouslyFocusedElement?.classList.remove(CALENDAR_MENU_CONSTANTS.classes.ITEM_FOCUSED);
+        previouslyFocusedElement?.setAttribute('tabindex', '-1');
+        const previouslyFocusedFocusIndicator = previouslyFocusedElement?.querySelector('forge-focus-indicator');
+        if (previouslyFocusedFocusIndicator) {
+            previouslyFocusedFocusIndicator.active = false;
+        }
+        const item = this._container.querySelectorAll(CALENDAR_MENU_CONSTANTS.selectors.ITEM)?.[index];
+        if (item) {
+            item.classList.add(CALENDAR_MENU_CONSTANTS.classes.ITEM_FOCUSED);
+            item.setAttribute('tabindex', preventFocus ? '-1' : '0');
+            if (setFocus && !preventFocus) {
+                item.focus();
+            }
+            else if (preventFocus) {
+                const focusIndicator = item.querySelector('forge-focus-indicator');
+                if (focusIndicator) {
+                    focusIndicator.active = true;
+                }
+            }
+            this._scrollItemIntoView('focused');
+        }
+    }
+    _scrollItemIntoView(type) {
+        const list = this._container.querySelector(CALENDAR_MENU_CONSTANTS.selectors.LIST);
+        const item = list?.querySelector(type === 'selected' ? CALENDAR_MENU_CONSTANTS.selectors.SELECTED : CALENDAR_MENU_CONSTANTS.selectors.FOCUSED);
+        if (list && item) {
+            tryScrollIntoView(list.parentElement, item, type === 'selected' ? 'auto' : 'smooth', type === 'selected' ? 'center' : 'nearest');
+        }
+    }
+}

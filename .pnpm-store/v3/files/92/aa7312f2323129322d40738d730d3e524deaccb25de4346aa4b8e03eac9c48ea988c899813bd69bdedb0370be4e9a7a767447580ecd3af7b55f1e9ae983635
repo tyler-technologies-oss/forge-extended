@@ -1,0 +1,12 @@
+{
+  "extends": "./index.js",
+  "rules": {
+    "scss/at-mixin-argumentless-call-parentheses": null,
+    "scss/at-rule-conditional-no-parentheses": null,
+    "scss/no-global-function-names": null,
+    "scss/no-duplicate-mixins": null,
+    "at-rule-no-vendor-prefix": null,
+    "selector-type-no-unknown": null,
+    "color-function-notation": null
+  }
+}

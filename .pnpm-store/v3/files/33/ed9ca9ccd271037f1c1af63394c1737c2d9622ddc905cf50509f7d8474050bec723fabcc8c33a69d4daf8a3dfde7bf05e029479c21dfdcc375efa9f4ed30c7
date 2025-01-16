@@ -1,0 +1,10 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./split-view.component";
+import * as i2 from "@angular/common";
+import * as i3 from "../split-view-panel/split-view-panel.module";
+export declare class ForgeSplitViewModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeSplitViewModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeSplitViewModule, [typeof i1.SplitViewComponent], [typeof i2.CommonModule, typeof i3.ForgeSplitViewPanelModule], [typeof i1.SplitViewComponent, typeof i3.ForgeSplitViewPanelModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeSplitViewModule>;
+}

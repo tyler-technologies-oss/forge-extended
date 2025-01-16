@@ -1,0 +1,12 @@
+export var ServiceRequestMethod;
+(function (ServiceRequestMethod) {
+    ServiceRequestMethod["GET"] = "GET";
+    ServiceRequestMethod["POST"] = "POST";
+    ServiceRequestMethod["PUT"] = "PUT";
+    ServiceRequestMethod["DELETE"] = "DELETE";
+    ServiceRequestMethod["PATCH"] = "PATCH";
+    ServiceRequestMethod["HEAD"] = "HEAD";
+    ServiceRequestMethod["CONNECT"] = "CONNECT";
+    ServiceRequestMethod["OPTIONS"] = "OPTIONS";
+    ServiceRequestMethod["TRACE"] = "TRACE";
+})(ServiceRequestMethod || (ServiceRequestMethod = {}));

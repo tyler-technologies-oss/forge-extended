@@ -1,0 +1,83 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { customElement, attachLightTemplate, toggleAttribute, getLightElement } from '@tylertech/forge-core';
+import { APP_BAR_MENU_BUTTON_CONSTANTS } from './app-bar-menu-button-constants';
+import { IconButtonComponent, ICON_BUTTON_CONSTANTS } from '../../icon-button';
+import { TooltipComponent } from '../../tooltip';
+import { IconRegistry, ICON_CONSTANTS } from '../../icon';
+import { tylIconMenu } from '@tylertech/tyler-icons/standard';
+import { BaseComponent } from '../../core/base/base-component';
+import { forwardAttributes } from '../../core/utils/reflect-utils';
+const template = '<template><forge-icon-button><forge-icon name=\"menu\"></forge-icon></forge-icon-button><forge-tooltip type=\"label\" placement=\"bottom\">Menu</forge-tooltip></template>';
+/**
+ * @tag forge-app-bar-menu-button
+ *
+ * @description A utility component with predefined icon and descriptions for use in an app bar `start` slot.
+ *
+ * @property {string} [icon=menu] - The name of an alternative icon to display.
+ *
+ * @attribute {string} [icon=menu] - The name of an alternative icon to display.
+ * @attribute {string} [aria-label] - The aria-label to apply to the button.
+ * @attribute {string} [aria-labelledby] - The id of an element to use as the aria-labelledby attribute.
+ */
+let AppBarMenuButtonComponent = class AppBarMenuButtonComponent extends BaseComponent {
+    static get observedAttributes() {
+        return Object.values(APP_BAR_MENU_BUTTON_CONSTANTS.observedAttributes);
+    }
+    constructor() {
+        super();
+        this._iconName = tylIconMenu.name;
+        IconRegistry.define(tylIconMenu);
+    }
+    initializedCallback() {
+        attachLightTemplate(this, template);
+    }
+    connectedCallback() {
+        this._iconButtonElement = getLightElement(this, ICON_BUTTON_CONSTANTS.elementName);
+        this._iconElement = this._iconButtonElement.querySelector(ICON_CONSTANTS.elementName);
+        if (this._iconElement.name !== this._iconName) {
+            this._iconElement.name = this._iconName;
+        }
+        const originalAriaLabelledby = this._iconButtonElement.getAttribute('aria-labelledby');
+        this._forwardObserver = forwardAttributes(this, APP_BAR_MENU_BUTTON_CONSTANTS.forwardedAttributes, (name, value) => {
+            if (name === 'aria-labelledby' && !value) {
+                value = originalAriaLabelledby;
+            }
+            toggleAttribute(this._iconButtonElement, !!value, name, value ?? undefined);
+        });
+    }
+    disconnectedCallback() {
+        this._forwardObserver?.disconnect();
+        this._forwardObserver = undefined;
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case APP_BAR_MENU_BUTTON_CONSTANTS.attributes.ICON:
+                this.icon = newValue;
+                break;
+        }
+    }
+    get icon() {
+        return this._iconName;
+    }
+    set icon(value) {
+        if (this._iconName !== value) {
+            this._iconName = value ?? tylIconMenu.name;
+            if (this._iconElement) {
+                this._iconElement.name = this._iconName;
+            }
+            this.setAttribute(APP_BAR_MENU_BUTTON_CONSTANTS.attributes.ICON, this._iconName);
+        }
+    }
+};
+AppBarMenuButtonComponent = __decorate([
+    customElement({
+        name: APP_BAR_MENU_BUTTON_CONSTANTS.elementName,
+        dependencies: [IconButtonComponent, TooltipComponent]
+    })
+], AppBarMenuButtonComponent);
+export { AppBarMenuButtonComponent };

@@ -1,0 +1,27 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponentDelegate } from '../core/delegates/base-component-delegate';
+import { CALENDAR_CONSTANTS } from './calendar-constants';
+export class CalendarComponentDelegate extends BaseComponentDelegate {
+    constructor(config) {
+        super(config);
+    }
+    _build() {
+        return document.createElement(CALENDAR_CONSTANTS.elementName);
+    }
+    onDateSelect(listener) {
+        this._element.addEventListener(CALENDAR_CONSTANTS.events.DATE_SELECT, listener);
+    }
+    onFocusChange(listener) {
+        this._element.addEventListener(CALENDAR_CONSTANTS.events.FOCUS_CHANGE, listener);
+    }
+    onMonthChange(listener) {
+        this._element.addEventListener(CALENDAR_CONSTANTS.events.MONTH_CHANGE, listener);
+    }
+    onViewChange(listener) {
+        this._element.addEventListener(CALENDAR_CONSTANTS.events.VIEW_CHANGE, listener);
+    }
+}

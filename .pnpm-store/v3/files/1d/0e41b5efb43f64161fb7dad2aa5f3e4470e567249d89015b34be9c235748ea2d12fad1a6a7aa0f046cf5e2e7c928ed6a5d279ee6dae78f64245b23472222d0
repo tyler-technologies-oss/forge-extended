@@ -1,0 +1,72 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponent, IBaseComponent } from '../core/base/base-component';
+import { ExpansionPanelAnimationType, ExpansionPanelOrientation, emulateUserToggle } from './expansion-panel-constants';
+export interface IExpansionPanelComponent extends IBaseComponent {
+    open: boolean;
+    orientation: ExpansionPanelOrientation;
+    animationType: ExpansionPanelAnimationType;
+    toggle(): void;
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-expansion-panel': IExpansionPanelComponent;
+    }
+    interface HTMLElementEventMap {
+        'forge-expansion-panel-toggle': CustomEvent<boolean>;
+        'forge-expansion-panel-animation-complete': CustomEvent<boolean>;
+    }
+}
+/**
+ * @tag forge-expansion-panel
+ *
+ * @summary Expansion panels provide progressive disclosure of content.
+ *
+ * @property {boolean} [open=false] - Whether the panel is open or closed.
+ * @property {ExpansionPanelOrientation} [orientation="vertical"] - The orientation of the panel.
+ * @property {ExpansionPanelAnimationType} [animationType="default"] - The type of animation to use when opening/closing the panel.
+ *
+ * @attribute {boolean} [open=false] - Whether the panel is open or closed.
+ * @attribute {ExpansionPanelOrientation} [orientation="vertical"] - The orientation of the panel.
+ * @attribute {ExpansionPanelAnimationType} [animation-type="default"] - The type of animation to use when opening/closing the panel.
+ *
+ * @fires {CustomEvent<boolean>} forge-expansion-panel-toggle - Event fired when the panel is toggled open or closed.
+ * @fires {CustomEvent<boolean>} forge-expansion-panel-animation-complete - Event fired when the panel has finished animating when toggling.
+ *
+ * @cssproperty --forge-expansion-panel-animation-duration - The duration of the open/close animation.
+ * @cssproperty --forge-expansion-panel-animation-easing - The easing function of the open/close animation.
+ *
+ * @csspart root - The root element of the panel.
+ * @csspart header - The header of the panel.
+ * @csspart content - The content of the panel.
+ *
+ * @cssclass forge-expansion-panel - The expandable element content container (required).
+ * @cssclass forge-expansion-panel__content - The expandable content within the panel container.
+ * @cssclass forge-expansion-panel--open - The open state of the panel.
+ *
+ * @slot - The content of the panel.
+ * @slot header - The header of the panel.
+ */
+export declare class ExpansionPanelComponent extends BaseComponent implements IExpansionPanelComponent {
+    static get observedAttributes(): string[];
+    private _core;
+    constructor();
+    connectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    open: boolean;
+    orientation: ExpansionPanelOrientation;
+    animationType: ExpansionPanelAnimationType;
+    /**
+     * Toggles the open state of the panel.
+     */
+    toggle(): void;
+    /**
+     * @internal
+     *
+     * Emulates a user toggle of the panel, by also dispatching the toggle event.
+     */
+    [emulateUserToggle](open: boolean): void;
+}

@@ -1,0 +1,53 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core';
+import { ILabelComponent } from './label';
+export interface ILabelAdapter extends IBaseAdapter {
+    destroy(): void;
+    hasTargetElement(): boolean;
+    getTargetElement(): HTMLElement | null;
+    setTargetElement(el: HTMLElement | null): void;
+    trySetTarget(value: string | null): void;
+    clickTarget(): void;
+    updateTargetLabel(): void;
+    addSlotChangeListener(callback: EventListener): void;
+    removeSlotChangeListener(callback: EventListener): void;
+    addMutationObserver(callback: MutationCallback): void;
+    removeMutationObserver(): void;
+}
+export declare class LabelAdapter extends BaseAdapter<ILabelComponent> implements ILabelAdapter {
+    private _slotElement;
+    private _targetElement;
+    private _mutationObserver?;
+    constructor(component: ILabelComponent);
+    destroy(): void;
+    hasTargetElement(): boolean;
+    getTargetElement(): HTMLElement | null;
+    setTargetElement(el: HTMLElement | null): void;
+    trySetTarget(value: string | null): void;
+    /**
+     * Calls the target's `labelClickedCallback`.
+     */
+    clickTarget(): void;
+    /**
+     * Computes the text content of the label then passes it to the target's `labelChangedCallback`.
+     */
+    updateTargetLabel(): void;
+    addSlotChangeListener(callback: EventListener): void;
+    removeSlotChangeListener(callback: EventListener): void;
+    addMutationObserver(callback: MutationCallback): void;
+    removeMutationObserver(): void;
+    /**
+     * Returns `true` if the provided element is label aware, `false` otherwise. If `false` a warning
+     * is logged to the console.
+     */
+    private _checkLabelAwareness;
+    /**
+     * Returns a label aware element queried from the provided id or a child element of the
+     * component or `null` if none exists.
+     */
+    private _locateTargetElement;
+}

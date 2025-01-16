@@ -1,0 +1,62 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponent, IBaseComponent } from '../../core/base/base-component';
+/**
+ * @deprecated Use `IIconButtonComponent` component instead.
+ */
+export interface IDeprecatedIconButtonComponent extends IBaseComponent {
+    disabled: boolean;
+    toggle: boolean;
+    isOn: boolean;
+    densityLevel: number;
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-deprecated-icon-button': IDeprecatedIconButtonComponent;
+    }
+}
+/**
+ * @tag forge-deprecated-icon-button
+ *
+ * @deprecated Use the `<forge-icon-button>` element instead.
+ */
+export declare class DeprecatedIconButtonComponent extends BaseComponent implements IDeprecatedIconButtonComponent {
+    static get observedAttributes(): string[];
+    private _disabled;
+    private _toggle;
+    private _isOn;
+    private _densityLevel;
+    private _slotElement;
+    private _focusIndicator;
+    private _stateLayer;
+    private _buttonOrAnchorElement;
+    private _slotChangeListener;
+    private _buttonAttrMutationObserver;
+    private _keydownListener;
+    private _toggleClickListener;
+    constructor();
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    private _onKeydown;
+    private _onSlotChange;
+    private _onToggle;
+    private _initialize;
+    private _syncDisabledState;
+    private _detachButton;
+    private _initializeToggle;
+    private _destroyToggle;
+    private _syncToggleState;
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    get toggle(): boolean;
+    set toggle(value: boolean);
+    get isOn(): boolean;
+    set isOn(value: boolean);
+    get densityLevel(): number;
+    set densityLevel(value: number);
+    focus(options?: FocusOptions | undefined): void;
+}

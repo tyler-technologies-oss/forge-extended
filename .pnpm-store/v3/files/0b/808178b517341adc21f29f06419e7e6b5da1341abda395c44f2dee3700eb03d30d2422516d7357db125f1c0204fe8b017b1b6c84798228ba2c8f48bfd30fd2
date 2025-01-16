@@ -1,0 +1,49 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ExperimentalFocusOptions } from '../constants';
+import { BaseAdapter, IBaseAdapter } from '../core/base/base-adapter';
+import { IProfileCardComponent } from './profile-card';
+export interface IProfileCardAdapter extends IBaseAdapter {
+    setFullName(value: string): void;
+    setEmail(value: string): void;
+    setAvatarText(value: string): void;
+    setAvatarIcon(value: string): void;
+    setAvatarImageUrl(value: string): void;
+    setAvatarLetterCount(count: number): void;
+    setActionToolbarVisibility(isVisible: boolean): void;
+    setProfileButtonVisibility(isVisible: boolean): void;
+    setSignOutButtonVisibility(isVisible: boolean): void;
+    setSignOutButtonText(value: string): void;
+    setProfileButtonText(value: string): void;
+    setProfileButtonListener(listener: (evt: Event) => void): void;
+    setSignOutButtonListener(listener: (evt: Event) => void): void;
+    requestProfileButtonFocus(options?: ExperimentalFocusOptions): void;
+    requestSignOutButtonFocus(options?: ExperimentalFocusOptions): void;
+}
+export declare class ProfileCardAdapter extends BaseAdapter<IProfileCardComponent> implements IProfileCardAdapter {
+    private _fullNameElement;
+    private _emailElement;
+    private _avatarElement;
+    private _actionToolbar;
+    private _profileButton;
+    private _signOutButton;
+    constructor(component: IProfileCardComponent);
+    setFullName(value: string): void;
+    setEmail(value: string): void;
+    setAvatarText(value: string): void;
+    setAvatarIcon(value: string): void;
+    setAvatarImageUrl(value: string): void;
+    setAvatarLetterCount(count: number): void;
+    setActionToolbarVisibility(isVisible: boolean): void;
+    setProfileButtonVisibility(isVisible: boolean): void;
+    setSignOutButtonVisibility(isVisible: boolean): void;
+    setSignOutButtonText(value: string): void;
+    setProfileButtonText(value: string): void;
+    setProfileButtonListener(listener: (evt: Event) => void): void;
+    setSignOutButtonListener(listener: (evt: Event) => void): void;
+    requestProfileButtonFocus(options?: ExperimentalFocusOptions): void;
+    requestSignOutButtonFocus(options?: ExperimentalFocusOptions): void;
+}

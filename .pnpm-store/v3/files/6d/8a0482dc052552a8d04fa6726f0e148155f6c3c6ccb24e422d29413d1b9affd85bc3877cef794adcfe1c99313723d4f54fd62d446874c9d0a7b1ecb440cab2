@@ -1,0 +1,34 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const STACK_CONSTANTS: {
+    elementName: string;
+    classes: {
+        DEFAULT: string;
+    };
+    observedAttributes: {
+        INLINE: string;
+        WRAP: string;
+        STRETCH: string;
+        GAP: string;
+        ALIGNMENT: string;
+        JUSTIFY: string;
+    };
+    attributes: {
+        INLINE: string;
+        WRAP: string;
+        STRETCH: string;
+        GAP: string;
+        ALIGNMENT: string;
+        JUSTIFY: string;
+    };
+    selectors: {
+        ROOT: string;
+    };
+    strings: {
+        DEFAULT_GAP: string;
+    };
+};
+export type StackAlignment = 'start' | 'center' | 'end';

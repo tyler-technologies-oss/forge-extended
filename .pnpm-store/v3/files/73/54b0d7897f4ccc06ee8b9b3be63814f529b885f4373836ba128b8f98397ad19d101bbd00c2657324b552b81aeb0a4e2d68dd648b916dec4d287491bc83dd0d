@@ -1,0 +1,142 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getFormState, getFormValue } from '../../constants';
+import { BaseComponent } from '../../core/base/base-component';
+import { IWithFocusable } from '../../core/mixins/focus/with-focusable';
+import { IWithFormAssociation } from '../../core/mixins/form/with-form-associated';
+import { IWithDefaultAria } from '../../core/mixins/internals/with-default-aria';
+import { IWithElementInternals } from '../../core/mixins/internals/with-element-internals';
+import { IWithLabelAwareness } from '../../core/mixins/label/with-label-aware';
+import { FormValue } from '../../core/utils/form-utils';
+import { RadioLabelPosition, RadioState, tryCheck } from './radio-constants';
+export interface IRadioComponent extends IWithFormAssociation, IWithFocusable, IWithLabelAwareness, IWithElementInternals, IWithDefaultAria {
+    checked: boolean;
+    defaultChecked: boolean;
+    value: string;
+    required: boolean;
+    dense: boolean;
+    labelPosition: RadioLabelPosition;
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-radio': IRadioComponent;
+    }
+}
+declare const RadioComponent_base: import("../../constants").AbstractConstructor<import("../../core/mixins/form/with-form-associated").WithFormAssociationContract> & import("../../constants").AbstractConstructor<import("../../core/mixins/label/with-label-aware").WithLabelAwarenessContract> & import("../../constants").AbstractConstructor<import("../../core/mixins/focus/with-focusable").WithFocusableContract> & import("../../constants").AbstractConstructor<import("../../core/mixins/internals/with-default-aria").WithDefaultAriaContract> & import("../../constants").AbstractConstructor<import("../../core/mixins/internals/with-element-internals").WithElementInternalsContract> & typeof BaseComponent;
+/**
+ * @tag forge-radio
+ *
+ * @summary The Forge Radio component is used to create a form input where only one out of a set of
+ * values should be selected.
+ *
+ * @cssproperty --forge-radio-primary-color - The primary color of the radio button when checked.
+ * @cssproperty --forge-radio-inactive-color - The color of the radio button when unchecked.
+ * @cssproperty --forge-radio-size - The size of the radio button in the inline and block directions.
+ * @cssproperty --forge-radio-width - The width of the radio button.
+ * @cssproperty --forge-radio-height - The height of the radio button.
+ * @cssproperty --forge-radio-border-width - The width of the radio button's border.
+ * @cssproperty --forge-radio-unchecked-border-color - The color of the radio button's border when unchecked.
+ * @cssproperty --forge-radio-checked-border-color - The color of the radio button's border when checked.
+ * @cssproperty --forge-radio-background - The background of the radio button.
+ * @cssproperty --forge-radio-shape - The shape of the radio button.
+ * @cssproperty --forge-radio-mark-size - The size of the radio button's mark in the inline and block directions.
+ * @cssproperty --forge-radio-mark-width - The width of the radio button's mark.
+ * @cssproperty --forge-radio-mark-height - The height of the radio button's mark.
+ * @cssproperty --forge-radio-mark-color - The color of the radio button's mark.
+ * @cssproperty --forge-radio-gap - The gap between the radio button and its label.
+ * @cssproperty --forge-radio-justify - The alignment of the radio button and its label in the inline direction.
+ * @cssproperty --forge-radio-direction - The direction of the radio button and its label.
+ * @cssproperty --forge-radio-state-layer-size - The size of the radio button's state layer in the inline and block directions.
+ * @cssproperty --forge-radio-state-layer-width - The width of the radio button's state layer.
+ * @cssproperty --forge-radio-state-layer-height - The height of the radio button's state layer.
+ * @cssproperty --forge-radio-state-layer-unchecked - color - The color of the radio button's state layer when unchecked.
+ * @cssproperty --forge-radio-state-layer-checked-color - The color of the radio button's state layer when checked.
+ * @cssproperty --forge-radio-state-layer-shape - The shape of the radio button's state layer.
+ * @cssproperty --forge-radio-state-layer-dense-size - The size of the radio button's state layer when dense.
+ * @cssproperty --forge-radio-state-layer-dense-width - The width of the radio button's state layer when dense.
+ * @cssproperty --forge-radio-state-layer-dense-height - The height of the radio button's state layer when dense.
+ * @cssproperty --forge-radio-disabled-opacity - The opacity of the radio button when disabled.
+ * @cssproperty --forge-radio-animation-duration - The duration of the radio button's animations.
+ * @cssproperty --forge-radio-animation-timing-function - The timing function of the radio button's animations.
+ * @cssproperty --forge-radio-animation-delay - The delay of the radio button's animations.
+ *
+ * @csspart root - Styles the radio's root element.
+ * @csspart background - Styles the border and background of the radio.
+ * @csspart focus-indicator - Styles the focus indicator of the radio.
+ * @csspart state-layer - Styles the state layer of the radio.
+ *
+ * @slot - This is a default/unnamed slot for the label text.
+ *
+ * @cssclass forge-radio - Apply to the root element _(required)_.
+ * @cssclass forge-radio--dense - Makes the radio dense.
+ */
+export declare class RadioComponent extends RadioComponent_base implements IRadioComponent {
+    static get observedAttributes(): string[];
+    private _core;
+    private _rootNode?;
+    private _latestAssociatedForm?;
+    constructor();
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    [getFormValue](): FormValue | null;
+    [getFormState](): RadioState;
+    formAssociatedCallback(form: HTMLFormElement | null): void;
+    formResetCallback(): void;
+    formStateRestoreCallback(state: RadioState): void;
+    labelClickedCallback(): void;
+    labelChangedCallback(value: string | null): void;
+    /**
+     * Gets/sets whether the radio is checked.
+     * @default false
+     * @attribute
+     */
+    checked: boolean;
+    /**
+     * Gets/sets whether the radio is checked by default.
+     * @default false
+     * @attribute default-checked
+     */
+    defaultChecked: boolean;
+    /**
+     * Gets/sets the value of the radio when submitted as part of a form.
+     * @default 'on'
+     * @attribute
+     */
+    value: string;
+    /**
+     * Controls whether the radio is dense.
+     * @default false
+     * @attribute
+     */
+    dense: boolean;
+    /**
+     * Controls whether the radio is disabled.
+     * @default false
+     * @attribute
+     */
+    disabled: boolean;
+    /**
+     * Controls whether the radio is required.
+     * @default false
+     * @attribute
+     */
+    required: boolean;
+    /**
+     * Controls whether the radio is read-only.
+     * @default false
+     * @attribute
+     */
+    readonly: boolean;
+    /**
+     * Controls whether the label appears before or after the radio.
+     * @default 'end'
+     * @attribute label-position
+     */
+    labelPosition: RadioLabelPosition;
+    [tryCheck](): boolean;
+}
+export {};

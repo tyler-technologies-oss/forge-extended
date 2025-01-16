@@ -1,0 +1,71 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../../core/base/base-adapter';
+import { IBaseSelectComponent } from './base-select';
+import { IListDropdownConfig } from '../../list-dropdown/list-dropdown-constants';
+import { ISelectOption, ISelectOptionGroup, SelectOptionListenerDestructor } from './base-select-constants';
+import { type IBaseComponent } from '../../core/base/base-component';
+export interface IBaseSelectAdapter<T extends IBaseComponent = IBaseSelectComponent> extends IBaseAdapter<T> {
+    initializeAccessibility(): void;
+    addClickListener(listener: (evt: Event) => void): void;
+    removeClickListener(listener: (evt: Event) => void): void;
+    addTargetListener(type: string, listener: (evt: Event) => void): void;
+    removeTargetListener(type: string, listener: (evt: Event) => void): void;
+    getOptions(): ISelectOption[] | ISelectOptionGroup[];
+    setOptions(options: ISelectOption[] | ISelectOptionGroup[], clear?: boolean): void;
+    open(config: IListDropdownConfig): void;
+    close(): void;
+    destroyListDropdown(): void;
+    setDismissListener(listener: () => void): void;
+    scrollSelectedOptionIntoView(): void;
+    activateSelectedOption(): void;
+    activateFirstOption(): void;
+    getActiveOptionIndex(): number;
+    highlightActiveOption(index: number): void;
+    toggleOptionMultiple(index: number, isSelected: boolean): void;
+    patchSelectedValues(selectedValues: string[]): void;
+    updateActiveDescendant(id: string): void;
+    setOptionsListener(listener: (options: ISelectOption[] | ISelectOptionGroup[]) => void): SelectOptionListenerDestructor;
+    setDropdownOptions(options: ISelectOption[] | ISelectOptionGroup[]): void;
+    appendDropdownOptions(options: ISelectOption[] | ISelectOptionGroup[]): void;
+    isFocusWithinPopup(target: HTMLElement): boolean;
+    queueDropdownPositionUpdate(): void;
+    popupElement: HTMLElement | undefined;
+}
+export declare abstract class BaseSelectAdapter<T extends IBaseSelectComponent> extends BaseAdapter<T> implements IBaseSelectAdapter {
+    private _listDropdown?;
+    protected _targetElement: HTMLElement;
+    constructor(component: T);
+    abstract initializeAccessibility(): void;
+    abstract updateActiveDescendant(id: string): void;
+    abstract addClickListener(listener: (evt: Event) => void): void;
+    abstract removeClickListener(listener: (evt: Event) => void): void;
+    abstract addTargetListener(type: string, listener: (evt: Event) => void): void;
+    abstract removeTargetListener(type: string, listener: (evt: Event) => void): void;
+    get popupElement(): HTMLElement | undefined;
+    getOptions(): ISelectOption[] | ISelectOptionGroup[];
+    private _createOptionsFromElements;
+    open(config: IListDropdownConfig): void;
+    close(): Promise<void>;
+    destroyListDropdown(): void;
+    setDismissListener(listener: () => void): void;
+    toggleOptionMultiple(index: number, isSelected: boolean): void;
+    getActiveOptionIndex(): number;
+    activateSelectedOption(): void;
+    activateFirstOption(): void;
+    highlightActiveOption(index: number): void;
+    patchSelectedValues(selectedValues: string[]): void;
+    setOptionsListener(listener: (options: ISelectOption[] | ISelectOptionGroup[]) => void): SelectOptionListenerDestructor;
+    setOptions(options: ISelectOption[] | ISelectOptionGroup[], clear?: boolean): void;
+    appendDropdownOptions(options: ISelectOption[] | ISelectOptionGroup[]): void;
+    setDropdownOptions(options: ISelectOption[] | ISelectOptionGroup[]): void;
+    scrollSelectedOptionIntoView(): void;
+    isFocusWithinPopup(target: HTMLElement): boolean;
+    queueDropdownPositionUpdate(): void;
+    private _clearOptions;
+    private _createOptionGroupElement;
+    private _createOptionElement;
+}

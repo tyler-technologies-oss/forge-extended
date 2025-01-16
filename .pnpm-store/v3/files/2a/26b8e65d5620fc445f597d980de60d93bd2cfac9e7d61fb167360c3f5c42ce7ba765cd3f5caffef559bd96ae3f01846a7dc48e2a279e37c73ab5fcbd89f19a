@@ -1,0 +1,13 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { SkeletonComponent as SkeletonComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class SkeletonComponent {
+    protected elementRef: ElementRef<SkeletonComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-skeleton element. */
+    readonly nativeElement: SkeletonComponentCustomElement;
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<SkeletonComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<SkeletonComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<SkeletonComponent, "forge-skeleton", never, {}, {}, never, ["*"], false, never>;
+}

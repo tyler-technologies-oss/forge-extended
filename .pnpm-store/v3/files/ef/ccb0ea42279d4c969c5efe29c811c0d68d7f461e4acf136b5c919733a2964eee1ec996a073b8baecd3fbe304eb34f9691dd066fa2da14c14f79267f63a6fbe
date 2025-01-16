@@ -1,0 +1,163 @@
+declare const _default: {
+    configs: {
+        recommended: {
+            extends: string;
+            rules: {
+                "@tylertech-eslint/invalid-relative-import-prefix": string;
+                "@tylertech-eslint/require-private-modifier": string;
+                "@tylertech-eslint/require-private-underscore": string;
+                "@typescript-eslint/adjacent-overload-signatures": string;
+                "@typescript-eslint/array-type": string;
+                "@typescript-eslint/ban-types": (string | {
+                    types: {
+                        Object: {
+                            message: string;
+                        };
+                        Function: {
+                            message: string;
+                        };
+                        Boolean: {
+                            message: string;
+                        };
+                        Number: {
+                            message: string;
+                        };
+                        String: {
+                            message: string;
+                        };
+                        Symbol: {
+                            message: string;
+                        };
+                    };
+                })[];
+                "@typescript-eslint/consistent-type-assertions": string;
+                "@typescript-eslint/dot-notation": string;
+                "@typescript-eslint/explicit-member-accessibility": (string | {
+                    accessibility: string;
+                })[];
+                "@typescript-eslint/explicit-function-return-type": (string | {
+                    allowExpressions: boolean;
+                })[];
+                "@typescript-eslint/indent": (string | number | {
+                    SwitchCase: number;
+                    MemberExpression: string;
+                    ignoredNodes: string[];
+                })[];
+                "@typescript-eslint/member-delimiter-style": (string | {
+                    multiline: {
+                        delimiter: string;
+                        requireLast: boolean;
+                    };
+                    singleline: {
+                        delimiter: string;
+                        requireLast: boolean;
+                    };
+                })[];
+                "@typescript-eslint/member-ordering": string;
+                "@typescript-eslint/naming-convention": string;
+                "@typescript-eslint/no-empty-function": string;
+                "@typescript-eslint/no-empty-interface": (string | {
+                    allowSingleExtends: boolean;
+                })[];
+                "@typescript-eslint/no-explicit-any": string;
+                "@typescript-eslint/no-inferrable-types": (string | {
+                    ignoreParameters: boolean;
+                })[];
+                "@typescript-eslint/no-misused-new": string;
+                "@typescript-eslint/no-namespace": string;
+                "@typescript-eslint/no-non-null-assertion": string;
+                "@typescript-eslint/no-parameter-properties": string;
+                "@typescript-eslint/no-shadow": (string | {
+                    hoist: string;
+                })[];
+                "@typescript-eslint/no-unused-expressions": string;
+                "@typescript-eslint/no-use-before-define": string;
+                "@typescript-eslint/no-var-requires": string;
+                "@typescript-eslint/no-extra-parens": (string | {
+                    nestedBinaryExpressions: boolean;
+                })[];
+                "@typescript-eslint/prefer-for-of": string;
+                "@typescript-eslint/prefer-function-type": string;
+                "@typescript-eslint/prefer-namespace-keyword": string;
+                "@typescript-eslint/quotes": (string | {
+                    allowTemplateLiterals: boolean;
+                })[];
+                "@typescript-eslint/semi": string[];
+                "@typescript-eslint/triple-slash-reference": (string | {
+                    path: string;
+                    types: string;
+                    lib: string;
+                })[];
+                "@typescript-eslint/type-annotation-spacing": string;
+                "@typescript-eslint/unified-signatures": string;
+                "@typescript-eslint/comma-dangle": string;
+                "@typescript-eslint/comma-spacing": string[];
+                "@typescript-eslint/arrow-body-style": string;
+                "arrow-body-style": string;
+                "arrow-parens": string[];
+                "comma-dangle": string;
+                "comma-spacing": string;
+                complexity: string;
+                "constructor-super": string;
+                curly: string;
+                "eol-last": string;
+                eqeqeq: string[];
+                "guard-for-in": string;
+                "id-blacklist": string[];
+                "id-match": string;
+                "import/order": string;
+                "max-classes-per-file": string;
+                "max-len": string;
+                "new-parens": string;
+                "no-bitwise": string;
+                "no-caller": string;
+                "no-cond-assign": string;
+                "no-console": (string | {
+                    allow: string[];
+                })[];
+                "no-debugger": string;
+                "no-empty": string;
+                "no-eval": string;
+                "no-extra-parens": string;
+                "no-fallthrough": string;
+                "no-invalid-this": string;
+                "no-multiple-empty-lines": string;
+                "no-new-wrappers": string;
+                "no-restricted-imports": string[];
+                "no-throw-literal": string;
+                "no-trailing-spaces": (string | {
+                    ignoreComments: boolean;
+                    skipBlankLines: boolean;
+                })[];
+                "no-undef-init": string;
+                "no-underscore-dangle": string;
+                "no-unsafe-finally": string;
+                "no-unused-labels": string;
+                "no-var": string;
+                "object-shorthand": string;
+                "one-var": string[];
+                "prefer-const": string;
+                "quote-props": (string | {
+                    unnecessary: boolean;
+                })[];
+                radix: string;
+                "space-before-function-paren": (string | {
+                    anonymous: string;
+                    asyncArrow: string;
+                    named: string;
+                })[];
+                "spaced-comment": (string | {
+                    markers: string[];
+                })[];
+                "use-isnan": string;
+                "valid-typeof": string;
+            };
+        };
+    };
+    rules: {
+        "require-private-modifier": import("@typescript-eslint/utils/dist/ts-eslint").RuleModule<"requirePrivateModifier", string[], import("@typescript-eslint/utils/dist/ts-eslint").RuleListener>;
+        "require-private-underscore": import("@typescript-eslint/utils/dist/ts-eslint").RuleModule<"requirePrivateUnderscore", string[], import("@typescript-eslint/utils/dist/ts-eslint").RuleListener>;
+        "invalid-relative-import-prefix": import("@typescript-eslint/utils/dist/ts-eslint").RuleModule<"invalidRelativeImportPrefix", string[], import("@typescript-eslint/utils/dist/ts-eslint").RuleListener>;
+    };
+};
+export default _default;

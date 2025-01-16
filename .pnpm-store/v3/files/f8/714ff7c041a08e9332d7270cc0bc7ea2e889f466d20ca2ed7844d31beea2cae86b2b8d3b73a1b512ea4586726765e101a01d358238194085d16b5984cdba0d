@@ -1,0 +1,44 @@
+import { EventAware, IEventAware } from '../events/event-aware';
+import { IScrollObserverConfiguration } from './scroll-types';
+export interface IScrollAxisObserver extends IEventAware {
+    scrollPosition: number;
+    isScrolled: boolean;
+    isScrolledStart: boolean;
+    isScrolledEnd: boolean;
+    isScrollable: boolean;
+    scrollSize: number;
+    elementSize: number;
+    setScrollPosition(position: number): void;
+    destroy(): void;
+    start(): void;
+    stop(): void;
+}
+/**
+ * Provides facilties for observing and reacting to scroll events and information on a given element.
+ */
+export declare class ScrollAxisObserver extends EventAware implements IScrollAxisObserver {
+    private _element;
+    private _config;
+    private _axis;
+    private _scrollThreshold;
+    private _lastScrollPosition;
+    private _lastScrollTop;
+    private _lastScrollLeft;
+    private _isListening;
+    private _scrollListener;
+    constructor(_element: HTMLElement, _config?: IScrollObserverConfiguration);
+    destroy(): void;
+    start(): void;
+    stop(): void;
+    private _initialize;
+    private _isScrollAxis;
+    private _onScroll;
+    get scrollPosition(): number;
+    get isScrolled(): boolean;
+    get isScrolledStart(): boolean;
+    get isScrolledEnd(): boolean;
+    get isScrollable(): boolean;
+    get scrollSize(): number;
+    get elementSize(): number;
+    setScrollPosition(position: number): void;
+}

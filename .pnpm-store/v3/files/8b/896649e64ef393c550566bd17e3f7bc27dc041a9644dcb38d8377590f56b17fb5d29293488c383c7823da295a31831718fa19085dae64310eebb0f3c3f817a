@@ -1,0 +1,12 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { defineCustomElement } from '@tylertech/forge-core';
+import { DrawerComponent } from './drawer';
+export * from './drawer-constants';
+export * from './drawer';
+export function defineDrawerComponent() {
+    defineCustomElement(DrawerComponent);
+}

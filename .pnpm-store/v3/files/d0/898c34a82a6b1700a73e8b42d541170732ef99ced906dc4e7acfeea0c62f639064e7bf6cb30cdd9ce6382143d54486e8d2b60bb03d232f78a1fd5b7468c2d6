@@ -1,0 +1,79 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const COLOR_PICKER_CONSTANTS: {
+    elementName: "forge-color-picker";
+    attributes: {
+        VALUE: string;
+        ALLOW_OPACITY: string;
+        DEBOUNCE_CHANGE_EVENT: string;
+    };
+    events: {
+        CHANGE: string;
+    };
+    classes: {
+        SLIDER_THUMB_ACTIVE: string;
+        GRADIENT_THUMB_ACTIVE: string;
+    };
+    selectors: {
+        GRADIENT: string;
+        GRADIENT_THUMB: string;
+        PREVIEW_COLOR: string;
+        HEX_INPUT: string;
+        RGBA_INPUT: string;
+        HSVA_INPUT: string;
+        HUE_SLIDER: string;
+        HUE_SLIDER_THUMB: string;
+        OPACITY_SLIDER: string;
+        OPACITY_SLIDER_THUMB: string;
+        SLIDER: string;
+        SLIDER_THUMB: string;
+        COLOR_VALUE_HEX_CONTAINER: string;
+        COLOR_VALUE_RGBA_CONTAINER: string;
+        COLOR_VALUE_HSVA_CONTAINER: string;
+        TYPE_BUTTON: string;
+        COLOR_VALUE_RGBA_R: string;
+        COLOR_VALUE_RGBA_G: string;
+        COLOR_VALUE_RGBA_B: string;
+        COLOR_VALUE_RGBA_A: string;
+        COLOR_VALUE_HSVA_H: string;
+        COLOR_VALUE_HSVA_S: string;
+        COLOR_VALUE_HSVA_V: string;
+        COLOR_VALUE_HSVA_A: string;
+    };
+    numbers: {
+        CHANGE_EVENT_DEBOUNCE_THRESHOLD: number;
+    };
+};
+export declare const DEFAULT_COLOR = "000000";
+export declare enum ColorPickerValueType {
+    HEX = "hex",
+    RGB = "rgb",
+    RGBA = "rgba",
+    HSV = "hsv",
+    HSVA = "hsva"
+}
+export interface IRGBA {
+    r: number;
+    g: number;
+    b: number;
+    a: number;
+}
+export interface IHSVA {
+    h: number;
+    s: number;
+    v: number;
+    a: number;
+}
+export type ColorPickerChangeEventType = 'slider' | 'input';
+export type ColorPickerChangeEventSource = 'gradient' | 'hue' | 'opacity' | 'hex' | 'rgba' | 'hsva';
+export interface IColorPickerChangeEventData {
+    type: ColorPickerChangeEventType;
+    source: ColorPickerChangeEventSource;
+    hex: string;
+    rgba: IRGBA;
+    hsva: IHSVA;
+    alpha?: number;
+}

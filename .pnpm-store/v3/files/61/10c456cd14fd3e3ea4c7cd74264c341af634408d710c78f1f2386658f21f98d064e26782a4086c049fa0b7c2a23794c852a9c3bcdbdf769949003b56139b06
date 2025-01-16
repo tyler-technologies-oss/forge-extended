@@ -1,0 +1,46 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+/**
+ * @license
+ * Copyright 2023 Google LLC
+ * SPDX-License-Identifier: Apache-2.0
+ *
+ * Adapted and influenced from [Material Web](https://github.com/material-components/material-web).
+ * The original source code can be found at: [GitHub](https://github.com/material-components/material-web/blob/main/labs/behaviors/focusable.ts)
+ */
+import { AbstractConstructor, isFocusable, MixinBase } from '../../../constants';
+import { IBaseComponent } from '../../base/base-component';
+/**
+ * An element that can enable and disable `tabindex` focusability.
+ */
+export interface IWithFocusable extends IBaseComponent {
+    /**
+     * Whether or not the element can be focused. Defaults to true. Set to false
+     * to disable focusing (unless a user has set a `tabindex`).
+     */
+    [isFocusable]: boolean;
+}
+export declare abstract class WithFocusableContract {
+    get [isFocusable](): boolean;
+    set [isFocusable](value: boolean);
+    connectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+}
+/**
+ * Provides focusable functionality for an element.
+ *
+ * Elements can enable and disable their focusability with the `isFocusable`
+ * symbol property. **Use this instead of changing `tabIndex` directly.**
+ *
+ * This will preserve externally-set tabindices. If an element sets `tabindex="-1"`,
+ * but a user sets `tabindex="0"`, it will still be focusable.
+ *
+ * To remove user overrides and restore focus control to the element, remove the `tabindex` attribute.
+ *
+ * @param base The base component to mix into.
+ * @returns The mixed-in base component.
+ */
+export declare function WithFocusable<TBase extends MixinBase>(base: TBase): AbstractConstructor<WithFocusableContract> & TBase;

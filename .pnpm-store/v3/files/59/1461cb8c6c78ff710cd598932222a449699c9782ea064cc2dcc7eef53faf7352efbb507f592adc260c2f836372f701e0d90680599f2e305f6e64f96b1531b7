@@ -1,0 +1,36 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core/base/base-adapter';
+import { IAvatarComponent } from './avatar';
+export interface IAvatarAdapter extends IBaseAdapter {
+    setBackgroundImageUrl(url: string): Promise<boolean>;
+    removeBackgroundImage(): void;
+    setText(value: string): void;
+    clearText(): void;
+}
+/**
+ * The DOM adapter behind the `<forge-avatar>` element.
+ */
+export declare class AvatarAdapter extends BaseAdapter<IAvatarComponent> implements IAvatarAdapter {
+    private _root;
+    private _defaultSlot;
+    constructor(component: IAvatarComponent);
+    /**
+     * Sets the background image URL.
+     * @param url The URL.
+     */
+    setBackgroundImageUrl(url: string): Promise<boolean>;
+    /**
+     * Removes the background image URL.
+     */
+    removeBackgroundImage(): void;
+    /**
+     * Sets the avatar text content.
+     * @param value The text value.
+     */
+    setText(value: string): void;
+    clearText(): void;
+}

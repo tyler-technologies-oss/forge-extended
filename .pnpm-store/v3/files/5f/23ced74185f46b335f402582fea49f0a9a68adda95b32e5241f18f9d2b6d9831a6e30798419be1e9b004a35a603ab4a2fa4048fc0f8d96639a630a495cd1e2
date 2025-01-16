@@ -1,0 +1,52 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getShadowElement } from '@tylertech/forge-core';
+import { BaseAdapter } from '../core/base/base-adapter';
+import { EXPANSION_PANEL_CONSTANTS } from './expansion-panel-constants';
+export class ExpansionPanelAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this._transitionStartListener = this._onTransitionStart.bind(this);
+        this._transitionEndListener = this._onTransitionEnd.bind(this);
+        this._headerElement = getShadowElement(this._component, EXPANSION_PANEL_CONSTANTS.selectors.HEADER);
+        this._contentElement = getShadowElement(this._component, EXPANSION_PANEL_CONSTANTS.selectors.CONTENT);
+        this._innerElement = getShadowElement(this._component, EXPANSION_PANEL_CONSTANTS.selectors.INNER);
+    }
+    setAnimationCompleteListener(listener) {
+        this._transitionCompleteListener = listener;
+        this._contentElement.addEventListener('transitionstart', this._transitionStartListener);
+        this._contentElement.addEventListener('transitionend', this._transitionEndListener);
+    }
+    addHeaderListener(type, listener) {
+        this._headerElement.addEventListener(type, listener);
+    }
+    tryToggleOpenIcon(value) {
+        const openIconElement = this._component.querySelector(EXPANSION_PANEL_CONSTANTS.selectors.OPEN_ICON);
+        if (openIconElement) {
+            openIconElement.open = value;
+        }
+    }
+    setContentVisibility(visible) {
+        this._contentElement.classList.toggle(EXPANSION_PANEL_CONSTANTS.classes.HIDDEN, !visible);
+    }
+    _onTransitionStart(evt) {
+        if (evt.propertyName.startsWith('grid-template')) {
+            this.toggleHostAttribute(EXPANSION_PANEL_CONSTANTS.attributes.OPENING, true);
+        }
+    }
+    _onTransitionEnd(evt) {
+        if (evt.propertyName.startsWith('grid-template')) {
+            this.toggleHostAttribute(EXPANSION_PANEL_CONSTANTS.attributes.OPENING, false);
+            this._transitionCompleteListener();
+        }
+    }
+    animationStart() {
+        this._innerElement.style.overflow = 'hidden';
+    }
+    animationEnd() {
+        this._innerElement.style.removeProperty('overflow');
+    }
+}

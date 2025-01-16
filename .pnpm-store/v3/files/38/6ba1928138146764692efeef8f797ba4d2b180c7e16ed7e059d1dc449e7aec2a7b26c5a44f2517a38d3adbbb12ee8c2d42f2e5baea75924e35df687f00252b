@@ -1,0 +1,11 @@
+import { Observable } from 'rxjs';
+import type { IPopoverComponent } from '@tylertech/forge';
+export declare class PopoverRef<TComponent = unknown, TResult = unknown> {
+    private readonly _elementRef;
+    private readonly _afterClosed;
+    afterClosed: Observable<TResult | undefined>;
+    componentInstance: TComponent;
+    constructor(instance: IPopoverComponent);
+    close(result?: TResult): void;
+    get nativeElement(): IPopoverComponent;
+}

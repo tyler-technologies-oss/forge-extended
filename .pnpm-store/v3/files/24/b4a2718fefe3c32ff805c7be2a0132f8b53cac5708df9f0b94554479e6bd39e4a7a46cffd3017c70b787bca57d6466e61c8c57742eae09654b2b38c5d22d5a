@@ -1,0 +1,12 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+/* stylelint-disable unit-allowed-list */
+body {
+  background-color: var(--forge-theme-surface-dim, #fafafa);
+  margin: 0;
+  height: 100dvh;
+  width: 100dvw;
+}

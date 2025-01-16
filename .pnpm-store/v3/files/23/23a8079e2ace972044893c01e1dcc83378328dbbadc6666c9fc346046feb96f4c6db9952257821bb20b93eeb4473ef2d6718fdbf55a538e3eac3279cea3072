@@ -1,0 +1,23 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export type TylerForgeGlobalConfiguration = {
+    [K in keyof HTMLElementTagNameMap]?: Partial<HTMLElementTagNameMap[K]>;
+};
+declare global {
+    interface Window {
+        TylerForgeGlobalConfiguration: TylerForgeGlobalConfiguration;
+    }
+}
+export declare class GlobalConfiguration {
+    private constructor();
+    /**
+     * Gets an entry from the global configuration for the specified element.
+     */
+    static get<T extends keyof HTMLElementTagNameMap>(element: T): {
+        has(key: keyof HTMLElementTagNameMap[T]): key is keyof HTMLElementTagNameMap[T];
+        valueOf<TKey extends keyof HTMLElementTagNameMap[T]>(key: TKey): Partial<HTMLElementTagNameMap[T]>[TKey];
+    } | null;
+}

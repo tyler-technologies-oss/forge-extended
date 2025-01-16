@@ -1,0 +1,43 @@
+{
+  "name": "reactify-wc",
+  "author": "Bryce Kolton (624), Mercedes-Benz R&D North America, Seattle HUB",
+  "version": "4.0.0",
+  "license": "MIT",
+  "description": "Wraps web components in React to allow usage and correct property passthrough",
+  "module": "dist/index.js",
+  "main": "dist/index.cjs.js",
+  "types": "dist/index.d.ts",
+  "keywords": [
+    "react",
+    "web component",
+    "reactify",
+    "componentize",
+    "react properties",
+    "react event handler",
+    "react attributes"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepack": "npm run build",
+    "build": "rollup -c"
+  },
+  "peerDependencies": {
+    "react": "^16.3.0"
+  },
+  "devDependencies": {
+    "@types/react": "^16.9.17",
+    "react": "^16.8.0",
+    "rollup": "^1.12.0",
+    "@rollup/plugin-commonjs": "^11.0.0",
+    "rollup-plugin-terser": "^5.1.3",
+    "rollup-plugin-typescript2": "^0.23.0",
+    "typescript": "^3.5.3"
+  },
+  "files": [
+    "dist"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/BBKolton/reactify-wc"
+  }
+}

@@ -1,0 +1,71 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { OverlayComponent as OverlayComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class OverlayComponent {
+    protected elementRef: ElementRef<OverlayComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-overlay element. */
+    readonly nativeElement: OverlayComponentCustomElement;
+    /** The element to use as the arrow for the overlay. */
+    set arrowElement(value: OverlayComponentCustomElement['arrowElement']);
+    get arrowElement(): OverlayComponentCustomElement['arrowElement'];
+    /** The offset to apply to the arrow element. */
+    set arrowElementOffset(value: OverlayComponentCustomElement['arrowElementOffset']);
+    get arrowElementOffset(): OverlayComponentCustomElement['arrowElementOffset'];
+    /** Whether or not the overlay is open. */
+    set open(value: OverlayComponentCustomElement['open']);
+    get open(): OverlayComponentCustomElement['open'];
+    /** Whether or not the overlay should be rendered inline (not in the :top-layer). */
+    set inline(value: OverlayComponentCustomElement['inline']);
+    get inline(): OverlayComponentCustomElement['inline'];
+    /** The element to anchor the overlay to. */
+    set anchorElement(value: OverlayComponentCustomElement['anchorElement']);
+    get anchorElement(): OverlayComponentCustomElement['anchorElement'];
+    /** The id of the element to anchor the overlay to. */
+    set anchor(value: OverlayComponentCustomElement['anchor']);
+    get anchor(): OverlayComponentCustomElement['anchor'];
+    /** Whether or not the overlay should be rendered without an anchor (centered on page by default). */
+    set noAnchor(value: OverlayComponentCustomElement['noAnchor']);
+    get noAnchor(): OverlayComponentCustomElement['noAnchor'];
+    /** The placement of the overlay relative to the anchor element. */
+    set placement(value: OverlayComponentCustomElement['placement']);
+    get placement(): OverlayComponentCustomElement['placement'];
+    /** The positioning strategy to use for the overlay. Valid values are `'fixed'` and `'absolute'`. */
+    set positionStrategy(value: OverlayComponentCustomElement['positionStrategy']);
+    get positionStrategy(): OverlayComponentCustomElement['positionStrategy'];
+    /** The offset to apply to the overlay position relative to the anchor element. */
+    set offset(value: OverlayComponentCustomElement['offset']);
+    get offset(): OverlayComponentCustomElement['offset'];
+    /** Whether or not the anchor element should shift along the side of the overlay when scrolling. */
+    set shift(value: OverlayComponentCustomElement['shift']);
+    get shift(): OverlayComponentCustomElement['shift'];
+    /** Whether or not the overlay should hide itself when the anchor element is out of view. */
+    set hide(value: OverlayComponentCustomElement['hide']);
+    get hide(): OverlayComponentCustomElement['hide'];
+    /** Whether or not the overlay handles light dismiss itself or not. */
+    set persistent(value: OverlayComponentCustomElement['persistent']);
+    get persistent(): OverlayComponentCustomElement['persistent'];
+    /** Whether or not the overlay should flip to the opposite placement when not enough room. */
+    set flip(value: OverlayComponentCustomElement['flip']);
+    get flip(): OverlayComponentCustomElement['flip'];
+    /** The id of the element to use as the boundary for the overlay. */
+    set boundary(value: OverlayComponentCustomElement['boundary']);
+    get boundary(): OverlayComponentCustomElement['boundary'];
+    /** The element to use as the boundary for the overlay. */
+    set boundaryElement(value: OverlayComponentCustomElement['boundaryElement']);
+    get boundaryElement(): OverlayComponentCustomElement['boundaryElement'];
+    /** The fallback placements to use when the overlay cannot be placed in the desired placement. */
+    set fallbackPlacements(value: OverlayComponentCustomElement['fallbackPlacements']);
+    get fallbackPlacements(): OverlayComponentCustomElement['fallbackPlacements'];
+    position(...args: Parameters<OverlayComponentCustomElement['position']>): ReturnType<OverlayComponentCustomElement['position']>;
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<OverlayComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<OverlayComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<OverlayComponent, "forge-overlay", never, { "arrowElement": { "alias": "arrowElement"; "required": false; }; "arrowElementOffset": { "alias": "arrowElementOffset"; "required": false; }; "open": { "alias": "open"; "required": false; }; "inline": { "alias": "inline"; "required": false; }; "anchorElement": { "alias": "anchorElement"; "required": false; }; "anchor": { "alias": "anchor"; "required": false; }; "noAnchor": { "alias": "noAnchor"; "required": false; }; "placement": { "alias": "placement"; "required": false; }; "positionStrategy": { "alias": "positionStrategy"; "required": false; }; "offset": { "alias": "offset"; "required": false; }; "shift": { "alias": "shift"; "required": false; }; "hide": { "alias": "hide"; "required": false; }; "persistent": { "alias": "persistent"; "required": false; }; "flip": { "alias": "flip"; "required": false; }; "boundary": { "alias": "boundary"; "required": false; }; "boundaryElement": { "alias": "boundaryElement"; "required": false; }; "fallbackPlacements": { "alias": "fallbackPlacements"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_arrowElementOffset: unknown;
+    static ngAcceptInputType_open: unknown;
+    static ngAcceptInputType_inline: unknown;
+    static ngAcceptInputType_noAnchor: unknown;
+    static ngAcceptInputType_shift: unknown;
+    static ngAcceptInputType_persistent: unknown;
+}

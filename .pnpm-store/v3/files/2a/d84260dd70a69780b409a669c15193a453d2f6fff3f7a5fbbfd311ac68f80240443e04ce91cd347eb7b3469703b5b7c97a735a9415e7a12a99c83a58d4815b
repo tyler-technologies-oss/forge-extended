@@ -1,0 +1,41 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IListDropdownOption, IListDropdownOptionGroup } from '../../list-dropdown/list-dropdown-constants';
+export type SelectOptionBuilder = (option: ISelectOption, parentElement: HTMLElement) => HTMLElement;
+export type SelectSelectedTextBuilder = (selectedOptions: IListDropdownOption[]) => string;
+export type SelectOptionListenerDestructor = () => void;
+export type SelectBeforeValueChangeCallback<T> = (value: T | T[]) => boolean | Promise<boolean>;
+export interface ISelectOption extends IListDropdownOption {
+}
+export interface ISelectOptionGroup extends IListDropdownOptionGroup {
+}
+export declare const BASE_SELECT_CONSTANTS: {
+    observedAttributes: {
+        VALUE: string;
+        MULTIPLE: string;
+        OBSERVE_SCROLL: string;
+        OBSERVE_SCROLL_THRESHOLD: string;
+        POPUP_CLASSES: string;
+        OPTION_LIMIT: string;
+        SYNC_POPUP_WIDTH: string;
+        CONSTRAIN_POPUP_WIDTH: string;
+        WRAP_OPTION_TEXT: string;
+    };
+    attributes: {
+        VALUE: string;
+        MULTIPLE: string;
+        OBSERVE_SCROLL: string;
+        OBSERVE_SCROLL_THRESHOLD: string;
+        POPUP_CLASSES: string;
+        OPTION_LIMIT: string;
+        SYNC_POPUP_WIDTH: string;
+        CONSTRAIN_POPUP_WIDTH: string;
+        WRAP_OPTION_TEXT: string;
+    };
+    events: {
+        CHANGE: string;
+    };
+};

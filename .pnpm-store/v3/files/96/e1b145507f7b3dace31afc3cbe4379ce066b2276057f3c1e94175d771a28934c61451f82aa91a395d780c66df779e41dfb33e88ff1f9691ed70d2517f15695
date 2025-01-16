@@ -1,0 +1,40 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+.forge-state-layer {
+  --_state-layer-display: var(--forge-state-layer-display, flex);
+  --_state-layer-color: var(--forge-state-layer-color, var(--forge-theme-on-surface, #000000));
+  --_state-layer-hover-color: var(--forge-state-layer-hover-color, var(--_state-layer-color));
+  --_state-layer-hover-opacity: var(--forge-state-layer-hover-opacity, 0.08);
+  --_state-layer-pressed-color: var(--forge-state-layer-pressed-color, var(--_state-layer-color));
+  --_state-layer-pressed-opacity: var(--forge-state-layer-pressed-opacity, 0.12);
+  --_state-layer-hover-duration: var(--forge-state-layer-hover-duration, 15ms);
+  --_state-layer-pressed-duration: var(--forge-state-layer-pressed-duration, 105ms);
+  --_state-layer-animation-duration: var(--forge-state-layer-animation-duration, 375ms);
+}
+.forge-state-layer::before {
+  opacity: 0;
+  position: absolute;
+  background-color: var(--_state-layer-hover-color);
+  inset: 0;
+  transition: opacity var(--_state-layer-hover-duration) linear, background-color var(--_state-layer-hover-duration) linear;
+  --_state-layer-hover-duration: var(--forge-state-layer-hover-duration, 100ms);
+  content: "";
+  opacity: 0;
+  border-radius: inherit;
+}
+.forge-state-layer:hover::before {
+  background-color: var(--_state-layer-hover-color);
+  opacity: var(--_state-layer-hover-opacity);
+}
+.forge-state-layer:active::before {
+  opacity: var(--_state-layer-pressed-opacity);
+  transition-duration: var(--_state-layer-pressed-duration);
+  --_state-layer-pressed-opacity: var(--forge-state-layer-pressed-opacity, 0.18);
+}
+.forge-state-layer__target {
+  position: relative;
+  overflow: hidden;
+}

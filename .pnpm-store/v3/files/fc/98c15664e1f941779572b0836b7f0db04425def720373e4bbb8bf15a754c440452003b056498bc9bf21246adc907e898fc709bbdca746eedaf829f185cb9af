@@ -1,0 +1,29 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponentDelegate, IBaseComponentDelegateConfig, IBaseComponentDelegateOptions } from '../core/delegates/base-component-delegate';
+import { ILabelValueComponent } from '../label-value';
+export type LabelValueComponentDelegateProps = Partial<ILabelValueComponent>;
+export interface ILabelValueComponentDelegateOptions extends IBaseComponentDelegateOptions {
+    labelText: string;
+    valueText: string;
+    iconElement?: HTMLElement;
+}
+export interface ILabelValueComponentDelegateConfig extends IBaseComponentDelegateConfig<ILabelValueComponent, ILabelValueComponentDelegateOptions> {
+}
+export declare class LabelValueComponentDelegate extends BaseComponentDelegate<ILabelValueComponent, ILabelValueComponentDelegateOptions> {
+    private _labelElement;
+    private _valueElement;
+    constructor(config?: ILabelValueComponentDelegateConfig);
+    get labelElement(): HTMLElement;
+    get valueElement(): HTMLElement;
+    get labelText(): string;
+    set labelText(value: string);
+    get valueText(): string;
+    set valueText(value: string);
+    protected _build(): ILabelValueComponent;
+    protected _configure(): void;
+    private _createTextElement;
+}

@@ -1,0 +1,115 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getShadowElement, toggleAttribute } from '@tylertech/forge-core';
+import { isFocusable, setValidity } from '../../constants';
+import { setAriaControls, tryCreateAriaControlsPlaceholder } from '../../core/utils/utils';
+import { FIELD_CONSTANTS } from '../../field/field-constants';
+import { BaseSelectAdapter } from '../core';
+import { SELECT_CONSTANTS } from './select-constants';
+export class SelectAdapter extends BaseSelectAdapter {
+    constructor(component) {
+        super(component);
+        this._fieldElement = getShadowElement(component, SELECT_CONSTANTS.selectors.FIELD);
+        this._labelElement = getShadowElement(component, SELECT_CONSTANTS.selectors.LABEL);
+        this._selectedTextElement = getShadowElement(component, SELECT_CONSTANTS.selectors.SELECTED_TEXT);
+        this._fieldElement.setAttribute('exportparts', Object.values(FIELD_CONSTANTS.parts).join(', '));
+        this._fieldElement.focusIndicatorTargetElement = this._component;
+    }
+    get fieldElement() {
+        return this._fieldElement;
+    }
+    initializeAccessibility() {
+        this._component.setAttribute('role', 'combobox');
+        this._component.setAttribute('aria-haspopup', 'true');
+        this._component.setAttribute('aria-expanded', 'false');
+        tryCreateAriaControlsPlaceholder();
+        setAriaControls(this._component);
+        if (this.fieldElement.required) {
+            this.setHostAttribute('aria-required', 'true');
+        }
+        if (this.fieldElement.disabled) {
+            this.setHostAttribute('aria-disabled', 'true');
+        }
+        if (this.fieldElement.invalid) {
+            this.setHostAttribute('aria-invalid', 'true');
+        }
+        this._component[isFocusable] = !this._component.disabled;
+    }
+    setLabel(value) {
+        const isInsetAndDense = this._fieldElement.labelPosition === 'inset' && (this._fieldElement.density === 'extra-small' || this._fieldElement.dense);
+        const hasLabel = !isInsetAndDense && !!value?.trim();
+        if (!this._component.hasAttribute('aria-label') || this._component.getAttribute('aria-label') === this._labelElement.textContent) {
+            this._component.setAttribute('aria-label', value);
+        }
+        if (hasLabel) {
+            if (!this._labelElement.isConnected) {
+                this._fieldElement.insertAdjacentElement('afterbegin', this._labelElement);
+            }
+            this._labelElement.textContent = value;
+        }
+        else {
+            this._labelElement.remove();
+        }
+    }
+    setPlaceholderText(value) {
+        toggleAttribute(this._selectedTextElement, !!value?.trim(), 'placeholder', value);
+    }
+    open(config) {
+        if (!this._targetElement) {
+            this._targetElement = getShadowElement(this._fieldElement, FIELD_CONSTANTS.selectors.POPOVER_TARGET);
+        }
+        super.open(config);
+        this._component.setAttribute('aria-controls', `list-dropdown-popup-${config.id}`);
+        this._component.setAttribute('aria-expanded', 'true');
+        this._fieldElement.popoverExpanded = true;
+    }
+    close() {
+        this._component.setAttribute('aria-expanded', 'false');
+        this._component.removeAttribute('aria-activedescendant');
+        setAriaControls(this._component);
+        this._fieldElement.popoverExpanded = false;
+        return super.close();
+    }
+    floatLabel(value) {
+        this._fieldElement.floatLabel = value;
+    }
+    updateActiveDescendant(id) {
+        toggleAttribute(this._component, !!id, 'aria-activedescendant', id);
+    }
+    setSelectedText(value) {
+        this._selectedTextElement.textContent = value;
+    }
+    setDisabled(value) {
+        this._component[isFocusable] = !value;
+        toggleAttribute(this._component, value, 'aria-disabled', 'true');
+    }
+    setRequired() {
+        this._component[setValidity]();
+    }
+    addClickListener(listener) {
+        this._component.addEventListener('click', listener);
+    }
+    removeClickListener(listener) {
+        this._component.removeEventListener('click', listener);
+    }
+    addTargetListener(type, listener) {
+        this._component.addEventListener(type, listener);
+    }
+    removeTargetListener(type, listener) {
+        this._component.removeEventListener(type, listener);
+    }
+    syncValue(value) {
+        // If the value is an empty or entirely null array, the form value should be null
+        const isEmpty = Array.isArray(value) ? !value.length || !value.some(entry => entry != null) : value == null;
+        const data = isEmpty ? null : new FormData();
+        const stringValue = JSON.stringify(value);
+        if (data && value) {
+            data.append(this._component.name, stringValue);
+        }
+        this._component.setFormValue(data, stringValue);
+        this._component[setValidity]();
+    }
+}

@@ -1,0 +1,51 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IToastAdapter } from './toast-adapter';
+import { ToastPlacement, ToastTheme } from './toast-constants';
+export interface IToastCore {
+    duration: number;
+    placement: ToastPlacement;
+    actionText: string;
+    dismissible: boolean;
+    dismissLabel: string;
+    show(): void;
+    hide(): Promise<void>;
+}
+export declare class ToastCore implements IToastCore {
+    private _adapter;
+    private _open;
+    private _actionText;
+    private _duration;
+    private _placement;
+    private _dismissible;
+    private _dismissLabel;
+    private _theme;
+    private _hideTimeout;
+    private _actionListener;
+    private _closeListener;
+    constructor(_adapter: IToastAdapter);
+    initialize(): void;
+    show(): void;
+    hide({ dispatchEvent }?: {
+        dispatchEvent?: boolean | undefined;
+    }): Promise<void>;
+    private _onAction;
+    private _onClose;
+    get open(): boolean;
+    set open(value: boolean);
+    get duration(): number;
+    set duration(value: number);
+    get placement(): ToastPlacement;
+    set placement(value: ToastPlacement);
+    get actionText(): string;
+    set actionText(value: string);
+    get dismissible(): boolean;
+    set dismissible(value: boolean);
+    get dismissLabel(): string;
+    set dismissLabel(value: string);
+    get theme(): ToastTheme;
+    set theme(value: ToastTheme);
+}

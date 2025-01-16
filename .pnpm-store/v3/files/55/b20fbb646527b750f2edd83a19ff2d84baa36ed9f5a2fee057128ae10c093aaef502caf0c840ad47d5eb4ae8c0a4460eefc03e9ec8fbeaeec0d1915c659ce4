@@ -1,0 +1,101 @@
+import { Subject } from '../observable';
+import { BooleanMediaFeature, IMediaObserverOptions, IMediaRange, MediaFeature as DiscreteMediaFeature, NamedMediaQuery, RangeMediaFeature } from './types';
+/**
+ * A Subject that tracks the value of a media feature and exposes it synchronously and
+ * asynchronously.
+ */
+export declare abstract class MediaObserver<T> extends Subject<T> {
+    /**
+     * STATIC MEMBERS
+     */
+    /** A collection of all managed media observers. */
+    private static _observers;
+    /**
+     * Returns a new media observer tracking a discrete feature.
+     * @param feature The name of a discrete media feature.
+     * @param options An options object with the following properties:
+     * - `name`: The name to track the observer by. The feature name is used if unsupplied.
+     * - `track`: Whether to make the observer available globally.
+     * @returns A `DiscreteMediaObserver` tracking the given feature.
+     */
+    static observeDiscrete(feature: DiscreteMediaFeature, options?: IMediaObserverOptions): DiscreteMediaObserver;
+    /** Returns a media observer tracking a range feature. */
+    /**
+     * Returns a new media observer tracking a range feature.
+     * @param feature The name of a range media feature.
+     * @param constraints One or more ranges to track. A range includes the following properties:
+     * - `name`: A label for the range used to set the observer's value.
+     * - `min`: The lowest value in the range (optional).
+     * - `max`: The highest value in the range (optional).
+     * - `equals`: A single value to match, supersedes `min` and `max` (optional).
+     * @param options An options object with the following properties:
+     * - `name`: The name to track the observer by. The feature name is used if unsupplied.
+     * - `track`: Whether to make the observer available globally.
+     * @returns A `RangeMediaObserver` tracking the given feature.
+     */
+    static observeRange(feature: RangeMediaFeature, constraints: IMediaRange | IMediaRange[], options?: IMediaObserverOptions): RangeMediaObserver;
+    /**
+     * Returns a media observer tracking a feature that evaluates to a boolean value.
+     * @param feature The name of a media feature that can be expressed as a boolean.
+     * @param options An options object with the following properties:
+     * - `name`: The name to track the observer by. The feature name plus '-bool' is used if unsupplied.
+     * - `track`: Whether to make the observer available globally.
+     * @returns A `BooleanMediaObserver` tracking the given feature.
+     */
+    static observeBoolean(feature: BooleanMediaFeature, options?: IMediaObserverOptions): BooleanMediaObserver;
+    /** Returns a media observer tracking any media query. */
+    /**
+     * Returns a media observer tracking any media query.
+     * @param query Any media query.
+     * @param options An options object with the following properties:
+     * - `name`: The name to track the observer by. The entire query string is used if unsupplied.
+     * - `track`: Whether to make the observer available globally.
+     * @returns A `CustomMediaObserver` tracking the given query.
+     */
+    static observeCustom(query: string, options?: IMediaObserverOptions): CustomMediaObserver;
+    private static _getObserver;
+    /**
+     * INSTANCE MEMBERS
+     */
+    private _name;
+    get name(): string;
+    private _queries;
+    protected constructor(name: string, namedQueries: NamedMediaQuery[], value: T, track?: boolean);
+    /** Removes the `MediaObserver` and all created event listeners. */
+    destroy(): void;
+    private _attachMediaQueries;
+    protected abstract setValue(value: MediaQueryList | MediaQueryListEvent, name: string): void;
+}
+/**
+ * A media observer that tracks one feature with multiple discrete keyword values.
+ */
+export declare class DiscreteMediaObserver extends MediaObserver<string> {
+    static create(feature: DiscreteMediaFeature, options?: IMediaObserverOptions): DiscreteMediaObserver;
+    protected setValue(value: MediaQueryList | MediaQueryListEvent, name: string): void;
+}
+/**
+ * A media observer that tracks one feature with comparable range values.
+ */
+export declare class RangeMediaObserver extends MediaObserver<string[]> {
+    static create(feature: RangeMediaFeature, constraints: IMediaRange[], options?: IMediaObserverOptions): RangeMediaObserver;
+    private _isAwaitingQueries;
+    private _valueQueue;
+    private _isInitialized;
+    private constructor();
+    protected setValue(value: MediaQueryList | MediaQueryListEvent, name: string): void;
+}
+/**
+ * A media observer that tracks one feature that can be coerced to a boolean value. `none` and 0
+ * values evaluate to `true`.
+ */
+export declare class BooleanMediaObserver extends MediaObserver<boolean> {
+    static create(feature: BooleanMediaFeature, options?: IMediaObserverOptions): BooleanMediaObserver;
+    protected setValue(value: MediaQueryList | MediaQueryListEvent, _: never): void;
+}
+/**
+ * A media observer that tracks any query.
+ */
+export declare class CustomMediaObserver extends MediaObserver<MediaQueryList | MediaQueryListEvent> {
+    static create(query: string, options?: IMediaObserverOptions): CustomMediaObserver;
+    protected setValue(value: MediaQueryList | MediaQueryListEvent, _: never): void;
+}

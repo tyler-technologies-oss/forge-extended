@@ -1,0 +1,59 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getShadowElement, toggleClass } from '@tylertech/forge-core';
+import { isFocusable, setDefaultAria, setValidity } from '../constants';
+import { BaseAdapter } from '../core';
+import { SWITCH_CONSTANTS } from './switch-constants';
+export class SwitchAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this._rootElement = getShadowElement(component, SWITCH_CONSTANTS.selectors.ROOT);
+        this._labelElement = getShadowElement(component, SWITCH_CONSTANTS.selectors.LABEL);
+        this._iconOnElement = getShadowElement(component, SWITCH_CONSTANTS.selectors.ICON_ON);
+        this._iconOffElement = getShadowElement(component, SWITCH_CONSTANTS.selectors.ICON_OFF);
+        this._stateLayerElement = getShadowElement(component, SWITCH_CONSTANTS.selectors.STATE_LAYER);
+    }
+    setOn(value) {
+        this._component[setValidity]();
+        this._component[setDefaultAria]({ ariaChecked: value ? 'true' : 'false' });
+    }
+    setDisabled(value) {
+        this._component[isFocusable] = !value;
+        this._component[setDefaultAria]({ ariaDisabled: value ? 'true' : 'false' });
+        this._stateLayerElement.disabled = value;
+    }
+    setRequired(value) {
+        this._component[setValidity]();
+        this._component[setDefaultAria]({ ariaRequired: value ? 'true' : 'false' });
+    }
+    setReadonly(value) {
+        this._component[setDefaultAria]({ ariaReadOnly: value ? 'true' : 'false' });
+        this._stateLayerElement.disabled = value;
+    }
+    setIconVisibility(value) {
+        const hideOn = value === 'none' || value === 'off';
+        const hideOff = value === 'none' || value === 'on';
+        toggleClass(this._iconOnElement, hideOn, SWITCH_CONSTANTS.classes.HIDDEN);
+        toggleClass(this._iconOffElement, hideOff, SWITCH_CONSTANTS.classes.HIDDEN);
+    }
+    setLabelPosition(value) {
+        this._labelElement.remove();
+        if (value === 'start') {
+            this._rootElement.prepend(this._labelElement);
+        }
+        else {
+            this._rootElement.append(this._labelElement);
+        }
+    }
+    syncValue(value) {
+        const data = value ? new FormData() : null;
+        const state = value ? SWITCH_CONSTANTS.state.ON : SWITCH_CONSTANTS.state.OFF;
+        if (data && value) {
+            data.append(this._component.name, value);
+        }
+        this._component.setFormValue(data, state);
+    }
+}

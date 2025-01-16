@@ -1,0 +1,9 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ISliderComponent } from '../slider';
+export declare function createStartInputElement(component: ISliderComponent): HTMLInputElement;
+export declare function createStartHandleElement(thumbLabel: string): HTMLElement;
+export declare function createLabel(text: string): HTMLElement;

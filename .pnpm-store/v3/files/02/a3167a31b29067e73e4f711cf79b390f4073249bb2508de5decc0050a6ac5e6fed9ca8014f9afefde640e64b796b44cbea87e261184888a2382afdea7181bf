@@ -1,0 +1,10 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use './theme/theme-dark';
+
+:root {
+  @include theme-dark.theme-properties;
+}

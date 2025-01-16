@@ -1,0 +1,114 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import type { IIconComponent } from '../icon';
+import type { IOverlayOffset } from '../overlay/overlay-constants';
+import { PositionPlacement } from '../core/utils/position-utils';
+export declare const LIST_DROPDOWN_CONSTANTS: {
+    attributes: {
+        POPUP_CLASSES: string;
+        OPTION_LIMIT: string;
+        OBSERVE_SCROLL: string;
+        OBSERVE_SCROLL_THRESHOLD: string;
+        SYNC_POPUP_WIDTH: string;
+        CONSTRAIN_POPUP_WIDTH: string;
+        WRAP_OPTION_TEXT: string;
+        CHECKBOX_ELEMENT: string;
+        DATA_ALLOW_FOCUS: string;
+    };
+    classes: {
+        GROUP_WRAPPER: string;
+    };
+};
+export type ListDropdownOptionBuilder<T = HTMLElement> = (option: IListDropdownOption, parentElement: T) => HTMLElement | string | void;
+export type ListDropdownHeaderBuilder = () => HTMLElement;
+export type ListDropdownFooterBuilder = () => HTMLElement;
+export type ListDropdownOptionGroupBuilder<T = any> = (option: IListDropdownOptionGroup<T>) => HTMLElement | string;
+export type ListDropdownTransformCallback = (label: string) => string | HTMLElement;
+export type ListDropdownIconType = 'font' | 'component';
+export interface IBaseListDropdownOption<T = any> {
+    value: T;
+    label: string;
+    secondaryLabel?: string;
+    disabled?: boolean;
+    divider?: boolean;
+    optionClass?: string | string[];
+    leadingIcon?: string;
+    leadingIconClass?: string;
+    leadingIconType?: ListDropdownIconType;
+    leadingIconComponentProps?: Partial<IIconComponent>;
+    trailingIcon?: string;
+    trailingIconClass?: string;
+    trailingIconType?: ListDropdownIconType;
+    trailingIconComponentProps?: Partial<IIconComponent>;
+    leadingBuilder?: () => HTMLElement;
+    trailingBuilder?: () => HTMLElement;
+}
+export interface IListDropdownOption<T = any> extends IBaseListDropdownOption<T> {
+    options?: Array<IListDropdownOption | IListDropdownOptionGroup>;
+    elementAttributes?: Map<string, string>;
+}
+export interface IListDropdownOptionGroup<T = any, K = any> {
+    text?: string;
+    value?: K;
+    builder?: ListDropdownOptionGroupBuilder;
+    options: IListDropdownOption<T>[];
+}
+export interface IListDropdownSelectEventData {
+    value: IListDropdownOption | IListDropdownOption[];
+}
+export interface IListDropdownConfig<T = any> {
+    id: string;
+    referenceElement: HTMLElement;
+    options: Array<IListDropdownOption | IListDropdownOptionGroup>;
+    selectCallback: (value: T) => void;
+    activeChangeCallback?: (id: string) => void;
+    closeCallback?: () => void;
+    syncWidth?: boolean;
+    constrainViewportWidth?: boolean;
+    wrapOptionText?: boolean;
+    selectedValues?: T[];
+    multiple?: boolean;
+    activeStartIndex?: number;
+    visibleStartIndex?: number;
+    transform?: ListDropdownTransformCallback;
+    allowBusy?: boolean;
+    asyncStyle?: ListDropdownAsyncStyle;
+    iconClass?: string;
+    dense?: boolean;
+    type?: ListDropdownType;
+    popupClasses?: string | string[];
+    popupOffset?: IOverlayOffset;
+    popupStatic?: boolean;
+    popupPlacement?: PositionPlacement;
+    popupFallbackPlacements?: PositionPlacement[];
+    optionLimit?: number;
+    optionBuilder?: ListDropdownOptionBuilder;
+    observeScroll?: boolean;
+    observeScrollThreshold?: number;
+    targetWidthCallback?: () => number;
+    scrollEndListener?: () => void;
+    headerBuilder?: ListDropdownHeaderBuilder;
+    footerBuilder?: ListDropdownFooterBuilder;
+    cascade?: boolean;
+    cascadingElementFactory?: (config: IListDropdownCascadingElementFactoryConfig) => HTMLElement;
+}
+export interface IListDropdownCascadingElementFactoryConfig {
+    index: number;
+    options: Array<IListDropdownOption | IListDropdownOptionGroup>;
+    parentValue: any;
+}
+export declare const DEFAULT_LIST_DROPDOWN_CONFIG: Partial<IListDropdownConfig>;
+export interface IListDropdownOpenConfig extends IListDropdownConfig {
+}
+export declare enum ListDropdownType {
+    None = "none",
+    Standard = "standard",
+    Menu = "menu"
+}
+export declare enum ListDropdownAsyncStyle {
+    Spinner = "spinner",
+    Skeleton = "skeleton"
+}

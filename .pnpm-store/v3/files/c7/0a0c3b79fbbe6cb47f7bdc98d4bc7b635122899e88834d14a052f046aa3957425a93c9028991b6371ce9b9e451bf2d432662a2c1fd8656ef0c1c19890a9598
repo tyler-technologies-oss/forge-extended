@@ -1,0 +1,48 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { FormFieldComponentDelegate, IFormFieldComponentDelegateOptions } from '../core';
+import { IBaseComponentDelegateConfig } from '../core/delegates/base-component-delegate';
+import { ISwitchComponent } from './switch';
+import { SwitchIconVisibility, SwitchLabelPosition } from './switch-constants';
+export type SwitchComponentDelegateProps = Partial<ISwitchComponent>;
+export interface ISwitchComponentDelegateOptions extends IFormFieldComponentDelegateOptions {
+    id?: string;
+    label?: string;
+}
+export interface ISwitchComponentDelegateConfig extends IBaseComponentDelegateConfig<ISwitchComponent, ISwitchComponentDelegateOptions> {
+}
+export declare class SwitchComponentDelegate extends FormFieldComponentDelegate<ISwitchComponent, ISwitchComponentDelegateOptions> {
+    constructor(config?: ISwitchComponentDelegateConfig);
+    get value(): string;
+    set value(value: string);
+    get on(): boolean;
+    set on(value: boolean);
+    get selected(): boolean;
+    set selected(value: boolean);
+    get defaultOn(): boolean;
+    set defaultOn(value: boolean);
+    get icon(): SwitchIconVisibility;
+    set icon(value: SwitchIconVisibility);
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    get dense(): boolean;
+    set dense(value: boolean);
+    get required(): boolean;
+    set required(value: boolean);
+    get readonly(): boolean;
+    set readonly(value: boolean);
+    get name(): string;
+    set name(value: string);
+    get labelPosition(): SwitchLabelPosition;
+    set labelPosition(value: SwitchLabelPosition);
+    onChange(listener: (value: boolean) => void): void;
+    onFocus(listener: (evt: Event) => void): void;
+    onBlur(listener: (evt: Event) => void): void;
+    setLabel(text: string | null): void;
+    toggle(force?: boolean): void;
+    protected _build(): ISwitchComponent;
+    protected _configure(): void;
+}

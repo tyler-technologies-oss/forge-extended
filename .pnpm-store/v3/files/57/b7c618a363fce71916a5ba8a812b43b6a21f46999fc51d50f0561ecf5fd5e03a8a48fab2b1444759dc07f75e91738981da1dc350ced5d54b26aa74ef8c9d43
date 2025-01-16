@@ -1,0 +1,8 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./switch-value-accessor.directive";
+import * as i2 from "./switch-proxy.module";
+export declare class ForgeSwitchModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeSwitchModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeSwitchModule, [typeof i1.SwitchValueAccessor], never, [typeof i1.SwitchValueAccessor, typeof i2.ForgeSwitchProxyModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeSwitchModule>;
+}

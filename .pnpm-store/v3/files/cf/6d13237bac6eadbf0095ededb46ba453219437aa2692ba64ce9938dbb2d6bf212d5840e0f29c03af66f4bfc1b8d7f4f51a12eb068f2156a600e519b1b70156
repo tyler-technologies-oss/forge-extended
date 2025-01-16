@@ -1,0 +1,54 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { ButtonComponent as ButtonComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class ButtonComponent {
+    protected elementRef: ElementRef<ButtonComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-button element. */
+    readonly nativeElement: ButtonComponentCustomElement;
+    /** The variant of the button. */
+    set variant(value: ButtonComponentCustomElement['variant']);
+    get variant(): ButtonComponentCustomElement['variant'];
+    /** Whether or not the button is pill-shaped. */
+    set pill(value: ButtonComponentCustomElement['pill']);
+    get pill(): ButtonComponentCustomElement['pill'];
+    /** The theme of the button. Defaults to `primary`. */
+    set theme(value: ButtonComponentCustomElement['theme']);
+    get theme(): ButtonComponentCustomElement['theme'];
+    /** Whether or not the button is full-width. */
+    set fullWidth(value: ButtonComponentCustomElement['fullWidth']);
+    get fullWidth(): ButtonComponentCustomElement['fullWidth'];
+    /** The type of button. Valid values are `button`, `submit`, and `reset`. */
+    set type(value: ButtonComponentCustomElement['type']);
+    get type(): ButtonComponentCustomElement['type'];
+    /** Whether or not the button is disabled. */
+    set disabled(value: ButtonComponentCustomElement['disabled']);
+    get disabled(): ButtonComponentCustomElement['disabled'];
+    /** Whether or not the button shows a built-in popover icon. */
+    set popoverIcon(value: ButtonComponentCustomElement['popoverIcon']);
+    get popoverIcon(): ButtonComponentCustomElement['popoverIcon'];
+    /** The name of the button. */
+    set name(value: ButtonComponentCustomElement['name']);
+    get name(): ButtonComponentCustomElement['name'];
+    /** The form value of the button. */
+    set value(value: ButtonComponentCustomElement['value']);
+    get value(): ButtonComponentCustomElement['value'];
+    /** Whether or not the button is dense. */
+    set dense(value: ButtonComponentCustomElement['dense']);
+    get dense(): ButtonComponentCustomElement['dense'];
+    /** The form reference of the button if within a `<form>` element. */
+    get form(): ButtonComponentCustomElement['form'];
+    /** Clicks the button. */
+    click(...args: Parameters<ButtonComponentCustomElement['click']>): ReturnType<ButtonComponentCustomElement['click']>;
+    /** Focuses the button. */
+    focus(...args: Parameters<ButtonComponentCustomElement['focus']>): ReturnType<ButtonComponentCustomElement['focus']>;
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<ButtonComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<ButtonComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ButtonComponent, "forge-button", never, { "variant": { "alias": "variant"; "required": false; }; "pill": { "alias": "pill"; "required": false; }; "theme": { "alias": "theme"; "required": false; }; "fullWidth": { "alias": "fullWidth"; "required": false; }; "type": { "alias": "type"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "popoverIcon": { "alias": "popoverIcon"; "required": false; }; "name": { "alias": "name"; "required": false; }; "value": { "alias": "value"; "required": false; }; "dense": { "alias": "dense"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_pill: unknown;
+    static ngAcceptInputType_fullWidth: unknown;
+    static ngAcceptInputType_disabled: unknown;
+    static ngAcceptInputType_popoverIcon: unknown;
+    static ngAcceptInputType_dense: unknown;
+}

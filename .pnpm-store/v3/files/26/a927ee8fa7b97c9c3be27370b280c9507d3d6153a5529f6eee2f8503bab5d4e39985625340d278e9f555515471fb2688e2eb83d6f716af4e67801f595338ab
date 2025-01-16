@@ -1,0 +1,54 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { DeprecatedButtonType } from './deprecated-button-constants';
+import { BaseComponent, IBaseComponent } from '../../core/base/base-component';
+/**
+ * @deprecated Use `IButtonComponent` component instead.
+ */
+export interface IDeprecatedButtonComponent extends IBaseComponent {
+    type: string;
+    disabled: boolean;
+    fullWidth: boolean;
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-deprecated-button': IDeprecatedButtonComponent;
+    }
+}
+/**
+ * @tag forge-deprecated-button
+ *
+ * @deprecated Use the `<forge-button>` element instead.
+ */
+export declare class DeprecatedButtonComponent extends BaseComponent implements IDeprecatedButtonComponent {
+    static get observedAttributes(): string[];
+    private _slotElement;
+    private _focusIndicator;
+    private _stateLayer;
+    private _buttonOrAnchorElement;
+    private _type;
+    private _disabled;
+    private _fullWidth;
+    private _buttonChangeListener;
+    private _buttonAttrMutationObserver;
+    private _keydownListener;
+    constructor();
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    private _onKeydown;
+    private _onButtonChange;
+    private _initialize;
+    private _syncDisabledState;
+    private _detachButton;
+    get type(): DeprecatedButtonType;
+    set type(value: DeprecatedButtonType);
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    get fullWidth(): boolean;
+    set fullWidth(value: boolean);
+    focus(options?: FocusOptions | undefined): void;
+}

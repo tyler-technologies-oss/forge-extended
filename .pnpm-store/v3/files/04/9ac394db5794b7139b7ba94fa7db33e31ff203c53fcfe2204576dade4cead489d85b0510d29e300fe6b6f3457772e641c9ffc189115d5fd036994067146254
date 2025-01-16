@@ -1,0 +1,14 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter } from '../../core/base/base-adapter';
+export class BaseFieldAdapter extends BaseAdapter {
+    setFieldProperty(name, value) {
+        this._fieldElement[name] = value;
+    }
+    floatLabelWithoutAnimation(value) {
+        this._fieldElement.floatLabelWithoutAnimation(value);
+    }
+}

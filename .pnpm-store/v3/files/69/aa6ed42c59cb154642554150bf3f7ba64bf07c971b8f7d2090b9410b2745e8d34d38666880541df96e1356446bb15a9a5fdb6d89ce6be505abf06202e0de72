@@ -1,0 +1,43 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { internals } from '../../../constants';
+/**
+ * Provides form validity functionality for an element.
+ *
+ * @param base The base component to mix into.
+ * @returns The mixed-in base component.
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export function WithFormValidity(base) {
+    class FormValidity extends base {
+        constructor() {
+            super(...arguments);
+            // Needed for Safari, see https://bugs.webkit.org/show_bug.cgi?id=261432
+            // Replace with this.internals.validity.customError when resolved.
+            this._hasCustomValidityError = false;
+        }
+        get validity() {
+            return this[internals].validity;
+        }
+        get validationMessage() {
+            return this[internals].validationMessage;
+        }
+        get willValidate() {
+            return this[internals].willValidate;
+        }
+        checkValidity() {
+            return this[internals].checkValidity();
+        }
+        reportValidity() {
+            return this[internals].reportValidity();
+        }
+        setCustomValidity(error) {
+            this._hasCustomValidityError = error !== '';
+            this[internals].setCustomValidity({ customError: this._hasCustomValidityError }, error);
+        }
+    }
+    return FormValidity;
+}

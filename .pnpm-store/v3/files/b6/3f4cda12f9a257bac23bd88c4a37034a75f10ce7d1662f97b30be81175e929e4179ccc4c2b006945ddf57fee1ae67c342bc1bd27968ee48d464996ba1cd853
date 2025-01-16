@@ -1,0 +1,98 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { FormFieldComponentDelegate } from '../core';
+import { CHECKBOX_CONSTANTS } from './checkbox-constants';
+export class CheckboxComponentDelegate extends FormFieldComponentDelegate {
+    constructor(config) {
+        super(config);
+    }
+    get value() {
+        return this._element.value;
+    }
+    set value(value) {
+        this._element.value = value;
+    }
+    get checked() {
+        return this._element.checked;
+    }
+    set checked(value) {
+        this._element.checked = value;
+    }
+    get defaultChecked() {
+        return this._element.defaultChecked;
+    }
+    set defaultChecked(value) {
+        this._element.defaultChecked = value;
+    }
+    get disabled() {
+        return this._element.disabled;
+    }
+    set disabled(value) {
+        this._element.disabled = value;
+    }
+    get indeterminate() {
+        return this._element.indeterminate;
+    }
+    set indeterminate(value) {
+        this._element.indeterminate = value;
+    }
+    get dense() {
+        return this._element.dense;
+    }
+    set dense(value) {
+        this._element.dense = value;
+    }
+    get required() {
+        return this._element.required;
+    }
+    set required(value) {
+        this._element.required = value;
+    }
+    get readonly() {
+        return this._element.readonly;
+    }
+    set readonly(value) {
+        this._element.readonly = value;
+    }
+    get name() {
+        return this._element.name;
+    }
+    set name(value) {
+        this._element.name = value;
+    }
+    get labelPosition() {
+        return this._element.labelPosition;
+    }
+    set labelPosition(value) {
+        this._element.labelPosition = value;
+    }
+    onChange(listener) {
+        this._element.addEventListener('change', evt => listener(evt.target.checked));
+    }
+    onFocus(listener) {
+        this._element.addEventListener('focus', evt => listener(evt));
+    }
+    onBlur(listener) {
+        this._element.addEventListener('blur', evt => listener(evt));
+    }
+    setLabel(text) {
+        this._element.innerText = text ?? '';
+    }
+    toggle(force) {
+        this._element.toggle(force);
+    }
+    _build() {
+        return document.createElement(CHECKBOX_CONSTANTS.elementName);
+    }
+    _configure() {
+        if (this._config.options?.id) {
+            this._element.id = this._config.options.id;
+        }
+        if (this._config.options?.label) {
+            this._element.innerText = this._config.options.label;
+        }
+    }
+}

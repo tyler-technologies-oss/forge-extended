@@ -1,0 +1,100 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core/base/base-adapter';
+import { IListDropdownConfig } from '../list-dropdown';
+import { IAutocompleteComponent } from './autocomplete';
+import { IAutocompleteOption, IAutocompleteOptionGroup } from './autocomplete-constants';
+export interface IAutocompleteAdapter extends IBaseAdapter {
+    readonly inputElement: HTMLInputElement;
+    setInputElement(): HTMLInputElement;
+    setInputAttribute(name: string, value: string): void;
+    addInputListener(type: string, listener: (evt: Event) => void): void;
+    removeInputListener(type: string, listener: (evt: Event) => void): void;
+    initializeInputAccessibility(identifier: string): void;
+    isWrappingChipField(): boolean;
+    show(config: IListDropdownConfig, popupTarget: string): void;
+    hide(listener: () => void, options: {
+        destroy?: boolean;
+    }): Promise<void>;
+    focus(): void;
+    setOptions(options: IAutocompleteOption[] | IAutocompleteOptionGroup[]): void;
+    appendOptions(options: IAutocompleteOption[] | IAutocompleteOptionGroup[]): void;
+    setSelectedText(value: string): void;
+    getInputValue(): string;
+    setInputValue(value: string): void;
+    selectInputValue(): void;
+    setDismissListener(listener: () => void): void;
+    isFocusWithinPopup(target: HTMLElement): boolean;
+    hasFocus(): boolean;
+    hasInputElement(): boolean;
+    setDropdownIconListener(type: string, listener: EventListener): void;
+    removeDropdownIconListener(type: string, listener: EventListener): void;
+    setClearButtonListener(type: string, listener: EventListener): void;
+    removeClearButtonListener(type: string, listener: EventListener): void;
+    getPopupElement(): HTMLElement | null;
+    propagateKey(key: string): void;
+    updateActiveDescendant(id: string): void;
+    getTargetElementWidth(selector: string): number;
+    activateFirstOption(): void;
+    activateSelectedOption(): void;
+    activateOptionByIndex(value: number): void;
+    setBusyVisibility(busy: boolean): void;
+    getActiveOptionIndex(): number | null;
+    clearActiveOption(): void;
+    setSelectedOptions(options: IAutocompleteOption[]): void;
+    queueDropdownPositionUpdate(): void;
+}
+/**
+ * The DOM adapter for the `<forge-autocomplete>` element.
+ */
+export declare class AutocompleteAdapter extends BaseAdapter<IAutocompleteComponent> implements IAutocompleteAdapter {
+    private _inputElement;
+    private _listDropdown?;
+    private _targetElement?;
+    constructor(component: IAutocompleteComponent);
+    get inputElement(): HTMLInputElement;
+    setInputElement(): HTMLInputElement;
+    setInputAttribute(name: string, value: string): void;
+    addInputListener(type: string, listener: (evt: Event) => void): void;
+    removeInputListener(type: string, listener: (evt: Event) => void): void;
+    initializeInputAccessibility(identifier: string): void;
+    isWrappingChipField(): boolean;
+    show(config: IListDropdownConfig, popupTarget: string): void;
+    hide(listener: () => void, { destroy }?: {
+        destroy?: boolean | undefined;
+    }): Promise<void>;
+    setBusyVisibility(isVisible: boolean): void;
+    setDismissListener(listener: () => void): void;
+    focus(): void;
+    setOptions(options: IAutocompleteOption[] | IAutocompleteOptionGroup[]): void;
+    appendOptions(options: IAutocompleteOption[] | IAutocompleteOptionGroup[]): void;
+    setSelectedText(value: string): void;
+    getInputValue(): string;
+    setInputValue(value: string): void;
+    selectInputValue(): void;
+    isFocusWithinPopup(target: HTMLElement): boolean;
+    hasFocus(): boolean;
+    hasInputElement(): boolean;
+    setDropdownIconListener(type: string, listener: EventListener): void;
+    removeDropdownIconListener(type: string, listener: EventListener): void;
+    setClearButtonListener(type: string, listener: EventListener): void;
+    removeClearButtonListener(type: string, listener: EventListener): void;
+    propagateKey(key: string): void;
+    updateActiveDescendant(id: string): void;
+    getTargetElementWidth(selector: string): number;
+    getPopupElement(): HTMLElement | null;
+    activateFirstOption(): void;
+    activateSelectedOption(): void;
+    activateOptionByIndex(value: number): void;
+    getActiveOptionIndex(): number | null;
+    clearActiveOption(): void;
+    setSelectedOptions(options: IAutocompleteOption[]): void;
+    queueDropdownPositionUpdate(): void;
+    private _getTargetElement;
+    private _getDefaultTargetElement;
+    private _tryToggleDropdownIconRotation;
+    private _tryGetFieldLikeChild;
+}

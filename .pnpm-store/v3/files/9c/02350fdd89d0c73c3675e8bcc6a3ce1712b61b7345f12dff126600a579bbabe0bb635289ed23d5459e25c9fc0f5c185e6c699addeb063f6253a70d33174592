@@ -1,0 +1,37 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use '../base/core' as base-core;
+@use '../../divider';
+
+//
+// Host
+//
+
+:host {
+  @include base-core.host;
+  @include divider.provide-theme(
+    (
+      margin: 4px 0
+    )
+  );
+}
+
+//
+// Base
+//
+
+@include base-core.core-styles;
+
+//
+// Safari fix for triggering reflow after transition completes (as of Safari 14)
+//
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) and (stroke-color: transparent) {
+    :host([open]) {
+      transform: translateZ(0);
+    }
+  }
+}

@@ -1,0 +1,50 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getShadowElement } from '@tylertech/forge-core';
+import { isFocusable, setDefaultAria, setValidity } from '../constants';
+import { BaseAdapter } from '../core';
+import { CHECKBOX_CONSTANTS } from './checkbox-constants';
+export class CheckboxAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this._rootElement = getShadowElement(component, CHECKBOX_CONSTANTS.selectors.ROOT);
+        this._labelElement = getShadowElement(component, CHECKBOX_CONSTANTS.selectors.LABEL);
+        this._stateLayerElement = getShadowElement(component, CHECKBOX_CONSTANTS.selectors.STATE_LAYER);
+    }
+    setChecked(value) {
+        this._component[setValidity]();
+        this._component[setDefaultAria]({ ariaChecked: value ? 'true' : 'false' });
+    }
+    setDisabled(value) {
+        this._component[isFocusable] = !value;
+        this._component[setDefaultAria]({ ariaDisabled: value ? 'true' : 'false' });
+        this._stateLayerElement.disabled = value;
+    }
+    setRequired(value) {
+        this._component[setValidity]();
+        this._component[setDefaultAria]({ ariaRequired: value ? 'true' : 'false' });
+    }
+    setReadonly(value) {
+        this._component[setDefaultAria]({ ariaReadOnly: value ? 'true' : 'false' });
+        this._stateLayerElement.disabled = value;
+    }
+    setLabelPosition(value) {
+        this._labelElement.remove();
+        if (value === 'start') {
+            this._rootElement.prepend(this._labelElement);
+        }
+        else {
+            this._rootElement.append(this._labelElement);
+        }
+    }
+    syncValue(value, state) {
+        const data = value ? new FormData() : null;
+        if (data && value) {
+            data.append(this._component.name, value);
+        }
+        this._component.setFormValue(data, state);
+    }
+}

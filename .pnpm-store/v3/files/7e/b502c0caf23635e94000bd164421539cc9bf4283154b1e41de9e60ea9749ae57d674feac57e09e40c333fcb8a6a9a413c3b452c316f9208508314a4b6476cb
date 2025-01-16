@@ -1,0 +1,17 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { DividerComponent as DividerComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class DividerComponent {
+    protected elementRef: ElementRef<DividerComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-divider element. */
+    readonly nativeElement: DividerComponentCustomElement;
+    /** Controls if the divider is displayed vertically or horizontally. */
+    set vertical(value: DividerComponentCustomElement['vertical']);
+    get vertical(): DividerComponentCustomElement['vertical'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<DividerComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<DividerComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<DividerComponent, "forge-divider", never, { "vertical": { "alias": "vertical"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_vertical: unknown;
+}

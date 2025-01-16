@@ -1,0 +1,9 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./bottom-sheet.component";
+import * as i2 from "@angular/common";
+export declare class ForgeBottomSheetModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeBottomSheetModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeBottomSheetModule, [typeof i1.BottomSheetComponent], [typeof i2.CommonModule], [typeof i1.BottomSheetComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeBottomSheetModule>;
+}

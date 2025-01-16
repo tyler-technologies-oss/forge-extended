@@ -1,0 +1,36 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+.forge-dialog--scrollable .forge-dialog__title,
+.forge-dialog--scrollable .forge-dialog__footer {
+  border-color: var(--forge-theme-outline, #e0e0e0);
+}
+.forge-dialog__header {
+  margin: 0;
+  padding: 0 24px 8px;
+  border-bottom: 1px solid transparent;
+}
+.forge-dialog__title {
+  box-sizing: border-box;
+  margin: 0;
+}
+.forge-dialog__body {
+  padding-top: 20px;
+  padding: 0 24px 24px;
+  overflow: auto;
+}
+.forge-dialog__footer {
+  display: flex;
+  position: relative;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  box-sizing: border-box;
+  min-height: 52px;
+  margin: 0;
+  padding: 8px;
+  border-top: 1px solid transparent;
+}

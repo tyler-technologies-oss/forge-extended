@@ -1,0 +1,73 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core/base/base-adapter';
+import { IMenuOption } from './index';
+import { IMenuComponent } from './menu';
+import { IMenuSelectEventData, IMenuOptionGroup } from './menu-constants';
+import { IListDropdownConfig } from '../list-dropdown';
+export interface IMenuAdapter extends IBaseAdapter {
+    readonly targetElement: HTMLElement | null;
+    getDropdownElement(): HTMLElement | null;
+    initializeTarget(): void;
+    initializeAccessibility(id: string): void;
+    hasTargetElement(): boolean;
+    addTargetListener(event: string, callback: (event: Event) => void, bubbles?: boolean): void;
+    removeTargetListener(event: string, callback: (event: Event) => void): void;
+    destroyListDropdown(): void;
+    attachMenu(config: IListDropdownConfig): void;
+    detachMenu(): Promise<void>;
+    setOptions(options: Array<IMenuOption | IMenuOptionGroup>): void;
+    getActiveOptionIndex(): number;
+    setActiveOption(index: number): void;
+    activateFirstOption(): void;
+    setCascadeTargetInactive(): void;
+    propagateKey(key: string): void;
+    proxyKeyboardEventToChild(evt: KeyboardEvent, id: string): void;
+    toggleChildMenu(index: number, open?: boolean): void;
+    focusTarget(): void;
+    isTargetFocused(): boolean;
+    updateActiveDescendant(id: string): void;
+    isOwnElement(element: Element): boolean;
+    addDropdownListener(type: string, listener: (evt: any) => void): void;
+    createChildMenu(index: number, parentValue: any, openCb: (index: number) => void, closeCb: (index: number) => void, selectCb: (data: IMenuSelectEventData) => void): IMenuComponent;
+    closeOtherChildMenus(excludeIndex?: number): void;
+    setSelectedValues(values: any[]): void;
+}
+export declare class MenuAdapter extends BaseAdapter<IMenuComponent> implements IMenuAdapter {
+    private _targetElement;
+    private _listDropdown;
+    private _childMenus;
+    constructor(component: IMenuComponent);
+    get targetElement(): HTMLElement | null;
+    getDropdownElement(): HTMLElement | null;
+    hasTargetElement(): boolean;
+    initializeTarget(): void;
+    initializeAccessibility(id: string): void;
+    addTargetListener(event: string, callback: (event: Event) => void, bubbles?: boolean): void;
+    removeTargetListener(event: string, callback: (event: Event) => void): void;
+    attachMenu(config: IListDropdownConfig): void;
+    setOptions(options: Array<IMenuOption | IMenuOptionGroup>): void;
+    destroyListDropdown(): void;
+    detachMenu(): Promise<void>;
+    setActiveOption(index: number): void;
+    activateFirstOption(): void;
+    setCascadeTargetInactive(): void;
+    getActiveOptionIndex(): number;
+    focusTarget(): void;
+    isTargetFocused(): boolean;
+    updateActiveDescendant(id: string): void;
+    addDropdownListener(type: string, listener: (evt: any) => void): void;
+    isOwnElement(el: Element): boolean;
+    propagateKey(key: string): void;
+    proxyKeyboardEventToChild(evt: KeyboardEvent, id: string): void;
+    toggleChildMenu(index: number, open?: boolean): void;
+    createChildMenu(index: number, parentValue: any, openCb: (index: number) => void, closeCb: (index: number) => void, selectCb: (data: IMenuSelectEventData) => void): IMenuComponent;
+    closeOtherChildMenus(excludeIndex?: number): void;
+    setSelectedValues(values: any[]): void;
+    private _getOpenChildMenu;
+    private _getOwnList;
+    private _getListItems;
+}

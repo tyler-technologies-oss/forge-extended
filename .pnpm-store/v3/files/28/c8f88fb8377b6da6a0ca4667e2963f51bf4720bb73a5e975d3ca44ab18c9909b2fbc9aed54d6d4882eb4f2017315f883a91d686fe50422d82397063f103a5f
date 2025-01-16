@@ -1,0 +1,26 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export var CellAlign;
+(function (CellAlign) {
+    CellAlign["Left"] = "left";
+    CellAlign["Right"] = "right";
+    CellAlign["Center"] = "center";
+})(CellAlign || (CellAlign = {}));
+export var SortDirection;
+(function (SortDirection) {
+    SortDirection["Ascending"] = "ASC";
+    SortDirection["Descending"] = "DESC";
+    SortDirection["Unset"] = "UNSET";
+})(SortDirection || (SortDirection = {}));
+export var TableFilterType;
+(function (TableFilterType) {
+    TableFilterType["InputText"] = "text";
+    TableFilterType["InputNumber"] = "number";
+    TableFilterType["Select"] = "select";
+    TableFilterType["SelectMultiple"] = "select-multiple";
+    TableFilterType["Date"] = "date";
+    TableFilterType["DateRange"] = "date-range";
+})(TableFilterType || (TableFilterType = {}));

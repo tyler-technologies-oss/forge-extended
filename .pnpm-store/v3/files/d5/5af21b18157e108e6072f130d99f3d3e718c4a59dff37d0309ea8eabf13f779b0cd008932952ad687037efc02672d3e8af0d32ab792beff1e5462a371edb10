@@ -1,0 +1,65 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../../core/base/base-adapter';
+import { ITabComponent } from '../tab/tab';
+import { ITabBarComponent } from './tab-bar';
+export interface ITabBarAdapter extends IBaseAdapter {
+    initialize(): void;
+    destroy(): void;
+    initializeContainerSizeObserver(listener: () => void): void;
+    destroyContainerSizeObserver(): void;
+    initializeScrollObserver(listener: EventListener): void;
+    destroyScrollObserver(listener: EventListener): void;
+    setVertical(value: boolean): void;
+    setScrollBackwardButtonListener(listener: EventListener): void;
+    setScrollForwardButtonListener(listener: EventListener): void;
+    addSlotListener(listener: EventListener): void;
+    getTabs(): ITabComponent[];
+    tryScrollTabIntoView(tab: ITabComponent): Promise<void>;
+    isScrollable(): boolean;
+    getScrollState(): ITabBarScrollInfo;
+    setScrollButtons(value: boolean): void;
+    syncScrollButtons(state: ITabBarScrollButtonState): void;
+    scroll(which: 'backward' | 'forward'): void;
+    updateScrollButtonIcons(vertical: boolean): void;
+}
+export interface ITabBarScrollInfo {
+    isScrolledStart: boolean;
+    isScrolledEnd: boolean;
+}
+export interface ITabBarScrollButtonState {
+    backwardEnabled: boolean;
+    forwardEnabled: boolean;
+}
+export declare class TabBarAdapter extends BaseAdapter<ITabBarComponent> implements ITabBarAdapter {
+    private readonly _defaultSlotElement;
+    private readonly _rootElement;
+    private readonly _scrollContainer;
+    private _resizeObserver;
+    private _backwardScrollButton;
+    private _forwardScrollButton;
+    private _forwardObserver?;
+    constructor(component: ITabBarComponent);
+    initialize(): void;
+    destroy(): void;
+    initializeContainerSizeObserver(listener: () => void): void;
+    initializeScrollObserver(listener: EventListener): void;
+    destroyContainerSizeObserver(): void;
+    destroyScrollObserver(listener: EventListener): void;
+    setVertical(value: boolean): void;
+    setScrollBackwardButtonListener(listener: EventListener): void;
+    setScrollForwardButtonListener(listener: EventListener): void;
+    addSlotListener(listener: EventListener): void;
+    getTabs(): ITabComponent[];
+    tryScrollTabIntoView(tab: ITabComponent): Promise<void>;
+    getScrollState(): ITabBarScrollInfo;
+    isScrollable(): boolean;
+    setScrollButtons(value: boolean): void;
+    syncScrollButtons({ backwardEnabled, forwardEnabled }: ITabBarScrollButtonState): void;
+    scroll(which: 'backward' | 'forward'): void;
+    updateScrollButtonIcons(vertical: boolean): void;
+    private _createScrollButton;
+}

@@ -1,0 +1,49 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { CheckboxComponent as CheckboxComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class CheckboxComponent {
+    protected elementRef: ElementRef<CheckboxComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-checkbox element. */
+    readonly nativeElement: CheckboxComponentCustomElement;
+    /** Gets/sets whether the checkbox is checked. */
+    set checked(value: CheckboxComponentCustomElement['checked']);
+    get checked(): CheckboxComponentCustomElement['checked'];
+    /** Gets/sets whether the checkbox is checked by default. */
+    set defaultChecked(value: CheckboxComponentCustomElement['defaultChecked']);
+    get defaultChecked(): CheckboxComponentCustomElement['defaultChecked'];
+    /** Gets/sets the indeterminate state. */
+    set indeterminate(value: CheckboxComponentCustomElement['indeterminate']);
+    get indeterminate(): CheckboxComponentCustomElement['indeterminate'];
+    /** Controls the value submitted with a form when checked. */
+    set value(value: CheckboxComponentCustomElement['value']);
+    get value(): CheckboxComponentCustomElement['value'];
+    /** Controls whether the checkbox is dense. */
+    set dense(value: CheckboxComponentCustomElement['dense']);
+    get dense(): CheckboxComponentCustomElement['dense'];
+    /** Controls whether the checkbox is disabled. */
+    set disabled(value: CheckboxComponentCustomElement['disabled']);
+    get disabled(): CheckboxComponentCustomElement['disabled'];
+    /** Controls whether the checkbox is required. */
+    set required(value: CheckboxComponentCustomElement['required']);
+    get required(): CheckboxComponentCustomElement['required'];
+    /** Controls whether the checkbox is readonly. */
+    set readonly(value: CheckboxComponentCustomElement['readonly']);
+    get readonly(): CheckboxComponentCustomElement['readonly'];
+    /** Controls whether the label appears before or after the checkbox. */
+    set labelPosition(value: CheckboxComponentCustomElement['labelPosition']);
+    get labelPosition(): CheckboxComponentCustomElement['labelPosition'];
+    /** Toggles the checkbox checked or unchecked. */
+    toggle(...args: Parameters<CheckboxComponentCustomElement['toggle']>): ReturnType<CheckboxComponentCustomElement['toggle']>;
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<CheckboxComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<CheckboxComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<CheckboxComponent, "forge-checkbox", never, { "checked": { "alias": "checked"; "required": false; }; "defaultChecked": { "alias": "defaultChecked"; "required": false; }; "indeterminate": { "alias": "indeterminate"; "required": false; }; "value": { "alias": "value"; "required": false; }; "dense": { "alias": "dense"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "required": { "alias": "required"; "required": false; }; "readonly": { "alias": "readonly"; "required": false; }; "labelPosition": { "alias": "labelPosition"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_checked: unknown;
+    static ngAcceptInputType_defaultChecked: unknown;
+    static ngAcceptInputType_indeterminate: unknown;
+    static ngAcceptInputType_dense: unknown;
+    static ngAcceptInputType_disabled: unknown;
+    static ngAcceptInputType_required: unknown;
+    static ngAcceptInputType_readonly: unknown;
+}

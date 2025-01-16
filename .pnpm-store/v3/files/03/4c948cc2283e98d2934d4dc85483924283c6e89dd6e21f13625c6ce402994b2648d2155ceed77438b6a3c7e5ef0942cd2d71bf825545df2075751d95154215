@@ -1,0 +1,55 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core/base';
+import { IFocusIndicatorComponent } from '../focus-indicator';
+import { FieldLabelPosition } from './base/base-field-constants';
+import { IFieldComponent } from './field';
+export interface IFieldAdapter extends IBaseAdapter<IFieldComponent> {
+    readonly focusIndicator: IFocusIndicatorComponent;
+    readonly hasSlottedLabel: boolean;
+    addRootListener(name: keyof HTMLElementEventMap, listener: EventListener): void;
+    addPopoverIconListener(type: string, listener: EventListener): void;
+    removePopoverIconListener(type: string, listener: EventListener): void;
+    setLabelPosition(value: FieldLabelPosition): void;
+    setFloatingLabel(value: boolean): void;
+    handleSlotChange(slot: HTMLSlotElement): void;
+    initializeSlots(): void;
+}
+export declare class FieldAdapter extends BaseAdapter<IFieldComponent> implements IFieldAdapter {
+    private readonly _rootElement;
+    private readonly _containerElement;
+    private readonly _inputContainerElement;
+    private readonly _labelElement;
+    private readonly _labelSlotElement;
+    private readonly _popoverIconElement;
+    private readonly _focusIndicatorElement;
+    get focusIndicator(): IFocusIndicatorComponent;
+    get hasSlottedLabel(): boolean;
+    constructor(component: IFieldComponent);
+    addRootListener(name: keyof HTMLElementEventMap, listener: EventListener): void;
+    addPopoverIconListener(type: string, listener: EventListener): void;
+    removePopoverIconListener(type: string, listener: EventListener): void;
+    /**
+     * Moves the label into the container element if the position is inset, or out to the root
+     * element otherwise.
+     */
+    setLabelPosition(value: FieldLabelPosition): void;
+    /**
+     * Adds or removes animation classes on the root element.
+     */
+    setFloatingLabel(value: boolean): void;
+    /**
+     * Adds or removes a class from the root element indicating whether the slot has any assigned
+     * nodes.
+     */
+    handleSlotChange(slot: HTMLSlotElement): void;
+    initializeSlots(): void;
+    /**
+     * Gets `<label>` and `<forge-label>` elements from the default slot and assigns them to the
+     * 'label' slot.
+     */
+    private _trySlotLabel;
+}

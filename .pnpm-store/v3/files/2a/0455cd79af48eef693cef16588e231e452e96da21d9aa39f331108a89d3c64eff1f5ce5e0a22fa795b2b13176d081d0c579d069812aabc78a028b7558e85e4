@@ -1,0 +1,58 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ISwitchAdapter } from './switch-adapter';
+import { SwitchIconVisibility, SwitchLabelPosition } from './switch-constants';
+export interface ISwitchCore {
+    on: boolean;
+    defaultOn: boolean;
+    value: string;
+    dense: boolean;
+    disabled: boolean;
+    required: boolean;
+    readonly: boolean;
+    icon: SwitchIconVisibility;
+    labelPosition: SwitchLabelPosition;
+}
+export declare class SwitchCore implements ISwitchCore {
+    private readonly _adapter;
+    private _on;
+    private _defaultOn;
+    private _value;
+    private _dense;
+    private _disabled;
+    private _required;
+    private _readonly;
+    private _icon;
+    private _labelPosition;
+    private get _submittedValue();
+    private readonly _clickListener;
+    private readonly _keydownListener;
+    private readonly _keyupListener;
+    constructor(_adapter: ISwitchAdapter);
+    initialize(): void;
+    private _handleKeydown;
+    private _handleKeyup;
+    private _handleChange;
+    private _setOnAttribute;
+    get on(): boolean;
+    set on(value: boolean);
+    get defaultOn(): boolean;
+    set defaultOn(value: boolean);
+    get value(): string;
+    set value(value: string);
+    get dense(): boolean;
+    set dense(value: boolean);
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    get required(): boolean;
+    set required(value: boolean);
+    get readonly(): boolean;
+    set readonly(value: boolean);
+    get icon(): SwitchIconVisibility;
+    set icon(value: SwitchIconVisibility);
+    get labelPosition(): SwitchLabelPosition;
+    set labelPosition(value: SwitchLabelPosition);
+}

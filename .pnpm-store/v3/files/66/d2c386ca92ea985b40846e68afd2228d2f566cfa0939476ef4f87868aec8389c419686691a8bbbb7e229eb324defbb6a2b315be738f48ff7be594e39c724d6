@@ -1,0 +1,158 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { OVERLAY_CONSTANTS } from '../overlay-constants';
+export class OverlayAwareCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._lightDismissListener = (evt) => this._onOverlayLightDismiss(evt);
+    }
+    initialize() {
+        if (!this.persistent) {
+            this._adapter.overlayElement.addEventListener(OVERLAY_CONSTANTS.events.LIGHT_DISMISS, this._lightDismissListener);
+        }
+    }
+    destroy() {
+        this._adapter.overlayElement.removeEventListener(OVERLAY_CONSTANTS.events.LIGHT_DISMISS, this._lightDismissListener);
+    }
+    get overlayElement() {
+        return this._adapter.overlayElement;
+    }
+    get anchorElement() {
+        return this._adapter.overlayElement.anchorElement;
+    }
+    set anchorElement(value) {
+        this._adapter.overlayElement.anchorElement = value;
+    }
+    get anchor() {
+        return this._adapter.overlayElement.anchor;
+    }
+    set anchor(value) {
+        this._adapter.overlayElement.anchor = value;
+    }
+    get noAnchor() {
+        return this._adapter.overlayElement.noAnchor;
+    }
+    set noAnchor(value) {
+        if (this._adapter.overlayElement.noAnchor !== value) {
+            this._adapter.overlayElement.noAnchor = value;
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.NO_ANCHOR, this._adapter.overlayElement.noAnchor);
+        }
+    }
+    get open() {
+        return this._adapter.overlayElement.open;
+    }
+    set open(value) {
+        if (this._adapter.overlayElement.open === value) {
+            this._adapter.overlayElement.open = value;
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.OPEN, this._adapter.overlayElement.open);
+        }
+    }
+    get inline() {
+        return this._adapter.overlayElement.inline;
+    }
+    set inline(value) {
+        if (this._adapter.overlayElement.inline !== value) {
+            this._adapter.overlayElement.inline = value;
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.INLINE, this._adapter.overlayElement.inline);
+        }
+    }
+    get placement() {
+        return this._adapter.overlayElement.placement;
+    }
+    set placement(value) {
+        if (this._adapter.overlayElement.placement !== value) {
+            this._adapter.overlayElement.placement = value;
+            this._adapter.setHostAttribute(OVERLAY_CONSTANTS.attributes.PLACEMENT, this._adapter.overlayElement.placement);
+        }
+    }
+    get positionStrategy() {
+        return this._adapter.overlayElement.positionStrategy;
+    }
+    set positionStrategy(value) {
+        if (this._adapter.overlayElement.positionStrategy !== value) {
+            this._adapter.overlayElement.positionStrategy = value;
+            this._adapter.setHostAttribute(OVERLAY_CONSTANTS.attributes.POSITION_STRATEGY, this._adapter.overlayElement.positionStrategy);
+        }
+    }
+    get offset() {
+        return this._adapter.overlayElement.offset;
+    }
+    set offset(value) {
+        if (this._adapter.overlayElement.offset !== value) {
+            this._adapter.overlayElement.offset = value;
+        }
+    }
+    get hide() {
+        return this._adapter.overlayElement.hide;
+    }
+    set hide(value) {
+        if (this._adapter.overlayElement.hide !== value) {
+            this._adapter.overlayElement.hide = value;
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.HIDE, this._adapter.overlayElement.hide !== OVERLAY_CONSTANTS.defaults.HIDE, String(this._adapter.overlayElement.hide));
+        }
+    }
+    get persistent() {
+        return this._adapter.overlayElement.persistent;
+    }
+    set persistent(value) {
+        if (this._adapter.overlayElement.persistent !== value) {
+            this._adapter.overlayElement.persistent = value;
+            if (!this.persistent) {
+                this._adapter.overlayElement.addEventListener(OVERLAY_CONSTANTS.events.LIGHT_DISMISS, this._lightDismissListener);
+            }
+            else {
+                this._adapter.overlayElement.removeEventListener(OVERLAY_CONSTANTS.events.LIGHT_DISMISS, this._lightDismissListener);
+            }
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.PERSISTENT, this._adapter.overlayElement.persistent);
+        }
+    }
+    get shift() {
+        return this._adapter.overlayElement.shift;
+    }
+    set shift(value) {
+        if (this._adapter.overlayElement.shift !== value) {
+            this._adapter.overlayElement.shift = value;
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.SHIFT, this._adapter.overlayElement.shift);
+        }
+    }
+    get flip() {
+        return this._adapter.overlayElement.flip;
+    }
+    set flip(value) {
+        if (this._adapter.overlayElement.flip !== value) {
+            this._adapter.overlayElement.flip = value;
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.FLIP, this._adapter.overlayElement.flip !== OVERLAY_CONSTANTS.defaults.FLIP, String(this._adapter.overlayElement.flip));
+        }
+    }
+    get boundary() {
+        return this._adapter.overlayElement.boundary;
+    }
+    set boundary(value) {
+        if (this._adapter.overlayElement.boundary !== value) {
+            this._adapter.overlayElement.boundary = value;
+            this._adapter.toggleHostAttribute(OVERLAY_CONSTANTS.attributes.BOUNDARY, !!this._adapter.overlayElement.boundary, this._adapter.overlayElement.boundary);
+        }
+    }
+    get boundaryElement() {
+        return this._adapter.overlayElement.boundaryElement;
+    }
+    set boundaryElement(value) {
+        if (this._adapter.overlayElement.boundaryElement !== value) {
+            this._adapter.overlayElement.boundaryElement = value;
+        }
+    }
+    get fallbackPlacements() {
+        return this._adapter.overlayElement.fallbackPlacements;
+    }
+    set fallbackPlacements(value) {
+        if (this._adapter.overlayElement.fallbackPlacements !== value) {
+            this._adapter.overlayElement.fallbackPlacements = value;
+        }
+    }
+    position() {
+        this._adapter.overlayElement.position();
+    }
+}

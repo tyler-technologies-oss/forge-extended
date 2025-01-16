@@ -1,0 +1,17 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { CardComponent as CardComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class CardComponent {
+    protected elementRef: ElementRef<CardComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-card element. */
+    readonly nativeElement: CardComponentCustomElement;
+    /** Whether the card has elevation or not. */
+    set raised(value: CardComponentCustomElement['raised']);
+    get raised(): CardComponentCustomElement['raised'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<CardComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<CardComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<CardComponent, "forge-card", never, { "raised": { "alias": "raised"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_raised: unknown;
+}

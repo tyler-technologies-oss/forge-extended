@@ -1,0 +1,87 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getShadowElement, removeAllChildren } from '@tylertech/forge-core';
+import { BaseAdapter } from '../core/base/base-adapter';
+import { IconComponentDelegate } from '../icon';
+import { PROFILE_CARD_CONSTANTS } from './profile-card-constants';
+export class ProfileCardAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this._fullNameElement = getShadowElement(component, PROFILE_CARD_CONSTANTS.selectors.FULL_NAME);
+        this._emailElement = getShadowElement(component, PROFILE_CARD_CONSTANTS.selectors.EMAIL);
+        this._avatarElement = getShadowElement(component, PROFILE_CARD_CONSTANTS.selectors.AVATAR);
+        this._actionToolbar = getShadowElement(component, PROFILE_CARD_CONSTANTS.selectors.ACTION_TOOLBAR);
+        this._profileButton = getShadowElement(component, PROFILE_CARD_CONSTANTS.selectors.PROFILE_BUTTON);
+        this._signOutButton = getShadowElement(component, PROFILE_CARD_CONSTANTS.selectors.SIGN_OUT_BUTTON);
+    }
+    setFullName(value) {
+        this._fullNameElement.textContent = value;
+    }
+    setEmail(value) {
+        this._emailElement.textContent = value;
+    }
+    setAvatarText(value) {
+        removeAllChildren(this._avatarElement);
+        this._avatarElement.text = value;
+    }
+    setAvatarIcon(value) {
+        if (value) {
+            const iconDelegate = new IconComponentDelegate({ props: { name: value } });
+            this._avatarElement.replaceChildren(iconDelegate.element);
+        }
+        else {
+            removeAllChildren(this._avatarElement);
+        }
+    }
+    setAvatarImageUrl(value) {
+        this._avatarElement.imageUrl = value;
+    }
+    setAvatarLetterCount(count) {
+        this._avatarElement.letterCount = count;
+    }
+    setActionToolbarVisibility(isVisible) {
+        if (isVisible) {
+            this._actionToolbar.style.removeProperty('display');
+        }
+        else {
+            this._actionToolbar.style.display = 'none';
+        }
+    }
+    setProfileButtonVisibility(isVisible) {
+        if (isVisible) {
+            this._profileButton.style.removeProperty('display');
+        }
+        else {
+            this._profileButton.style.display = 'none';
+        }
+    }
+    setSignOutButtonVisibility(isVisible) {
+        if (isVisible) {
+            this._signOutButton.style.removeProperty('display');
+        }
+        else {
+            this._signOutButton.style.display = 'none';
+        }
+    }
+    setSignOutButtonText(value) {
+        this._signOutButton.textContent = value;
+    }
+    setProfileButtonText(value) {
+        this._profileButton.textContent = value;
+    }
+    setProfileButtonListener(listener) {
+        this._profileButton.addEventListener('click', listener);
+    }
+    setSignOutButtonListener(listener) {
+        this._signOutButton.addEventListener('click', listener);
+    }
+    requestProfileButtonFocus(options) {
+        window.requestAnimationFrame(() => this._profileButton.focus(options));
+    }
+    requestSignOutButtonFocus(options) {
+        window.requestAnimationFrame(() => this._signOutButton.focus(options));
+    }
+}

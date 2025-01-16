@@ -1,0 +1,37 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getShadowElement } from '@tylertech/forge-core';
+import { BaseAdapter } from '../../core/base/base-adapter';
+import { APP_BAR_SEARCH_CONSTANTS } from './app-bar-search-constants';
+export class AppBarSearchAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this._rootElement = getShadowElement(component, APP_BAR_SEARCH_CONSTANTS.selectors.ROOT);
+    }
+    initialize() {
+        const inputElement = this._component.querySelector(APP_BAR_SEARCH_CONSTANTS.selectors.INPUT);
+        if (inputElement) {
+            this._inputElement = inputElement;
+            const focusIndicator = document.createElement('forge-focus-indicator');
+            focusIndicator.targetElement = this._inputElement;
+            this._rootElement.appendChild(focusIndicator);
+        }
+    }
+    addInputEventListener(type, listener) {
+        this._inputElement?.addEventListener(type, listener);
+    }
+    removeInputEventListener(type, listener) {
+        this._inputElement?.removeEventListener(type, listener);
+    }
+    setInputProperty(name, value) {
+        if (this._inputElement) {
+            this._inputElement[name] = value;
+        }
+    }
+    getInputProperty(name) {
+        return this._inputElement?.[name];
+    }
+}

@@ -1,0 +1,48 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { task } from '../utils/utils';
+export function simulateHover(targetEl, { pointerType = 'mouse', isPrimary = true } = {}) {
+    targetEl.dispatchEvent(new PointerEvent('pointerenter', { ...createMouseEventInit(targetEl), isPrimary, pointerType }));
+}
+export function simulateLeave(targetEl) {
+    targetEl.dispatchEvent(new PointerEvent('pointerleave', createMouseEventInit(targetEl)));
+}
+export async function simulatePressed(targetEl, { pointerType = 'mouse' } = {}) {
+    const evtInit = {
+        ...createMouseEventInit(targetEl),
+        pointerType
+    };
+    targetEl.dispatchEvent(new PointerEvent('pointerenter', evtInit));
+    await task();
+    targetEl.dispatchEvent(new PointerEvent('pointerdown', evtInit));
+    targetEl.dispatchEvent(new PointerEvent('pointerup', evtInit));
+    targetEl.dispatchEvent(new MouseEvent('click', evtInit));
+}
+export async function simulatePressAndHold(container, { pointerType = 'mouse' } = {}) {
+    const evtInit = {
+        ...createMouseEventInit(container),
+        pointerType
+    };
+    container.dispatchEvent(new PointerEvent('pointerenter', evtInit));
+    await task();
+    container.dispatchEvent(new PointerEvent('pointerdown', evtInit));
+}
+export function createMouseEventInit(element) {
+    const { top, right, left, bottom } = element.getBoundingClientRect();
+    return {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+        clientX: (left + right) / 2,
+        clientY: (top + bottom) / 2,
+        screenX: (left + right) / 2,
+        screenY: (top + bottom) / 2,
+        isPrimary: true,
+        pointerType: 'mouse',
+        button: 0,
+        buttons: 1
+    };
+}

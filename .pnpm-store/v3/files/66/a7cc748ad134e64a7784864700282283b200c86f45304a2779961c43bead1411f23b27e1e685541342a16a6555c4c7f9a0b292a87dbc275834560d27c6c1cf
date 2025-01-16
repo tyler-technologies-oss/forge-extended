@@ -1,0 +1,413 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { isDate, isValidDate, Platform } from '@tylertech/forge-core';
+import { DateRange } from '../calendar';
+import { isSameDate } from '../core/utils/date-utils';
+import { BaseDatePickerCore } from '../date-picker/base/base-date-picker-core';
+import { DatePickerRange, DATE_RANGE_PICKER_CONSTANTS } from './date-range-picker-constants';
+export class DateRangePickerCore extends BaseDatePickerCore {
+    constructor(adapter) {
+        super(adapter);
+        this._mode = 'range';
+        this._from = null;
+        this._to = null;
+        this._toInputListener = evt => this._onToInput(evt);
+        this._toInputValueChangedListener = value => this._onToInputValueChanged(value);
+        this._toInputKeydownListener = evt => this._onInputKeydown(evt);
+        this._toInputFocusListener = evt => this._onToInputFocus();
+        this._toInputBlurListener = evt => this._onToInputBlur(evt);
+    }
+    initialize() {
+        super.initialize();
+        this._setFormattedToInputValue(true);
+    }
+    _initializeState() {
+        this._applyToMask();
+        if (!this._from) {
+            this._from = this._coerceDateValue(this._adapter.getInputValue());
+        }
+        if (!this._to) {
+            this._to = this._coerceDateValue(this._adapter.getToInputValue());
+        }
+    }
+    _initializeListeners() {
+        super._initializeListeners();
+        this._adapter.addToInputListener('keydown', this._toInputKeydownListener);
+        this._adapter.addToInputListener('focus', this._toInputFocusListener);
+        this._adapter.addToInputListener('blur', this._toInputBlurListener);
+    }
+    _initializeValueChangedListeners() {
+        super._initializeValueChangedListeners();
+        this._adapter.setToInputValueChangedListener(this, this._toInputValueChangedListener);
+    }
+    _setInputChangeListeners() {
+        super._setInputChangeListeners();
+        this._adapter.addToInputListener('input', this._toInputListener);
+    }
+    _removeInputChangeListeners() {
+        super._removeInputChangeListeners();
+        this._adapter.removeToInputListener('input', this._toInputListener);
+    }
+    _openCalendar(emitOpenEvent) {
+        this._formatToInputValue();
+        super._openCalendar(emitOpenEvent);
+        const currentValue = this._getCurrentValue();
+        if (!!currentValue?.to) {
+            this._adapter.goToCalendarDate(new Date(currentValue.to));
+        }
+        else if (!!currentValue?.from) {
+            this._adapter.goToCalendarDate(new Date(currentValue.from));
+        }
+    }
+    _emitChangeEvent(value, force) {
+        const typedStartValue = this._getTypedValue((value && value.from) || null);
+        const typedEndValue = this._getTypedValue((value && value.to) || null);
+        const detail = new DatePickerRange({ from: typedStartValue, to: typedEndValue });
+        const wasCancelled = !this._adapter.emitHostEvent(DATE_RANGE_PICKER_CONSTANTS.events.CHANGE, detail, true, !force);
+        if (!wasCancelled) {
+            this._setValue(this._coerceDateValue((value && value.from) || null));
+            this._setToValue(this._coerceDateValue((value && value.to) || null));
+            return true;
+        }
+        return false;
+    }
+    _emitOpenEvent() {
+        this._adapter.emitHostEvent(DATE_RANGE_PICKER_CONSTANTS.events.OPEN, undefined, false);
+    }
+    _emitCloseEvent() {
+        this._adapter.emitHostEvent(DATE_RANGE_PICKER_CONSTANTS.events.CLOSE, undefined, false);
+    }
+    _onToday() {
+        const today = new Date();
+        this._tryMergeCurrentTime({ from: today });
+        const range = this._open ? new DateRange({ from: this._from || today, to: this._to || undefined }) : new DateRange({ from: today });
+        if (!this._isDateRangeAcceptable(range)) {
+            return;
+        }
+        this.value = range;
+        this._onDateSelected({ date: today, range, selected: true, type: 'date' });
+        this._adapter.setCalendarActiveDate(today);
+    }
+    _onClear() {
+        this._onDateSelected({ date: null, range: new DateRange(), selected: false, type: 'date' });
+        this._closeCalendar(true);
+    }
+    _getCurrentValue() {
+        return this._value;
+    }
+    _applyToMask() {
+        if (this._masked) {
+            this._initializeToMask();
+        }
+        else {
+            this._adapter.destroyToMask();
+            this._formatToInputValue();
+        }
+    }
+    _formatToInputValue() {
+        const inputValue = this._adapter.getToInputValue();
+        if (inputValue) {
+            const parsedDate = this._parseDateString(inputValue);
+            if (isValidDate(parsedDate) && this._isDateValueAcceptable(parsedDate)) {
+                const formattedDate = this._formatDate(parsedDate);
+                if (formattedDate) {
+                    this._adapter.setToInputValue(formattedDate, this._notifyInputValueChanges);
+                }
+            }
+            else {
+                if (!this._allowInvalidDate) {
+                    this._adapter.setToInputValue('', this._notifyInputValueChanges);
+                }
+            }
+        }
+    }
+    _setFormattedInputValue(suppressValueChanges) {
+        let formattedDate = this._formatDate(this._from);
+        if (!formattedDate && !this._allowInvalidDate) {
+            formattedDate = '';
+        }
+        this._adapter.setInputValue(formattedDate, suppressValueChanges ? false : this._notifyInputValueChanges);
+    }
+    _setFormattedToInputValue(suppressValueChanges) {
+        let formattedDate = this._formatDate(this._to);
+        if (!formattedDate && !this._allowInvalidDate) {
+            formattedDate = '';
+        }
+        this._adapter.setToInputValue(formattedDate, suppressValueChanges ? false : this._notifyInputValueChanges);
+    }
+    _isDateRangeAcceptable(value) {
+        if (!value?.to) {
+            return true;
+        }
+        const passesMinDate = () => this._isDateValueAcceptable(value.from);
+        const passesMaxDate = () => this._isDateValueAcceptable(value.to);
+        const passesDateRange = () => (value?.from && value?.to ? value.from.getTime() <= value.to.getTime() : true);
+        return passesMinDate() && passesMaxDate() && passesDateRange();
+    }
+    _setValue(value) {
+        if (this._isDateValueAcceptable(value)) {
+            this._from = value || null;
+            if (!this._value) {
+                this._value = { from: this._from, to: this._to };
+            }
+            else {
+                this._value.from = this._from;
+            }
+        }
+    }
+    _setToValue(value) {
+        if (this._isDateValueAcceptable(value)) {
+            this._to = value || null;
+            if (!this._value) {
+                this._value = { from: this._from, to: this._to };
+            }
+            else {
+                this._value.to = this._to;
+            }
+        }
+    }
+    _onDateSelected(event) {
+        const value = event.range;
+        if (event.rangeSelectionState === 'to') {
+            this._closeCalendar(true);
+        }
+        this._tryMergeCurrentTime(value);
+        if (!this._emitChangeEvent(value ?? null)) {
+            return;
+        }
+        const formattedFromValue = this._formatDate((value && value.from) || null);
+        const formattedToValue = this._formatDate((value && value.to) || null);
+        this._adapter.setInputValue(formattedFromValue, this._notifyInputValueChanges);
+        this._adapter.setToInputValue(formattedToValue, this._notifyInputValueChanges);
+        this._formatInputValue();
+        this._formatToInputValue();
+        this._from = (value && value.from) || null;
+        this._to = (value && value.to) || null;
+        if (!Platform.isMobile) {
+            if (formattedToValue) {
+                this._adapter.selectToInputText();
+            }
+            else {
+                this._adapter.selectInputText();
+            }
+        }
+    }
+    _applyMin() {
+        if (this._from && !this._isDateValueAcceptable(this._from)) {
+            this._emitChangeEvent(new DateRange({ to: this._to || undefined }), true);
+            this._setFormattedInputValue();
+        }
+        if (this._to && !this._isDateValueAcceptable(this._to)) {
+            this._emitChangeEvent(new DateRange({ from: this._from || undefined }), true);
+            this._setFormattedToInputValue();
+        }
+        super._applyMin();
+    }
+    _applyMax() {
+        if (this._from && !this._isDateValueAcceptable(this._from)) {
+            this._emitChangeEvent(new DateRange({ to: this._to || undefined }), true);
+            this._setFormattedInputValue();
+        }
+        if (this._to && !this._isDateValueAcceptable(this._to)) {
+            this._emitChangeEvent(new DateRange({ from: this._from || undefined }), true);
+            this._setFormattedToInputValue();
+        }
+        super._applyMax();
+    }
+    _initializeToMask() {
+        if (!this._masked) {
+            return;
+        }
+        const options = {
+            showMaskFormat: this._showMaskFormat && this._adapter.isInputFocused(),
+            pattern: this._maskFormat,
+            onChange: (value) => this._handleToInput(value)
+        };
+        if (this._prepareMaskCallback) {
+            options.prepareCallback = (value, masked, flags, maskInstance) => {
+                return this._prepareMaskCallback.call(null, value, masked, flags, maskInstance);
+            };
+        }
+        this._adapter.initializeToMask(options);
+    }
+    _applyDisabledDates() {
+        if (this._from && !this._isDateValueAcceptable(this._from)) {
+            this._emitChangeEvent(new DateRange({ to: this._to || undefined }), true);
+            this._setFormattedInputValue();
+        }
+        if (this._to && !this._isDateValueAcceptable(this._to)) {
+            this._emitChangeEvent(new DateRange({ from: this._from || undefined }), true);
+            this._setFormattedToInputValue();
+        }
+    }
+    _applyDisabledDaysOfWeek() {
+        if (this._from && !this._isDateValueAcceptable(this._from)) {
+            this._emitChangeEvent(null, true);
+            this._setFormattedInputValue();
+        }
+        if (this._to && !this._isDateValueAcceptable(this._to)) {
+            this._emitChangeEvent(null, true);
+            this._setFormattedToInputValue();
+        }
+    }
+    _onToInput(evt) {
+        this._handleInput(this._adapter.getInputValue());
+    }
+    _handleInput(value) {
+        const sanitizedValue = this._getSanitizedDateString(value);
+        const date = this._coerceDateValue(sanitizedValue);
+        this._tryMergeCurrentTime({ from: date });
+        if (this._masked) {
+            this._adapter.emitInputEvent(DATE_RANGE_PICKER_CONSTANTS.events.INPUT, sanitizedValue);
+        }
+        if (!isSameDate(date, this._from) && this._isDateValueAcceptable(date)) {
+            this._emitChangeEvent(new DateRange({ from: date || undefined, to: this._to || undefined }));
+        }
+    }
+    _handleToInput(value) {
+        const sanitizedValue = this._getSanitizedDateString(value);
+        const date = this._coerceDateValue(sanitizedValue);
+        this._tryMergeCurrentTime({ to: date });
+        if (this._masked) {
+            this._adapter.emitToInputEvent(DATE_RANGE_PICKER_CONSTANTS.events.INPUT, sanitizedValue);
+        }
+        if (!isSameDate(date, this._to) && this._isDateValueAcceptable(date)) {
+            this._emitChangeEvent(new DateRange({ from: this._from || undefined, to: date || undefined }));
+        }
+    }
+    _onToInputFocus() {
+        if (this.masked && this._showMaskFormat) {
+            this._initializeMask();
+            this._initializeToMask();
+        }
+        this._adapter.selectToInputText();
+    }
+    _onToInputBlur(evt) {
+        if (this._masked && !this._adapter.isInputFocused(evt.relatedTarget)) {
+            this._initializeMask();
+            this._initializeToMask();
+        }
+        this._formatToInputValue();
+        if (this._open) {
+            this._closeCalendar(true);
+        }
+    }
+    _onInputFocus(evt) {
+        if (this.masked && this._showMaskFormat) {
+            this._initializeMask();
+            this._initializeToMask();
+        }
+        this._adapter.selectInputText();
+    }
+    _onInputBlur(evt) {
+        if (this.masked && !this._adapter.isInputFocused(evt.relatedTarget)) {
+            this._initializeMask();
+            this._initializeToMask();
+        }
+        this._formatInputValue();
+        if (this._open && !this._adapter.isInputFocused(evt.relatedTarget)) {
+            this._closeCalendar(true);
+        }
+    }
+    _onInputValueChanged(value) {
+        if (this._masked) {
+            return;
+        }
+        const sanitizedValue = this._getSanitizedDateString(value);
+        const date = this._coerceDateValue(sanitizedValue);
+        if (!isSameDate(date, this._from)) {
+            this.from = date;
+            this._emitChangeEvent(new DateRange({ from: date || undefined, to: this._to || undefined }));
+        }
+    }
+    _onToInputValueChanged(value) {
+        if (this._masked) {
+            return;
+        }
+        const sanitizedValue = this._getSanitizedDateString(value);
+        const date = this._coerceDateValue(sanitizedValue);
+        if (!isSameDate(date, this._to)) {
+            this.to = date;
+            this._emitChangeEvent(new DateRange({ from: this._from || undefined, to: date || undefined }));
+        }
+    }
+    _tryMergeCurrentTime(range) {
+        if (!range || !this._value || (!this._value.from && !this._value.to)) {
+            return;
+        }
+        if (range.from && this._value.from && this._value.from instanceof Date) {
+            range.from.setHours(this._value.from.getHours(), this._value.from.getMinutes(), this._value.from.getSeconds(), this._value.from.getMilliseconds());
+        }
+        if (range.to && this._value.to && this._value.to instanceof Date) {
+            range.to.setHours(this._value.to.getHours(), this._value.to.getMinutes(), this._value.to.getSeconds(), this._value.to.getMilliseconds());
+        }
+    }
+    get value() {
+        return { from: this.from, to: this.to };
+    }
+    set value(value) {
+        if (!value) {
+            value = { from: null, to: null };
+        }
+        if (value.from === undefined) {
+            value.from = null;
+        }
+        if (value.to === undefined) {
+            value.to = null;
+        }
+        this.from = value.from;
+        this.to = value.to;
+        this._value = { from: this.from, to: this.to };
+    }
+    get from() {
+        const date = this._getTypedValue(this._from);
+        if (!date) {
+            return null;
+        }
+        if (isDate(date)) {
+            return new Date(date.getTime());
+        }
+        return date;
+    }
+    set from(value) {
+        if (this._from !== value) {
+            this._setValue(this._coerceDateValue(value));
+            if (this._isInitialized) {
+                this._setFormattedInputValue();
+                if (this._open) {
+                    this._adapter.setCalendarValue(new DateRange({
+                        from: this._coerceDateValue(value) || undefined,
+                        to: this._coerceDateValue(this._to) || undefined
+                    }));
+                }
+            }
+        }
+    }
+    get to() {
+        const date = this._getTypedValue(this._to);
+        if (!date) {
+            return null;
+        }
+        if (isDate(date)) {
+            return new Date(date.getTime());
+        }
+        return date;
+    }
+    set to(value) {
+        if (this._to !== value) {
+            this._setToValue(this._coerceDateValue(value));
+            if (this._isInitialized) {
+                this._setFormattedToInputValue();
+                if (this._open) {
+                    this._adapter.setCalendarValue(new DateRange({
+                        to: this._coerceDateValue(value) || undefined,
+                        from: this._coerceDateValue(this._from) || undefined
+                    }));
+                }
+            }
+        }
+    }
+}

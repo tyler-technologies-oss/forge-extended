@@ -1,0 +1,35 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const APP_BAR_PROFILE_BUTTON_CONSTANTS: {
+    elementName: "forge-app-bar-profile-button";
+    attributes: {
+        FULL_NAME: string;
+        EMAIL: string;
+        AVATAR_IMAGE_URL: string;
+        AVATAR_LETTER_COUNT: string;
+        AVATAR_TEXT: string;
+        AVATAR_ICON: string;
+        SIGN_OUT_BUTTON: string;
+        PROFILE_BUTTON: string;
+        SIGN_OUT_BUTTON_TEXT: string;
+        PROFILE_BUTTON_TEXT: string;
+        OPEN: string;
+    };
+    forwardedAttributes: string[];
+};
+export interface IAppBarProfileCardConfig {
+    fullName: string;
+    email: string;
+    signOut: boolean;
+    profile: boolean;
+    signOutButtonText: string;
+    profileButtonText: string;
+    avatarText: string;
+    avatarIcon: string;
+    avatarImageUrl: string;
+    avatarLetterCount: number;
+}
+export type AppBarProfileButtonProfileCardBuilder = () => HTMLElement;

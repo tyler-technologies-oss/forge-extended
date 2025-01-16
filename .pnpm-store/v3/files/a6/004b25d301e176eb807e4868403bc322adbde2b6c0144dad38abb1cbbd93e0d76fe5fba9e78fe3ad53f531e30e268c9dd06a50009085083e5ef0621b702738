@@ -1,0 +1,25 @@
+import { ApplicationRef, EnvironmentInjector, Type } from '@angular/core';
+import { IToastComponent, IToastPresentConfiguration } from '@tylertech/forge';
+import { ToastConfig } from './toast-config';
+import * as i0 from "@angular/core";
+export interface IToastConfig<T = any> extends Partial<IToastPresentConfiguration> {
+    component?: Type<T>;
+    message?: string;
+    actionHandler?: () => void;
+}
+export interface IToastRef {
+    nativeElement: IToastComponent;
+    close: () => Promise<void>;
+}
+export declare class ToastService {
+    private _appRef;
+    private _injector;
+    constructor(_appRef: ApplicationRef, _injector: EnvironmentInjector);
+    /**
+     * Creates and renders a toast component.
+     * @param config The toast configuration.
+     */
+    show(configOrMessage: IToastConfig | string, toastConfig?: ToastConfig): IToastRef;
+    static ɵfac: i0.ɵɵFactoryDeclaration<ToastService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<ToastService>;
+}

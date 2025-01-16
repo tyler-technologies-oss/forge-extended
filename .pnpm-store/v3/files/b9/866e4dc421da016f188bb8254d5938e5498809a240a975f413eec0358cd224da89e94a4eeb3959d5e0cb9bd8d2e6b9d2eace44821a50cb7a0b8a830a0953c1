@@ -1,0 +1,204 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter } from '../core/base/base-adapter';
+import { MENU_CONSTANTS } from './menu-constants';
+import { ListDropdown } from '../list-dropdown';
+import { LIST_CONSTANTS, LIST_ITEM_CONSTANTS } from '../list';
+export class MenuAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this._childMenus = new Map();
+    }
+    get targetElement() {
+        return this._targetElement;
+    }
+    getDropdownElement() {
+        return this._listDropdown?.dropdownElement ?? null;
+    }
+    hasTargetElement() {
+        return !!this._targetElement;
+    }
+    initializeTarget() {
+        this._targetElement = this._component.querySelector(MENU_CONSTANTS.selectors.TOGGLE);
+        if (!this._targetElement) {
+            this._targetElement = this._component.firstElementChild;
+        }
+    }
+    initializeAccessibility(id) {
+        if (!this._targetElement) {
+            return;
+        }
+        this._targetElement.setAttribute('aria-atomic', 'true');
+        this._targetElement.setAttribute('aria-live', 'assertive');
+        this._targetElement.setAttribute('aria-haspopup', 'true');
+        this._targetElement.setAttribute('aria-expanded', 'false');
+        if (!this._targetElement.hasAttribute('aria-label')) {
+            this._targetElement.setAttribute('aria-label', this._targetElement.textContent || '');
+        }
+    }
+    addTargetListener(event, callback, bubbles = false) {
+        if (this._targetElement) {
+            this._targetElement.addEventListener(event, callback, bubbles);
+        }
+    }
+    removeTargetListener(event, callback) {
+        if (this._targetElement) {
+            this._targetElement.removeEventListener(event, callback);
+        }
+    }
+    attachMenu(config) {
+        if (this._listDropdown || !this._targetElement) {
+            return;
+        }
+        this._listDropdown = new ListDropdown(this._targetElement, config);
+        this._listDropdown.open();
+        this._targetElement.setAttribute('aria-expanded', 'true');
+        this._targetElement.setAttribute('aria-controls', `list-dropdown-popup-${config.id}`);
+    }
+    setOptions(options) {
+        this._listDropdown?.setOptions(options);
+    }
+    destroyListDropdown() {
+        this._listDropdown?.destroy();
+        this._listDropdown = undefined;
+    }
+    async detachMenu() {
+        this._targetElement?.removeAttribute('aria-activedescendant');
+        this._targetElement?.removeAttribute('aria-expanded');
+        this._targetElement?.removeAttribute('aria-controls');
+        await this._listDropdown?.close();
+        this._listDropdown?.destroy();
+        this._listDropdown = undefined;
+    }
+    setActiveOption(index) {
+        this._listDropdown?.activateOption(index);
+    }
+    activateFirstOption() {
+        this._listDropdown?.activateFirstOption();
+    }
+    setCascadeTargetInactive() {
+        const listItem = this._targetElement;
+        if (listItem?.active) {
+            listItem.active = false;
+        }
+    }
+    getActiveOptionIndex() {
+        return this._listDropdown?.getActiveOptionIndex() ?? -1;
+    }
+    focusTarget() {
+        if (!this._targetElement?.matches(':focus-within')) {
+            this._targetElement?.focus();
+        }
+    }
+    isTargetFocused() {
+        return document.activeElement === this._targetElement;
+    }
+    updateActiveDescendant(id) {
+        if (!this._targetElement) {
+            return;
+        }
+        if (id) {
+            this._targetElement.setAttribute('aria-activedescendant', id);
+        }
+        else {
+            this._targetElement.removeAttribute('aria-activedescendant');
+        }
+    }
+    addDropdownListener(type, listener) {
+        if (!this._listDropdown || !this._listDropdown.dropdownElement) {
+            return;
+        }
+        this._listDropdown.dropdownElement.addEventListener(type, listener);
+    }
+    isOwnElement(el) {
+        if (!this._targetElement || !this._listDropdown || !this._listDropdown.dropdownElement) {
+            return false;
+        }
+        return this._targetElement.contains(el) || !!this._listDropdown.dropdownElement.contains(el);
+    }
+    propagateKey(key) {
+        this._listDropdown?.handleKey(key);
+    }
+    proxyKeyboardEventToChild(evt, id) {
+        if (!this.getDropdownElement()) {
+            return;
+        }
+        const openMenu = this._getOpenChildMenu(id);
+        if (openMenu) {
+            openMenu.propagateKeyEvent(evt);
+        }
+    }
+    toggleChildMenu(index, open) {
+        const listItems = this._getListItems();
+        const listItem = listItems[index];
+        const childMenu = listItem.parentElement;
+        if (childMenu && childMenu.tagName.toLowerCase() === MENU_CONSTANTS.elementName) {
+            if (open === undefined) {
+                childMenu.open = !childMenu.open;
+            }
+            else {
+                childMenu.open = open;
+            }
+            childMenu.activateFirstOption();
+        }
+    }
+    createChildMenu(index, parentValue, openCb, closeCb, selectCb) {
+        const menu = document.createElement('forge-menu');
+        menu.style.display = 'block';
+        // Set listeners to notify the parent menu when anything important happens within a child menu that needs to be propagated to the root menu
+        menu.addEventListener(MENU_CONSTANTS.events.OPEN, () => {
+            this._childMenus.set(index, menu);
+            openCb(index);
+        });
+        menu.addEventListener(MENU_CONSTANTS.events.CLOSE, () => {
+            this._childMenus.delete(index);
+            closeCb(index);
+        });
+        menu.addEventListener(MENU_CONSTANTS.events.SELECT, (evt) => {
+            evt.stopPropagation();
+            selectCb({ ...evt.detail, parentValue });
+        });
+        return menu;
+    }
+    closeOtherChildMenus(excludeIndex) {
+        const menusToRemove = [];
+        this._childMenus.forEach((menu, index) => {
+            if (index !== excludeIndex) {
+                menu.open = false;
+                menusToRemove.push(index);
+            }
+        });
+        menusToRemove.forEach(index => this._childMenus.delete(index));
+    }
+    setSelectedValues(values) {
+        this._listDropdown?.setSelectedValues(values);
+    }
+    _getOpenChildMenu(id) {
+        if (!this.getDropdownElement()) {
+            return null;
+        }
+        const list = this._getOwnList(id);
+        return list ? list.querySelector(`${MENU_CONSTANTS.elementName}[${MENU_CONSTANTS.attributes.OPEN}]`) : null;
+    }
+    _getOwnList(id) {
+        const popup = this.getDropdownElement();
+        if (!popup) {
+            return null;
+        }
+        return popup.querySelector(`${LIST_CONSTANTS.elementName}[id="list-dropdown-list-${id}"]`);
+    }
+    _getListItems() {
+        const popup = this.getDropdownElement();
+        if (!popup) {
+            return [];
+        }
+        const listElement = popup.querySelector(LIST_CONSTANTS.elementName);
+        if (listElement) {
+            return Array.from(listElement.querySelectorAll(LIST_ITEM_CONSTANTS.elementName));
+        }
+        return [];
+    }
+}

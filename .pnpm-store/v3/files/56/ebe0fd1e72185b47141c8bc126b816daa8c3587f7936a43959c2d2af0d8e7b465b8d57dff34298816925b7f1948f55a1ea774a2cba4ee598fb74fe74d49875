@@ -1,0 +1,8 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./radio-value-accessor.directive";
+import * as i2 from "./radio-proxy.module";
+export declare class ForgeRadioModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeRadioModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeRadioModule, [typeof i1.RadioValueAccessor], never, [typeof i1.RadioValueAccessor, typeof i2.ForgeRadioProxyModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeRadioModule>;
+}

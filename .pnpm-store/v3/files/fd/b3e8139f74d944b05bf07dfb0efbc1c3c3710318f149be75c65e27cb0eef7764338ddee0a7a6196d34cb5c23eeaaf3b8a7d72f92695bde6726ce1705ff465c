@@ -1,0 +1,30 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ButtonTheme } from '../button';
+import { BaseAdapter, IBaseAdapter } from '../core/base/base-adapter';
+import { ISplitButtonComponent } from './split-button';
+import { SplitButtonVariant } from './split-button-constants';
+export interface ISplitButtonAdapter extends IBaseAdapter {
+    setVariant(variant: SplitButtonVariant): void;
+    setTheme(theme: ButtonTheme): void;
+    setDisabled(value: boolean): void;
+    setDense(value: boolean): void;
+    setPill(value: boolean): void;
+    startButtonObserver(): void;
+    destroyButtonObserver(): void;
+}
+export declare class SplitButtonAdapter extends BaseAdapter<ISplitButtonComponent> implements ISplitButtonAdapter {
+    private _buttonChangeObserver;
+    constructor(component: ISplitButtonComponent);
+    startButtonObserver(): void;
+    destroyButtonObserver(): void;
+    setVariant(variant: SplitButtonVariant): void;
+    setTheme(theme: ButtonTheme): void;
+    setDisabled(value: boolean): void;
+    setDense(value: boolean): void;
+    setPill(value: boolean): void;
+    private _getButtons;
+}

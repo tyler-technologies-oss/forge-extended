@@ -1,0 +1,389 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { TableRow } from './table-row';
+import { CellAlign, ITableConfiguration, SortDirection, TableHeaderSelectAllTemplate, TableViewTemplate, TableSelectTooltipCallback } from './types';
+/**
+ * Provides facilities for creating and manipulating a table component.
+ */
+export declare class TableUtils {
+    /**
+     * Creates a table using the provided configuration.
+     * @param {ITableConfiguration} configuration The table configuration.
+     */
+    static createTable(configuration: ITableConfiguration): void;
+    private static _setTableHead;
+    private static _setTableBody;
+    /**
+     * Destroys and recreates the table body section only.
+     * @param {ITableConfiguration} configuration The table configuration.
+     */
+    static recreateTableBody(configuration: ITableConfiguration): void;
+    /**
+     * Removes all DOM nodes from the table.
+     * @param {HTMLTableElement} tableElement The table element to remove all children from.
+     */
+    private static _resetTable;
+    /**
+     * Creates a `forge-tooltip` for multi sort column headers
+     */
+    private static _createMultisortTooltip;
+    /**
+     * Creates the table header section by adding a row for the column headers based on column configuration.
+     * @param columnDataMap The column based data map.
+     * @param tableElement The table element.
+     */
+    private static _createTableHead;
+    /**
+     * Sets the sort direction on the table to the provided column.
+     * @param tableElement
+     * @param columnIndex
+     * @param sortDirection
+     */
+    static setSortDirection(tableElement: HTMLTableElement, columnIndex: number, sortDirection: SortDirection): void;
+    /**
+     * Sets the sort direction on the provided table header cell element.
+     * @param thElement
+     * @param sortDirection
+     */
+    private static _setColumnSortDirection;
+    /**
+     * Creates the table body section by adding rows/cells for our data/column configuration.
+     * @param columnDataMap The column based data map.
+     * @param tableElement The table element.
+     */
+    private static _createTableBody;
+    /**
+     * Populates a table row element with provided data.
+     * @param configuration
+     * @param tr
+     * @param cellData
+     * @param rowIndex
+     */
+    private static _populateRowCells;
+    /**
+     * Sets the proper alignment class on the provided element.
+     * @param el The element to add the class to.
+     * @param align The alignment value.
+     */
+    private static _setCellAlignmentClass;
+    /**
+     * Returns all non-expanded rows in a tbody.
+     * @param rows All rows in the tbody.
+     */
+    private static _getNonExpandedRows;
+    /**
+     * Returns all expanded rows in a tbody.
+     * @param rows All rows in the tbody.
+     */
+    private static _getExpandedRows;
+    /**
+     * Creates the column data map which organizes the data by column.
+     * @param {IColumnConfiguration[]} columnConfigurations The column configurations.
+     * @param {IColumnData[]} data The row data.
+     */
+    private static _createColumnDataMap;
+    /**
+     * Returns the row data in a column ordered fashion.
+     * @param columnConfigurations
+     * @param data
+     */
+    private static _getOrderedRowData;
+    /**
+     * Attaches a click listener to each row in the table.
+     * @param tbodyElement
+     * @param listener
+     */
+    private static _attachRowClickListeners;
+    /**
+     * Sets attributes for each row in the table.
+     * @param tbodyElement
+     * @param clickListener
+     */
+    private static _addRowClickAttributes;
+    /**
+     * Removes attributes for each row in the table.
+     * @param tbodyElement
+     * @param clickListener
+     */
+    private static _removeRowClickAttributes;
+    /**
+     * Attaches a click listener to each row checkbox in the table for handling selections.
+     * @param tbodyElement
+     * @param listener
+     */
+    private static _attachRowSelectListeners;
+    private static _attachRowSelectListener;
+    /**
+     * Removes the select listeners from every table row.
+     * @param tbodyElement The table body element.
+     * @param listener The click listener.
+     */
+    private static _detachRowSelectListeners;
+    /**
+     * Removes the click listeners from every table row.
+     * @param tbodyElement The table body element.
+     * @param listener The click listener.
+     */
+    private static _detachRowClickListeners;
+    /**
+     * Attaches a click listener to the last table header row select all cell.
+     */
+    private static _attachSelectAllListener;
+    /**
+     * Attaches a click listener to the last table header row select all cell.
+     */
+    private static _tryAttachSelectAllTemplateListener;
+    /**
+     * Removes the select all click listener.
+     * @param theadElement The table head element.
+     * @param listener The click listener.
+     */
+    private static _detachSelectAllListener;
+    /**
+     * Attaches a click listener to the first row of the table header to handle mouse events.
+     * @param theadElement
+     * @param listener
+     */
+    private static _attachHeadRowMouseDownListener;
+    /**
+     * Attaches a click listener to the first row of the table header to handle context menu events.
+     * @param theadElement
+     * @param listener
+     */
+    private static _attachHeadRowContextMenuListener;
+    /**
+     * Creates the select column as the first column in the table.
+     * @param theadElement
+     * @param tbodyElement
+     */
+    private static _createSelectColumn;
+    /**
+     * Creates the select column in the table head.
+     * @param {HTMLTableSectionElement} theadElement The table head element.
+     * @param {boolean} showSelectAll Whether to show the select all checkbox or not.
+     */
+    private static _createHeadSelectColumn;
+    /**
+     * Creates the select column in the table body.
+     * @param {HTMLTableSectionElement} tbodyElement The table body element.
+     */
+    private static _createBodySelectColumn;
+    private static _addRowSelectColumn;
+    /**
+     * Removes the first cell (select cell) in every row in the table head and table body elements.
+     * @param {HTMLTableSectionElement} theadElement The table head element.
+     * @param {HTMLTableSectionElement} tbodyElement The table body element.
+     */
+    private static _destroySelectColumn;
+    /**
+     * Determines if the table has the select column being rendered currently.
+     */
+    private static _hasSelectColumn;
+    /**
+     * Creates a checkbox element for the select column.
+     */
+    private static _createCheckboxElement;
+    /**
+     * Retrieves the checkbox element from the given table row. Used in select mode only.
+     * @param rowElement
+     */
+    private static _getCheckboxElement;
+    /**
+     * Retrieves the select all checkbox element from the given table row. Used in select mode only.
+     * @param rowElement
+     */
+    private static _tryGetSelectAllCheckboxElement;
+    /**
+     * Sets the checked state of the select checkbox.
+     * @param checkboxElement
+     * @param isSelected
+     */
+    private static _setSelectedCheckboxState;
+    /**
+     * Sets the indeterminate state of the select checkbox.
+     * @param checkboxElement
+     * @param isIndeterminate
+     */
+    private static _setIndeterminateCheckboxState;
+    /**
+     * Updates the selected state on the provided table row element.
+     * @param rowElement
+     * @param isSelected
+     */
+    private static _setRowSelectedState;
+    /**
+     * Resets the colspan on all expanded rows to the proper value.
+     */
+    private static _updateExpandedRowColspan;
+    /**
+     * Updates the state of a table row element to be selected or not.
+     * @param {HTMLTableRowElement} rowElement The row element.
+     * @param {boolean} isSelected Whether the row is selected or not.
+     */
+    static updateSelectedState(rowElement: HTMLTableRowElement, isSelected: boolean): void;
+    /**
+     * Get a row from the first table body by index.
+     */
+    static getRowByIndex(tableElement: HTMLTableElement, index: number): HTMLTableRowElement;
+    /**
+     * Updates the state of the select all checkbox.
+     * @param {HTMLTableElement} tableElement The table element.
+     * @param {boolean} isAllSelected Whether the checkboxes should be checked or not.
+     */
+    static updateSelectAllState(tableElement: HTMLTableElement, isAllSelected: boolean, isIndeterminate?: boolean): void;
+    /**
+     * Sets the selected rows in the table.
+     * @param tableElement
+     * @param key
+     * @param data
+     * @param selectedRows
+     * @param preserveExisting
+     */
+    static setSelectedRows(tableElement: HTMLTableElement, key: string[], data: any[], selectedRows: any[], preserveExisting?: boolean): void;
+    /**
+     * Clears all selected rows in the table.
+     * @param tableElement
+     */
+    static clearSelectedRows(tableElement: HTMLTableElement): void;
+    /**
+     * Sets the sorted column in the table.
+     * @param tableElement
+     * @param columnIndex
+     * @param sortDirection
+     */
+    static setSortedColumn(tableElement: HTMLTableElement, columnIndex: number, sortDirection: SortDirection): void;
+    /**
+     * Sets the sorted column in the table.
+     * @param tableElement
+     * @param columnIndex
+     * @param sortOrder
+     */
+    static setMultiSortColumnSortNumber(tableElement: HTMLTableElement, hasMultipleColumnsSorted: boolean, columnIndex: number, sortOrder: number | null): void;
+    /**
+     * Removes the sorted column in the table.
+     * @param tableElement
+     * @param columnIndex
+     */
+    static removeColumnSort(tableElement: HTMLTableElement, columnIndex: number): void;
+    /**
+     * Retrieves a header cell from the table based on index.
+     * @param {HTMLTableElement} tableElement The table element.
+     * @param {number} index The column index.
+     */
+    private static _getHeaderCellByIndex;
+    /**
+     * Gets the sort icon element from the table cell that contains the select all checkbox.
+     * @param {HTMLTableHeaderCellElement} cell The table header cell element.
+     */
+    private static _getSortIconElementFromHeaderCell;
+    /**
+     * Adds/removes the select column on the table.
+     */
+    static setSelectColumnVisibility(tableElement: HTMLTableElement, isVisible: boolean, selectListener: ((evt: Event) => void) | null, selectAllListener: ((evt: Event) => void) | null, selectAllTemplate: TableHeaderSelectAllTemplate | null, selectCheckboxAlignment: CellAlign | null, data: TableRow[], tooltipSelect: string | TableSelectTooltipCallback | null, tooltipSelectAll: string | null): void;
+    /**
+     * Adds the select column to the thead/tbody elements and attaches the provided click listeners.
+     * @param theadElement The table head element.
+     * @param tbodyElement The table body element.
+     * @param selectListener The row select listener.
+     * @param selectAllListener The select all checkbox listener.
+     */
+    private static _addSelectColumn;
+    /**
+     * Adds/removes the dense class on the table.
+     */
+    static setDenseState(tableElement: HTMLTableElement, isDense: boolean): void;
+    /**
+     * Adds/removes the roomy class on the table.
+     */
+    static setRoomyState(tableElement: HTMLTableElement, isRoomy: boolean): void;
+    static setResizable(configuration: ITableConfiguration): void;
+    private static _addResizeHandles;
+    private static _removeResizeHandles;
+    /**
+     * Adds/removes the wrap class on the table.
+     */
+    static setWrapContentState(tableElement: HTMLTableElement, wrapContent: boolean): void;
+    /**
+     *
+     * @param {HTMLTableElement} tableElement The table element.
+     * @param {boolean} isVisible Whether the select all option is visible or not.
+     */
+    static setSelectAllVisibility(tableElement: HTMLTableElement, isVisible: boolean, listener: ((evt: Event) => void) | null, selectAllTemplate: TableHeaderSelectAllTemplate | null, selectCheckboxAlignment: CellAlign | null, tooltipSelectAll: string | null): void;
+    /**
+     * Controls the visibility of the table filter row.
+     * @param {ITableConfiguration} configuration The table configuration.
+     */
+    static setFilterRow(configuration: ITableConfiguration): void;
+    /**
+     * Creates the table filter row element.
+     * @param {ITableConfiguration} configuration The table configuration.
+     */
+    private static _createFilterRowElement;
+    /**
+     * Creates the element that will be used as the filter for this column.
+     * @param {IColumnConfiguration} columnConfig The column configuration.
+     */
+    private static _createFilterElement;
+    /**
+     * Gets the filter row from the table head element rows, or undefined if not found.
+     * @param {HTMLTableRowElement | undefined} tHeadElement The thead element.
+     */
+    private static _getFilterRowElement;
+    /**
+     * Expands a row by inserting a new row beneath it and displaying the provided template content.
+     * @param configuration The table configuration.
+     * @param rowIndex The index of the row to expand.
+     * @param template The template for the expanded row content.
+     */
+    static expandRow(configuration: ITableConfiguration, rowIndex: number, template: TableViewTemplate): Promise<void>;
+    /**
+     * Sets the template content in the table row element.
+     * @param {HTMLElement} element The element to the append the template to.
+     * @param {string | HTMLElement} template The template content.
+     */
+    private static _setRowTemplate;
+    /**
+     * Collapses an expanded table row.
+     * @param configuration The table configuration.
+     * @param rowIndex The index of the row to collapse.
+     */
+    static collapseRow(configuration: ITableConfiguration, rowIndex: number): Promise<void>;
+    /**
+     * Checks if a row is expanded or not.
+     * @param configuration The table configuration.
+     * @param rowIndex The row index.
+     * @returns {boolean}
+     */
+    static isRowExpanded(configuration: ITableConfiguration, rowIndex: number): boolean;
+    /**
+     * Sets the fixed class on the table element based on whether fixed headers were requested or not.
+     * @param configuration The table configuration.
+     */
+    static setFixedHeaders(configuration: ITableConfiguration): void;
+    /**
+     * Sets the table layout algorithm.
+     * @param configuration The table configuration.
+     */
+    static setLayoutType(configuration: ITableConfiguration): void;
+    /**
+     * Ensures that any columns width styles are within the bounds of available space.
+     * @param configuration The table configuration.
+     */
+    static normalizeColumnWidths(configuration: ITableConfiguration): void;
+    /**
+     * Toggles the visibility of the resize cell indicator for all table cells.
+     * @param configuration The table configuration.
+     * @param columnIndex The cell index of the column being resized.
+     * @param isVisible Whether to show the indicator or not.
+     */
+    static setColumnResizeIndicatorVisibility(configuration: ITableConfiguration, columnIndex: number, isVisible: boolean): void;
+    static setRowClickListeners(tableElement: HTMLTableElement, allowClick: boolean, clickListener: (evt: Event) => void, doubleClickListener: (evt: Event) => void): void;
+    static setRowClickAttributes(tableElement: HTMLTableElement, allowClick: boolean): void;
+    static getOwnerDocument(el: HTMLElement): Document;
+    private static _prepend;
+    private static _isMac;
+    private static _renderSelectAllTemplate;
+}

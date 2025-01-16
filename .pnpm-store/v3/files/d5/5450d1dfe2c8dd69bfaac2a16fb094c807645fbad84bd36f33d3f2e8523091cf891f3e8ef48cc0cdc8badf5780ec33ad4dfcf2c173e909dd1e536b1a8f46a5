@@ -1,0 +1,8 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./time-picker-value-accessor.directive";
+import * as i2 from "./time-picker-proxy.module";
+export declare class ForgeTimePickerModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeTimePickerModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeTimePickerModule, [typeof i1.TimePickerValueAccessor], never, [typeof i1.TimePickerValueAccessor, typeof i2.ForgeTimePickerProxyModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeTimePickerModule>;
+}

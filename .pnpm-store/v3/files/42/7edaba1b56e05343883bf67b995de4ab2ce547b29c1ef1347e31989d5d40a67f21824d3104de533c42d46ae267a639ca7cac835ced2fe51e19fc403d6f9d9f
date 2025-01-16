@@ -1,0 +1,71 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { AbstractConstructor, MixinBase } from '../../constants';
+import { IBaseComponent } from '../../core/base/base-component';
+import { IFieldComponent } from '../field';
+import { FieldLabelPosition, FieldLabelAlignment, FieldVariant, FieldTheme, FieldShape, FieldDensity, FieldSupportTextInset } from './base-field-constants';
+/**
+ * Provides a consistent passthrough API to the underlying field component, for
+ * field-like wrapper components.
+ */
+export interface IWithBaseField extends IBaseComponent {
+    labelPosition: FieldLabelPosition;
+    labelAlignment: FieldLabelAlignment;
+    invalid: boolean;
+    required: boolean;
+    optional: boolean;
+    disabled: boolean;
+    floatLabel: boolean;
+    variant: FieldVariant;
+    theme: FieldTheme;
+    shape: FieldShape;
+    density: FieldDensity;
+    dense: boolean;
+    popoverIcon: boolean;
+    supportTextInset: FieldSupportTextInset;
+    initializeFieldInstance(fieldElement: IFieldComponent): void;
+    floatLabelWithoutAnimation(value: boolean): void;
+}
+export declare abstract class WithBaseFieldContract {
+    get labelPosition(): FieldLabelPosition;
+    set labelPosition(value: FieldLabelPosition);
+    get labelAlignment(): FieldLabelAlignment;
+    set labelAlignment(value: FieldLabelAlignment);
+    get invalid(): boolean;
+    set invalid(value: boolean);
+    get required(): boolean;
+    set required(value: boolean);
+    get optional(): boolean;
+    set optional(value: boolean);
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    get floatLabel(): boolean;
+    set floatLabel(value: boolean);
+    get variant(): FieldVariant;
+    set variant(value: FieldVariant);
+    get theme(): FieldTheme;
+    set theme(value: FieldTheme);
+    get shape(): FieldShape;
+    set shape(value: FieldShape);
+    get density(): FieldDensity;
+    set density(value: FieldDensity);
+    get dense(): boolean;
+    set dense(value: boolean);
+    get popoverIcon(): boolean;
+    set popoverIcon(value: boolean);
+    get supportTextInset(): FieldSupportTextInset;
+    set supportTextInset(value: FieldSupportTextInset);
+    initializeFieldInstance(fieldElement: IFieldComponent): void;
+    floatLabelWithoutAnimation(value: boolean): void;
+}
+/**
+ * Provides a consistent passthrough API to the underlying field component, for
+ * field-like wrapper components.
+ *
+ * @param base The base component to mix into.
+ * @returns The mixed-in base component.
+ */
+export declare function WithBaseField<TBase extends MixinBase>(base: TBase): AbstractConstructor<WithBaseFieldContract> & TBase;

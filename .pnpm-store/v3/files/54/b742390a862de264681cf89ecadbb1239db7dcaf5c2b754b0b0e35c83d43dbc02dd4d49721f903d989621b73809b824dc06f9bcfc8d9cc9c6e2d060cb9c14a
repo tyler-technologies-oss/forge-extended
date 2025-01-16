@@ -1,0 +1,10 @@
+/**
+ * Represents a single message list entry containing a string message and its identifier.
+ */
+export class MessageListEntry {
+    constructor(message, identifier) {
+        this.message = message;
+        this.identifier = identifier;
+        this.originalMessage = message;
+    }
+}

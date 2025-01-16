@@ -1,0 +1,39 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { Density, Theme } from '../constants';
+export declare const ICON_BUTTON_CONSTANTS: {
+    elementName: "forge-icon-button";
+    observedAttributes: {
+        TOGGLE: string;
+        ON: string;
+        VARIANT: string;
+        THEME: string;
+        SHAPE: string;
+        DENSITY: string;
+    };
+    attributes: {
+        ARIA_PRESSED: string;
+        TOGGLE: string;
+        ON: string;
+        VARIANT: string;
+        THEME: string;
+        SHAPE: string;
+        DENSITY: string;
+    };
+    events: {
+        TOGGLE: string;
+    };
+    defaults: {
+        DEFAULT_VARIANT: IconButtonVariant;
+        DEFAULT_THEME: IconButtonTheme;
+        DEFAULT_SHAPE: IconButtonShape;
+        DEFAULT_DENSITY: Density;
+    };
+};
+export type IconButtonVariant = 'icon' | 'outlined' | 'tonal' | 'filled' | 'raised';
+export type IconButtonTheme = Theme | 'default';
+export type IconButtonShape = 'circular' | 'squared';
+export type IconButtonDensity = Density;

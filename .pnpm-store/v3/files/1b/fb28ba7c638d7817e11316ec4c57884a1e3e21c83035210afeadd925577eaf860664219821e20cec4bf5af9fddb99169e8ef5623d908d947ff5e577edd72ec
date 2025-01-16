@@ -1,0 +1,169 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../../core/base/base-adapter';
+import { ISplitViewPanelComponent } from './split-view-panel';
+import { ISplitViewPanelCursorConfig, ISplitViewPanelOpenEvent, SplitViewPanelResizable } from './split-view-panel-constants';
+import { ISplitViewUpdateConfig, SplitViewOrientation } from '../split-view/split-view-constants';
+import { ISplitViewComponent } from '../split-view/split-view';
+export interface ISplitViewPanelAdapter extends IBaseAdapter {
+    initialize(): void;
+    tryRemoveOverlay(): void;
+    setPointerdownListener(listener: (evt: PointerEvent) => void): void;
+    setPointerupListener(listener: (evt: PointerEvent) => void): void;
+    removePointerupListener(listener: (evt: PointerEvent) => void): void;
+    setPointermoveListener(listener: (evt: PointerEvent) => void): void;
+    removePointermoveListener(listener: (evt: PointerEvent) => void): void;
+    setKeydownListener(listener: (evt: KeyboardEvent) => void): void;
+    setKeyupListener(listener: (evt: KeyboardEvent) => void): void;
+    removeKeyupListener(listener: (evt: KeyboardEvent) => void): void;
+    getParentProperty(name: keyof ISplitViewComponent): unknown;
+    setAccessibleLabel(value: string): void;
+    setDisabled(value: boolean): void;
+    setResizable(value: SplitViewPanelResizable): void;
+    setOrientation(value: SplitViewOrientation): void;
+    setOpen(value: boolean, withAnimation?: boolean, event?: ISplitViewPanelOpenEvent): void;
+    setGrabbed(value: boolean): void;
+    setHandleCursor(orientation?: SplitViewOrientation, config?: ISplitViewPanelCursorConfig): void;
+    setBodyCursor(orientation: SplitViewOrientation, config?: ISplitViewPanelCursorConfig): void;
+    getContentSize(orientation: SplitViewOrientation): number;
+    setContentSize(value: number): void;
+    setValuenow(value: number): void;
+    focusHandle(): void;
+    getAvailableSpace(orientation: SplitViewOrientation, resizable: SplitViewPanelResizable): number;
+    getSiblingContentSize(): number;
+    setSiblingContentSize(value: number): void;
+    animateStateLayer(defaultActivated: boolean): void;
+    getParentSize(orientation: SplitViewOrientation): number;
+    updateParent(config: ISplitViewUpdateConfig): void;
+}
+export declare class SplitViewPanelAdapter extends BaseAdapter<ISplitViewPanelComponent> implements ISplitViewPanelAdapter {
+    private _root;
+    private _handle;
+    private _icon;
+    private _stateLayer;
+    private _content;
+    private _parent?;
+    private _overlay?;
+    constructor(component: ISplitViewPanelComponent);
+    initialize(): void;
+    tryRemoveOverlay(): void;
+    setPointerdownListener(listener: (evt: PointerEvent) => void): void;
+    setPointerupListener(listener: (evt: PointerEvent) => void): void;
+    removePointerupListener(listener: (evt: PointerEvent) => void): void;
+    setPointermoveListener(listener: (evt: PointerEvent) => void): void;
+    removePointermoveListener(listener: (evt: PointerEvent) => void): void;
+    setKeydownListener(listener: (evt: KeyboardEvent) => void): void;
+    setKeyupListener(listener: (evt: KeyboardEvent) => void): void;
+    removeKeyupListener(listener: (evt: KeyboardEvent) => void): void;
+    /**
+     * Gets the specified property value from the parent split view.
+     * @param name The property name.
+     * @returns The value of the property.
+     */
+    getParentProperty(name: keyof ISplitViewComponent): unknown;
+    /**
+     * Sets the accessible label of the resize handle.
+     * @param value The label text.
+     */
+    setAccessibleLabel(value: string): void;
+    /**
+     * Sets the disabled state of the component.
+     * @param value Whether the component is disabled.
+     */
+    setDisabled(value: boolean): void;
+    /**
+     * Sets the whether the component's handle is present and at its start or end.
+     * @param value The component's resizable value.
+     */
+    setResizable(value: SplitViewPanelResizable): void;
+    /**
+     * Sets the orientation of the component including ARIA attributes and the resize handle icon.
+     * @param value The component's orientation.
+     */
+    setOrientation(value: SplitViewOrientation): void;
+    /**
+     * Opens or closes the component.
+     * @param value Whether the component is open.
+     * @param withAnimation Whether to use the animation. Defaults to `true`.
+     */
+    setOpen(value: boolean, withAnimation?: boolean, event?: ISplitViewPanelOpenEvent): void;
+    /**
+     * Sets the components appearance and accessibility to indicated whether it is currently grabbed
+     * by the user. Applies a cursor style to the document body.
+     * @param value Whether the component is currently being resized via pointer interaction.
+     */
+    setGrabbed(value: boolean): void;
+    /**
+     * Applies a cursor style to the resize handle.
+     * @param orientation The component's orientation. If absent the cursor will be removed.
+     * @param config The component's resizable value and whether it's at the min or max value.
+     */
+    setHandleCursor(orientation?: SplitViewOrientation, config?: ISplitViewPanelCursorConfig): void;
+    /**
+     * Applies a cursor style to the overlay element covering the document body.
+     * @param orientation The component's orientation.
+     * @param config The component's resizable value and whether it's at the min or max value.
+     */
+    setBodyCursor(orientation: SplitViewOrientation, config?: ISplitViewPanelCursorConfig): void;
+    /**
+     * Gets the size of the content along the orientation axis. Does not include the resize handle.
+     * @param orientation The component's orientation.
+     * @returns The width or height of the content in pixels.
+     */
+    getContentSize(orientation: SplitViewOrientation): number;
+    /**
+     * Sets the size of the content not including the resize handle.
+     * @param value The width or height of the content in pixels.
+     */
+    setContentSize(value: number): void;
+    /**
+     * Sets the ARIA attribute representing the size of the content compared to its min and max.
+     * @param value The content size scaled from 0 to 100.
+     */
+    setValuenow(value: number): void;
+    /**
+     * Sets focus on the handle element.
+     */
+    focusHandle(): void;
+    /**
+     * Gets the amount of space that the component is allowed to take. This includes the current
+     * size of the component and the size of the sibling it resizes into along the axis of
+     * orientation. The sibling's min and max values are taken into account but the component's are
+     * not.
+     * @param orientation The component's orientation.
+     * @param resizable The component's resizable value.
+     * @returns The amount of space available for the component to resize into in pixels.
+     */
+    getAvailableSpace(orientation: SplitViewOrientation, resizable: SplitViewPanelResizable): number;
+    /**
+     * Gets the content size of the sibling panel the component resizes into along its axis of
+     * orientation.
+     * @returns The sibling's content size in pixels or 0 if the sibling does not exist.
+     */
+    getSiblingContentSize(): number;
+    /**
+     * Sets the content size of the sibling panel the component resizes into along its axis of
+     * orientation.
+     * @returns The sibling's content size in pixels.
+     */
+    setSiblingContentSize(value: number): void;
+    /**
+     * Runs the state-layer animation.
+     * @param fromActivated Whether the state-layer starts from and should end in an activated state.
+     */
+    animateStateLayer(fromActivated: boolean): void;
+    /**
+     * Gets the size of the parent split view along the axis of orientation.
+     * @param orientation The component's orientation.
+     * @returns The parent's size in pixels.
+     */
+    getParentSize(orientation: SplitViewOrientation): number;
+    /**
+     * Updates the provided characteristics of all panels.
+     * @param config An update configuration.
+     */
+    updateParent(config: ISplitViewUpdateConfig): void;
+}

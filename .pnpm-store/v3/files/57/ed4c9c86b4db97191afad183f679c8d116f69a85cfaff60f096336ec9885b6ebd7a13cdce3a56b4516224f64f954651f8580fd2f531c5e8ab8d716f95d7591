@@ -1,0 +1,203 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { attachShadowTemplate, coerceBoolean, coerceNumber, customElement, ensureChildren, getShadowElement } from '@tylertech/forge-core';
+import { FocusIndicatorComponent, FOCUS_INDICATOR_CONSTANTS } from '../../focus-indicator';
+import { StateLayerComponent, STATE_LAYER_CONSTANTS } from '../../state-layer';
+import { DEPRECATED_ICON_BUTTON_CONSTANTS } from './deprecated-icon-button-constants';
+import { BaseComponent } from '../../core/base/base-component';
+import { IconComponent } from '../../icon/icon';
+const template = '<template><slot></slot><forge-focus-indicator part=\"focus-indicator\"></forge-focus-indicator><forge-state-layer exportparts=\"surface:state-layer\"></forge-state-layer></template>';
+const styles = ':host{--_icon-button-display:var(--forge-icon-button-display, inline-flex);--_icon-button-size:var(--forge-icon-button-size, 48px);--_icon-button-gap:var(--forge-icon-button-gap, 0);--_icon-button-icon-color:var(--forge-icon-button-icon-color, currentColor);--_icon-button-background-color:var(--forge-icon-button-background-color, none);--_icon-button-icon-size:var(--forge-icon-button-icon-size, calc(var(--forge-typography-font-size, 1rem) * 1.5));--_icon-button-cursor:var(--forge-icon-button-cursor, pointer);--_icon-button-padding:var(--forge-icon-button-padding, var(--forge-spacing-xxsmall, 4px));--_icon-button-border:var(--forge-icon-button-border, none);--_icon-button-shadow:var(--forge-icon-button-shadow, none);--_icon-button-transition-duration:var(--forge-icon-button-transition-duration, var(--forge-animation-duration-short3, 150ms));--_icon-button-transition-timing:var(--forge-icon-button-transition-timing, var(--forge-animation-easing-standard, cubic-bezier(0.2, 0, 0, 1)));--_icon-button-shape:var(--forge-icon-button-shape, calc(var(--forge-shape-full, 9999px) * var(--forge-shape-factor, 1)));--_icon-button-shape-start-start:var(--forge-icon-button-shape-start-start, var(--_icon-button-shape));--_icon-button-shape-start-end:var(--forge-icon-button-shape-start-end, var(--_icon-button-shape));--_icon-button-shape-end-start:var(--forge-icon-button-shape-end-start, var(--_icon-button-shape));--_icon-button-shape-end-end:var(--forge-icon-button-shape-end-end, var(--_icon-button-shape));--_icon-button-shape-squared:var(--forge-icon-button-shape-squared, calc(var(--forge-shape-medium, 4px) * var(--forge-shape-factor, 1)));--_icon-button-outlined-border-width:var(--forge-icon-button-outlined-border-width, 1px);--_icon-button-outlined-border-style:var(--forge-icon-button-outlined-border-style, solid);--_icon-button-outlined-border-color:var(--forge-icon-button-outlined-border-color, var(--_icon-button-icon-color));--_icon-button-tonal-icon-color:var(--forge-icon-button-tonal-icon-color, var(--forge-theme-on-primary-container, #222c62));--_icon-button-tonal-background-color:var(--forge-icon-button-tonal-background-color, var(--forge-theme-primary-container, #d1d5ed));--_icon-button-filled-icon-color:var(--forge-icon-button-filled-icon-color, var(--forge-theme-on-primary, #ffffff));--_icon-button-filled-background-color:var(--forge-icon-button-filled-background-color, var(--forge-theme-primary, #3f51b5));--_icon-button-raised-shadow:var(--forge-icon-button-raised-shadow, 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12));--_icon-button-raised-hover-shadow:var(--forge-icon-button-raised-hover-shadow, 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12));--_icon-button-raised-active-shadow:var(--forge-icon-button-raised-active-shadow, 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12));--_icon-button-raised-disabled-shadow:var(--forge-icon-button-raised-disabled-shadow, none);--_icon-button-density-small-size:var(--forge-icon-button-density-small-size, 24px);--_icon-button-density-small-padding:var(--forge-icon-button-density-small-padding, var(--forge-spacing-xxxsmall, 2px));--_icon-button-density-small-icon-size:var(--forge-icon-button-density-small-icon-size, calc(var(--forge-typography-font-size, 1rem) * 1.125));--_icon-button-density-medium-size:var(--forge-icon-button-density-medium-size, 36px);--_icon-button-density-medium-padding:var(--forge-icon-button-density-medium-padding, var(--forge-spacing-xxsmall, 4px));--_icon-button-density-large-size:var(--forge-icon-button-density-large-size, var(--_icon-button-size));--_icon-button-toggle-on-background-color:var(--forge-icon-button-toggle-on-background-color, var(--forge-theme-primary-container, #d1d5ed));--_icon-button-toggle-on-icon-color:var(--forge-icon-button-toggle-on-icon-color, var(--forge-theme-primary, #3f51b5));--_icon-button-outlined-toggle-on-background-color:var(--forge-icon-button-outlined-toggle-on-background-color, var(--forge-theme-primary-container, #d1d5ed));--_icon-button-outlined-toggle-on-icon-color:var(--forge-icon-button-outlined-toggle-on-icon-color, var(--forge-theme-primary, #3f51b5));--_icon-button-tonal-toggle-background-color:var(--forge-icon-button-tonal-toggle-background-color, var(--forge-theme-surface-container-low, #ebebeb));--_icon-button-tonal-toggle-on-background-color:var(--forge-icon-button-tonal-toggle-on-background-color, var(--forge-theme-primary-container, #d1d5ed));--_icon-button-tonal-toggle-on-icon-color:var(--forge-icon-button-tonal-toggle-on-icon-color, var(--forge-theme-primary, #3f51b5));--_icon-button-filled-toggle-background-color:var(--forge-icon-button-filled-toggle-background-color, var(--forge-theme-surface-container-low, #ebebeb));--_icon-button-filled-toggle-icon-color:var(--forge-icon-button-filled-toggle-icon-color, var(--forge-theme-primary, #3f51b5));--_icon-button-filled-toggle-on-background-color:var(--forge-icon-button-filled-toggle-on-background-color, var(--forge-theme-primary, #3f51b5));--_icon-button-filled-toggle-on-icon-color:var(--forge-icon-button-filled-toggle-on-icon-color, var(--forge-theme-on-primary, #ffffff));--_icon-button-disabled-cursor:var(--forge-icon-button-disabled-cursor, not-allowed);--_icon-button-disabled-opacity:var(--forge-icon-button-disabled-opacity, 0.38);--_icon-button-popover-icon-padding:var(--forge-icon-button-popover-icon-padding, var(--forge-spacing-xsmall, 8px));--_icon-button-focus-indicator-color:var(--forge-icon-button-focus-indicator-color, var(--forge-theme-primary, #3f51b5))}:host{display:var(--_icon-button-display);position:relative;outline:0;-webkit-tap-highlight-color:transparent;border-start-start-radius:var(--_icon-button-shape-start-start);border-start-end-radius:var(--_icon-button-shape-start-end);border-end-start-radius:var(--_icon-button-shape-end-start);border-end-end-radius:var(--_icon-button-shape-end-end)}:host([hidden]){display:none}::slotted(:is(button,a)){position:relative;z-index:0;display:var(--_icon-button-display);align-items:center;justify-content:center;gap:var(--_icon-button-gap);box-sizing:border-box;height:var(--_icon-button-density-large-size);min-width:var(--_icon-button-density-large-size);border:var(--_icon-button-border);border-start-start-radius:var(--_icon-button-shape-start-start);border-start-end-radius:var(--_icon-button-shape-start-end);border-end-start-radius:var(--_icon-button-shape-end-start);border-end-end-radius:var(--_icon-button-shape-end-end);padding:var(--_icon-button-padding);box-shadow:var(--_icon-button-shadow);color:var(--_icon-button-icon-color);background:var(--_icon-button-background-color);font-size:var(--_icon-button-icon-size);cursor:var(--_icon-button-cursor);user-select:none;transition-property:box-shadow,background;transition-duration:var(--_icon-button-transition-duration);transition-timing-function:var(--_icon-button-transition-timing);font-size:var(--_icon-button-icon-size);height:var(--_icon-button-size);width:var(--_icon-button-size)}::slotted(a){text-decoration:none;color:var(--_icon-button-icon-color)!important}forge-state-layer{--forge-state-layer-color:var(--_icon-button-icon-color)}forge-focus-indicator{--forge-focus-indicator-outward-offset:0px;--forge-focus-indicator-color:var(--_icon-button-focus-indicator-color);--forge-focus-indicator-shape-start-start:var(--_icon-button-shape-start-start);--forge-focus-indicator-shape-start-end:var(--_icon-button-shape-start-end);--forge-focus-indicator-shape-end-start:var(--_icon-button-shape-end-start);--forge-focus-indicator-shape-end-end:var(--_icon-button-shape-end-end)}:host(:is([dense],[density=large]):not(:is([density=medium],[density-level]))){--_icon-button-size:var(--_icon-button-density-small-size);--_icon-button-icon-size:var(--_icon-button-density-small-icon-size);--_icon-button-padding:var(--_icon-button-density-small-padding);--forge-icon-font-size:var(--_icon-button-icon-size)}:host([dense]:not([density=large]):not([density=small]):is([density=medium],[density-level])){--_icon-button-size:var(--_icon-button-density-medium-size);--_icon-button-padding:var(--_icon-button-density-medium-padding)}:host([disabled]){cursor:var(--_icon-button-disabled-cursor)}:host([disabled]) ::slotted(button[disabled]){pointer-events:none;opacity:var(--_icon-button-disabled-opacity)}:host([toggle]:is([on],[is-on]):not([is-on=false])){--_icon-button-background-color:var(--_icon-button-toggle-on-background-color);--_icon-button-icon-color:var(--_icon-button-toggle-on-icon-color);--_icon-button-background-color:var(--forge-icon-button-background-color, var(--forge-theme-primary-container-low, #e8eaf6))}';
+/**
+ * @tag forge-deprecated-icon-button
+ *
+ * @deprecated Use the `<forge-icon-button>` element instead.
+ */
+let DeprecatedIconButtonComponent = class DeprecatedIconButtonComponent extends BaseComponent {
+    static get observedAttributes() {
+        return Object.values(DEPRECATED_ICON_BUTTON_CONSTANTS.attributes);
+    }
+    constructor() {
+        super();
+        // State
+        this._disabled = false;
+        this._toggle = false;
+        this._isOn = false;
+        this._densityLevel = 0;
+        this._buttonOrAnchorElement = null;
+        // Listeners
+        this._slotChangeListener = this._onSlotChange.bind(this);
+        this._keydownListener = this._onKeydown.bind(this);
+        this._toggleClickListener = this._onToggle.bind(this);
+        attachShadowTemplate(this, template, styles);
+        this._slotElement = getShadowElement(this, 'slot:not([name])');
+        this._focusIndicator = getShadowElement(this, FOCUS_INDICATOR_CONSTANTS.elementName);
+        this._stateLayer = getShadowElement(this, STATE_LAYER_CONSTANTS.elementName);
+    }
+    connectedCallback() {
+        this._slotElement.addEventListener('slotchange', this._slotChangeListener);
+        if (this.children.length) {
+            this._initialize();
+        }
+        else {
+            ensureChildren(this).then(() => this._initialize());
+        }
+    }
+    disconnectedCallback() {
+        this._detachButton();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case DEPRECATED_ICON_BUTTON_CONSTANTS.attributes.DISABLED:
+                this.disabled = coerceBoolean(newValue);
+                return;
+            case DEPRECATED_ICON_BUTTON_CONSTANTS.attributes.TOGGLE:
+                this.toggle = coerceBoolean(newValue);
+                return;
+            case DEPRECATED_ICON_BUTTON_CONSTANTS.attributes.IS_ON:
+                this.isOn = coerceBoolean(newValue);
+                return;
+            case DEPRECATED_ICON_BUTTON_CONSTANTS.attributes.DENSITY_LEVEL:
+                this.densityLevel = coerceNumber(newValue);
+                return;
+        }
+    }
+    _onKeydown(evt) {
+        if (evt.key === 'Enter' || evt.key === ' ') {
+            this._stateLayer.playAnimation();
+        }
+    }
+    _onSlotChange() {
+        this._detachButton();
+        this._initialize();
+    }
+    _onToggle() {
+        this.isOn = !this._isOn;
+        this.dispatchEvent(new CustomEvent('forge-icon-button-toggle', { bubbles: true, composed: true, detail: this._isOn }));
+    }
+    _initialize() {
+        this._buttonOrAnchorElement = this.querySelector(DEPRECATED_ICON_BUTTON_CONSTANTS.selectors.BUTTON);
+        if (!this._buttonOrAnchorElement) {
+            return;
+        }
+        this._stateLayer.targetElement = this._buttonOrAnchorElement;
+        this._focusIndicator.targetElement = this._buttonOrAnchorElement;
+        this._buttonOrAnchorElement.addEventListener('keydown', this._keydownListener);
+        // Sync disabled state
+        if (this._buttonOrAnchorElement instanceof HTMLButtonElement && this._disabled && !this._buttonOrAnchorElement.disabled) {
+            this._buttonOrAnchorElement.disabled = true;
+        }
+        else {
+            this.disabled = this._buttonOrAnchorElement instanceof HTMLButtonElement && this._buttonOrAnchorElement.disabled;
+        }
+        if (this._toggle) {
+            this._initializeToggle();
+        }
+        // Listen for disabled attribute changes on the button
+        if (this._buttonOrAnchorElement instanceof HTMLButtonElement) {
+            this._buttonAttrMutationObserver = new MutationObserver(mutationList => {
+                if (mutationList.some(mutation => mutation.attributeName === 'disabled')) {
+                    this._syncDisabledState();
+                }
+            });
+            this._buttonAttrMutationObserver.observe(this._buttonOrAnchorElement, {
+                attributes: true,
+                attributeFilter: ['disabled']
+            });
+        }
+    }
+    _syncDisabledState() {
+        const isDisabled = this._buttonOrAnchorElement instanceof HTMLButtonElement && this._buttonOrAnchorElement.disabled;
+        this.toggleAttribute(DEPRECATED_ICON_BUTTON_CONSTANTS.attributes.DISABLED, isDisabled);
+    }
+    _detachButton() {
+        this._buttonOrAnchorElement?.removeEventListener('keydown', this._keydownListener);
+        if (this._buttonAttrMutationObserver) {
+            this._buttonAttrMutationObserver.disconnect();
+            this._buttonAttrMutationObserver = undefined;
+        }
+    }
+    _initializeToggle() {
+        /* c8 ignore next 3 */
+        if (!this._buttonOrAnchorElement) {
+            return;
+        }
+        this._buttonOrAnchorElement.addEventListener('click', this._toggleClickListener);
+        this._syncToggleState();
+    }
+    _destroyToggle() {
+        this._buttonOrAnchorElement?.removeEventListener('click', this._toggleClickListener);
+    }
+    _syncToggleState() {
+        const iconLikeElements = Array.from(this.querySelectorAll(DEPRECATED_ICON_BUTTON_CONSTANTS.selectors.ICON_LIKE));
+        const onIconElement = iconLikeElements.find(el => el.hasAttribute(DEPRECATED_ICON_BUTTON_CONSTANTS.attributes.ON_ICON));
+        const offIconElements = iconLikeElements.filter(el => el !== onIconElement);
+        onIconElement?.toggleAttribute('hidden', !this._isOn);
+        offIconElements.forEach(el => el.toggleAttribute('hidden', this._isOn));
+        this.toggleAttribute(DEPRECATED_ICON_BUTTON_CONSTANTS.attributes.IS_ON, this._isOn);
+    }
+    get disabled() {
+        return this._disabled;
+    }
+    set disabled(value) {
+        value = Boolean(value);
+        if (this._disabled !== value) {
+            this._disabled = value;
+            this._buttonOrAnchorElement?.toggleAttribute(DEPRECATED_ICON_BUTTON_CONSTANTS.attributes.DISABLED, this._disabled);
+            this.toggleAttribute(DEPRECATED_ICON_BUTTON_CONSTANTS.attributes.DISABLED, this._disabled);
+        }
+    }
+    get toggle() {
+        return this._toggle;
+    }
+    set toggle(value) {
+        value = Boolean(value);
+        if (this._toggle !== value) {
+            this._toggle = value;
+            if (this.isConnected) {
+                if (this._toggle) {
+                    this._initializeToggle();
+                }
+                else {
+                    this._destroyToggle();
+                }
+            }
+            this.toggleAttribute(DEPRECATED_ICON_BUTTON_CONSTANTS.attributes.TOGGLE, this._toggle);
+        }
+    }
+    get isOn() {
+        return this._isOn;
+    }
+    set isOn(value) {
+        value = Boolean(value);
+        if (this._isOn !== value) {
+            this._isOn = value;
+            if (this.isConnected) {
+                this._syncToggleState();
+            }
+        }
+    }
+    get densityLevel() {
+        return this._densityLevel;
+    }
+    set densityLevel(value) {
+        if (this._densityLevel !== value) {
+            this._densityLevel = value;
+            this.setAttribute(DEPRECATED_ICON_BUTTON_CONSTANTS.attributes.DENSITY_LEVEL, String(this._densityLevel));
+        }
+    }
+    focus(options) {
+        this._buttonOrAnchorElement?.focus(options);
+    }
+};
+DeprecatedIconButtonComponent = __decorate([
+    customElement({
+        name: DEPRECATED_ICON_BUTTON_CONSTANTS.elementName,
+        dependencies: [IconComponent, FocusIndicatorComponent, StateLayerComponent]
+    })
+], DeprecatedIconButtonComponent);
+export { DeprecatedIconButtonComponent };

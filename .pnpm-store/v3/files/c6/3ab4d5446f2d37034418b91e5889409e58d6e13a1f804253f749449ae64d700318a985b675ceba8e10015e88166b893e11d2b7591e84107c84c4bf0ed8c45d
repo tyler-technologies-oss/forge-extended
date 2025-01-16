@@ -1,0 +1,85 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+.forge-focus-indicator__target {
+  position: relative;
+  outline: none;
+}
+@keyframes forge-focus-indicator-outward-grow {
+  from {
+    outline-width: 0;
+  }
+  to {
+    outline-width: var(--_focus-indicator-active-width);
+  }
+}
+@keyframes forge-focus-indicator-outward-shrink {
+  from {
+    outline-width: var(--_focus-indicator-active-width);
+  }
+}
+@keyframes forge-focus-indicator-inward-grow {
+  from {
+    border-width: 0;
+  }
+  to {
+    border-width: var(--_focus-indicator-active-width);
+  }
+}
+@keyframes forge-focus-indicator-inward-shrink {
+  from {
+    border-width: var(--_focus-indicator-active-width);
+  }
+}
+.forge-focus-indicator__target:focus-visible .forge-focus-indicator::before, .forge-focus-indicator__target:focus-visible::before, .forge-focus-indicator:focus-visible .forge-focus-indicator::before, .forge-focus-indicator:focus-visible::before {
+  --_focus-indicator-display: var(--forge-focus-indicator-display, flex);
+  --_focus-indicator-width: var(--forge-focus-indicator-width, var(--forge-border-medium, 2px));
+  --_focus-indicator-active-width: var(--forge-focus-indicator-active-width, 6px);
+  --_focus-indicator-color: var(--forge-focus-indicator-color, var(--forge-theme-primary, #3f51b5));
+  --_focus-indicator-shape: var(--forge-focus-indicator-shape, calc(var(--forge-shape-extra-small, 1px) * var(--forge-shape-factor, 1)));
+  --_focus-indicator-duration: var(--forge-focus-indicator-duration, var(--forge-animation-duration-long4, 600ms));
+  --_focus-indicator-easing: var(--forge-focus-indicator-easing, var(--forge-animation-easing-emphasized, cubic-bezier(0.2, 0, 0, 1)));
+  --_focus-indicator-shape-start-start: var(--forge-focus-indicator-shape-start-start, var(--_focus-indicator-shape));
+  --_focus-indicator-shape-start-end: var(--forge-focus-indicator-shape-start-end, var(--_focus-indicator-shape));
+  --_focus-indicator-shape-end-end: var(--forge-focus-indicator-shape-end-end, var(--_focus-indicator-shape));
+  --_focus-indicator-shape-end-start: var(--forge-focus-indicator-shape-end-start, var(--_focus-indicator-shape));
+  --_focus-indicator-outward-offset: var(--forge-focus-indicator-outward-offset, var(--forge-spacing-xxsmall, 4px));
+  --_focus-indicator-inward-offset: var(--forge-focus-indicator-inward-offset, 0px);
+  --_focus-indicator-offset-block: var(--forge-focus-indicator-offset-block, 0);
+  --_focus-indicator-offset-inline: var(--forge-focus-indicator-offset-inline, 0);
+}
+.forge-focus-indicator__target:focus-visible .forge-focus-indicator::before, .forge-focus-indicator__target:focus-visible::before, .forge-focus-indicator:focus-visible .forge-focus-indicator::before, .forge-focus-indicator:focus-visible::before {
+  animation-delay: 0s, calc(var(--_focus-indicator-duration) * 0.25);
+  animation-duration: calc(var(--_focus-indicator-duration) * 0.25), calc(var(--_focus-indicator-duration) * 0.75);
+  animation-timing-function: var(--_focus-indicator-easing);
+  box-sizing: border-box;
+  color: var(--_focus-indicator-color);
+  display: none;
+  pointer-events: none;
+  position: absolute;
+  margin-block: var(--_focus-indicator-offset-block);
+  margin-inline: var(--_focus-indicator-offset-inline);
+  animation-name: forge-focus-indicator-outward-grow, forge-focus-indicator-outward-shrink;
+  border-end-end-radius: calc(var(--_focus-indicator-shape-end-end) + var(--_focus-indicator-outward-offset));
+  border-end-start-radius: calc(var(--_focus-indicator-shape-end-start) + var(--_focus-indicator-outward-offset));
+  border-start-end-radius: calc(var(--_focus-indicator-shape-start-end) + var(--_focus-indicator-outward-offset));
+  border-start-start-radius: calc(var(--_focus-indicator-shape-start-start) + var(--_focus-indicator-outward-offset));
+  inset: calc(-1 * var(--_focus-indicator-outward-offset));
+  outline: var(--_focus-indicator-width) solid currentColor;
+  content: "";
+  display: block;
+}
+.forge-focus-indicator--inward .forge-focus-indicator::before, .forge-focus-indicator--inward:focus-visible::before {
+  animation-name: forge-focus-indicator-inward-grow, forge-focus-indicator-inward-shrink;
+  border-end-end-radius: calc(var(--_focus-indicator-shape-end-end) - var(--_focus-indicator-inward-offset));
+  border-end-start-radius: calc(var(--_focus-indicator-shape-end-start) - var(--_focus-indicator-inward-offset));
+  border-start-end-radius: calc(var(--_focus-indicator-shape-start-end) - var(--_focus-indicator-inward-offset));
+  border-start-start-radius: calc(var(--_focus-indicator-shape-start-start) - var(--_focus-indicator-inward-offset));
+  border: var(--_focus-indicator-width) solid currentColor;
+  inset: var(--_focus-indicator-inward-offset);
+}
+.forge-focus-indicator--active .forge-focus-indicator::before, .forge-focus-indicator--active:focus-visible::before {
+  display: var(--_focus-indicator-display);
+}

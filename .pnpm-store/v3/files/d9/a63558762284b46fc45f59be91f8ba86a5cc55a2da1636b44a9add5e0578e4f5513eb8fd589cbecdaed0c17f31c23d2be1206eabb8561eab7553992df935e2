@@ -1,0 +1,92 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ITooltipAdapter } from './tooltip-adapter';
+import { TooltipPlacement, TooltipTriggerType, TooltipType } from './tooltip-constants';
+import { OverlayFlipState } from '../overlay/overlay-constants';
+import { PositionPlacement } from '../core/utils/position-utils';
+export interface ITooltipCore {
+    open: boolean;
+    type: TooltipType;
+    placement: `${TooltipPlacement}`;
+    delay: number;
+    anchor: string;
+    anchorElement: HTMLElement | null;
+    offset: number;
+    flip: OverlayFlipState;
+    boundary: string | null;
+    boundaryElement: HTMLElement | null;
+    fallbackPlacements: PositionPlacement[] | null;
+    triggerType: TooltipTriggerType | TooltipTriggerType[];
+    syncTooltipAria(): void;
+}
+declare const TooltipCore_base: import("../constants").AbstractConstructor<import("../core/mixins/interactions/longpress/with-longpress-listener").WithLongpressListenerContract> & ObjectConstructor;
+export declare class TooltipCore extends TooltipCore_base implements ITooltipCore {
+    private _adapter;
+    private _open;
+    private _type;
+    private _anchor;
+    private _delay;
+    private _placement;
+    private _offset;
+    private _flip;
+    private _boundary;
+    private _boundaryElement;
+    private _fallbackPlacements;
+    private _triggerTypes;
+    private _hoverStartListener;
+    private _hoverEndListener;
+    private _hoverTimeout;
+    private _focusListener;
+    private _blurListener;
+    private _longpressVisibilityTimeout;
+    private _scrollListener;
+    private _mouseDownListener;
+    private _dragListener;
+    private _lightDismissListener;
+    constructor(_adapter: ITooltipAdapter);
+    initialize(): void;
+    destroy(): void;
+    syncTooltipAria(): void;
+    private _attachAnchorListeners;
+    private _detachAnchorListeners;
+    private _show;
+    private _hide;
+    private _attachDismissListeners;
+    private _detachDismissListeners;
+    private _onHoverStart;
+    private _onHoverEnd;
+    private _onFocus;
+    private _onBlur;
+    protected _onLongpress(): void;
+    protected _onLongpressEnd(evt: PointerEvent | TouchEvent): void;
+    private _onTryShow;
+    private _onTryHide;
+    get open(): boolean;
+    set open(value: boolean);
+    get type(): TooltipType;
+    set type(value: TooltipType);
+    get anchor(): string;
+    set anchor(value: string);
+    get anchorElement(): HTMLElement | null;
+    set anchorElement(element: HTMLElement | null);
+    get delay(): number;
+    set delay(value: number);
+    get placement(): TooltipPlacement;
+    set placement(value: TooltipPlacement);
+    get offset(): number;
+    set offset(value: number);
+    get flip(): OverlayFlipState;
+    set flip(value: OverlayFlipState);
+    get boundary(): string | null;
+    set boundary(value: string | null);
+    get boundaryElement(): HTMLElement | null;
+    set boundaryElement(element: HTMLElement | null);
+    get fallbackPlacements(): PositionPlacement[] | null;
+    set fallbackPlacements(value: PositionPlacement[] | null);
+    get triggerType(): TooltipTriggerType | TooltipTriggerType[];
+    set triggerType(value: TooltipTriggerType | TooltipTriggerType[]);
+}
+export {};

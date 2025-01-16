@@ -1,0 +1,77 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { SelectOptionBuilder, SelectSelectedTextBuilder, ISelectOption, ISelectOptionGroup, SelectBeforeValueChangeCallback } from './base-select-constants';
+import { IBaseSelectCore } from './base-select-core';
+import { IListDropdownAware, ListDropdownAware } from '../../list-dropdown/list-dropdown-aware';
+import type { IPopoverComponent } from '../../popover/popover';
+export interface IBaseSelectComponent extends IListDropdownAware {
+    value: any;
+    selectedIndex: number | number[];
+    options: ISelectOption[] | ISelectOptionGroup[];
+    multiple: boolean;
+    open: boolean;
+    optionBuilder: SelectOptionBuilder;
+    selectedTextBuilder: SelectSelectedTextBuilder;
+    popupElement: IPopoverComponent | undefined;
+    beforeValueChange: SelectBeforeValueChangeCallback<any>;
+    appendOptions(options: ISelectOption[] | ISelectOption[]): void;
+    selectAll(): void;
+    deselectAll(): void;
+}
+export declare abstract class BaseSelectComponent<T extends IBaseSelectCore> extends ListDropdownAware implements IBaseSelectComponent {
+    protected _core: T;
+    constructor();
+    /**
+     * Gets/sets the value.
+     * @attribute
+     */
+    value: any;
+    /**
+     * Gets/sets the selected index.
+     * @attribute selected-index
+     */
+    selectedIndex: number | number[];
+    /**
+     * Gets/sets the available options.
+     */
+    options: ISelectOption[] | ISelectOptionGroup[];
+    /**
+     * Gets/sets the multiple select state.
+     * @attribute
+     */
+    multiple: boolean;
+    /**
+     * Gets the open state of the dropdown.
+     * @attribute
+     */
+    open: boolean;
+    /**
+     * Sets the option builder callback that will be executed when building the option list in the dropdown.
+     */
+    optionBuilder: SelectOptionBuilder;
+    /**
+     * Sets the selected text builder callback that will be executed when getting the selected text to display in the field.
+     */
+    selectedTextBuilder: SelectSelectedTextBuilder;
+    /**
+     * Sets the callback to be executed when the user selects a value.
+     */
+    beforeValueChange: SelectBeforeValueChangeCallback<any>;
+    /**
+     * Gets the popup element (when the dropdown is open).
+     * @readonly
+     */
+    popupElement: IPopoverComponent | undefined;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    /** Dynamically appends options to the dropdown while it's open. */
+    appendOptions(options: ISelectOption[] | ISelectOptionGroup[]): void;
+    /** Selects all options. */
+    selectAll(): void;
+    /** Deselects all options. */
+    deselectAll(): void;
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+}

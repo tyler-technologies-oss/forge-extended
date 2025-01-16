@@ -1,0 +1,40 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const VIEW_SWITCHER_CONSTANTS: {
+    elementName: "forge-view-switcher";
+    attributes: {
+        INDEX: string;
+        ANIMATION_TYPE: string;
+    };
+    classes: {
+        ROOT: string;
+        VIEW_HIDDEN: string;
+        VIEW_SWITCHER_SLIDE: string;
+        VIEW_SWITCHER_FADE: string;
+    };
+    selectors: {
+        ROOT: string;
+        DEFAULT_SLOT: string;
+        VIEW_HIDDEN: string;
+    };
+    numbers: {
+        DEFAULT_TRANSITION_DURATION: number;
+    };
+};
+export interface IViewSwitcherView {
+    element: HTMLElement;
+}
+export declare enum ViewAnimationDirection {
+    Left = "left",
+    Right = "right"
+}
+/** @deprecated Use `ViewSwitcherAnimation` type instead. */
+export declare enum ViewSwitcherAnimationType {
+    None = "none",
+    Slide = "slide",
+    Fade = "fade"
+}
+export type ViewSwitcherAnimation = 'none' | 'slide' | 'fade';

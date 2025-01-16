@@ -1,0 +1,64 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ICalendarMenuOption } from './calendar-menu/calendar-menu-constants';
+import { CalendarEventBuilder, DayOfWeek, ICalendarEvent, ICalendarNumberRange, ICalendarMenuMonthConfig, ICalendarMenuYearConfig, ICalendarDisabledDateParams, CalendarView } from './calendar-constants';
+import { DateRange } from './core/date-range';
+/** Returns an array of dates encompassing an entire month and the beginning and end of adjacent months to fill weeks. */
+export declare function getMonthDates(month: number, year: number, firstDayOfWeek?: DayOfWeek): Date[];
+/** Returns an array of the dates in single week given a date from the week. */
+export declare function getWeekDates(date: Date, firstDayOfWeek?: DayOfWeek): Date[];
+/** Returns the first date of the week containing the given date. */
+export declare function getFirstDateOfWeek(date: Date, firstDayOfWeek?: DayOfWeek): Date;
+/** Returns the last date of the week containing the given date. */
+export declare function getLastDateOfWeek(date: Date, firstDayOfWeek?: DayOfWeek): Date;
+/** Returns the day of week of the first date of the given month. */
+export declare function getFirstDayOfMonth(month: number, year: number): DayOfWeek;
+/** Returns an array of day strings for a week starting on the given first day of week. */
+export declare function getSortedDaysOfWeek(firstDayOfWeek?: DayOfWeek): DayOfWeek[];
+/** Returns whether the given date object is today. */
+export declare function isToday(date: Date): boolean;
+/** Returns whether the given date is in a given month. */
+export declare function isInMonth(date: Date, month: number, year: number): boolean;
+/** Returns whether the given date falls between two other dates. */
+export declare function isInRange(date: Date, start: Date, end: Date): boolean;
+/** Sorts an array of dates from earliest to latest. */
+export declare function sortDates(dates: Date[]): Date[];
+/** Splits an array into groups of seven. */
+export declare function splitIntoWeeks<T>(array: T[]): T[][];
+/** Returns a date range from an array of dates. */
+export declare function getDateRangeFromDates(dates: Date[]): DateRange;
+/** Returns an array of dates from a date range. */
+export declare function getDatesFromDateRange(range: DateRange): Date[];
+/** Returns the earliest and latest dates in an array as an array. */
+export declare function getMinAndMaxDates(dates: Date[]): Date[];
+/** Returns an array of ICalendarDates that fall between two other dates. */
+export declare function getDatesInRange(dates: Date[], start: Date, end: Date): Date[];
+/** Gets an accessible description of events. */
+export declare function getEventDescriptions(events: ICalendarEvent[]): string;
+/** Gets a date from a string of numbers postfixed by y, m, w, or d */
+export declare function parseDateOffset(offset: string): Date;
+/** Gets a min and max year from a string of two numbers separated by : and optionally prefixed with + or - */
+export declare function parseYearRange(range: string): ICalendarNumberRange;
+/** Gets an array of month ICalendarMenuOptions. */
+export declare function getMonthOptions(config: ICalendarMenuMonthConfig): ICalendarMenuOption[];
+/** Gets an array of year ICalendarMenuOptions. */
+export declare function getYearOptions(config: ICalendarMenuYearConfig): ICalendarMenuOption[];
+/** Gets an array of year ICalendarMenuOptions including every year in range. */
+export declare function getAllYearOptions(config: ICalendarMenuYearConfig): ICalendarMenuOption[];
+/** Checks whether a date is present in the given array. */
+export declare function isSelected(date: Date, values: Date[]): boolean;
+/** Checks wheter a date is disabled. */
+export declare function isDisabled(date: Date, params: ICalendarDisabledDateParams): boolean;
+/** Returns the index of the given date in the dates array. */
+export declare function getIndexOfDate(date: Date, dates: Date[]): number;
+/** Returns all the events on the given date. */
+export declare function getEventsOnDate(date: Date, events: ICalendarEvent[], builder: CalendarEventBuilder | undefined): ICalendarEvent[];
+/** Gets all enabled dates between the first and last items in an array of dates.  */
+export declare function getMultipleFromRange(dates: Date[], disabledParams?: ICalendarDisabledDateParams): Date[];
+/** Gets a date or null from a date, string, or date offset. */
+export declare function coerceDateFromValue(value?: Date | string | null): Date | null;
+/** Returns whether an event should be handled or ignored. */
+export declare function shouldHandleEvent(evt: Event, view: CalendarView, preventFocus: boolean): boolean;

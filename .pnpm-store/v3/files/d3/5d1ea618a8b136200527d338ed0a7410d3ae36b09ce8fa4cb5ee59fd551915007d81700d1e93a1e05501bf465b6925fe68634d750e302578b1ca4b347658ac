@@ -1,0 +1,14 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { defineCustomElement } from '@tylertech/forge-core';
+import { StepComponent } from './step';
+export * from './step-adapter';
+export * from './step-constants';
+export * from './step-core';
+export * from './step';
+export function defineStepComponent() {
+    defineCustomElement(StepComponent);
+}

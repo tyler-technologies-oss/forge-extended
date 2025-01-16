@@ -1,0 +1,74 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { customElement, attachShadowTemplate, coerceNumber, coreProperty } from '@tylertech/forge-core';
+import { ViewSwitcherAdapter } from './view-switcher-adapter';
+import { ViewSwitcherCore } from './view-switcher-core';
+import { VIEW_SWITCHER_CONSTANTS } from './view-switcher-constants';
+import { ViewComponent } from './view/view';
+import { BaseComponent } from '../core/base/base-component';
+const template = '<template><div class=\"forge-view-switcher\" part=\"root\"><slot></slot></div></template>';
+const styles = ':host{height:var(--_view-switcher-height);width:var(--_view-switcher-width);display:block}:host([hidden]){display:none}.forge-view-switcher{--_view-switcher-height:var(--forge-view-switcher-height, auto);--_view-switcher-width:var(--forge-view-switcher-width, auto);--_view-switcher-animation-duration:var(--forge-view-switcher-animation-duration, var(--forge-animation-duration-medium2, 300ms));--_view-switcher-animation-easing:var(--forge-view-switcher-animation-easing, var(--forge-animation-easing-standard, cubic-bezier(0.2, 0, 0, 1)))}.forge-view-switcher{height:var(--_view-switcher-height);width:var(--_view-switcher-width);position:relative;overflow:hidden;transition-property:height;transition-duration:var(--_view-switcher-animation-duration);transition-timing-function:var(--_view-switcher-animation-easing)}.forge-view-switcher ::slotted(.forge-view-switcher__view--hidden){position:absolute;top:0;right:0;bottom:0;left:0}:host(.slide) ::slotted(forge-view){transition-property:transform;transition-duration:var(--_view-switcher-animation-duration);transition-timing-function:var(--_view-switcher-animation-easing);will-change:transform}:host(.fade) ::slotted(forge-view){transition-property:opacity;transition-duration:var(--_view-switcher-animation-duration);transition-timing-function:var(--_view-switcher-animation-easing);will-change:opacity}:host(.fade) ::slotted(.forge-view-switcher__view--hidden){opacity:0}';
+/**
+ * @tag forge-view-switcher
+ *
+ * @dependency forge-view
+ */
+let ViewSwitcherComponent = class ViewSwitcherComponent extends BaseComponent {
+    static get observedAttributes() {
+        return [VIEW_SWITCHER_CONSTANTS.attributes.INDEX, VIEW_SWITCHER_CONSTANTS.attributes.ANIMATION_TYPE];
+    }
+    constructor() {
+        super();
+        attachShadowTemplate(this, template, styles);
+        this._core = new ViewSwitcherCore(new ViewSwitcherAdapter(this));
+    }
+    connectedCallback() {
+        this._core.initialize();
+    }
+    disconnectedCallback() {
+        this._core.destroy();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case VIEW_SWITCHER_CONSTANTS.attributes.INDEX:
+                this.index = coerceNumber(newValue);
+                break;
+            case VIEW_SWITCHER_CONSTANTS.attributes.ANIMATION_TYPE:
+                this.animationType = newValue;
+                break;
+        }
+    }
+    /** Transitions to the next view. */
+    next() {
+        this._core.next();
+    }
+    /** Transitions to the previous view. */
+    previous() {
+        this._core.previous();
+    }
+    /** Transitions to the first view. */
+    goToStart() {
+        this._core.goToStart();
+    }
+    /** Transitions to the last view. */
+    goToEnd() {
+        this._core.goToEnd();
+    }
+};
+__decorate([
+    coreProperty()
+], ViewSwitcherComponent.prototype, "index", void 0);
+__decorate([
+    coreProperty()
+], ViewSwitcherComponent.prototype, "animationType", void 0);
+ViewSwitcherComponent = __decorate([
+    customElement({
+        name: VIEW_SWITCHER_CONSTANTS.elementName,
+        dependencies: [ViewComponent]
+    })
+], ViewSwitcherComponent);
+export { ViewSwitcherComponent };

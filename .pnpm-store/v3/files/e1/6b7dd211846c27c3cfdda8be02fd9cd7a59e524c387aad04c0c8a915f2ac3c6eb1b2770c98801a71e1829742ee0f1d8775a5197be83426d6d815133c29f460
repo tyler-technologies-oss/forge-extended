@@ -1,0 +1,234 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { SplitViewPanelResizable } from './split-view-panel-constants';
+import { ISplitViewPanelAdapter } from './split-view-panel-adapter';
+import { ISplitViewUpdateConfig } from '../split-view/split-view-constants';
+import { ISplitViewBase } from '../core/split-view-base';
+export interface ISplitViewPanelCore extends Partial<ISplitViewBase> {
+    resizable: SplitViewPanelResizable;
+    size: number | string;
+    min: number | string;
+    max: number | string | undefined;
+    accessibleLabel: string;
+    open: boolean;
+    getContentSize(): number;
+    getCollapsibleSize(): number;
+    setContentSize(size: number): void;
+    update(config: ISplitViewUpdateConfig): void;
+}
+export declare class SplitViewPanelCore implements ISplitViewPanelCore {
+    private _adapter;
+    private _size;
+    private _min;
+    private _max;
+    private _accessibleLabel;
+    private _open;
+    private _disabled?;
+    private _allowClose?;
+    private _autoClose?;
+    private _autoCloseThreshold?;
+    private _state;
+    private _isInitialized;
+    private get _orientation();
+    private set _orientation(value);
+    private get _resizable();
+    private set _resizable(value);
+    private get _pixelMin();
+    private set _pixelMin(value);
+    private get _pixelMax();
+    private set _pixelMax(value);
+    private _parentProperties;
+    private get _appliedDisabled();
+    private get _appliedAllowClose();
+    private get _appliedAutoClose();
+    private get _appliedAutoCloseThreshold();
+    private _pointerdownListener;
+    private _pointerupListener;
+    private _pointermoveListener;
+    private _keydownListener;
+    private _keyupListener;
+    constructor(_adapter: ISplitViewPanelAdapter);
+    initialize(): void;
+    destroy(): void;
+    /**
+     * Handles a pointerdown event and sets further pointer event listeners.
+     * @param evt The pointer event.
+     */
+    private _onPointerdown;
+    /**
+     * Handles a pointerup event and removes pointer event listeners.
+     * @param evt The pointer event.
+     */
+    private _onPointerup;
+    /**
+     * Handles a pointermove event and removes pointer events if the mouse button is released.
+     * @param evt The pointer event.
+     */
+    private _onPointermove;
+    /**
+     * Handles a keydown event and sets a keyup listener if an arrow key is pressed.
+     * @param evt The keyboard event.
+     */
+    private _onKeydown;
+    /**
+     * Handles a keyup event and removes the keyup listener if an arrow key was released.
+     * @param evt The keyboard event.
+     */
+    private _onKeyup;
+    /**
+     * Toggles the open state.
+     * @param evt
+     */
+    private _handleEnterKey;
+    /**
+     * Sets panel size to the min.
+     * @param evt
+     */
+    private _handleHomeKey;
+    /**
+     * Sets panel size to the max.
+     * @param evt
+     */
+    private _handleEndKey;
+    /**
+     * Runs resize logic if an arrow key is included in the event.
+     * @param evt
+     */
+    private _handleArrowKey;
+    /**
+     * Sets resize properties when an arrow key is first pressed.
+     */
+    private _tryHandleArrowKeyDown;
+    /**
+     * Performs cleanup logic after a keyboard driven resize.
+     */
+    private _handleArrowKeyUp;
+    /**
+     * Resizes the panel by a set amount.
+     * @param increment The pixel change in size.
+     */
+    private _handleArrowKeyHeld;
+    /**
+     * Handles the beginning of a pointer driven resize.
+     * @param evt
+     */
+    private _handlePointerdown;
+    /**
+     * Handles the end of a pointer driven resize.
+     */
+    private _handlePointerup;
+    /**
+     * Resizes the panel from a pointer event.
+     * @param evt
+     */
+    private _handlePointermove;
+    /**
+     * Emits a will resize event and allows it to be cancelled.
+     * @returns Whether the resize should proceed.
+     */
+    private _allowResize;
+    /**
+     * Handles common logic to begin a resize.
+     */
+    private _startResize;
+    /**
+     * Handles common logic to end a resize.
+     */
+    private _endResize;
+    /**
+     * Emits a will open or will close event and sets the panel open or closed if allowed.
+     * @param shouldOpen Whether the panel should open or close. Defaults to `true`.
+     * @param auto Whether the panel auto-opened or auto-closed.
+     * @param userInitiated Whether opening or closing via user action instead of programmatically.
+     */
+    private _tryOpenOrClose;
+    /**
+     * Auto close the panel if enabled and within the size threshold.
+     */
+    private _tryAutoClose;
+    /**
+     * Sets orientation, disabled, disable close, and autoclose to reflect the parent split view.
+     */
+    private _getParentProperties;
+    private _applyOrientation;
+    /**
+     * Get/set resizable. This affects the side the handle appears on and the direction the panel closes into.
+     */
+    get resizable(): SplitViewPanelResizable;
+    set resizable(value: SplitViewPanelResizable);
+    private _applyResizable;
+    /**
+     * Get/set panel size.
+     */
+    get size(): number | string;
+    set size(value: number | string);
+    private _applySize;
+    /** Get/set min panel size. */
+    get min(): number | string;
+    set min(value: number | string);
+    private _applyMin;
+    /** Get/set max panel size. */
+    get max(): number | string | undefined;
+    set max(value: number | string | undefined);
+    private _applyMax;
+    /**
+     * Get/set the accessible label.
+     */
+    get accessibleLabel(): string;
+    set accessibleLabel(value: string);
+    private _applyAccessibleLabel;
+    /**
+     * Get/set whether the panel is open.
+     */
+    get open(): boolean;
+    set open(value: boolean);
+    private _applyOpen;
+    /**
+     * Get/set whether interactions are disabled.
+     */
+    get disabled(): boolean | undefined;
+    set disabled(value: boolean | undefined);
+    private _applyDisabled;
+    private _applyParentDisabled;
+    /**
+     * Get/set whether closing the panel is disabled.
+     */
+    get allowClose(): boolean | undefined;
+    set allowClose(value: boolean | undefined);
+    private _applyAllowClose;
+    /**
+     * Get/set whether the panel closes when a threshold size is reached.
+     */
+    get autoClose(): boolean | undefined;
+    set autoClose(value: boolean | undefined);
+    private _applyAutoClose;
+    private _applyParentAutoClose;
+    /** Get/set the size at which the panel auto closes. */
+    get autoCloseThreshold(): number | undefined;
+    set autoCloseThreshold(value: number | undefined);
+    private _applyAutoCloseThreshold;
+    private _applyParentAutoCloseThreshold;
+    /**
+     * Gets the size of panel content without the handle.
+     * @returns Content size in pixels.
+     */
+    getContentSize(): number;
+    /**
+     * Gets how much the panel can shrink from its current size.
+     * @returns The difference between the current and min size in pixels.
+     */
+    getCollapsibleSize(): number;
+    /**
+     * Sets a new size for the content area.
+     * @param size The new content size in pixels.
+     */
+    setContentSize(size: number): void;
+    /**
+     * Updates the proved characteristics.
+     * @param config An update configuration.
+     */
+    update(config: ISplitViewUpdateConfig): void;
+}

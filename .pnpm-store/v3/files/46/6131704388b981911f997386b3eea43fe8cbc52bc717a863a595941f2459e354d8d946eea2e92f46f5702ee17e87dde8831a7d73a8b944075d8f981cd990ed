@@ -1,0 +1,46 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { DayOfWeek, ICalendarDateConfig, ICalendarDateOptions, ICalendarEvent } from './calendar-constants';
+/** Converts a day into an id string prefixed with "d". */
+export declare function getDayId(day: DayOfWeek): string;
+/** Converts a date object into a "yyyymmdd" id string prefixed with "d". */
+export declare function getDateId(date: Date): string;
+/** Converts a date object into a "yyyymmdd" if string prefixed with "e". */
+export declare function getEventWrapperId(date: Date): string;
+/** Returns a day element. */
+export declare function getDayElement(day: DayOfWeek, locale?: string): HTMLElement;
+/** Returns a date row element. */
+export declare function getDateRow(dates: ICalendarDateConfig[], index: number, options?: ICalendarDateOptions): HTMLElement;
+/** Returns a date element. */
+export declare function getDateElement(date: ICalendarDateConfig, locale?: string): HTMLElement;
+/** Returns a date spacer element. */
+export declare function getDateSpacerElement(date: Date): HTMLElement;
+/** Returns an event wrapper element. */
+export declare function getEventWrapperElement(date: Date): HTMLElement;
+/** Returns an event element. */
+export declare function getEventElement(event: ICalendarEvent, overflow?: boolean): HTMLElement;
+/** Returns a tooltip element. */
+export declare function getTooltip(content: string): HTMLElement;
+/** Returns a calendar header. */
+export declare function getHeader(): HTMLElement;
+/** Returns content for the month button. */
+export declare function getMonthButtonContent(month: number, locale?: string): HTMLElement[];
+/** Returns content for the year button. */
+export declare function getYearButtonContent(year: number, locale?: string): HTMLElement[];
+/** Returns a hidden, accessible header. */
+export declare function getAccessibleHeader(): HTMLElement;
+/** Returns a calendar footer. */
+export declare function getFooter(): HTMLElement;
+/** Returns a clear button. */
+export declare function getClearButton(): HTMLElement;
+/** Returns a today button. */
+export declare function getTodayButton(): HTMLElement;
+/** Checks whether an event originated from a date element, returning the element if it did. */
+export declare function eventIncludesDate(evt: Event, includeDisabled?: boolean): HTMLElement | null;
+/** Checks whether an event originated from an element with the given id, returning the element if it did. */
+export declare function eventIncludesElement(evt: Event, id: string): HTMLElement | null;
+/** Sets the tabindex on a date element. */
+export declare function setTabindexOnElement(element: HTMLElement, value: number, setFocus: boolean, preventFocus?: boolean): void;

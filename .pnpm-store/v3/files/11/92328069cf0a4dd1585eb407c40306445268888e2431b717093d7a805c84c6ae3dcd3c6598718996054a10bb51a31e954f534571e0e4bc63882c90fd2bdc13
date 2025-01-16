@@ -1,0 +1,49 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { InputMask } from 'imask';
+import { TimeSegmentType } from './time-segment-parser';
+export declare const SEGMENT_CURSOR_POSITION: {
+    'hours-start': number;
+    'hours-end': number;
+    'minutes-start': number;
+    'minutes-end': number;
+    'seconds-start': number;
+    'seconds-end': number;
+    'meridiem-start': number;
+    'meridiem-end': number;
+};
+export declare class IntermediateTimeParser {
+    private _char;
+    private _mask;
+    private _segmentParser;
+    constructor(_char: string, _mask: InputMask<IMask.AnyMaskedOptions>);
+    get value(): string;
+    get numChar(): number;
+    get asPaddedChar(): string;
+    private _normalizeTimeString;
+    get isAllSelected(): boolean;
+    /** Determines if this is the first non-zero hours character being entered. */
+    get isFirstHoursChar(): boolean;
+    /** Determines if this is the first minutes char being entered */
+    get isFirstMinutesChar(): boolean;
+    get isFirstSecondsChar(): boolean;
+    get isFinalHoursChar(): boolean;
+    get isFinalMinutesChar(): boolean;
+    get isFinalSecondsChar(): boolean;
+    get isInitialHoursEntry(): boolean;
+    get hasOnlyHoursSegment(): boolean;
+    get hoursSegmentNum(): number;
+    get minutesSegmentNum(): number;
+    get secondsSegmentNum(): number;
+    get canOverwriteHoursChar(): boolean;
+    get canOverwriteMinutesChar(): boolean;
+    get canOverwriteSecondsChar(): boolean;
+    reset(): void;
+    patchSegmentValue(type: TimeSegmentType, value: string, { overwrite }?: {
+        overwrite?: boolean | undefined;
+    }): string;
+    applyValue(value: string, cursorPos?: keyof typeof SEGMENT_CURSOR_POSITION): void;
+}

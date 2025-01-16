@@ -1,0 +1,240 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { STEP_CONSTANTS } from './step-constants';
+export class StepCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._clickListener = () => this._onClickListener();
+        this._expansionContentSlotChangeListener = evt => this._onExpansionContentSlotChange(evt);
+        this._expansionContentFocusInListener = evt => this._onExpansionContentFocusIn(evt);
+        this._expansionContentFocusOutListener = evt => this._onExpansionContentFocusOut(evt);
+    }
+    initialize() {
+        this._adapter.initialize();
+        this._applySelected();
+        this._toggleIcon();
+        if (this._vertical) {
+            this._adapter.addExpansionPanel();
+            this._adapter.addExpansionIcon();
+            this._adapter.setClickListener(this._clickListener);
+            this._adapter.setSlotListener(this._expansionContentSlotChangeListener);
+            this._adapter.addExpansionPanelListener('focusin', this._expansionContentFocusInListener);
+            this._adapter.addExpansionPanelListener('focusout', this._expansionContentFocusOutListener);
+        }
+        this._initialized = true;
+    }
+    destroy() {
+        this._adapter.removeClickListener(this._clickListener);
+        this._adapter.removeSlotListener(this._expansionContentSlotChangeListener);
+        this._adapter.removeExpansionPanelListener('focusin', this._onExpansionContentFocusIn);
+        this._adapter.removeExpansionPanelListener('focusout', this._onExpansionContentFocusOut);
+    }
+    get index() {
+        return this._index;
+    }
+    set index(value) {
+        if (this._index !== value) {
+            this._index = value;
+            this._applyIndex();
+            this._adapter.setHostAttribute(STEP_CONSTANTS.attributes.INDEX, value.toString());
+        }
+    }
+    get editable() {
+        return this._editable;
+    }
+    set editable(value) {
+        if (this._editable !== value) {
+            this._editable = value;
+            this._adapter.toggleHostAttribute(STEP_CONSTANTS.attributes.EDITABLE, value);
+            this._applyEditable();
+        }
+    }
+    get completed() {
+        return this._completed;
+    }
+    set completed(value) {
+        if (this._completed !== value) {
+            this._completed = value;
+            this._adapter.toggleHostAttribute(STEP_CONSTANTS.attributes.COMPLETED, value);
+            this._applyCompleted();
+        }
+    }
+    get error() {
+        return this._error;
+    }
+    set error(value) {
+        if (this._error !== value) {
+            this._error = value;
+            this._adapter.toggleHostAttribute(STEP_CONSTANTS.attributes.ERROR, value);
+            this._applyError();
+        }
+    }
+    get selected() {
+        return this._selected;
+    }
+    set selected(value) {
+        if (this._selected !== value) {
+            this._selected = value;
+            this._adapter.toggleHostAttribute(STEP_CONSTANTS.attributes.SELECTED, value);
+            this._applySelected();
+        }
+    }
+    get alternative() {
+        return this._alternative;
+    }
+    set alternative(value) {
+        if (this._alternative !== value) {
+            this._alternative = value;
+            this._adapter.toggleHostAttribute(STEP_CONSTANTS.attributes.ALTERNATIVE, value);
+            this._applyAlternative();
+        }
+    }
+    get disabled() {
+        return this._disabled;
+    }
+    set disabled(value) {
+        this._disabled = value;
+        this._applyDisabled();
+    }
+    get vertical() {
+        return this._vertical;
+    }
+    set vertical(value) {
+        if (value !== this._vertical) {
+            this._vertical = value;
+            this._applyVertical();
+            if (this._initialized) {
+                if (this._vertical) {
+                    this._adapter.addExpansionPanel();
+                    this._adapter.addExpansionIcon();
+                    this._adapter.setClickListener(this._clickListener);
+                    this._adapter.setSlotListener(this._expansionContentSlotChangeListener);
+                }
+                else {
+                    this._adapter.removeClickListener(this._clickListener);
+                    this._adapter.removeSlotListener(this._expansionContentSlotChangeListener);
+                    this._adapter.removeExpansionPanel();
+                    this._adapter.removeExpansionIcon();
+                }
+            }
+        }
+    }
+    get expanded() {
+        return this._expanded;
+    }
+    set expanded(value) {
+        if (value !== this._expanded) {
+            this._expanded = value;
+            this._adapter.toggleHostAttribute(STEP_CONSTANTS.attributes.EXPANDED, this._expanded);
+            if (this._initialized) {
+                this._applyExpanded();
+            }
+        }
+    }
+    get ignoreUserExpansion() {
+        return this._ignoreUserExpansion;
+    }
+    set ignoreUserExpansion(value) {
+        if (value !== this._ignoreUserExpansion) {
+            this._ignoreUserExpansion = value;
+        }
+    }
+    _applyExpanded() {
+        this._adapter.setExpanded(this._expanded);
+    }
+    _applyVertical() {
+        this._adapter.toggleHostAttribute(STEP_CONSTANTS.attributes.VERTICAL, this._vertical);
+        this._adapter.toggleRootClass(STEP_CONSTANTS.classes.VERTICAL, this._vertical);
+    }
+    _applyAlternative() {
+        this._adapter.toggleRootClass(STEP_CONSTANTS.classes.ALTERNATIVE, this._alternative);
+    }
+    _applySelected() {
+        this._adapter.toggleRootClass(STEP_CONSTANTS.classes.SELECTED, this._selected);
+        this._adapter.setHostAttribute(STEP_CONSTANTS.attributes.ARIA_SELECTED, (this._selected || false).toString());
+        this._adapter.hostElement.tabIndex = this._selected ? 0 : -1;
+        this._toggleIcon();
+    }
+    _applyIndex() {
+        this._adapter.setIndex(this._index);
+    }
+    _applyEditable() {
+        this._adapter.toggleRootClass(STEP_CONSTANTS.classes.EDITABLE, this._editable);
+        this._toggleIcon();
+    }
+    _applyCompleted() {
+        this._adapter.toggleRootClass(STEP_CONSTANTS.classes.COMPLETED, this._completed);
+        this._toggleIcon();
+    }
+    _applyError() {
+        this._adapter.toggleRootClass(STEP_CONSTANTS.classes.ERROR, this._error);
+        this._toggleIcon();
+    }
+    _applyDisabled() {
+        this._adapter.toggleDisabled(this._disabled);
+        this._toggleIcon();
+    }
+    _getIconState() {
+        if (this._error) {
+            return 'warning';
+        }
+        if (this._completed) {
+            if (this._editable) {
+                return 'mode_edit';
+            }
+            return 'check';
+        }
+        if (this._editable && this._selected && !this._disabled) {
+            return 'mode_edit';
+        }
+        if (this._disabled) {
+            return 'block';
+        }
+        return '';
+    }
+    _toggleIcon() {
+        this._iconState = this._getIconState();
+        this._adapter.toggleIcon(this._iconState, this._iconState !== '');
+    }
+    _toggleExpanded() {
+        if (this._adapter.slotHasContent()) {
+            this._expanded = !this._expanded;
+            this._applyExpanded();
+            this._adapter.toggleHostAttribute(STEP_CONSTANTS.attributes.EXPANDED, this._expanded);
+        }
+    }
+    _onClickListener() {
+        if (this._vertical && !this._ignoreUserExpansion) {
+            this._toggleExpanded();
+        }
+    }
+    _onExpansionContentSlotChange(evt) {
+        const hasSlotContent = this._adapter.slotHasContent();
+        if (hasSlotContent) {
+            this._adapter.setHostAttribute(STEP_CONSTANTS.attributes.EXPANDABLE);
+            this._applyExpanded();
+            // The animations on the initial slot content  is causing the panel not to open correctly. Opting out for animations on initialization
+            this._adapter.setExpansionPanelAnimations(true);
+        }
+        else {
+            this._adapter.removeHostAttribute(STEP_CONSTANTS.attributes.EXPANDABLE);
+            this._adapter.setExpansionPanelAnimations(false);
+        }
+        this._adapter.toggleRootClass(STEP_CONSTANTS.classes.EXPANDABLE, hasSlotContent);
+    }
+    _onExpansionContentFocusIn(event) {
+        if (!this._expandedContentFocused && this._adapter.isExpandedContentInFocus(event.target)) {
+            this._adapter.emitHostEvent(STEP_CONSTANTS.events.EXPANDED_CONTENT_FOCUSIN, this._adapter.component);
+            this._expandedContentFocused = true;
+        }
+    }
+    _onExpansionContentFocusOut(event) {
+        if (event.relatedTarget && !this._adapter.isExpandedContentInFocus(event.relatedTarget)) {
+            this._adapter.emitHostEvent(STEP_CONSTANTS.events.EXPANDED_CONTENT_FOCUSOUT, this._adapter.component);
+            this._expandedContentFocused = false;
+        }
+    }
+}

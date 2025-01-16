@@ -1,0 +1,41 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { IconComponent as IconComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class IconComponent {
+    protected elementRef: ElementRef<IconComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-icon element. */
+    readonly nativeElement: IconComponentCustomElement;
+    /** The name of the icon to render. */
+    set name(value: IconComponentCustomElement['name']);
+    get name(): IconComponentCustomElement['name'];
+    /** Provides the ability to set the SVG string content directly. */
+    set src(value: IconComponentCustomElement['src']);
+    get src(): IconComponentCustomElement['src'];
+    /** Controls whether the icon will be loaded dynamically when it comes into view. False by default. */
+    set lazy(value: IconComponentCustomElement['lazy']);
+    get lazy(): IconComponentCustomElement['lazy'];
+    /** Controls whether external network requests are allowed for this icon. Only pertains for icons that aren't already defined in the registry. */
+    set external(value: IconComponentCustomElement['external']);
+    get external(): IconComponentCustomElement['external'];
+    /** The type of icon to load externally. Possible values: "standard" (default), "extended", "custom". */
+    set externalType(value: IconComponentCustomElement['externalType']);
+    get externalType(): IconComponentCustomElement['externalType'];
+    /** A callback that can be provided to generate a URL that will be used to fetch an SVG icon. */
+    set externalUrlBuilder(value: IconComponentCustomElement['externalUrlBuilder']);
+    get externalUrlBuilder(): IconComponentCustomElement['externalUrlBuilder'];
+    /** A custom value to apply to the `viewBox` attribute on the internal `<svg>` element. */
+    set viewbox(value: IconComponentCustomElement['viewbox']);
+    get viewbox(): IconComponentCustomElement['viewbox'];
+    /** The theme to apply to the icon. */
+    set theme(value: IconComponentCustomElement['theme']);
+    get theme(): IconComponentCustomElement['theme'];
+    /** Forces a reload of the icon. */
+    layout(...args: Parameters<IconComponentCustomElement['layout']>): ReturnType<IconComponentCustomElement['layout']>;
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<IconComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<IconComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<IconComponent, "forge-icon", never, { "name": { "alias": "name"; "required": false; }; "src": { "alias": "src"; "required": false; }; "lazy": { "alias": "lazy"; "required": false; }; "external": { "alias": "external"; "required": false; }; "externalType": { "alias": "externalType"; "required": false; }; "externalUrlBuilder": { "alias": "externalUrlBuilder"; "required": false; }; "viewbox": { "alias": "viewbox"; "required": false; }; "theme": { "alias": "theme"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_lazy: unknown;
+    static ngAcceptInputType_external: unknown;
+}

@@ -1,0 +1,19 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter } from '../../core/base/base-adapter';
+import { IListComponent } from './list';
+import { IListItemComponent } from '../list-item/list-item';
+export interface IListAdapter extends BaseAdapter<IListComponent> {
+    setSelectedListItems(values: unknown | unknown[]): void;
+    setListItemsProperty<T extends keyof IListItemComponent>(property: T, value: IListItemComponent[T]): void;
+}
+export declare class ListAdapter extends BaseAdapter<IListComponent> implements IListAdapter {
+    constructor(component: IListComponent);
+    /** Select all list items that match values in the provided array of values. */
+    setSelectedListItems(value: unknown | unknown[]): void;
+    setListItemsProperty<T extends keyof IListItemComponent>(property: T, value: IListItemComponent[T]): void;
+    private _getOwnListItems;
+}

@@ -1,0 +1,38 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { FocusIndicatorComponent as FocusIndicatorComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class FocusIndicatorComponent {
+    protected elementRef: ElementRef<FocusIndicatorComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-focus-indicator element. */
+    readonly nativeElement: FocusIndicatorComponentCustomElement;
+    /** The element to attach the focus indicator to. */
+    set targetElement(value: FocusIndicatorComponentCustomElement['targetElement']);
+    get targetElement(): FocusIndicatorComponentCustomElement['targetElement'];
+    /** The id of the element to attach the focus indicator to. */
+    set target(value: FocusIndicatorComponentCustomElement['target']);
+    get target(): FocusIndicatorComponentCustomElement['target'];
+    /** Controls whether the indicator is active. */
+    set active(value: FocusIndicatorComponentCustomElement['active']);
+    get active(): FocusIndicatorComponentCustomElement['active'];
+    /** Controls whether the indicator renders inward. */
+    set inward(value: FocusIndicatorComponentCustomElement['inward']);
+    get inward(): FocusIndicatorComponentCustomElement['inward'];
+    /** Controls whether the indicator renders circular. */
+    set circular(value: FocusIndicatorComponentCustomElement['circular']);
+    get circular(): FocusIndicatorComponentCustomElement['circular'];
+    /** Controls whether the indicator renders when the target element matches `:focus` instead of `:focus-visible`. */
+    set allowFocus(value: FocusIndicatorComponentCustomElement['allowFocus']);
+    get allowFocus(): FocusIndicatorComponentCustomElement['allowFocus'];
+    /** The focus mode to use. */
+    set focusMode(value: FocusIndicatorComponentCustomElement['focusMode']);
+    get focusMode(): FocusIndicatorComponentCustomElement['focusMode'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<FocusIndicatorComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<FocusIndicatorComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<FocusIndicatorComponent, "forge-focus-indicator", never, { "targetElement": { "alias": "targetElement"; "required": false; }; "target": { "alias": "target"; "required": false; }; "active": { "alias": "active"; "required": false; }; "inward": { "alias": "inward"; "required": false; }; "circular": { "alias": "circular"; "required": false; }; "allowFocus": { "alias": "allowFocus"; "required": false; }; "focusMode": { "alias": "focusMode"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_active: unknown;
+    static ngAcceptInputType_inward: unknown;
+    static ngAcceptInputType_circular: unknown;
+    static ngAcceptInputType_allowFocus: unknown;
+}

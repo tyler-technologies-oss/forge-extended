@@ -1,0 +1,60 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { IconButtonComponent as IconButtonComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class IconButtonComponent {
+    protected elementRef: ElementRef<IconButtonComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-icon-button element. */
+    readonly nativeElement: IconButtonComponentCustomElement;
+    /** Whether or not the icon button can be toggled. */
+    set toggle(value: IconButtonComponentCustomElement['toggle']);
+    get toggle(): IconButtonComponentCustomElement['toggle'];
+    /** Whether or not the button is on. Only applies when `toggle` is `true`. */
+    set on(value: IconButtonComponentCustomElement['on']);
+    get on(): IconButtonComponentCustomElement['on'];
+    /** The theme of the button. Valid values are `default`, `primary`, `secondary`, `tertiary`, `success`, `error`, `warning`, `info`. */
+    set theme(value: IconButtonComponentCustomElement['theme']);
+    get theme(): IconButtonComponentCustomElement['theme'];
+    /** The variant of the button. Valid values are `text`, `outlined`, `filled`, and `raised`. */
+    set variant(value: IconButtonComponentCustomElement['variant']);
+    get variant(): IconButtonComponentCustomElement['variant'];
+    /** The shape of the button. Valid values are `circular` and `squared`. */
+    set shape(value: IconButtonComponentCustomElement['shape']);
+    get shape(): IconButtonComponentCustomElement['shape'];
+    /** The density of the button. Valid values are `small`, `medium`, and `large`. */
+    set density(value: IconButtonComponentCustomElement['density']);
+    get density(): IconButtonComponentCustomElement['density'];
+    /** The type of button. Defaults to `button`. Valid values are `button`, `submit`, and `reset`. */
+    set type(value: IconButtonComponentCustomElement['type']);
+    get type(): IconButtonComponentCustomElement['type'];
+    /** Whether or not the button is disabled. */
+    set disabled(value: IconButtonComponentCustomElement['disabled']);
+    get disabled(): IconButtonComponentCustomElement['disabled'];
+    /** Whether or not the button shows a built-in popover icon. */
+    set popoverIcon(value: IconButtonComponentCustomElement['popoverIcon']);
+    get popoverIcon(): IconButtonComponentCustomElement['popoverIcon'];
+    /** Whether or not the button is dense. */
+    set dense(value: IconButtonComponentCustomElement['dense']);
+    get dense(): IconButtonComponentCustomElement['dense'];
+    /** The name of the button. */
+    set name(value: IconButtonComponentCustomElement['name']);
+    get name(): IconButtonComponentCustomElement['name'];
+    /** The form value of the button. */
+    set value(value: IconButtonComponentCustomElement['value']);
+    get value(): IconButtonComponentCustomElement['value'];
+    /** The form reference of the button if within a `<form>` element. */
+    get form(): IconButtonComponentCustomElement['form'];
+    /** Clicks the button. */
+    click(...args: Parameters<IconButtonComponentCustomElement['click']>): ReturnType<IconButtonComponentCustomElement['click']>;
+    /** Focuses the button. */
+    focus(...args: Parameters<IconButtonComponentCustomElement['focus']>): ReturnType<IconButtonComponentCustomElement['focus']>;
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<IconButtonComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<IconButtonComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<IconButtonComponent, "forge-icon-button", never, { "toggle": { "alias": "toggle"; "required": false; }; "on": { "alias": "on"; "required": false; }; "theme": { "alias": "theme"; "required": false; }; "variant": { "alias": "variant"; "required": false; }; "shape": { "alias": "shape"; "required": false; }; "density": { "alias": "density"; "required": false; }; "type": { "alias": "type"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "popoverIcon": { "alias": "popoverIcon"; "required": false; }; "dense": { "alias": "dense"; "required": false; }; "name": { "alias": "name"; "required": false; }; "value": { "alias": "value"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_toggle: unknown;
+    static ngAcceptInputType_on: unknown;
+    static ngAcceptInputType_disabled: unknown;
+    static ngAcceptInputType_popoverIcon: unknown;
+    static ngAcceptInputType_dense: unknown;
+}

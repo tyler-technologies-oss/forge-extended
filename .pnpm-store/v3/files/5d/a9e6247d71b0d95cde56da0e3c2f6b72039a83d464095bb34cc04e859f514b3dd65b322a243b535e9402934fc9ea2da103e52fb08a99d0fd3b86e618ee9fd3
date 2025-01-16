@@ -1,0 +1,10 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export * from './tab-bar-adapter';
+export * from './tab-bar-constants';
+export * from './tab-bar-core';
+export * from './tab-bar';
+export declare function defineTabBarComponent(): void;

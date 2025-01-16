@@ -1,0 +1,82 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { APP_BAR_CONSTANTS } from './app-bar-constants';
+export class AppBarCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._titleText = '';
+        this._elevation = 'raised';
+        this._href = '';
+        this._target = '';
+        this._centerSlotListener = () => this._adapter.setCenterSlotVisibility();
+        this._anchorClickListener = this._onHrefClick.bind(this);
+    }
+    initialize() {
+        this._adapter.initialize();
+        this._adapter.addCenterSlotListener(this._centerSlotListener);
+        this._adapter.setCenterSlotVisibility();
+    }
+    _onHrefClick(evt) {
+        const event = new CustomEvent(APP_BAR_CONSTANTS.events.NAVIGATE, {
+            bubbles: true,
+            composed: true,
+            cancelable: true
+        });
+        this._adapter.dispatchHostEvent(event);
+        if (event.defaultPrevented) {
+            evt.preventDefault();
+        }
+    }
+    get titleText() {
+        return this._titleText;
+    }
+    set titleText(value) {
+        if (this._titleText !== value) {
+            this._titleText = value ?? '';
+            this._adapter.setTitleText(this._titleText);
+            const hasTitleText = !!this._titleText?.trim().length;
+            this._adapter.toggleHostAttribute(APP_BAR_CONSTANTS.attributes.TITLE_TEXT, hasTitleText, value);
+        }
+    }
+    get elevation() {
+        return this._elevation;
+    }
+    set elevation(value) {
+        if (this._elevation !== value) {
+            this._elevation = value;
+            this._adapter.setHostAttribute(APP_BAR_CONSTANTS.attributes.ELEVATION, value);
+        }
+    }
+    get theme() {
+        return this._theme;
+    }
+    set theme(value) {
+        if (this._theme !== value) {
+            this._theme = value ?? '';
+            this._adapter.toggleHostAttribute(APP_BAR_CONSTANTS.attributes.THEME, !!this._theme, this._theme);
+        }
+    }
+    get href() {
+        return this._href ?? '';
+    }
+    set href(value) {
+        if (this._href !== value) {
+            this._href = value?.trim().length ? value.trim() : '';
+            this._adapter.setHref(this._href, this._anchorClickListener);
+            this._adapter.toggleHostAttribute(APP_BAR_CONSTANTS.attributes.HREF, !!this._href, this._href);
+        }
+    }
+    get target() {
+        return this._target ?? '';
+    }
+    set target(value) {
+        if (this._target !== value) {
+            this._target = value?.trim().length ? value.trim() : '';
+            this._adapter.setTarget(this._target);
+            this._adapter.toggleHostAttribute(APP_BAR_CONSTANTS.attributes.TARGET, !!this._target, this._target);
+        }
+    }
+}

@@ -1,0 +1,26 @@
+import { Renderer2, ElementRef } from '@angular/core';
+import { StaticProvider } from '@angular/core';
+import { ControlValueAccessor } from '@angular/forms';
+import { ISliderChangeEventData, ISliderRangeChangeEventData } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+export declare const SLIDER_VALUE_ACCESSOR: StaticProvider;
+export declare class SliderValueAccessor implements ControlValueAccessor {
+    private _elementRef;
+    private _renderer;
+    sliderChange(event: CustomEvent<ISliderChangeEventData>): void;
+    sliderInput(event: CustomEvent<ISliderChangeEventData>): void;
+    sliderRangeChange(event: CustomEvent<ISliderRangeChangeEventData>): void;
+    sliderRangeInput(event: CustomEvent<ISliderRangeChangeEventData>): void;
+    blur(): void;
+    onChange: (_: any) => void;
+    onTouched: () => void;
+    constructor(_elementRef: ElementRef, _renderer: Renderer2);
+    writeValue(value: number | ISliderRangeChangeEventData): void;
+    registerOnChange(fn: (_: number | ISliderRangeChangeEventData) => void): void;
+    registerOnTouched(fn: () => void): void;
+    setDisabledState(isDisabled: boolean): void;
+    change(value: number | ISliderRangeChangeEventData): void;
+    private _toFloat;
+    static ɵfac: i0.ɵɵFactoryDeclaration<SliderValueAccessor, never>;
+    static ɵdir: i0.ɵɵDirectiveDeclaration<SliderValueAccessor, "forge-slider[formControlName],forge-slider[formControl],forge-slider[ngModel]", never, {}, {}, never, never, false, never>;
+}

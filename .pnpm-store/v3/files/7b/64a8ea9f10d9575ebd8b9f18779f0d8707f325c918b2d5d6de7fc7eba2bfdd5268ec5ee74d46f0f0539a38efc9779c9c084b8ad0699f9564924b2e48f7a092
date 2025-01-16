@@ -1,0 +1,9 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./page-state.component";
+import * as i2 from "@angular/common";
+export declare class ForgePageStateModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgePageStateModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgePageStateModule, [typeof i1.PageStateComponent], [typeof i2.CommonModule], [typeof i1.PageStateComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgePageStateModule>;
+}

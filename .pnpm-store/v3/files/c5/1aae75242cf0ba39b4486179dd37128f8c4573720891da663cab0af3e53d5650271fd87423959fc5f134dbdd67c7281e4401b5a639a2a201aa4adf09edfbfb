@@ -1,0 +1,126 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseButtonCore } from '../button/base/base-button-core';
+import { ICON_BUTTON_CONSTANTS } from './icon-button-constants';
+export class IconButtonCore extends BaseButtonCore {
+    constructor(adapter) {
+        super(adapter);
+        this._toggle = false;
+        this._on = false;
+        this._variant = ICON_BUTTON_CONSTANTS.defaults.DEFAULT_VARIANT;
+        this._theme = ICON_BUTTON_CONSTANTS.defaults.DEFAULT_THEME;
+        this._shape = ICON_BUTTON_CONSTANTS.defaults.DEFAULT_SHAPE;
+        this._density = ICON_BUTTON_CONSTANTS.defaults.DEFAULT_DENSITY;
+    }
+    initialize() {
+        super.initialize();
+        this._adapter.tryApplyGlobalConfiguration(['variant', 'shape', 'density']);
+    }
+    async _onClick(evt) {
+        if (this._toggle) {
+            this._onToggle();
+        }
+        super._onClick(evt);
+    }
+    _onToggle() {
+        // Update internal state first so listeners can access the new state
+        const originalOn = this._on;
+        this._on = !this._on;
+        const cancelled = !this._adapter.emitHostEvent(ICON_BUTTON_CONSTANTS.events.TOGGLE, this.on, true, true);
+        this._on = originalOn;
+        if (cancelled) {
+            return;
+        }
+        this.on = !originalOn;
+    }
+    get toggle() {
+        return this._toggle;
+    }
+    set toggle(value) {
+        value = !!value;
+        if (this._toggle !== value) {
+            this._toggle = value;
+            this._adapter.toggleHostAttribute(ICON_BUTTON_CONSTANTS.attributes.ARIA_PRESSED, this._toggle, `${this._on}`);
+            this._adapter.toggleHostAttribute(ICON_BUTTON_CONSTANTS.attributes.TOGGLE, this._toggle);
+        }
+    }
+    get on() {
+        return this._on;
+    }
+    set on(value) {
+        value = !!value;
+        if (this._on !== value) {
+            this._on = value;
+            if (this._toggle) {
+                this._adapter.setHostAttribute(ICON_BUTTON_CONSTANTS.attributes.ARIA_PRESSED, `${this._on}`);
+            }
+            else {
+                this._adapter.removeHostAttribute(ICON_BUTTON_CONSTANTS.attributes.ARIA_PRESSED);
+            }
+            this._adapter.toggleHostAttribute(ICON_BUTTON_CONSTANTS.attributes.ON, this._on);
+        }
+    }
+    get variant() {
+        return this._variant;
+    }
+    set variant(value) {
+        value = value ?? ICON_BUTTON_CONSTANTS.defaults.DEFAULT_VARIANT;
+        if (this._variant !== value) {
+            this._variant = value;
+            if (this._variant !== ICON_BUTTON_CONSTANTS.defaults.DEFAULT_VARIANT) {
+                this._adapter.setHostAttribute(ICON_BUTTON_CONSTANTS.attributes.VARIANT, this._variant);
+            }
+            else {
+                this._adapter.removeHostAttribute(ICON_BUTTON_CONSTANTS.attributes.VARIANT);
+            }
+        }
+    }
+    get theme() {
+        return this._theme;
+    }
+    set theme(value) {
+        value = value ?? ICON_BUTTON_CONSTANTS.defaults.DEFAULT_THEME;
+        if (this._theme !== value) {
+            this._theme = value;
+            if (this._theme !== ICON_BUTTON_CONSTANTS.defaults.DEFAULT_THEME) {
+                this._adapter.setHostAttribute(ICON_BUTTON_CONSTANTS.attributes.THEME, this._theme);
+            }
+            else {
+                this._adapter.removeHostAttribute(ICON_BUTTON_CONSTANTS.attributes.THEME);
+            }
+        }
+    }
+    get shape() {
+        return this._shape;
+    }
+    set shape(value) {
+        value = value ?? ICON_BUTTON_CONSTANTS.defaults.DEFAULT_SHAPE;
+        if (this._shape !== value) {
+            this._shape = value;
+            if (this._shape !== ICON_BUTTON_CONSTANTS.defaults.DEFAULT_SHAPE) {
+                this._adapter.setHostAttribute(ICON_BUTTON_CONSTANTS.attributes.SHAPE, this._shape);
+            }
+            else {
+                this._adapter.removeHostAttribute(ICON_BUTTON_CONSTANTS.attributes.SHAPE);
+            }
+        }
+    }
+    get density() {
+        return this._density;
+    }
+    set density(value) {
+        value = value ?? ICON_BUTTON_CONSTANTS.defaults.DEFAULT_DENSITY;
+        if (this._density !== value) {
+            this._density = value;
+            if (this._density !== ICON_BUTTON_CONSTANTS.defaults.DEFAULT_DENSITY) {
+                this._adapter.setHostAttribute(ICON_BUTTON_CONSTANTS.attributes.DENSITY, this._density);
+            }
+            else {
+                this._adapter.removeHostAttribute(ICON_BUTTON_CONSTANTS.attributes.DENSITY);
+            }
+        }
+    }
+}

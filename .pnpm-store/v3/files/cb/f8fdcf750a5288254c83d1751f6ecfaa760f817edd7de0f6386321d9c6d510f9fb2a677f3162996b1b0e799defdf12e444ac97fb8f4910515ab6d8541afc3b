@@ -1,0 +1,38 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponentDelegate, IBaseComponentDelegateConfig, IBaseComponentDelegateOptions } from '../../core/delegates/base-component-delegate';
+import { IIconComponent } from '../../icon/icon';
+import { IconExternalType } from '../../icon/icon-constants';
+import { TooltipPlacement } from '../../tooltip/tooltip-constants';
+import { IDeprecatedIconButtonComponent } from './deprecated-icon-button';
+export type DeprecatedIconButtonComponentDelegateProps = Partial<IDeprecatedIconButtonComponent>;
+export interface IDeprecatedIconButtonComponentDelegateOptions extends IBaseComponentDelegateOptions {
+    iconName?: string;
+    iconExternal?: boolean;
+    iconExternalType?: IconExternalType;
+    iconType?: 'font' | 'component';
+    iconClass?: string | string[];
+    tooltip?: string;
+    tooltipPosition?: TooltipPlacement;
+}
+export interface IDeprecatedIconButtonComponentDelegateConfig extends IBaseComponentDelegateConfig<IDeprecatedIconButtonComponent, IDeprecatedIconButtonComponentDelegateOptions> {
+}
+export declare class DeprecatedIconButtonComponentDelegate extends BaseComponentDelegate<IDeprecatedIconButtonComponent, IDeprecatedIconButtonComponentDelegateOptions> {
+    private _buttonElement?;
+    private _iconElement?;
+    constructor(config?: IDeprecatedIconButtonComponentDelegateConfig);
+    destroy(): void;
+    get buttonElement(): HTMLButtonElement | undefined;
+    protected _build(): IDeprecatedIconButtonComponent;
+    onClick(listener: EventListener): void;
+    onFocus(listener: EventListener): void;
+    onBlur(listener: EventListener): void;
+    get iconElement(): IIconComponent | undefined;
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    protected _configure(): void;
+    private _configureIcon;
+}

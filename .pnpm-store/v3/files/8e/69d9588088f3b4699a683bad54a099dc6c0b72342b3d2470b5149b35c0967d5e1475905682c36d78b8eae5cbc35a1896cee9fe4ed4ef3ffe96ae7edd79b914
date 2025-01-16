@@ -1,0 +1,67 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponent } from '../core/base/base-component';
+import { IWithDefaultAria } from '../core/mixins/internals/with-default-aria';
+import { IWithElementInternals } from '../core/mixins/internals/with-element-internals';
+import { LinearProgressTheme } from './linear-progress-constants';
+export interface ILinearProgressComponent extends IWithElementInternals, IWithDefaultAria {
+    determinate: boolean;
+    progress: number;
+    buffer: number;
+    theme: LinearProgressTheme;
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-linear-progress': ILinearProgressComponent;
+    }
+}
+declare const LinearProgressComponent_base: import("..").AbstractConstructor<import("../core/mixins/internals/with-element-internals").WithElementInternalsContract> & import("..").AbstractConstructor<import("../core/mixins/internals/with-default-aria").WithDefaultAriaContract> & typeof BaseComponent;
+/**
+ * @tag forge-linear-progress
+ *
+ * @summary
+ * Linear progress indicators display progress by animating along a linear track in a horizontal direction.
+ *
+ * @description
+ * Progress indicators inform users about the status of ongoing processes.
+ * - Determinate indicators display how long a process will take.
+ * - Indeterminate indicators express an unspecified amount of wait time.
+ *
+ * @property {boolean} [determinate=false] - Controls the determinate state.
+ * @property {number} [progress=0] - Controls the progress while in a determinate state. Accepts values from `0` to `1`.
+ * @property {number} [buffer=1] - Controls the buffer progress while in a determinate state. Accepts values from `0` to `1`.
+ * @property {string} [theme=primary] - Sets the theme.
+ *
+ * @attribute {boolean} [determinate=false] - Controls the determinate state.
+ * @attribute {number} [progress=0] - Controls the progress while in a determinate state. Accepts values from `0` to `1`.
+ * @attribute {number} [buffer=1] - Controls the buffer progress while in a determinate state. Accepts values from `0` to `1`.
+ * @attribute {string} [theme=primary] - Sets the theme.
+ *
+ * @cssproperty --forge-linear-progress-height - The height of the element.
+ * @cssproperty --forge-linear-progress-track-color - The background color of the indicator.
+ * @cssproperty --forge-linear-progress-track-shape - The shape of the indicator.
+ * @cssproperty --forge-linear-progress-indicator-color - The color of the indicator.
+ * @cssproperty --forge-linear-progress-indicator-height - The height of the indicator only.
+ * @cssproperty --forge-linear-progress-determinate-duration - The duration of the determinate animation.
+ * @cssproperty --forge-linear-progress-indeterminate-duration - The duration of the indeterminate animation.
+ * @cssproperty --forge-linear-progress-determinate-easing - The easing function to use for the determinate animation.
+ * @cssproperty --forge-linear-progress-theme-transition-duration - The duration of the theme transition.
+ * @cssproperty --forge-linear-progress-theme-transition-timing - The easing function to use for the theme transition.
+ *
+ * @csspart progressbar - Styles the progress bar container element
+ */
+export declare class LinearProgressComponent extends LinearProgressComponent_base implements ILinearProgressComponent {
+    static get observedAttributes(): string[];
+    private _core;
+    constructor();
+    connectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    determinate: boolean;
+    progress: number;
+    buffer: number;
+    theme: LinearProgressTheme;
+}
+export {};

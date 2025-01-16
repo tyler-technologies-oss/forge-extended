@@ -1,0 +1,30 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IBaseComponentDelegateConfig } from '../core/delegates/base-component-delegate';
+import { FormFieldComponentDelegate, IFormFieldComponentDelegateOptions } from '../core/delegates/form-field-component-delegate';
+import { ISelectComponent } from './select/select';
+export type SelectComponentDelegateProps = Partial<ISelectComponent>;
+export interface ISelectComponentDelegateOptions extends IFormFieldComponentDelegateOptions {
+    helperText?: string;
+}
+export interface ISelectComponentDelegateConfig extends IBaseComponentDelegateConfig<ISelectComponent, ISelectComponentDelegateOptions> {
+}
+export declare class SelectComponentDelegate extends FormFieldComponentDelegate<ISelectComponent, ISelectComponentDelegateOptions> {
+    private _helperTextElement;
+    constructor(config?: ISelectComponentDelegateConfig);
+    protected _build(): ISelectComponent;
+    protected _configure(): void;
+    get value(): any;
+    set value(value: any);
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    get invalid(): boolean;
+    set invalid(value: boolean);
+    onChange(listener: (value: string) => void): void;
+    onFocus(listener: (evt: Event) => void): void;
+    onBlur(listener: (evt: Event) => void): void;
+    setHelperText(text: string | null): void;
+}

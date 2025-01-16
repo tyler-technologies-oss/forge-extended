@@ -1,0 +1,48 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const RADIO_CONSTANTS: {
+    elementName: "forge-radio";
+    observedAttributes: {
+        CHECKED: string;
+        DEFAULT_CHECKED: string;
+        VALUE: string;
+        DENSE: string;
+        DISABLED: string;
+        REQUIRED: string;
+        READONLY: string;
+        LABEL_POSITION: string;
+        TABINDEX: string;
+    };
+    attributes: {
+        CHECKED: string;
+        DEFAULT_CHECKED: string;
+        VALUE: string;
+        DENSE: string;
+        DISABLED: string;
+        REQUIRED: string;
+        READONLY: string;
+        LABEL_POSITION: string;
+        TABINDEX: string;
+    };
+    selectors: {
+        ROOT: string;
+        LABEL: string;
+        STATE_LAYER: string;
+    };
+    events: {
+        CHANGE: string;
+        INPUT: string;
+    };
+};
+/**
+ * This symbol is used to attempt to check a radio while navigating between its siblings in a
+ * group. It differs from simply setting `checked` in that it causes the input/change events to
+ * emit and returns `false` if either was prevented. The radio group manager can then prevent a
+ * change in focus and selection state.
+ */
+export declare const tryCheck: unique symbol;
+export type RadioState = 'checked' | 'unchecked';
+export type RadioLabelPosition = 'start' | 'end';

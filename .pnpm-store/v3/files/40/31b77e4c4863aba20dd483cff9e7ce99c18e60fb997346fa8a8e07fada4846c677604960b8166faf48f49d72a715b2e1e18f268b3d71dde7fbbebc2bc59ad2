@@ -1,0 +1,59 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+/** The shape of an SVG icon that can be defined with the icon registry. */
+export interface IIcon {
+    /** The unique name of the icon. */
+    name: string;
+    /** The SVG icon data. */
+    data: string;
+}
+export interface IIconDescriptor {
+    raw: string;
+    node?: SVGElement;
+}
+/**
+ * The registry for SVG icon instances being used within the current context.
+ */
+export declare class IconRegistry {
+    private static get _icons();
+    private static _listeners;
+    /**
+     * Defines a new icon.
+     * @param icon The icon(s) to register.
+     */
+    static define(icon: IIcon | IIcon[] | string, svgData?: string): void;
+    /**
+     * Removes a defined icon.
+     * @param icon The icon to unregister.
+     */
+    static remove(icon: IIcon | string): void;
+    /**
+     * Removes a listener
+     * @param key The icon name.
+     * @param listener The listener callback.
+     */
+    static removeListener(key: string, listener: () => void): void;
+    /** Removes all defined icons. */
+    static clear(): void;
+    /** Gets the icon data by its name, or `undefined` if not found. */
+    static get(name: string): IIconDescriptor | undefined;
+    /** Sets the icon node for a given icon name. */
+    static setNode(name: string, node: SVGElement): void;
+    /** Gets the names of registered icons. */
+    static getIconNames(): string[];
+    /** Registers a listener to be notified when an icon with the provided key is registered in the future. */
+    static awaitIcon(key: string, listener: () => void): void;
+    /** Gets the number of defined icons in the registry. */
+    static get size(): number;
+    /** Registers an icon, and attempts to invalidate any listeners. */
+    private static _register;
+    /** Gets all listeners for a specific key, calls the listeners (if any are found), and removes the listeners after they are called. */
+    private static _invalidateListeners;
+    /** Normalizes incoming parameters to an `IIcon` type. */
+    private static _parseIcon;
+    /** Determines if the provided `icon` matches the `IIcon` shape. */
+    private static _isIconObject;
+}

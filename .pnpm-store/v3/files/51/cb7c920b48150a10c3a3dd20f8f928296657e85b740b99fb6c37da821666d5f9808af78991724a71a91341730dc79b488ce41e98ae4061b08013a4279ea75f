@@ -1,0 +1,349 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { MoveController } from '../core/controllers/move-controller';
+import { DismissibleStack } from '../core/utils/dismissible-stack';
+import { DIALOG_CONSTANTS } from './dialog-constants';
+export class DialogCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._open = false;
+        this._mode = DIALOG_CONSTANTS.defaults.MODE;
+        this._type = DIALOG_CONSTANTS.defaults.TYPE;
+        this._animationType = DIALOG_CONSTANTS.defaults.ANIMATION_TYPE;
+        this._preset = DIALOG_CONSTANTS.defaults.PRESET;
+        this._persistent = false;
+        this._fullscreen = false;
+        this._fullscreenThreshold = DIALOG_CONSTANTS.defaults.FULLSCREEN_THRESHOLD;
+        this._trigger = '';
+        this._moveable = false;
+        this._sizeStrategy = DIALOG_CONSTANTS.defaults.SIZE_STRATEGY;
+        this._placement = DIALOG_CONSTANTS.defaults.PLACEMENT;
+        this._positionStrategy = DIALOG_CONSTANTS.defaults.POSITION_STRATEGY;
+        this._escapeDismissListener = this._onEscapeDismiss.bind(this);
+        this._backdropDismissListener = this._onBackdropDismiss.bind(this);
+        this._dialogFormSubmitListener = this._onDialogFormSubmit.bind(this);
+        this._triggerClickListener = this._onTriggerClick.bind(this);
+        this._fullscreenListener = this._onFullscreenChange.bind(this);
+    }
+    initialize() {
+        this._adapter.tryApplyGlobalConfiguration(['animationType', 'positionStrategy', 'sizeStrategy', 'persistent', 'moveable', 'fullscreenThreshold']);
+        if (this._trigger && !this._adapter.triggerElement) {
+            this._adapter.tryLocateTriggerElement(this._trigger);
+        }
+        if (this._adapter.triggerElement) {
+            this._adapter.addTriggerInteractionListener(this._triggerClickListener);
+        }
+        if (this._open) {
+            this._applyOpen();
+        }
+    }
+    destroy() {
+        if (this._adapter.triggerElement) {
+            this._adapter.removeTriggerInteractionListener(this._triggerClickListener);
+        }
+        if (this._moveController) {
+            this._destroyMoveController();
+        }
+        if (this._open) {
+            this._hide();
+        }
+    }
+    dispatchBeforeCloseEvent() {
+        const evt = new CustomEvent(DIALOG_CONSTANTS.events.BEFORE_CLOSE, {
+            cancelable: true,
+            bubbles: true,
+            composed: true
+        });
+        this._adapter.dispatchHostEvent(evt);
+        return !evt.defaultPrevented;
+    }
+    hideBackdrop() {
+        this._adapter.hideBackdrop();
+    }
+    showBackdrop() {
+        this._adapter.showBackdrop();
+    }
+    _show() {
+        this._adapter.show();
+        this._adapter.addDialogFormSubmitListener(this._dialogFormSubmitListener);
+        DismissibleStack.instance.add(this._adapter.hostElement);
+        if (this._mode === 'modal') {
+            this._adapter.addDialogCancelListener(this._escapeDismissListener);
+        }
+        else if (this._mode === 'inline-modal') {
+            this._adapter.addDocumentListener('keydown', this._escapeDismissListener);
+        }
+        if (!this._persistent) {
+            this._adapter.addBackdropDismissListener(this._backdropDismissListener);
+        }
+        if (this._moveable && !this._fullscreen) {
+            this._initializeMoveController();
+        }
+        if (!this._fullscreen && this._fullscreenThreshold > 0) {
+            this._originalFullscreenValue = this._fullscreen;
+            this._adapter.addFullscreenListener(this._fullscreenThreshold, this._fullscreenListener);
+        }
+        this._adapter.dispatchHostEvent(new CustomEvent(DIALOG_CONSTANTS.events.OPEN, { bubbles: true, composed: true }));
+    }
+    async _hide() {
+        this._adapter.removeDialogFormSubmitListener(this._dialogFormSubmitListener);
+        this._adapter.removeDialogCancelListener(this._escapeDismissListener);
+        this._adapter.removeDocumentListener('keydown', this._escapeDismissListener);
+        this._adapter.removeBackdropDismissListener(this._backdropDismissListener);
+        DismissibleStack.instance.remove(this._adapter.hostElement);
+        await this._adapter.hide();
+        // Reset the fullscreen value to the original value if it was changed internally by our media query listener
+        if (typeof this._originalFullscreenValue === 'boolean') {
+            this.fullscreen = this._originalFullscreenValue;
+        }
+        this._originalFullscreenValue = undefined;
+        if (this._moveController) {
+            this._destroyMoveController();
+        }
+        this._adapter.dispatchHostEvent(new CustomEvent(DIALOG_CONSTANTS.events.CLOSE, { bubbles: true, composed: true }));
+    }
+    async _applyOpen() {
+        if (this._open) {
+            this._show();
+            this._adapter.tryAutofocus();
+        }
+        else {
+            await this._hide();
+        }
+        this._adapter.toggleHostAttribute(DIALOG_CONSTANTS.attributes.VISIBLE, this._open); // We use this for styling purposes to control animations
+        this._adapter.toggleHostAttribute(DIALOG_CONSTANTS.attributes.OPEN, this._open);
+    }
+    _onEscapeDismiss(evt) {
+        if (evt.type === 'keydown') {
+            const key = evt.key;
+            if (key !== 'Escape' || !DismissibleStack.instance.isMostRecent(this._adapter.hostElement)) {
+                return;
+            }
+        }
+        else if (evt.type === 'cancel') {
+            evt.preventDefault();
+        }
+        if (!this._persistent) {
+            this._tryClose();
+        }
+    }
+    _onBackdropDismiss() {
+        this._tryClose();
+    }
+    _onDialogFormSubmit(evt) {
+        evt.stopPropagation();
+        const isDialogSubmitter = evt.submitter?.getAttribute('formmethod') === 'dialog' || evt.target?.getAttribute('method') === 'dialog';
+        if (isDialogSubmitter) {
+            this._tryClose();
+        }
+    }
+    _onFullscreenChange(value) {
+        this.fullscreen = value;
+        const event = new CustomEvent(DIALOG_CONSTANTS.events.FULLSCREEN_CHANGE, { bubbles: true, composed: true, detail: value });
+        this._adapter.dispatchHostEvent(event);
+    }
+    _tryClose() {
+        if (this.dispatchBeforeCloseEvent()) {
+            this.open = false;
+        }
+    }
+    _onTriggerClick(_evt) {
+        this.open = !this._open;
+    }
+    _initializeMoveController() {
+        /* c8 ignore next 3 */
+        if (this._moveController) {
+            return;
+        }
+        const onMoveStart = () => {
+            const event = new CustomEvent(DIALOG_CONSTANTS.events.MOVE_START, { cancelable: true });
+            this._adapter.dispatchHostEvent(event);
+            return event.defaultPrevented;
+        };
+        const onMove = (position) => {
+            const event = new CustomEvent(DIALOG_CONSTANTS.events.MOVE, { detail: position, cancelable: true });
+            this._adapter.dispatchHostEvent(event);
+            if (!event.defaultPrevented) {
+                this._adapter.addSurfaceClass(DIALOG_CONSTANTS.classes.MOVED);
+                this._adapter.addSurfaceClass(DIALOG_CONSTANTS.classes.MOVING);
+            }
+            return event.defaultPrevented;
+        };
+        const onMoveEnd = () => {
+            const event = new CustomEvent(DIALOG_CONSTANTS.events.MOVE_END);
+            this._adapter.removeSurfaceClass(DIALOG_CONSTANTS.classes.MOVING);
+            this._adapter.dispatchHostEvent(event);
+        };
+        const { moveHandleElement: handleElement, surfaceElement } = this._adapter;
+        this._moveController = new MoveController({ handleElement, surfaceElement, onMoveStart, onMove, onMoveEnd });
+    }
+    _destroyMoveController() {
+        this._adapter.removeSurfaceClass(DIALOG_CONSTANTS.classes.MOVED);
+        this._moveController?.destroy();
+        this._moveController = undefined;
+    }
+    _applyMoveable({ enabled } = { enabled: this._moveable }) {
+        if (enabled) {
+            this._initializeMoveController();
+        }
+        else {
+            this._destroyMoveController();
+        }
+    }
+    get open() {
+        return this._open;
+    }
+    set open(value) {
+        value = Boolean(value);
+        if (this._open !== value) {
+            this._open = value;
+            if (this._adapter.isConnected) {
+                this._applyOpen();
+            }
+        }
+    }
+    get mode() {
+        return this._mode;
+    }
+    set mode(value) {
+        if (this._mode !== value) {
+            this._mode = value;
+            this._adapter.setHostAttribute(DIALOG_CONSTANTS.attributes.MODE, this._mode);
+        }
+    }
+    get type() {
+        return this._type;
+    }
+    set type(value) {
+        if (this._type !== value) {
+            this._type = value;
+            this._adapter.setHostAttribute(DIALOG_CONSTANTS.attributes.TYPE, this._type);
+        }
+    }
+    get animationType() {
+        return this._animationType;
+    }
+    set animationType(value) {
+        if (this._animationType !== value) {
+            this._animationType = value;
+            this._adapter.setHostAttribute(DIALOG_CONSTANTS.attributes.ANIMATION_TYPE, this._animationType);
+        }
+    }
+    get preset() {
+        return this._preset;
+    }
+    set preset(value) {
+        if (this._preset !== value) {
+            this._preset = value;
+            this._adapter.setHostAttribute(DIALOG_CONSTANTS.attributes.PRESET, this._preset);
+        }
+    }
+    get persistent() {
+        return this._persistent;
+    }
+    set persistent(value) {
+        value = Boolean(value);
+        if (this._persistent !== value) {
+            this._persistent = value;
+            this._adapter.toggleHostAttribute(DIALOG_CONSTANTS.attributes.PERSISTENT, this._persistent);
+        }
+    }
+    get fullscreen() {
+        return this._fullscreen;
+    }
+    set fullscreen(value) {
+        value = Boolean(value);
+        if (this._fullscreen !== value) {
+            this._fullscreen = value;
+            this._applyMoveable({ enabled: !this._fullscreen });
+            this._adapter.toggleHostAttribute(DIALOG_CONSTANTS.attributes.FULLSCREEN, this._fullscreen);
+        }
+    }
+    get fullscreenThreshold() {
+        return this._fullscreenThreshold;
+    }
+    set fullscreenThreshold(value) {
+        if (this._fullscreenThreshold !== value) {
+            this._fullscreenThreshold = value;
+            if (this._adapter.isConnected && this._open && !this._fullscreen && this._fullscreenThreshold > 0) {
+                this._adapter.removeFullscreenListener(this._fullscreenListener);
+                this._adapter.addFullscreenListener(this._fullscreenThreshold, this._fullscreenListener);
+            }
+            this._adapter.setHostAttribute(DIALOG_CONSTANTS.attributes.FULLSCREEN_THRESHOLD, this._fullscreenThreshold.toString());
+        }
+    }
+    get trigger() {
+        return this._trigger ?? '';
+    }
+    set trigger(value) {
+        if (this._trigger !== value) {
+            this._trigger = value;
+            if (this._adapter.triggerElement) {
+                this._adapter.removeTriggerInteractionListener(this._triggerClickListener);
+            }
+            if (this._adapter.isConnected) {
+                this._adapter.tryLocateTriggerElement(this._trigger);
+                this._adapter.addTriggerInteractionListener(this._triggerClickListener);
+            }
+            this._adapter.setHostAttribute(DIALOG_CONSTANTS.attributes.TRIGGER, this._trigger);
+        }
+    }
+    get triggerElement() {
+        return this._adapter.triggerElement;
+    }
+    set triggerElement(element) {
+        if (this._adapter.triggerElement) {
+            this._adapter.removeTriggerInteractionListener(this._triggerClickListener);
+        }
+        if (this._trigger) {
+            this._trigger = '';
+        }
+        this._adapter.triggerElement = element;
+        if (this._adapter.isConnected) {
+            this._adapter.addTriggerInteractionListener(this._triggerClickListener);
+        }
+    }
+    get moveable() {
+        return this._moveable;
+    }
+    set moveable(value) {
+        value = Boolean(value);
+        if (this._moveable !== value) {
+            this._moveable = value;
+            if (this._adapter.isConnected && this._open) {
+                this._applyMoveable();
+            }
+            this._adapter.toggleHostAttribute(DIALOG_CONSTANTS.attributes.MOVEABLE, this._moveable);
+        }
+    }
+    get positionStrategy() {
+        return this._positionStrategy;
+    }
+    set positionStrategy(value) {
+        if (this._positionStrategy !== value) {
+            this._positionStrategy = value;
+            this._adapter.setHostAttribute(DIALOG_CONSTANTS.attributes.POSITION_STRATEGY, this._positionStrategy);
+        }
+    }
+    get sizeStrategy() {
+        return this._sizeStrategy;
+    }
+    set sizeStrategy(value) {
+        if (this._sizeStrategy !== value) {
+            this._sizeStrategy = value;
+            this._adapter.setHostAttribute(DIALOG_CONSTANTS.attributes.SIZE_STRATEGY, this._sizeStrategy);
+        }
+    }
+    get placement() {
+        return this._placement;
+    }
+    set placement(value) {
+        if (this._placement !== value) {
+            this._placement = value;
+            this._adapter.setHostAttribute(DIALOG_CONSTANTS.attributes.PLACEMENT, this._placement);
+        }
+    }
+}

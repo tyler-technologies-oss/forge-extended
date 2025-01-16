@@ -1,0 +1,26 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const BUTTON_AREA_CONSTANTS: {
+    elementName: string;
+    attributes: {
+        DISABLED: string;
+        IGNORE: string;
+        IGNORE_ALT: string;
+    };
+    ids: {
+        ROOT: string;
+        BUTTON_SLOT: string;
+        CONTENT_SLOT: string;
+    };
+    classes: {
+        ROOT: string;
+    };
+    selectors: {
+        ROOT: string;
+        BUTTON_SLOT: string;
+        CONTENT_SLOT: string;
+    };
+};

@@ -1,0 +1,30 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { Theme } from '../constants';
+export declare const LINEAR_PROGRESS_CONSTANTS: {
+    elementName: "forge-linear-progress";
+    classes: {
+        INDETERMINATE: string;
+    };
+    selectors: {
+        ROOT: string;
+        TRACK: string;
+        PROGRESS: string;
+    };
+    attributes: {
+        DETERMINATE: string;
+        PROGRESS: string;
+        BUFFER: string;
+        THEME: string;
+    };
+    observedAttributes: {
+        DETERMINATE: string;
+        PROGRESS: string;
+        BUFFER: string;
+        THEME: string;
+    };
+};
+export type LinearProgressTheme = Theme;

@@ -1,0 +1,54 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponent } from '../../core/base/base-component';
+import { IWithDefaultAria } from '../../core/mixins/internals/with-default-aria';
+import { IWithElementInternals } from '../../core/mixins/internals/with-element-internals';
+import { IWithLabelAwareness } from '../../core/mixins/label/with-label-aware';
+export interface IRadioGroupComponent extends IWithLabelAwareness, IWithElementInternals, IWithDefaultAria {
+    readonly form: HTMLFormElement | null;
+    readonly labels: NodeList;
+    name: string;
+    disabled: boolean;
+    formDisabledCallback(disabled: boolean): void;
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-radio-group': IRadioGroupComponent;
+    }
+}
+declare const RadioGroupComponent_base: import("../../constants").AbstractConstructor<import("../../core/mixins/label/with-label-aware").WithLabelAwarenessContract> & import("../../constants").AbstractConstructor<import("../../core/mixins/internals/with-default-aria").WithDefaultAriaContract> & import("../../constants").AbstractConstructor<import("../../core/mixins/internals/with-element-internals").WithElementInternalsContract> & typeof BaseComponent;
+/**
+ * @tag forge-radio-group
+ *
+ * @dependency forge-radio
+ *
+ * @summary The Forge Radio Group component groups a set of radio buttons together.
+ */
+export declare class RadioGroupComponent extends RadioGroupComponent_base implements IRadioGroupComponent {
+    static readonly formAssociated = true;
+    /** @ignore */
+    get form(): HTMLFormElement | null;
+    /** @ignore */
+    get labels(): NodeList;
+    /** @ignore */
+    get name(): string;
+    /** @ignore */
+    set name(value: string);
+    static get observedAttributes(): string[];
+    private _core;
+    constructor();
+    connectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    formDisabledCallback(isDisabled: boolean): void;
+    labelChangedCallback(value: string | null): void;
+    /**
+     * Controls whether the radio group is disabled.
+     * @default false
+     * @attribute
+     */
+    disabled: boolean;
+}
+export {};

@@ -1,0 +1,243 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { debounce } from '@tylertech/forge-core';
+import { ColorPickerValueType, COLOR_PICKER_CONSTANTS, DEFAULT_COLOR } from './color-picker-constants';
+import { ColorPickerGradientSlider } from './color-picker-gradient-slider';
+import { ColorPickerSlider } from './color-picker-slider';
+import { formatHex, formatRgba, hexToRgba, hsvaToRgba, isValidHex, isValidHSVA, isValidRGBA, rgbaToHex, rgbaToHsva } from './color-picker-utils';
+export class ColorPickerCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._value = null;
+        this._allowOpacity = true;
+        this._hex = DEFAULT_COLOR;
+        this._hsva = { h: 0, s: 0, v: 0, a: 1 };
+        this._rgba = { r: 0, g: 0, b: 0, a: 1 };
+        this._debounceChangeEvent = false;
+        this._valueType = ColorPickerValueType.HEX;
+        this._initialized = false;
+        this._gradientSliderChangedListener = (x, y) => this._onGradientSliderChanged(x, y);
+        this._hueSliderChangedListener = value => this._onHueSliderChanged(value);
+        this._opacitySliderChangedListener = value => this._onOpacitySliderChanged(value);
+        this._typeClickListener = evt => this._onTypeClicked(evt);
+        this._hexInputChangedListener = evt => this._onHexInputChanged();
+        this._rgbaInputChangedListener = evt => this._onRgbaInputChanged();
+        this._hsvaInputChangedListener = evt => this._onHsvaInputChanged();
+    }
+    initialize() {
+        this._initialized = true;
+        this._applyChangeEventTrigger();
+        this._adapter.setTypeClickListener(this._typeClickListener);
+        this._adapter.setHexInputListener('input', this._hexInputChangedListener);
+        this._adapter.setRgbaInputListener('input', this._rgbaInputChangedListener);
+        this._adapter.setHsvaInputListener('input', this._hsvaInputChangedListener);
+        this._gradientSlider = new ColorPickerGradientSlider(this._adapter.getGradientElement(), this._gradientSliderChangedListener);
+        this._hueSlider = new ColorPickerSlider(this._adapter.getHueSliderElement(), this._hueSliderChangedListener);
+        this._opacitySlider = new ColorPickerSlider(this._adapter.getOpacitySliderElement(), this._opacitySliderChangedListener);
+        this._initializeOpacity();
+        this._setColorFromHex();
+        this._adapter.setActiveValueType(this._valueType);
+    }
+    destroy() {
+        this._adapter.removeTypeClickListener(this._typeClickListener);
+        this._adapter.removeHexInputListener('input', this._hexInputChangedListener);
+        this._adapter.removeRgbaInputListener('input', this._hexInputChangedListener);
+        this._adapter.removeHsvaInputListener('input', this._hexInputChangedListener);
+        this._gradientSlider.destroy();
+        this._hueSlider.destroy();
+        this._opacitySlider.destroy();
+        this._initialized = false;
+    }
+    _applyChangeEventTrigger() {
+        if (this._debounceChangeEvent) {
+            this._triggerChangeEvent = debounce((type, source) => {
+                this._emitChangeEvent(type, source);
+            }, COLOR_PICKER_CONSTANTS.numbers.CHANGE_EVENT_DEBOUNCE_THRESHOLD, false);
+        }
+        else {
+            this._triggerChangeEvent = (type, source) => this._emitChangeEvent(type, source);
+        }
+    }
+    _initializeOpacity() {
+        this._hsva.a = 1;
+        this._adapter.toggleOpacityControls(this._allowOpacity);
+        this._render();
+    }
+    _onTypeClicked(evt) {
+        if (this._valueType === ColorPickerValueType.HEX) {
+            this._valueType = ColorPickerValueType.RGBA;
+        }
+        else if (this._valueType === ColorPickerValueType.RGBA) {
+            this._valueType = ColorPickerValueType.HSVA;
+        }
+        else if (this._valueType === ColorPickerValueType.HSVA) {
+            this._valueType = ColorPickerValueType.HEX;
+        }
+        this._adapter.setActiveValueType(this._valueType);
+        this._adapter.focusValueInput(this._valueType);
+    }
+    _onHexInputChanged() {
+        const value = this._adapter.getHexInputValue();
+        if (isValidHex(value)) {
+            this.value = value;
+            this._triggerChangeEvent('input', 'hex');
+        }
+    }
+    _onRgbaInputChanged() {
+        const value = this._adapter.getRgbaInputValue();
+        if (isValidRGBA(value)) {
+            this.value = rgbaToHex(value);
+            this._triggerChangeEvent('input', 'rgba');
+        }
+    }
+    _onHsvaInputChanged() {
+        const value = this._adapter.getHsvaInputValue();
+        if (isValidHSVA(value)) {
+            this.value = rgbaToHex(hsvaToRgba(value));
+            this._triggerChangeEvent('input', 'hsva');
+        }
+    }
+    _setColorFromHex() {
+        this._rgba = hexToRgba(this._hex);
+        this._hsva = rgbaToHsva(this._rgba);
+        if (this._initialized) {
+            this._gradientSlider.setValue(this._hsva.s, this._hsva.v);
+            this._hueSlider.setValue(parseFloat((this._hsva.h / 360).toFixed(2)));
+            this._opacitySlider.setValue(this._hsva.a);
+            this._render();
+        }
+    }
+    _onGradientSliderChanged(x, y) {
+        this._hsva.s = x;
+        this._hsva.v = y;
+        this._syncColors();
+        this._render();
+        this._triggerChangeEvent('slider', 'gradient');
+    }
+    _onHueSliderChanged(value) {
+        this._hsva.h = parseInt((360 * value).toString(), 10);
+        this._syncColors();
+        this._setGradientColor();
+        this._render();
+        this._triggerChangeEvent('slider', 'hue');
+    }
+    _onOpacitySliderChanged(value) {
+        this._hsva.a = value;
+        this._syncColors();
+        this._render();
+        this._triggerChangeEvent('slider', 'opacity');
+    }
+    _setGradientColor() {
+        const rgba = hsvaToRgba({ h: this._hsva.h, s: 100, v: 100, a: 1 });
+        this._adapter.setGradientColor(`rgb(${rgba.r}, ${rgba.g}, ${rgba.b})`);
+    }
+    _syncColors() {
+        this._rgba = hsvaToRgba(this._hsva);
+        this._hex = rgbaToHex(this._rgba);
+        this._value = this._hex || null;
+    }
+    _render() {
+        this._setGradientColor();
+        this._adapter.setPreviewColor(formatRgba(this._rgba));
+        this._adapter.setHexInputValue(`#${this._hex}`);
+        this._adapter.setRgbaInputValue(this._rgba);
+        this._adapter.setHsvaInputValue(this._hsva);
+        this._adapter.updateA11y(this._hsva.h, Math.round(this._hsva.a * 100));
+    }
+    _emitChangeEvent(type, source) {
+        const data = {
+            type,
+            source,
+            hex: formatHex(this._hex, false).replace(/^#/, ''),
+            rgba: this._rgba,
+            hsva: this._hsva
+        };
+        if (this._allowOpacity) {
+            data.alpha = this._hsva.a;
+        }
+        this._adapter.emitHostEvent(COLOR_PICKER_CONSTANTS.events.CHANGE, data);
+    }
+    get value() {
+        return formatHex(this._hex, false);
+    }
+    set value(value) {
+        if (this._value !== value) {
+            this._value = value || DEFAULT_COLOR;
+            if (!isValidHex(this._value)) {
+                throw new Error('Invalid hex value provided.');
+            }
+            this._hex = this._value.replace(/^#/, '');
+            this._setColorFromHex();
+            this._adapter.setHostAttribute(COLOR_PICKER_CONSTANTS.attributes.VALUE, this._value);
+        }
+    }
+    get rgba() {
+        return !!this._rgba ? { ...this._rgba } : null;
+    }
+    set rgba(value) {
+        if (value) {
+            if (isValidRGBA(value)) {
+                this.value = rgbaToHex(value);
+            }
+        }
+        else {
+            this.value = null;
+        }
+    }
+    get hsva() {
+        return !!this._hsva ? { ...this._hsva } : null;
+    }
+    set hsva(value) {
+        if (value) {
+            if (isValidHSVA(value)) {
+                this.value = rgbaToHex(hsvaToRgba(value));
+            }
+        }
+        else {
+            this.value = null;
+        }
+    }
+    get opacity() {
+        return this._hsva ? this._hsva.a : null;
+    }
+    set opacity(value) {
+        if (this._hsva.a !== value) {
+            if (value != null && this._allowOpacity) {
+                if (value >= 0 && value <= 1) {
+                    this._hsva.a = value;
+                    this._syncColors();
+                    if (this._initialized) {
+                        this._opacitySlider.setValue(this._hsva.a);
+                        this._render();
+                    }
+                }
+                else {
+                    console.warn(`The provided opacity value (${value}) must be between 0 and 1.`);
+                }
+            }
+        }
+    }
+    get allowOpacity() {
+        return this._allowOpacity;
+    }
+    set allowOpacity(value) {
+        this._allowOpacity = value;
+        if (this._initialized) {
+            this._initializeOpacity();
+        }
+    }
+    get debounceChangeEvent() {
+        return this._debounceChangeEvent;
+    }
+    set debounceChangeEvent(value) {
+        if (this._debounceChangeEvent !== value) {
+            this._debounceChangeEvent = value;
+            if (this._initialized) {
+                this._applyChangeEventTrigger();
+            }
+        }
+    }
+}

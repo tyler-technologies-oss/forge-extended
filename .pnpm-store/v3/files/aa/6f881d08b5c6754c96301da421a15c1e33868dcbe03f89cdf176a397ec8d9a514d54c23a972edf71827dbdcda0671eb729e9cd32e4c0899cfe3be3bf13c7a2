@@ -1,0 +1,42 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import type { IFieldComponent } from '../../field/field';
+import { IListDropdownConfig } from '../../list-dropdown/list-dropdown-constants';
+import { BaseSelectAdapter, IBaseSelectAdapter } from '../core';
+import { ISelectComponent } from './select';
+export type OptionListenerDestructor = () => void;
+export interface ISelectAdapter extends IBaseSelectAdapter<ISelectComponent> {
+    readonly fieldElement: IFieldComponent;
+    floatLabel(value: boolean): void;
+    setLabel(value: string): void;
+    setPlaceholderText(value: string): void;
+    setSelectedText(value: string): void;
+    setDisabled(value: boolean): void;
+    setRequired(): void;
+    syncValue(value: unknown | null): void;
+}
+export declare class SelectAdapter extends BaseSelectAdapter<ISelectComponent> implements ISelectAdapter {
+    private _fieldElement;
+    private _labelElement;
+    private _selectedTextElement;
+    constructor(component: ISelectComponent);
+    get fieldElement(): IFieldComponent;
+    initializeAccessibility(): void;
+    setLabel(value: string): void;
+    setPlaceholderText(value: string): void;
+    open(config: IListDropdownConfig): void;
+    close(): Promise<void>;
+    floatLabel(value: boolean): void;
+    updateActiveDescendant(id: string): void;
+    setSelectedText(value: string): void;
+    setDisabled(value: boolean): void;
+    setRequired(): void;
+    addClickListener(listener: (evt: Event) => void): void;
+    removeClickListener(listener: (evt: Event) => void): void;
+    addTargetListener(type: string, listener: (evt: Event) => void): void;
+    removeTargetListener(type: string, listener: (evt: Event) => void): void;
+    syncValue(value: unknown | null): void;
+}

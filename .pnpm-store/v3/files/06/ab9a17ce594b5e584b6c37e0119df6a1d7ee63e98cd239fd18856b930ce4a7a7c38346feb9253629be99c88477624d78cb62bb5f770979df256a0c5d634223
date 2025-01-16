@@ -1,0 +1,68 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { COMPONENT_NAME_PREFIX } from '../constants';
+const elementName = `${COMPONENT_NAME_PREFIX}dialog`;
+const observedAttributes = {
+    OPEN: 'open',
+    VISIBLE: 'visible',
+    MODE: 'mode',
+    TYPE: 'type',
+    ANIMATION_TYPE: 'animation-type',
+    PRESET: 'preset',
+    PERSISTENT: 'persistent',
+    FULLSCREEN: 'fullscreen',
+    FULLSCREEN_THRESHOLD: 'fullscreen-threshold',
+    TRIGGER: 'trigger',
+    MOVEABLE: 'moveable',
+    MOVE_TARGET: 'move-target',
+    POSITION_STRATEGY: 'position-strategy',
+    PLACEMENT: 'placement',
+    SIZE_STRATEGY: 'size-strategy'
+};
+const attributes = {
+    ...observedAttributes
+};
+const classes = {
+    MOVED: 'moved',
+    MOVING: 'moving'
+};
+const selectors = {
+    DIALOG: '.forge-dialog',
+    SURFACE: '.surface',
+    MOVE_HANDLE: '.move-handle',
+    AUTOFOCUS: ':is([autofocus],[forge-dialog-focus])'
+};
+const events = {
+    BEFORE_CLOSE: `${elementName}-before-close`,
+    OPEN: `${elementName}-open`,
+    CLOSE: `${elementName}-close`,
+    MOVE_START: `${elementName}-move-start`,
+    MOVE: `${elementName}-move`,
+    MOVE_END: `${elementName}-move-end`,
+    FULLSCREEN_CHANGE: `${elementName}-fullscreen-change`
+};
+const defaults = {
+    MODE: 'modal',
+    TYPE: 'dialog',
+    ANIMATION_TYPE: 'zoom',
+    PRESET: 'dialog',
+    SIZE_STRATEGY: 'content',
+    POSITION_STRATEGY: 'viewport',
+    PLACEMENT: 'center',
+    FULLSCREEN_THRESHOLD: 599
+};
+export const DIALOG_CONSTANTS = {
+    elementName,
+    observedAttributes,
+    classes,
+    attributes,
+    selectors,
+    events,
+    defaults
+};
+export const hideBackdrop = Symbol('hideBackdrop');
+export const showBackdrop = Symbol('showBackdrop');
+export const dialogStack = Symbol('dialogStack');

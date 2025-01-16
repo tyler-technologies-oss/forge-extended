@@ -1,0 +1,26 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { DEFERRED_LABEL_TARGET, forgeLabelRef, updateTarget } from '../../../constants';
+/**
+ * Mixes in Forge label awareness into a base component.
+ *
+ * @param base The base component to mix into.
+ * @returns The mixed-in base component.
+ */
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export function WithLabelAwareness(base) {
+    class LabelAwareComponent extends base {
+        connectedCallback() {
+            super.connectedCallback?.();
+            if (this.hasAttribute(DEFERRED_LABEL_TARGET) && this[forgeLabelRef]) {
+                this[forgeLabelRef][updateTarget](this);
+            }
+            this.removeAttribute(DEFERRED_LABEL_TARGET);
+            delete this[forgeLabelRef];
+        }
+    }
+    return LabelAwareComponent;
+}

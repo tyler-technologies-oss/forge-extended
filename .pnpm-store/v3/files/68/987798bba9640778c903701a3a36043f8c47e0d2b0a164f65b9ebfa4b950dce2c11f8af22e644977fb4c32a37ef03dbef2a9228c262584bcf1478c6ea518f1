@@ -1,0 +1,278 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+/* prettier-ignore */
+.forge-checkbox {
+  --_checkbox-primary-color: var(--forge-checkbox-primary-color, var(--forge-theme-tertiary, #3d5afe));
+  --_checkbox-size: var(--forge-checkbox-size, 16px);
+  --_checkbox-border-width: var(--forge-checkbox-border-width, var(--forge-border-medium, 2px));
+  --_checkbox-icon-color: var(--forge-checkbox-icon-color, var(--forge-theme-on-tertiary, #ffffff));
+  --_checkbox-state-layer-size: var(--forge-checkbox-state-layer-size, 40px);
+  --_checkbox-state-layer-dense-size: var(--forge-checkbox-state-layer-dense-size, 24px);
+  --_checkbox-background: var(--forge-checkbox-background, var(--forge-theme-surface, #ffffff));
+  --_checkbox-width: var(--forge-checkbox-width, var(--_checkbox-size));
+  --_checkbox-height: var(--forge-checkbox-height, var(--_checkbox-size));
+  --_checkbox-unchecked-border-width: var(--forge-checkbox-unchecked-border-width, var(--_checkbox-border-width));
+  --_checkbox-unchecked-border-color: var(--forge-checkbox-unchecked-border-color, var(--forge-theme-surface-container-high, #9e9e9e));
+  --_checkbox-shape: var(--forge-checkbox-shape, calc(var(--forge-shape-small, 2px) * var(--forge-shape-factor, 1)));
+  --_checkbox-elevation: var(--forge-checkbox-elevation, 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 0px 0px 0px 0px rgba(0, 0, 0, 0.14), 0px 0px 0px 0px rgba(0, 0, 0, 0.12));
+  --_checkbox-checked-background: var(--forge-checkbox-checked-background, var(--_checkbox-primary-color));
+  --_checkbox-checked-border-width: var(--forge-checkbox-checked-border-width, var(--_checkbox-border-width));
+  --_checkbox-checked-border-color: var(--forge-checkbox-checked-border-color, var(--_checkbox-checked-background));
+  --_checkbox-icon-checked-color: var(--forge-checkbox-icon-checked-color, var(--_checkbox-icon-color));
+  --_checkbox-icon-indeterminate-color: var(--forge-checkbox-icon-indeterminate-color, var(--_checkbox-icon-color));
+  --_checkbox-icon-stroke-width: var(--forge-checkbox-icon-stroke-width, 4px);
+  --_checkbox-gap: var(--forge-checkbox-gap, 0);
+  --_checkbox-justify: var(--forge-checkbox-justify, start);
+  --_checkbox-direction: var(--forge-checkbox-direction, initial);
+  --_checkbox-state-layer-width: var(--forge-checkbox-state-layer-width, var(--_checkbox-state-layer-size));
+  --_checkbox-state-layer-height: var(--forge-checkbox-state-layer-height, var(--_checkbox-state-layer-size));
+  --_checkbox-state-layer-checked-color: var(--forge-checkbox-state-layer-checked-color, var(--_checkbox-primary-color));
+  --_checkbox-state-layer-unchecked-color: var(--forge-checkbox-state-layer-unchecked-color, var(--_checkbox-color));
+  --_checkbox-state-layer-shape: var(--forge-checkbox-state-layer-shape, calc(var(--forge-shape-full, 9999px) * var(--forge-shape-factor, 1)));
+  --_checkbox-dense-gap: var(--forge-checkbox-dense-gap, 8px);
+  --_checkbox-state-layer-dense-width: var(--forge-checkbox-state-layer-dense-width, var(--_checkbox-state-layer-dense-size));
+  --_checkbox-state-layer-dense-height: var(--forge-checkbox-state-layer-dense-height, var(--_checkbox-state-layer-dense-size));
+  --_checkbox-disabled-opacity: var(--forge-checkbox-disabled-opacity, 0.38);
+  --_checkbox-animation-duration: var(--forge-checkbox-animation-duration, var(--forge-animation-duration-short2, 100ms));
+  --_checkbox-background-animation-timing: var(--forge-checkbox-background-animation-timing, var(--forge-animation-easing-standard, cubic-bezier(0.2, 0, 0, 1)));
+  --_checkbox-icon-animation-timing: var(--forge-checkbox-icon-animation-timing, var(--forge-animation-easing-emphasized-accelerate, cubic-bezier(0.3, 0, 0.8, 0.15)));
+}
+
+.forge-checkbox {
+  outline: none;
+  --forge-focus-indicator-shape: 0px;
+  --forge-focus-indicator-outward-offset: 8px;
+  display: inline grid;
+  position: relative;
+  align-items: center;
+  justify-items: center;
+  inline-size: var(--_checkbox-state-layer-width);
+  block-size: var(--_checkbox-state-layer-height);
+}
+.forge-checkbox:has(input[type=checkbox]:focus-visible)::after {
+  --_focus-indicator-display: var(--forge-focus-indicator-display, flex);
+  --_focus-indicator-width: var(--forge-focus-indicator-width, var(--forge-border-medium, 2px));
+  --_focus-indicator-active-width: var(--forge-focus-indicator-active-width, 6px);
+  --_focus-indicator-color: var(--forge-focus-indicator-color, var(--forge-theme-primary, #3f51b5));
+  --_focus-indicator-shape: var(--forge-focus-indicator-shape, calc(var(--forge-shape-extra-small, 1px) * var(--forge-shape-factor, 1)));
+  --_focus-indicator-duration: var(--forge-focus-indicator-duration, var(--forge-animation-duration-long4, 600ms));
+  --_focus-indicator-easing: var(--forge-focus-indicator-easing, var(--forge-animation-easing-emphasized, cubic-bezier(0.2, 0, 0, 1)));
+  --_focus-indicator-shape-start-start: var(--forge-focus-indicator-shape-start-start, var(--_focus-indicator-shape));
+  --_focus-indicator-shape-start-end: var(--forge-focus-indicator-shape-start-end, var(--_focus-indicator-shape));
+  --_focus-indicator-shape-end-end: var(--forge-focus-indicator-shape-end-end, var(--_focus-indicator-shape));
+  --_focus-indicator-shape-end-start: var(--forge-focus-indicator-shape-end-start, var(--_focus-indicator-shape));
+  --_focus-indicator-outward-offset: var(--forge-focus-indicator-outward-offset, var(--forge-spacing-xxsmall, 4px));
+  --_focus-indicator-inward-offset: var(--forge-focus-indicator-inward-offset, 0px);
+  --_focus-indicator-offset-block: var(--forge-focus-indicator-offset-block, 0);
+  --_focus-indicator-offset-inline: var(--forge-focus-indicator-offset-inline, 0);
+}
+.forge-checkbox:has(input[type=checkbox]:focus-visible)::after {
+  animation-delay: 0s, calc(var(--_focus-indicator-duration) * 0.25);
+  animation-duration: calc(var(--_focus-indicator-duration) * 0.25), calc(var(--_focus-indicator-duration) * 0.75);
+  animation-timing-function: var(--_focus-indicator-easing);
+  box-sizing: border-box;
+  color: var(--_focus-indicator-color);
+  display: none;
+  pointer-events: none;
+  position: absolute;
+  margin-block: var(--_focus-indicator-offset-block);
+  margin-inline: var(--_focus-indicator-offset-inline);
+  animation-name: forge-focus-indicator-outward-grow, forge-focus-indicator-outward-shrink;
+  border-end-end-radius: calc(var(--_focus-indicator-shape-end-end) + var(--_focus-indicator-outward-offset));
+  border-end-start-radius: calc(var(--_focus-indicator-shape-end-start) + var(--_focus-indicator-outward-offset));
+  border-start-end-radius: calc(var(--_focus-indicator-shape-start-end) + var(--_focus-indicator-outward-offset));
+  border-start-start-radius: calc(var(--_focus-indicator-shape-start-start) + var(--_focus-indicator-outward-offset));
+  inset: calc(-1 * var(--_focus-indicator-outward-offset));
+  outline: var(--_focus-indicator-width) solid currentColor;
+  content: "";
+  display: block;
+}
+.forge-checkbox input[type=checkbox] {
+  appearance: none;
+  grid-column: 1;
+  grid-row: 1;
+  z-index: 20;
+  outline: none;
+  margin: 0;
+  cursor: pointer;
+}
+.forge-checkbox input[type=checkbox]:checked, .forge-checkbox input[type=checkbox]:indeterminate {
+  --forge-state-layer-color: var(--_checkbox-state-layer-checked-color);
+}
+.forge-checkbox input[type=checkbox]:not(:disabled) {
+  --_state-layer-display: var(--forge-state-layer-display, flex);
+  --_state-layer-color: var(--forge-state-layer-color, var(--forge-theme-on-surface, #000000));
+  --_state-layer-hover-color: var(--forge-state-layer-hover-color, var(--_state-layer-color));
+  --_state-layer-hover-opacity: var(--forge-state-layer-hover-opacity, 0.08);
+  --_state-layer-pressed-color: var(--forge-state-layer-pressed-color, var(--_state-layer-color));
+  --_state-layer-pressed-opacity: var(--forge-state-layer-pressed-opacity, 0.12);
+  --_state-layer-hover-duration: var(--forge-state-layer-hover-duration, 15ms);
+  --_state-layer-pressed-duration: var(--forge-state-layer-pressed-duration, 105ms);
+  --_state-layer-animation-duration: var(--forge-state-layer-animation-duration, 375ms);
+  border-radius: var(--_checkbox-state-layer-shape) !important;
+}
+.forge-checkbox input[type=checkbox]:not(:disabled) {
+  opacity: 0;
+  position: absolute;
+  background-color: var(--_state-layer-hover-color);
+  inset: 0;
+  transition: opacity var(--_state-layer-hover-duration) linear, background-color var(--_state-layer-hover-duration) linear;
+  --_state-layer-hover-duration: var(--forge-state-layer-hover-duration, 100ms);
+  opacity: 0;
+  border-radius: inherit;
+}
+.forge-checkbox input[type=checkbox]:not(:disabled):hover {
+  background-color: var(--_state-layer-hover-color);
+  opacity: var(--_state-layer-hover-opacity);
+}
+.forge-checkbox input[type=checkbox]:not(:disabled):active {
+  opacity: var(--_state-layer-pressed-opacity);
+  transition-duration: var(--_state-layer-pressed-duration);
+  --_state-layer-pressed-opacity: var(--forge-state-layer-pressed-opacity, 0.18);
+}
+.forge-checkbox__icon {
+  display: none;
+  grid-column: 1;
+  grid-row: 1;
+  block-size: calc(var(--_checkbox-height) - 2 * var(--_checkbox-checked-border-width));
+  inline-size: calc(var(--_checkbox-width) - 2 * var(--_checkbox-checked-border-width));
+  pointer-events: none;
+}
+.forge-checkbox__icon--checked {
+  background-color: none;
+}
+.forge-checkbox__icon--indeterminate {
+  background-color: none;
+}
+.forge-checkbox__icon::before {
+  display: block;
+  block-size: 100%;
+  inline-size: 100%;
+  background-color: var(--_checkbox-icon-checked-color);
+  content: "";
+  translate: -100% 0;
+  transition-property: translate;
+  transition-duration: var(--_checkbox-animation-duration);
+  transition-timing-function: var(--_checkbox-icon-animation-timing);
+  transition-delay: var(--_checkbox-animation-duration);
+}
+.forge-checkbox::before {
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  transition-property: background, border-width, border-color;
+  transition-duration: var(--_checkbox-animation-duration);
+  transition-timing-function: var(--_checkbox-background-animation-timing);
+  box-shadow: var(--_checkbox-elevation);
+  border-style: solid;
+  border-width: var(--_checkbox-unchecked-border-width);
+  border-color: var(--_checkbox-unchecked-border-color);
+  border-radius: var(--_checkbox-shape);
+  box-sizing: border-box;
+  block-size: var(--_checkbox-height);
+  inline-size: var(--_checkbox-width);
+  background: var(--_checkbox-background);
+  display: block;
+  grid-column: 1;
+  grid-row: 1;
+  line-height: 0;
+  content: "";
+}
+.forge-checkbox:has(input[type=checkbox]:checked)::before {
+  border-style: solid;
+  border-width: var(--_checkbox-checked-border-width);
+  border-color: var(--_checkbox-checked-border-color);
+  background: var(--_checkbox-checked-background);
+}
+.forge-checkbox:has(input[type=checkbox]:checked) .forge-checkbox__icon {
+  display: block;
+  clip-path: polygon(13.101048% 47.903832%, 1.316772% 59.688108%, 33.7527% 92.84076%, 100.858068% 25.018668%, 89.073792% 13.234392%, 33.7527% 68.3388%);
+}
+.forge-checkbox:has(input[type=checkbox]:checked) .forge-checkbox__icon::before {
+  translate: 0;
+}
+@starting-style {
+  .forge-checkbox:has(input[type=checkbox]:checked) .forge-checkbox__icon::before {
+    translate: -100% 0;
+  }
+}
+.forge-checkbox:has(input[type=checkbox]:checked) .forge-checkbox__icon--checked {
+  clip-path: none;
+}
+.forge-checkbox:has(input[type=checkbox]:checked) .forge-checkbox__icon--checked::before {
+  content: none;
+}
+.forge-checkbox:has(input[type=checkbox]:indeterminate)::before {
+  border-style: solid;
+  border-width: var(--_checkbox-checked-border-width);
+  border-color: var(--_checkbox-checked-border-color);
+  background: var(--_checkbox-checked-background);
+}
+.forge-checkbox:has(input[type=checkbox]:indeterminate) .forge-checkbox__icon {
+  display: block;
+  clip-path: polygon(8.334% 41.67%, 8.334% 58.338%, 91.674% 58.338%, 91.674% 41.67%);
+}
+.forge-checkbox:has(input[type=checkbox]:indeterminate) .forge-checkbox__icon::before {
+  translate: 0;
+}
+@starting-style {
+  .forge-checkbox:has(input[type=checkbox]:indeterminate) .forge-checkbox__icon::before {
+    translate: -100% 0;
+  }
+}
+.forge-checkbox:has(input[type=checkbox]:indeterminate) .forge-checkbox__icon--indeterminate {
+  clip-path: none;
+}
+.forge-checkbox:has(input[type=checkbox]:indeterminate) .forge-checkbox__icon--indeterminate::before {
+  content: none;
+}
+.forge-checkbox:has(input[type=checkbox]:disabled) {
+  opacity: var(--_checkbox-disabled-opacity);
+  cursor: not-allowed;
+}
+@keyframes forge-focus-indicator-outward-grow {
+  from {
+    outline-width: 0;
+  }
+  to {
+    outline-width: var(--_focus-indicator-active-width);
+  }
+}
+@keyframes forge-focus-indicator-outward-shrink {
+  from {
+    outline-width: var(--_focus-indicator-active-width);
+  }
+}
+@keyframes forge-focus-indicator-inward-grow {
+  from {
+    border-width: 0;
+  }
+  to {
+    border-width: var(--_focus-indicator-active-width);
+  }
+}
+@keyframes forge-focus-indicator-inward-shrink {
+  from {
+    border-width: var(--_focus-indicator-active-width);
+  }
+}
+.forge-checkbox:has(input[type=checkbox]:focus-visible)::after {
+  position: relative;
+  grid-column: 1;
+  grid-row: 1;
+  inset: 0;
+  /* 
+    We "fake" the pseudo-element's dimensions here to size the focus indicator without
+    overriding any of its calculations, taking the width of its outline into account
+  */
+  padding-inline: calc(var(--_checkbox-width) - var(--_focus-indicator-width));
+  padding-block: calc(var(--_checkbox-height) - var(--_focus-indicator-width));
+}
+.forge-checkbox--dense {
+  inline-size: var(--_checkbox-state-layer-dense-width);
+  block-size: var(--_checkbox-state-layer-dense-height);
+}

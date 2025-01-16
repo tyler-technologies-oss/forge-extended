@@ -1,0 +1,22 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export type TimeSegmentType = 'hours' | 'minutes' | 'seconds' | 'meridiem';
+export interface ISegmentDescriptor {
+    segment: TimeSegmentType;
+    value: string;
+}
+export declare class TimeSegmentParser {
+    private _segments;
+    constructor(timeStr: string);
+    get hours(): string;
+    get minutes(): string;
+    get seconds(): string;
+    get meridiem(): string;
+    applyValue(timeStr: string): void;
+    patchSegmentValue(type: TimeSegmentType, value: string): string;
+    toString(): string;
+    private _parseSegments;
+}

@@ -1,0 +1,22 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+.forge-divider {
+  --_divider-color: var(--forge-divider-color, var(--forge-theme-outline, #e0e0e0));
+  --_divider-width: var(--forge-divider-width, var(--forge-border-thin, 1px));
+  --_divider-border-style: var(--forge-divider-border-style, solid);
+  --_divider-margin: var(--forge-divider-margin, 0);
+}
+
+.forge-divider {
+  display: block;
+  contain: content;
+  margin: var(--_divider-margin);
+  border: none;
+  border-bottom-color: var(--_divider-color);
+  border-bottom-width: var(--_divider-width);
+  border-bottom-style: var(--_divider-border-style);
+  height: 0;
+}

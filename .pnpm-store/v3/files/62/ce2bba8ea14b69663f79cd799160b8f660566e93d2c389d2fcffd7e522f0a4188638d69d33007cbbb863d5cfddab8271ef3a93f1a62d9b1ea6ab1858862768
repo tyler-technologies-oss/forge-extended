@@ -1,0 +1,177 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { OPTION_CONSTANTS } from './option-constants';
+export class OptionCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._disabled = false;
+        this._divider = false;
+        this._optionClass = [];
+    }
+    /** Gets/sets the value of this option. */
+    get value() {
+        return this._value;
+    }
+    set value(value) {
+        if (this._value !== value) {
+            this._value = value;
+            this._adapter.emitHostEvent(OPTION_CONSTANTS.events.VALUE_CHANGE, this._value);
+        }
+    }
+    /** Gets/sets the label of this option. */
+    get label() {
+        return this._label;
+    }
+    set label(value) {
+        if (this._label !== value) {
+            this._label = value;
+            this._adapter.toggleHostAttribute(OPTION_CONSTANTS.attributes.LABEL, !!this._label, this._label);
+        }
+    }
+    /** Gets/sets the secondary label of this option. */
+    get secondaryLabel() {
+        return this._secondaryLabel;
+    }
+    set secondaryLabel(value) {
+        if (this._secondaryLabel !== value) {
+            this._secondaryLabel = value;
+            this._adapter.toggleHostAttribute(OPTION_CONSTANTS.attributes.SECONDARY_LABEL, !!this._secondaryLabel, this._secondaryLabel);
+        }
+    }
+    /** Gets/sets the disabled status of this option. */
+    get disabled() {
+        return this._disabled;
+    }
+    set disabled(value) {
+        if (this._disabled !== value) {
+            this._disabled = value;
+            this._adapter.toggleHostAttribute(OPTION_CONSTANTS.attributes.DISABLED, this._disabled);
+        }
+    }
+    /** Gets/sets the whether this option is a divider. */
+    get divider() {
+        return this._divider;
+    }
+    set divider(value) {
+        if (this._divider !== value) {
+            this._divider = value;
+            this._adapter.toggleHostAttribute(OPTION_CONSTANTS.attributes.DIVIDER, this._divider);
+        }
+    }
+    /** Gets/sets the classes of this option. */
+    get optionClass() {
+        return this._optionClass;
+    }
+    set optionClass(value) {
+        if (!value) {
+            value = [];
+        }
+        else if (typeof value === 'string') {
+            value = value.split(' ');
+        }
+        value = value.filter(v => v && !/\s+/.test(v));
+        if (this._optionClass.toString() !== value.toString()) {
+            this._optionClass = value;
+            this._adapter.toggleHostAttribute(OPTION_CONSTANTS.attributes.OPTION_CLASS, this._optionClass && !!this._optionClass.length, this._optionClass.join(' '));
+        }
+    }
+    /** Gets/sets the leading icon of this option. */
+    get leadingIcon() {
+        return this._leadingIcon;
+    }
+    set leadingIcon(value) {
+        if (this._leadingIcon !== value) {
+            this._leadingIcon = value;
+            this._adapter.toggleHostAttribute(OPTION_CONSTANTS.attributes.LEADING_ICON, !!this._leadingIcon, this._leadingIcon);
+        }
+    }
+    /** Gets/sets the leading icon class of this option. */
+    get leadingIconClass() {
+        return this._leadingIconClass;
+    }
+    set leadingIconClass(value) {
+        if (this._leadingIconClass !== value) {
+            this._leadingIconClass = value;
+            this._adapter.toggleHostAttribute(OPTION_CONSTANTS.attributes.LEADING_ICON_CLASS, !!this._leadingIconClass, this._leadingIconClass);
+        }
+    }
+    /** Gets/sets the leading icon type of this option. */
+    get leadingIconType() {
+        return this._leadingIconType;
+    }
+    set leadingIconType(value) {
+        if (this._leadingIconType !== value) {
+            this._leadingIconType = value;
+            this._adapter.toggleHostAttribute(OPTION_CONSTANTS.attributes.LEADING_ICON_TYPE, !!this._leadingIconType, this._leadingIconType);
+        }
+    }
+    /** Gets/sets the props on the leading icon component. */
+    get leadingIconComponentProps() {
+        return this._leadingIconComponentProps;
+    }
+    set leadingIconComponentProps(value) {
+        if (this._leadingIconComponentProps !== value) {
+            this._leadingIconComponentProps = value;
+        }
+    }
+    /** Gets/sets the trailing icon of this option. */
+    get trailingIcon() {
+        return this._trailingIcon;
+    }
+    set trailingIcon(value) {
+        if (this._trailingIcon !== value) {
+            this._trailingIcon = value;
+            this._adapter.toggleHostAttribute(OPTION_CONSTANTS.attributes.TRAILING_ICON, !!this._trailingIcon, this._trailingIcon);
+        }
+    }
+    /** Gets/sets the trailing icon class of this option. */
+    get trailingIconClass() {
+        return this._trailingIconClass;
+    }
+    set trailingIconClass(value) {
+        if (this._trailingIconClass !== value) {
+            this._trailingIconClass = value;
+            this._adapter.toggleHostAttribute(OPTION_CONSTANTS.attributes.TRAILING_ICON_CLASS, !!this._trailingIconClass, this._trailingIconClass);
+        }
+    }
+    /** Gets/sets the trailing icon type of this option. */
+    get trailingIconType() {
+        return this._trailingIconType;
+    }
+    set trailingIconType(value) {
+        if (this._trailingIconType !== value) {
+            this._trailingIconType = value;
+            this._adapter.toggleHostAttribute(OPTION_CONSTANTS.attributes.TRAILING_ICON_TYPE, !!this._trailingIconType, this._trailingIconType);
+        }
+    }
+    /** Gets/sets the props on the trailing icon component. */
+    get trailingIconComponentProps() {
+        return this._trailingIconComponentProps;
+    }
+    set trailingIconComponentProps(value) {
+        if (this._trailingIconComponentProps !== value) {
+            this._trailingIconComponentProps = value;
+        }
+    }
+    /** Gets/sets the leading builder of this option. */
+    get leadingBuilder() {
+        return this._leadingBuilder;
+    }
+    set leadingBuilder(value) {
+        if (this._leadingBuilder !== value) {
+            this._leadingBuilder = value;
+        }
+    }
+    /** Gets/sets the trailing builder of this option. */
+    get trailingBuilder() {
+        return this._trailingBuilder;
+    }
+    set trailingBuilder(value) {
+        if (this._trailingBuilder !== value) {
+            this._trailingBuilder = value;
+        }
+    }
+}

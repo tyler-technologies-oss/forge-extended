@@ -1,0 +1,51 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IStepComponent } from '../step';
+import { IStepConfiguration, IStepperConfiguration, StepperLayoutAlign, StepperLayoutMode } from '../stepper/stepper-constants';
+export declare class StepperUtils {
+    /**
+     * Creates a step element using the provided configuration.
+     * @param {IStepConfiguration} step The step configuration
+     * @param {number} index The index of the step.
+     * @param {number} activeStepIndex The currently active step index.
+     * @param {boolean} linear Whether the stepper is in linear mode or not.
+     */
+    static createStepElement(step: IStepConfiguration, index: number, stepperConfig: IStepperConfiguration): IStepComponent;
+    /**
+     * Creates the step label element using the provided configuration.
+     * @param {IStepConfiguration} step The step configuration.
+     */
+    static createStepOptionalLabel(labelText: string): HTMLElement;
+    /**
+     * Sets the stepper to the provided linear state.
+     * @param {HTMLElement} stepperElement The stepper element.
+     * @param {boolean} isLinear Whether the stepper is in linear mode or not.
+     */
+    static setLinearState(stepperElement: HTMLElement, isLinear: boolean): void;
+    /**
+     * Sets the stepper to the provided label state.
+     * @param {HTMLElement} stepperElement The stepper element.
+     * @param {boolean} isAlternative Whether the stepper is in alternative mode or not.
+     */
+    static setAlternativeState(stepperElement: HTMLElement, isAlternative: boolean): void;
+    /**
+     * Sets the stepper layout mode.
+     * @param {HTMLElement} stepperElement The stepper element.
+     * @param {StepperLayoutMode} mode The layout mode.
+     */
+    static setLayoutMode(stepperElement: HTMLElement, mode: StepperLayoutMode): void;
+    /**
+     * Sets the stepper layout alignment.
+     * @param {HTMLElement} stepperElement The stepper element.
+     * @param {StepperLayoutAlign} mode The layout alignment.
+     */
+    static setLayoutAlign(stepperElement: HTMLElement, mode: StepperLayoutAlign): void;
+    /**
+     * Creates a stepper with all of its step elements.
+     * @param {IStepperConfiguration} stepperConfiguration The stepper configuration.
+     */
+    static createSteps(stepperConfiguration: IStepperConfiguration): IStepComponent[];
+}

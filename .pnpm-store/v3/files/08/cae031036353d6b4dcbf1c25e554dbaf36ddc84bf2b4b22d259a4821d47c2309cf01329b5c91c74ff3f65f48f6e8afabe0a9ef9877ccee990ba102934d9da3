@@ -1,0 +1,37 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, locateTargetHeuristic } from '../core';
+export class FocusIndicatorAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this._targetElement = null;
+    }
+    destroy() {
+        this._targetElement = null;
+    }
+    hasTargetElement() {
+        return !!this._targetElement;
+    }
+    addTargetListener(type, listener) {
+        this._targetElement?.addEventListener(type, listener);
+    }
+    removeTargetListener(type, listener) {
+        this._targetElement?.removeEventListener(type, listener);
+    }
+    getTargetElement() {
+        return this._targetElement;
+    }
+    setTargetElement(el) {
+        this._targetElement = el;
+    }
+    trySetTarget(value) {
+        this._targetElement = locateTargetHeuristic(this._component, value);
+    }
+    isActive(selector, el) {
+        const targetedEl = el ?? this._targetElement;
+        return !!targetedEl?.matches(selector);
+    }
+}

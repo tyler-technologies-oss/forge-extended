@@ -1,0 +1,90 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ITimePickerComponent } from './time-picker';
+import { BaseAdapter } from '../core/base/base-adapter';
+import { ITimeInputMaskOptions } from '../core/mask/time-input-mask';
+import { IListDropdownConfig, IListDropdownOption } from '../list-dropdown/list-dropdown-constants';
+export interface ITimePickerAdapter extends BaseAdapter<ITimePickerComponent> {
+    readonly inputElement: HTMLInputElement | undefined;
+    initialize(): void;
+    initializeMask(options: ITimeInputMaskOptions): void;
+    destroy(): void;
+    destroyMask(): void;
+    initializeAccessibility(identifier: string): void;
+    addInputListener(type: string, listener: (event: Event) => void, capture?: boolean): void;
+    removeInputListener(type: string, listener: (event: Event) => void, capture?: boolean): void;
+    addToggleListener(type: string, listener: (event: Event) => void): void;
+    removeToggleListener(type: string, listener: (event: Event) => void): void;
+    hasInputElement(): boolean;
+    tryCreateToggle(): void;
+    tryFocusInput(): void;
+    tryBlurInput(): void;
+    selectInputText(): void;
+    getInputValue(): string;
+    setInputValue(value: string, emitEvents: boolean): void;
+    isInputDisabled(): boolean;
+    isInputFocused(): boolean;
+    setDisabled(isDisabled: boolean): void;
+    attachDropdown(config: IListDropdownConfig): void;
+    detachDropdown(options: {
+        destroy?: boolean;
+    }): Promise<void>;
+    setActiveDescendant(id: string): void;
+    propagateKey(key: string): void;
+    getTargetElementWidth(selector: string): number;
+    emitInputEvent(type: string, data?: any): void;
+    setInputReadonly(value: boolean): void;
+    setToggleDisabled(value: boolean): void;
+    hasActiveOption(): boolean;
+    activateOptionByIndex(index: number): void;
+    activateFirstOption(): void;
+    getActiveOption(): IListDropdownOption | undefined;
+}
+export declare class TimePickerAdapter extends BaseAdapter<ITimePickerComponent> implements ITimePickerAdapter {
+    private _inputElement;
+    private _toggleElement?;
+    private _inputMask?;
+    private _listDropdown?;
+    private _targetElement?;
+    constructor(component: ITimePickerComponent);
+    get inputElement(): HTMLInputElement | undefined;
+    initialize(): void;
+    initializeMask(options: ITimeInputMaskOptions): void;
+    destroy(): void;
+    destroyMask(): void;
+    initializeAccessibility(identifier: string): void;
+    addInputListener(type: string, listener: (event: Event) => void, capture?: boolean): void;
+    removeInputListener(type: string, listener: (event: Event) => void, capture?: boolean): void;
+    addToggleListener(type: string, listener: (event: Event) => void): void;
+    removeToggleListener(type: string, listener: (event: Event) => void): void;
+    hasInputElement(): boolean;
+    tryCreateToggle(): void;
+    tryFocusInput(): void;
+    tryBlurInput(): void;
+    selectInputText(): void;
+    isInputDisabled(): boolean;
+    isInputFocused(): boolean;
+    setInputValue(value: string, emitEvents: boolean): void;
+    getInputValue(): string;
+    setDisabled(isDisabled: boolean): void;
+    attachDropdown(config: IListDropdownConfig): void;
+    detachDropdown({ destroy }?: {
+        destroy?: boolean | undefined;
+    }): Promise<void>;
+    propagateKey(key: string): void;
+    setActiveDescendant(id: string): void;
+    getTargetElementWidth(selector: string): number;
+    private _emitInputEvent;
+    emitInputEvent(type: string, data?: any): void;
+    setInputReadonly(value: boolean): void;
+    setToggleDisabled(value: boolean): void;
+    hasActiveOption(): boolean;
+    activateOptionByIndex(index: number): void;
+    activateFirstOption(): void;
+    getActiveOption(): IListDropdownOption | undefined;
+    private _getTargetElement;
+    private _getDefaultTargetElement;
+}

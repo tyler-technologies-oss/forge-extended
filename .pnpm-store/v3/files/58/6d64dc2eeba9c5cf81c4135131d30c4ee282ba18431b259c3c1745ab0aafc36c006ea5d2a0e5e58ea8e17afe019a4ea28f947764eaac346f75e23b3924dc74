@@ -1,0 +1,14 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { defineCustomElement } from '@tylertech/forge-core';
+import { BottomSheetComponent } from './bottom-sheet';
+export * from './bottom-sheet-adapter';
+export * from './bottom-sheet-constants';
+export * from './bottom-sheet-core';
+export * from './bottom-sheet';
+export function defineBottomSheetComponent() {
+    defineCustomElement(BottomSheetComponent);
+}

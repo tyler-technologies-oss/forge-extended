@@ -1,0 +1,45 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IChipFieldAdapter } from './chip-field-adapter';
+import { BaseFieldCore, IBaseFieldCore } from '../field/base/base-field-core';
+export interface IChipFieldCore extends IBaseFieldCore {
+    addOnBlur: boolean;
+    readonly popoverTargetElement: HTMLElement;
+}
+export declare class ChipFieldCore extends BaseFieldCore<IChipFieldAdapter> implements IChipFieldCore {
+    private _addOnBlur;
+    private _mouseDownListener;
+    private _clickListener;
+    private _rootKeyDownListener;
+    private _inputKeyDownListener;
+    private _slotChangeListener;
+    private _inputAttributeListener;
+    private _valueChangeListener;
+    private _inputListener;
+    private _blurListener;
+    constructor(adapter: IChipFieldAdapter);
+    initialize(): void;
+    destroy(): void;
+    protected _onBlur(event: FocusEvent): void;
+    private _onMouseDown;
+    private _onClick;
+    private _onValueChange;
+    private _onSlotChange;
+    private _onInputAttributeChange;
+    private _onRootKeyDown;
+    private _onKeyDown;
+    private _focusNextMember;
+    private _focusPreviousMember;
+    private _isMemberActive;
+    private _getActiveMember;
+    private _addMember;
+    private _removeMember;
+    get addOnBlur(): boolean;
+    set addOnBlur(value: boolean);
+    get popoverTargetElement(): HTMLElement;
+    get disabled(): boolean;
+    set disabled(value: boolean);
+}

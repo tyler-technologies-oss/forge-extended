@@ -1,0 +1,2 @@
+/** Copy the text value to the clipboard. */
+export declare function copyToClipboard(text: string): boolean;

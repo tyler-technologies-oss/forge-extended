@@ -1,0 +1,16 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { InlineMessageComponent as InlineMessageComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class InlineMessageComponent {
+    protected elementRef: ElementRef<InlineMessageComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-inline-message element. */
+    readonly nativeElement: InlineMessageComponentCustomElement;
+    /** The theme to apply. */
+    set theme(value: InlineMessageComponentCustomElement['theme']);
+    get theme(): InlineMessageComponentCustomElement['theme'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<InlineMessageComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<InlineMessageComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<InlineMessageComponent, "forge-inline-message", never, { "theme": { "alias": "theme"; "required": false; }; }, {}, never, ["*"], false, never>;
+}

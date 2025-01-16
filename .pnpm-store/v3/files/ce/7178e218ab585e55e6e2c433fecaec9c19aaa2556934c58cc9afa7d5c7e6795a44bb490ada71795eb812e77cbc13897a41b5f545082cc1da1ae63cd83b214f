@@ -1,0 +1,13 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { internals } from '../../constants';
+import { BaseComponent } from './base-component';
+/**
+ * Any form associated Custom HTML element.
+ */
+export class BaseFormComponent extends BaseComponent {
+}
+BaseFormComponent.formAssociated = true;

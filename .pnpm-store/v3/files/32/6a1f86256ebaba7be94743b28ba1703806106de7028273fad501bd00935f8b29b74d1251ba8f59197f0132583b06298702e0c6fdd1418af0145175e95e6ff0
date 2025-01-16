@@ -1,0 +1,5844 @@
+{
+  "$schema": "https://raw.githubusercontent.com/microsoft/vscode-css-languageservice/main/docs/customData.schema.json",
+  "version": 1.1,
+  "properties": [
+    {
+      "name": "--forge-avatar-background",
+      "description": "The background color of the avatar.",
+      "values": [{ "name": "string" }]
+    },
+    {
+      "name": "--forge-avatar-shape",
+      "description": "The border radius of the avatar, defaults to 50%.",
+      "values": [{ "name": "number" }]
+    },
+    {
+      "name": "--forge-avatar-color",
+      "description": "The text color of the avatar.",
+      "values": [{ "name": "color" }]
+    },
+    {
+      "name": "--forge-avatar-size",
+      "description": "The height and width of the avatar.",
+      "values": [{ "name": "number" }]
+    },
+    {
+      "name": "--forge-avatar-transition-duration",
+      "description": "The transition duration for animations.",
+      "values": [{ "name": "number" }]
+    },
+    {
+      "name": "--forge-avatar-transition-timing",
+      "description": "The transition timing function for animations.",
+      "values": [{ "name": "string" }]
+    },
+    {
+      "name": "--forge-backdrop-background",
+      "description": "The backdrop background color.",
+      "values": []
+    },
+    {
+      "name": "--forge-backdrop-opacity",
+      "description": "The backdrop opacity.",
+      "values": []
+    },
+    {
+      "name": "--forge-backdrop-z-index",
+      "description": "The backdrop z-index.",
+      "values": []
+    },
+    {
+      "name": "--forge-backdrop-enter-animation-duration",
+      "description": "The animation duration for the enter animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-backdrop-enter-animation-easing",
+      "description": "The animation easing for the enter animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-backdrop-exit-animation-duration",
+      "description": "The animation duration for the exit animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-backdrop-exit-animation-easing",
+      "description": "The animation easing for the exit animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-badge-background",
+      "description": "The background color.",
+      "values": []
+    },
+    {
+      "name": "--forge-badge-color",
+      "description": "The text color.",
+      "values": []
+    },
+    {
+      "name": "--forge-badge-shape",
+      "description": "The shape radius.",
+      "values": []
+    },
+    {
+      "name": "--forge-badge-padding-inline",
+      "description": "The inline padding.",
+      "values": []
+    },
+    {
+      "name": "--forge-badge-padding-block",
+      "description": "The block padding.",
+      "values": []
+    },
+    {
+      "name": "--forge-badge-border-width",
+      "description": "The border width.",
+      "values": []
+    },
+    {
+      "name": "--forge-badge-border-color",
+      "description": "The border color.",
+      "values": []
+    },
+    {
+      "name": "--forge-badge-border-style",
+      "description": "The border style.",
+      "values": []
+    },
+    {
+      "name": "--forge-badge-gap",
+      "description": "The spacing between the content within the badge.",
+      "values": []
+    },
+    {
+      "name": "--forge-banner-background",
+      "description": "The background color of the banner.",
+      "values": []
+    },
+    {
+      "name": "--forge-banner-color",
+      "description": "The text color of the banner.",
+      "values": []
+    },
+    {
+      "name": "--forge-banner-icon-color",
+      "description": "The color of the icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-banner-gap",
+      "description": "The gap between the contents.",
+      "values": []
+    },
+    {
+      "name": "--forge-banner-padding-inline",
+      "description": "The inline padding.",
+      "values": []
+    },
+    {
+      "name": "--forge-banner-padding-block",
+      "description": "The block padding.",
+      "values": []
+    },
+    {
+      "name": "--forge-banner-transition-duration",
+      "description": "The transition duration.",
+      "values": []
+    },
+    {
+      "name": "--forge-banner-transition-easing",
+      "description": "The transition easing function.",
+      "values": []
+    },
+    {
+      "name": "--forge-bottom-sheet-desktop-max-width",
+      "description": "The maximum width of the bottom sheet on desktop.",
+      "values": []
+    },
+    {
+      "name": "--forge-bottom-sheet-desktop-min-width",
+      "description": "The minimum width of the bottom sheet on desktop.",
+      "values": []
+    },
+    {
+      "name": "--forge-bottom-sheet-animation-duration",
+      "description": "The duration of the bottom sheet animation to fullscreen.",
+      "values": []
+    },
+    {
+      "name": "--forge-bottom-sheet-animation-timing",
+      "description": "The timing function of the bottom sheet animation to fullscreen.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-primary-color",
+      "description": "The primary color of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-text-color",
+      "description": "The text color of the button. Inherits from primary color.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-disabled-color",
+      "description": "The disabled color of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-padding",
+      "description": "The padding of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-display",
+      "description": "The display of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-justify",
+      "description": "The flex justify of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-shape",
+      "description": "The shape of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-height",
+      "description": "The height of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-min-width",
+      "description": "The min-width of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-spacing",
+      "description": "The spacing of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-border-width",
+      "description": "The border-width of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-border-style",
+      "description": "The border style of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-border-color",
+      "description": "The border color of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-shape-start-start-radius",
+      "description": "The shape start start radius of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-shape-start-end-radius",
+      "description": "The shape start end radius of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-shape-end-start-radius",
+      "description": "The shape end start radius of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-shape-end-end-radius",
+      "description": "The shape end end radius of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-padding-block",
+      "description": "The padding block of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-padding-inline",
+      "description": "The padding inline of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-background",
+      "description": "The background color of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-hover-background",
+      "description": "The background color of the button on hover.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-active-background",
+      "description": "The background color of the button on active state.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-color",
+      "description": "The text color of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-icon-size",
+      "description": "The size of the icon in the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-shadow",
+      "description": "The shadow of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-hover-shadow",
+      "description": "The shadow of the button on hover.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-active-shadow",
+      "description": "The shadow of the button on active state.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-cursor",
+      "description": "The cursor type of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-transition-duration",
+      "description": "The transition duration of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-transition-timing",
+      "description": "The transition timing of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-text-padding-inline",
+      "description": "The inline padding of the button when using the text variant.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-filled-background",
+      "description": "The background color of the filled button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-filled-disabled-background",
+      "description": "The background color of the disabled filled button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-filled-color",
+      "description": "The text color of the filled button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-filled-disabled-color",
+      "description": "The text color of the disabled filled button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-raised-background",
+      "description": "The background color of the raised button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-raised-disabled-background",
+      "description": "The background color of the disabled raised button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-raised-color",
+      "description": "The text color of the raised button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-raised-disabled-color",
+      "description": "The text color of the disabled raised button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-raised-shadow",
+      "description": "The shadow of the raised button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-raised-hover-shadow",
+      "description": "The shadow of the raised button on hover.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-raised-active-shadow",
+      "description": "The shadow of the raised button on active state.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-raised-disabled-shadow",
+      "description": "The shadow of the disabled raised button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-flat-background",
+      "description": "The background color of the flat button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-flat-disabled-background",
+      "description": "The background color of the disabled flat button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-flat-color",
+      "description": "The text color of the flat button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-flat-disabled-color",
+      "description": "The text color of the disabled flat button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-outlined-background",
+      "description": "The background color of the outlined button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-outlined-color",
+      "description": "The text color of the outlined button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-outlined-border-width",
+      "description": "The border width of the outlined button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-outlined-border-style",
+      "description": "The border style of the outlined button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-outlined-border-color",
+      "description": "The border color of the outlined button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-link-color",
+      "description": "The text color of the link button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-link-text-decoration",
+      "description": "The text decoration of the link button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-link-height",
+      "description": "The height of the link button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-link-padding",
+      "description": "The padding of the link button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-link-line-height",
+      "description": "The line height of the link button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-link-width",
+      "description": "The width of the link button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-link-hover-text-decoration",
+      "description": "The text decoration of the link button on hover.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-link-active-opacity",
+      "description": "The opacity of the link button on active state.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-link-transition-duration",
+      "description": "The transition duration of the link button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-link-transition-timing",
+      "description": "The transition timing of the link button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-disabled-cursor",
+      "description": "The cursor type of the disabled button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-disabled-text-color",
+      "description": "The text color of the disabled button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-disabled-background",
+      "description": "The background color of the disabled button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-disabled-border-color",
+      "description": "The border color of the disabled button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-disabled-shadow",
+      "description": "The shadow of the disabled button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-dense-height",
+      "description": "The height of the dense button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-pill-shape",
+      "description": "The shape of the pill button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-pill-padding-inline",
+      "description": "The inline padding of the pill button.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-area-cursor",
+      "description": "The cursor.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-area-disabled-cursor",
+      "description": "The cursor when in the disabled state.",
+      "values": []
+    },
+    {
+      "name": "--forge-card-background",
+      "description": "The background color of the card.",
+      "values": []
+    },
+    {
+      "name": "--forge-card-height",
+      "description": "The height of the card.",
+      "values": []
+    },
+    {
+      "name": "--forge-card-width",
+      "description": "The width of the card.",
+      "values": []
+    },
+    {
+      "name": "--forge-card-outline-color",
+      "description": "The outline color of the card.",
+      "values": []
+    },
+    {
+      "name": "--forge-card-outline-width",
+      "description": "The outline width of the card.",
+      "values": []
+    },
+    {
+      "name": "--forge-card-outline-style",
+      "description": "The outline style of the card.",
+      "values": []
+    },
+    {
+      "name": "--forge-card-elevation",
+      "description": "The elevation/shadow of the card.",
+      "values": []
+    },
+    {
+      "name": "--forge-card-padding",
+      "description": "The padding of the card.",
+      "values": []
+    },
+    {
+      "name": "--forge-card-shape",
+      "description": "The shape (border-radius) of the card.",
+      "values": []
+    },
+    {
+      "name": "--forge-card-overflow",
+      "description": "The overflow of the card.",
+      "values": []
+    },
+    {
+      "name": "--forge-card-raised-elevation",
+      "description": "The elevation/shadow of the card when raised.",
+      "values": []
+    },
+    {
+      "name": "--forge-card-raised-outline-width",
+      "description": "The outline width of the card when raised.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-background",
+      "description": "The color of the checkbox background when unchecked and not indeterminate.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-width",
+      "description": "The inline size of the checkbox.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-height",
+      "description": "The block size of the checkbox.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-unchecked-border-width",
+      "description": "The width of the checkbox border when unchecked and not indeterminate.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-unchecked-border-color",
+      "description": "The color of the checkbox border when unchecked and not indeterminate.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-shape",
+      "description": "The shape of the checkbox.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-elevation",
+      "description": "The shadow of the checkbox.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-gap",
+      "description": "The space between the checkbox and label.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-justify",
+      "description": "How the checkbox and label are distributed along their main axis.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-direction",
+      "description": "Whether the checkbox and label are arranged along the inline or block axis.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-checked-background",
+      "description": "The color of the checkbox background when checked or indeterminate.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-checked-border-width",
+      "description": "The width of the checkbox border when checked or indeterminate.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-checked-border-color",
+      "description": "The color of the checkbox border when checked or indeterminate.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-icon-checked-color",
+      "description": "The color of the checkmark mark.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-icon-indeterminate-color",
+      "description": "The color of the indeterminate mark.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-icon-stroke-width",
+      "description": "The stroke width of the checkmark and indeterminate marks.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-state-layer-width",
+      "description": "The inline size of the state layer.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-state-layer-height",
+      "description": "The block size of the state layer.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-state-layer-checked-color",
+      "description": "The color of the state layer when checked.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-state-layer-unchecked-color",
+      "description": "The color of the state layer when unchecked.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-state-layer-shape",
+      "description": "The shape of the state layer.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-state-layer-dense-width",
+      "description": "The inline size of the state layer when dense.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-state-layer-dense-height",
+      "description": "The block size of the state layer when dense.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-disabled-opacity",
+      "description": "The opacity when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-animation-duration",
+      "description": "The duration of animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-background-animation-timing",
+      "description": "The timing function of the background animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-checkbox-icon-animation-timing",
+      "description": "The timing function of the checked and indeterminate icons animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-field-member-spacing",
+      "description": "The spacing between chip members.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-field-content-spacing",
+      "description": "The spacing around chips group.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-background",
+      "description": "The background of the field surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-tonal-background",
+      "description": "The background of the field surface in the tonal variant.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-tonal-background-hover",
+      "description": "The background of the field surface in the tonal variant on hover.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-filled-background",
+      "description": "The background of the field surface in the filled and raised variants.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-outline-style",
+      "description": "The style of the field outline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-outline-width",
+      "description": "The width of the field outline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-shape",
+      "description": "The border radius of the field's corners.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-height",
+      "description": "The height of the field in its default density.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-inset-height",
+      "description": "The height of the field in its default density when the label is inset.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-padding-inline",
+      "description": "The inline padding of the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-padding-inline-start",
+      "description": "The inline start padding of the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-padding-inline-end",
+      "description": "The inline end padding of the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-inner-padding-inline",
+      "description": "The padding between elements slotted into the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-margin-block",
+      "description": "The margin between the support text and the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-gap",
+      "description": "The minimum gap between the support text and the support text end.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-padding-inline",
+      "description": "The inline padding of the support text.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-padding-inline-start",
+      "description": "The inline start padding of the support text.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-padding-inline-end",
+      "description": "The inline end padding of the support text.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-label-margin-inline",
+      "description": "The margin between the label and the field when the label is in an inline position.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-label-margin-block",
+      "description": "The margin between the label and the field when the label is in the block start position.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-required-padding",
+      "description": "The padding between the required indicator and the label.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-required-content",
+      "description": "The content of the required indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-optional-padding",
+      "description": "The padding between the optional indicator and the label.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-optional-content",
+      "description": "The content of the optional indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-resize",
+      "description": "The direction the field can be resized when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-min-inline-size",
+      "description": "The minimum inline size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-max-inline-size",
+      "description": "The maximum inline size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-min-block-size",
+      "description": "The minimum block size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-max-block-size",
+      "description": "The maximum block size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-popover-icon-transition-duration",
+      "description": "The duration of the popover icon animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-popover-icon-transition-timing",
+      "description": "The timing function of the popover icon animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-popover-icon-open-rotation",
+      "description": "The rotation of the popover icon when open.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-animation-duration",
+      "description": "The duration of background and outline animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-animation-timing",
+      "description": "The timing function of background and outline animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-floating-animation-duration",
+      "description": "The duration of the floating label animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-floating-animation-timing",
+      "description": "The timing function of the floating label animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-focus-indicator-width",
+      "description": "The width of the focus indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-disabled-opacity",
+      "description": "The opacity of the field when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-disabled-background",
+      "description": "The background of the field when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-circular-progress-size",
+      "description": "The height and width of the indicator container.",
+      "values": []
+    },
+    {
+      "name": "--forge-circular-progress-padding",
+      "description": "The padding inside the bounding box of the container.",
+      "values": []
+    },
+    {
+      "name": "--forge-circular-progress-track-width",
+      "description": "The track indicator width.",
+      "values": []
+    },
+    {
+      "name": "--forge-circular-progress-track-color",
+      "description": "The track background color.",
+      "values": []
+    },
+    {
+      "name": "--forge-circular-progress-indicator-color",
+      "description": "The track indicator color.",
+      "values": []
+    },
+    {
+      "name": "--forge-circular-progress-arc-duration",
+      "description": "The duration of the arc animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-circular-progress-theme-transition-duration",
+      "description": "The duration of the theme transition.",
+      "values": []
+    },
+    {
+      "name": "--forge-circular-progress-theme-transition-timing",
+      "description": "The easing function to use for the theme transition.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-background",
+      "description": "The background color of the dialog.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-shape",
+      "description": "The shape of the dialog.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-elevation",
+      "description": "The elevation of the dialog.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-spacing",
+      "description": "The spacing between elements inside the dialog.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-block-start-spacing",
+      "description": "The spacing at the start of the dialog block.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-block-end-spacing",
+      "description": "The spacing at the end of the dialog block.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-inline-start-spacing",
+      "description": "The spacing at the start of the dialog inline.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-inline-end-spacing",
+      "description": "The spacing at the end of the dialog inline.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-padding",
+      "description": "The padding of the dialog.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-width",
+      "description": "The width of the dialog.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-height",
+      "description": "The height of the dialog.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-min-width",
+      "description": "The minimum width of the dialog.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-max-width",
+      "description": "The maximum width of the dialog.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-min-height",
+      "description": "The minimum height of the dialog.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-max-height",
+      "description": "The maximum height of the dialog.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-z-index",
+      "description": "The z-index of the dialog.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-move-handle-color",
+      "description": "The color of the move handle.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-move-handle-size",
+      "description": "The size of the move handle.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-move-handle-hover-cursor",
+      "description": "The cursor style when hovering over the move handle.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-move-handle-active-cursor",
+      "description": "The cursor style when the move handle is active.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-move-handle-spacing",
+      "description": "The spacing around the move handle.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-move-transition-duration",
+      "description": "The duration of the move transition.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-move-transition-easing",
+      "description": "The easing function of the move transition.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-moving-opacity",
+      "description": "The opacity of the dialog when it is being moved.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-enter-animation-duration",
+      "description": "The duration of the enter animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-enter-animation-easing",
+      "description": "The easing function of the enter animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-exit-animation-duration",
+      "description": "The duration of the exit animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-exit-animation-easing",
+      "description": "The easing function of the exit animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-zoom-opacity",
+      "description": "The opacity of the dialog during zoom animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-zoom-scale",
+      "description": "The scale of the dialog during zoom animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-fade-opacity",
+      "description": "The opacity of the dialog during fade animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-slide-opacity",
+      "description": "The opacity of the dialog during slide animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-slide-translate",
+      "description": "The translation distance of the dialog during slide animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-backdrop-opacity",
+      "description": "The opacity of the dialog backdrop.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-nonmodal-elevation",
+      "description": "The elevation of non-modal dialogs.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-fullscreen-enter-animation-duration",
+      "description": "The duration of the enter animation for fullscreen dialogs.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-fullscreen-exit-animation-duration",
+      "description": "The duration of the exit animation for fullscreen dialogs.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-position-x",
+      "description": "The x-axis position of the dialog.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-position-y",
+      "description": "The y-axis position of the dialog.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-preset-sheet-enter-animation-duration",
+      "description": "The duration of the enter animation for preset sheet dialogs.",
+      "values": []
+    },
+    {
+      "name": "--forge-dialog-preset-sheet-exit-animation-duration",
+      "description": "The duration of the exit animation for preset sheet dialogs.",
+      "values": []
+    },
+    {
+      "name": "--forge-divider-color",
+      "description": "The color of the divider.",
+      "values": []
+    },
+    {
+      "name": "--forge-divider-width",
+      "description": "The width of the divider.",
+      "values": []
+    },
+    {
+      "name": "--forge-divider-border-style",
+      "description": "The border-style (dashed, solid) of the divider.",
+      "values": []
+    },
+    {
+      "name": "--forge-divider-margin",
+      "description": "The margin of divider.",
+      "values": []
+    },
+    {
+      "name": "--forge-expansion-panel-animation-duration",
+      "description": "The duration of the open/close animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-expansion-panel-animation-easing",
+      "description": "The easing function of the open/close animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-background",
+      "description": "The background of the field surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-tonal-background",
+      "description": "The background of the field surface in the tonal variant.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-tonal-background-hover",
+      "description": "The background of the field surface in the tonal variant on hover.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-filled-background",
+      "description": "The background of the field surface in the filled and raised variants.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-outline-style",
+      "description": "The style of the field outline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-outline-width",
+      "description": "The width of the field outline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-shape",
+      "description": "The border radius of the field's corners.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-height",
+      "description": "The height of the field in its default density.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-inset-height",
+      "description": "The height of the field in its default density when the label is inset.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-padding-inline",
+      "description": "The inline padding of the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-padding-inline-start",
+      "description": "The inline start padding of the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-padding-inline-end",
+      "description": "The inline end padding of the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-inner-padding-inline",
+      "description": "The padding between elements slotted into the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-margin-block",
+      "description": "The margin between the support text and the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-gap",
+      "description": "The minimum gap between the support text and the support text end.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-padding-inline",
+      "description": "The inline padding of the support text.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-padding-inline-start",
+      "description": "The inline start padding of the support text.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-padding-inline-end",
+      "description": "The inline end padding of the support text.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-label-margin-inline",
+      "description": "The margin between the label and the field when the label is in an inline position.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-label-margin-block",
+      "description": "The margin between the label and the field when the label is in the block start position.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-required-padding",
+      "description": "The padding between the required indicator and the label.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-required-content",
+      "description": "The content of the required indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-optional-padding",
+      "description": "The padding between the optional indicator and the label.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-optional-content",
+      "description": "The content of the optional indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-resize",
+      "description": "The direction the field can be resized when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-min-inline-size",
+      "description": "The minimum inline size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-max-inline-size",
+      "description": "The maximum inline size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-min-block-size",
+      "description": "The minimum block size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-max-block-size",
+      "description": "The maximum block size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-popover-icon-transition-duration",
+      "description": "The duration of the popover icon animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-popover-icon-transition-timing",
+      "description": "The timing function of the popover icon animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-popover-icon-open-rotation",
+      "description": "The rotation of the popover icon when open.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-animation-duration",
+      "description": "The duration of background and outline animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-animation-timing",
+      "description": "The timing function of background and outline animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-floating-animation-duration",
+      "description": "The duration of the floating label animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-floating-animation-timing",
+      "description": "The timing function of the floating label animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-focus-indicator-width",
+      "description": "The width of the focus indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-disabled-opacity",
+      "description": "The opacity of the field when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-disabled-background",
+      "description": "The background of the field when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-file-picker-background",
+      "description": "Controls the background color.",
+      "values": []
+    },
+    {
+      "name": "--forge-file-picker-width",
+      "description": "Controls the width.",
+      "values": []
+    },
+    {
+      "name": "--forge-file-picker-height",
+      "description": "Controls the height.",
+      "values": []
+    },
+    {
+      "name": "--forge-file-picker-max-width",
+      "description": "Controls the maximum width.",
+      "values": []
+    },
+    {
+      "name": "--forge-file-picker-border-width",
+      "description": "Controls the border width.",
+      "values": []
+    },
+    {
+      "name": "--forge-file-picker-border-style",
+      "description": "Controls the border style.",
+      "values": []
+    },
+    {
+      "name": "--forge-file-picker-border-color",
+      "description": "Controls the border color.",
+      "values": []
+    },
+    {
+      "name": "--forge-file-picker-gap",
+      "description": "Controls gap between each element.",
+      "values": []
+    },
+    {
+      "name": "--forge-file-picker-padding",
+      "description": "Controls the padding.",
+      "values": []
+    },
+    {
+      "name": "--forge-file-picker-padding-block",
+      "description": "Controls the top and bottom padding.",
+      "values": []
+    },
+    {
+      "name": "--forge-file-picker-padding-inline",
+      "description": "Controls the left and right padding.",
+      "values": []
+    },
+    {
+      "name": "--forge-file-picker-disabled-opacity",
+      "description": "Controls the opacity value of the file picker when it's disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-file-picker-highlight-background",
+      "description": "Controls the background color of the file picker when dragging files into the form.",
+      "values": []
+    },
+    {
+      "name": "--forge-file-picker-highlight-border-color",
+      "description": "Controls the border color of the file picker when dragging files into the form.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-background-display",
+      "description": "The display property.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-gap",
+      "description": "The gap between the icon and the label.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-background",
+      "description": "The background color.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-color",
+      "description": "The text color.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-size",
+      "description": "The height and min-width of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-padding",
+      "description": "The inline padding of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-shadow",
+      "description": "The box shadow of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-hover-shadow",
+      "description": "The box shadow of the button when hovered.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-active-shadow",
+      "description": "The box shadow of the button when active.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-lowered-shadow",
+      "description": "The box shadow of the button when lowered.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-lowered-hover-shadow",
+      "description": "The box shadow of the button when lowered and hovered.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-lowered-active-shadow",
+      "description": "The box shadow of the button when lowered and active.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-transition-duration",
+      "description": "The transition duration.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-transition-timing",
+      "description": "The transition timing function.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-shape",
+      "description": "The border radius of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-shape-start-start",
+      "description": "The start-start border radius.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-shape-start-end",
+      "description": "The start-end border radius.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-shape-end-start",
+      "description": "The end-start border radius.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-shape-end-end",
+      "description": "The end-end border radius.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-extended-padding",
+      "description": "The inline padding of the extended button.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-extended-min-width",
+      "description": "The min-width of the extended button.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-density-small-size",
+      "description": "The height and min-width of the small density button.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-density-medium-size",
+      "description": "The height and min-width of the medium density (default) button.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-density-large-size",
+      "description": "The height and min-width of the large density button.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-disabled-cursor",
+      "description": "The cursor when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-disabled-background",
+      "description": "The background color when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-disabled-color",
+      "description": "The text color when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-fab-disabled-opacity",
+      "description": "The opacity when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-display",
+      "description": "The `display` style. Defaults to `flex`.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-width",
+      "description": "The width of the focus indicator when resting.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-active-width",
+      "description": "The width of the focus indicator when active. When animating this is the max extent.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-color",
+      "description": "The color of the focus indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-shape",
+      "description": "The shape of the focus indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-duration",
+      "description": "The animation duration.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-easing",
+      "description": "The animation easing function.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-shape-start-start",
+      "description": "The start start shape.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-shape-start-end",
+      "description": "The start end shape.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-shape-end-start",
+      "description": "The end start shape.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-shape-end-end",
+      "description": "The end end shape.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-outward-offset",
+      "description": "The offset of the focus indicator when outward.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-inward-offset",
+      "description": "The offset of the focus indicator when inward.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-offset-block",
+      "description": "The block offset.",
+      "values": []
+    },
+    {
+      "name": "--forge-focus-indicator-offset-inline",
+      "description": "The inline offset.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-color",
+      "description": "The color of the icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-size",
+      "description": "The size of the icon. Defaults to the font-size of the context it is placed in.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-width",
+      "description": "The width of the icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-height",
+      "description": "The height of the icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-font-size",
+      "description": "The font size of the icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-display",
+      "description": "The display property of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-size",
+      "description": "The height and min-width of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-gap",
+      "description": "The gap between the icon content.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-icon-color",
+      "description": "The color of the icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-background-color",
+      "description": "The background color of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-icon-size",
+      "description": "The size of the icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-cursor",
+      "description": "The cursor of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-padding",
+      "description": "The inline padding of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-border",
+      "description": "The border of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-shadow",
+      "description": "The shadow of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-transition-duration",
+      "description": "The transition duration of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-transition-timing",
+      "description": "The transition timing of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-shape",
+      "description": "The shape of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-shape-start-start",
+      "description": "The start-start border-radius of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-shape-start-end",
+      "description": "The start-end border-radius of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-shape-end-start",
+      "description": "The end-start border-radius of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-shape-end-end",
+      "description": "The end-end border-radius of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-shape-squared",
+      "description": "The squared border-radius of the button.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-outlined-border-width",
+      "description": "The border width when in the outlined variant.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-outlined-border-style",
+      "description": "The border style when in the outlined variant.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-outlined-border-color",
+      "description": "The border color when in the outlined variant.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-tonal-icon-color",
+      "description": "The icon color when in the tonal variant.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-tonal-background-color",
+      "description": "The background color when in the tonal variant.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-filled-icon-color",
+      "description": "The icon color when in the filled variant.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-filled-background-color",
+      "description": "The background color when in the filled variant.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-raised-shadow",
+      "description": "The shadow when in the raised variant.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-raised-hover-shadow",
+      "description": "The shadow when in the raised variant and hovered.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-raised-active-shadow",
+      "description": "The shadow when in the raised variant and active.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-raised-disabled-shadow",
+      "description": "The shadow when in the raised variant and disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-density-small-size",
+      "description": "The size of the button when in the small density.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-density-small-padding",
+      "description": "The padding of the button when in the small density.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-density-small-icon-size",
+      "description": "The size of the icon when in the small density.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-density-medium-size",
+      "description": "The size of the button when in the medium density.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-density-medium-padding",
+      "description": "The padding of the button when in the medium density.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-density-large-size",
+      "description": "The size of the button when in the large density.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-toggle-on-background-color",
+      "description": "The background color of the when in toggle mode and toggled on.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-toggle-on-icon-color",
+      "description": "The color of the icon when in toggle mode and toggled on.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-outlined-toggle-on-background-color",
+      "description": "The background color when in the outlined variant and toggled on.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-outlined-toggle-on-icon-color",
+      "description": "The icon color when in the outlined variant and toggled on.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-tonal-toggle-background-color",
+      "description": "The background color when in the tonal variant and toggled.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-tonal-toggle-on-background-color",
+      "description": "The background color when in the tonal variant and toggled on.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-tonal-toggle-on-icon-color",
+      "description": "The icon color when in the tonal variant and toggled on.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-filled-toggle-background-color",
+      "description": "The background color when in the filled variant and toggled.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-filled-toggle-icon-color",
+      "description": "The icon color when in the filled variant and toggled.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-filled-toggle-on-background-color",
+      "description": "The background color when in the filled variant and toggled on.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-filled-toggle-on-icon-color",
+      "description": "The icon color when in the filled variant and toggled on.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-disabled-cursor",
+      "description": "The cursor when the button is disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-disabled-opacity",
+      "description": "The opacity when the button is disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-popover-icon-padding",
+      "description": "The padding of the popover icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-icon-button-focus-indicator-color",
+      "description": "The color of the focus indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-inline-message-background",
+      "description": "The background color.",
+      "values": []
+    },
+    {
+      "name": "--forge-inline-message-color",
+      "description": "The text color.",
+      "values": []
+    },
+    {
+      "name": "--forge-inline-message-shape",
+      "description": "The shape (border) radius.",
+      "values": []
+    },
+    {
+      "name": "--forge-inline-message-padding",
+      "description": "The padding around the content.",
+      "values": []
+    },
+    {
+      "name": "--forge-inline-message-padding-inline",
+      "description": "The inline padding around the content.",
+      "values": []
+    },
+    {
+      "name": "--forge-inline-message-padding-block",
+      "description": "The block padding around the content.",
+      "values": []
+    },
+    {
+      "name": "--forge-inline-message-border-width",
+      "description": "The border width.",
+      "values": []
+    },
+    {
+      "name": "--forge-inline-message-border-style",
+      "description": "The border style. Defaults to `none`.",
+      "values": []
+    },
+    {
+      "name": "--forge-inline-message-border-color",
+      "description": "The border color.",
+      "values": []
+    },
+    {
+      "name": "--forge-inline-message-gap",
+      "description": "The gap/space between the content elements.",
+      "values": []
+    },
+    {
+      "name": "--forge-inline-message-icon-gap",
+      "description": "The gap/space between the icon and the content.",
+      "values": []
+    },
+    {
+      "name": "--forge-inline-message-content-gap",
+      "description": "The gap/space between the title and the message.",
+      "values": []
+    },
+    {
+      "name": "--forge-inline-message-icon-color",
+      "description": "The icon color.",
+      "values": []
+    },
+    {
+      "name": "--forge-label-value-align",
+      "description": "Aligns the label and value. Possible values: `start` (default), `center`, `end`.",
+      "values": []
+    },
+    {
+      "name": "--forge-label-value-label-spacing",
+      "description": "The spacing between the label and value.",
+      "values": []
+    },
+    {
+      "name": "--forge-label-value-label-block-start-spacing",
+      "description": "The block start spacing for the label.",
+      "values": []
+    },
+    {
+      "name": "--forge-label-value-label-block-end-spacing",
+      "description": "The block end spacing for the label.",
+      "values": []
+    },
+    {
+      "name": "--forge-label-value-label-color",
+      "description": "The color to apply to the label.",
+      "values": []
+    },
+    {
+      "name": "--forge-label-value-icon-spacing",
+      "description": "The spacing between the icon and the label.",
+      "values": []
+    },
+    {
+      "name": "--forge-label-value-inline-label-spacing",
+      "description": "The spacing between the label and value when displayed inline.",
+      "values": []
+    },
+    {
+      "name": "--forge-label-value-empty-color",
+      "description": "The color to apply to the value when empty.",
+      "values": []
+    },
+    {
+      "name": "--forge-label-value-empty-style",
+      "description": "The font-style to apply to the value when empty.",
+      "values": []
+    },
+    {
+      "name": "--forge-linear-progress-height",
+      "description": "The height of the element.",
+      "values": []
+    },
+    {
+      "name": "--forge-linear-progress-track-color",
+      "description": "The background color of the indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-linear-progress-track-shape",
+      "description": "The shape of the indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-linear-progress-indicator-color",
+      "description": "The color of the indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-linear-progress-indicator-height",
+      "description": "The height of the indicator only.",
+      "values": []
+    },
+    {
+      "name": "--forge-linear-progress-determinate-duration",
+      "description": "The duration of the determinate animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-linear-progress-indeterminate-duration",
+      "description": "The duration of the indeterminate animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-linear-progress-determinate-easing",
+      "description": "The easing function to use for the determinate animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-linear-progress-theme-transition-duration",
+      "description": "The duration of the theme transition.",
+      "values": []
+    },
+    {
+      "name": "--forge-linear-progress-theme-transition-timing",
+      "description": "The easing function to use for the theme transition.",
+      "values": []
+    },
+    {
+      "name": "--forge-open-icon-color",
+      "description": "The color of the icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-open-icon-size",
+      "description": "The size of the icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-open-icon-height",
+      "description": "The height of the icon. Defaults to `size`.",
+      "values": []
+    },
+    {
+      "name": "--forge-open-icon-width",
+      "description": "The width of the icon. Defaults to `size`.",
+      "values": []
+    },
+    {
+      "name": "--forge-open-icon-initial-rotation",
+      "description": "The initial rotation of the icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-open-icon-open-rotation",
+      "description": "The rotation of the icon when open.",
+      "values": []
+    },
+    {
+      "name": "--forge-open-icon-animation-duration",
+      "description": "The duration of the open animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-open-icon-half-animation-duration",
+      "description": "The duration of the open animation when in a half orientation.",
+      "values": []
+    },
+    {
+      "name": "--forge-open-icon-animation-timing",
+      "description": "The timing function of the open animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-overlay-position",
+      "description": "The `position` of the overlay.",
+      "values": []
+    },
+    {
+      "name": "--forge-overlay-z-index",
+      "description": "The `z-index` of the overlay. Defaults to the `popup` range.",
+      "values": []
+    },
+    {
+      "name": "--forge-overlay-height",
+      "description": "The `height` of the overlay. Defaults to `min-content`.",
+      "values": []
+    },
+    {
+      "name": "--forge-overlay-width",
+      "description": "The `width` of the overlay. Defaults to `min-content`.",
+      "values": []
+    },
+    {
+      "name": "--forge-overlay-position-block-start",
+      "description": "The `block-start` position of the overlay.",
+      "values": []
+    },
+    {
+      "name": "--forge-overlay-position-block-end",
+      "description": "The `block-end` position of the overlay.",
+      "values": []
+    },
+    {
+      "name": "--forge-overlay-position-inline-start",
+      "description": "The `inline-start` position of the overlay.",
+      "values": []
+    },
+    {
+      "name": "--forge-overlay-position-inline-end",
+      "description": "The `inline-end` position of the overlay.",
+      "values": []
+    },
+    {
+      "name": "--forge-page-state-width",
+      "description": "The width of the page state.",
+      "values": []
+    },
+    {
+      "name": "--forge-page-state-height",
+      "description": "The height of the page state.",
+      "values": []
+    },
+    {
+      "name": "--forge-page-state-spacing",
+      "description": "The spacing of the page state.",
+      "values": []
+    },
+    {
+      "name": "--forge-page-state-mobile-width",
+      "description": "The mobile width of the page state.",
+      "values": []
+    },
+    {
+      "name": "--forge-page-state-graphic-height",
+      "description": "The graphic height of the page state.",
+      "values": []
+    },
+    {
+      "name": "--forge-page-state-graphic-spacing",
+      "description": "The graphic spacing of the page state.",
+      "values": []
+    },
+    {
+      "name": "--forge-page-state-mobile-graphic-height",
+      "description": "The mobile graphic height of the page state.",
+      "values": []
+    },
+    {
+      "name": "--forge-page-state-title-color",
+      "description": "The title color of the page state.",
+      "values": []
+    },
+    {
+      "name": "--forge-page-state-title-spacing",
+      "description": "The title spacing of the page state.",
+      "values": []
+    },
+    {
+      "name": "--forge-page-state-message-color",
+      "description": "The message color of the page state.",
+      "values": []
+    },
+    {
+      "name": "--forge-page-state-message-spacing",
+      "description": "The message spacing of the page state.",
+      "values": []
+    },
+    {
+      "name": "--forge-page-state-actions-spacing",
+      "description": "The actions spacing of the page state.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-background",
+      "description": "The background color of the popover surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-border-radius",
+      "description": "The border radius of the popover surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-box-shadow",
+      "description": "The box shadow of the popover surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-border-width",
+      "description": "The border width of the popover surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-border-style",
+      "description": "The border style of the popover surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-border-color",
+      "description": "The border color of the popover surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-width",
+      "description": "The width of the popover surface. Defaults to `auto`.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-height",
+      "description": "The height of the popover surface. Defaults to `auto`.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-min-width",
+      "description": "The minimum width of the popover surface. Defaults to `none`.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-max-width",
+      "description": "The maximum width of the popover surface. Defaults to `none`.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-min-height",
+      "description": "The minimum height of the popover surface. Defaults to `none`.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-max-height",
+      "description": "The maximum height of the popover surface. Defaults to `none`.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-arrow-size",
+      "description": "The size of the arrow.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-arrow-height",
+      "description": "The height of the arrow.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-arrow-width",
+      "description": "The width of the arrow.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-arrow-background-color",
+      "description": "The background color of the arrow. Defaults to the background color of the popover surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-arrow-top-rotation",
+      "description": "The rotation of the arrow when the popover is placed on the top.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-arrow-right-rotation",
+      "description": "The rotation of the arrow when the popover is placed on the right.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-arrow-bottom-rotation",
+      "description": "The rotation of the arrow when the popover is placed on the bottom.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-arrow-left-rotation",
+      "description": "The rotation of the arrow when the popover is placed on the left.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-arrow-border-width",
+      "description": "The border width of the popover surface and arrow when an arrow is applied.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-arrow-clip-path",
+      "description": "The clip path to use for the arrow element.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-animation-timing",
+      "description": "The animation timing function to use for the popover animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-zoom-duration",
+      "description": "The duration of the zoom animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-zoom-timing",
+      "description": "The timing function to use for the zoom animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-slide-duration",
+      "description": "The duration of the slide animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-slide-timing",
+      "description": "The timing function to use for the slide animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-slide-offset",
+      "description": "The start offset to use for the slide animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-fade-duration",
+      "description": "The duration of the fade animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-fade-timing",
+      "description": "The timing function to use for the fade animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-position-block-start",
+      "description": "The `block-start` position of the popover.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-position-block-end",
+      "description": "The `block-end` position of the popover.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-position-inline-start",
+      "description": "The `inline-start` position of the popover.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-position-inline-end",
+      "description": "The `inline-end` position of the popover.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-preset-dropdown-max-height",
+      "description": "The maximum height of the popover when using `preset=\"dropdown\"`. Defaults to `256px`.",
+      "values": []
+    },
+    {
+      "name": "--forge-popover-preset-dropdown-overflow",
+      "description": "The overflow behavior of the popover when using `preset=\"dropdown\"`. Defaults to `auto visible` (vertical scrolling only).",
+      "values": []
+    },
+    {
+      "name": "--forge-scaffold-height",
+      "description": "The `height` of the scaffold.",
+      "values": []
+    },
+    {
+      "name": "--forge-scaffold-width",
+      "description": "The `width` of the scaffold.",
+      "values": []
+    },
+    {
+      "name": "--forge-scaffold-overflow",
+      "description": "The `overflow` of the scaffold.",
+      "values": []
+    },
+    {
+      "name": "--forge-scaffold-body-position",
+      "description": "The `position` of the scaffold body.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-animation-duration",
+      "description": "The duration of the skeleton animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-width",
+      "description": "The width of the skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-height",
+      "description": "The height of the skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-background",
+      "description": "The background color of the skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-shape",
+      "description": "The shape of the skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-margin",
+      "description": "The margin of the skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-button-height",
+      "description": "The height of the button skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-button-width",
+      "description": "The width of the button skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-form-field-height",
+      "description": "The height of the form field skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-form-field-width",
+      "description": "The width of the form field skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-chip-height",
+      "description": "The height of the chip skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-chip-width",
+      "description": "The width of the chip skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-chip-shape",
+      "description": "The shape of the chip skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-list-item-height",
+      "description": "The height of the list item skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-list-item-margin",
+      "description": "The margin of the list item skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-text-height",
+      "description": "The height of the text skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-gradient-color",
+      "description": "The color of the gradient skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-avatar-size",
+      "description": "The size of the avatar skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skeleton-avatar-shape",
+      "description": "The shape of the avatar skeleton.",
+      "values": []
+    },
+    {
+      "name": "--forge-skip-link-background",
+      "description": "The background color of the skip link.",
+      "values": []
+    },
+    {
+      "name": "--forge-skip-link-color",
+      "description": "The text color of the skip link.",
+      "values": []
+    },
+    {
+      "name": "--forge-skip-link-shape",
+      "description": "The border radius of the skip link.",
+      "values": []
+    },
+    {
+      "name": "--forge-skip-link-inset",
+      "description": "The skip link's inset from the edge of the viewport.",
+      "values": []
+    },
+    {
+      "name": "--forge-skip-link-z-index",
+      "description": "The z-index of the skip link.",
+      "values": []
+    },
+    {
+      "name": "--forge-skip-link-elevation",
+      "description": "The box shadow of the skip link.",
+      "values": []
+    },
+    {
+      "name": "--forge-skip-link-padding-block",
+      "description": "The interior padding of the skip link along the block axis.",
+      "values": []
+    },
+    {
+      "name": "--forge-skip-link-padding-inline",
+      "description": "The interior padding of the skip link along the inline axis.",
+      "values": []
+    },
+    {
+      "name": "--forge-skip-link-focus-indicator-color",
+      "description": "The color of the focus indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-skip-link-transition-duration",
+      "description": "The duration of the skip link's animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-skip-link-transition-timing-function",
+      "description": "The timing function of the skip link's animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-theme-primary",
+      "description": "The primary color of the slider.",
+      "values": []
+    },
+    {
+      "name": "--forge-theme-on-primary",
+      "description": "The color of elements placed on top of the primary color (the label text for example).",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-track-height",
+      "description": "The height of the track.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-active-track-color",
+      "description": "The color of the active track.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-active-track-height",
+      "description": "The height of the active track.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-active-track-shape",
+      "description": "The shape of the active track.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-disabled-active-track-color",
+      "description": "The color of the active track when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-disabled-active-track-opacity",
+      "description": "The opacity of the active track when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-disabled-handle-color",
+      "description": "The color of the slider handle when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-disabled-inactive-track-color",
+      "description": "The color of the inactive track when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-disabled-inactive-track-opacity",
+      "description": "The opacity of the inactive track when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-focus-handle-color",
+      "description": "The color of the slider handle when focused.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-handle-color",
+      "description": "The color of the slider handle.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-handle-height",
+      "description": "The height of the slider handle.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-handle-width",
+      "description": "The width of the slider handle.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-handle-shape",
+      "description": "The shape of the slider handle.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-hover-handle-color",
+      "description": "The color of the slider handle when hovered.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-inactive-track-color",
+      "description": "The color of the inactive track.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-inactive-track-height",
+      "description": "The height of the inactive track.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-inactive-track-shape",
+      "description": "The shape of the inactive track.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-label-container-shape",
+      "description": "The shape of the label container.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-label-container-color",
+      "description": "The color of the label container.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-label-container-height",
+      "description": "The height of the label container.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-label-text-color",
+      "description": "The color of the label text.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-pressed-handle-color",
+      "description": "The color of the slider handle when pressed.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-state-layer-size",
+      "description": "The size of the state layer.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-with-overlap-handle-outline-color",
+      "description": "The color of the slider handle outline when overlapping.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-with-overlap-handle-outline-width",
+      "description": "The width of the slider handle outline when overlapping.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-with-tick-marks-active-container-color",
+      "description": "The color of the active tick mark container when tick marks are visible.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-with-tick-marks-container-size",
+      "description": "The size of the tick mark container when tick marks are visible.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-with-tick-marks-disabled-active-container-color",
+      "description": "The color of the active tick mark container when tick marks are visible and disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-with-tick-marks-disabled-inactive-container-color",
+      "description": "The color of the inactive tick mark container when tick marks are visible and disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-slider-with-tick-marks-inactive-container-color",
+      "description": "The color of the inactive tick mark container when tick marks are visible.",
+      "values": []
+    },
+    {
+      "name": "--forge-split-button-min-width",
+      "description": "The minimum width of the slotted buttons.",
+      "values": []
+    },
+    {
+      "name": "--forge-split-button-gap",
+      "description": "The gap between the slotted buttons.",
+      "values": []
+    },
+    {
+      "name": "--forge-split-button-focus-indicator-offset",
+      "description": "The offset of the focus indicator around the buttons.",
+      "values": []
+    },
+    {
+      "name": "--forge-split-button-focus-indicator-divider-offset",
+      "description": "The offset of the focus indicator divider when using outlined buttons.",
+      "values": []
+    },
+    {
+      "name": "--forge-stack-alignment",
+      "description": "Controls the align-items CSS property of the root stack element.",
+      "values": []
+    },
+    {
+      "name": "--forge-stack-justify",
+      "description": "Controls the justify-content CSS property of the root stack element.",
+      "values": []
+    },
+    {
+      "name": "--forge-stack-gap",
+      "description": "Controls the gap between each child element within a stack.",
+      "values": []
+    },
+    {
+      "name": "--forge-stack-height",
+      "description": "Controls the height of the root stack element.",
+      "values": []
+    },
+    {
+      "name": "--forge-stack-stretch",
+      "description": "Controls the flex shorthand property of a child element within the stack.",
+      "values": []
+    },
+    {
+      "name": "--forge-state-layer-color",
+      "description": "The color of the state layer. Defaults to the on-surface theme.",
+      "values": []
+    },
+    {
+      "name": "--forge-state-layer-hover-color",
+      "description": "The color of the state layer when hovered.",
+      "values": []
+    },
+    {
+      "name": "--forge-state-layer-hover-opacity",
+      "description": "The opacity of the state layer when hovered.",
+      "values": []
+    },
+    {
+      "name": "--forge-state-layer-pressed-color",
+      "description": "The color of the state layer when pressed.",
+      "values": []
+    },
+    {
+      "name": "--forge-state-layer-pressed-opacity",
+      "description": "The opacity of the state layer when pressed.",
+      "values": []
+    },
+    {
+      "name": "--forge-state-layer-hover-duration",
+      "description": "The duration of the hover animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-state-layer-animation-duration",
+      "description": "The duration of the animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-state-layer-pressed-duration",
+      "description": "The duration of the pressed animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-theme-primary",
+      "description": "The primary color of the switch.",
+      "values": []
+    },
+    {
+      "name": "--forge-theme-on-primary",
+      "description": "The color of elements placed on top of the primary color (the handle icons for example).",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-on-color",
+      "description": "The color of the handle in the switch's on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-off-color",
+      "description": "The color of the handle in the switch's off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-active-on-color",
+      "description": "The color of the handle when the switch is active (pressed) in its on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-active-off-color",
+      "description": "The color of the handle when the switch is active (pressed) in its off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-size",
+      "description": "The inline and block size of the handle.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-width",
+      "description": "The inline size of the handle.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-height",
+      "description": "The block size of the handle.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-scale",
+      "description": "The scale transformation applied to the handle.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-on-scale",
+      "description": "The scale transformation applied to the handle in the switch's on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-off-scale",
+      "description": "The scale transformation applied to the handle in the switch's off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-active-scale",
+      "description": "The scale transformation applied to the handle when the switch is active (pressed).",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-active-on-scale",
+      "description": "The scale transformation applied to the handle when the switch is active (pressed) in its on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-active-off-scale",
+      "description": "The scale transformation applied to the handle when the switch is active (pressed) in its off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-shape",
+      "description": "The shape of the handle.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-elevation",
+      "description": "The handle's shadow.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-on-elevation",
+      "description": "The handle's shadow in the switch's on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-off-elevation",
+      "description": "The handle's shadow in the switch's off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-active-elevation",
+      "description": "The handle's shadow when the switch is active (pressed).",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-active-on-elevation",
+      "description": "The handle's shadow when the switch is active (pressed) in its on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-handle-active-off-elevation",
+      "description": "The handle's shadow when the switch is active (pressed) in its off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-on-color",
+      "description": "The color of the track in the switch's on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-off-color",
+      "description": "The color fo the track in the switch's off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-active-on-color",
+      "description": "The color of the track when the switch is active (pressed) in its on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-active-off-color",
+      "description": "The color fo the track when the switch is active (pressed) in its off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-width",
+      "description": "The inline size of the track.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-height",
+      "description": "The block size of the track.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-shape",
+      "description": "The shape of the track.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-border-width",
+      "description": "The width of the track border.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-on-border-width",
+      "description": "The width of the track border in the switch's on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-off-border-width",
+      "description": "The width of the track border in the switch's off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-active-on-border-width",
+      "description": "The width of the track border when the switch is active (pressed) in its on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-active-off-border-width",
+      "description": "The width of the track border when the switch is active (pressed) in its off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-border-color",
+      "description": "The color of the track border.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-on-border-color",
+      "description": "The color of the track border in the switch's on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-off-border-color",
+      "description": "The color of the track border in the switch's off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-active-on-border-color",
+      "description": "The color of the track border when the switch is active (pressed) in its on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-track-active-off-border-color",
+      "description": "The color of the track border when the switch is active (pressed) in its off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-icon-color",
+      "description": "The color of the handle icons.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-icon-on-color",
+      "description": "The color of the handle icon in the switch's on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-icon-off-color",
+      "description": "The color of the handle icon in the switch's off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-icon-active-on-color",
+      "description": "The color of the handle icon when the switch is active (pressed) in its on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-icon-active-off-color",
+      "description": "The color of the handle icon when the switch is active (pressed) in its off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-icon-size",
+      "description": "The size of the handle icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-icon-on-size",
+      "description": "The size of the handle icon in the switch's on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-icon-off-size",
+      "description": "The size of the handle icon in the switch's off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-icon-scale",
+      "description": "The scale transformation applied to the handle icons.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-icon-on-scale",
+      "description": "The scale transformation applied to the handle icons in the switch's on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-icon-off-scale",
+      "description": "The scale transformation applied to the handle icons in the switch's off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-icon-active-on-scale",
+      "description": "The scale transformation applied to the handle icons when the switch is active (pressed) in its on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-icon-active-off-scale",
+      "description": "The scale transformation applied to the handle icons when the switch is active (pressed) in its off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-gap",
+      "description": "The space between the switch and label.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-justify",
+      "description": "How the switch and label are distributed along their main axis.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-direction",
+      "description": "Whether the switch and label are arranged along the inline or block axis.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-state-layer-size",
+      "description": "The inline and block size of the handle's state layer.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-state-layer-width",
+      "description": "The inline size of the handle's state layer.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-state-layer-height",
+      "description": "The block size of the handle's state layer.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-state-layer-on-color",
+      "description": "The color of the handle's state layer when the switch is in its on state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-state-layer-off-color",
+      "description": "The color of the handle's state layer when the switch is in its off state.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-state-layer-dense-size",
+      "description": "The inline and block size of the handle's state layer when the dense switch is used.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-state-layer-dense-width",
+      "description": "The inline size of the handle's state layer when the dense switch is used.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-state-layer-dense-height",
+      "description": "The block size of the handle's state layer when the dense switch is used.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-disabled-opacity",
+      "description": "The opacity of the switch when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-animation-duration",
+      "description": "The duration of animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-animation-timing",
+      "description": "The timing function used in most animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-switch-active-animation-timing",
+      "description": "The timing function used in active state animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-background",
+      "description": "The background of the field surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-tonal-background",
+      "description": "The background of the field surface in the tonal variant.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-tonal-background-hover",
+      "description": "The background of the field surface in the tonal variant on hover.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-filled-background",
+      "description": "The background of the field surface in the filled and raised variants.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-outline-style",
+      "description": "The style of the field outline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-outline-width",
+      "description": "The width of the field outline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-shape",
+      "description": "The border radius of the field's corners.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-height",
+      "description": "The height of the field in its default density.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-inset-height",
+      "description": "The height of the field in its default density when the label is inset.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-padding-inline",
+      "description": "The inline padding of the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-padding-inline-start",
+      "description": "The inline start padding of the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-padding-inline-end",
+      "description": "The inline end padding of the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-inner-padding-inline",
+      "description": "The padding between elements slotted into the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-margin-block",
+      "description": "The margin between the support text and the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-gap",
+      "description": "The minimum gap between the support text and the support text end.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-padding-inline",
+      "description": "The inline padding of the support text.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-padding-inline-start",
+      "description": "The inline start padding of the support text.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-padding-inline-end",
+      "description": "The inline end padding of the support text.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-label-margin-inline",
+      "description": "The margin between the label and the field when the label is in an inline position.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-label-margin-block",
+      "description": "The margin between the label and the field when the label is in the block start position.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-required-padding",
+      "description": "The padding between the required indicator and the label.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-required-content",
+      "description": "The content of the required indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-optional-padding",
+      "description": "The padding between the optional indicator and the label.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-optional-content",
+      "description": "The content of the optional indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-resize",
+      "description": "The direction the field can be resized when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-min-inline-size",
+      "description": "The minimum inline size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-max-inline-size",
+      "description": "The maximum inline size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-min-block-size",
+      "description": "The minimum block size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-max-block-size",
+      "description": "The maximum block size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-popover-icon-transition-duration",
+      "description": "The duration of the popover icon animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-popover-icon-transition-timing",
+      "description": "The timing function of the popover icon animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-popover-icon-open-rotation",
+      "description": "The rotation of the popover icon when open.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-animation-duration",
+      "description": "The duration of background and outline animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-animation-timing",
+      "description": "The timing function of background and outline animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-floating-animation-duration",
+      "description": "The duration of the floating label animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-floating-animation-timing",
+      "description": "The timing function of the floating label animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-focus-indicator-width",
+      "description": "The width of the focus indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-disabled-opacity",
+      "description": "The opacity of the field when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-disabled-background",
+      "description": "The background of the field when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-background",
+      "description": "The background color of the toast.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-color",
+      "description": "The text color of the toast.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-offset",
+      "description": "The offset of the toast from the edge of the viewport.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-shape",
+      "description": "The shape of the toast.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-elevation",
+      "description": "The elevation of the toast.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-action-color",
+      "description": "The text color of the action button.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-min-width",
+      "description": "The minimum width of the toast.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-max-width",
+      "description": "The maximum width of the toast.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-min-height",
+      "description": "The minimum height of the toast.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-inline-padding",
+      "description": "The padding of the toast when inline.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-spacing",
+      "description": "The spacing between toasts.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-message-padding",
+      "description": "The padding of the toast message.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-enter-duration",
+      "description": "The duration of the enter animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-enter-timing",
+      "description": "The timing function of the enter animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-exit-duration",
+      "description": "The duration of the exit animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-exit-timing",
+      "description": "The timing function of the exit animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-toast-slide-origin",
+      "description": "The origin of the slide animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-theme-height",
+      "description": "Controls the height.",
+      "values": []
+    },
+    {
+      "name": "--forge-theme-min-height",
+      "description": "Controls the minimum height.",
+      "values": []
+    },
+    {
+      "name": "--forge-theme-surface",
+      "description": "Controls the background-color of the toolbar.",
+      "values": []
+    },
+    {
+      "name": "--forge-toolbar-divider-width",
+      "description": "Controls the divider width.",
+      "values": []
+    },
+    {
+      "name": "--forge-toolbar-divider-style",
+      "description": "Controls the divider style.",
+      "values": []
+    },
+    {
+      "name": "--forge-toolbar-divider-color",
+      "description": "Controls the divider color.",
+      "values": []
+    },
+    {
+      "name": "--forge-toolbar-shape",
+      "description": "Controls the border radius of the toolbar.",
+      "values": []
+    },
+    {
+      "name": "--forge-toolbar-start-start-shape",
+      "description": "Controls the border radius of the top left corner.",
+      "values": []
+    },
+    {
+      "name": "--forge-toolbar-start-end-shape",
+      "description": "Controls the border radius of the top right corner.",
+      "values": []
+    },
+    {
+      "name": "--forge-toolbar-end-start-shape",
+      "description": "Controls the border radius of the bottom left corner.",
+      "values": []
+    },
+    {
+      "name": "--forge-toolbar-end-end-shape",
+      "description": "Controls the border radius of the bottom right corner.",
+      "values": []
+    },
+    {
+      "name": "--forge-toolbar-padding",
+      "description": "Controls the left and right padding using the padding-inline style.",
+      "values": []
+    },
+    {
+      "name": "--forge-toolbar-padding-block",
+      "description": "Controls the top and bottom padding using the padding-block style.",
+      "values": []
+    },
+    {
+      "name": "--forge-toolbar-padding-inline",
+      "description": "Controls the left and right padding using the padding-block style.",
+      "values": []
+    },
+    {
+      "name": "--forge-toolbar-columns",
+      "description": "The grid column track sizes.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-background",
+      "description": "The background color of the tooltip surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-color",
+      "description": "The text color of the tooltip surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-shape",
+      "description": "The shape of the tooltip surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-padding",
+      "description": "The padding of the tooltip surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-padding-block",
+      "description": "The block padding of the tooltip surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-padding-inline",
+      "description": "The inline padding of the tooltip surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-max-width",
+      "description": "The maximum width of the tooltip surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-elevation",
+      "description": "The elevation of the tooltip surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-border-width",
+      "description": "The border width of the tooltip surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-border-style",
+      "description": "The border style of the tooltip surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-border-color",
+      "description": "The border color of the tooltip surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-animation-timing",
+      "description": "The animation timing function of the tooltip surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-animation-duration",
+      "description": "The animation duration of the tooltip surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-animation-offset",
+      "description": "The animation offset of the tooltip surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-arrow-size",
+      "description": "The size of the tooltip arrow.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-arrow-height",
+      "description": "The height of the tooltip arrow.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-arrow-width",
+      "description": "The width of the tooltip arrow.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-arrow-shape",
+      "description": "The shape of the tooltip arrow.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-arrow-clip-path",
+      "description": "The clip path of the tooltip arrow.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-arrow-rotation",
+      "description": "The rotation of the tooltip arrow.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-arrow-top-rotation",
+      "description": "The rotation of the tooltip arrow when the tooltip is placed on top.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-arrow-right-rotation",
+      "description": "The rotation of the tooltip arrow when the tooltip is placed on the right.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-arrow-bottom-rotation",
+      "description": "The rotation of the tooltip arrow when the tooltip is placed on the bottom.",
+      "values": []
+    },
+    {
+      "name": "--forge-tooltip-arrow-left-rotation",
+      "description": "The rotation of the tooltip arrow when the tooltip is placed on the left.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-background",
+      "description": "The background color of the app bar.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-foreground",
+      "description": "The text color of the app bar.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-z-index",
+      "description": "The `z-index` of the app bar.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-elevation",
+      "description": "The elevation of the app bar.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-height",
+      "description": "The height of the app bar.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-row-padding",
+      "description": "The inline padding of the app bar.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-logo-gap",
+      "description": "The space between the logo and title.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-title-padding",
+      "description": "The padding around the title element.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-columns",
+      "description": "The grid column track sizes.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-transition-duration",
+      "description": "The transition duration for animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-transition-timing",
+      "description": "The transition timing function for animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-theme-on-primary",
+      "description": "Controls the border-color of the container outline, the font-color, and icon color.",
+      "values": []
+    },
+    {
+      "name": "--forge-theme-on-surface",
+      "description": "Controls the font color of the buttons.",
+      "values": []
+    },
+    {
+      "name": "--forge-theme-text-medium",
+      "description": "Controls the placeholder font color.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-search-theme-background",
+      "description": "Controls the background-color of the container.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-search-theme-background-focused",
+      "description": "Controls the focused background-color of the container.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-search-theme-hover-opacity",
+      "description": "Controls the hover opacity of the outline.",
+      "values": []
+    },
+    {
+      "name": "--forge-app-bar-search-theme-disabled-opacity",
+      "description": "Controls the disabled opacity of the component.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-display",
+      "description": "The `display` style for the button toggle container element.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-min-width",
+      "description": "The minimum width.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-spacing",
+      "description": "The spacing between the button toggle and its content.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-padding-block",
+      "description": "The padding on the block axis.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-padding-inline",
+      "description": "The padding on the inline axis.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-color",
+      "description": "The color of the button toggle content.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-background",
+      "description": "The background of the button toggle.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-cursor",
+      "description": "The cursor of the button toggle.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-border-width",
+      "description": "The border-width of the button toggle.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-border-style",
+      "description": "The border-style of the button toggle.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-border-color",
+      "description": "The border-color of the button toggle.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-shape",
+      "description": "The shape radius of the button toggle.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-shape-start-start",
+      "description": "The start-start shape radius of the button toggle.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-shape-start-end",
+      "description": "The start-end shape radius of the button toggle.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-shape-end-start",
+      "description": "The end-start shape radius of the button toggle.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-shape-end-end",
+      "description": "The end-end shape radius of the button toggle.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-selected-background",
+      "description": "The background of the button toggle when selected.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-selected-color",
+      "description": "The color of the button toggle content when selected.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-selected-disabled-background",
+      "description": "The background of the button toggle when selected and disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-disabled-opacity",
+      "description": "The opacity of the button toggle when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-disabled-cursor",
+      "description": "The cursor of the button toggle when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-disabled-color",
+      "description": "The color of the button toggle content when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-disabled-background",
+      "description": "The background of the button toggle when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-transition-duration",
+      "description": "The transition-duration of various properties.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-transition-timing",
+      "description": "The transition-timing of various properties.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-display",
+      "description": "The `display` of the group container elements.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-gap",
+      "description": "The space between button toggle elements.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-padding",
+      "description": "The padding around the button toggle elements when outlined.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-padding-block",
+      "description": "The block padding around the button toggle elements when outlined.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-padding-inline",
+      "description": "The inline padding around the button toggle elements when outlined.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-height",
+      "description": "The height of the group element.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-dense-height",
+      "description": "The height of the group element when dense.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-outline-width",
+      "description": "The width of the outline around the group element.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-outline-style",
+      "description": "The style of the outline around the group element.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-outline-color",
+      "description": "The color of the outline around the group element.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-outline-color-active",
+      "description": "The color of the outline around the group element when hovered or focused.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-shape",
+      "description": "The shape radius of the group container element.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-shape-start-start",
+      "description": "The start-start shape radius.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-shape-start-end",
+      "description": "The start-end shape radius.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-shape-end-start",
+      "description": "The end-start shape radius.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-shape-end-end",
+      "description": "The end-end shape radius.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-transition-duration",
+      "description": "The transition duration for all animations on the group.",
+      "values": []
+    },
+    {
+      "name": "--forge-button-toggle-group-transition-timing",
+      "description": "The transition timing for all animations on the group.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-background",
+      "description": "The background color of the chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-color",
+      "description": "The background color of the chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-shape",
+      "description": "The shape of the chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-spacing",
+      "description": "The spacing between chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-height",
+      "description": "The height of the chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-padding-inline",
+      "description": "The inline padding of the chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-padding-block",
+      "description": "The block padding of the chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-cursor",
+      "description": "The cursor style of the chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-icon-font-size",
+      "description": "The font size of the chip icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-focus-indicator-color",
+      "description": "The color of the focus indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-disabled-opacity",
+      "description": "The opacity of the disabled chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-disabled-cursor",
+      "description": "The cursor style of the disabled chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-dense-height",
+      "description": "The height of the dense chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-dense-padding-inline",
+      "description": "The inline padding of the dense chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-dense-spacing",
+      "description": "The spacing between dense chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-dense-font-size",
+      "description": "The font size of the dense chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-dense-font-weight",
+      "description": "The font weight of the dense chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-dense-focus-indicator-offset",
+      "description": "The offset of the focus indicator for dense chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-dense-icon-font-size",
+      "description": "The font size of the icon in dense chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-remove-button-spacing",
+      "description": "The spacing of the remove button in chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-remove-button-height-dense",
+      "description": "The height of the remove button in dense chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-remove-button-icon-size-dense",
+      "description": "The icon size of the remove button in dense chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-remove-button-spacing-dense",
+      "description": "The spacing of the remove button in dense chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-selected-background",
+      "description": "The background color of the selected chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-selected-color",
+      "description": "The text color of the selected chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-invalid-color",
+      "description": "The text color of the invalid chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-invalid-selected-background",
+      "description": "The background color of the invalid selected chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-invalid-selected-color",
+      "description": "The text color of the invalid selected chip.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-border-width",
+      "description": "The width of the chip border.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-border-style",
+      "description": "The style of the chip border.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-border-color",
+      "description": "The color of the chip border.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-field-background",
+      "description": "The background color of the chip field.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-field-color",
+      "description": "The text color of the chip field.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-field-shape",
+      "description": "The shape of the chip field.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-field-border-color",
+      "description": "The color of the chip field border.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-field-cursor",
+      "description": "The cursor style of the chip field.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-checkmark-size",
+      "description": "The size of the checkmark in chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-checkmark-color",
+      "description": "The color of the checkmark in chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-checkmark-spacing",
+      "description": "The spacing of the checkmark in chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-avatar-size",
+      "description": "The size of the avatar in chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-avatar-size-dense",
+      "description": "The size of the avatar in dense chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-avatar-font-size",
+      "description": "The font size of the avatar in chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-avatar-font-size-dense",
+      "description": "The font size of the avatar in dense chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-avatar-spacing",
+      "description": "The spacing of the avatar in chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-avatar-spacing-dense",
+      "description": "The spacing of the avatar in dense chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-transition-duration",
+      "description": "The duration of the chip transition.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-transition-easing",
+      "description": "The easing function of the chip transition.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-checkmark-transition-delay",
+      "description": "The delay of the checkmark transition in chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-chip-set-spacing",
+      "description": "The spacing between chips.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-width",
+      "description": "The width of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-background",
+      "description": "The background color of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-border-color",
+      "description": "The border of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-border-width",
+      "description": "The border width of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-transition-duration",
+      "description": "The transition duration of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-transition-easing",
+      "description": "The transition timing function of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-duration-close",
+      "description": "The duration of the drawer closing animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-mini-drawer-width",
+      "description": "The width of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-mini-drawer-hover-width",
+      "description": "The width of the drawer when hovered.",
+      "values": []
+    },
+    {
+      "name": "--forge-mini-drawer-transition-duration",
+      "description": "The transition duration of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-mini-drawer-transition-easing",
+      "description": "The transition timing function of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-mini-drawer-delay",
+      "description": "The delay before the drawer closes when the mouse leaves the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-mini-drawer-hover-transition-duration",
+      "description": "The transition duration of the drawer when hovered.",
+      "values": []
+    },
+    {
+      "name": "--forge-mini-drawer-hover-transition-easing",
+      "description": "The transition timing function of the drawer when hovered.",
+      "values": []
+    },
+    {
+      "name": "--forge-mini-drawer-hover-transition-delay",
+      "description": "The delay before the drawer closes when the mouse leaves the drawer when hovered.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-width",
+      "description": "The width of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-background",
+      "description": "The background color of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-border-color",
+      "description": "The border of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-border-width",
+      "description": "The border width of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-transition-duration",
+      "description": "The transition duration of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-transition-easing",
+      "description": "The transition timing function of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-duration-close",
+      "description": "The duration of the drawer closing animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-width",
+      "description": "The width of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-background",
+      "description": "The background color of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-border-color",
+      "description": "The border of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-border-width",
+      "description": "The border width of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-transition-duration",
+      "description": "The transition duration of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-transition-easing",
+      "description": "The transition timing function of the drawer.",
+      "values": []
+    },
+    {
+      "name": "--forge-drawer-duration-close",
+      "description": "The duration of the drawer closing animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-container-color",
+      "description": "The background color of the list surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-spacing",
+      "description": "The spacing between the list items.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-background",
+      "description": "The background color.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-shape",
+      "description": "The shape of the list item.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-padding",
+      "description": "The padding inside of the container element.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-wrap-padding",
+      "description": "The padding inside of the container element when `wrap` is enabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-margin",
+      "description": "The margin around the host element.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-height",
+      "description": "The height of the container.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-indent",
+      "description": "The margin inline state when in the indented state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-cursor",
+      "description": "The cursor when interactive.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-gap",
+      "description": "The gap between the slotted content.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-text-color",
+      "description": "The text color of the text.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-text-font-size",
+      "description": "The font size of the text.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-text-font-weight",
+      "description": "The font weight of the text.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-text-line-height",
+      "description": "The line height of the text.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-selected-color",
+      "description": "The foreground color when in the selected state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-selected-background",
+      "description": "The background color when in the selected state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-selected-opacity",
+      "description": "The opacity of the background color when in the selected state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-start-selected-color",
+      "description": "The color of the start content when in the selected state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-end-selected-color",
+      "description": "The color of the end content when in the selected state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-selected-text-color",
+      "description": "The color of the text when in the selected state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-disabled-opacity",
+      "description": "The opacity of the element when in the disabled state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-disabled-cursor",
+      "description": "The cursor when in the disabled state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-one-line-height",
+      "description": "The line height when in the one/single line state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-two-line-height",
+      "description": "The line height when in the two line state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-three-line-height",
+      "description": "The line height when in the three line state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-dense-one-line-height",
+      "description": "The line height when in the dense one/single line state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-dense-two-line-height",
+      "description": "The line height when in the dense two line state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-dense-three-line-height",
+      "description": "The line height when in the dense three line state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-dense-font-size",
+      "description": "The font size when in the dense state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-dense-indent",
+      "description": "The margin inline state when in the dense indented state.",
+      "values": []
+    },
+    {
+      "name": "--forge-list-item-dense-gap",
+      "description": "The gap between the slotted content when in the dense state.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-primary-color",
+      "description": "The primary color of the radio button when checked.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-inactive-color",
+      "description": "The color of the radio button when unchecked.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-size",
+      "description": "The size of the radio button in the inline and block directions.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-width",
+      "description": "The width of the radio button.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-height",
+      "description": "The height of the radio button.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-border-width",
+      "description": "The width of the radio button's border.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-unchecked-border-color",
+      "description": "The color of the radio button's border when unchecked.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-checked-border-color",
+      "description": "The color of the radio button's border when checked.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-background",
+      "description": "The background of the radio button.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-shape",
+      "description": "The shape of the radio button.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-mark-size",
+      "description": "The size of the radio button's mark in the inline and block directions.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-mark-width",
+      "description": "The width of the radio button's mark.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-mark-height",
+      "description": "The height of the radio button's mark.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-mark-color",
+      "description": "The color of the radio button's mark.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-gap",
+      "description": "The gap between the radio button and its label.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-justify",
+      "description": "The alignment of the radio button and its label in the inline direction.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-direction",
+      "description": "The direction of the radio button and its label.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-state-layer-size",
+      "description": "The size of the radio button's state layer in the inline and block directions.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-state-layer-width",
+      "description": "The width of the radio button's state layer.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-state-layer-height",
+      "description": "The height of the radio button's state layer.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-state-layer-unchecked",
+      "description": "color - The color of the radio button's state layer when unchecked.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-state-layer-checked-color",
+      "description": "The color of the radio button's state layer when checked.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-state-layer-shape",
+      "description": "The shape of the radio button's state layer.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-state-layer-dense-size",
+      "description": "The size of the radio button's state layer when dense.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-state-layer-dense-width",
+      "description": "The width of the radio button's state layer when dense.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-state-layer-dense-height",
+      "description": "The height of the radio button's state layer when dense.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-disabled-opacity",
+      "description": "The opacity of the radio button when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-animation-duration",
+      "description": "The duration of the radio button's animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-animation-timing-function",
+      "description": "The timing function of the radio button's animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-radio-animation-delay",
+      "description": "The delay of the radio button's animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-select-placeholder-color",
+      "description": "The color of the placeholder text.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-background",
+      "description": "The background of the field surface.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-tonal-background",
+      "description": "The background of the field surface in the tonal variant.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-tonal-background-hover",
+      "description": "The background of the field surface in the tonal variant on hover.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-filled-background",
+      "description": "The background of the field surface in the filled and raised variants.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-outline-style",
+      "description": "The style of the field outline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-outline-width",
+      "description": "The width of the field outline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-shape",
+      "description": "The border radius of the field's corners.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-height",
+      "description": "The height of the field in its default density.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-inset-height",
+      "description": "The height of the field in its default density when the label is inset.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-padding-inline",
+      "description": "The inline padding of the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-padding-inline-start",
+      "description": "The inline start padding of the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-padding-inline-end",
+      "description": "The inline end padding of the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-inner-padding-inline",
+      "description": "The padding between elements slotted into the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-margin-block",
+      "description": "The margin between the support text and the field.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-gap",
+      "description": "The minimum gap between the support text and the support text end.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-padding-inline",
+      "description": "The inline padding of the support text.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-padding-inline-start",
+      "description": "The inline start padding of the support text.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-support-text-padding-inline-end",
+      "description": "The inline end padding of the support text.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-label-margin-inline",
+      "description": "The margin between the label and the field when the label is in an inline position.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-label-margin-block",
+      "description": "The margin between the label and the field when the label is in the block start position.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-required-padding",
+      "description": "The padding between the required indicator and the label.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-required-content",
+      "description": "The content of the required indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-optional-padding",
+      "description": "The padding between the optional indicator and the label.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-optional-content",
+      "description": "The content of the optional indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-resize",
+      "description": "The direction the field can be resized when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-min-inline-size",
+      "description": "The minimum inline size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-max-inline-size",
+      "description": "The maximum inline size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-min-block-size",
+      "description": "The minimum block size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-multiline-max-block-size",
+      "description": "The maximum block size the field can be resized to when multiline.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-popover-icon-transition-duration",
+      "description": "The duration of the popover icon animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-popover-icon-transition-timing",
+      "description": "The timing function of the popover icon animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-popover-icon-open-rotation",
+      "description": "The rotation of the popover icon when open.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-animation-duration",
+      "description": "The duration of background and outline animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-animation-timing",
+      "description": "The timing function of background and outline animations.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-floating-animation-duration",
+      "description": "The duration of the floating label animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-surface-floating-animation-timing",
+      "description": "The timing function of the floating label animation.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-focus-indicator-width",
+      "description": "The width of the focus indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-disabled-opacity",
+      "description": "The opacity of the field when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-field-disabled-background",
+      "description": "The background of the field when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-split-view-panel-size",
+      "description": "The size of the panel along the axis of orientation.",
+      "values": []
+    },
+    {
+      "name": "--forge-split-view-panel-cursor",
+      "description": "The cursor to display when hovering over the panel.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-primary-color",
+      "description": "The primary color of the step. Defaults to the primary theme.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-text-color",
+      "description": "The text color of the step. Defaults to the on-primary theme.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-border-radius",
+      "description": "The border radius of the step. Defaults to the extra-large shape.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-border-radius-vertical",
+      "description": "The border radius of the step in vertical mode. Defaults to the medium shape.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-disabled-text-color",
+      "description": "The text color of the step when disabled. Defaults to the text-low theme.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-disabled-color",
+      "description": "The color of the step when disabled. Defaults to the surface-container-minimum theme.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-icon-fill",
+      "description": "The fill color of the step icon. Defaults to unset.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-icon-fill-active",
+      "description": "The fill color of the step icon when active. Defaults to the primary color.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-icon-text-color",
+      "description": "The text color of the step icon. Defaults to the primary theme.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-icon-text-color-active",
+      "description": "The text color of the step icon when active. Defaults to the on-primary theme.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-icon-content-size",
+      "description": "The size of the step icon content. Defaults to 24px.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-icon-size",
+      "description": "The size of the step icon. Defaults to 0.875em.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-icon-transition-duration",
+      "description": "The duration of the step icon transition. Defaults to the medium4 animation duration.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-icon-transition-easing",
+      "description": "The easing of the step icon transition. Defaults to the standard animation easing.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-line-color",
+      "description": "The color of the step line. Defaults to the outline theme.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-line-min-width",
+      "description": "The minimum width of the step line. Defaults to 10px.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-line-min-width-clustered",
+      "description": "The minimum width of the step line when clustered. Defaults to 25px.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-label-color",
+      "description": "The color of the step label. Defaults to the text-high theme.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-sub-label-color",
+      "description": "The color of the step sub-label. Defaults to the text-medium theme.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-error-color",
+      "description": "The color of the step error. Defaults to the error theme.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-error-text-color",
+      "description": "The text color of the step error. Defaults to the on-error theme.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-expansion-panel-border-left-width",
+      "description": "The border left width of the step expansion panel. Defaults to 1px.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-expansion-panel-margin-bottom",
+      "description": "The margin bottom of the step expansion panel. Defaults to 4px.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-expansion-panel-margin-left",
+      "description": "The margin left of the step expansion panel. Defaults to 60px.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-expansion-panel-margin-top",
+      "description": "The margin top of the step expansion panel. Defaults to 4px.",
+      "values": []
+    },
+    {
+      "name": "--forge-step-expansion-panel-icon-color",
+      "description": "The color of the step expansion panel icon. Defaults to the text-medium theme.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-active-color",
+      "description": "The primary color of the contents when active.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-inactive-color",
+      "description": "The primary color of the contents when inactive.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-height",
+      "description": "The height of the tab.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-stacked-height",
+      "description": "The height of the tab when stacked.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-padding-block",
+      "description": "The block space between the tab contents and the bounds of the tab.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-padding-inline",
+      "description": "The inline space between the tab contents and the bounds of the tab.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-disabled-opacity",
+      "description": "The opacity of the tab when disabled.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-indicator-color",
+      "description": "The color of the active tab indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-indicator-height",
+      "description": "The height of the active tab indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-indicator-shape",
+      "description": "The shape of the active tab indicator.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-vertical-indicator-shape",
+      "description": "The shape of the active tab indicator when vertical.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-inverted-indicator-shape",
+      "description": "The shape of the active tab indicator when inverted.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-vertical-inverted-indicator-shape",
+      "description": "The shape of the active tab indicator when vertical and inverted.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-container-color",
+      "description": "The color of the tab container.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-container-height",
+      "description": "The height of the tab container.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-container-shape",
+      "description": "The shape of the tab container.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-content-height",
+      "description": "The height of the tab content.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-content-spacing",
+      "description": "The spacing between tab contents.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-content-padding",
+      "description": "The padding value for both block and inline of the tab content.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-content-padding-block",
+      "description": "The block padding of the tab content.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-content-padding-inline",
+      "description": "The inline padding of the tab content.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-active-focus-icon-color",
+      "description": "The color of the icon when the tab is active and focused.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-active-hover-icon-color",
+      "description": "The color of the icon when the tab is active and hovered.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-active-icon-color",
+      "description": "The color of the icon when the tab is active.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-active-pressed-icon-color",
+      "description": "The color of the icon when the tab is active and pressed.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-icon-size",
+      "description": "The size of the icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-focus-icon-color",
+      "description": "The color of the icon when the tab is focused.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-hover-icon-color",
+      "description": "The color of the icon when the tab is hovered.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-icon-color",
+      "description": "The color of the icon.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-pressed-icon-color",
+      "description": "The color of the icon when the tab is pressed.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-active-focus-label-text-color",
+      "description": "The color of the label text when the tab is active and focused.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-active-hover-label-text-color",
+      "description": "The color of the label text when the tab is active and hovered.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-active-label-text-color",
+      "description": "The color of the label text when the tab is active.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-active-pressed-label-text-color",
+      "description": "The color of the label text when the tab is active and pressed.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-focus-label-text-color",
+      "description": "The color of the label text when the tab is focused.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-hover-label-text-color",
+      "description": "The color of the label text when the tab is hovered.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-label-text-color",
+      "description": "The color of the label text.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-pressed-label-text-color",
+      "description": "The color of the label text when the tab is pressed.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-bar-justify",
+      "description": "The `justify-content` value for the tab bar flex container.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-bar-stretch",
+      "description": "The `flex` value for the child `<forge-tab>` elements.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-bar-divider-color",
+      "description": "The color of the divider.",
+      "values": []
+    },
+    {
+      "name": "--forge-tab-bar-divider-thickness",
+      "description": "The thickness of the divider.",
+      "values": []
+    }
+  ],
+  "pseudoElements": [
+    { "name": "::part(root)", "description": "The root container element." },
+    {
+      "name": "::part(root)",
+      "description": "The root element of the backdrop."
+    },
+    {
+      "name": "::part(root)",
+      "description": "The root element of the bottom sheet."
+    },
+    {
+      "name": "::part(surface)",
+      "description": "The surface element of the bottom sheet within th dialog."
+    },
+    { "name": "::part(root)", "description": "The root container element." },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "The focus-indicator indicator element."
+    },
+    {
+      "name": "::part(state-layer)",
+      "description": "The state-layer surface element."
+    },
+    { "name": "::part(root)", "description": "The root container element." },
+    {
+      "name": "::part(button)",
+      "description": "The visually hidden slot for the `<button>` element."
+    },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "The focus-indicator indicator element."
+    },
+    {
+      "name": "::part(state-layer)",
+      "description": "The state-layer surface element."
+    },
+    { "name": "::part(root)", "description": "The root container element." },
+    { "name": "::part(root)", "description": "Styles the root element." },
+    {
+      "name": "::part(background)",
+      "description": "Styles the checkbox background element."
+    },
+    {
+      "name": "::part(checkmark)",
+      "description": "Styles the checkmark element."
+    },
+    {
+      "name": "::part(mixedmark)",
+      "description": "Styles the indeterminate mark element."
+    },
+    { "name": "::part(label)", "description": "Styles the label element." },
+    {
+      "name": "::part(state-layer)",
+      "description": "Styles the state layer element."
+    },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "Styles the focus indicator element."
+    },
+    { "name": "::part(root)", "description": "The root container element." },
+    { "name": "::part(label)", "description": "The label element." },
+    {
+      "name": "::part(input)",
+      "description": "The element containing the input slot."
+    },
+    {
+      "name": "::part(start)",
+      "description": "The element containing the start slot."
+    },
+    {
+      "name": "::part(end)",
+      "description": "The element containing the end slot."
+    },
+    {
+      "name": "::part(popover-icon)",
+      "description": "The popover icon element."
+    },
+    {
+      "name": "::part(accessory)",
+      "description": "The element containing the accessory slot."
+    },
+    {
+      "name": "::part(support-text)",
+      "description": "The support text element."
+    },
+    {
+      "name": "::part(support-text-end)",
+      "description": "The element containing the support text end slot."
+    },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "The focus indicator element."
+    },
+    {
+      "name": "::part(progressbar)",
+      "description": "Styles the progress bar container element"
+    },
+    { "name": "::part(root)", "description": "The dialog container element." },
+    { "name": "::part(backdrop)", "description": "The backdrop element." },
+    { "name": "::part(surface)", "description": "The dialog surface element." },
+    {
+      "name": "::part(move-handle-container)",
+      "description": "The alignment container for the move handle."
+    },
+    {
+      "name": "::part(move-handle)",
+      "description": "The move handle element."
+    },
+    {
+      "name": "::part(move-handle-icon)",
+      "description": "The move handle icon element."
+    },
+    { "name": "::part(root)", "description": "The root container element." },
+    { "name": "::part(root)", "description": "The root element of the panel." },
+    { "name": "::part(header)", "description": "The header of the panel." },
+    { "name": "::part(content)", "description": "The content of the panel." },
+    { "name": "::part(root)", "description": "The root container element." },
+    { "name": "::part(label)", "description": "The label element." },
+    {
+      "name": "::part(input)",
+      "description": "The element containing the input slot."
+    },
+    {
+      "name": "::part(start)",
+      "description": "The element containing the start slot."
+    },
+    {
+      "name": "::part(end)",
+      "description": "The element containing the end slot."
+    },
+    {
+      "name": "::part(popover-icon)",
+      "description": "The popover icon element."
+    },
+    {
+      "name": "::part(accessory)",
+      "description": "The element containing the accessory slot."
+    },
+    {
+      "name": "::part(support-text)",
+      "description": "The element containing the support text slot."
+    },
+    {
+      "name": "::part(support-text-end)",
+      "description": "The element containing the support text end slot."
+    },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "The focus indicator element."
+    },
+    {
+      "name": "::part(form)",
+      "description": "The `<form>` element at the root."
+    },
+    {
+      "name": "::part(primary)",
+      "description": "The container element around the primary slot."
+    },
+    {
+      "name": "::part(secondary)",
+      "description": "The container element around the secondary slot."
+    },
+    {
+      "name": "::part(input)",
+      "description": "The `<input type=\"file\">` element."
+    },
+    {
+      "name": "::part(helper-text-container)",
+      "description": "The container around the helper-text slot."
+    },
+    { "name": "::part(root)", "description": "The root container element." },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "The focus-indicator indicator element."
+    },
+    {
+      "name": "::part(state-layer)",
+      "description": "The state-layer surface element."
+    },
+    {
+      "name": "::part(indicator)",
+      "description": "The focus indicator element."
+    },
+    { "name": "::part(svg)", "description": "The internal SVG element." },
+    { "name": "::part(root)", "description": "The root container element." },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "The focus-indicator indicator element."
+    },
+    {
+      "name": "::part(state-layer)",
+      "description": "The state-layer surface element."
+    },
+    { "name": "::part(root)", "description": "The root layout element." },
+    {
+      "name": "::part(container)",
+      "description": "The container element for the title and message content."
+    },
+    {
+      "name": "::part(root)",
+      "description": "The root layout container element."
+    },
+    { "name": "::part(label)", "description": "The label container element." },
+    { "name": "::part(value)", "description": "The value container element." },
+    { "name": "::part(icon)", "description": "The icon container element." },
+    {
+      "name": "::part(progressbar)",
+      "description": "Styles the progress bar container element"
+    },
+    { "name": "::part(root)", "description": "The root element of the icon." },
+    { "name": "::part(icon)", "description": "The icon element." },
+    { "name": "::part(root)", "description": "The component's root element." },
+    { "name": "::part(root)", "description": "The root container element." },
+    {
+      "name": "::part(graphic-container)",
+      "description": "The graphic container element."
+    },
+    {
+      "name": "::part(title-container)",
+      "description": "The title container element."
+    },
+    {
+      "name": "::part(message-container)",
+      "description": "The message container element."
+    },
+    {
+      "name": "::part(actions-container)",
+      "description": "The actions container element."
+    },
+    { "name": "::part(overlay)", "description": "The overlay root element." },
+    {
+      "name": "::part(surface)",
+      "description": "The surface container element for the slotted content."
+    },
+    { "name": "::part(root)", "description": "The root container element." },
+    { "name": "::part(header)", "description": "The header of the scaffold." },
+    { "name": "::part(body)", "description": "The body of the scaffold." },
+    {
+      "name": "::part(root)",
+      "description": "The root element of the skeleton."
+    },
+    { "name": "::part(anchor)", "description": "The root anchor element." },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "The focus indicator element."
+    },
+    {
+      "name": "::part(state-layer)",
+      "description": "The state layer element."
+    },
+    {
+      "name": "::part(slider)",
+      "description": "Styles the slider container element."
+    },
+    { "name": "::part(track)", "description": "Styles the track element." },
+    {
+      "name": "::part(handle-end)",
+      "description": "Styles the end handle element."
+    },
+    {
+      "name": "::part(handle-end-thumb)",
+      "description": "Styles the end handle thumb element."
+    },
+    {
+      "name": "::part(handle-end-label)",
+      "description": "Styles the end handle label element."
+    },
+    {
+      "name": "::part(handle-end-label-content)",
+      "description": "Styles the end handle label content element."
+    },
+    {
+      "name": "::part(handle-start)",
+      "description": "Styles the start handle element."
+    },
+    {
+      "name": "::part(handle-start-thumb)",
+      "description": "Styles the start handle thumb element."
+    },
+    {
+      "name": "::part(handle-start-label)",
+      "description": "Styles the start handle label element."
+    },
+    {
+      "name": "::part(handle-start-label-content)",
+      "description": "Styles the start handle label content element."
+    },
+    { "name": "::part(root)", "description": "The root container element." },
+    { "name": "::part(surface)", "description": "The surface element." },
+    {
+      "name": "::part(switch)",
+      "description": "Styles the switch container element."
+    },
+    { "name": "::part(track)", "description": "Styles the track element." },
+    { "name": "::part(handle)", "description": "Styles the handle element." },
+    { "name": "::part(icon-on)", "description": "Styles the on icon element." },
+    {
+      "name": "::part(icon-off)",
+      "description": "Styles the off icon element."
+    },
+    { "name": "::part(label)", "description": "Styles the label element." },
+    {
+      "name": "::part(state-layer)",
+      "description": "Styles the state layer root element."
+    },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "Styles the focus indicator root element."
+    },
+    { "name": "::part(root)", "description": "The root container element." },
+    { "name": "::part(label)", "description": "The label element." },
+    {
+      "name": "::part(container)",
+      "description": "The container element surrounding the input."
+    },
+    {
+      "name": "::part(input)",
+      "description": "The element containing te input slot."
+    },
+    {
+      "name": "::part(start)",
+      "description": "The element containing the start slot."
+    },
+    {
+      "name": "::part(end)",
+      "description": "The element containing the end slot."
+    },
+    {
+      "name": "::part(popover-icon)",
+      "description": "The popover icon element."
+    },
+    {
+      "name": "::part(accessory)",
+      "description": "The element containing the accessory slot."
+    },
+    {
+      "name": "::part(support-text)",
+      "description": "The support text element."
+    },
+    {
+      "name": "::part(support-text)",
+      "description": "The support text element."
+    },
+    {
+      "name": "::part(support-text-end)",
+      "description": "The element containing the support text end slot."
+    },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "The focus indicator element."
+    },
+    { "name": "::part(surface)", "description": "The surface container." },
+    { "name": "::part(message)", "description": "The message container." },
+    { "name": "::part(action-button)", "description": "The action button." },
+    { "name": "::part(close-button)", "description": "The close button." },
+    {
+      "name": "::part(overlay)",
+      "description": "The `<forge-overlay>` element."
+    },
+    {
+      "name": "::part(root)",
+      "description": "The root container element wrapping all slots and content."
+    },
+    {
+      "name": "::part(inner)",
+      "description": "The internal container element for the start, center, and end slots."
+    },
+    {
+      "name": "::part(before-section-start)",
+      "description": "The container element for the before-start slot."
+    },
+    {
+      "name": "::part(section-start)",
+      "description": "The container element for the start slot."
+    },
+    {
+      "name": "::part(section-center)",
+      "description": "The container element for the center slot."
+    },
+    {
+      "name": "::part(section-end)",
+      "description": "The container element for the end slot."
+    },
+    {
+      "name": "::part(after-section-end)",
+      "description": "The container element for the after-end slot."
+    },
+    { "name": "::part(surface)", "description": "The tooltip surface." },
+    { "name": "::part(arrow)", "description": "The tooltip arrow." },
+    { "name": "::part(overlay)", "description": "The overlay surface." },
+    { "name": "::part(root)", "description": "The root container element." },
+    { "name": "::part(title)", "description": "The title element." },
+    { "name": "::part(root)", "description": "The root element" },
+    {
+      "name": "::part(container)",
+      "description": "The input container element."
+    },
+    {
+      "name": "::part(icon-container)",
+      "description": "The icon container element."
+    },
+    { "name": "::part(icon)", "description": "The <forge-icon> element." },
+    {
+      "name": "::part(context)",
+      "description": "The context container element."
+    },
+    {
+      "name": "::part(context-divider)",
+      "description": "The context divider element."
+    },
+    {
+      "name": "::part(context-button)",
+      "description": "The context button element."
+    },
+    {
+      "name": "::part(context-button-text)",
+      "description": "The context button text element."
+    },
+    {
+      "name": "::part(context-button-icon)",
+      "description": "The context button icon element."
+    },
+    {
+      "name": "::part(global-icon-container)",
+      "description": "The global icon container element."
+    },
+    {
+      "name": "::part(global-icon)",
+      "description": "The global icon <forge-icon> element."
+    },
+    {
+      "name": "::part(actions-container)",
+      "description": "The action container element around the slot."
+    },
+    { "name": "::part(root)", "description": "The root container element." },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "The focus indicator element."
+    },
+    {
+      "name": "::part(state-layer)",
+      "description": "The state layer surface element."
+    },
+    {
+      "name": "::part(root)",
+      "description": "The root container element for the group."
+    },
+    { "name": "::part(root)", "description": "The component's root element." },
+    {
+      "name": "::part(trigger)",
+      "description": "The trigger element of the chip."
+    },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "The focus indicator of the chip."
+    },
+    {
+      "name": "::part(state-layer)",
+      "description": "The state layer surface."
+    },
+    { "name": "::part(root)", "description": "The component's root element." },
+    { "name": "::part(root)", "description": "The component's root element." },
+    {
+      "name": "::part(content)",
+      "description": "The content container element."
+    },
+    { "name": "::part(root)", "description": "The component's root element." },
+    {
+      "name": "::part(container)",
+      "description": "The container element around the content."
+    },
+    {
+      "name": "::part(content)",
+      "description": "The content container element."
+    },
+    { "name": "::part(root)", "description": "The component's root element." },
+    {
+      "name": "::part(content)",
+      "description": "The content container element."
+    },
+    { "name": "::part(backdrop)", "description": "The backdrop root element." },
+    {
+      "name": "::part(root)",
+      "description": "The component's root container element."
+    },
+    { "name": "::part(root)", "description": "The root container element." },
+    {
+      "name": "::part(text-container)",
+      "description": "The container for the text content."
+    },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "The forwarded focus indicator's internal indicator element."
+    },
+    {
+      "name": "::part(state-layer)",
+      "description": "The forwarded state layer's internal surface element."
+    },
+    {
+      "name": "::part(root)",
+      "description": "Styles the radio's root element."
+    },
+    {
+      "name": "::part(background)",
+      "description": "Styles the border and background of the radio."
+    },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "Styles the focus indicator of the radio."
+    },
+    {
+      "name": "::part(state-layer)",
+      "description": "Styles the state layer of the radio."
+    },
+    { "name": "::part(root)", "description": "The root container element." },
+    { "name": "::part(label)", "description": "The label element." },
+    {
+      "name": "::part(text-container)",
+      "description": "The element container for the selected text."
+    },
+    {
+      "name": "::part(text)",
+      "description": "The element containing the selected text."
+    },
+    {
+      "name": "::part(container)",
+      "description": "The container element surrounding the input."
+    },
+    {
+      "name": "::part(input)",
+      "description": "The element containing te input slot."
+    },
+    {
+      "name": "::part(start)",
+      "description": "The element containing the start slot."
+    },
+    {
+      "name": "::part(end)",
+      "description": "The element containing the end slot."
+    },
+    {
+      "name": "::part(popover-icon)",
+      "description": "The popover icon element."
+    },
+    {
+      "name": "::part(accessory)",
+      "description": "The element containing the accessory slot."
+    },
+    {
+      "name": "::part(support-text)",
+      "description": "The support text element."
+    },
+    {
+      "name": "::part(support-text)",
+      "description": "The element containing the support text slot."
+    },
+    {
+      "name": "::part(support-text-end)",
+      "description": "The element containing the support text end slot."
+    },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "The focus indicator element."
+    },
+    { "name": "::part(root)", "description": "The root element." },
+    { "name": "::part(step)", "description": "The step container element." },
+    { "name": "::part(before)", "description": "The line before the step." },
+    { "name": "::part(after)", "description": "The line after the step." },
+    {
+      "name": "::part(icon-container)",
+      "description": "The icon container element."
+    },
+    {
+      "name": "::part(icon-content)",
+      "description": "The icon content element."
+    },
+    { "name": "::part(icon)", "description": "The icon element." },
+    { "name": "::part(index)", "description": "The index content container." },
+    {
+      "name": "::part(text-container)",
+      "description": "The text container element."
+    },
+    {
+      "name": "::part(title-container)",
+      "description": "The title container element."
+    },
+    {
+      "name": "::part(subtitle-container)",
+      "description": "The subtitle container element."
+    },
+    {
+      "name": "::part(state-layer)",
+      "description": "The state layer surface element."
+    },
+    {
+      "name": "::part(focus-indicator)",
+      "description": "The focus indicator element."
+    },
+    { "name": "::part(container)", "description": "The tab container." },
+    { "name": "::part(content)", "description": "The tab content container." },
+    { "name": "::part(label)", "description": "The tab label container." },
+    { "name": "::part(indicator)", "description": "The tab active indicator." },
+    { "name": "::part(container)", "description": "The container element." },
+    {
+      "name": "::part(scroll-container)",
+      "description": "The scroll container element."
+    }
+  ]
+}

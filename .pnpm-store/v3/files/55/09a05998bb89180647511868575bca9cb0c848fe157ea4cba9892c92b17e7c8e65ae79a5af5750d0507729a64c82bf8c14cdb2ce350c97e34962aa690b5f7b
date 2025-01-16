@@ -1,0 +1,31 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { SplitButtonComponent as SplitButtonComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class SplitButtonComponent {
+    protected elementRef: ElementRef<SplitButtonComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-split-button element. */
+    readonly nativeElement: SplitButtonComponentCustomElement;
+    /** The variant of the buttons. Valid values are `text`, `outlined`, `tonal`, `filled`, and `raised`. */
+    set variant(value: SplitButtonComponentCustomElement['variant']);
+    get variant(): SplitButtonComponentCustomElement['variant'];
+    /** The theme of the buttons. Valid values are `primary`, `secondary`, `tertiary`, `success`, `error`, `warning`, `info`. */
+    set theme(value: SplitButtonComponentCustomElement['theme']);
+    get theme(): SplitButtonComponentCustomElement['theme'];
+    /** Whether or not the buttons are disabled. */
+    set disabled(value: SplitButtonComponentCustomElement['disabled']);
+    get disabled(): SplitButtonComponentCustomElement['disabled'];
+    /** Whether or not the buttons are dense. */
+    set dense(value: SplitButtonComponentCustomElement['dense']);
+    get dense(): SplitButtonComponentCustomElement['dense'];
+    /** Whether or not the buttons are pill-shaped. */
+    set pill(value: SplitButtonComponentCustomElement['pill']);
+    get pill(): SplitButtonComponentCustomElement['pill'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<SplitButtonComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<SplitButtonComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<SplitButtonComponent, "forge-split-button", never, { "variant": { "alias": "variant"; "required": false; }; "theme": { "alias": "theme"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "dense": { "alias": "dense"; "required": false; }; "pill": { "alias": "pill"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_disabled: unknown;
+    static ngAcceptInputType_dense: unknown;
+    static ngAcceptInputType_pill: unknown;
+}

@@ -1,0 +1,72 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { FormFieldComponentDelegate } from '../core/delegates/form-field-component-delegate';
+import { TextFieldComponentDelegate } from '../text-field';
+import { DATE_PICKER_CONSTANTS } from './date-picker-constants';
+export class DatePickerComponentDelegate extends FormFieldComponentDelegate {
+    constructor(config) {
+        super(config);
+    }
+    _build() {
+        const datePicker = document.createElement(DATE_PICKER_CONSTANTS.elementName);
+        this._attachTextField(datePicker);
+        return datePicker;
+    }
+    getInputElement() {
+        return this._textFieldDelegate.inputElement;
+    }
+    getTextFieldElement() {
+        return this._textFieldDelegate.element;
+    }
+    get value() {
+        return this._element.value;
+    }
+    set value(value) {
+        this._element.value = value;
+    }
+    get disabled() {
+        return this._element.disabled;
+    }
+    set disabled(value) {
+        this._element.disabled = value;
+    }
+    get invalid() {
+        return this._textFieldDelegate.invalid || false;
+    }
+    set invalid(value) {
+        this._textFieldDelegate.invalid = value;
+    }
+    onChange(listener) {
+        if (this._element.masked) {
+            this._element.addEventListener(DATE_PICKER_CONSTANTS.events.INPUT, evt => listener(evt.target.value));
+        }
+        else {
+            this.getInputElement().addEventListener('input', evt => listener(evt.target.value));
+        }
+    }
+    onInput(listener) {
+        if (this._element.masked) {
+            this._element.addEventListener(DATE_PICKER_CONSTANTS.events.INPUT, (evt) => listener(evt.detail));
+        }
+        else {
+            this._textFieldDelegate.inputElement.addEventListener('input', evt => listener(evt.target.value));
+        }
+    }
+    onFocus(listener) {
+        this._textFieldDelegate.inputElement.addEventListener('focus', (evt) => listener(evt));
+    }
+    onBlur(listener) {
+        this._textFieldDelegate.inputElement.addEventListener('blur', (evt) => listener(evt));
+    }
+    _attachTextField(datePicker) {
+        const textFieldConfig = {
+            props: { ...this._config.options?.textFieldDelegateConfig?.props },
+            options: { ...this._config.options?.textFieldDelegateConfig?.options }
+        };
+        this._textFieldDelegate = new TextFieldComponentDelegate(textFieldConfig);
+        datePicker.appendChild(this._textFieldDelegate.element);
+    }
+}

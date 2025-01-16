@@ -1,0 +1,15 @@
+"use strict";var react=require("react");
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */function __rest(e,t){var r={};for(var n in e)Object.prototype.hasOwnProperty.call(e,n)&&t.indexOf(n)<0&&(r[n]=e[n]);if(null!=e&&"function"==typeof Object.getOwnPropertySymbols){var s=0;for(n=Object.getOwnPropertySymbols(e);s<n.length;s++)t.indexOf(n[s])<0&&Object.prototype.propertyIsEnumerable.call(e,n[s])&&(r[n[s]]=e[n[s]])}return r}const reactifyWebComponent=(e,{forceProperty:t=[],forceAttribute:r=[],forceEvent:n=[]}={forceProperty:[],forceAttribute:[],forceEvent:[]})=>{class s extends react.Component{constructor(e){super(e),this.eventHandlers=[],this.ref=this.props.innerRef||react.createRef()}setProperty(e,t){this.ref.current[e]=t}setAttribute(e,t){if(!1===t)return this.ref.current.removeAttribute(e);this.ref.current.setAttribute(e,t.toString())}setEvent(e,t){this.eventHandlers.push([e,t]),this.ref.current.addEventListener(e,t)}update(){this.clearEventHandlers(),Object.entries(this.props).forEach(([e,s])=>{let i=!1;if(t.includes(e)&&(this.setProperty(e,s),i=!0),r.includes(e)&&(this.setAttribute(e,s),i=!0),n.includes(e)&&(this.setEvent(e,s),i=!0),!i&&"style"!==e&&"children"!==e){if("classname"===e.toLowerCase())return this.ref.current.className=s;if("string"==typeof s||"number"==typeof s||"boolean"==typeof s)return this.setProperty(e,s),void this.setAttribute(e,s);if("function"==typeof s){if(e.match(/^on[A-Z]/))return this.setEvent(e[2].toLowerCase()+e.substr(3),s);if(e.match(/^on\-[a-z]/))return this.setEvent(e.substr(3),s)}this.setProperty(e,s)}})}componentDidUpdate(){this.update()}componentDidMount(){this.update()}componentWillUnmount(){this.clearEventHandlers()}clearEventHandlers(){this.eventHandlers.forEach(([e,t])=>{this.ref.current.removeEventListener(e,t)}),this.eventHandlers=[]}render(){const{children:t,style:r}=this.props;return react.createElement(e,{ref:this.ref,style:r},t)}}return react.forwardRef((e,t)=>{var{children:r}=e,n=__rest(e,["children"]);return react.createElement(s,Object.assign({innerRef:t},n),r)})};module.exports=reactifyWebComponent;

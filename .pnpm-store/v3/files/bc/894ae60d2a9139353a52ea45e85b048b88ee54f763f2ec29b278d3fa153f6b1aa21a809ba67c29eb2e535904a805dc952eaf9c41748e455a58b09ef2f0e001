@@ -1,0 +1,149 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { customElement, attachShadowTemplate, coerceBoolean, coreProperty } from '@tylertech/forge-core';
+import { TabAdapter } from './tab-adapter';
+import { TabCore } from './tab-core';
+import { TAB_CONSTANTS } from './tab-constants';
+import { BaseComponent } from '../../core/base/base-component';
+import { FocusIndicatorComponent } from '../../focus-indicator/focus-indicator';
+import { StateLayerComponent } from '../../state-layer/state-layer';
+const template = '<template><div class=\"forge-tab\" part=\"container\"><span class=\"content\" part=\"content\"><slot name=\"start\"><slot name=\"leading\"></slot></slot><span class=\"label\" part=\"label\"><slot></slot></span><slot name=\"end\"><slot name=\"trailing\"></slot></slot><span class=\"indicator\" part=\"indicator\"></span></span><forge-state-layer exportparts=\"surface:state-layer\" target=\":host\"></forge-state-layer><forge-focus-indicator part=\"focus-indicator\" target=\":host\" inward></forge-focus-indicator></div></template>';
+const styles = ':host{display:inline-flex;outline:0;-webkit-tap-highlight-color:transparent;vertical-align:middle}:host([hidden]){display:none}.forge-tab{--_tab-active-color:var(--forge-tab-active-color, var(--forge-theme-primary, #3f51b5));--_tab-inactive-color:var(--forge-tab-inactive-color, var(--forge-theme-text-medium, rgba(0, 0, 0, 0.6)));--_tab-height:var(--forge-tab-height, 48px);--_tab-stacked-height:var(--forge-tab-stacked-height, 64px);--_tab-padding-block:var(--forge-tab-padding-block, 0);--_tab-padding-inline:var(--forge-tab-padding-inline, 0);--_tab-disabled-opacity:var(--forge-tab-disabled-opacity, 0.38);--_tab-indicator-color:var(--forge-tab-indicator-color, var(--_tab-active-color));--_tab-indicator-height:var(--forge-tab-indicator-height, 3px);--_tab-indicator-shape:var(--forge-tab-indicator-shape, 3px 3px 0 0);--_tab-vertical-indicator-shape:var(--forge-tab-vertical-indicator-shape, 3px 0 0 3px);--_tab-secondary-indicator-height:var(--forge-tab-secondary-indicator-height, 2px);--_tab-secondary-indicator-shape:var(--forge-tab-secondary-indicator-shape, 0);--_tab-inverted-indicator-shape:var(--forge-tab-inverted-indicator-shape, 0 0 3px 3px);--_tab-vertical-inverted-indicator-shape:var(--forge-tab-vertical-inverted-indicator-shape, 0 3px 3px 0);--_tab-container-color:var(--forge-tab-container-color, transparent);--_tab-container-height:var(--forge-tab-container-height, var(--_tab-height));--_tab-container-shape:var(--forge-tab-container-shape, 0);--_tab-content-height:var(--forge-tab-content-height, var(--_tab-height));--_tab-content-spacing:var(--forge-tab-content-spacing, var(--forge-spacing-xsmall, 8px));--_tab-content-padding:var(--forge-tab-content-padding, var(--forge-spacing-xxsmall, 4px));--_tab-content-padding-block:var(--forge-tab-content-padding-block, var(--_tab-content-padding));--_tab-content-padding-inline:var(--forge-tab-content-padding-inline, var(--forge-spacing-medium, 16px));--_tab-content-padding-inline-secondary:var(--forge-tab-content-padding-inline-secondary, var(--forge-spacing-medium, 16px));--_tab-active-focus-icon-color:var(--forge-tab-active-focus-icon-color, var(--_tab-active-color));--_tab-active-hover-icon-color:var(--forge-tab-active-hover-icon-color, var(--_tab-active-color));--_tab-active-icon-color:var(--forge-tab-active-icon-color, var(--_tab-active-color));--_tab-active-pressed-icon-color:var(--forge-tab-active-pressed-icon-color, var(--_tab-active-color));--_tab-icon-size:var(--forge-tab-icon-size, 24px);--_tab-focus-icon-color:var(--forge-tab-focus-icon-color, var(--_tab-inactive-color));--_tab-hover-icon-color:var(--forge-tab-hover-icon-color, var(--_tab-inactive-color));--_tab-icon-color:var(--forge-tab-icon-color, var(--_tab-inactive-color));--_tab-pressed-icon-color:var(--forge-tab-pressed-icon-color, var(--_tab-inactive-color));--_tab-active-focus-label-text-color:var(--forge-tab-active-focus-label-text-color, var(--_tab-active-color));--_tab-active-hover-label-text-color:var(--forge-tab-active-hover-label-text-color, var(--_tab-active-color));--_tab-active-label-text-color:var(--forge-tab-active-label-text-color, var(--_tab-active-color));--_tab-active-pressed-label-text-color:var(--forge-tab-active-pressed-label-text-color, var(--_tab-active-color));--_tab-focus-label-text-color:var(--forge-tab-focus-label-text-color, var(--_tab-inactive-color));--_tab-hover-label-text-color:var(--forge-tab-hover-label-text-color, var(--_tab-inactive-color));--_tab-label-text-color:var(--forge-tab-label-text-color, var(--_tab-inactive-color));--_tab-pressed-label-text-color:var(--forge-tab-pressed-label-text-color, var(--_tab-inactive-color))}.forge-tab{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-button-font-family, var(--forge-typography-font-family, \"Roboto\", sans-serif));font-size:var(--forge-typography-button-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-button-font-size-scale, .875)));font-weight:var(--forge-typography-button-font-weight,500);line-height:var(--forge-typography-button-line-height, normal);letter-spacing:var(--forge-typography-button-letter-spacing, .0714285714em);text-transform:var(--forge-typography-button-text-transform,inherit);text-decoration:var(--forge-typography-button-text-decoration,inherit);display:inline-flex;align-items:center;justify-content:center;box-sizing:border-box;border:none;outline:0;user-select:none;-webkit-appearance:none;vertical-align:middle;background:0 0;text-decoration:none;width:100%;position:relative;padding-block:var(--_tab-padding-block);padding-inline:var(--_tab-padding-inline);margin:0;z-index:0;background-color:var(--_tab-container-color);color:var(--_tab-label-text-color);min-height:var(--_tab-container-height)}.forge-tab::-moz-focus-inner{padding:0;border:0}.forge-tab ::slotted([slot=leading]),.forge-tab ::slotted([slot=trailing]){display:inline-flex;position:relative;writing-mode:horizontal-tb;fill:currentColor;color:var(--_tab-icon-color);font-size:var(--_tab-icon-size);width:var(--_tab-icon-size);height:var(--_tab-icon-size)}.forge-tab:hover{color:var(--_tab-hover-label-text-color);cursor:pointer}.forge-tab:hover ::slotted([slot=leading]),.forge-tab:hover ::slotted([slot=trailing]){color:var(--_tab-hover-icon-color)}.forge-tab .content{position:relative;box-sizing:border-box;display:inline-flex;flex-direction:row;align-items:center;justify-content:center;white-space:nowrap;transition:150ms color linear;max-height:calc(var(--_tab-content-height) + 2 * var(--_tab-content-padding-block));min-height:var(--_tab-content-height);width:100%;padding-block:var(--_tab-content-padding-block);padding-inline:var(--_tab-content-padding-inline);gap:var(--_tab-content-spacing)}.forge-tab .content .label{display:inline-block;line-height:1}.forge-tab .indicator{position:absolute;box-sizing:border-box;z-index:-1;transform-origin:bottom left;background:var(--_tab-indicator-color);border-radius:var(--_tab-indicator-shape);height:var(--_tab-indicator-height);min-width:100%;inset:auto 0 0;opacity:0}::slotted(*),:host{white-space:nowrap}forge-focus-indicator{--forge-focus-indicator-color:var(--_tab-active-color);--forge-focus-indicator-shape:8px}forge-state-layer{--forge-state-layer-color:var(--_tab-inactive-color)}:host(:focus) .forge-tab{color:var(--_tab-focus-label-text-color)}:host(:focus) .forge-tab ::slotted([slot=leading]),:host(:focus) .forge-tab ::slotted([slot=trailing]){color:var(--_tab-focus-icon-color)}:host(:active) .forge-tab{color:var(--_tab-pressed-label-text-color);outline:0}:host(:active) .forge-tab ::slotted([slot=leading]),:host(:active) .forge-tab ::slotted([slot=trailing]){color:var(--_tab-pressed-icon-color)}:host([disabled]){cursor:not-allowed}:host([disabled]) .forge-tab{opacity:var(--_tab-disabled-opacity);pointer-events:none}:host([selected]) .forge-tab{color:var(--_tab-active-label-text-color)}:host([selected]) .forge-tab ::slotted([slot=end]),:host([selected]) .forge-tab ::slotted([slot=leading]),:host([selected]) .forge-tab ::slotted([slot=start]),:host([selected]) .forge-tab ::slotted([slot=trailing]){color:var(--_tab-active-icon-color)}:host([selected]) .forge-tab:hover{color:var(--_tab-active-hover-label-text-color)}:host([selected]) .forge-tab:hover ::slotted([slot=end]),:host([selected]) .forge-tab:hover ::slotted([slot=leading]),:host([selected]) .forge-tab:hover ::slotted([slot=start]),:host([selected]) .forge-tab:hover ::slotted([slot=trailing]){color:var(--_tab-active-hover-icon-color)}:host([selected]) .forge-tab .indicator{opacity:1}:host([selected]) forge-state-layer{--forge-state-layer-color:var(--_tab-active-color)}:host([selected]:not([vertical])) forge-focus-indicator{--forge-focus-indicator-offset-block:0 calc(var(--_tab-indicator-height) + 1px)}:host([selected]:focus) .forge-tab{color:var(--_tab-active-focus-label-text-color)}:host([selected]:focus) .forge-tab ::slotted([slot=leading]),:host([selected]:focus) .forge-tab ::slotted([slot=trailing]){color:var(--_tab-active-focus-icon-color)}:host([selected]:active) .forge-tab{color:var(--_tab-active-pressed-label-text-color)}:host([selected]:active) .forge-tab ::slotted([slot=leading]),:host([selected]:active) .forge-tab ::slotted([slot=trailing]){color:var(--_tab-active-pressed-icon-color)}:host([stacked]) .forge-tab{--_tab-height:var(--_tab-stacked-height)}:host([stacked]) .forge-tab .content{max-height:none;flex-direction:column;height:100%}:host([vertical]) .forge-tab{--_tab-padding-inline:var(--forge-tab-padding-inline, 0);width:100%;flex-direction:row;border-bottom:none}:host([vertical]) .forge-tab .content{width:100%;min-height:100%}:host([vertical]) .forge-tab .indicator{height:100%;min-width:var(--_tab-indicator-height);inset:0 0 0 auto}:host([vertical]) forge-focus-indicator{--forge-focus-indicator-offset-inline:0 calc(var(--_tab-indicator-height) + 1px)}:host([vertical]) .forge-tab{--_tab-indicator-shape:var(--_tab-vertical-indicator-shape)}:host([inverted]) .forge-tab{--_tab-indicator-shape:var(--_tab-inverted-indicator-shape)}:host([inverted]) .indicator{inset:0 0 auto;transform-origin:top left}:host([inverted][vertical]) .forge-tab{--_tab-indicator-shape:var(--_tab-vertical-inverted-indicator-shape)}:host([inverted][vertical]) .indicator{inset:0 auto 0 0}';
+/**
+ * @tag forge-tab
+ *
+ * @dependency forge-focus-indicator
+ * @dependency forge-state-layer
+ *
+ * @property {boolean} [disabled=false] - The disabled state of the tab. Should not be set if using the disabled property on `forge-tab-bar`.
+ * @property {boolean} [selected=false] - The selected state of the tab.
+ * @property {boolean} [vertical=false] - Controls whether the tab is vertical or horizontal.
+ * @property {boolean} [stacked=false] - Controls whether the tab is taller to allow for slotted leading/trailing elements.
+ * @property {boolean} [secondary=false] - Controls whether the tab is styled as secondary tab navigation.
+ * @property {boolean} [inverted=false] - Controls whether the tab indicator is rendered on the opposite side of the tab.
+ *
+ * @attribute [disabled=false] - The disabled state of the tab.
+ * @attribute [selected=false] - The selected state of the tab.
+ * @attribute [vertical=false] - Controls whether the tab is vertical or horizontal.
+ * @attribute [stacked=false] - Controls whether the tab is taller to allow for slotted leading/trailing elements.
+ * @attribute [secondary=false] - Deprecated. Controls whether the tab is styled as secondary tab navigation.
+ * @attribute [inverted=false] - Controls whether the tab indicator is rendered on the opposite side of the tab.
+ *
+ * @event {CustomEvent<void>} forge-tab-select - Dispatched when the tab is selected. This event bubbles and it can be useful to capture it on the `<forge-tab-bar>` element.
+ *
+ * @cssproperty --forge-tab-active-color - The primary color of the contents when active.
+ * @cssproperty --forge-tab-inactive-color - The primary color of the contents when inactive.
+ * @cssproperty --forge-tab-height - The height of the tab.
+ * @cssproperty --forge-tab-stacked-height - The height of the tab when stacked.
+ * @cssproperty --forge-tab-padding-block - The block space between the tab contents and the bounds of the tab.
+ * @cssproperty --forge-tab-padding-inline - The inline space between the tab contents and the bounds of the tab.
+ * @cssproperty --forge-tab-disabled-opacity - The opacity of the tab when disabled.
+ * @cssproperty --forge-tab-indicator-color - The color of the active tab indicator.
+ * @cssproperty --forge-tab-indicator-height - The height of the active tab indicator.
+ * @cssproperty --forge-tab-indicator-shape - The shape of the active tab indicator.
+ * @cssproperty --forge-tab-vertical-indicator-shape - The shape of the active tab indicator when vertical.
+ * @cssproperty --forge-tab-inverted-indicator-shape - The shape of the active tab indicator when inverted.
+ * @cssproperty --forge-tab-vertical-inverted-indicator-shape - The shape of the active tab indicator when vertical and inverted.
+ * @cssproperty --forge-tab-container-color - The color of the tab container.
+ * @cssproperty --forge-tab-container-height - The height of the tab container.
+ * @cssproperty --forge-tab-container-shape - The shape of the tab container.
+ * @cssproperty --forge-tab-content-height - The height of the tab content.
+ * @cssproperty --forge-tab-content-spacing - The spacing between tab contents.
+ * @cssproperty --forge-tab-content-padding - The padding value for both block and inline of the tab content.
+ * @cssproperty --forge-tab-content-padding-block - The block padding of the tab content.
+ * @cssproperty --forge-tab-content-padding-inline - The inline padding of the tab content.
+ * @cssproperty --forge-tab-active-focus-icon-color - The color of the icon when the tab is active and focused.
+ * @cssproperty --forge-tab-active-hover-icon-color - The color of the icon when the tab is active and hovered.
+ * @cssproperty --forge-tab-active-icon-color - The color of the icon when the tab is active.
+ * @cssproperty --forge-tab-active-pressed-icon-color - The color of the icon when the tab is active and pressed.
+ * @cssproperty --forge-tab-icon-size - The size of the icon.
+ * @cssproperty --forge-tab-focus-icon-color - The color of the icon when the tab is focused.
+ * @cssproperty --forge-tab-hover-icon-color - The color of the icon when the tab is hovered.
+ * @cssproperty --forge-tab-icon-color - The color of the icon.
+ * @cssproperty --forge-tab-pressed-icon-color - The color of the icon when the tab is pressed.
+ * @cssproperty --forge-tab-active-focus-label-text-color - The color of the label text when the tab is active and focused.
+ * @cssproperty --forge-tab-active-hover-label-text-color - The color of the label text when the tab is active and hovered.
+ * @cssproperty --forge-tab-active-label-text-color - The color of the label text when the tab is active.
+ * @cssproperty --forge-tab-active-pressed-label-text-color - The color of the label text when the tab is active and pressed.
+ * @cssproperty --forge-tab-focus-label-text-color - The color of the label text when the tab is focused.
+ * @cssproperty --forge-tab-hover-label-text-color - The color of the label text when the tab is hovered.
+ * @cssproperty --forge-tab-label-text-color - The color of the label text.
+ * @cssproperty --forge-tab-pressed-label-text-color - The color of the label text when the tab is pressed.
+ *
+ * @csspart container - The tab container.
+ * @csspart content - The tab content container.
+ * @csspart label - The tab label container.
+ * @csspart indicator - The tab active indicator.
+ *
+ * @slot - The tab label.
+ * @slot start - Content before the label.
+ * @slot end - Content after the label.
+ */
+let TabComponent = class TabComponent extends BaseComponent {
+    static get observedAttributes() {
+        return Object.values(TAB_CONSTANTS.observedAttributes);
+    }
+    constructor() {
+        super();
+        attachShadowTemplate(this, template, styles);
+        this._core = new TabCore(new TabAdapter(this));
+    }
+    connectedCallback() {
+        this._core.initialize();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case TAB_CONSTANTS.observedAttributes.DISABLED:
+                this.disabled = coerceBoolean(newValue);
+                break;
+            case TAB_CONSTANTS.observedAttributes.SELECTED:
+                this.selected = coerceBoolean(newValue);
+                break;
+            case TAB_CONSTANTS.observedAttributes.VERTICAL:
+                this.vertical = coerceBoolean(newValue);
+                break;
+            case TAB_CONSTANTS.observedAttributes.STACKED:
+                this.stacked = coerceBoolean(newValue);
+                break;
+            case TAB_CONSTANTS.observedAttributes.SECONDARY:
+                this.secondary = coerceBoolean(newValue);
+                break;
+            case TAB_CONSTANTS.observedAttributes.INVERTED:
+                this.inverted = coerceBoolean(newValue);
+                break;
+        }
+    }
+    focus(options) {
+        super.focus(options);
+        this._core.setFocus(options);
+    }
+};
+__decorate([
+    coreProperty()
+], TabComponent.prototype, "disabled", void 0);
+__decorate([
+    coreProperty()
+], TabComponent.prototype, "selected", void 0);
+__decorate([
+    coreProperty()
+], TabComponent.prototype, "vertical", void 0);
+__decorate([
+    coreProperty()
+], TabComponent.prototype, "stacked", void 0);
+__decorate([
+    coreProperty()
+], TabComponent.prototype, "secondary", void 0);
+__decorate([
+    coreProperty()
+], TabComponent.prototype, "inverted", void 0);
+TabComponent = __decorate([
+    customElement({
+        name: TAB_CONSTANTS.elementName,
+        dependencies: [FocusIndicatorComponent, StateLayerComponent]
+    })
+], TabComponent);
+export { TabComponent };

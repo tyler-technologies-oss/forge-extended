@@ -1,0 +1,52 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core/base/base-adapter';
+import { PositionPlacement, VirtualElement } from '../core/utils/position-utils';
+import { IOverlayComponent } from './overlay';
+import { IOverlayOffset, OverlayFlipState, OverlayHideState, OverlayLightDismissReason, OverlayPositionStrategy } from './overlay-constants';
+export interface IOverlayAdapter extends IBaseAdapter<IOverlayComponent> {
+    show(): void;
+    hide(): void;
+    tryHideDescendantOverlays(): void;
+    locateAnchorElement(id: string | null): HTMLElement | null;
+    isMostRecentOpenOverlay(): boolean;
+    positionElement(config: IPositionElementConfig): void;
+    tryCleanupAutoUpdate(): void;
+    addLightDismissListener(listener: (reason: OverlayLightDismissReason) => void): void;
+    removeLightDismissListener(): void;
+}
+export interface IPositionElementConfig {
+    anchorElement: HTMLElement | VirtualElement;
+    strategy: OverlayPositionStrategy;
+    placement: PositionPlacement;
+    hide: OverlayHideState;
+    offset: IOverlayOffset;
+    shift: boolean;
+    flip: OverlayFlipState;
+    boundary: string | null;
+    boundaryElement: HTMLElement | null;
+    fallbackPlacements: PositionPlacement[] | undefined;
+}
+export declare class OverlayAdapter extends BaseAdapter<IOverlayComponent> implements IOverlayAdapter {
+    private _rootElement;
+    private _autoUpdateCleanup?;
+    private _lightDismissController;
+    constructor(component: IOverlayComponent);
+    show(): Promise<void>;
+    hide(): void;
+    tryHideDescendantOverlays(): void;
+    locateAnchorElement(id: string | null): HTMLElement | null;
+    positionElement({ anchorElement, strategy, placement, hide, offset, shift, flip, boundary, boundaryElement, fallbackPlacements }: IPositionElementConfig): void;
+    tryCleanupAutoUpdate(): void;
+    isMostRecentOpenOverlay(): boolean;
+    addLightDismissListener(listener: (reason: OverlayLightDismissReason) => void): void;
+    removeLightDismissListener(): void;
+    /**
+     * Finds all descendant overlays that are not persistent.
+     * @returns An array of descendant overlays.
+     */
+    private _findDescendantOverlays;
+}

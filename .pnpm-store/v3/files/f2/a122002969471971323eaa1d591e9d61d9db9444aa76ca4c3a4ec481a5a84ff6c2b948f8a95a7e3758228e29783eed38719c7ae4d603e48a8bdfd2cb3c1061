@@ -1,0 +1,10 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./app-bar-router-navigate.directive";
+import * as i2 from "@angular/common";
+import * as i3 from "./app-bar-proxy.module";
+export declare class ForgeAppBarModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeAppBarModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeAppBarModule, [typeof i1.AppBarRouterNavigateDirective], [typeof i2.CommonModule], [typeof i1.AppBarRouterNavigateDirective, typeof i3.ForgeAppBarProxyModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeAppBarModule>;
+}

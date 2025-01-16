@@ -1,0 +1,35 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseComponentDelegate } from '../../core/delegates/base-component-delegate';
+import { DEPRECATED_BUTTON_CONSTANTS } from './deprecated-button-constants';
+export class DeprecatedButtonComponentDelegate extends BaseComponentDelegate {
+    constructor(config) {
+        super(config);
+    }
+    destroy() {
+        this._buttonElement = undefined;
+    }
+    get buttonElement() {
+        return this._buttonElement;
+    }
+    _build() {
+        const component = document.createElement(DEPRECATED_BUTTON_CONSTANTS.elementName);
+        this._buttonElement = document.createElement('button');
+        this._buttonElement.type = this._config.options?.type || 'button';
+        this._buttonElement.textContent = this._config.options?.text || '';
+        component.appendChild(this._buttonElement);
+        return component;
+    }
+    onClick(listener) {
+        this._buttonElement?.addEventListener('click', listener);
+    }
+    onFocus(listener) {
+        this._buttonElement?.addEventListener('focus', evt => listener(evt));
+    }
+    onBlur(listener) {
+        this._buttonElement?.addEventListener('blur', evt => listener(evt));
+    }
+}

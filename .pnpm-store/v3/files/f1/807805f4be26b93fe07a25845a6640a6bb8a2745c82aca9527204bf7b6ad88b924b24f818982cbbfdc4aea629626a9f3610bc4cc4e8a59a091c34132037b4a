@@ -1,0 +1,23 @@
+import { NgModule } from '@angular/core';
+import { DatePickerValueAccessor } from './date-picker-value-accessor.directive';
+import { ForgeDatePickerProxyModule } from './date-picker-proxy.module';
+import * as i0 from "@angular/core";
+export class ForgeDatePickerModule {
+    static { this.ɵfac = i0.ɵɵngDeclareFactory({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: ForgeDatePickerModule, deps: [], target: i0.ɵɵFactoryTarget.NgModule }); }
+    static { this.ɵmod = i0.ɵɵngDeclareNgModule({ minVersion: "14.0.0", version: "17.3.7", ngImport: i0, type: ForgeDatePickerModule, declarations: [DatePickerValueAccessor], exports: [DatePickerValueAccessor,
+            ForgeDatePickerProxyModule] }); }
+    static { this.ɵinj = i0.ɵɵngDeclareInjector({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: ForgeDatePickerModule, imports: [ForgeDatePickerProxyModule] }); }
+}
+i0.ɵɵngDeclareClassMetadata({ minVersion: "12.0.0", version: "17.3.7", ngImport: i0, type: ForgeDatePickerModule, decorators: [{
+            type: NgModule,
+            args: [{
+                    declarations: [
+                        DatePickerValueAccessor
+                    ],
+                    exports: [
+                        DatePickerValueAccessor,
+                        ForgeDatePickerProxyModule
+                    ]
+                }]
+        }] });
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiZGF0ZS1waWNrZXIubW9kdWxlLmpzIiwic291cmNlUm9vdCI6IiIsInNvdXJjZXMiOlsiLi4vLi4vLi4vLi4vLi4vcHJvamVjdHMvZm9yZ2UtYW5ndWxhci9zcmMvbGliL2RhdGUtcGlja2VyL2RhdGUtcGlja2VyLm1vZHVsZS50cyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSxPQUFPLEVBQUUsUUFBUSxFQUFFLE1BQU0sZUFBZSxDQUFDO0FBRXpDLE9BQU8sRUFBRSx1QkFBdUIsRUFBRSxNQUFNLHdDQUF3QyxDQUFDO0FBQ2pGLE9BQU8sRUFBRSwwQkFBMEIsRUFBRSxNQUFNLDRCQUE0QixDQUFDOztBQVd4RSxNQUFNLE9BQU8scUJBQXFCOzhHQUFyQixxQkFBcUI7K0dBQXJCLHFCQUFxQixpQkFQOUIsdUJBQXVCLGFBR3ZCLHVCQUF1QjtZQUN2QiwwQkFBMEI7K0dBR2pCLHFCQUFxQixZQUg5QiwwQkFBMEI7OzJGQUdqQixxQkFBcUI7a0JBVGpDLFFBQVE7bUJBQUM7b0JBQ1IsWUFBWSxFQUFFO3dCQUNaLHVCQUF1QjtxQkFDeEI7b0JBQ0QsT0FBTyxFQUFFO3dCQUNQLHVCQUF1Qjt3QkFDdkIsMEJBQTBCO3FCQUMzQjtpQkFDRiIsInNvdXJjZXNDb250ZW50IjpbImltcG9ydCB7IE5nTW9kdWxlIH0gZnJvbSAnQGFuZ3VsYXIvY29yZSc7XG5cbmltcG9ydCB7IERhdGVQaWNrZXJWYWx1ZUFjY2Vzc29yIH0gZnJvbSAnLi9kYXRlLXBpY2tlci12YWx1ZS1hY2Nlc3Nvci5kaXJlY3RpdmUnO1xuaW1wb3J0IHsgRm9yZ2VEYXRlUGlja2VyUHJveHlNb2R1bGUgfSBmcm9tICcuL2RhdGUtcGlja2VyLXByb3h5Lm1vZHVsZSc7XG5cbkBOZ01vZHVsZSh7XG4gIGRlY2xhcmF0aW9uczogW1xuICAgIERhdGVQaWNrZXJWYWx1ZUFjY2Vzc29yXG4gIF0sXG4gIGV4cG9ydHM6IFtcbiAgICBEYXRlUGlja2VyVmFsdWVBY2Nlc3NvcixcbiAgICBGb3JnZURhdGVQaWNrZXJQcm94eU1vZHVsZVxuICBdXG59KVxuZXhwb3J0IGNsYXNzIEZvcmdlRGF0ZVBpY2tlck1vZHVsZSB7fVxuIl19

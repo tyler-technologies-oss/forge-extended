@@ -1,0 +1,36 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+.forge-expansion-panel {
+  --_expansion-panel-animation-duration: var(--forge-expansion-panel-animation-duration, var(--forge-animation-duration-medium4, 400ms));
+  --_expansion-panel-animation-easing: var(--forge-expansion-panel-animation-easing, var(--forge-animation-easing-standard, cubic-bezier(0.2, 0, 0, 1)));
+}
+
+.forge-expansion-panel {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition-property: visibility, opacity, grid-template-rows;
+  transition-duration: var(--_expansion-panel-animation-duration);
+  transition-timing-function: var(--_expansion-panel-animation-easing);
+  min-height: 0;
+  opacity: 0;
+}
+.forge-expansion-panel:not(.forge-expansion-panel--open) {
+  visibility: hidden;
+}
+.forge-expansion-panel--open {
+  opacity: 1;
+  grid-template-rows: 1fr;
+}
+.forge-expansion-panel__content {
+  display: grid;
+  grid-template-rows: 1fr;
+  overflow: hidden;
+}
+@media (prefers-reduced-motion: reduce) {
+  .forge-expansion-panel {
+    transition: none;
+  }
+}

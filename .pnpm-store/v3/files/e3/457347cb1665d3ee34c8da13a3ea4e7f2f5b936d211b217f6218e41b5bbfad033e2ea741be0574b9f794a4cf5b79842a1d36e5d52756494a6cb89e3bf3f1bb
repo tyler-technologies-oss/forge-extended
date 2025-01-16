@@ -1,0 +1,47 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getShadowElement } from '@tylertech/forge-core';
+import { BaseAdapter } from '../core/base/base-adapter';
+import { BANNER_CONSTANTS } from './banner-constants';
+export class BannerAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this._rootElement = this._component;
+        this._rootElement = getShadowElement(component, '.forge-banner');
+        this._dismissButtonElement = getShadowElement(component, BANNER_CONSTANTS.selectors.DISMISS_BUTTON);
+        this._iconSlotElement = getShadowElement(component, BANNER_CONSTANTS.selectors.ICON_SLOT);
+        this._buttonSlotElement = getShadowElement(component, BANNER_CONSTANTS.selectors.BUTTON_SLOT);
+    }
+    initialize() {
+        this._iconSlotElement.addEventListener('slotchange', this._onIconSlotChange.bind(this));
+        this._buttonSlotElement.addEventListener('slotchange', this._onButtonSlotChange.bind(this));
+        this._onIconSlotChange();
+        this._onButtonSlotChange();
+    }
+    setDismissButtonVisibility(visible) {
+        this._dismissButtonElement.hidden = !visible;
+    }
+    addDismissListener(callback) {
+        this._dismissButtonElement.addEventListener('click', callback);
+    }
+    removeDismissListener(callback) {
+        this._dismissButtonElement.removeEventListener('click', callback);
+    }
+    setDismissed(value) {
+        this._rootElement.inert = value;
+    }
+    async startDismissCompleteListener() {
+        return new Promise(resolve => {
+            this._rootElement.addEventListener('transitionend', () => resolve(), { once: true });
+        });
+    }
+    _onIconSlotChange() {
+        this._rootElement.classList.toggle(BANNER_CONSTANTS.classes.HAS_ICON, this._iconSlotElement.assignedNodes().length > 0);
+    }
+    _onButtonSlotChange() {
+        this._rootElement.classList.toggle(BANNER_CONSTANTS.classes.HAS_BUTTON, this._buttonSlotElement.assignedNodes().length > 0);
+    }
+}

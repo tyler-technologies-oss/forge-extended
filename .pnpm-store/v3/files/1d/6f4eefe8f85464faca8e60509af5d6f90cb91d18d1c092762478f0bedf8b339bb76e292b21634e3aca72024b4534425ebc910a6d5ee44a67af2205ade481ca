@@ -1,0 +1,17 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use '../core/styles/typography';
+
+// Apply base typography styles to the body element by default
+body {
+  @include typography.base;
+}
+
+// Create helper classes for each Forge typography style/role
+@include typography.classes;
+
+// Automatically apply styles to anchor elements
+@include typography.anchor;

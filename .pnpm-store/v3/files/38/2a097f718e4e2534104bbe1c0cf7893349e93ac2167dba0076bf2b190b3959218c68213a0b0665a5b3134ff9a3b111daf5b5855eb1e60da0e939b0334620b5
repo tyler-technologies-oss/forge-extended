@@ -1,0 +1,82 @@
+export declare const DISCRETE_MEDIA_FEATURES: readonly ["any-hover", "any-pointer", "color-gamut", "display-mode", "dynamic-range", "forced-colors", "grid", "hover", "inverted-colors", "orientation", "overflow-block", "overflow-inline", "pointer", "prefers-contrast", "prefers-color-scheme", "prefers-reduced-motion", "scripting", "update", "video-dynamic-range"];
+export declare const RANGE_MEDIA_FEATURES: readonly ["aspect-ratio", "color", "color-index", "height", "monochrome", "resolution", "width"];
+export declare const ALL_MEDIA_FEATURES: ("resolution" | "height" | "width" | "color" | "grid" | "update" | "orientation" | "any-hover" | "any-pointer" | "color-gamut" | "display-mode" | "dynamic-range" | "forced-colors" | "hover" | "inverted-colors" | "overflow-block" | "overflow-inline" | "pointer" | "prefers-contrast" | "prefers-color-scheme" | "prefers-reduced-motion" | "scripting" | "video-dynamic-range" | "aspect-ratio" | "color-index" | "monochrome")[];
+export declare const BOOLEAN_MEDIA_FEATURES: readonly ["any-hover", "any-pointer", "color", "color-index", "dynamic-range", "forced-colors", "grid", "height", "hover", "inverted-colors", "monochrome", "overflow-block", "overflow-inline", "pointer", "prefers-contrast", "prefers-reduced-motion", "scripting", "update", "video-dynamic-range", "width"];
+export type DiscreteMediaFeature = typeof DISCRETE_MEDIA_FEATURES[number];
+export type RangeMediaFeature = typeof RANGE_MEDIA_FEATURES[number];
+export type MediaFeature = DiscreteMediaFeature | RangeMediaFeature;
+export type BooleanMediaFeature = typeof BOOLEAN_MEDIA_FEATURES[number];
+export declare const colorGamutValues: readonly ["srbg", "p3", "rec2020"];
+export declare const displayModeValues: readonly ["fullscreen", "standalone", "minimal-ui", "browser", "window-controls-overlay"];
+export declare const dynamicRangeValues: readonly ["standard", "high"];
+export declare const forcedColorsValues: readonly ["none", "active"];
+export declare const gridValues: readonly [0, 1];
+export declare const hoverValues: readonly ["none", "hover"];
+export declare const invertedColorsValues: readonly ["none", "inverted"];
+export declare const orientationValues: readonly ["portrait", "landscape"];
+export declare const overflowBlockValues: readonly ["none", "scroll", "optional-paged", "paged"];
+export declare const overflowInlineValues: readonly ["none", "scroll"];
+export declare const pointerValues: readonly ["none", "coarse", "fine"];
+export declare const prefersContrastValues: readonly ["no-preference", "more", "less", "custom"];
+export declare const prefersColorSchemeValues: readonly ["light", "dark"];
+export declare const prefersReducedMotionValues: readonly ["no-preference", "reduce"];
+export declare const scriptingValues: readonly ["none", "initial-only", "enabled"];
+export declare const updateValues: readonly ["none", "slow", "fast"];
+export declare const videoDynamicRangeValues: readonly ["standard", "high"];
+export type ColorGamutValue = typeof colorGamutValues[number];
+export type DisplayModeValue = typeof displayModeValues[number];
+export type DynamicRangeValue = typeof dynamicRangeValues[number];
+export type ForcedColorsValue = typeof forcedColorsValues[number];
+export type GridValue = typeof gridValues[number];
+export type HoverValue = typeof hoverValues[number];
+export type InvertedColorsValue = typeof invertedColorsValues[number];
+export type OrientationValue = typeof orientationValues[number];
+export type OverflowBlockValue = typeof overflowBlockValues[number];
+export type OverflowInlineValue = typeof overflowInlineValues[number];
+export type PointerValue = typeof pointerValues[number];
+export type PrefersContrastValue = typeof prefersContrastValues[number];
+export type PrefersColorSchemeValue = typeof prefersColorSchemeValues[number];
+export type PrefersReducedMotionValue = typeof prefersReducedMotionValues[number];
+export type ScriptingValue = typeof scriptingValues[number];
+export type UpdateValue = typeof updateValues[number];
+export type VideoDynamicRangeValue = typeof videoDynamicRangeValues[number];
+export type NamedMediaQuery = {
+    name: string;
+    query: string;
+};
+export type ManagedMediaQuery = {
+    queryList: MediaQueryList;
+    handler: MediaQueryHandler;
+};
+export type MediaQueryHandler = (event: MediaQueryList | MediaQueryListEvent) => void;
+export declare const mediaFeatureValues: {
+    'any-hover': ("none" | "hover")[];
+    'any-pointer': ("none" | "coarse" | "fine")[];
+    'color-gamut': ("p3" | "rec2020" | "srbg")[];
+    'display-mode': ("browser" | "fullscreen" | "standalone" | "minimal-ui" | "window-controls-overlay")[];
+    'dynamic-range': ("high" | "standard")[];
+    'forced-colors': ("none" | "active")[];
+    grid: (0 | 1)[];
+    hover: ("none" | "hover")[];
+    'inverted-colors': ("none" | "inverted")[];
+    orientation: ("portrait" | "landscape")[];
+    'overflow-block': ("none" | "scroll" | "optional-paged" | "paged")[];
+    'overflow-inline': ("none" | "scroll")[];
+    pointer: ("none" | "coarse" | "fine")[];
+    'prefers-contrast': ("custom" | "no-preference" | "more" | "less")[];
+    'prefers-color-scheme': ("light" | "dark")[];
+    'prefers-reduced-motion': ("reduce" | "no-preference")[];
+    scripting: ("none" | "initial-only" | "enabled")[];
+    update: ("none" | "slow" | "fast")[];
+    'video-dynamic-range': ("high" | "standard")[];
+};
+export interface IMediaObserverOptions {
+    name?: string;
+    track?: boolean;
+}
+export interface IMediaRange {
+    name: string;
+    min?: string | number;
+    max?: string | number;
+    equals?: string | number;
+}

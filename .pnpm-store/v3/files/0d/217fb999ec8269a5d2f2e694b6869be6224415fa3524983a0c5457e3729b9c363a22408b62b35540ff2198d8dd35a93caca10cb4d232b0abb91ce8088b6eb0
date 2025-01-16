@@ -1,0 +1,49 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { KeyboardShortcutComponent as KeyboardShortcutComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class KeyboardShortcutComponent {
+    protected elementRef: ElementRef<KeyboardShortcutComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-keyboard-shortcut element. */
+    readonly nativeElement: KeyboardShortcutComponentCustomElement;
+    /** Gets/sets the key binding. */
+    set key(value: KeyboardShortcutComponentCustomElement['key']);
+    get key(): KeyboardShortcutComponentCustomElement['key'];
+    /** Alias for key. */
+    set keyBinding(value: KeyboardShortcutComponentCustomElement['keyBinding']);
+    get keyBinding(): KeyboardShortcutComponentCustomElement['keyBinding'];
+    /** Gets/sets the target element selector. */
+    set target(value: KeyboardShortcutComponentCustomElement['target']);
+    get target(): KeyboardShortcutComponentCustomElement['target'];
+    /** Gets/sets the global listener state. */
+    set global(value: KeyboardShortcutComponentCustomElement['global']);
+    get global(): KeyboardShortcutComponentCustomElement['global'];
+    /** Gets/sets whether the callback will be called while in a text entry field. */
+    set allowWhileTyping(value: KeyboardShortcutComponentCustomElement['allowWhileTyping']);
+    get allowWhileTyping(): KeyboardShortcutComponentCustomElement['allowWhileTyping'];
+    /** Gets/sets whether to prevent default on keyboard events */
+    set preventDefault(value: KeyboardShortcutComponentCustomElement['preventDefault']);
+    get preventDefault(): KeyboardShortcutComponentCustomElement['preventDefault'];
+    /** Gets/sets whether to use capturing on keyboard events */
+    set capture(value: KeyboardShortcutComponentCustomElement['capture']);
+    get capture(): KeyboardShortcutComponentCustomElement['capture'];
+    /** Gets/sets whether to match codes instead of keys on keyboard events. */
+    set useCode(value: KeyboardShortcutComponentCustomElement['useCode']);
+    get useCode(): KeyboardShortcutComponentCustomElement['useCode'];
+    /** Gets/sets whether the callback will be called. */
+    set disabled(value: KeyboardShortcutComponentCustomElement['disabled']);
+    get disabled(): KeyboardShortcutComponentCustomElement['disabled'];
+    /** Gets/sets whether the activation callback. */
+    set activateCallback(value: KeyboardShortcutComponentCustomElement['activateCallback']);
+    get activateCallback(): KeyboardShortcutComponentCustomElement['activateCallback'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<KeyboardShortcutComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<KeyboardShortcutComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<KeyboardShortcutComponent, "forge-keyboard-shortcut", never, { "key": { "alias": "key"; "required": false; }; "keyBinding": { "alias": "keyBinding"; "required": false; }; "target": { "alias": "target"; "required": false; }; "global": { "alias": "global"; "required": false; }; "allowWhileTyping": { "alias": "allowWhileTyping"; "required": false; }; "preventDefault": { "alias": "preventDefault"; "required": false; }; "capture": { "alias": "capture"; "required": false; }; "useCode": { "alias": "useCode"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "activateCallback": { "alias": "activateCallback"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_global: unknown;
+    static ngAcceptInputType_allowWhileTyping: unknown;
+    static ngAcceptInputType_preventDefault: unknown;
+    static ngAcceptInputType_capture: unknown;
+    static ngAcceptInputType_useCode: unknown;
+    static ngAcceptInputType_disabled: unknown;
+}

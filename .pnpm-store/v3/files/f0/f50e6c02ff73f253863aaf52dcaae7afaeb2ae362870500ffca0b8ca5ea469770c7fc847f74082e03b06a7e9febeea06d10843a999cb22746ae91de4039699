@@ -1,0 +1,23 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseAdapter, IBaseAdapter } from '../core/base/base-adapter';
+import { ILinearProgressComponent } from './linear-progress';
+export interface ILinearProgressAdapter extends IBaseAdapter {
+    initialize(): void;
+    setDeterminate(value: boolean): void;
+    setProgress(value: number): void;
+    setBuffer(value: number): void;
+}
+export declare class LinearProgressAdapter extends BaseAdapter<ILinearProgressComponent> implements ILinearProgressAdapter {
+    private readonly _rootElement;
+    private readonly _trackElement;
+    private readonly _progressElement;
+    constructor(component: ILinearProgressComponent);
+    initialize(): void;
+    setDeterminate(value: boolean): void;
+    setProgress(value: number): void;
+    setBuffer(value: number): void;
+}

@@ -1,0 +1,383 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { customElement, attachShadowTemplate, coreProperty, coerceNumber, coerceBoolean, elementParents } from '@tylertech/forge-core';
+import { tylIconAdd, tylIconArrowDropDown, tylIconKeyboardArrowLeft, tylIconKeyboardArrowRight, tylIconLens } from '@tylertech/tyler-icons/standard';
+import { CalendarAdapter } from './calendar-adapter';
+import { CalendarCore } from './calendar-core';
+import { CALENDAR_CONSTANTS } from './calendar-constants';
+import { ButtonComponent } from '../button';
+import { IconButtonComponent } from '../icon-button';
+import { IconComponent, IconRegistry } from '../icon';
+import { TooltipComponent } from '../tooltip';
+import { CalendarMenuComponent } from './calendar-menu';
+import { StateLayerComponent } from '../state-layer';
+import { FocusIndicatorComponent } from '../focus-indicator';
+import { BaseComponent } from '../core/base/base-component';
+const template = '<template><div class=\"forge-calendar\" part=\"root\"><div id=\"view\" class=\"forge-calendar__view\" part=\"view\"><div id=\"date-view\" class=\"forge-calendar__date-view\" role=\"grid\" part=\"date-view\"><div role=\"rowgroup\" part=\"date-view-container\"><div id=\"day-row\" class=\"forge-calendar__date-view__row\" role=\"row\" part=\"date-view-row\"></div></div><div id=\"date-grid\" class=\"forge-calendar__date-grid\" role=\"rowgroup\" part=\"date-grid-container\"></div></div><forge-calendar-menu id=\"menu\" part=\"calendar-menu\"></forge-calendar-menu></div></div></template>';
+const styles = '.forge-calendar{width:var(--forge-calendar-width,100%);height:fit-content;position:relative}.forge-calendar__header{padding:var(--forge-calendar-controls-padding,0);display:flex;align-items:center;justify-content:space-between}.forge-calendar__footer{padding:var(--forge-calendar-controls-padding,0);display:flex;align-items:center;justify-content:space-between}.forge-calendar__view{position:relative}.forge-calendar__date-view{display:block}.forge-calendar__date-view__row{display:grid;grid-template-columns:repeat(7,1fr)}.forge-calendar__date-grid{display:grid}.forge-calendar__day{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-label2-font-family, var(--forge-typography-font-family, \"Roboto\", sans-serif));font-size:var(--forge-typography-label2-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-label-font-size-scale, .8125)));font-weight:var(--forge-typography-label2-font-weight,400);line-height:var(--forge-typography-label2-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-label-line-height-scale, 1.25)));letter-spacing:var(--forge-typography-label2-letter-spacing, .0096153846em);text-transform:var(--forge-typography-label2-text-transform,inherit);text-decoration:var(--forge-typography-label2-text-decoration,inherit);display:flex;justify-content:center;align-items:center;min-width:0;padding:0;font-weight:700;user-select:none}.forge-calendar__day::after{float:left;padding-top:100%;content:\"\"}.forge-calendar__date{margin-top:var(--forge-calendar-row-gap,2px);min-width:0;padding:0;border-radius:50%;position:relative;outline:0;cursor:default;user-select:none}.forge-calendar__date::after{float:left;padding-top:100%;content:\"\"}.forge-calendar__date forge-focus-indicator{--forge-focus-indicator-shape:50%}.forge-calendar__date__inner{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-body1-font-family, var(--forge-typography-font-family, \"Roboto\", sans-serif));font-size:var(--forge-typography-body1-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-body-font-size-scale, .875)));font-weight:var(--forge-typography-body1-font-weight,400);line-height:var(--forge-typography-body1-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-body-line-height-scale, 1.125)));letter-spacing:var(--forge-typography-body1-letter-spacing, .0357142857em);text-transform:var(--forge-typography-body1-text-transform,inherit);text-decoration:var(--forge-typography-body1-text-decoration,inherit);position:absolute;width:calc(100% - 2px);height:calc(100% - 2px);top:calc(2px / 2);left:calc(2px / 2);display:flex;justify-content:center;align-items:center;border-radius:inherit;box-sizing:border-box}.forge-calendar--show-today .forge-calendar__date--today:not([disabled]){color:var(--forge-theme-primary,#3f51b5);border-color:var(--forge-theme-primary,#3f51b5)}.forge-calendar--show-today .forge-calendar__date--today .forge-calendar__date__inner{border-color:inherit;border-width:1px;border-style:solid;font-weight:700}.forge-calendar--show-today .forge-calendar__date--today.forge-calendar__date--selected{color:var(--forge-theme-on-primary,#fff)}.forge-calendar:not(.forge-calendar--readonly) .forge-calendar__date:not([disabled]){cursor:pointer}.forge-calendar__date--selected:not([disabled]) .forge-calendar__date__inner{background-color:var(--forge-theme-primary,#3f51b5);color:var(--forge-theme-on-primary,#fff)}.forge-calendar__date--selected[disabled] .forge-calendar__date__inner{background-color:var(--forge-theme-primary-container-minimum,#f7f8fc);color:var(--forge-theme-text-low,rgba(0,0,0,.38))}.forge-calendar__date--selected forge-focus-indicator{--forge-focus-indicator-color:var(--forge-theme-primary-container)}.forge-calendar__date[disabled]{color:var(--forge-theme-text-low,rgba(0,0,0,.38))}.forge-calendar__date-spacer{pointer-events:none}.forge-calendar--fixed-height .forge-calendar__date-spacer{margin-top:var(--forge-calendar-row-gap,2px)}.forge-calendar--fixed-height .forge-calendar__date-spacer::after{float:left;padding-top:100%;content:\"\"}.forge-calendar__range:not(.forge-calendar__date-spacer) .forge-calendar__range__target{background-color:var(--forge-theme-primary,#3f51b5);position:absolute;width:100%;height:100%;opacity:.14;border-radius:0}.forge-calendar__range:not(.forge-calendar__date-spacer).forge-calendar__range--start .forge-calendar__range__target{border-top-left-radius:50%;border-bottom-left-radius:50%}.forge-calendar__range:not(.forge-calendar__date-spacer).forge-calendar__range--end .forge-calendar__range__target{border-top-right-radius:50%;border-bottom-right-radius:50%}.forge-calendar__range:not(.forge-calendar__range--start):first-of-type .forge-calendar__range__target{border-top-left-radius:4px;border-bottom-left-radius:4px}.forge-calendar__range:not(.forge-calendar__range--end):last-of-type .forge-calendar__range__target{border-top-right-radius:4px;border-bottom-right-radius:4px}.forge-calendar--allow-single-date-range .forge-calendar__range--start.forge-calendar__range--end .forge-calendar__range__target{transition:transform .2s;transform:scale(1.15);transform-origin:center}.forge-calendar__event{font-size:var(--forge-calendar-event-dot-size, 12px)}.forge-calendar__event[data-event-theme=primary]{color:var(--forge-calendar-theme-event-primary-accent,#3f51b5)}.forge-calendar__event[data-event-theme=secondary]{color:var(--forge-calendar-theme-event-secondary-accent,#ffc107)}.forge-calendar__event[data-event-theme=blue]{color:var(--forge-calendar-theme-event-blue-accent,#2196f3)}.forge-calendar__event[data-event-theme=light-green]{color:var(--forge-calendar-theme-event-light-green-accent,#8bc34a)}.forge-calendar__event[data-event-theme=cyan]{color:var(--forge-calendar-theme-event-cyan-accent,#00bcd4)}.forge-calendar__event[data-event-theme=teal]{color:var(--forge-calendar-theme-event-teal-accent,#009688)}.forge-calendar__event[data-event-theme=orange]{color:var(--forge-calendar-theme-event-orange-accent,#ff9800)}.forge-calendar__event[data-event-theme=blue-grey]{color:var(--forge-calendar-theme-event-blue-grey-accent,#607d8b)}.forge-calendar__event[data-event-theme=grey]{color:var(--forge-calendar-theme-event-grey-accent,#9e9e9e)}.forge-calendar__event[data-event-theme=red]{color:var(--forge-calendar-theme-event-red-accent,#f44336)}.forge-calendar__event[data-event-theme=pink]{color:var(--forge-calendar-theme-event-pink-accent,#e91e63)}.forge-calendar__event[data-event-theme=purple]{color:var(--forge-calendar-theme-event-purple-accent,#9c27b0)}.forge-calendar__event[data-event-theme=light-blue]{color:var(--forge-calendar-theme-event-light-blue-accent,#03a9f4)}.forge-calendar__event[data-event-theme=deep-purple]{color:var(--forge-calendar-theme-event-deep-purple-accent,#673ab7)}.forge-calendar__event[data-event-theme=green]{color:var(--forge-calendar-theme-event-green-accent,#4caf50)}.forge-calendar__event[data-event-theme=lime]{color:var(--forge-calendar-theme-event-lime-accent,#cddc39)}.forge-calendar__event[data-event-theme=yellow]{color:var(--forge-calendar-theme-event-yellow-accent,#ffeb3b)}.forge-calendar__event[data-event-theme=brown]{color:var(--forge-calendar-theme-event-brown-accent,#795548)}.forge-calendar__event[data-event-theme=deep-orange]{color:var(--forge-calendar-theme-event-deep-orange-accent,#ff5722)}.forge-calendar__date[disabled] .forge-calendar__event{opacity:.14}.forge-calendar__event--overflow{background-color:var(--forge-theme-surface,#fff);color:var(--forge-theme-on-surface,#000);border-radius:50%}.forge-calendar__event__wrapper{display:flex;justify-content:center;gap:2px;position:absolute;bottom:0;left:0;width:100%;padding-bottom:2px;pointer-events:none}.forge-calendar__date-spacer .forge-calendar__event__wrapper{display:none}.forge-calendar--rtl .forge-calendar__header forge-icon-button forge-icon{transform:rotate(180deg)}#accessible-header{border:0;clip:rect(0 0 0 0);height:1px;margin:-1px;overflow:hidden;padding:0;position:fixed;width:1px;outline:0;-webkit-appearance:none;-moz-appearance:none}#month-button forge-icon{transition:transform .2s}.forge-calendar--month-menu-open #month-button forge-icon{transform:rotate(180deg)}#year-button forge-icon{transition:transform .2s}.forge-calendar--year-menu-open #year-button forge-icon{transform:rotate(180deg)}:host{--forge-calendar-event-stroke-color:var(--forge-theme-surface, #ffffff);display:inline-block}:host([hidden]){display:none}:host([forge-popover-context=true]){--forge-calendar-event-stroke-color:var(--forge-theme-surface-bright, #ffffff)}';
+/**
+ * @tag forge-calendar
+ *
+ * @property {Date} activeDate - The currently active date in the calendar.
+ * @property {boolean} [allowSingleDateRange=true] - Whether to allow a single date range to be selected.
+ * @property {boolean} [clearButton=false] - Whether to show a button to clear the selected date(s).
+ * @property {() => void | undefined} clearCallback - Callback function to call when the clear button is clicked.
+ * @property {boolean} [constrainToEnabled=true] - Whether to constrain the selected date(s) to the enabled dates.
+ * @property {CalendarDateBuilder | undefined} dateBuilder - Function to build the date content.
+ * @property {CalendarDateSelectCallback | undefined} dateSelectCallback - Callback function to call when a date is selected.
+ * @property {CalendarDayBuilder | undefined} dayBuilder - Function to build the day content.
+ * @property {(date: Date) => boolean | undefined} disabledDateBuilder - Function to determine if a date is disabled.
+ * @property {Date | Date[] | null | undefined} [disabledDates=[]] - Dates that are disabled from being selected.
+ * @property {DayOfWeek | DayOfWeek[] | null | undefined} [disabledDaysOfWeek=[]] - Days of the week that are disabled from being selected.
+ * @property {CalendarEventBuilder | undefined} eventBuilder - Function to build the event content.
+ * @property {ICalendarEvent[] | null | undefined} [events=[]] - Events to display on the calendar.
+ * @property {DayOfWeek | undefined} firstDayOfWeek - The first day of the week.
+ * @property {boolean} [fixedHeight=false] - Whether to fix the height of the calendar.
+ * @property {boolean} [listYears=true] - Whether to list the years in the year view.
+ * @property {string | undefined} locale - The locale to use for formatting dates.
+ * @property {Date | string | null | undefined} max - The maximum date that can be selected.
+ * @property {CalendarMenuAnimationType} [menuAnimation="scale"] - The animation to use for the menu.
+ * @property {Date | string | null | undefined} min - The minimum date that can be selected.
+ * @property {CalendarMode} [mode="single"] - The mode of the calendar.
+ * @property {number} [month=<current month>] - The month to display.
+ * @property {boolean} [preventFocus=false] - Whether to prevent the calendar from taking focus.
+ * @property {boolean} [readonly=false] - Whether the calendar is readonly.
+ * @property {boolean} [selectionFollowsMonth=false] - Whether the selection follows the month.
+ * @property {boolean} [showHeader=true] - Whether to show the header.
+ * @property {boolean} [showOtherMonths=false] - Whether to show days from other months.
+ * @property {boolean} [showToday=true] - Whether to show the today button.
+ * @property {boolean} [todayButton=false] - Whether to show a button to select today.
+ * @property {() => void | undefined} todayCallback - Callback function to call when the today button is clicked.
+ * @property {CalendarTooltipBuilder | undefined} tooltipBuilder - Function to build the tooltip content.
+ * @property {Date | Date[] | DateRange | null | undefined} [value=[]] - The selected date(s).
+ * @property {CalendarView} [view="date"] - The view of the calendar.
+ * @property {DayOfWeek[] | null | undefined} weekendDays - The days of the week that are considered weekends.
+ * @property {number} [year=<current year>] - The year to display.
+ * @property {string} [yearRange="-50:+50"] - The range of years to display.
+ *
+ * @attribute {boolean} [allow-single-date-range=true] - Whether to allow a single date range to be selected.
+ * @attribute {boolean} [clear-button=false] - Whether to show a button to clear the selected date(s).
+ * @attribute {boolean} [constrain-to-enabled=true] - Whether to constrain the selected date(s) to the enabled dates.
+ * @attribute {DayOfWeek} first-day-of-week - The first day of the week.
+ * @attribute {boolean} [fixed-height=false] - Whether to fix the height of the calendar.
+ * @attribute {boolean} [list-years=true] - Whether to list the years in the year view.
+ * @attribute {string} locale - The locale to use for formatting dates.
+ * @attribute {Date | string | null} max - The maximum date that can be selected.
+ * @attribute {CalendarMenuAnimationType} [menu-animation="scale"] - The animation to use for the menu.
+ * @attribute {Date | string | null} min - The minimum date that can be selected.
+ * @attribute {CalendarMode} [mode="single"] - The mode of the calendar.
+ * @attribute {number} [month=<current month>] - The month to display.
+ * @attribute {boolean} [prevent-focus=false] - Whether to prevent the calendar from taking focus.
+ * @attribute {boolean} [readonly=false] - Whether the calendar is readonly.
+ * @attribute {boolean} [selection-follows-month=false] - Whether the selection follows the month.
+ * @attribute {boolean} [show-header=true] - Whether to show the header.
+ * @attribute {boolean} [show-other-months=false] - Whether to show days from other months.
+ * @attribute {boolean} [show-today=true] - Whether to show the today button.
+ * @attribute {boolean} [today-button=fakse] - Whether to show a button to select today.
+ * @attribute {CalendarView} [view="date"] - The view of the calendar.
+ * @attribute {number} [year=<current year>] - The year to display.
+ * @attribute {string} [year-range="-50:+50"] - The range of years to display.
+ *
+ * @fires {CustomEvent<ICalendarDateSelectEventData>} forge-calendar-date-select - Event fired when a date is selected.
+ * @fires {CustomEvent<ICalendarFocusChangeEventData>} forge-calendar-focus-change - Event fired when the focus changes.
+ * @fires {CustomEvent<ICalendarMonthChangeEventData>} forge-calendar-month-change - Event fired when the month changes.
+ * @fires {CustomEvent<CalendarView>} forge-calendar-view-change - Event fired when the view changes.
+ *
+ * @slot today-button-text - Text to display in the today button.
+ * @slot clear-button-text - Text to display in the clear button.
+ * @slot next-month-button-text - Text to display in the next month button's tooltip.
+ * @slot previous-month-button-text - Text to display in the previous month button's tooltip.
+ * @slot next-year-button-text - Text to display in the next year button's tooltip.
+ * @slot previous-year-button-text - Text to display in the previous year button's tooltip.
+ * @slot next-years-button-text - Text to display in the next years button's tooltip.
+ * @slot previous-years-button-text - Text to display in the previous years button's tooltip.
+ */
+let CalendarComponent = class CalendarComponent extends BaseComponent {
+    static get observedAttributes() {
+        return [
+            CALENDAR_CONSTANTS.attributes.ALLOW_SINGLE_DATE_RANGE,
+            CALENDAR_CONSTANTS.attributes.CLEAR_BUTTON,
+            CALENDAR_CONSTANTS.attributes.CONSTRAIN_TO_ENABLED,
+            CALENDAR_CONSTANTS.attributes.FIRST_DAY_OF_WEEK,
+            CALENDAR_CONSTANTS.attributes.FIXED_HEIGHT,
+            CALENDAR_CONSTANTS.attributes.LIST_YEARS,
+            CALENDAR_CONSTANTS.attributes.LOCALE,
+            CALENDAR_CONSTANTS.attributes.MAX,
+            CALENDAR_CONSTANTS.attributes.MENU_ANIMATION,
+            CALENDAR_CONSTANTS.attributes.MIN,
+            CALENDAR_CONSTANTS.attributes.MODE,
+            CALENDAR_CONSTANTS.attributes.MONTH,
+            CALENDAR_CONSTANTS.attributes.PREVENT_FOCUS,
+            CALENDAR_CONSTANTS.attributes.READONLY,
+            CALENDAR_CONSTANTS.attributes.SELECTION_FOLLOWS_MONTH,
+            CALENDAR_CONSTANTS.attributes.SHOW_HEADER,
+            CALENDAR_CONSTANTS.attributes.SHOW_OTHER_MONTHS,
+            CALENDAR_CONSTANTS.attributes.SHOW_TODAY,
+            CALENDAR_CONSTANTS.attributes.TODAY_BUTTON,
+            CALENDAR_CONSTANTS.attributes.VIEW,
+            CALENDAR_CONSTANTS.attributes.YEAR,
+            CALENDAR_CONSTANTS.attributes.YEAR_RANGE
+        ];
+    }
+    constructor() {
+        super();
+        IconRegistry.define([tylIconKeyboardArrowLeft, tylIconKeyboardArrowRight, tylIconArrowDropDown, tylIconLens, tylIconAdd]);
+        attachShadowTemplate(this, template, styles);
+        this._core = new CalendarCore(new CalendarAdapter(this));
+    }
+    connectedCallback() {
+        // To simulate the :host-context() selector for Firefox until they implement it, we need to determine if the
+        // calendar is within a popup for auto-styling the calendar when included within a popup. Check to see if
+        // any of the parents of this element are a popup.
+        if (!this.hasAttribute(CALENDAR_CONSTANTS.attributes.POPOVER_CONTEXT) && elementParents(this).some(el => el.tagName.toLowerCase() === 'forge-popover')) {
+            this.setAttribute(CALENDAR_CONSTANTS.attributes.POPOVER_CONTEXT, 'true');
+        }
+        this._core.initialize();
+    }
+    disconnectedCallback() {
+        this._core.destroy();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case CALENDAR_CONSTANTS.attributes.ALLOW_SINGLE_DATE_RANGE:
+                this.allowSingleDateRange = coerceBoolean(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.CLEAR_BUTTON:
+                this.clearButton = coerceBoolean(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.CONSTRAIN_TO_ENABLED:
+                this.constrainToEnabled = coerceBoolean(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.FIRST_DAY_OF_WEEK:
+                this.firstDayOfWeek = coerceNumber(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.FIXED_HEIGHT:
+                this.fixedHeight = coerceBoolean(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.LIST_YEARS:
+                this.listYears = coerceBoolean(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.LOCALE:
+                this.locale = newValue;
+                break;
+            case CALENDAR_CONSTANTS.attributes.MAX:
+                this.max = newValue;
+                break;
+            case CALENDAR_CONSTANTS.attributes.MENU_ANIMATION:
+                this.menuAnimation = newValue;
+                break;
+            case CALENDAR_CONSTANTS.attributes.MIN:
+                this.min = newValue;
+                break;
+            case CALENDAR_CONSTANTS.attributes.MODE:
+                this.mode = newValue;
+                break;
+            case CALENDAR_CONSTANTS.attributes.MONTH:
+                this.month = coerceNumber(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.PREVENT_FOCUS:
+                this.preventFocus = coerceBoolean(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.READONLY:
+                this.readonly = coerceBoolean(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.SELECTION_FOLLOWS_MONTH:
+                this.selectionFollowsMonth = coerceBoolean(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.SHOW_HEADER:
+                this.showHeader = coerceBoolean(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.SHOW_OTHER_MONTHS:
+                this.showOtherMonths = coerceBoolean(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.SHOW_TODAY:
+                this.showToday = coerceBoolean(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.TODAY_BUTTON:
+                this.todayButton = coerceBoolean(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.VIEW:
+                this.view = newValue;
+                break;
+            case CALENDAR_CONSTANTS.attributes.YEAR:
+                this.year = coerceNumber(newValue);
+                break;
+            case CALENDAR_CONSTANTS.attributes.YEAR_RANGE:
+                this.yearRange = newValue;
+                break;
+        }
+    }
+    /**
+     * Clears the selected date(s).
+     */
+    clear() {
+        this._core.clear();
+    }
+    /**
+     * Deselects a date.
+     */
+    deselectDate(date) {
+        this._core.deselectDate(new Date(date));
+    }
+    /**
+     * Navigates to a specific date.
+     */
+    goToDate(date, setFocus) {
+        this._core.goToDate(new Date(date), setFocus);
+    }
+    /**
+     * Handles a keyboard event.
+     */
+    handleKey(evt) {
+        this._core.handleExternalKeyEvent(evt);
+    }
+    /**
+     * Lays out the calendar.
+     */
+    layout() {
+        this._core.layout();
+    }
+    /**
+     * Selects a date.
+     */
+    selectDate(date) {
+        this._core.selectDate(new Date(date));
+    }
+    /**
+     * Sets the active date.
+     */
+    setActiveDate(date, setFocus) {
+        return this._core.setActiveDate(new Date(date), setFocus);
+    }
+    /**
+     * Sets the calendar to today.
+     */
+    today() {
+        this._core.today();
+    }
+    /**
+     * Toggles a date selection.
+     */
+    toggleDate(date, force) {
+        this._core.toggleDate(new Date(date), force);
+    }
+};
+__decorate([
+    coreProperty({ set: false })
+], CalendarComponent.prototype, "activeDate", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "allowSingleDateRange", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "clearButton", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "clearCallback", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "constrainToEnabled", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "dateBuilder", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "dateSelectCallback", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "dayBuilder", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "disabledDateBuilder", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "disabledDates", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "disabledDaysOfWeek", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "eventBuilder", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "events", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "firstDayOfWeek", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "fixedHeight", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "listYears", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "locale", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "max", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "menuAnimation", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "min", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "mode", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "month", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "preventFocus", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "readonly", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "selectionFollowsMonth", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "showHeader", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "showOtherMonths", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "showToday", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "todayButton", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "todayCallback", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "tooltipBuilder", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "value", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "view", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "weekendDays", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "year", void 0);
+__decorate([
+    coreProperty()
+], CalendarComponent.prototype, "yearRange", void 0);
+CalendarComponent = __decorate([
+    customElement({
+        name: CALENDAR_CONSTANTS.elementName,
+        dependencies: [ButtonComponent, CalendarMenuComponent, IconButtonComponent, IconComponent, TooltipComponent, StateLayerComponent, FocusIndicatorComponent]
+    })
+], CalendarComponent);
+export { CalendarComponent };

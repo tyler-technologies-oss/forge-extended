@@ -1,0 +1,87 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ICON_CLASS_NAME } from '../../constants';
+import { BaseComponentDelegate } from '../../core/delegates/base-component-delegate';
+import { ICON_CONSTANTS } from '../../icon/icon-constants';
+import { DEPRECATED_ICON_BUTTON_CONSTANTS } from './deprecated-icon-button-constants';
+export class DeprecatedIconButtonComponentDelegate extends BaseComponentDelegate {
+    constructor(config) {
+        super(config);
+    }
+    destroy() {
+        this._buttonElement = undefined;
+    }
+    get buttonElement() {
+        return this._buttonElement;
+    }
+    _build() {
+        const component = document.createElement(DEPRECATED_ICON_BUTTON_CONSTANTS.elementName);
+        this._buttonElement = document.createElement('button');
+        this._buttonElement.type = 'button';
+        component.appendChild(this._buttonElement);
+        if (this._config.options?.tooltip) {
+            const tooltip = document.createElement('forge-tooltip');
+            tooltip.textContent = this._config.options.tooltip;
+            if (this._config.options.tooltipPosition) {
+                tooltip.position = this._config.options.tooltipPosition;
+            }
+            component.appendChild(tooltip);
+        }
+        return component;
+    }
+    onClick(listener) {
+        this._buttonElement?.addEventListener('click', listener);
+    }
+    onFocus(listener) {
+        this._buttonElement?.addEventListener('focus', listener);
+    }
+    onBlur(listener) {
+        this._buttonElement?.addEventListener('blur', listener);
+    }
+    get iconElement() {
+        return this._iconElement;
+    }
+    get disabled() {
+        return !!this._buttonElement?.disabled;
+    }
+    set disabled(value) {
+        if (this._buttonElement) {
+            this._buttonElement.disabled = value;
+        }
+    }
+    _configure() {
+        this._configureIcon();
+    }
+    _configureIcon() {
+        if (!this._config.options?.iconName) {
+            return;
+        }
+        const type = this._config.options?.iconType || 'component';
+        switch (type) {
+            case 'font':
+                const classes = Array.isArray(this._config.options.iconClass) ? this._config.options.iconClass : [ICON_CLASS_NAME];
+                this._buttonElement?.classList.add(...classes);
+                if (this._buttonElement) {
+                    this._buttonElement.textContent = this._config.options.iconName;
+                }
+                break;
+            case 'component':
+                this._iconElement = document.createElement(ICON_CONSTANTS.elementName);
+                this._iconElement.name = this._config.options.iconName;
+                if (this._config.options.iconExternal !== undefined) {
+                    this._iconElement.external = !!this._config.options.iconExternal;
+                }
+                if (this._config.options.iconExternalType) {
+                    this._iconElement.externalType = this._config.options.iconExternalType;
+                }
+                if (this._config.options.iconClass) {
+                    this._iconElement.classList.add(...this._config.options.iconClass);
+                }
+                this._buttonElement?.appendChild(this._iconElement);
+                break;
+        }
+    }
+}

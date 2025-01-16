@@ -1,0 +1,4 @@
+type Options = string[];
+export declare const RULE_NAME = "invalid-relative-import-prefix";
+declare const _default: import("@typescript-eslint/utils/dist/ts-eslint").RuleModule<"invalidRelativeImportPrefix", Options, import("@typescript-eslint/utils/dist/ts-eslint").RuleListener>;
+export default _default;

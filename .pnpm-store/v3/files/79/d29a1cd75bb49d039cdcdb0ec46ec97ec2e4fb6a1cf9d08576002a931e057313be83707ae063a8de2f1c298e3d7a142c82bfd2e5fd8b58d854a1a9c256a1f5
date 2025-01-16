@@ -1,0 +1,35 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { SkipLinkComponent as SkipLinkComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class SkipLinkComponent {
+    protected elementRef: ElementRef<SkipLinkComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-skip-link element. */
+    readonly nativeElement: SkipLinkComponentCustomElement;
+    /** The IDREF of the element to which the skip link should navigate. */
+    set target(value: SkipLinkComponentCustomElement['target']);
+    get target(): SkipLinkComponentCustomElement['target'];
+    /** The theme applied to the skip link. */
+    set theme(value: SkipLinkComponentCustomElement['theme']);
+    get theme(): SkipLinkComponentCustomElement['theme'];
+    /** Whether or not the skip link uses a muted color scheme. */
+    set muted(value: SkipLinkComponentCustomElement['muted']);
+    get muted(): SkipLinkComponentCustomElement['muted'];
+    /** Whether or not the skip link should remain visible when not focused. */
+    set persistent(value: SkipLinkComponentCustomElement['persistent']);
+    get persistent(): SkipLinkComponentCustomElement['persistent'];
+    /** Whether or not the skip link renders within its container. */
+    set inline(value: SkipLinkComponentCustomElement['inline']);
+    get inline(): SkipLinkComponentCustomElement['inline'];
+    /** Sets the skip link to skip browser navigation and scroll to the target element. */
+    set skipUrlChange(value: SkipLinkComponentCustomElement['skipUrlChange']);
+    get skipUrlChange(): SkipLinkComponentCustomElement['skipUrlChange'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<SkipLinkComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<SkipLinkComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<SkipLinkComponent, "forge-skip-link", never, { "target": { "alias": "target"; "required": false; }; "theme": { "alias": "theme"; "required": false; }; "muted": { "alias": "muted"; "required": false; }; "persistent": { "alias": "persistent"; "required": false; }; "inline": { "alias": "inline"; "required": false; }; "skipUrlChange": { "alias": "skipUrlChange"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_muted: unknown;
+    static ngAcceptInputType_persistent: unknown;
+    static ngAcceptInputType_inline: unknown;
+    static ngAcceptInputType_skipUrlChange: unknown;
+}

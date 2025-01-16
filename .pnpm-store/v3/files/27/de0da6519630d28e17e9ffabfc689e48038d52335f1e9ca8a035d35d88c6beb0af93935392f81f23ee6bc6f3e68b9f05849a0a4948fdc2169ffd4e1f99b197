@@ -1,0 +1,13 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+/**
+ * Represents a row within the table.
+ */
+export declare class TableRow {
+    data: any;
+    selected: boolean;
+    constructor(data: any, selected?: boolean);
+}

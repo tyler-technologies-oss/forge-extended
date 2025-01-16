@@ -1,0 +1,11 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const DIVIDER_CONSTANTS: {
+    elementName: "forge-divider";
+    attributes: {
+        VERTICAL: string;
+    };
+};

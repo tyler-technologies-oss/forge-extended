@@ -1,0 +1,53 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IBaseComponentDelegateConfig } from '../core/delegates/base-component-delegate';
+import { FormFieldComponentDelegate, IFormFieldComponentDelegateOptions } from '../core/delegates/form-field-component-delegate';
+import { ITextFieldComponent } from './text-field';
+export type TextFieldComponentDelegateProps = Partial<ITextFieldComponent>;
+export interface ITextFieldComponentDelegateOptions extends IFormFieldComponentDelegateOptions {
+    id?: string;
+    label?: string;
+    type?: string;
+    value?: string;
+    placeholder?: string;
+    startElement?: HTMLElement;
+    endElement?: HTMLElement;
+    accessoryElement?: HTMLElement;
+    supportText?: string;
+    supportTextEndElement?: string;
+    leadingElement?: HTMLElement;
+    trailingElement?: HTMLElement;
+    helperText?: string;
+}
+export interface ITextFieldComponentDelegateConfig extends IBaseComponentDelegateConfig<ITextFieldComponent, ITextFieldComponentDelegateOptions> {
+}
+export declare class TextFieldComponentDelegate extends FormFieldComponentDelegate<ITextFieldComponent, ITextFieldComponentDelegateOptions> {
+    private _inputElement;
+    private _labelElement?;
+    private _supportTextElement?;
+    private _supportTextEndElement?;
+    constructor(config?: ITextFieldComponentDelegateConfig);
+    protected _build(): ITextFieldComponent;
+    protected _configure(): void;
+    get value(): string;
+    set value(value: string);
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    get invalid(): boolean;
+    set invalid(value: boolean);
+    get inputElement(): HTMLInputElement;
+    get labelElement(): HTMLLabelElement | undefined;
+    onChange(listener: (value: string) => void): void;
+    onFocus(listener: (evt: Event) => void): void;
+    onBlur(listener: (evt: Event) => void): void;
+    setLabel(text: string | null): void;
+    setSupportText(text: string | null): void;
+    setHelperText(text: string | null): void;
+    setSupportTextEnd(text: string | null): void;
+    floatLabel(value: boolean): void;
+    private _createLabel;
+    private _buildInputElement;
+}

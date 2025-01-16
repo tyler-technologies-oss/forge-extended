@@ -1,0 +1,8 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./date-range-picker-value-accessor.directive";
+import * as i2 from "./date-range-picker-proxy.module";
+export declare class ForgeDateRangePickerModule {
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeDateRangePickerModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeDateRangePickerModule, [typeof i1.DateRangePickerValueAccessor], never, [typeof i1.DateRangePickerValueAccessor, typeof i2.ForgeDateRangePickerProxyModule]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeDateRangePickerModule>;
+}

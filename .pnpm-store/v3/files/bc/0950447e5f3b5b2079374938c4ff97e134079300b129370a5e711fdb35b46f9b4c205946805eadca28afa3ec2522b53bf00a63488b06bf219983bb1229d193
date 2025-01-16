@@ -1,0 +1,9 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./text-field.component";
+import * as i2 from "@angular/common";
+export declare class ForgeTextFieldModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeTextFieldModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeTextFieldModule, [typeof i1.TextFieldComponent], [typeof i2.CommonModule], [typeof i1.TextFieldComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeTextFieldModule>;
+}

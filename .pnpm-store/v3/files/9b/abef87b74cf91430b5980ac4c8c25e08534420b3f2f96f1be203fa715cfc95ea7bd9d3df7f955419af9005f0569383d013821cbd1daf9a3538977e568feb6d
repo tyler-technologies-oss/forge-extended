@@ -1,0 +1,12 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { defineCustomElement } from '@tylertech/forge-core';
+import { OpenIconComponent } from './open-icon';
+export * from './open-icon-constants';
+export * from './open-icon';
+export function defineOpenIconComponent() {
+    defineCustomElement(OpenIconComponent);
+}

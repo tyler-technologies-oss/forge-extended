@@ -1,0 +1,28 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { BadgeComponent as BadgeComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class BadgeComponent {
+    protected elementRef: ElementRef<BadgeComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-badge element. */
+    readonly nativeElement: BadgeComponentCustomElement;
+    /** Controls whether the badge will be a small dot without any content visible. */
+    set dot(value: BadgeComponentCustomElement['dot']);
+    get dot(): BadgeComponentCustomElement['dot'];
+    /** The theme of the badge. */
+    set theme(value: BadgeComponentCustomElement['theme']);
+    get theme(): BadgeComponentCustomElement['theme'];
+    /** Controls whether the badge will have a stronger visual appearance. */
+    set strong(value: BadgeComponentCustomElement['strong']);
+    get strong(): BadgeComponentCustomElement['strong'];
+    /** Controls whether the badge is visible. */
+    set hide(value: BadgeComponentCustomElement['hide']);
+    get hide(): BadgeComponentCustomElement['hide'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<BadgeComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<BadgeComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<BadgeComponent, "forge-badge", never, { "dot": { "alias": "dot"; "required": false; }; "theme": { "alias": "theme"; "required": false; }; "strong": { "alias": "strong"; "required": false; }; "hide": { "alias": "hide"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_dot: unknown;
+    static ngAcceptInputType_strong: unknown;
+    static ngAcceptInputType_hide: unknown;
+}

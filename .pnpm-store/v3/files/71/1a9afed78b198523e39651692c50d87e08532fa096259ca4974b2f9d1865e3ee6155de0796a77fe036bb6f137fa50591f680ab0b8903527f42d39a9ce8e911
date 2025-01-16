@@ -1,0 +1,20 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseDrawerCore, IBaseDrawerCore } from '../base';
+import { IModalDrawerAdapter } from './modal-drawer-adapter';
+export interface IModalDrawerCore extends IBaseDrawerCore {
+}
+export declare class ModalDrawerCore extends BaseDrawerCore implements IModalDrawerCore {
+    protected _adapter: IModalDrawerAdapter;
+    protected _open: boolean;
+    private _backdropClickListener;
+    constructor(_adapter: IModalDrawerAdapter);
+    initialize(): void;
+    protected _triggerDrawerOpen(): Promise<void>;
+    protected _triggerDrawerClose(): Promise<void>;
+    private _onBackdropClick;
+    private _setBackdrop;
+}

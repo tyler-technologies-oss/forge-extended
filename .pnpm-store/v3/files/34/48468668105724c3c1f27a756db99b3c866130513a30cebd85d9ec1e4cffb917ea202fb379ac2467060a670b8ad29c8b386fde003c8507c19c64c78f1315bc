@@ -1,0 +1,27 @@
+import { ApplicationRef, EnvironmentInjector, NgModuleRef, NgZone, Type } from '@angular/core';
+import { IPopoverComponent } from '@tylertech/forge';
+import { PopoverConfig } from './popover-config';
+import { PopoverRef } from './popover-ref';
+import * as i0 from "@angular/core";
+export interface IPopoverOptions extends Omit<Partial<IPopoverComponent>, 'attributes'> {
+    className?: string;
+    attributes?: Map<string, string>;
+    anchorElement: HTMLElement;
+}
+export declare class PopoverService {
+    private _appRef;
+    private _injector;
+    private _ngZone;
+    constructor(_appRef: ApplicationRef, _injector: EnvironmentInjector, _ngZone: NgZone);
+    /**
+     * Displays a components within a Forge popover instance.
+     * @param component The component reference.
+     * @param options Sets attributes and properties on the `forge-popover` element. `targetElement` is required.
+     * @param config The configuration to provide to the dynamic component as an injectable token.
+     * @param moduleRef Optional NgModule ref if need by the component.
+     * @returns A PopoverRef to the forge-popover and dynamically created component, and related close handling.
+     */
+    show<T, TModule>(component: Type<T>, options: IPopoverOptions, config?: PopoverConfig, moduleRef?: NgModuleRef<TModule>, envInjector?: EnvironmentInjector): PopoverRef<T>;
+    static ɵfac: i0.ɵɵFactoryDeclaration<PopoverService, never>;
+    static ɵprov: i0.ɵɵInjectableDeclaration<PopoverService>;
+}

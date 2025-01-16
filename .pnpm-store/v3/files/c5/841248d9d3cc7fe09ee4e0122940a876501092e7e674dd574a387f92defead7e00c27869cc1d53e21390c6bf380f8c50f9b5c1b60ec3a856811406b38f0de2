@@ -1,0 +1,33 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { ColorPickerComponent as ColorPickerComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class ColorPickerComponent {
+    protected elementRef: ElementRef<ColorPickerComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-color-picker element. */
+    readonly nativeElement: ColorPickerComponentCustomElement;
+    /** Gets/sets the value using hex format only. */
+    set value(value: ColorPickerComponentCustomElement['value']);
+    get value(): ColorPickerComponentCustomElement['value'];
+    /** Gets/sets the value using rgba format. */
+    set rgba(value: ColorPickerComponentCustomElement['rgba']);
+    get rgba(): ColorPickerComponentCustomElement['rgba'];
+    /** Gets/sets the value using hsva format. */
+    set hsva(value: ColorPickerComponentCustomElement['hsva']);
+    get hsva(): ColorPickerComponentCustomElement['hsva'];
+    /** Gets/sets the opacity value, if `allowOpacity` is true. */
+    set opacity(value: ColorPickerComponentCustomElement['opacity']);
+    get opacity(): ColorPickerComponentCustomElement['opacity'];
+    /** Gets/sets whether opacity is displayed and allowed be to changed. */
+    set allowOpacity(value: ColorPickerComponentCustomElement['allowOpacity']);
+    get allowOpacity(): ColorPickerComponentCustomElement['allowOpacity'];
+    /** Gets/sets whether change event has a debounce applied to avoid successive updates. */
+    set debounceChangeEvent(value: ColorPickerComponentCustomElement['debounceChangeEvent']);
+    get debounceChangeEvent(): ColorPickerComponentCustomElement['debounceChangeEvent'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<ColorPickerComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<ColorPickerComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<ColorPickerComponent, "forge-color-picker", never, { "value": { "alias": "value"; "required": false; }; "rgba": { "alias": "rgba"; "required": false; }; "hsva": { "alias": "hsva"; "required": false; }; "opacity": { "alias": "opacity"; "required": false; }; "allowOpacity": { "alias": "allowOpacity"; "required": false; }; "debounceChangeEvent": { "alias": "debounceChangeEvent"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_allowOpacity: unknown;
+    static ngAcceptInputType_debounceChangeEvent: unknown;
+}

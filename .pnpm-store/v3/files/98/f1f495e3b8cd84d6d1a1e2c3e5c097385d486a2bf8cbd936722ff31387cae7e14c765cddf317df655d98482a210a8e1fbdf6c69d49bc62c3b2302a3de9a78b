@@ -1,0 +1,30 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseButtonCore, IBaseButtonCore } from './base/base-button-core';
+import { IButtonAdapter } from './button-adapter';
+import { ButtonTheme, ButtonVariant } from './button-constants';
+export interface IButtonCore extends IBaseButtonCore {
+    variant: ButtonVariant;
+    pill: boolean;
+    theme: ButtonTheme;
+    fullWidth: boolean;
+}
+export declare class ButtonCore extends BaseButtonCore<IButtonAdapter> implements IButtonCore {
+    private _variant;
+    private _pill;
+    private _theme;
+    private _fullWidth;
+    constructor(adapter: IButtonAdapter);
+    initialize(): void;
+    get variant(): ButtonVariant;
+    set variant(value: ButtonVariant);
+    get pill(): boolean;
+    set pill(value: boolean);
+    get theme(): ButtonTheme;
+    set theme(value: ButtonTheme);
+    get fullWidth(): boolean;
+    set fullWidth(value: boolean);
+}

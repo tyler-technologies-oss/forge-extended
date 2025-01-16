@@ -1,0 +1,38 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { Theme } from '../constants';
+import { BaseComponentDelegate, IBaseComponentDelegateConfig, IBaseComponentDelegateOptions } from '../core/delegates/base-component-delegate';
+import { IIconComponent } from '../icon/icon';
+import { IconExternalType } from '../icon/icon-constants';
+import { IFloatingActionButtonComponent } from './floating-action-button';
+import { FloatingActionButtonDensity, FloatingActionButtonElevation } from './floating-action-button-constants';
+export type FloatingActionButtonComponentDelegateProps = Partial<IFloatingActionButtonComponent>;
+export interface IFloatingActionButtonComponentDelegateOptions extends IBaseComponentDelegateOptions {
+    iconName?: string;
+    iconExternal?: boolean;
+    iconExternalType?: IconExternalType;
+    iconType?: 'font' | 'component';
+    iconClass?: string | string[];
+    label?: string;
+    theme?: Theme;
+    density?: FloatingActionButtonDensity;
+    elevation?: FloatingActionButtonElevation;
+}
+export interface IFloatingActionButtonComponentDelegateConfig extends IBaseComponentDelegateConfig<IFloatingActionButtonComponent, IFloatingActionButtonComponentDelegateOptions> {
+}
+export declare class FloatingActionButtonComponentDelegate extends BaseComponentDelegate<IFloatingActionButtonComponent, IFloatingActionButtonComponentDelegateOptions> {
+    private _iconElement?;
+    constructor(config?: IFloatingActionButtonComponentDelegateConfig);
+    protected _build(): IFloatingActionButtonComponent;
+    protected _configure(): void;
+    private _configureIcon;
+    get iconElement(): IIconComponent | undefined;
+    get disabled(): boolean;
+    set disabled(value: boolean);
+    onClick(listener: (evt: MouseEvent) => void): void;
+    onFocus(listener: (evt: Event) => void): void;
+    onBlur(listener: (evt: Event) => void): void;
+}

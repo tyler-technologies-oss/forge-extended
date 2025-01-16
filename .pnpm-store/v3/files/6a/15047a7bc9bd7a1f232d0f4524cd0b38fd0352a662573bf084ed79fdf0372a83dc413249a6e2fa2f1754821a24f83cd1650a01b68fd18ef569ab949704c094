@@ -1,0 +1,11 @@
+import { IBottomSheetComponent } from '@tylertech/forge';
+import { ReactComponentOrElements } from '../utils';
+export interface ForgeBottomSheetOptions extends Partial<IBottomSheetComponent> {
+    bottomSheetClass?: string;
+    bottomSheetAttributes?: Map<string, string>;
+}
+export type UseForgeBottomSheetResult = [
+    (options?: ForgeBottomSheetOptions, dismissCallback?: () => void) => IBottomSheetComponent,
+    () => void
+];
+export declare const useForgeBottomSheet: (component: ReactComponentOrElements, componentProps?: any) => UseForgeBottomSheetResult;

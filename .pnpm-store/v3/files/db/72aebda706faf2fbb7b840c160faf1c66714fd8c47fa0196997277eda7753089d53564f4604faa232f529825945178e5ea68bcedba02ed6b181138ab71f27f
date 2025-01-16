@@ -1,0 +1,115 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { customElement, attachShadowTemplate, coreProperty, coerceBoolean, coerceNumberArray, coerceNumber } from '@tylertech/forge-core';
+import { tylIconFirstPage, tylIconLastPage, tylIconKeyboardArrowRight, tylIconKeyboardArrowLeft } from '@tylertech/tyler-icons/standard';
+import { PAGINATOR_CONSTANTS } from './paginator-constants';
+import { PaginatorCore } from './paginator-core';
+import { PaginatorAdapter } from './paginator-adapter';
+import { IconButtonComponent } from '../icon-button/icon-button';
+import { SelectComponent } from '../select/select';
+import { IconRegistry } from '../icon/icon-registry';
+import { BaseComponent } from '../core/base/base-component';
+import { TooltipComponent } from '../tooltip/tooltip';
+const template = '<template><div class=\"forge-paginator\" part=\"root\" forge-popover-host><div class=\"container\" part=\"container\"><div class=\"label\" part=\"label\" id=\"label\"><slot name=\"label\"></slot></div><forge-select class=\"page-size-options\" aria-labelledby=\"label\" label-position=\"none\" density=\"extra-small\" part=\"page-size-options\"></forge-select><div class=\"range-label\" part=\"range-label\"><slot name=\"range-label\"></slot></div></div><div class=\"actions\" part=\"actions\"><div id=\"first-page-container\"><forge-icon-button class=\"first-page\" part=\"first-page-button\" part=\"first-page-button-element\"><forge-icon name=\"first_page\" part=\"first-page-icon\"></forge-icon></forge-icon-button><forge-tooltip type=\"label\" placement=\"top\"><slot name=\"first-page-tooltip\">Go to the first page</slot></forge-tooltip></div><div id=\"previous-page-container\"><forge-icon-button class=\"previous-page\" part=\"previous-page-button\" part=\"previous-page-button-element\"><forge-icon name=\"keyboard_arrow_left\" part=\"previous-page-button-icon\"></forge-icon></forge-icon-button><forge-tooltip type=\"label\" placement=\"top\"><slot name=\"previous-page-tooltip\">Go to the previous page</slot></forge-tooltip></div><div class=\"alternative-range-label\" part=\"alternative-range-label\"><slot name=\"alternative-range-label\"></slot></div><div id=\"next-page-container\"><forge-icon-button class=\"next-page\" part=\"next-page-button\" part=\"next-page-button-element\"><forge-icon name=\"keyboard_arrow_right\" part=\"next-page-icon\"></forge-icon></forge-icon-button><forge-tooltip type=\"label\" placement=\"top\"><slot name=\"next-page-tooltip\">Go to the next page</slot></forge-tooltip></div><div id=\"last-page-container\"><forge-icon-button class=\"last-page\" part=\"last-page-button\" part=\"last-page-button-element\"><forge-icon name=\"last_page\" part=\"last-page-icon\"></forge-icon></forge-icon-button><forge-tooltip type=\"label\" placement=\"top\"><slot name=\"last-page-tooltip\">Go to the last page</slot></forge-tooltip></div></div></div></template>';
+const styles = ':host{display:block}:host([hidden]){display:none}.forge-paginator{display:flex;gap:var(--forge-spacing-xsmall,8px)}.container{display:flex;gap:var(--forge-spacing-medium,16px);align-items:center}.alternative-range-label,.label,.range-label{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-label1-font-family, var(--forge-typography-font-family, \"Roboto\", sans-serif));font-size:var(--forge-typography-label1-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-label-font-size-scale, .75)));font-weight:var(--forge-typography-label1-font-weight,400);line-height:var(--forge-typography-label1-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-label-line-height-scale, 1.25)));letter-spacing:var(--forge-typography-label1-letter-spacing, .0357142857em);text-transform:var(--forge-typography-label1-text-transform,inherit);text-decoration:var(--forge-typography-label1-text-decoration,inherit)}.actions{display:flex;align-items:center}.alternative-range-label{display:none}:host([alternative]) .alternative-range-label{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-body1-font-family, var(--forge-typography-font-family, \"Roboto\", sans-serif));font-size:var(--forge-typography-body1-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-body-font-size-scale, .875)));font-weight:var(--forge-typography-body1-font-weight,400);line-height:var(--forge-typography-body1-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-body-line-height-scale, 1.125)));letter-spacing:var(--forge-typography-body1-letter-spacing, .0357142857em);text-transform:var(--forge-typography-body1-text-transform,inherit);text-decoration:var(--forge-typography-body1-text-decoration,inherit);display:inline-block}:host([alternative]) .container{display:none}:host([alternative]) .actions{width:100%;justify-content:var(--forge-paginator-alternative-alignment,start)}';
+/**
+ * @tag forge-paginator
+ *
+ * @event {CustomEvent<IPaginatorChangeEventData>} forge-paginator-change - Dispatched when the paginator state changes.
+ */
+let PaginatorComponent = class PaginatorComponent extends BaseComponent {
+    static get observedAttributes() {
+        return Object.values(PAGINATOR_CONSTANTS.observedAttributes);
+    }
+    constructor() {
+        super();
+        IconRegistry.define([tylIconFirstPage, tylIconKeyboardArrowLeft, tylIconKeyboardArrowRight, tylIconLastPage]);
+        attachShadowTemplate(this, template, styles);
+        this._core = new PaginatorCore(new PaginatorAdapter(this));
+    }
+    connectedCallback() {
+        this._core.initialize();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case PAGINATOR_CONSTANTS.observedAttributes.PAGE_INDEX:
+                this.pageIndex = coerceNumber(newValue) ?? PAGINATOR_CONSTANTS.numbers.DEFAULT_PAGE_INDEX;
+                break;
+            case PAGINATOR_CONSTANTS.observedAttributes.PAGE_SIZE:
+                this.pageSize = coerceNumber(newValue) ?? PAGINATOR_CONSTANTS.numbers.DEFAULT_PAGE_SIZE;
+                break;
+            case PAGINATOR_CONSTANTS.observedAttributes.OFFSET:
+                this.offset = coerceNumber(newValue);
+                break;
+            case PAGINATOR_CONSTANTS.observedAttributes.TOTAL:
+                this.total = coerceNumber(newValue) ?? PAGINATOR_CONSTANTS.numbers.DEFAULT_TOTAL;
+                break;
+            case PAGINATOR_CONSTANTS.observedAttributes.PAGE_SIZE_OPTIONS:
+                this.pageSizeOptions = coerceNumberArray(newValue) ?? PAGINATOR_CONSTANTS.numbers.DEFAULT_PAGE_SIZE_OPTIONS;
+                break;
+            case PAGINATOR_CONSTANTS.observedAttributes.LABEL:
+                this.label = newValue;
+                break;
+            case PAGINATOR_CONSTANTS.observedAttributes.FIRST_LAST:
+                this.firstLast = coerceBoolean(newValue);
+                break;
+            case PAGINATOR_CONSTANTS.observedAttributes.FIRST:
+                this.first = coerceBoolean(newValue);
+                break;
+            case PAGINATOR_CONSTANTS.observedAttributes.DISABLED:
+                this.disabled = coerceBoolean(newValue);
+                break;
+            case PAGINATOR_CONSTANTS.observedAttributes.ALTERNATIVE:
+                this.alternative = coerceBoolean(newValue);
+                break;
+        }
+    }
+    /** Sets focus to the first focusable element within the paginator. */
+    focus(options) {
+        this._core.focus(options);
+    }
+};
+__decorate([
+    coreProperty()
+], PaginatorComponent.prototype, "pageIndex", void 0);
+__decorate([
+    coreProperty()
+], PaginatorComponent.prototype, "pageSize", void 0);
+__decorate([
+    coreProperty()
+], PaginatorComponent.prototype, "offset", void 0);
+__decorate([
+    coreProperty()
+], PaginatorComponent.prototype, "total", void 0);
+__decorate([
+    coreProperty()
+], PaginatorComponent.prototype, "pageSizeOptions", void 0);
+__decorate([
+    coreProperty()
+], PaginatorComponent.prototype, "label", void 0);
+__decorate([
+    coreProperty()
+], PaginatorComponent.prototype, "firstLast", void 0);
+__decorate([
+    coreProperty()
+], PaginatorComponent.prototype, "first", void 0);
+__decorate([
+    coreProperty()
+], PaginatorComponent.prototype, "disabled", void 0);
+__decorate([
+    coreProperty()
+], PaginatorComponent.prototype, "alternative", void 0);
+__decorate([
+    coreProperty()
+], PaginatorComponent.prototype, "rangeLabelCallback", void 0);
+PaginatorComponent = __decorate([
+    customElement({
+        name: PAGINATOR_CONSTANTS.elementName,
+        dependencies: [IconButtonComponent, SelectComponent, TooltipComponent]
+    })
+], PaginatorComponent);
+export { PaginatorComponent };

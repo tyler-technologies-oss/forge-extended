@@ -1,0 +1,20 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const DATE_PICKER_CONSTANTS: {
+    elementName: "forge-date-picker";
+    selectors: {
+        INPUT: string;
+    };
+    events: {
+        CHANGE: string;
+        OPEN: string;
+        CLOSE: string;
+        INPUT: string;
+    };
+    observedAttributes: {
+        VALUE: string;
+    };
+};

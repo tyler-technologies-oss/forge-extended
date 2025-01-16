@@ -1,0 +1,66 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { IColorPickerAdapter } from './color-picker-adapter';
+import { IHSVA, IRGBA } from './color-picker-constants';
+export interface IColorPickerCore {
+    value: string | null | undefined;
+    rgba: IRGBA | null | undefined;
+    hsva: IHSVA | null | undefined;
+    opacity: number | null | undefined;
+    allowOpacity: boolean;
+    debounceChangeEvent: boolean;
+}
+export declare class ColorPickerCore implements IColorPickerCore {
+    private _adapter;
+    private _value;
+    private _allowOpacity;
+    private _hex;
+    private _hsva;
+    private _rgba;
+    private _debounceChangeEvent;
+    private _valueType;
+    private _gradientSlider;
+    private _hueSlider;
+    private _opacitySlider;
+    private _initialized;
+    private _gradientSliderChangedListener;
+    private _hueSliderChangedListener;
+    private _opacitySliderChangedListener;
+    private _typeClickListener;
+    private _hexInputChangedListener;
+    private _rgbaInputChangedListener;
+    private _hsvaInputChangedListener;
+    private _triggerChangeEvent;
+    constructor(_adapter: IColorPickerAdapter);
+    initialize(): void;
+    destroy(): void;
+    private _applyChangeEventTrigger;
+    private _initializeOpacity;
+    private _onTypeClicked;
+    private _onHexInputChanged;
+    private _onRgbaInputChanged;
+    private _onHsvaInputChanged;
+    private _setColorFromHex;
+    private _onGradientSliderChanged;
+    private _onHueSliderChanged;
+    private _onOpacitySliderChanged;
+    private _setGradientColor;
+    private _syncColors;
+    private _render;
+    private _emitChangeEvent;
+    get value(): string | null | undefined;
+    set value(value: string | null | undefined);
+    get rgba(): IRGBA | null | undefined;
+    set rgba(value: IRGBA | null | undefined);
+    get hsva(): IHSVA | null | undefined;
+    set hsva(value: IHSVA | null | undefined);
+    get opacity(): number | null | undefined;
+    set opacity(value: number | null | undefined);
+    get allowOpacity(): boolean;
+    set allowOpacity(value: boolean);
+    get debounceChangeEvent(): boolean;
+    set debounceChangeEvent(value: boolean);
+}

@@ -1,0 +1,23 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const AVATAR_CONSTANTS: {
+    elementName: "forge-avatar";
+    attributes: {
+        IMAGE_URL: string;
+        TEXT: string;
+        LETTER_COUNT: string;
+    };
+    numbers: {
+        DEFAULT_LETTER_COUNT: number;
+    };
+    selectors: {
+        ROOT: string;
+        DEFAULT_SLOT: string;
+    };
+    strings: {
+        BACKGROUND_VARNAME: string;
+    };
+};

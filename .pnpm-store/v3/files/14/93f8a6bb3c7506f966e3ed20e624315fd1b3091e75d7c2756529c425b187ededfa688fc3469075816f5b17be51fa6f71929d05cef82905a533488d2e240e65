@@ -1,0 +1,40 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ISplitViewBase } from '../core';
+export declare const SPLIT_VIEW_CONSTANTS: {
+    elementName: "forge-split-view";
+    attributes: {
+        ORIENTATION: string;
+        DISABLED: string;
+        ALLOW_CLOSE: string;
+        AUTO_CLOSE: string;
+        AUTO_CLOSE_THRESHOLD: string;
+    };
+    classes: {
+        ROOT: string;
+    };
+    ids: {
+        ROOT: string;
+    };
+    selectors: {
+        ROOT: string;
+        PANEL: "forge-split-view-panel";
+    };
+    numbers: {
+        RESIZE_THROTTLE_THRESHOLD: number;
+    };
+    customCssProperties: {
+        ANIMATING_LAYER: string;
+    };
+};
+export type SplitViewOrientation = 'horizontal' | 'vertical';
+export interface ISplitViewUpdateConfig {
+    accessibility?: boolean;
+    cursor?: boolean;
+    orientation?: SplitViewOrientation;
+    properties?: Partial<ISplitViewBase>;
+    size?: boolean;
+}

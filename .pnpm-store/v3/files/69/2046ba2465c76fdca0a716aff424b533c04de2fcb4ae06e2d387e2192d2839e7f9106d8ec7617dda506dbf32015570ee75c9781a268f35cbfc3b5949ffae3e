@@ -1,0 +1,40 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { SplitViewComponent as SplitViewComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class SplitViewComponent {
+    protected elementRef: ElementRef<SplitViewComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-split-view element. */
+    readonly nativeElement: SplitViewComponentCustomElement;
+    /** Whether child split view panels are laid out and resize horizontally or vertically. */
+    set orientation(value: SplitViewComponentCustomElement['orientation']);
+    get orientation(): SplitViewComponentCustomElement['orientation'];
+    /** Whether child split view panels have resize interactions disabled or enabled. */
+    set disabled(value: SplitViewComponentCustomElement['disabled']);
+    get disabled(): SplitViewComponentCustomElement['disabled'];
+    /** Whether child split view panels can be closed via keyboard interaction. */
+    set allowClose(value: SplitViewComponentCustomElement['allowClose']);
+    get allowClose(): SplitViewComponentCustomElement['allowClose'];
+    /** Whether child split view panels automatically close when they reach a size of 0. */
+    set autoClose(value: SplitViewComponentCustomElement['autoClose']);
+    get autoClose(): SplitViewComponentCustomElement['autoClose'];
+    /** The size at which panels auto close. */
+    set autoCloseThreshold(value: SplitViewComponentCustomElement['autoCloseThreshold']);
+    get autoCloseThreshold(): SplitViewComponentCustomElement['autoCloseThreshold'];
+    /** Arranges split view panels to avoid overlapping during animations. */
+    layerSlottedPanels(...args: Parameters<SplitViewComponentCustomElement['layerSlottedPanels']>): ReturnType<SplitViewComponentCustomElement['layerSlottedPanels']>;
+    /** Removes presentation data set during an animation. */
+    unlayerSlottedPanels(...args: Parameters<SplitViewComponentCustomElement['unlayerSlottedPanels']>): ReturnType<SplitViewComponentCustomElement['unlayerSlottedPanels']>;
+    /** Updates the provided characteristics of each slotted panel. */
+    update(...args: Parameters<SplitViewComponentCustomElement['update']>): ReturnType<SplitViewComponentCustomElement['update']>;
+    /** Resizes panels within the split view to avoid overflow. */
+    refit(...args: Parameters<SplitViewComponentCustomElement['refit']>): ReturnType<SplitViewComponentCustomElement['refit']>;
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<SplitViewComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<SplitViewComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<SplitViewComponent, "forge-split-view", never, { "orientation": { "alias": "orientation"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "allowClose": { "alias": "allowClose"; "required": false; }; "autoClose": { "alias": "autoClose"; "required": false; }; "autoCloseThreshold": { "alias": "autoCloseThreshold"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_disabled: unknown;
+    static ngAcceptInputType_allowClose: unknown;
+    static ngAcceptInputType_autoClose: unknown;
+    static ngAcceptInputType_autoCloseThreshold: unknown;
+}

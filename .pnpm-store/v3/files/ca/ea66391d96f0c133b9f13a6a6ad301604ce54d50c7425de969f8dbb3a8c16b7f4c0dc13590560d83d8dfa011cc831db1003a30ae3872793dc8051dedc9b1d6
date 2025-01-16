@@ -1,0 +1,75 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+@use './core' as *;
+
+.forge-stack {
+  @include base;
+  @include tokens;
+
+  ::slotted(*) {
+    @include stretch;
+  }
+}
+
+:host([inline]) {
+  .forge-stack {
+    @include inline;
+  }
+}
+
+:host([inline][wrap]) {
+  .forge-stack {
+    @include wrap;
+  }
+}
+
+:host(:not([inline])) {
+  .forge-stack {
+    @include override(height, 100%, value);
+  }
+}
+
+:host([stretch]) {
+  ::slotted(*) {
+    @include override(stretch, 1, value);
+  }
+}
+
+:host([alignment='start']) {
+  .forge-stack {
+    @include override(alignment, start, value);
+  }
+}
+
+:host([alignment='center']) {
+  .forge-stack {
+    @include override(alignment, center, value);
+  }
+}
+
+:host([alignment='end']) {
+  .forge-stack {
+    @include override(alignment, end, value);
+  }
+}
+
+:host([justify='start']) {
+  .forge-stack {
+    @include override(justify, start, value);
+  }
+}
+
+:host([justify='center']) {
+  .forge-stack {
+    @include override(justify, center, value);
+  }
+}
+
+:host([justify='end']) {
+  .forge-stack {
+    @include override(justify, end, value);
+  }
+}

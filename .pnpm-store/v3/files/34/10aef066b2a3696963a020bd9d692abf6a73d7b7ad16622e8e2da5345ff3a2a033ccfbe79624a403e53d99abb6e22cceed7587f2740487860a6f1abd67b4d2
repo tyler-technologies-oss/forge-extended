@@ -1,0 +1,180 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "my-element.js",
+      "declarations": [
+        {
+          "kind": "mixin",
+          "description": "",
+          "name": "ArrowFunctionMixin",
+          "members": [
+            {
+              "kind": "field",
+              "name": "foo"
+            },
+            {
+              "kind": "method",
+              "name": "method"
+            }
+          ],
+          "events": [
+            {
+              "name": "change",
+              "type": {
+                "text": "Event"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "my-attribute"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "klass"
+            }
+          ]
+        },
+        {
+          "kind": "mixin",
+          "description": "",
+          "name": "FunctionDeclarationMixin",
+          "parameters": [
+            {
+              "name": "klass"
+            }
+          ]
+        },
+        {
+          "kind": "mixin",
+          "description": "",
+          "name": "ReturnValMixin",
+          "parameters": [
+            {
+              "name": "klass"
+            }
+          ]
+        },
+        {
+          "kind": "mixin",
+          "description": "",
+          "name": "ReturnValArrowMixin",
+          "parameters": [
+            {
+              "name": "klass"
+            }
+          ]
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "InternalClass",
+          "mixins": [
+            {
+              "name": "InternalMixin",
+              "module": "my-element.js"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "customElement": true,
+          "members": [
+            {
+              "kind": "field",
+              "name": "foo",
+              "type": {
+                "text": "number"
+              },
+              "default": "1",
+              "inheritedFrom": {
+                "name": "InternalMixin",
+                "module": "my-element.js"
+              }
+            }
+          ]
+        },
+        {
+          "kind": "mixin",
+          "description": "",
+          "name": "ReexportedWrappedMixin",
+          "mixins": [
+            {
+              "name": "BarMixin",
+              "module": "/bar-mixin.js"
+            },
+            {
+              "name": "dedupeMixin",
+              "package": "@open-wc/dedupe-mixin"
+            }
+          ],
+          "parameters": [
+            {
+              "name": "klass",
+              "type": {
+                "text": "string"
+              }
+            }
+          ],
+          "type": {
+            "text": "Element"
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ArrowFunctionMixin",
+          "declaration": {
+            "name": "ArrowFunctionMixin",
+            "module": "my-element.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "FunctionDeclarationMixin",
+          "declaration": {
+            "name": "FunctionDeclarationMixin",
+            "module": "my-element.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ReturnValMixin",
+          "declaration": {
+            "name": "ReturnValMixin",
+            "module": "my-element.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ReturnValArrowMixin",
+          "declaration": {
+            "name": "ReturnValArrowMixin",
+            "module": "my-element.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "InternalClass",
+          "declaration": {
+            "name": "InternalClass",
+            "module": "my-element.js"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ReexportedWrappedMixin",
+          "declaration": {
+            "name": "ReexportedWrappedMixin",
+            "module": "my-element.js"
+          }
+        }
+      ]
+    }
+  ]
+}

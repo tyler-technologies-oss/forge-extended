@@ -1,0 +1,11 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { BaseButtonAdapter } from '../button/base/base-button-adapter';
+export class IconButtonAdapter extends BaseButtonAdapter {
+    constructor(component) {
+        super(component);
+    }
+}

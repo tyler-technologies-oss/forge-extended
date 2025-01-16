@@ -1,0 +1,27 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { BannerComponent as BannerComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class BannerComponent {
+    protected elementRef: ElementRef<BannerComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-banner element. */
+    readonly nativeElement: BannerComponentCustomElement;
+    /** Controls the visibility of the banner. */
+    set dismissed(value: BannerComponentCustomElement['dismissed']);
+    get dismissed(): BannerComponentCustomElement['dismissed'];
+    /** Controls the visibility of the built-in dismiss button. */
+    set persistent(value: BannerComponentCustomElement['persistent']);
+    get persistent(): BannerComponentCustomElement['persistent'];
+    /** The theme of the banner. */
+    set theme(value: BannerComponentCustomElement['theme']);
+    get theme(): BannerComponentCustomElement['theme'];
+    set canDismiss(value: BannerComponentCustomElement['canDismiss']);
+    get canDismiss(): BannerComponentCustomElement['canDismiss'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<BannerComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<BannerComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<BannerComponent, "forge-banner", never, { "dismissed": { "alias": "dismissed"; "required": false; }; "persistent": { "alias": "persistent"; "required": false; }; "theme": { "alias": "theme"; "required": false; }; "canDismiss": { "alias": "canDismiss"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_dismissed: unknown;
+    static ngAcceptInputType_persistent: unknown;
+    static ngAcceptInputType_canDismiss: unknown;
+}

@@ -1,0 +1,21 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ICircularProgressComponent } from './circular-progress';
+import { BaseAdapter, IBaseAdapter } from '../core/base/base-adapter';
+export interface ICircularProgressAdapter extends IBaseAdapter<ICircularProgressComponent> {
+    initialize(): void;
+    setDeterminate(value: boolean): void;
+    setProgress(value: number): void;
+}
+export declare class CircularProgressAdapter extends BaseAdapter<ICircularProgressComponent> implements ICircularProgressAdapter {
+    private readonly _rootElement;
+    private _determinateProgressCircleElement;
+    constructor(component: ICircularProgressComponent);
+    initialize(): void;
+    setDeterminate(value: boolean): void;
+    setProgress(value: number): void;
+    private _tryResetTemplate;
+}

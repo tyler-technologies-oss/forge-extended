@@ -1,0 +1,9 @@
+import * as i0 from "@angular/core";
+import * as i1 from "./floating-action-button.component";
+import * as i2 from "@angular/common";
+export declare class ForgeFloatingActionButtonModule {
+    constructor();
+    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeFloatingActionButtonModule, never>;
+    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeFloatingActionButtonModule, [typeof i1.FloatingActionButtonComponent], [typeof i2.CommonModule], [typeof i1.FloatingActionButtonComponent]>;
+    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeFloatingActionButtonModule>;
+}

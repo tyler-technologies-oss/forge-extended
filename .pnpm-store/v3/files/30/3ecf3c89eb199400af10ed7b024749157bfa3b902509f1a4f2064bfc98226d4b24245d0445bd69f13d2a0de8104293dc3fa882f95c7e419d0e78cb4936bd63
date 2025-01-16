@@ -1,0 +1,30 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { ILinearProgressAdapter } from './linear-progress-adapter';
+import { LinearProgressTheme } from './linear-progress-constants';
+export interface ICircularProgressCore {
+    determinate: boolean;
+    progress: number;
+    buffer: number;
+    theme: LinearProgressTheme;
+}
+export declare class LinearProgressCore {
+    private _adapter;
+    private _determinate;
+    private _progress;
+    private _buffer;
+    private _theme;
+    constructor(_adapter: ILinearProgressAdapter);
+    initialize(): void;
+    get determinate(): boolean;
+    set determinate(value: boolean);
+    get progress(): number;
+    set progress(value: number);
+    get buffer(): number;
+    set buffer(value: number);
+    get theme(): LinearProgressTheme;
+    set theme(value: LinearProgressTheme);
+}

@@ -1,0 +1,52 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { CalendarDirection, CalendarMenuAnimationType, ICalendarMenuOption } from './calendar-menu-constants';
+import { BaseComponent, IBaseComponent } from '../../core/base/base-component';
+export interface ICalendarMenuComponent extends IBaseComponent {
+    animationType: CalendarMenuAnimationType;
+    preventFocus: boolean;
+    animateIn(options: ICalendarMenuOption[], direction: CalendarDirection, setFocus?: boolean): void;
+    close(): void;
+    moveFocusBackward(): boolean;
+    moveFocusDown(): void;
+    moveFocusForward(): boolean;
+    moveFocusUp(): void;
+    openAsGrid(options: ICalendarMenuOption[], setFocus?: boolean): void;
+    openAsList(options: ICalendarMenuOption[], setFocus?: boolean): void;
+    selectFocusedItem(): void;
+}
+declare global {
+    interface HTMLElementTagNameMap {
+        'forge-calendar-menu': ICalendarMenuComponent;
+    }
+    interface HTMLElementEventMap {
+        'forge-calendar-menu-focus-change': CustomEvent<number>;
+        'forge-calendar-menu-select': CustomEvent<number>;
+    }
+}
+/**
+ * @internal
+ * @tag forge-calendar-menu
+ */
+export declare class CalendarMenuComponent extends BaseComponent implements ICalendarMenuComponent {
+    static get observedAttributes(): string[];
+    private _core;
+    constructor();
+    connectedCallback(): void;
+    disconnectedCallback(): void;
+    attributeChangedCallback(name: string, oldValue: string, newValue: string): void;
+    animationType: CalendarMenuAnimationType;
+    preventFocus: boolean;
+    animateIn(options: ICalendarMenuOption[], direction: CalendarDirection, setFocus?: boolean): void;
+    close(): void;
+    moveFocusDown(): void;
+    moveFocusBackward(): boolean;
+    moveFocusForward(): boolean;
+    moveFocusUp(): void;
+    openAsGrid(options: ICalendarMenuOption[], setFocus?: boolean): void;
+    openAsList(options: ICalendarMenuOption[], setFocus?: boolean): void;
+    selectFocusedItem(): void;
+}

@@ -1,0 +1,212 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { __decorate } from "tslib";
+import { customElement, attachShadowTemplate, coreProperty, coerceBoolean, coerceNumber } from '@tylertech/forge-core';
+import { tylIconDragVerticalVariant } from '@tylertech/tyler-icons/extended';
+import { tylIconDragHandle } from '@tylertech/tyler-icons/standard';
+import { BaseComponent } from '../../core/base/base-component';
+import { SPLIT_VIEW_PANEL_CONSTANTS } from './split-view-panel-constants';
+import { SplitViewPanelCore } from './split-view-panel-core';
+import { SplitViewPanelAdapter } from './split-view-panel-adapter';
+import { IconComponent, IconRegistry } from '../../icon';
+const template = '<template><div class=\"forge-split-view-panel\" id=\"root\" part=\"root\"><div class=\"forge-split-view-panel__handle\" id=\"handle\" part=\"handle\" role=\"separator\" aria-controls=\"content\" aria-grabbed=\"false\" tabindex=\"0\"><forge-icon class=\"forge-split-view-panel__icon\" id=\"icon\" part=\"icon\"></forge-icon><forge-state-layer target=\"handle\" id=\"state-layer\" exportparts=\"surface:state-layer\"></forge-state-layer><forge-focus-indicator inward target=\"handle\" part=\"focus-indicator\"></forge-focus-indicator></div><div class=\"forge-split-view-panel__content\" id=\"content\" part=\"content\" role=\"group\"><slot></slot></div></div></template>';
+const styles = '.forge-split-view-panel{display:flex;width:100%;height:100%;overflow:hidden;contain:paint size}.forge-split-view-panel__handle{color:var(--forge-theme-text-medium,rgba(0,0,0,.6));background-color:var(--forge-theme-outline,#e0e0e0);position:relative;display:flex;flex-shrink:0;justify-content:center;align-items:center;outline:0}.forge-split-view-panel__content{flex:1;overflow:hidden}.forge-split-view-panel--closed{display:none}.forge-split-view-panel--disabled #handle{pointer-events:none}.forge-split-view-panel--disabled .forge-split-view-panel__icon{display:none}.forge-split-view-panel[orientation=horizontal]{min-width:var(--forge-split-view-handle-width,8px);width:calc(var(--forge-split-view-panel-size,unset) + var(--forge-split-view-handle-width,8px));flex-direction:row}.forge-split-view-panel[orientation=horizontal] .forge-split-view-panel__handle{width:var(--forge-split-view-handle-width,8px);cursor:var(--forge-split-view-panel-cursor)}.forge-split-view-panel[orientation=horizontal].forge-split-view-panel--closing[resizable=end]{position:absolute;top:0;left:0;animation-name:unique-id;animation-duration:var(--forge-animation-duration-medium2, 300ms);animation-timing-function:var(--forge-animation-easing-standard,cubic-bezier(0.2,0,0,1))}@keyframes unique-id{from{transform:none}to{transform:translateX(-100%)}}.forge-split-view-panel[orientation=horizontal].forge-split-view-panel--closing[resizable=start]{position:absolute;top:0;right:0;animation-name:unique-id;animation-duration:var(--forge-animation-duration-medium2, 300ms);animation-timing-function:var(--forge-animation-easing-standard,cubic-bezier(0.2,0,0,1))}@keyframes unique-id{from{transform:none}to{transform:translateX(100%)}}.forge-split-view-panel[orientation=horizontal].forge-split-view-panel--opening[resizable=end]{position:absolute;top:0;left:0;animation-name:unique-id;animation-duration:var(--forge-animation-duration-medium2, 300ms);animation-timing-function:var(--forge-animation-easing-standard,cubic-bezier(0.2,0,0,1));animation-direction:reverse}@keyframes unique-id{from{transform:none}to{transform:translateX(-100%)}}.forge-split-view-panel[orientation=horizontal].forge-split-view-panel--opening[resizable=start]{position:absolute;top:0;right:0;animation-name:unique-id;animation-duration:var(--forge-animation-duration-medium2, 300ms);animation-timing-function:var(--forge-animation-easing-standard,cubic-bezier(0.2,0,0,1));animation-direction:reverse}@keyframes unique-id{from{transform:none}to{transform:translateX(100%)}}.forge-split-view-panel[orientation=vertical]{min-height:var(--forge-split-view-handle-width,8px);height:calc(var(--forge-split-view-panel-size,unset) + var(--forge-split-view-handle-width,8px));flex-direction:column}.forge-split-view-panel[orientation=vertical] .forge-split-view-panel__handle{height:var(--forge-split-view-handle-width,8px);cursor:var(--forge-split-view-panel-cursor)}.forge-split-view-panel[orientation=vertical].forge-split-view-panel--closing[resizable=end]{position:absolute;top:0;left:0;animation-name:unique-id;animation-duration:var(--forge-animation-duration-medium2, 300ms);animation-timing-function:var(--forge-animation-easing-standard,cubic-bezier(0.2,0,0,1))}@keyframes unique-id{from{transform:none}to{transform:translateY(-100%)}}.forge-split-view-panel[orientation=vertical].forge-split-view-panel--closing[resizable=start]{position:absolute;bottom:0;left:0;animation-name:unique-id;animation-duration:var(--forge-animation-duration-medium2, 300ms);animation-timing-function:var(--forge-animation-easing-standard,cubic-bezier(0.2,0,0,1))}@keyframes unique-id{from{transform:none}to{transform:translateY(100%)}}.forge-split-view-panel[orientation=vertical].forge-split-view-panel--opening[resizable=end]{position:absolute;top:0;left:0;animation-name:unique-id;animation-duration:var(--forge-animation-duration-medium2, 300ms);animation-timing-function:var(--forge-animation-easing-standard,cubic-bezier(0.2,0,0,1));animation-direction:reverse}@keyframes unique-id{from{transform:none}to{transform:translateY(-100%)}}.forge-split-view-panel[orientation=vertical].forge-split-view-panel--opening[resizable=start]{position:absolute;bottom:0;left:0;animation-name:unique-id;animation-duration:var(--forge-animation-duration-medium2, 300ms);animation-timing-function:var(--forge-animation-easing-standard,cubic-bezier(0.2,0,0,1));animation-direction:reverse}@keyframes unique-id{from{transform:none}to{transform:translateY(100%)}}:host{z-index:var(--forge-split-view-animating-layer)!important;display:block;position:relative;height:100%;width:100%;flex:0}:host([hidden]){display:none}:host(:not([resizable=start],[resizable=end])){flex:1}:host(:not([resizable=start],[resizable=end])) .forge-split-view-panel{width:100%;height:100%;min-width:0;min-height:0}:host(:not([resizable=start],[resizable=end])) .forge-split-view-panel__handle{display:none}forge-focus-indicator{--forge-focus-indicator-active-width:2px}';
+import { StateLayerComponent } from '../../state-layer';
+import { FocusIndicatorComponent } from '../../focus-indicator';
+/**
+ * @tag forge-split-view-panel
+ *
+ * @dependency forge-icon
+ * @dependency forge-state-layer
+ * @dependency forge-focus-indicator
+ *
+ * @property {SplitViewPanelResizable} [resizable="off"] - Controls which side of the panel the resize handle appears on.
+ * @property {number | string} [size=200] - The initial size along the axis of orientation.
+ * @property {number | string} [min=0] - The smallest size the panel can take along its axis of orientation.
+ * @property {number | string | undefined} max - The largest size the panel can take along its axis of orientation.
+ * @property {string} accessibleLabel - The ARIA label given to the resize handle.
+ * @property {boolean} [open=true] - Controls the open state of the panel.
+ * @property {boolean} [disabled=false] - Whether resize interactions are disabled or enabled.
+ * @property {boolean} [allowClose=false] - Whether the panel can be closed via keyboard interaction.
+ * @property {boolean} [autoClose=false] - Whether the panel automatically closes when it reaches a size of 0.
+ * @property {number} [autoCloseThreshold=0] - The size at which the panel auto closes.
+ *
+ * @attribute {SplitViewPanelResizable} [resizable="off"] - Controls which side of the panel the resize handle appears on.
+ * @attribute {number | string} [size=200] - The initial size along the axis of orientation.
+ * @attribute {number | string} [min=0] - The smallest size the panel can take along its axis of orientation.
+ * @attribute {number | string | undefined} max - The largest size the panel can take along its axis of orientation.
+ * @attribute {string} accessible-label - The ARIA label given to the resize handle.
+ * @attribute {boolean} [open=true] - Controls the open state of the panel.
+ * @attribute {boolean} [disabled=false] - Whether resize interactions are disabled or enabled.
+ * @attribute {boolean} [allow-close=false] - Whether the panel can be closed via keyboard interaction.
+ * @attribute {boolean} [auto-close=false] - Whether the panel automatically closes when it reaches a size of 0.
+ * @attribute {number} [auto-close-threshold=0] - The size at which the panel auto closes.
+ *
+ * @event {CustomEvent<ISplitViewPanelWillResizeEvent>} forge-split-view-panel-will-resize - Emitted before the panel resizes.
+ * @event {CustomEvent<number>} forge-split-view-panel-resize-start - Emitted when the panel starts resizing.
+ * @event {CustomEvent<number>} forge-split-view-panel-resize-end - Emitted when the panel stops resizing.
+ * @event {CustomEvent<number>} forge-split-view-panel-resize - Emitted when the panel resizes.
+ * @event {CustomEvent<ISplitViewPanelOpenEvent>} forge-split-view-panel-will-open - Emitted before the panel opens.
+ * @event {CustomEvent<ISplitViewPanelOpenEvent>} forge-split-view-panel-will-close - Emitted before the panel closes.
+ * @event {CustomEvent<ISplitViewPanelOpenEvent>} forge-split-view-panel-did-open - Emitted after the panel opens.
+ * @event {CustomEvent<ISplitViewPanelOpenEvent>} forge-split-view-panel-did-close - Emitted after the panel closes.
+ *
+ * @cssproperty --forge-split-view-panel-size - The size of the panel along the axis of orientation.
+ * @cssproperty --forge-split-view-panel-cursor - The cursor to display when hovering over the panel.
+ */
+let SplitViewPanelComponent = class SplitViewPanelComponent extends BaseComponent {
+    static get observedAttributes() {
+        return [
+            SPLIT_VIEW_PANEL_CONSTANTS.attributes.RESIZABLE,
+            SPLIT_VIEW_PANEL_CONSTANTS.attributes.SIZE,
+            SPLIT_VIEW_PANEL_CONSTANTS.attributes.MIN,
+            SPLIT_VIEW_PANEL_CONSTANTS.attributes.MAX,
+            SPLIT_VIEW_PANEL_CONSTANTS.attributes.ACCESSIBLE_LABEL,
+            SPLIT_VIEW_PANEL_CONSTANTS.attributes.OPEN,
+            SPLIT_VIEW_PANEL_CONSTANTS.attributes.DISABLED,
+            SPLIT_VIEW_PANEL_CONSTANTS.attributes.ALLOW_CLOSE,
+            SPLIT_VIEW_PANEL_CONSTANTS.attributes.AUTO_CLOSE,
+            SPLIT_VIEW_PANEL_CONSTANTS.attributes.AUTO_CLOSE_THRESHOLD
+        ];
+    }
+    constructor() {
+        super();
+        IconRegistry.define([tylIconDragVerticalVariant, tylIconDragHandle]);
+        attachShadowTemplate(this, template, styles);
+        this._core = new SplitViewPanelCore(new SplitViewPanelAdapter(this));
+    }
+    connectedCallback() {
+        this._core.initialize();
+    }
+    disconnectedCallback() {
+        this._core.destroy();
+    }
+    attributeChangedCallback(name, oldValue, newValue) {
+        switch (name) {
+            case SPLIT_VIEW_PANEL_CONSTANTS.attributes.RESIZABLE:
+                this.resizable = newValue;
+                break;
+            case SPLIT_VIEW_PANEL_CONSTANTS.attributes.SIZE:
+                this.size = newValue;
+                break;
+            case SPLIT_VIEW_PANEL_CONSTANTS.attributes.MIN:
+                this.min = newValue;
+                break;
+            case SPLIT_VIEW_PANEL_CONSTANTS.attributes.MAX:
+                if (newValue) {
+                    this.max = newValue;
+                }
+                else {
+                    this.max = undefined;
+                }
+                break;
+            case SPLIT_VIEW_PANEL_CONSTANTS.attributes.ACCESSIBLE_LABEL:
+                this.accessibleLabel = newValue;
+                break;
+            case SPLIT_VIEW_PANEL_CONSTANTS.attributes.OPEN:
+                this.open = coerceBoolean(newValue);
+                break;
+            case SPLIT_VIEW_PANEL_CONSTANTS.attributes.DISABLED:
+                if (this.hasAttribute(name)) {
+                    this.disabled = coerceBoolean(newValue);
+                }
+                else {
+                    this.disabled = undefined;
+                }
+                break;
+            case SPLIT_VIEW_PANEL_CONSTANTS.attributes.ALLOW_CLOSE:
+                if (this.hasAttribute(name)) {
+                    this.allowClose = coerceBoolean(newValue);
+                }
+                else {
+                    this.allowClose = undefined;
+                }
+                break;
+            case SPLIT_VIEW_PANEL_CONSTANTS.attributes.AUTO_CLOSE:
+                if (this.hasAttribute(name)) {
+                    this.autoClose = coerceBoolean(newValue);
+                }
+                else {
+                    this.autoClose = undefined;
+                }
+                break;
+            case SPLIT_VIEW_PANEL_CONSTANTS.attributes.AUTO_CLOSE_THRESHOLD:
+                if (newValue) {
+                    this.autoCloseThreshold = coerceNumber(newValue);
+                }
+                else {
+                    this.autoCloseThreshold = undefined;
+                }
+                break;
+        }
+    }
+    /**
+     * Gets the size of content along the axis of orientation.
+     * @returns The size of content in pixels.
+     */
+    getContentSize() {
+        return this._core.getContentSize();
+    }
+    /**
+     * Gets the amount that the content can shrink along the axis of orientation before reaching its
+     * min size.
+     * @returns The amount that content can shrink in pixels.
+     */
+    getCollapsibleSize() {
+        return this._core.getCollapsibleSize();
+    }
+    /**
+     * Sets the size of content along the axis of orientation.
+     * @param size The new size of content in pixels.
+     */
+    setContentSize(size) {
+        this._core.setContentSize(size);
+    }
+    /**
+     * Updates the provided characteristics.
+     * @param config An update configuration.
+     */
+    update(config) {
+        this._core.update(config);
+    }
+};
+__decorate([
+    coreProperty()
+], SplitViewPanelComponent.prototype, "resizable", void 0);
+__decorate([
+    coreProperty()
+], SplitViewPanelComponent.prototype, "size", void 0);
+__decorate([
+    coreProperty()
+], SplitViewPanelComponent.prototype, "min", void 0);
+__decorate([
+    coreProperty()
+], SplitViewPanelComponent.prototype, "max", void 0);
+__decorate([
+    coreProperty()
+], SplitViewPanelComponent.prototype, "accessibleLabel", void 0);
+__decorate([
+    coreProperty()
+], SplitViewPanelComponent.prototype, "open", void 0);
+__decorate([
+    coreProperty()
+], SplitViewPanelComponent.prototype, "disabled", void 0);
+__decorate([
+    coreProperty()
+], SplitViewPanelComponent.prototype, "allowClose", void 0);
+__decorate([
+    coreProperty()
+], SplitViewPanelComponent.prototype, "autoClose", void 0);
+__decorate([
+    coreProperty()
+], SplitViewPanelComponent.prototype, "autoCloseThreshold", void 0);
+SplitViewPanelComponent = __decorate([
+    customElement({
+        name: SPLIT_VIEW_PANEL_CONSTANTS.elementName,
+        dependencies: [IconComponent, StateLayerComponent, FocusIndicatorComponent]
+    })
+], SplitViewPanelComponent);
+export { SplitViewPanelComponent };

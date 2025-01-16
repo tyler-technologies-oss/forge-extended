@@ -1,0 +1,77 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { SPLIT_BUTTON_CONSTANTS } from './split-button-constants';
+export class SplitButtonCore {
+    constructor(_adapter) {
+        this._adapter = _adapter;
+        this._variant = SPLIT_BUTTON_CONSTANTS.defaults.DEFAULT_VARIANT;
+        this._theme = SPLIT_BUTTON_CONSTANTS.defaults.DEFAULT_THEME;
+        this._disabled = false;
+        this._dense = false;
+        this._pill = false;
+    }
+    initialize() {
+        this._adapter.startButtonObserver();
+        this._adapter.setVariant(this._variant);
+        this._adapter.setTheme(this._theme);
+        this._adapter.setDisabled(this._disabled);
+        this._adapter.setDense(this._dense);
+        this._adapter.setPill(this._pill);
+    }
+    destroy() {
+        this._adapter.destroyButtonObserver();
+    }
+    get variant() {
+        return this._variant;
+    }
+    set variant(value) {
+        if (this._variant !== value) {
+            this._variant = value ?? SPLIT_BUTTON_CONSTANTS.defaults.DEFAULT_VARIANT;
+            this._adapter.setVariant(value);
+            this._adapter.setHostAttribute(SPLIT_BUTTON_CONSTANTS.attributes.VARIANT, this._variant);
+        }
+    }
+    get theme() {
+        return this._theme;
+    }
+    set theme(value) {
+        if (this._theme !== value) {
+            this._theme = value ?? SPLIT_BUTTON_CONSTANTS.defaults.DEFAULT_THEME;
+            this._adapter.setTheme(this._theme);
+            this._adapter.setHostAttribute(SPLIT_BUTTON_CONSTANTS.attributes.THEME, this._theme);
+        }
+    }
+    get disabled() {
+        return this._disabled;
+    }
+    set disabled(value) {
+        if (this._disabled !== value) {
+            this._disabled = value;
+            this._adapter.setDisabled(this._disabled);
+            this._adapter.toggleHostAttribute(SPLIT_BUTTON_CONSTANTS.attributes.DISABLED, this._disabled);
+        }
+    }
+    get dense() {
+        return this._dense;
+    }
+    set dense(value) {
+        if (this._dense !== value) {
+            this._dense = value;
+            this._adapter.setDense(this._dense);
+            this._adapter.toggleHostAttribute(SPLIT_BUTTON_CONSTANTS.attributes.DENSE, this._dense);
+        }
+    }
+    get pill() {
+        return this._pill;
+    }
+    set pill(value) {
+        if (this._pill !== value) {
+            this._pill = value;
+            this._adapter.setPill(this._pill);
+            this._adapter.toggleHostAttribute(SPLIT_BUTTON_CONSTANTS.attributes.PILL, this._pill);
+        }
+    }
+}

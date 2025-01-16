@@ -1,0 +1,55 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getShadowElement, removeAllChildren } from '@tylertech/forge-core';
+import { BaseAdapter } from '../core/base/base-adapter';
+import { AVATAR_CONSTANTS } from './avatar-constants';
+/**
+ * The DOM adapter behind the `<forge-avatar>` element.
+ */
+export class AvatarAdapter extends BaseAdapter {
+    constructor(component) {
+        super(component);
+        this._root = getShadowElement(this._component, AVATAR_CONSTANTS.selectors.ROOT);
+        this._defaultSlot = getShadowElement(this._component, AVATAR_CONSTANTS.selectors.DEFAULT_SLOT);
+    }
+    /**
+     * Sets the background image URL.
+     * @param url The URL.
+     */
+    async setBackgroundImageUrl(url) {
+        // Set before loading image to prevent a flash of background color
+        this._root.classList.add('forge-avatar--image');
+        return new Promise(resolve => {
+            const image = new Image();
+            image.onload = () => {
+                this._root.style.backgroundImage = `url(${image.src})`;
+                resolve(true);
+            };
+            image.onerror = () => {
+                this._root.classList.remove('forge-avatar--image');
+                resolve(false);
+            };
+            image.src = url;
+        });
+    }
+    /**
+     * Removes the background image URL.
+     */
+    removeBackgroundImage() {
+        this._root.style.removeProperty('background-image');
+        this._root.classList.remove('forge-avatar--image');
+    }
+    /**
+     * Sets the avatar text content.
+     * @param value The text value.
+     */
+    setText(value) {
+        this._defaultSlot.textContent = value;
+    }
+    clearText() {
+        removeAllChildren(this._defaultSlot);
+    }
+}

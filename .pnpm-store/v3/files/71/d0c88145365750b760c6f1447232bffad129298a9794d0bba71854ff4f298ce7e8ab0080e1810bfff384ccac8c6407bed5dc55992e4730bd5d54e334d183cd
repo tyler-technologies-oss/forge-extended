@@ -1,0 +1,90 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { DatePickerComponent as DatePickerComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class DatePickerComponent {
+    protected elementRef: ElementRef<DatePickerComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-date-picker element. */
+    readonly nativeElement: DatePickerComponentCustomElement;
+    /** The value of the date picker. */
+    set value(value: DatePickerComponentCustomElement['value']);
+    get value(): DatePickerComponentCustomElement['value'];
+    /** The minimum date the calendar will allow. */
+    set min(value: DatePickerComponentCustomElement['min']);
+    get min(): DatePickerComponentCustomElement['min'];
+    /** The maximum date the calendar will allow. */
+    set max(value: DatePickerComponentCustomElement['max']);
+    get max(): DatePickerComponentCustomElement['max'];
+    /** The dates that are restricted from being selected. */
+    set disabledDates(value: DatePickerComponentCustomElement['disabledDates']);
+    get disabledDates(): DatePickerComponentCustomElement['disabledDates'];
+    /** Whether the calendar dropdown is open. */
+    set open(value: DatePickerComponentCustomElement['open']);
+    get open(): DatePickerComponentCustomElement['open'];
+    /** The CSS classes that are applied to the popup element. */
+    set popupClasses(value: DatePickerComponentCustomElement['popupClasses']);
+    get popupClasses(): DatePickerComponentCustomElement['popupClasses'];
+    /** Whether the date picker is disabled or not. */
+    set disabled(value: DatePickerComponentCustomElement['disabled']);
+    get disabled(): DatePickerComponentCustomElement['disabled'];
+    /** Whether the input mask is applied or not. */
+    set masked(value: DatePickerComponentCustomElement['masked']);
+    get masked(): DatePickerComponentCustomElement['masked'];
+    /** The mask format that displayed in the input. Default is `MM/DD/YYYY`. */
+    set maskFormat(value: DatePickerComponentCustomElement['maskFormat']);
+    get maskFormat(): DatePickerComponentCustomElement['maskFormat'];
+    /** Whether the mask format is displayed in the input or not. Only applies if `masked` is `true`. */
+    set showMaskFormat(value: DatePickerComponentCustomElement['showMaskFormat']);
+    get showMaskFormat(): DatePickerComponentCustomElement['showMaskFormat'];
+    /** The type for the `value` property and `forge-date-picker-change` event. */
+    set valueMode(value: DatePickerComponentCustomElement['valueMode']);
+    get valueMode(): DatePickerComponentCustomElement['valueMode'];
+    /** Whether the native input will be notified of value changes via the `input` and `change` events. */
+    set notifyInputValueChanges(value: DatePickerComponentCustomElement['notifyInputValueChanges']);
+    get notifyInputValueChanges(): DatePickerComponentCustomElement['notifyInputValueChanges'];
+    /** Whether to allow an invalid date to be input. When true, the date picker will not clear out the value of the input if the date was invalid (i.e. could not be parsed). */
+    set allowInvalidDate(value: DatePickerComponentCustomElement['allowInvalidDate']);
+    get allowInvalidDate(): DatePickerComponentCustomElement['allowInvalidDate'];
+    /** Whether the today button is visible in the popup. */
+    set showToday(value: DatePickerComponentCustomElement['showToday']);
+    get showToday(): DatePickerComponentCustomElement['showToday'];
+    /** Whether the clear button is visible in the popup. */
+    set showClear(value: DatePickerComponentCustomElement['showClear']);
+    get showClear(): DatePickerComponentCustomElement['showClear'];
+    /** The callback to use for parsing a date value string to a `Date` object. */
+    set parseCallback(value: DatePickerComponentCustomElement['parseCallback']);
+    get parseCallback(): DatePickerComponentCustomElement['parseCallback'];
+    /** The callback to use for formatting `Date` value to a custom string format. */
+    set formatCallback(value: DatePickerComponentCustomElement['formatCallback']);
+    get formatCallback(): DatePickerComponentCustomElement['formatCallback'];
+    /** The callback to use when altering default mask entry. */
+    set prepareMaskCallback(value: DatePickerComponentCustomElement['prepareMaskCallback']);
+    get prepareMaskCallback(): DatePickerComponentCustomElement['prepareMaskCallback'];
+    /** The days of the week to disable from selection. */
+    set disabledDaysOfWeek(value: DatePickerComponentCustomElement['disabledDaysOfWeek']);
+    get disabledDaysOfWeek(): DatePickerComponentCustomElement['disabledDaysOfWeek'];
+    /** The callback to use for testing whether a specific date should be disabled or not. */
+    set disableDayCallback(value: DatePickerComponentCustomElement['disableDayCallback']);
+    get disableDayCallback(): DatePickerComponentCustomElement['disableDayCallback'];
+    /** The year range. */
+    set yearRange(value: DatePickerComponentCustomElement['yearRange']);
+    get yearRange(): DatePickerComponentCustomElement['yearRange'];
+    /** The locale to use. */
+    set locale(value: DatePickerComponentCustomElement['locale']);
+    get locale(): DatePickerComponentCustomElement['locale'];
+    /** Customized strings to display in the calendar dropdown UI. */
+    set calendarText(value: DatePickerComponentCustomElement['calendarText']);
+    get calendarText(): DatePickerComponentCustomElement['calendarText'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<DatePickerComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<DatePickerComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<DatePickerComponent, "forge-date-picker", never, { "value": { "alias": "value"; "required": false; }; "min": { "alias": "min"; "required": false; }; "max": { "alias": "max"; "required": false; }; "disabledDates": { "alias": "disabledDates"; "required": false; }; "open": { "alias": "open"; "required": false; }; "popupClasses": { "alias": "popupClasses"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "masked": { "alias": "masked"; "required": false; }; "maskFormat": { "alias": "maskFormat"; "required": false; }; "showMaskFormat": { "alias": "showMaskFormat"; "required": false; }; "valueMode": { "alias": "valueMode"; "required": false; }; "notifyInputValueChanges": { "alias": "notifyInputValueChanges"; "required": false; }; "allowInvalidDate": { "alias": "allowInvalidDate"; "required": false; }; "showToday": { "alias": "showToday"; "required": false; }; "showClear": { "alias": "showClear"; "required": false; }; "parseCallback": { "alias": "parseCallback"; "required": false; }; "formatCallback": { "alias": "formatCallback"; "required": false; }; "prepareMaskCallback": { "alias": "prepareMaskCallback"; "required": false; }; "disabledDaysOfWeek": { "alias": "disabledDaysOfWeek"; "required": false; }; "disableDayCallback": { "alias": "disableDayCallback"; "required": false; }; "yearRange": { "alias": "yearRange"; "required": false; }; "locale": { "alias": "locale"; "required": false; }; "calendarText": { "alias": "calendarText"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_open: unknown;
+    static ngAcceptInputType_disabled: unknown;
+    static ngAcceptInputType_masked: unknown;
+    static ngAcceptInputType_showMaskFormat: unknown;
+    static ngAcceptInputType_notifyInputValueChanges: unknown;
+    static ngAcceptInputType_allowInvalidDate: unknown;
+    static ngAcceptInputType_showToday: unknown;
+    static ngAcceptInputType_showClear: unknown;
+}

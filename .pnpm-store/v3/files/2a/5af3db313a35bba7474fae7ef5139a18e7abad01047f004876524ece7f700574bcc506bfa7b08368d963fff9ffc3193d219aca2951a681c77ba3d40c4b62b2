@@ -1,0 +1,36 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+export declare const BASE_BUTTON_CONSTANTS: {
+    readonly observedAttributes: {
+        readonly TYPE: "type";
+        readonly DISABLED: "disabled";
+        readonly POPOVER_ICON: "popover-icon";
+        readonly DENSE: "dense";
+        readonly TABINDEX: "tabindex";
+    };
+    readonly attributes: {
+        readonly TYPE: "type";
+        readonly DISABLED: "disabled";
+        readonly POPOVER_ICON: "popover-icon";
+        readonly DENSE: "dense";
+        readonly TABINDEX: "tabindex";
+    };
+    readonly selectors: {
+        readonly ROOT: "[part=root]";
+        readonly DEFAULT_SLOT: "slot:not([name])";
+        readonly END_SLOT: "slot[name=end]";
+    };
+    readonly classes: {
+        readonly ROOT: "forge-button";
+        readonly POPOVER_ICON: "forge-button__popover-icon";
+        readonly WITH_ANCHOR: "with-anchor";
+    };
+};
+export type ButtonType = 'button' | 'submit' | 'reset';
+export type ButtonTarget = '_blank' | '_self' | '_parent' | '_top';
+export type ButtonClickOptions = {
+    animateStateLayer?: boolean;
+};

@@ -1,0 +1,80 @@
+import { ElementRef, ChangeDetectorRef, NgZone } from '@angular/core';
+import { SliderComponent as SliderComponentCustomElement } from '@tylertech/forge';
+import * as i0 from "@angular/core";
+/**  */
+export declare class SliderComponent {
+    protected elementRef: ElementRef<SliderComponentCustomElement>;
+    protected zone: NgZone;
+    /** The forge-slider element. */
+    readonly nativeElement: SliderComponentCustomElement;
+    get form(): SliderComponentCustomElement['form'];
+    get labels(): SliderComponentCustomElement['labels'];
+    /** The form control name. */
+    set name(value: SliderComponentCustomElement['name']);
+    get name(): SliderComponentCustomElement['name'];
+    /** The form control name for the start handle in range mode. */
+    set nameStart(value: SliderComponentCustomElement['nameStart']);
+    get nameStart(): SliderComponentCustomElement['nameStart'];
+    /** The form control name for the end handle in range mode. */
+    set nameEnd(value: SliderComponentCustomElement['nameEnd']);
+    get nameEnd(): SliderComponentCustomElement['nameEnd'];
+    /** The current value of the slider. */
+    set value(value: SliderComponentCustomElement['value']);
+    get value(): SliderComponentCustomElement['value'];
+    /** The current start value of the slider. */
+    set valueStart(value: SliderComponentCustomElement['valueStart']);
+    get valueStart(): SliderComponentCustomElement['valueStart'];
+    /** The current end value of the slider. */
+    set valueEnd(value: SliderComponentCustomElement['valueEnd']);
+    get valueEnd(): SliderComponentCustomElement['valueEnd'];
+    /** The label text for the slider handle. */
+    set label(value: SliderComponentCustomElement['label']);
+    get label(): SliderComponentCustomElement['label'];
+    /** The label text for the start slider handle. */
+    set labelStart(value: SliderComponentCustomElement['labelStart']);
+    get labelStart(): SliderComponentCustomElement['labelStart'];
+    /** The label text for the end slider handle. */
+    set labelEnd(value: SliderComponentCustomElement['labelEnd']);
+    get labelEnd(): SliderComponentCustomElement['labelEnd'];
+    /** A function that returns a label for the slider handle. */
+    set labelBuilder(value: SliderComponentCustomElement['labelBuilder']);
+    get labelBuilder(): SliderComponentCustomElement['labelBuilder'];
+    /** The minimum value of the slider. */
+    set min(value: SliderComponentCustomElement['min']);
+    get min(): SliderComponentCustomElement['min'];
+    /** The maximum value of the slider. */
+    set max(value: SliderComponentCustomElement['max']);
+    get max(): SliderComponentCustomElement['max'];
+    /** The step value of the slider. */
+    set step(value: SliderComponentCustomElement['step']);
+    get step(): SliderComponentCustomElement['step'];
+    /** Controls if tickmarks are visible. */
+    set tickmarks(value: SliderComponentCustomElement['tickmarks']);
+    get tickmarks(): SliderComponentCustomElement['tickmarks'];
+    /** Controls if labels are visible. */
+    set labeled(value: SliderComponentCustomElement['labeled']);
+    get labeled(): SliderComponentCustomElement['labeled'];
+    /** Controls range mode. */
+    set range(value: SliderComponentCustomElement['range']);
+    get range(): SliderComponentCustomElement['range'];
+    /** Controls if the slider is disabled. */
+    set disabled(value: SliderComponentCustomElement['disabled']);
+    get disabled(): SliderComponentCustomElement['disabled'];
+    /** Controls if the slider is readonly. */
+    set readonly(value: SliderComponentCustomElement['readonly']);
+    get readonly(): SliderComponentCustomElement['readonly'];
+    constructor(changeDetectorRef: ChangeDetectorRef, elementRef: ElementRef<SliderComponentCustomElement>, zone: NgZone);
+    static ɵfac: i0.ɵɵFactoryDeclaration<SliderComponent, never>;
+    static ɵcmp: i0.ɵɵComponentDeclaration<SliderComponent, "forge-slider", never, { "name": { "alias": "name"; "required": false; }; "nameStart": { "alias": "nameStart"; "required": false; }; "nameEnd": { "alias": "nameEnd"; "required": false; }; "value": { "alias": "value"; "required": false; }; "valueStart": { "alias": "valueStart"; "required": false; }; "valueEnd": { "alias": "valueEnd"; "required": false; }; "label": { "alias": "label"; "required": false; }; "labelStart": { "alias": "labelStart"; "required": false; }; "labelEnd": { "alias": "labelEnd"; "required": false; }; "labelBuilder": { "alias": "labelBuilder"; "required": false; }; "min": { "alias": "min"; "required": false; }; "max": { "alias": "max"; "required": false; }; "step": { "alias": "step"; "required": false; }; "tickmarks": { "alias": "tickmarks"; "required": false; }; "labeled": { "alias": "labeled"; "required": false; }; "range": { "alias": "range"; "required": false; }; "disabled": { "alias": "disabled"; "required": false; }; "readonly": { "alias": "readonly"; "required": false; }; }, {}, never, ["*"], false, never>;
+    static ngAcceptInputType_value: unknown;
+    static ngAcceptInputType_valueStart: unknown;
+    static ngAcceptInputType_valueEnd: unknown;
+    static ngAcceptInputType_min: unknown;
+    static ngAcceptInputType_max: unknown;
+    static ngAcceptInputType_step: unknown;
+    static ngAcceptInputType_tickmarks: unknown;
+    static ngAcceptInputType_labeled: unknown;
+    static ngAcceptInputType_range: unknown;
+    static ngAcceptInputType_disabled: unknown;
+    static ngAcceptInputType_readonly: unknown;
+}

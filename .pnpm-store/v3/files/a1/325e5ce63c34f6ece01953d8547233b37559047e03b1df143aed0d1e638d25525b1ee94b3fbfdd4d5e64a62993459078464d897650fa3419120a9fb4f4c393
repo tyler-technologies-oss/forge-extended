@@ -1,0 +1,34 @@
+/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */
+import { getShadowElement, toggleClass } from '@tylertech/forge-core';
+import { BACKDROP_CONSTANTS } from '../../backdrop';
+import { BaseDrawerAdapter } from '../base';
+export class ModalDrawerAdapter extends BaseDrawerAdapter {
+    constructor(_component) {
+        super(_component);
+        this._component = _component;
+        this._backdropElement = getShadowElement(this._component, BACKDROP_CONSTANTS.elementName);
+    }
+    setBackdropCloseListener(listener) {
+        this._backdropElement.addEventListener('click', listener);
+    }
+    setBackdropVisibility(visible, { immediate }) {
+        this._backdropElement.toggleAttribute('hidden', !visible);
+        if (!this._backdropElement.fadeIn || !this._backdropElement.fadeOut) {
+            if (immediate) {
+                this._backdropElement.toggleAttribute(BACKDROP_CONSTANTS.attributes.VISIBLE, visible);
+            }
+            return Promise.resolve();
+        }
+        if (immediate) {
+            return Promise.resolve(visible ? this._backdropElement.show() : this._backdropElement.hide());
+        }
+        return visible ? this._backdropElement.fadeIn() : this._backdropElement.fadeOut();
+    }
+    toggleBackdropClass(hasClass, className) {
+        toggleClass(this._backdropElement, hasClass, className);
+    }
+}

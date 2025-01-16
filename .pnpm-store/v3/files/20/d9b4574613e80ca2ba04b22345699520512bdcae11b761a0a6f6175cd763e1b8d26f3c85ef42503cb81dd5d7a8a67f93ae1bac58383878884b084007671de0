@@ -1,0 +1,8 @@
+{
+    "extends": "./configs/base.json",
+    "rules": {
+        "@tylertech-eslint/invalid-relative-import-prefix": "error",
+        "@tylertech-eslint/require-private-modifier": "error",
+        "@tylertech-eslint/require-private-underscore": "error"
+    }
+}
