@@ -1,3 +1,0 @@
-export declare class BottomSheetConfig<T = any> {
-    data?: T;
-}

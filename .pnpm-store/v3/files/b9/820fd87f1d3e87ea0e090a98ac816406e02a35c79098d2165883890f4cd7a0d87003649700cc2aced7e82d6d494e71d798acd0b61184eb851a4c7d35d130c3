@@ -1,8 +1,0 @@
-/**
- * @license
- * Copyright Tyler Technologies, Inc. 
- * License: Apache-2.0
- */
-export * from './app-bar-menu-button-constants';
-export * from './app-bar-menu-button';
-export declare function defineAppBarMenuButtonComponent(): void;

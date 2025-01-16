@@ -1,9 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./app-bar-profile-button.component";
-import * as i2 from "@angular/common";
-export declare class ForgeAppBarProfileButtonModule {
-    constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeAppBarProfileButtonModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeAppBarProfileButtonModule, [typeof i1.AppBarProfileButtonComponent], [typeof i2.CommonModule], [typeof i1.AppBarProfileButtonComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeAppBarProfileButtonModule>;
-}

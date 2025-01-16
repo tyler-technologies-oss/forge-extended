@@ -1,9 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./deprecated-button.component";
-import * as i2 from "@angular/common";
-export declare class ForgeDeprecatedButtonModule {
-    constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeDeprecatedButtonModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeDeprecatedButtonModule, [typeof i1.DeprecatedButtonComponent], [typeof i2.CommonModule], [typeof i1.DeprecatedButtonComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeDeprecatedButtonModule>;
-}

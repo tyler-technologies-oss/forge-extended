@@ -1,9 +1,0 @@
-/**
- * Represents a single message list entry containing a string message and its identifier.
- */
-export declare class MessageListEntry<T> {
-    message: string;
-    identifier: T;
-    originalMessage: string;
-    constructor(message: string, identifier: T);
-}

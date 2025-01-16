@@ -1,8 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./checkbox-value-accessor.directive";
-import * as i2 from "./checkbox-proxy.module";
-export declare class ForgeCheckboxModule {
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeCheckboxModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeCheckboxModule, [typeof i1.CheckboxValueAccessor], never, [typeof i1.CheckboxValueAccessor, typeof i2.ForgeCheckboxProxyModule]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeCheckboxModule>;
-}

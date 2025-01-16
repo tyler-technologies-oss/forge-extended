@@ -1,3 +1,0 @@
-import { BaseInjector } from '../core/base-injector';
-export declare class PopoverInjector extends BaseInjector {
-}

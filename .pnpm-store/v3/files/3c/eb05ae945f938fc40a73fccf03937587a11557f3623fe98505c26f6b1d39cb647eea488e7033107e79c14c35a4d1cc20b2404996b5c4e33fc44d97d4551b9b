@@ -1,7 +1,0 @@
-export * from './dialog-config';
-export * from './dialog-injector';
-export * from './dialog-ref';
-export * from './dialog.component';
-export * from './dialog.module';
-export * from './dialog.service';
-//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiaW5kZXguanMiLCJzb3VyY2VSb290IjoiIiwic291cmNlcyI6WyIuLi8uLi8uLi8uLi8uLi9wcm9qZWN0cy9mb3JnZS1hbmd1bGFyL3NyYy9saWIvZGlhbG9nL2luZGV4LnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBLGNBQWMsaUJBQWlCLENBQUM7QUFDaEMsY0FBYyxtQkFBbUIsQ0FBQztBQUNsQyxjQUFjLGNBQWMsQ0FBQztBQUM3QixjQUFjLG9CQUFvQixDQUFDO0FBQ25DLGNBQWMsaUJBQWlCLENBQUM7QUFDaEMsY0FBYyxrQkFBa0IsQ0FBQyIsInNvdXJjZXNDb250ZW50IjpbImV4cG9ydCAqIGZyb20gJy4vZGlhbG9nLWNvbmZpZyc7XG5leHBvcnQgKiBmcm9tICcuL2RpYWxvZy1pbmplY3Rvcic7XG5leHBvcnQgKiBmcm9tICcuL2RpYWxvZy1yZWYnO1xuZXhwb3J0ICogZnJvbSAnLi9kaWFsb2cuY29tcG9uZW50JztcbmV4cG9ydCAqIGZyb20gJy4vZGlhbG9nLm1vZHVsZSc7XG5leHBvcnQgKiBmcm9tICcuL2RpYWxvZy5zZXJ2aWNlJztcbiJdfQ==

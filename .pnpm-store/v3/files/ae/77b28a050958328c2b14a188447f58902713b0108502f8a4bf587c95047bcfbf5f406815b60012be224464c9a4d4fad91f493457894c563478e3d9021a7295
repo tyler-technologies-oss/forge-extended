@@ -1,9 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./date-range-picker.component";
-import * as i2 from "@angular/common";
-export declare class ForgeDateRangePickerProxyModule {
-    constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeDateRangePickerProxyModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeDateRangePickerProxyModule, [typeof i1.DateRangePickerComponent], [typeof i2.CommonModule], [typeof i1.DateRangePickerComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeDateRangePickerProxyModule>;
-}

@@ -1,8 +1,0 @@
-/**
- * @license
- * Copyright Tyler Technologies, Inc. 
- * License: Apache-2.0
- */
-export * from './scaffold-constants';
-export * from './scaffold';
-export declare function defineScaffoldComponent(): void;

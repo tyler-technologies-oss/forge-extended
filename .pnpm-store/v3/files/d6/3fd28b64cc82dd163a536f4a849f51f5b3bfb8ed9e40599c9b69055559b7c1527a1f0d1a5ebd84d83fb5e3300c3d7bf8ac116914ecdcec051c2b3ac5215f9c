@@ -1,7 +1,0 @@
-/**
- * @license
- * Copyright Tyler Technologies, Inc. 
- * License: Apache-2.0
- */
-export * from './date-input-mask';
-export * from './time-input-mask';

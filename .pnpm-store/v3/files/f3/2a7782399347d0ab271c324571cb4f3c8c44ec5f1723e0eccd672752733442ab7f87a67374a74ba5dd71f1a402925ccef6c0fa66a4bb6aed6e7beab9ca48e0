@@ -1,9 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./label-value.component";
-import * as i2 from "@angular/common";
-export declare class ForgeLabelValueModule {
-    constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeLabelValueModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeLabelValueModule, [typeof i1.LabelValueComponent], [typeof i2.CommonModule], [typeof i1.LabelValueComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeLabelValueModule>;
-}

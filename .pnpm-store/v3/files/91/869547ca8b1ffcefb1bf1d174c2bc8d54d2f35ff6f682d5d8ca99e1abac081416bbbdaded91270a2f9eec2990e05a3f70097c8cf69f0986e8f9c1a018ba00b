@@ -1,9 +1,0 @@
-/**
- * @license
- * Copyright Tyler Technologies, Inc. 
- * License: Apache-2.0
- */
-@use './forge-tokens';
-@use './theme/forge-theme';
-@use './typography/forge-typography';
-@use './table/forge-table';

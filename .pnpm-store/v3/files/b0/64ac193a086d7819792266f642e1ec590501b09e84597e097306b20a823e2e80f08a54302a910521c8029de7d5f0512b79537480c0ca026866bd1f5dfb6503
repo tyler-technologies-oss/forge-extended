@@ -1,9 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./skip-link.component";
-import * as i2 from "@angular/common";
-export declare class ForgeSkipLinkModule {
-    constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeSkipLinkModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeSkipLinkModule, [typeof i1.SkipLinkComponent], [typeof i2.CommonModule], [typeof i1.SkipLinkComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeSkipLinkModule>;
-}

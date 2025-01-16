@@ -1,9 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./keyboard-shortcut.component";
-import * as i2 from "@angular/common";
-export declare class ForgeKeyboardShortcutModule {
-    constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeKeyboardShortcutModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeKeyboardShortcutModule, [typeof i1.KeyboardShortcutComponent], [typeof i2.CommonModule], [typeof i1.KeyboardShortcutComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeKeyboardShortcutModule>;
-}

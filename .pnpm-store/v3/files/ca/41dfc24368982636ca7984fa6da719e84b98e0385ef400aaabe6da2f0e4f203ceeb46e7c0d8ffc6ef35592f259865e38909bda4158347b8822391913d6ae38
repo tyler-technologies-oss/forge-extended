@@ -1,9 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./app-bar.component";
-import * as i2 from "@angular/common";
-export declare class ForgeAppBarProxyModule {
-    constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeAppBarProxyModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeAppBarProxyModule, [typeof i1.AppBarComponent], [typeof i2.CommonModule], [typeof i1.AppBarComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeAppBarProxyModule>;
-}

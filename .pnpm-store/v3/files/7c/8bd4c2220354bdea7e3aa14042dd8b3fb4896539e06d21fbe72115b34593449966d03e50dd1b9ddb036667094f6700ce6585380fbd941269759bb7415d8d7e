@@ -1,7 +1,0 @@
-export declare const CUSTOM_ELEMENT_NAME_PROPERTY: unique symbol;
-export declare const CUSTOM_ELEMENT_DEPENDENCIES_PROPERTY: unique symbol;
-export declare const CUSTOM_ELEMENT_TEMPLATE_PROPERTY: unique symbol;
-export declare const CUSTOM_ELEMENT_CSS_PROPERTY: unique symbol;
-export declare const CUSTOM_ELEMENT_STYLESHEETS_PROPERTY: unique symbol;
-/** Whether the browser supports constructable stylesheets */
-export declare const supportsConstructableStyleSheets: boolean;

@@ -1,5 +1,0 @@
-/**
- * Hides an element from the user visually, while keeping it in the DOM.
- * @param element The element to hide from view.
- */
-export declare function hideElementVisually(element: HTMLElement): void;

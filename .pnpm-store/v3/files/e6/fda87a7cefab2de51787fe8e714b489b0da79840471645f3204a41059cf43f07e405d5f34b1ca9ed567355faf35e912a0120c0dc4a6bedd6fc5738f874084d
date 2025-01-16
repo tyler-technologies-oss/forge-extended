@@ -1,7 +1,0 @@
-import { Injector } from '@angular/core';
-export declare class BaseInjector implements Injector {
-    private _parentInjector;
-    private _additionalTokens;
-    constructor(_parentInjector: Injector, _additionalTokens: WeakMap<any, any>);
-    get(token: any, notFoundValue?: any): void;
-}

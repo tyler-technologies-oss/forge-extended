@@ -1,8 +1,0 @@
-/**
- * @license
- * Copyright Tyler Technologies, Inc. 
- * License: Apache-2.0
- */
-@function cell-size($span: 1, $size: 256, $gap: 16) {
-  @return (($span - 1) * $gap) + ($span * $size);
-}

@@ -1,4 +1,0 @@
-/// <reference types="react" />
-import { Options } from "./types";
-declare const reactifyWebComponent: <Props>(WC: string, { forceProperty, forceAttribute, forceEvent }?: Options) => import("react").ForwardRefExoticComponent<import("react").RefAttributes<unknown>>;
-export default reactifyWebComponent;

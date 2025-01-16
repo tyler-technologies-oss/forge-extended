@@ -1,8 +1,0 @@
-/**
- * @license
- * Copyright Tyler Technologies, Inc. 
- * License: Apache-2.0
- */
-export * from './option-group-constants';
-export * from './option-group';
-export declare function defineOptionGroupComponent(): void;

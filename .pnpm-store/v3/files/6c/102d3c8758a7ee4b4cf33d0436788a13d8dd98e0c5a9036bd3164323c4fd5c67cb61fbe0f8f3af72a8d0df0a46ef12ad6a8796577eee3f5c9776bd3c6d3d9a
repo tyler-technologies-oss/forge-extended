@@ -1,9 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./paginator.component";
-import * as i2 from "@angular/common";
-export declare class ForgePaginatorModule {
-    constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgePaginatorModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgePaginatorModule, [typeof i1.PaginatorComponent], [typeof i2.CommonModule], [typeof i1.PaginatorComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgePaginatorModule>;
-}

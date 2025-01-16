@@ -1,8 +1,0 @@
-/**
- * @license
- * Copyright Tyler Technologies, Inc. 
- * License: Apache-2.0
- */
-export * from './drawer-constants';
-export * from './drawer';
-export declare function defineDrawerComponent(): void;

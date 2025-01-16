@@ -1,8 +1,0 @@
-/**
- * @license
- * Copyright Tyler Technologies, Inc. 
- * License: Apache-2.0
- */
-export * from './open-icon-constants';
-export * from './open-icon';
-export declare function defineOpenIconComponent(): void;

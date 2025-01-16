@@ -1,8 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./popover.directive";
-import * as i2 from "./popover-proxy.module";
-export declare class ForgePopoverModule {
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgePopoverModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgePopoverModule, [typeof i1.PopoverDirective], never, [typeof i1.PopoverDirective, typeof i2.ForgePopoverProxyModule]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgePopoverModule>;
-}

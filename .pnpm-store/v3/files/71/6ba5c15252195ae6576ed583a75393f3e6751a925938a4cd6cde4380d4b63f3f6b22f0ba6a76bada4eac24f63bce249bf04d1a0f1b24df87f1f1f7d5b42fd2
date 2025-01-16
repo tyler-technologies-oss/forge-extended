@@ -1,6 +1,0 @@
-/**
- * Converts a string value to dash-case.
- * Ex. someTestValue => some-test-value
- * @param {string} value The string to convert
- */
-export declare function dashify(value: string): string;

@@ -1,9 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./profile-card.component";
-import * as i2 from "@angular/common";
-export declare class ForgeProfileCardModule {
-    constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeProfileCardModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeProfileCardModule, [typeof i1.ProfileCardComponent], [typeof i2.CommonModule], [typeof i1.ProfileCardComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeProfileCardModule>;
-}

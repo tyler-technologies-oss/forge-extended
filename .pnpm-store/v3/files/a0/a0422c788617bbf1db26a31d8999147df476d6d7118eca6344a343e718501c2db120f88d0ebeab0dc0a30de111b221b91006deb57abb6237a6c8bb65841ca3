@@ -1,9 +1,0 @@
-/**
- * @license
- * Copyright Tyler Technologies, Inc. 
- * License: Apache-2.0
- */
-export * from './badge-component-delegate';
-export * from './badge-constants';
-export * from './badge';
-export declare function defineBadgeComponent(): void;

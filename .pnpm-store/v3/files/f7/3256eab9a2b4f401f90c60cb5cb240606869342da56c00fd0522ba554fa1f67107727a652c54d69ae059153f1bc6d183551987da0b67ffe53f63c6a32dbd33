@@ -1,9 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./autocomplete.component";
-import * as i2 from "@angular/common";
-export declare class ForgeAutocompleteProxyModule {
-    constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeAutocompleteProxyModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeAutocompleteProxyModule, [typeof i1.AutocompleteComponent], [typeof i2.CommonModule], [typeof i1.AutocompleteComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeAutocompleteProxyModule>;
-}

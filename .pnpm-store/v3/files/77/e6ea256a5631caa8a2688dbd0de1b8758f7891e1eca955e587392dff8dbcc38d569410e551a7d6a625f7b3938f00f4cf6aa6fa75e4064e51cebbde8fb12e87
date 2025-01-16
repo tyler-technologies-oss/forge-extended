@@ -1,9 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./view.component";
-import * as i2 from "@angular/common";
-export declare class ForgeViewModule {
-    constructor();
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeViewModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeViewModule, [typeof i1.ViewComponent], [typeof i2.CommonModule], [typeof i1.ViewComponent]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeViewModule>;
-}

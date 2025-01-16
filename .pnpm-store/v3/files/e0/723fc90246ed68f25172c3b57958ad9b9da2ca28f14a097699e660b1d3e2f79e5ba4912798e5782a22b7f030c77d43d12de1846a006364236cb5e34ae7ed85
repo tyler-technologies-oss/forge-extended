@@ -1,8 +1,0 @@
-import * as i0 from "@angular/core";
-import * as i1 from "./button-toggle-group-value-accessor.directive";
-import * as i2 from "./button-toggle-proxy.module";
-export declare class ForgeButtonToggleModule {
-    static ɵfac: i0.ɵɵFactoryDeclaration<ForgeButtonToggleModule, never>;
-    static ɵmod: i0.ɵɵNgModuleDeclaration<ForgeButtonToggleModule, [typeof i1.ButtonToggleGroupValueAccessor], never, [typeof i1.ButtonToggleGroupValueAccessor, typeof i2.ForgeButtonToggleProxyModule]>;
-    static ɵinj: i0.ɵɵInjectorDeclaration<ForgeButtonToggleModule>;
-}
