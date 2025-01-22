@@ -30,7 +30,7 @@
     "storybook:extended": "turbo run storybook --filter=@tylertech/forge-extended"
   },
   "devDependencies": {
-    "@changesets/cli": "^2.27.11",
+    "@changesets/cli": "2.27.11",
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
     "@types/node": "catalog:",
@@ -44,6 +44,9 @@
   "pnpm": {
     "overrides": {
       "reactify-wc>react": ">=17"
+    },
+    "patchedDependencies": {
+      "@changesets/assemble-release-plan@6.0.5": "patches/@changesets__assemble-release-plan@6.0.5.patch"
     }
   }
 }

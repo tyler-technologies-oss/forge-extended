@@ -1,5 +1,6 @@
 .github/
 .husky/
+patches/
 **/.angular/
 **/.coverage/
 **/storybook-static/

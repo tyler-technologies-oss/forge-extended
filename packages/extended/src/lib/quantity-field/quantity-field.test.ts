@@ -1,20 +1,20 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
-import { QuantityFieldElement } from './quantity-field';
+import { QuantityFieldComponent } from './quantity-field';
 import sinon from 'sinon';
 
 import './quantity-field';
 
 describe('Quantity Field', () => {
   it('should contain shadow root', async () => {
-    const el = await fixture<QuantityFieldElement>(html`<forge-quantity-field></forge-quantity-field>`);
+    const el = await fixture<QuantityFieldComponent>(html`<forge-quantity-field></forge-quantity-field>`);
 
     expect(el.shadowRoot).to.be.ok;
     expect(el.shadowRoot?.childNodes.length).to.be.greaterThan(0);
   });
 
   it('should render a label', async () => {
-    const el = await fixture<QuantityFieldElement>(
+    const el = await fixture<QuantityFieldComponent>(
       html`<forge-quantity-field><label slot="label">Quantity</label></forge-quantity-field>`
     );
 
@@ -24,7 +24,7 @@ describe('Quantity Field', () => {
   });
 
   it('should render a decrement button', async () => {
-    const el = await fixture<QuantityFieldElement>(
+    const el = await fixture<QuantityFieldComponent>(
       html`<forge-quantity-field><forge-icon-button slot="decrement-button"></forge-icon-button></forge-quantity-field>`
     );
 
@@ -35,7 +35,7 @@ describe('Quantity Field', () => {
   });
 
   it('should render an increment button', async () => {
-    const el = await fixture<QuantityFieldElement>(
+    const el = await fixture<QuantityFieldComponent>(
       html`<forge-quantity-field><forge-icon-button slot="increment-button"></forge-icon-button></forge-quantity-field>`
     );
 
@@ -46,7 +46,7 @@ describe('Quantity Field', () => {
   });
 
   it('should render a support text', async () => {
-    const el = await fixture<QuantityFieldElement>(
+    const el = await fixture<QuantityFieldComponent>(
       html`<forge-quantity-field><p slot="support-text">Enter a quantity</p></forge-quantity-field>`
     );
 
@@ -58,7 +58,7 @@ describe('Quantity Field', () => {
   });
 
   it('should increment the input value', async () => {
-    const el = await fixture<QuantityFieldElement>(
+    const el = await fixture<QuantityFieldComponent>(
       html`<forge-quantity-field
         ><forge-text-field><input type="number" value="1" step="2" /></forge-text-field
         ><forge-icon-button slot="increment-button"></forge-icon-button
@@ -75,7 +75,7 @@ describe('Quantity Field', () => {
   });
 
   it('should decrement the input value', async () => {
-    const el = await fixture<QuantityFieldElement>(
+    const el = await fixture<QuantityFieldComponent>(
       html`<forge-quantity-field
         ><forge-text-field><input type="number" value="3" step="2" /></forge-text-field
         ><forge-icon-button slot="decrement-button"></forge-icon-button
@@ -92,7 +92,7 @@ describe('Quantity Field', () => {
   });
 
   it('should not decrement below the minimum value', async () => {
-    const el = await fixture<QuantityFieldElement>(
+    const el = await fixture<QuantityFieldComponent>(
       html`<forge-quantity-field
         ><forge-text-field><input type="number" value="1" step="2" min="1" /></forge-text-field
         ><forge-icon-button slot="decrement-button"></forge-icon-button
@@ -109,7 +109,7 @@ describe('Quantity Field', () => {
   });
 
   it('should not increment above the maximum value', async () => {
-    const el = await fixture<QuantityFieldElement>(
+    const el = await fixture<QuantityFieldComponent>(
       html`<forge-quantity-field
         ><forge-text-field><input type="number" value="1" step="2" max="3" /></forge-text-field
         ><forge-icon-button slot="increment-button"></forge-icon-button
@@ -126,19 +126,19 @@ describe('Quantity Field', () => {
   });
 
   it('should set required', async () => {
-    const el = await fixture<QuantityFieldElement>(html`<forge-quantity-field required></forge-quantity-field>`);
+    const el = await fixture<QuantityFieldComponent>(html`<forge-quantity-field required></forge-quantity-field>`);
 
     expect(el.required).to.be.true;
   });
 
   it('should set invalid', async () => {
-    const el = await fixture<QuantityFieldElement>(html`<forge-quantity-field invalid></forge-quantity-field>`);
+    const el = await fixture<QuantityFieldComponent>(html`<forge-quantity-field invalid></forge-quantity-field>`);
 
     expect(el.invalid).to.be.true;
   });
 
   it('should not render decrement button', async () => {
-    const el = await fixture<QuantityFieldElement>(html`<forge-quantity-field></forge-quantity-field>`);
+    const el = await fixture<QuantityFieldComponent>(html`<forge-quantity-field></forge-quantity-field>`);
 
     const decrementButton = (
       el.shadowRoot?.querySelector('slot[name="decrement-button"]') as HTMLSlotElement
@@ -147,7 +147,7 @@ describe('Quantity Field', () => {
   });
 
   it('should not render increment button', async () => {
-    const el = await fixture<QuantityFieldElement>(html`<forge-quantity-field></forge-quantity-field>`);
+    const el = await fixture<QuantityFieldComponent>(html`<forge-quantity-field></forge-quantity-field>`);
 
     const incrementButton = (
       el.shadowRoot?.querySelector('slot[name="increment-button"]') as HTMLSlotElement
@@ -156,7 +156,7 @@ describe('Quantity Field', () => {
   });
 
   it('should not render support text', async () => {
-    const el = await fixture<QuantityFieldElement>(html`<forge-quantity-field></forge-quantity-field>`);
+    const el = await fixture<QuantityFieldComponent>(html`<forge-quantity-field></forge-quantity-field>`);
 
     const supportText = (
       el.shadowRoot?.querySelector('slot[name="support-text"]') as HTMLSlotElement
@@ -165,7 +165,7 @@ describe('Quantity Field', () => {
   });
 
   it('should dispatch input and change event on decrement', async () => {
-    const el = await fixture<QuantityFieldElement>(
+    const el = await fixture<QuantityFieldComponent>(
       html`<forge-quantity-field>
         <input type="number" value="1" />
       </forge-quantity-field>`
@@ -188,7 +188,7 @@ describe('Quantity Field', () => {
   });
 
   it('should dispatch input and change event on increment', async () => {
-    const el = await fixture<QuantityFieldElement>(
+    const el = await fixture<QuantityFieldComponent>(
       html`<forge-quantity-field>
         <input type="number" value="1" />
       </forge-quantity-field>`

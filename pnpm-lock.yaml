@@ -151,12 +151,17 @@ catalogs:
 overrides:
   reactify-wc>react: '>=17'
 
+patchedDependencies:
+  '@changesets/assemble-release-plan@6.0.5':
+    hash: 36i7rxeelabqeg2gccl2n7pfaa
+    path: patches/@changesets__assemble-release-plan@6.0.5.patch
+
 importers:
 
   .:
     devDependencies:
       '@changesets/cli':
-        specifier: ^2.27.11
+        specifier: 2.27.11
         version: 2.27.11
       '@commitlint/cli':
         specifier: ^19.6.1
@@ -9714,7 +9719,7 @@ snapshots:
       resolve-from: 5.0.0
       semver: 7.6.3
 
-  '@changesets/assemble-release-plan@6.0.5':
+  '@changesets/assemble-release-plan@6.0.5(patch_hash=36i7rxeelabqeg2gccl2n7pfaa)':
     dependencies:
       '@changesets/errors': 0.2.0
       '@changesets/get-dependents-graph': 2.1.2
@@ -9730,7 +9735,7 @@ snapshots:
   '@changesets/cli@2.27.11':
     dependencies:
       '@changesets/apply-release-plan': 7.0.7
-      '@changesets/assemble-release-plan': 6.0.5
+      '@changesets/assemble-release-plan': 6.0.5(patch_hash=36i7rxeelabqeg2gccl2n7pfaa)
       '@changesets/changelog-git': 0.2.0
       '@changesets/config': 3.0.5
       '@changesets/errors': 0.2.0
@@ -9781,7 +9786,7 @@ snapshots:
 
   '@changesets/get-release-plan@4.0.6':
     dependencies:
-      '@changesets/assemble-release-plan': 6.0.5
+      '@changesets/assemble-release-plan': 6.0.5(patch_hash=36i7rxeelabqeg2gccl2n7pfaa)
       '@changesets/config': 3.0.5
       '@changesets/pre': 2.0.1
       '@changesets/read': 0.6.2

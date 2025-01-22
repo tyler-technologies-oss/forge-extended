@@ -1,4 +1,4 @@
-import { BusyIndicatorElement, QuantityFieldElement } from '@tylertech/forge-extended';
+import { BusyIndicatorComponent, QuantityFieldComponent } from '@tylertech/forge-extended';
 
 export * from './components';
 
@@ -9,8 +9,8 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace JSX {
     interface IntrinsicElements {
-      'forge-busy-indicator': CustomElementProps<BusyIndicatorElement>;
-      'forge-quantity-field': CustomElementProps<QuantityFieldElement>;
+      'forge-busy-indicator': CustomElementProps<BusyIndicatorComponent>;
+      'forge-quantity-field': CustomElementProps<QuantityFieldComponent>;
     }
   }
 }

@@ -1,16 +1,16 @@
 import { Observable, Subject } from 'rxjs';
 import { ElementRef } from '@angular/core';
-import { BusyIndicatorElement } from '@tylertech/forge-extended';
+import { BusyIndicatorComponent } from '@tylertech/forge-extended';
 
 export class BusyIndicatorRef {
-  private readonly _elementRef: ElementRef<BusyIndicatorElement>;
+  private readonly _elementRef: ElementRef<BusyIndicatorComponent>;
 
   private readonly _afterCancel = new Subject<CustomEvent<void>>();
   public afterCancel: Observable<CustomEvent<void>> = this._afterCancel.asObservable();
 
-  public componentInstance: BusyIndicatorElement;
+  public componentInstance: BusyIndicatorComponent;
 
-  constructor(instance: BusyIndicatorElement) {
+  constructor(instance: BusyIndicatorComponent) {
     this._elementRef = new ElementRef(instance);
     if (instance.cancelable) {
       instance.addEventListener('forge-busy-indicator-cancel', evt => this._afterCancel.next(evt));
@@ -23,7 +23,7 @@ export class BusyIndicatorRef {
     this._afterCancel.complete();
   }
 
-  public get nativeElement(): BusyIndicatorElement {
+  public get nativeElement(): BusyIndicatorComponent {
     return this._elementRef.nativeElement;
   }
 }
