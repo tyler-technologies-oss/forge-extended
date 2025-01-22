@@ -11,7 +11,7 @@ import styles from './busy-indicator.scss?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'forge-busy-indicator': BusyIndicatorElement;
+    'forge-busy-indicator': BusyIndicatorComponent;
   }
 
   interface HTMLElementEventMap {
@@ -22,7 +22,7 @@ declare global {
 export type BusyIndicatorDirection = 'row' | 'column';
 
 @customElement('forge-busy-indicator')
-export class BusyIndicatorElement extends LitElement {
+export class BusyIndicatorComponent extends LitElement {
   static {
     defineDialogComponent();
     defineCircularProgressComponent();

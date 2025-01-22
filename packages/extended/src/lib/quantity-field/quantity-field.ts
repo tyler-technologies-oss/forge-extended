@@ -12,12 +12,12 @@ import styles from './quantity-field.scss?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'forge-quantity-field': QuantityFieldElement;
+    'forge-quantity-field': QuantityFieldComponent;
   }
 }
 
 @customElement('forge-quantity-field')
-export class QuantityFieldElement extends LitElement {
+export class QuantityFieldComponent extends LitElement {
   static {
     defineTextFieldComponent();
     defineIconButtonComponent();

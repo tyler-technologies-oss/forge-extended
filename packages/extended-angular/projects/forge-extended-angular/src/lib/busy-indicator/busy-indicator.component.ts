@@ -10,8 +10,8 @@ import {
   Input
 } from '@angular/core';
 import {
-  BusyIndicatorElement as BusyIndicatorElementCustomElement,
-  defineBusyIndicatorElementComponent
+  BusyIndicatorComponent as BusyIndicatorComponentCustomElement,
+  defineBusyIndicatorComponent
 } from '@tylertech/forge-extended';
 
 /**  */
@@ -20,126 +20,126 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>'
 })
-export class BusyIndicatorElement {
+export class BusyIndicatorComponent {
   /** The forge-busy-indicator element. */
   public readonly nativeElement = this.elementRef.nativeElement;
 
   /** Indicates whether the busy indicator is open. */
   @Input({ transform: booleanAttribute })
-  public set open(value: BusyIndicatorElementCustomElement['open']) {
+  public set open(value: BusyIndicatorComponentCustomElement['open']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.open = value;
     });
   }
-  public get open(): BusyIndicatorElementCustomElement['open'] {
+  public get open(): BusyIndicatorComponentCustomElement['open'] {
     return this.nativeElement.open;
   }
 
   /** The title text to display. */
   @Input()
-  public set titleText(value: BusyIndicatorElementCustomElement['titleText']) {
+  public set titleText(value: BusyIndicatorComponentCustomElement['titleText']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.titleText = value;
     });
   }
-  public get titleText(): BusyIndicatorElementCustomElement['titleText'] {
+  public get titleText(): BusyIndicatorComponentCustomElement['titleText'] {
     return this.nativeElement.titleText;
   }
 
   /** The message to display. */
   @Input()
-  public set message(value: BusyIndicatorElementCustomElement['message']) {
+  public set message(value: BusyIndicatorComponentCustomElement['message']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.message = value;
     });
   }
-  public get message(): BusyIndicatorElementCustomElement['message'] {
+  public get message(): BusyIndicatorComponentCustomElement['message'] {
     return this.nativeElement.message;
   }
 
   /** Indicates whether the cancel button is displayed. */
   @Input({ transform: booleanAttribute })
-  public set cancelable(value: BusyIndicatorElementCustomElement['cancelable']) {
+  public set cancelable(value: BusyIndicatorComponentCustomElement['cancelable']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.cancelable = value;
     });
   }
-  public get cancelable(): BusyIndicatorElementCustomElement['cancelable'] {
+  public get cancelable(): BusyIndicatorComponentCustomElement['cancelable'] {
     return this.nativeElement.cancelable;
   }
 
   /** Indicates whether the spinner is displayed. */
   @Input({ transform: booleanAttribute })
-  public set spinner(value: BusyIndicatorElementCustomElement['spinner']) {
+  public set spinner(value: BusyIndicatorComponentCustomElement['spinner']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.spinner = value;
     });
   }
-  public get spinner(): BusyIndicatorElementCustomElement['spinner'] {
+  public get spinner(): BusyIndicatorComponentCustomElement['spinner'] {
     return this.nativeElement.spinner;
   }
 
   /** Indicates whether the progress bar is displayed. */
   @Input({ transform: booleanAttribute })
-  public set progressBar(value: BusyIndicatorElementCustomElement['progressBar']) {
+  public set progressBar(value: BusyIndicatorComponentCustomElement['progressBar']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.progressBar = value;
     });
   }
-  public get progressBar(): BusyIndicatorElementCustomElement['progressBar'] {
+  public get progressBar(): BusyIndicatorComponentCustomElement['progressBar'] {
     return this.nativeElement.progressBar;
   }
 
   /** Indicates whether the progress bar is determinate. */
   @Input({ transform: booleanAttribute })
-  public set progressBarDeterminate(value: BusyIndicatorElementCustomElement['progressBarDeterminate']) {
+  public set progressBarDeterminate(value: BusyIndicatorComponentCustomElement['progressBarDeterminate']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.progressBarDeterminate = value;
     });
   }
-  public get progressBarDeterminate(): BusyIndicatorElementCustomElement['progressBarDeterminate'] {
+  public get progressBarDeterminate(): BusyIndicatorComponentCustomElement['progressBarDeterminate'] {
     return this.nativeElement.progressBarDeterminate;
   }
 
   /** The progress amount for the progress bar. */
   @Input({ transform: numberAttribute })
-  public set progress(value: BusyIndicatorElementCustomElement['progress']) {
+  public set progress(value: BusyIndicatorComponentCustomElement['progress']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.progress = value;
     });
   }
-  public get progress(): BusyIndicatorElementCustomElement['progress'] {
+  public get progress(): BusyIndicatorComponentCustomElement['progress'] {
     return this.nativeElement.progress;
   }
 
   /** The buffer amount for the progress bar. */
   @Input({ transform: numberAttribute })
-  public set buffer(value: BusyIndicatorElementCustomElement['buffer']) {
+  public set buffer(value: BusyIndicatorComponentCustomElement['buffer']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.buffer = value;
     });
   }
-  public get buffer(): BusyIndicatorElementCustomElement['buffer'] {
+  public get buffer(): BusyIndicatorComponentCustomElement['buffer'] {
     return this.nativeElement.buffer;
   }
 
   /** The layout direction of the busy indicator. */
   @Input()
-  public set direction(value: BusyIndicatorElementCustomElement['direction']) {
+  public set direction(value: BusyIndicatorComponentCustomElement['direction']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.direction = value;
     });
   }
-  public get direction(): BusyIndicatorElementCustomElement['direction'] {
+  public get direction(): BusyIndicatorComponentCustomElement['direction'] {
     return this.nativeElement.direction;
   }
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,
-    protected elementRef: ElementRef<BusyIndicatorElementCustomElement>,
+    protected elementRef: ElementRef<BusyIndicatorComponentCustomElement>,
     protected zone: NgZone
   ) {
-    defineBusyIndicatorElementComponent();
+    defineBusyIndicatorComponent();
     changeDetectorRef.detach();
   }
 }

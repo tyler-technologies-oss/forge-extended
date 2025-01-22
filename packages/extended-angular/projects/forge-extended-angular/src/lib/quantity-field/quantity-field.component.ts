@@ -9,8 +9,8 @@ import {
   Input
 } from '@angular/core';
 import {
-  QuantityFieldElement as QuantityFieldElementCustomElement,
-  defineQuantityFieldElementComponent
+  QuantityFieldComponent as QuantityFieldComponentCustomElement,
+  defineQuantityFieldComponent
 } from '@tylertech/forge-extended';
 
 /**  */
@@ -19,60 +19,60 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>'
 })
-export class QuantityFieldElement {
+export class QuantityFieldComponent {
   /** The forge-quantity-field element. */
   public readonly nativeElement = this.elementRef.nativeElement;
 
   /** Indicates whether the field is invalid. */
   @Input({ transform: booleanAttribute })
-  public set invalid(value: QuantityFieldElementCustomElement['invalid']) {
+  public set invalid(value: QuantityFieldComponentCustomElement['invalid']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.invalid = value;
     });
   }
-  public get invalid(): QuantityFieldElementCustomElement['invalid'] {
+  public get invalid(): QuantityFieldComponentCustomElement['invalid'] {
     return this.nativeElement.invalid;
   }
 
   /** Indicates whether the field is required. */
   @Input({ transform: booleanAttribute })
-  public set required(value: QuantityFieldElementCustomElement['required']) {
+  public set required(value: QuantityFieldComponentCustomElement['required']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.required = value;
     });
   }
-  public get required(): QuantityFieldElementCustomElement['required'] {
+  public get required(): QuantityFieldComponentCustomElement['required'] {
     return this.nativeElement.required;
   }
 
   /** The accessible label for the decrement button. */
   @Input()
-  public set decrementLabel(value: QuantityFieldElementCustomElement['decrementLabel']) {
+  public set decrementLabel(value: QuantityFieldComponentCustomElement['decrementLabel']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.decrementLabel = value;
     });
   }
-  public get decrementLabel(): QuantityFieldElementCustomElement['decrementLabel'] {
+  public get decrementLabel(): QuantityFieldComponentCustomElement['decrementLabel'] {
     return this.nativeElement.decrementLabel;
   }
 
   /** The accessible label for the increment button. */
   @Input()
-  public set incrementLabel(value: QuantityFieldElementCustomElement['incrementLabel']) {
+  public set incrementLabel(value: QuantityFieldComponentCustomElement['incrementLabel']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.incrementLabel = value;
     });
   }
-  public get incrementLabel(): QuantityFieldElementCustomElement['incrementLabel'] {
+  public get incrementLabel(): QuantityFieldComponentCustomElement['incrementLabel'] {
     return this.nativeElement.incrementLabel;
   }
 
   constructor(
     changeDetectorRef: ChangeDetectorRef,
-    protected elementRef: ElementRef<QuantityFieldElementCustomElement>,
+    protected elementRef: ElementRef<QuantityFieldComponentCustomElement>,
     protected zone: NgZone
   ) {
-    defineQuantityFieldElementComponent();
+    defineQuantityFieldComponent();
     changeDetectorRef.detach();
   }
 }
