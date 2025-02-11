@@ -19,7 +19,9 @@
     "clean": "rimraf dist/",
     "prebuild": "npm run clean",
     "build": "tsc --project lib/tsconfig-build.json",
-    "lint": "eslint --parser-options tsconfigRootDir:. --ext .ts,.tsx"
+    "lint": "eslint --parser-options tsconfigRootDir:. --ext .ts,.tsx",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
   },
   "dependencies": {
     "reactify-wc": "^4.0.0",
@@ -30,10 +32,11 @@
     "react": ">=17.0.0"
   },
   "devDependencies": {
+    "@repo/prettier-config": "workspace:",
     "@tylertech-eslint/eslint-plugin": "catalog:",
     "@tylertech/forge": "catalog:",
     "@tylertech/forge-extended": "workspace:^",
-    "@tylertech/forge-react": "^3.0.1",
+    "@tylertech/forge-react": "^3.1.0",
     "@tylertech/tyler-icons": "catalog:",
     "@types/node": "catalog:",
     "@types/react": "^17.0.83",

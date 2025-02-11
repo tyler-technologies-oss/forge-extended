@@ -1,0 +1,5 @@
+export * from './{{dashCase name}}';
+
+export function define{{pascalCase name}}Component(): Promise<typeof import('./{{dashCase name}}')> {
+  return import('./{{dashCase name}}');
+}

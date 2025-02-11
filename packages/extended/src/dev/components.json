@@ -1,0 +1,4 @@
+[
+  { "label": "Busy Indicator", "path": "/pages/busy-indicator/busy-indicator.html", "tags": ["dialog", "loading"] },
+  { "label": "Quantity Field", "path": "/pages/quantity-field/quantity-field.html", "tags": ["input"] }
+]

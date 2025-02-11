@@ -1,0 +1,18 @@
+import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
+import { customElement } from 'lit/decorators.js';
+
+import styles from './{{dashCase name}}.scss?inline';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'forge-{{dashCase name}}': {{pascalCase name}}Component;
+  }
+}
+
+@customElement('forge-{{dashCase name}}')
+export class {{pascalCase name}}Component extends LitElement {
+  public static override styles = unsafeCSS(styles);
+  public override render(): TemplateResult {
+    return html`<div>{{pascalCase name}}Component works!</div>`;
+  }
+}

@@ -20,8 +20,14 @@ declare global {
 }
 
 export type BusyIndicatorDirection = 'row' | 'column';
+export const BusyIndicatorComponentTagName: keyof HTMLElementTagNameMap = 'forge-busy-indicator';
 
-@customElement('forge-busy-indicator')
+/**
+ * @tag forge-busy-indicator
+ *
+ * @slot cancel-text - The text for the cancel button.
+ */
+@customElement(BusyIndicatorComponentTagName)
 export class BusyIndicatorComponent extends LitElement {
   static {
     defineDialogComponent();
