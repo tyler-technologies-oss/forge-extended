@@ -1,5 +1,12 @@
 # @tylertech/forge-extended-react
 
+## 0.1.2
+
+### Patch Changes
+
+- Updated dependencies [e9d1ed5]
+  - @tylertech/forge-extended@0.1.0
+
 ## 0.1.1
 
 ### Patch Changes
