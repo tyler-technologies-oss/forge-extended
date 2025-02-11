@@ -1,5 +1,12 @@
 # @tylertech/forge-extended-angular
 
+## 0.1.3
+
+### Patch Changes
+
+- Updated dependencies [e9d1ed5]
+  - @tylertech/forge-extended@0.1.0
+
 ## 0.1.2
 
 ### Patch Changes
