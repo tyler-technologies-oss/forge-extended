@@ -8,4 +8,5 @@ src/dev/
 CONTRIBUTING.md
 CHANGELOG.md
 README.md
+plopfile.mjs
 .gitignore

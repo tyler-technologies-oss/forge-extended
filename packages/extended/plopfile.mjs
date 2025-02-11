@@ -45,7 +45,7 @@ export default function (plop) {
         {
           type: 'modify',
           path: 'src/lib/index.ts',
-          pattern: /(\/\/ -- EXPORTS PLACEHOLDER --)/g,
+          pattern: /(\/\/ -- Plop Placeholder \(DO NOT REMOVE\) --)/g,
           template: "export * from './{{dashCase name}}';\n$1"
         }
       ];
@@ -53,9 +53,15 @@ export default function (plop) {
       if (answers.hasDemo) {
         actions.push({
           type: 'addMany',
-          destination: 'src/pages/demo/{{dashCase name}}',
+          destination: 'src/dev/pages/{{dashCase name}}',
           base: 'templates/demo',
           templateFiles: 'templates/demo/**'
+        });
+        actions.push({
+          type: 'modify',
+          path: 'src/dev/components.json',
+          pattern: /(})(\n)(])$/gm,
+          template: '$1,\n  { "label": "{{titleCase (sentenceCase name)}}", "path": "/pages/{{dashCase name}}/{{dashCase name}}.html" }\n$3'
         });
       }
 

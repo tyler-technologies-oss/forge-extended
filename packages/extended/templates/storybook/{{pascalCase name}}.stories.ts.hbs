@@ -1,12 +1,12 @@
 import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 
-import '../../../lib/{{dashCase name}}/{{dashCase name}}';
+import '$lib/{{dashCase name}}';
 
 const component = 'forge-{{dashCase name}}';
 
 const meta = {
-  title: 'Components/{{pascalCase name}}',
+title: 'Components/{{titleCase (sentenceCase name)}}',
   render: args => {
     return html`<forge-{{dashCase name}}></forge-{{dashCase name}}>`;
   },
