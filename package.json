@@ -28,6 +28,7 @@
     "dev:extended-angular": "pnpm run --filter=@tylertech/forge-extended-angular dev",
     "dev:extended-react": "pnpm run --filter=@tylertech/forge-extended-react dev",
     "storybook:extended": "turbo run storybook --filter=@tylertech/forge-extended",
+    "build:storybook:extended": "pnpm run --filter=@tylertech/forge-extended build:storybook ",
     "plop:extended": "pnpm run --filter=@tylertech/forge-extended plop"
   },
   "devDependencies": {
