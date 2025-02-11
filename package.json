@@ -3,15 +3,15 @@
   "private": true,
   "license": "Apache-2.0",
   "author": "Tyler Technologies, Inc.",
-  "packageManager": "pnpm@9.15.4",
+  "packageManager": "pnpm@10.2.0",
   "engines": {
     "node": ">=18",
-    "pnpm": ">=9"
+    "pnpm": ">=10"
   },
   "scripts": {
     "prepare": "husky",
-    "format": "prettier --write .",
-    "format:check": "prettier --check .",
+    "format": "turbo run format",
+    "format:check": "turbo run format:check",
     "changeset:version": "changeset version && turbo run changeset:version",
     "build": "turbo run build",
     "build:extended": "pnpm run --filter=@tylertech/forge-extended build",
@@ -27,19 +27,24 @@
     "dev:extended": "pnpm run --filter=@tylertech/forge-extended dev",
     "dev:extended-angular": "pnpm run --filter=@tylertech/forge-extended-angular dev",
     "dev:extended-react": "pnpm run --filter=@tylertech/forge-extended-react dev",
-    "storybook:extended": "turbo run storybook --filter=@tylertech/forge-extended"
+    "storybook:extended": "turbo run storybook --filter=@tylertech/forge-extended",
+    "build:storybook:extended": "pnpm run --filter=@tylertech/forge-extended build:storybook ",
+    "plop:extended": "pnpm run --filter=@tylertech/forge-extended plop"
   },
   "devDependencies": {
-    "@changesets/cli": "2.27.11",
-    "@commitlint/cli": "^19.6.1",
-    "@commitlint/config-conventional": "^19.6.0",
+    "@changesets/cli": "2.27.12",
+    "@commitlint/cli": "^19.7.1",
+    "@commitlint/config-conventional": "^19.7.1",
+    "@repo/prettier-config": "workspace:",
     "@types/node": "catalog:",
-    "commitlint": "^19.6.1",
+    "commitlint": "^19.7.1",
     "eslint": "catalog:",
     "husky": "^9.1.7",
-    "lint-staged": "^15.3.0",
-    "prettier": "^3.4.2",
-    "turbo": "^2.3.3"
+    "lint-staged": "^15.4.3",
+    "prettier": "catalog:",
+    "turbo": "^2.4.1",
+    "vite-plugin-ejs": "^1.7.0",
+    "vite-plugin-full-reload": "^1.2.0"
   },
   "pnpm": {
     "overrides": {

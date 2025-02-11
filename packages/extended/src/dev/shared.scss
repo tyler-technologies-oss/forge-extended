@@ -1,0 +1,16 @@
+@use './styles/content';
+@use './styles/flex';
+@use './styles/grid';
+
+body.ready {
+  opacity: 1;
+  transition: 300ms opacity 200ms;
+}
+
+:not(:defined) {
+  visibility: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}

@@ -61,34 +61,57 @@ import '@tylertech/forge-extended';
 
 ## Local Development
 
+This project uses [pnpm](https://pnpm.io/) for package management and is a monorepo using pnpm workspaces.
+
+Additionally, this project uses [Turoborepo](https://turbo.build/repo/docs) for managing the monorepo and orchestrating tasks.
+
 ### Install
 
 ```bash
-npm install
+pnpm install
+```
+
+### Recommended VSCode Extensions
+
+It is recommended that you install the following extensions in Visual Studio Code for the best development experience:
+
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [Monorepo Workspace](https://marketplace.visualstudio.com/items?itemName=folke.vscode-monorepo-workspace)
+- [lit-plugin](https://marketplace.visualstudio.com/items?itemName=runem.lit-plugin)
+- [MDX](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx)
+
+### Run Storybook
+
+The following command will run Storybook, which is used for both local development and documentation.
+
+```bash
+pnpm storybook:extended
 ```
 
 ### Run dev site
 
-This will open the Storybook site that is used for local development.
+The following command will run all dev sites for each package in the monorepo:
 
 ```bash
-npm start
+pnpm dev
 ```
 
-### Vite Dev
-
-You can also run a basic HTML dev site using Vite for simple/quick testing.
+If you'd prefer to run a specific dev site for a workspace/package, you can do so like this:
 
 ```bash
-npm run dev
+pnpm dev:extended
 ```
+
+> See the `scripts` section of the `package.json` for more dev site commands.
 
 ### Build
 
-This runs a local production build of the library.
+This runs a local production build of all packages.
 
 ```bash
-npm run build
+pnpm build
 ```
 
 ### Run tests
@@ -96,5 +119,5 @@ npm run build
 Executes the unit test suite.
 
 ```bash
-npm test
+pnpm test
 ```

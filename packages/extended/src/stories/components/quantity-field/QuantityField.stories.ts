@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 
-import '../../../lib/quantity-field/quantity-field';
+import '$lib/quantity-field';
 
 const component = 'forge-quantity-field';
 

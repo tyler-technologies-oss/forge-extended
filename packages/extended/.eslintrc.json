@@ -1,12 +1,21 @@
 {
   "root": true,
-  "ignorePatterns": ["dist/**/*", "src/stories/**/*", "vite.config.mts", "web-test-runner.config.*", "*.test.ts"],
+  "ignorePatterns": [
+    "dist/**/*",
+    "src/stories/**/*",
+    "src/dev/**/*",
+    "plugins/**/*",
+    "vite.config.mts",
+    "web-test-runner.config.*",
+    "custom-elements-manifest.config.mjs",
+    "plopfile.mjs",
+    "*.test.ts"
+  ],
   "overrides": [
     {
       "files": ["*.js", "*.ts"],
       "parserOptions": {
         "project": ["tsconfig.json"],
-        "tsconfigRootDir": "./packages/extended",
         "createDefaultProgram": true
       },
       "extends": ["plugin:@tylertech-eslint/recommended", "plugin:prettier/recommended"]

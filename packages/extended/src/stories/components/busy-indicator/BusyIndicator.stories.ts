@@ -2,8 +2,8 @@ import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import { createRef, ref } from 'lit/directives/ref.js';
 
-import { BusyIndicatorElement } from '../../../lib/busy-indicator/busy-indicator';
-import '../../../lib/busy-indicator/busy-indicator';
+import { BusyIndicatorComponent } from '$lib/busy-indicator';
+import '$lib/busy-indicator';
 
 const component = 'forge-busy-indicator';
 
@@ -11,10 +11,11 @@ const meta = {
   title: 'Components/Busy Indicator',
   component,
   render: args => {
-    const busyIndicatorRef = createRef<BusyIndicatorElement>();
+    const busyIndicatorRef = createRef<BusyIndicatorComponent>();
 
     function handleClick() {
       busyIndicatorRef.value!.open = true;
+      setTimeout(() => (busyIndicatorRef.value!.open = false), 3000);
     }
 
     return html`
@@ -46,8 +47,8 @@ const meta = {
   },
   args: {
     open: false,
-    titleText: 'Loading...',
-    message: 'Please wait while we load your data',
+    titleText: '',
+    message: 'Please wait while we load your data...',
     cancelable: false,
     spinner: true,
     progressBar: false,
@@ -62,8 +63,4 @@ export default meta;
 
 type Story = StoryObj;
 
-export const Demo: Story = {
-  args: {
-    cancelable: true
-  }
-};
+export const Demo: Story = {};

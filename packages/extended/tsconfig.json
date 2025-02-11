@@ -15,12 +15,14 @@
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "forceConsistentCasingInFileNames": true,
+    "resolveJsonModule": true,
     "baseUrl": ".",
     "paths": {
-      "$lib": ["./src/lib"],
-      "$lib/*": ["./src/lib/*"]
+      "$dev": ["src/dev"],
+      "$lib": ["src/lib"],
+      "$lib/*": ["src/lib/*"]
     },
     "types": ["vite/client", "mocha", "node", "sinon"]
   },
-  "include": ["src/lib/**/*.ts", "typings/*.d.ts"]
+  "include": ["src/**/*.ts", "typings/scss.d.ts"]
 }

@@ -16,7 +16,18 @@ declare global {
   }
 }
 
-@customElement('forge-quantity-field')
+export const QuantityFieldComponentTagName: keyof HTMLElementTagNameMap = 'forge-quantity-field';
+
+/**
+ * @tag forge-quantity-field
+ *
+ * @slot - Reserved for the `<input>` element.
+ * @slot label - The label for the field.
+ * @slot decrement-button - The decrement button.
+ * @slot increment-button - The increment button.
+ * @slot support-text - The support text for the field.
+ */
+@customElement(QuantityFieldComponentTagName)
 export class QuantityFieldComponent extends LitElement {
   static {
     defineTextFieldComponent();

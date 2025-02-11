@@ -5,8 +5,10 @@ patches/
 **/.coverage/
 **/storybook-static/
 **/dist/
+**/templates/
 **/node_modules/
 **/pnpm-lock.yaml
+packages/extended/src/dev/
 CONTRIBUTING.md
 CHANGELOG.md
 **/README.md
