@@ -41,7 +41,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "prettier": "catalog:",
-    "turbo": "^2.4.0",
+    "turbo": "^2.4.1",
     "vite-plugin-ejs": "^1.7.0",
     "vite-plugin-full-reload": "^1.2.0"
   },

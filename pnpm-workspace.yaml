@@ -4,20 +4,20 @@ catalog:
   '@custom-elements-manifest/analyzer': 0.10.4
   '@esm-bundle/chai': 4.3.4-fix.0
   '@open-wc/testing': 4.0.0
-  '@storybook/addon-a11y': 8.5.3
-  '@storybook/addon-essentials': 8.5.3
-  '@storybook/addon-links': 8.5.3
-  '@storybook/addon-measure': 8.5.3
-  '@storybook/addon-themes': 8.5.3
-  '@storybook/addon-viewport': 8.5.3
-  '@storybook/blocks': 8.5.3
-  '@storybook/preview-api': 8.5.3
-  '@storybook/test': 8.5.3
-  '@storybook/theming': 8.5.3
-  '@storybook/web-components': 8.5.3
-  '@storybook/web-components-vite': 8.5.3
+  '@storybook/addon-a11y': 8.5.4
+  '@storybook/addon-essentials': 8.5.4
+  '@storybook/addon-links': 8.5.4
+  '@storybook/addon-measure': 8.5.4
+  '@storybook/addon-themes': 8.5.4
+  '@storybook/addon-viewport': 8.5.4
+  '@storybook/blocks': 8.5.4
+  '@storybook/preview-api': 8.5.4
+  '@storybook/test': 8.5.4
+  '@storybook/theming': 8.5.4
+  '@storybook/web-components': 8.5.4
+  '@storybook/web-components-vite': 8.5.4
   '@tylertech-eslint/eslint-plugin': 2.1.0
-  '@tylertech/forge': 3.5.1
+  '@tylertech/forge': 3.6.0
   '@tylertech/forge-core': 3.1.0
   '@tylertech/stylelint-rules': 5.1.1
   '@tylertech/tyler-icons': 1.18.1
@@ -37,12 +37,12 @@ catalog:
   lit-analyzer: 2.0.3
   plop: 4.0.1
   postcss-lit: 1.2.0
-  prettier: 3.4.2
-  remark-gfm: 4.0.0
+  prettier: 3.5.0
+  remark-gfm: 4.0.1
   rimraf: 6.0.1
-  sass: 1.83.4
+  sass: 1.84.0
   sinon: 19.0.2
-  storybook: 8.5.3
+  storybook: 8.5.4
   storybook-dark-mode: 4.0.2
   stylelint: 16.14.1
   stylelint-config-standard: 37.0.0
