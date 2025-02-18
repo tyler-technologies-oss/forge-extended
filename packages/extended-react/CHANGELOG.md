@@ -1,5 +1,13 @@
 # @tylertech/forge-extended-react
 
+## 0.1.3
+
+### Patch Changes
+
+- cfb1dad: consistency updates and release preparation
+- Updated dependencies [cfb1dad]
+  - @tylertech/forge-extended@0.1.1
+
 ## 0.1.2
 
 ### Patch Changes
