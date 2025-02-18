@@ -1,0 +1,78 @@
+import { type Meta, type StoryObj } from '@storybook/web-components';
+import { html } from 'lit';
+
+import '$lib/confirmation-dialog';
+import { ConfirmationDialogComponent } from '$lib/confirmation-dialog';
+
+import { createRef, ref } from 'lit/directives/ref.js';
+
+const component = 'forge-confirmation-dialog';
+
+const meta = {
+  title: 'Components/Confirmation Dialog',
+  render: args => {
+    const confirmationDialogRef = createRef<ConfirmationDialogComponent>();
+
+    function handleClick() {
+      confirmationDialogRef.value!.open = true;
+    }
+
+    function closeDialog() {
+      confirmationDialogRef.value!.open = false;
+    }
+
+    function onConfirmationDialogAction(e: IConfirmationDialogAction) {
+      const isPrimary = e.detail.primaryAction;
+      if (!isPrimary) {
+        confirmationDialogRef.value!.open = false;
+        return;
+      } else {
+        // This logic (whether async or synchronous) would be managed by the consumer
+        if (!args.simulateAsync) {
+          closeDialog();
+          return;
+        } else {
+          confirmationDialogRef.value!.isBusy = true;
+          setTimeout(() => {
+            closeDialog();
+          }, 2500);
+        }
+      }
+    }
+
+    return html`
+      <forge-button variant="raised" @click=${handleClick}>Show Confirmation Dialog</forge-button>
+      <forge-confirmation-dialog
+        ${ref(confirmationDialogRef)}
+        @forge-confirmation-dialog-action=${(e: IConfirmationDialogAction) => onConfirmationDialogAction(e)}
+        @forge-dialog-close=${closeDialog}
+        ?open=${args.open}
+        .isBusy=${args.isBusy}>
+        <div slot="title">${args.title}</div>
+        <div slot="message">${args.message}</div>
+        ${args.showSecondaryButton
+          ? html`<forge-button slot="secondary-action">${args.secondaryButtonText}</forge-button>`
+          : ''}
+        <div slot="primary-button-text">${args.primaryButtonText}</div>
+      </forge-confirmation-dialog>
+    `;
+  },
+  component,
+  argTypes: {},
+  args: {
+    open: false,
+    isBusy: false,
+    title: 'Delete selected images?',
+    message: 'Images will be permanently removed from your account and all synced devices.',
+    secondaryButtonText: 'Cancel',
+    primaryButtonText: 'Yes',
+    showSecondaryButton: true,
+    simulateAsync: false
+  }
+} satisfies Meta;
+
+export default meta;
+
+type Story = StoryObj;
+
+export const Demo: Story = {};
