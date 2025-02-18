@@ -45,7 +45,7 @@ export default function (plop) {
         {
           type: 'modify',
           path: 'src/lib/index.ts',
-          pattern: /(\/\/ -- Plop Placeholder \(DO NOT REMOVE\) --)/g,
+          pattern: /(\/\/ -- EXPORTS PLACEHOLDER \(DO NOT REMOVE\) --)/g,
           template: "export * from './{{dashCase name}}';\n$1"
         }
       ];

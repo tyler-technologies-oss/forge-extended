@@ -1,7 +1,7 @@
 {
   "name": "@tylertech/forge-extended-react",
   "version": "0.1.2",
-  "description": "A React adapter for Tyler Forge™ Extended UI components.",
+  "description": "A React adapter for Tyler Forge™ Extended Web Components.",
   "repository": "tyler-technologies-oss/forge-extended",
   "author": "Tyler Technologies, Inc.",
   "license": "Apache-2.0",
@@ -12,16 +12,17 @@
     "dist"
   ],
   "scripts": {
-    "predev": "npm run build",
+    "predev": "pnpm run build",
     "dev": "vite",
     "build:demo": "vite build",
     "serve:demo": "vite preview",
     "clean": "rimraf dist/",
-    "prebuild": "npm run clean",
-    "build": "tsc --project lib/tsconfig-build.json",
+    "prebuild": "pnpm run clean",
+    "build": "pnpm run generate-proxies",
     "lint": "eslint --parser-options tsconfigRootDir:. --ext .ts,.tsx",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "generate-proxies": "node scripts/generate-proxies.mjs"
   },
   "dependencies": {
     "reactify-wc": "^4.0.0",
@@ -44,6 +45,8 @@
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
     "@vitejs/plugin-react": "^4.3.4",
+    "change-case": "^5.4.4",
+    "custom-element-react-wrappers": "^1.7.0",
     "eslint": "catalog:",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",

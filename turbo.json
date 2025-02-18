@@ -1,5 +1,6 @@
 {
   "$schema": "https://turbo.build/schema.json",
+  "ui": "tui",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
@@ -13,6 +14,17 @@
     },
     "dev": {
       "dependsOn": ["^build"],
+      "persistent": true,
+      "cache": false
+    },
+    "@tylertech/forge-extended-angular#dev": {
+      "dependsOn": ["@tylertech/forge-extended#build"],
+      "persistent": true,
+      "interactive": true,
+      "cache": false
+    },
+    "@tylertech/forge-extended-react#dev": {
+      "dependsOn": ["@tylertech/forge-extended#build"],
       "persistent": true,
       "cache": false
     },

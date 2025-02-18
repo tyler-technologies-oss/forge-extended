@@ -1,6 +1,6 @@
 import { resolve, isAbsolute } from 'path';
 import { defineConfig } from 'vite';
-import { sync } from 'glob';
+import { sync as globSync } from 'glob';
 import { readFileSync } from 'fs';
 import dts from 'vite-plugin-dts';
 import { ViteEjsPlugin } from 'vite-plugin-ejs';
@@ -20,11 +20,11 @@ function resolveTsconfigPaths(): Record<string, string> {
 export default defineConfig({
   build: {
     lib: {
-      entry: sync(resolve('src/lib/**/index.ts')),
+      entry: globSync(resolve('src/lib/**/index.ts')),
       formats: ['es']
     },
     outDir: 'dist',
-    minify: true,
+    minify: false,
     rollupOptions: {
       external: id => !(isAbsolute(id) || id.startsWith('.')),
       output: {
