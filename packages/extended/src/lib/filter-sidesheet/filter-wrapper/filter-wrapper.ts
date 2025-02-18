@@ -10,6 +10,6 @@ export class FilterWrapperElement extends LitElement {
   public static override styles = unsafeCSS(styles);
 
   public override render(): TemplateResult {
-    return html` <div>Filter wrapper component</div> `;
+    return html` <div class="filter-wrapper">Facet wrapper component</div> `;
   }
 }

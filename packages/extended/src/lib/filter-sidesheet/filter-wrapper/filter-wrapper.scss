@@ -1,0 +1,13 @@
+//
+// Host
+//
+
+:host {
+  display: block;
+}
+
+.filter-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

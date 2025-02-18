@@ -1,0 +1,43 @@
+@use '@tylertech/forge/sass/core/styles/theme' as theme;
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+
+//
+// Host
+//
+
+:host {
+  display: block;
+}
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-inline: 16px;
+
+  forge-checkbox {
+    width: 100%;
+  }
+
+  forge-checkbox::part(root) {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  forge-checkbox::part(label) {
+    width: 100%;
+  }
+}
+
+.container-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.count {
+  @include forge-typography.style(body1);
+}
