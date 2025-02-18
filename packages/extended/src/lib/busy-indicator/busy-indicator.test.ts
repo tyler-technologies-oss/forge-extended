@@ -38,7 +38,7 @@ describe('Busy Indicator', () => {
     expect(harness.el.mode).to.equal('fullscreen');
     expect(harness.el.label).not.to.be.ok;
     expect(harness.el.description).not.to.be.ok;
-    expect(harness.el.focusMode).to.equal('capture');
+    expect(harness.el.focusMode).to.equal('auto');
   });
 
   it('should define sub-component dependencies', async () => {
@@ -218,19 +218,17 @@ describe('Busy Indicator', () => {
     expect(harness.isOpen).to.be.true;
   });
 
-  it('should capture and reset focused element when focusMode is "capture"', async () => {
+  it('should capture and reset focused element when focusMode is "auto"', async () => {
     const harness = await createFixture();
 
     expect(harness.isOpen).to.be.false;
-    expect(harness.el.focusMode).to.equal('capture');
+    expect(harness.el.focusMode).to.equal('auto');
     expect(document.activeElement).to.equal(document.body);
 
     harness.el.open = true;
     await harness.el.updateComplete;
 
-    // Must wait 2 frames for focus to be captured by the <forge-dialog>
-    await frame();
-    await frame();
+    await harness.focusDelay();
 
     expect(harness.isOpen).to.be.true;
     expect(document.activeElement).to.equal(harness.el);
@@ -303,6 +301,12 @@ class BusyIndicatorHarness {
 
   public exitAnimation(): Promise<void> {
     return task(500);
+  }
+
+  public async focusDelay(): Promise<void> {
+    // Wait for two frames to ensure focus is captured by the <forge-dialog> element
+    await frame();
+    await frame();
   }
 }
 

@@ -31,7 +31,6 @@ export default {
     }
     return true;
   },
-  testsFinishTimeout: 5000,
   testFramework: {
     config: {
       timeout: 5000,
