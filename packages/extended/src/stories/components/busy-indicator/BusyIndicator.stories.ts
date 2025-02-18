@@ -4,6 +4,8 @@ import { createRef, ref } from 'lit/directives/ref.js';
 
 import { BusyIndicatorComponent } from '$lib/busy-indicator';
 import '$lib/busy-indicator';
+import { standaloneStoryParams } from '../../utils';
+import { storyStyles } from '../../decorators';
 
 const component = 'forge-busy-indicator';
 
@@ -23,15 +25,15 @@ const meta = {
       <forge-busy-indicator
         ${ref(busyIndicatorRef)}
         ?open=${args.open}
+        .mode=${args.mode}
         .titleText="${args.titleText}"
         .message=${args.message}
         .cancelable=${args.cancelable}
-        .spinner=${args.spinner}
+        .variant=${args.variant}
+        .determinate=${args.determinate}
         .progress=${args.progress}
-        .progressBar=${args.progressBar}
-        .progressBarDeterminate=${args.progressBarDeterminate}
         .buffer=${args.buffer}
-        .direction=${args.direction}></forge-busy-indicator>
+        .transparent=${args.transparent}></forge-busy-indicator>
     `;
   },
   argTypes: {
@@ -40,22 +42,26 @@ const meta = {
         type: 'boolean'
       }
     },
-    direction: {
+    mode: {
       control: 'select',
-      options: ['row', 'column']
+      options: ['modal', 'inline']
+    },
+    variant: {
+      control: 'select',
+      options: ['spinner', 'progress', 'message-only']
     }
   },
   args: {
     open: false,
+    mode: 'modal',
     titleText: '',
     message: 'Please wait while we load your data...',
     cancelable: false,
-    spinner: true,
-    progressBar: false,
-    progress: 0,
-    buffer: 0,
-    direction: 'column',
-    progressBarDeterminate: false
+    variant: 'spinner',
+    progress: 0.5,
+    buffer: 1,
+    determinate: false,
+    transparent: false
   }
 } satisfies Meta;
 
@@ -64,3 +70,28 @@ export default meta;
 type Story = StoryObj;
 
 export const Demo: Story = {};
+
+export const Inline: Story = {
+  ...standaloneStoryParams,
+  decorators: [
+    storyStyles(`
+    .parent {
+      position: relative;
+      height: 300px;
+      border: 1px solid var(--forge-theme-outline);
+      border-radius: var(--forge-shape-large);
+    }
+  `)
+  ],
+  render: () => {
+    return html`
+      <div class="parent">
+        <forge-busy-indicator
+          open
+          mode="inline"
+          title-text="Loading"
+          message="Please wait while we load your data..."></forge-busy-indicator>
+      </div>
+    `;
+  }
+};

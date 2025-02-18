@@ -1,4 +1,8 @@
-<forge-button variant="raised" id="show-button">Show Busy Indicator</forge-button>
-<forge-busy-indicator id="busy-indicator"></forge-busy-indicator>
+<forge-button variant="raised" id="show-fullscreen-button">Show Fullscreen Busy Indicator</forge-button>
+
+<div class="inline-busy-indicator-container">
+  <forge-busy-indicator mode="inline" title-text="Loading" message="This could take a while..." cancelable open></forge-busy-indicator>
+  <forge-button id="show-inline-button">Show Inline Busy Indicator</forge-button>
+</div>
 
 <script type="module" src="./busy-indicator.ts"></script>

@@ -17,7 +17,7 @@ compatibility table below):
 npm install @tylertech/forge @tylertech/forge-extended
 ```
 
-> The core Forge library is a peer dependency of this extended library, and they are very tightly coupled and
+> The core Forge library is a peer dependency of this extended library, they are very tightly coupled and
 > intended to always be used alongside each other.
 
 ### Importing components
@@ -61,26 +61,32 @@ import '@tylertech/forge-extended';
 
 ## Local Development
 
+This repository uses [pnpm](https://pnpm.io/) for package management. You can install it globally like this:
+
+```bash
+npm install -g pnpm
+```
+
 ### Install
 
 ```bash
 npm install
 ```
 
-### Run dev site
+### Run Storybook
 
-This will open the Storybook site that is used for local development.
+This will open the Storybook site that is used for both documentation and local development.
 
 ```bash
-npm start
+pnpm run start
 ```
 
-### Vite Dev
+### Dev Site
 
-You can also run a basic HTML dev site using Vite for simple/quick testing.
+You can also run a basic HTML dev site using Vite for quick prototyping and testing.
 
 ```bash
-npm run dev
+pnpm run dev
 ```
 
 ### Build
@@ -88,7 +94,7 @@ npm run dev
 This runs a local production build of the library.
 
 ```bash
-npm run build
+pnpm run build
 ```
 
 ### Run tests
@@ -96,5 +102,11 @@ npm run build
 Executes the unit test suite.
 
 ```bash
-npm test
+pnpm run test
+```
+
+To run a test for a specific component, you can do so like this:
+
+```bash
+pnpm run test:focus <component name>
 ```

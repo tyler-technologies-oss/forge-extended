@@ -1,6 +1,6 @@
 # Tyler Forge™ Extended
 
-A library of prebuilt components implementing Tyler Forge™ design patterns and recipes.
+A library of prebuilt components implementing Tyler Forge™ design patterns and blocks.
 
 These UI components are typically composed of multiple atomic components from the core `@tylertech/forge`
 library, and are intended to encapsulate a larger pattern and/or design to help developers create user
@@ -30,6 +30,18 @@ import '@tylertech/forge-extended/quantity-field';
 
 > This is a side-effect import, so you don't need to assign it to a variable. It will register the component with the
 > custom element registry and make it available for use in your HTML.
+
+Or you can import the definition functions and call them like so:
+
+```javascript
+import { defineQuantityFieldComponent } from '@tylertech/forge-extended';
+
+defineQuantityFieldComponent();
+```
+
+> **Important:** You should only call the definition functions once in your application, typically in your main entry
+> point file, or if you're in a class-based environment within a static initializer block or the constructor. This
+> ensures that if any tree-shaking is done by a bundler, the components are not removed from the bundle.
 
 You can also reference types from components modules like so:
 

@@ -1,6 +1,7 @@
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/sass/typography' as forge-typography;
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/dialog' as forge-dialog;
 
 //
 // Host
@@ -8,6 +9,7 @@
 
 :host {
   display: contents;
+  border-radius: inherit;
 }
 
 //
@@ -15,16 +17,23 @@
 //
 
 .surface {
-  padding: #{forge-spacing.variable(xxlarge)};
-  box-sizing: border-box;
+  padding: #{forge-spacing.variable(large)};
+  display: grid;
+  gap: #{forge-spacing.variable(large)};
 }
 
-.message-container {
+.layout-container {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: #{forge-spacing.variable(medium)};
-  flex-direction: column;
+  gap: #{forge-spacing.variable(large)};
+
+  .content {
+    display: flex;
+    align-items: center;
+    gap: #{forge-spacing.variable(medium)};
+  }
 }
 
 .message {
@@ -38,30 +47,40 @@
 .title {
   @include forge-typography.style(heading4);
 
-  margin-top: calc(#{forge-spacing.variable(large)} * -1);
-  margin-left: calc(#{forge-spacing.variable(large)} * -1);
-}
-
-.cancel-button {
-  margin-inline-start: #{forge-spacing.variable(medium)};
+  margin: 0;
 }
 
 .progress-container {
   min-width: 244px;
-  margin-block-start: #{forge-spacing.variable(large)};
 }
 
 //
-// Direction - Row
+// Inline Mode
 //
 
-:host([direction='row']) {
-  .message-container {
-    flex-direction: row;
+forge-dialog.inline {
+  border-radius: inherit;
+
+  &::part(root) {
+    position: absolute;
+    overflow: clip;
   }
 
-  .message {
-    text-align: center;
-    margin: 0;
+  &::part(root),
+  &::part(backdrop) {
+    border-radius: inherit;
   }
+}
+
+//
+// Transparent
+//
+
+.transparent {
+  @include forge-dialog.provide-theme(
+    (
+      background: transparent,
+      elevation: none
+    )
+  );
 }

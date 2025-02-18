@@ -1,17 +1,11 @@
-.actions {
-  display: grid;
-  gap: var(--forge-spacing-medium);
-
-  forge-button {
-    width: 256px;
-  }
-}
-
-.inline-container {
+.inline-busy-indicator-container {
   margin-block-start: var(--forge-spacing-large);
   position: relative;
   height: 500px;
   width: 500px;
   border: 1px solid var(--forge-theme-outline);
   border-radius: var(--forge-shape-large);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }

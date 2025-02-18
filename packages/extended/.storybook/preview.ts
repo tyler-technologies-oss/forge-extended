@@ -22,7 +22,20 @@ const preview: Preview = {
         headingSelector: 'h2,h3,h4'
       }
     },
-    darkMode: { light, dark }
+    darkMode: { light, dark },
+    options: {
+      storySort: {
+        order: [
+          'Home',
+          'Getting Started',
+          ['Installation', 'Version Compatibility'],
+          'Frameworks',
+          ['Angular', 'React', 'Vue', 'Svelte'],
+          'Components'
+        ],
+        method: 'alphabetical'
+      }
+    }
   },
   tags: ['autodocs']
 };

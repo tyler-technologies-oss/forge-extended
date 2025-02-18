@@ -1,3 +1,5 @@
+import { customElementSveltePlugin } from 'custom-element-svelte-integration';
+import { customElementVuejsPlugin } from 'custom-element-vuejs-integration';
 import { customJSDocTagsPlugin } from 'cem-plugin-custom-jsdoc-tags';
 import forgeBranchNamePlugin from './plugins/cem/branch-name.mjs';
 import forgeTypePathsPlugin from './plugins/cem/type-paths.mjs';
@@ -8,6 +10,16 @@ export default {
   plugins: [
     forgeBranchNamePlugin(),
     forgeTypePathsPlugin(),
+    customElementSveltePlugin({
+      outdir: 'dist/types/svelte/',
+      fileName: 'forge-extended-svelte.d.ts',
+      globalTypePath: '../index.d.ts'
+    }),
+    customElementVuejsPlugin({
+      outdir: 'dist/types/vue/',
+      fileName: 'forge-extended-vue.d.ts',
+      globalTypePath: '../index.d.ts'
+    }),
     customJSDocTagsPlugin({
       hideLogs: true,
       tags: {

@@ -35,6 +35,32 @@ export class BusyIndicatorComponent {
     return this.nativeElement.open;
   }
 
+  /** Whether the busy indicator is fullscreen or inline. */
+  @Input()
+  public set mode(value: BusyIndicatorComponentCustomElement['mode']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.mode = value;
+    });
+  }
+  public get mode(): BusyIndicatorComponentCustomElement['mode'] {
+    return this.nativeElement.mode;
+  }
+
+  /**
+   * The focus mode for the busy indicator. Determines whether the busy indicator captures focus or not.
+   * - `auto` (default): The busy indicator captures focus and releases it when closed.
+   * - `manual`: The busy indicator does not manage focus.
+   */
+  @Input()
+  public set focusMode(value: BusyIndicatorComponentCustomElement['focusMode']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.focusMode = value;
+    });
+  }
+  public get focusMode(): BusyIndicatorComponentCustomElement['focusMode'] {
+    return this.nativeElement.focusMode;
+  }
+
   /** The title text to display. */
   @Input()
   public set titleText(value: BusyIndicatorComponentCustomElement['titleText']) {
@@ -57,6 +83,28 @@ export class BusyIndicatorComponent {
     return this.nativeElement.message;
   }
 
+  /** The accessible label for dialog. */
+  @Input()
+  public set label(value: BusyIndicatorComponentCustomElement['label']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.label = value;
+    });
+  }
+  public get label(): BusyIndicatorComponentCustomElement['label'] {
+    return this.nativeElement.label;
+  }
+
+  /** The accessible description for dialog. */
+  @Input()
+  public set description(value: BusyIndicatorComponentCustomElement['description']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.description = value;
+    });
+  }
+  public get description(): BusyIndicatorComponentCustomElement['description'] {
+    return this.nativeElement.description;
+  }
+
   /** Indicates whether the cancel button is displayed. */
   @Input({ transform: booleanAttribute })
   public set cancelable(value: BusyIndicatorComponentCustomElement['cancelable']) {
@@ -68,37 +116,31 @@ export class BusyIndicatorComponent {
     return this.nativeElement.cancelable;
   }
 
-  /** Indicates whether the spinner is displayed. */
-  @Input({ transform: booleanAttribute })
-  public set spinner(value: BusyIndicatorComponentCustomElement['spinner']) {
+  /**
+   * The variant of the busy indicator.
+   * - `spinner` (default): displays a spinner.
+   * - `progress`: displays a progress bar.
+   * - `message-only`: No progress indicator is displayed.
+   */
+  @Input()
+  public set variant(value: BusyIndicatorComponentCustomElement['variant']) {
     this.zone.runOutsideAngular(() => {
-      this.nativeElement.spinner = value;
+      this.nativeElement.variant = value;
     });
   }
-  public get spinner(): BusyIndicatorComponentCustomElement['spinner'] {
-    return this.nativeElement.spinner;
+  public get variant(): BusyIndicatorComponentCustomElement['variant'] {
+    return this.nativeElement.variant;
   }
 
-  /** Indicates whether the progress bar is displayed. */
+  /** Indicates whether the loading indicator is determinate. */
   @Input({ transform: booleanAttribute })
-  public set progressBar(value: BusyIndicatorComponentCustomElement['progressBar']) {
+  public set determinate(value: BusyIndicatorComponentCustomElement['determinate']) {
     this.zone.runOutsideAngular(() => {
-      this.nativeElement.progressBar = value;
+      this.nativeElement.determinate = value;
     });
   }
-  public get progressBar(): BusyIndicatorComponentCustomElement['progressBar'] {
-    return this.nativeElement.progressBar;
-  }
-
-  /** Indicates whether the progress bar is determinate. */
-  @Input({ transform: booleanAttribute })
-  public set progressBarDeterminate(value: BusyIndicatorComponentCustomElement['progressBarDeterminate']) {
-    this.zone.runOutsideAngular(() => {
-      this.nativeElement.progressBarDeterminate = value;
-    });
-  }
-  public get progressBarDeterminate(): BusyIndicatorComponentCustomElement['progressBarDeterminate'] {
-    return this.nativeElement.progressBarDeterminate;
+  public get determinate(): BusyIndicatorComponentCustomElement['determinate'] {
+    return this.nativeElement.determinate;
   }
 
   /** The progress amount for the progress bar. */
@@ -123,15 +165,15 @@ export class BusyIndicatorComponent {
     return this.nativeElement.buffer;
   }
 
-  /** The layout direction of the busy indicator. */
-  @Input()
-  public set direction(value: BusyIndicatorComponentCustomElement['direction']) {
+  /** Indicates whether the busy indicator surface should be transparent (no background or elevation). */
+  @Input({ transform: booleanAttribute })
+  public set transparent(value: BusyIndicatorComponentCustomElement['transparent']) {
     this.zone.runOutsideAngular(() => {
-      this.nativeElement.direction = value;
+      this.nativeElement.transparent = value;
     });
   }
-  public get direction(): BusyIndicatorComponentCustomElement['direction'] {
-    return this.nativeElement.direction;
+  public get transparent(): BusyIndicatorComponentCustomElement['transparent'] {
+    return this.nativeElement.transparent;
   }
 
   constructor(

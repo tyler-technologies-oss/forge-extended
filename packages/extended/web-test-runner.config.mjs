@@ -15,6 +15,11 @@ export const FILTERED_LOGS = ['Lit is in dev mode'];
  * @type {import('@web/test-runner').TestRunnerConfig}
  */
 export default {
+  // Workaround until https://github.com/modernweb-dev/web/issues/2772 is resolved
+  // Remove the @ungap/structured-clone dependency once the issue is resolved
+  testRunnerHtml(testFramework) {
+    return `<html><body><script type="module">import structuredClone from '@ungap/structured-clone';window.structuredClone = (value) => structuredClone(value, { lossy: true });</script><script type="module" src="${testFramework}"></script></body></html>`;
+  },
   concurrentBrowsers: 3,
   port: 8000,
   nodeResolve: true,
@@ -26,7 +31,7 @@ export default {
     }
     return true;
   },
-  testsFinishTimeout: 60000,
+  testsFinishTimeout: 5000,
   testFramework: {
     config: {
       timeout: 5000,
