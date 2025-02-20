@@ -187,8 +187,8 @@ export class BusyIndicatorComponent extends LitElement {
     super.disconnectedCallback();
   }
 
-  public override willUpdate(_changedProperties: PropertyValues<this>): void {
-    if (_changedProperties.has('open')) {
+  public override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('open')) {
       this._tryManageFocus();
     }
   }
