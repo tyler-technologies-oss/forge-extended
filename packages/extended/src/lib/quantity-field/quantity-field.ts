@@ -105,7 +105,7 @@ export class QuantityFieldComponent extends LitElement {
               </slot>
             </forge-icon-button>
           </slot>
-          <forge-text-field .invalid=${this.invalid}>
+          <forge-text-field .invalid=${this.invalid} .required=${this.required}>
             <slot></slot>
           </forge-text-field>
           <slot name="increment-button" @click=${this._onIncrement}>
