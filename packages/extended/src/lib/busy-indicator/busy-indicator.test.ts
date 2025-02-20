@@ -38,7 +38,6 @@ describe('Busy Indicator', () => {
     expect(harness.el.mode).to.equal('fullscreen');
     expect(harness.el.label).not.to.be.ok;
     expect(harness.el.description).not.to.be.ok;
-    expect(harness.el.focusMode).to.equal('auto');
   });
 
   it('should define sub-component dependencies', async () => {
@@ -218,11 +217,11 @@ describe('Busy Indicator', () => {
     expect(harness.isOpen).to.be.true;
   });
 
-  it('should capture and reset focused element when focusMode is "auto"', async () => {
+  it('should capture and reset focused element when fullscreen', async () => {
     const harness = await createFixture();
 
     expect(harness.isOpen).to.be.false;
-    expect(harness.el.focusMode).to.equal('auto');
+    expect(harness.el.mode).to.equal('fullscreen');
     expect(document.activeElement).to.equal(document.body);
 
     harness.el.open = true;
@@ -236,6 +235,28 @@ describe('Busy Indicator', () => {
     harness.el.open = false;
     await harness.el.updateComplete;
     await harness.exitAnimation();
+
+    expect(harness.isOpen).to.be.false;
+    expect(document.activeElement).to.equal(document.body);
+  });
+
+  it('should not capture and reset focused element when inline', async () => {
+    const harness = await createFixture({ mode: 'inline' });
+
+    expect(harness.isOpen).to.be.false;
+    expect(harness.el.mode).to.equal('inline');
+    expect(document.activeElement).to.equal(document.body);
+
+    harness.el.open = true;
+    await harness.el.updateComplete;
+
+    await harness.focusDelay();
+
+    expect(harness.isOpen).to.be.true;
+    expect(document.activeElement).to.equal(document.body);
+
+    harness.el.open = false;
+    await harness.el.updateComplete;
 
     expect(harness.isOpen).to.be.false;
     expect(document.activeElement).to.equal(document.body);
