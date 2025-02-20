@@ -4,7 +4,7 @@ import { html } from 'lit';
 
 import '$lib/quantity-field';
 
-const component = 'forge-quantity-field';
+const component = 'forge-ext-quantity-field';
 
 const changeAction = action('change');
 const inputAction = action('input');
@@ -14,7 +14,7 @@ const meta = {
   component,
   render: args => {
     return html`
-      <forge-quantity-field .invalid=${args.invalid} .required=${args.required}>
+      <forge-ext-quantity-field .invalid=${args.invalid} .required=${args.required}>
         <label slot="label" for="quantity">Quantity</label>
         <input
           id="quantity"
@@ -25,7 +25,7 @@ const meta = {
           @change=${changeAction}
           @input=${inputAction} />
         <span slot="support-text">Enter a quantity</span>
-      </forge-quantity-field>
+      </forge-ext-quantity-field>
     `;
   },
   argTypes: {

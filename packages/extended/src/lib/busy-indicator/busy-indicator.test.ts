@@ -175,7 +175,7 @@ describe('Busy Indicator', () => {
     expect(harness.isOpen).to.be.true;
 
     const spy = sinon.spy();
-    harness.el.addEventListener('forge-busy-indicator-cancel', spy);
+    harness.el.addEventListener('forge-ext-busy-indicator-cancel', spy);
 
     harness.cancelButtonElement.click();
 
@@ -189,7 +189,7 @@ describe('Busy Indicator', () => {
     expect(harness.isOpen).to.be.true;
 
     const spy = sinon.spy(evt => evt.preventDefault());
-    harness.el.addEventListener('forge-busy-indicator-cancel', spy);
+    harness.el.addEventListener('forge-ext-busy-indicator-cancel', spy);
 
     harness.cancelButtonElement.click();
 
@@ -355,7 +355,7 @@ async function createFixture({
   description
 }: BusyIndicatorFixtureConfig = {}): Promise<BusyIndicatorHarness> {
   const el = await fixture<BusyIndicatorComponent>(html`
-    <forge-busy-indicator
+    <forge-ext-busy-indicator
       label=${ifDefined(label)}
       description=${ifDefined(description)}
       title-text=${ifDefined(titleText)}
@@ -365,7 +365,7 @@ async function createFixture({
       ?determinate=${determinate}
       .open=${open}
       mode=${ifDefined(mode)}>
-    </forge-busy-indicator>
+    </forge-ext-busy-indicator>
   `);
 
   return new BusyIndicatorHarness(el);

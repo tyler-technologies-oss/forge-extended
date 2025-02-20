@@ -10,7 +10,7 @@ import { BusyIndicatorComponent } from './busy-indicator.component';
   declarations: [BusyIndicatorComponent],
   exports: [BusyIndicatorComponent]
 })
-export class ForgeExtendedBusyIndicatorProxyModule {
+export class ForgeExtBusyIndicatorProxyModule {
   constructor() {
     defineBusyIndicatorComponent();
   }

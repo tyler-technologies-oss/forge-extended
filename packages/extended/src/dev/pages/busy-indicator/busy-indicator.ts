@@ -7,7 +7,7 @@ let busyIndicator: BusyIndicatorComponent | undefined;
 
 const showFullscreenButton = document.getElementById('show-fullscreen-button') as HTMLButtonElement;
 showFullscreenButton.addEventListener('click', () => {
-  busyIndicator = document.createElement('forge-busy-indicator');
+  busyIndicator = document.createElement('forge-ext-busy-indicator');
   busyIndicator.open = true;
   document.body.appendChild(busyIndicator);
 
@@ -21,7 +21,7 @@ showFullscreenButton.addEventListener('click', () => {
 });
 
 const showInlineButton = document.getElementById('show-inline-button') as HTMLButtonElement;
-const inlineBusyIndicator = document.querySelector('forge-busy-indicator[mode=inline]') as BusyIndicatorComponent;
+const inlineBusyIndicator = document.querySelector('forge-ext-busy-indicator[mode=inline]') as BusyIndicatorComponent;
 showInlineButton.addEventListener('click', () => {
   inlineBusyIndicator.open = true;
 });

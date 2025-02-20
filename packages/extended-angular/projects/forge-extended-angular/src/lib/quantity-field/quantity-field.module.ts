@@ -10,7 +10,7 @@ import { QuantityFieldComponent } from './quantity-field.component';
   declarations: [QuantityFieldComponent],
   exports: [QuantityFieldComponent]
 })
-export class ForgeExtendedQuantityFieldModule {
+export class ForgeExtQuantityFieldModule {
   constructor() {
     defineQuantityFieldComponent();
   }

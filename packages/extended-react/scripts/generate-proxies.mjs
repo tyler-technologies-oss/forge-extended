@@ -14,5 +14,5 @@ manifest.modules.forEach(module => {
 
 generateReactWrappers(manifest, {
   outdir: 'dist/',
-  modulePath: (_className, tagName) => `@tylertech/forge-extended/${tagName.replace(/forge-/g, '')}`
+  modulePath: (_className, tagName) => `@tylertech/forge-extended/${tagName.replace(/forge-ext-/g, '')}`
 });

@@ -15,12 +15,12 @@ import {
 
 /**  */
 @Component({
-  selector: 'forge-quantity-field',
+  selector: 'forge-ext-quantity-field',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>'
 })
 export class QuantityFieldComponent {
-  /** The forge-quantity-field element. */
+  /** The forge-ext-quantity-field element. */
   public readonly nativeElement = this.elementRef.nativeElement;
 
   /** Indicates whether the field is invalid. */

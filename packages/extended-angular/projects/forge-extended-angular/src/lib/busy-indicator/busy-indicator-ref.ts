@@ -13,7 +13,7 @@ export class BusyIndicatorRef {
   constructor(instance: BusyIndicatorComponent) {
     this._elementRef = new ElementRef(instance);
     if (instance.cancelable) {
-      instance.addEventListener('forge-busy-indicator-cancel', evt => this._afterCancel.next(evt));
+      instance.addEventListener('forge-ext-busy-indicator-cancel', evt => this._afterCancel.next(evt));
     }
   }
 

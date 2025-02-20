@@ -1,11 +1,11 @@
 import { ForgeButton } from '@tylertech/forge-react';
-import { ForgeBusyIndicator } from '@tylertech/forge-extended-react';
+import { ForgeExtBusyIndicator } from '@tylertech/forge-extended-react';
 import { useState } from 'react';
 
 export function BusyIndicatorDemo(): JSX.Element {
   const [open, setOpen] = useState(false);
 
-  function openBusyIndicator() {
+  function openBusyIndicator(): void {
     setOpen(true);
     setTimeout(() => setOpen(false), 5000);
   }
@@ -17,7 +17,7 @@ export function BusyIndicatorDemo(): JSX.Element {
         <ForgeButton variant="raised" onclick={openBusyIndicator}>
           Show Busy Indicator
         </ForgeButton>
-        <ForgeBusyIndicator open={open} />
+        <ForgeExtBusyIndicator open={open} />
       </div>
     </>
   );

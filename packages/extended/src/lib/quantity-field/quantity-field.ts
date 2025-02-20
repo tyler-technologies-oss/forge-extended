@@ -12,14 +12,14 @@ import styles from './quantity-field.scss?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'forge-quantity-field': QuantityFieldComponent;
+    'forge-ext-quantity-field': QuantityFieldComponent;
   }
 }
 
-export const QuantityFieldComponentTagName: keyof HTMLElementTagNameMap = 'forge-quantity-field';
+export const QuantityFieldComponentTagName: keyof HTMLElementTagNameMap = 'forge-ext-quantity-field';
 
 /**
- * @tag forge-quantity-field
+ * @tag forge-ext-quantity-field
  *
  * @slot - Reserved for the `<input>` element.
  * @slot label - The label for the field.

@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 
-import { ForgeExtendedBusyIndicatorModule } from './busy-indicator/busy-indicator.module';
-import { ForgeExtendedQuantityFieldModule } from './quantity-field/quantity-field.module';
+import { ForgeExtBusyIndicatorModule } from './busy-indicator/busy-indicator.module';
+import { ForgeExtQuantityFieldModule } from './quantity-field/quantity-field.module';
 
 @NgModule({
-  exports: [ForgeExtendedBusyIndicatorModule, ForgeExtendedQuantityFieldModule]
+  exports: [ForgeExtQuantityFieldModule, ForgeExtBusyIndicatorModule]
 })
 export class ForgeExtendedModule {}

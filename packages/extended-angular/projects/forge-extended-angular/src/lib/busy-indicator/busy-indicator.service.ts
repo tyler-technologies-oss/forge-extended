@@ -3,7 +3,7 @@ import { BusyIndicatorComponent } from '@tylertech/forge-extended';
 import { BusyIndicatorRef } from './busy-indicator-ref';
 
 /**
- * Provides facilities for showing a `<forge-busy-indicator>` element.
+ * Provides facilities for showing a `<forge-ext-busy-indicator>` element.
  */
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,7 @@ export class BusyIndicatorService {
    * @param [parent] The parent element to attach this busy indicator instance to.
    */
   public show(config: Partial<BusyIndicatorComponent>, parent = document.body): BusyIndicatorRef {
-    const element = document.createElement('forge-busy-indicator');
+    const element = document.createElement('forge-ext-busy-indicator');
     Object.assign(element, config);
     parent.appendChild(element);
     element.open = true;

@@ -16,12 +16,12 @@ import {
 
 /**  */
 @Component({
-  selector: 'forge-busy-indicator',
+  selector: 'forge-ext-busy-indicator',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>'
 })
 export class BusyIndicatorComponent {
-  /** The forge-busy-indicator element. */
+  /** The forge-ext-busy-indicator element. */
   public readonly nativeElement = this.elementRef.nativeElement;
 
   /** Indicates whether the busy indicator is open. */
@@ -44,21 +44,6 @@ export class BusyIndicatorComponent {
   }
   public get mode(): BusyIndicatorComponentCustomElement['mode'] {
     return this.nativeElement.mode;
-  }
-
-  /**
-   * The focus mode for the busy indicator. Determines whether the busy indicator captures focus or not.
-   * - `auto` (default): The busy indicator captures focus and releases it when closed.
-   * - `manual`: The busy indicator does not manage focus.
-   */
-  @Input()
-  public set focusMode(value: BusyIndicatorComponentCustomElement['focusMode']) {
-    this.zone.runOutsideAngular(() => {
-      this.nativeElement.focusMode = value;
-    });
-  }
-  public get focusMode(): BusyIndicatorComponentCustomElement['focusMode'] {
-    return this.nativeElement.focusMode;
   }
 
   /** The title text to display. */

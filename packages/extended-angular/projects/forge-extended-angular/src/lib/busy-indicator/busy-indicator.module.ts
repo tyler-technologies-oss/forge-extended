@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { ForgeExtendedBusyIndicatorProxyModule } from './busy-indicator-proxy.module';
+import { ForgeExtBusyIndicatorProxyModule } from './busy-indicator-proxy.module';
 import { BusyIndicatorService } from './busy-indicator.service';
 
 @NgModule({
   providers: [BusyIndicatorService],
-  imports: [ForgeExtendedBusyIndicatorProxyModule],
-  exports: [ForgeExtendedBusyIndicatorProxyModule]
+  imports: [ForgeExtBusyIndicatorProxyModule],
+  exports: [ForgeExtBusyIndicatorProxyModule]
 })
-export class ForgeExtendedBusyIndicatorModule {}
+export class ForgeExtBusyIndicatorModule {}

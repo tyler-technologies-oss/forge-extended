@@ -13,21 +13,21 @@ import styles from './busy-indicator.scss?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'forge-busy-indicator': BusyIndicatorComponent;
+    'forge-ext-busy-indicator': BusyIndicatorComponent;
   }
 
   interface HTMLElementEventMap {
-    'forge-busy-indicator-cancel': CustomEvent<void>;
+    'forge-ext-busy-indicator-cancel': CustomEvent<void>;
   }
 }
 
 export type BusyIndicatorMode = 'fullscreen' | 'inline';
 export type BusyIndicatorVariant = 'spinner' | 'progress' | 'message-only';
 export type BusyIndicatorFocusMode = 'auto' | 'manual';
-export const BusyIndicatorComponentTagName: keyof HTMLElementTagNameMap = 'forge-busy-indicator';
+export const BusyIndicatorComponentTagName: keyof HTMLElementTagNameMap = 'forge-ext-busy-indicator';
 
 /**
- * @tag forge-busy-indicator
+ * @tag forge-ext-busy-indicator
  *
  * @slot title - The title text to display.
  * @slot message - The message to display.
@@ -215,7 +215,7 @@ export class BusyIndicatorComponent extends LitElement {
   }
 
   private _onCancel(): void {
-    const event = new CustomEvent('forge-busy-indicator-cancel', { bubbles: true, cancelable: true });
+    const event = new CustomEvent('forge-ext-busy-indicator-cancel', { bubbles: true, cancelable: true });
     this.dispatchEvent(event);
     if (!event.defaultPrevented) {
       this.open = false;

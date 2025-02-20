@@ -3,7 +3,7 @@
   "importPath": "@tylertech/forge-extended",
   "exclude": "",
   "outDir": "projects/forge-extended-angular/src/lib",
-  "outDirExcludePrefix": "forge-",
-  "modulePrefix": "ForgeExtended",
+  "outDirExcludePrefix": "forge-ext-",
+  "modulePrefix": "ForgeExt",
   "useDefineFunction": true
 }

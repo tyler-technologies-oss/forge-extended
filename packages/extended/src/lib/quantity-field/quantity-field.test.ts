@@ -186,7 +186,7 @@ async function createFixture({
   incrementLabel
 }: QuantityFieldFixtureConfig = {}): Promise<QuantityFieldHarness> {
   const el = await fixture<QuantityFieldComponent>(html`
-    <forge-quantity-field
+    <forge-ext-quantity-field
       ?required=${required}
       ?invalid=${invalid}
       decrement-label=${ifDefined(decrementLabel)}
@@ -198,7 +198,7 @@ async function createFixture({
         step=${ifDefined(step)}
         min=${ifDefined(min)}
         max=${ifDefined(max)} />
-    </forge-quantity-field>
+    </forge-ext-quantity-field>
   `);
   return new QuantityFieldHarness(el);
 }

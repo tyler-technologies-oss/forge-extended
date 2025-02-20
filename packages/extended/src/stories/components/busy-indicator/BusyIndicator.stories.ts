@@ -7,7 +7,7 @@ import '$lib/busy-indicator';
 import { standaloneStoryParams } from '../../utils';
 import { storyStyles } from '../../decorators';
 
-const component = 'forge-busy-indicator';
+const component = 'forge-ext-busy-indicator';
 
 const meta = {
   title: 'Components/Busy Indicator',
@@ -22,7 +22,7 @@ const meta = {
 
     return html`
       <forge-button variant="raised" @click=${handleClick}>Show Busy Indicator</forge-button>
-      <forge-busy-indicator
+      <forge-ext-busy-indicator
         ${ref(busyIndicatorRef)}
         ?open=${args.open}
         .mode=${args.mode}
@@ -33,7 +33,7 @@ const meta = {
         .determinate=${args.determinate}
         .progress=${args.progress}
         .buffer=${args.buffer}
-        .transparent=${args.transparent}></forge-busy-indicator>
+        .transparent=${args.transparent}></forge-ext-busy-indicator>
     `;
   },
   argTypes: {
@@ -86,11 +86,11 @@ export const Inline: Story = {
   render: () => {
     return html`
       <div class="parent">
-        <forge-busy-indicator
+        <forge-ext-busy-indicator
           open
           mode="inline"
           title-text="Loading"
-          message="Please wait while we load your data..."></forge-busy-indicator>
+          message="Please wait while we load your data..."></forge-ext-busy-indicator>
       </div>
     `;
   }
