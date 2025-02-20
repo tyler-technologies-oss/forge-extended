@@ -24,15 +24,14 @@
 
 .layout-container {
   display: flex;
-  flex-direction: row;
   align-items: center;
-  justify-content: center;
   gap: #{forge-spacing.variable(large)};
 
   .content {
     display: flex;
     align-items: center;
     gap: #{forge-spacing.variable(medium)};
+    width: 100%;
   }
 }
 

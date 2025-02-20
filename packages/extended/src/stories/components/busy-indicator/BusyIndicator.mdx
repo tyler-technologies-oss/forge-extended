@@ -36,8 +36,9 @@ of the application.
 
 <Canvas of={BusyIndicatorStories.Inline} />
 
-Inline busy indicators are displayed in the normal flow of the document, use absolute positioning, and will **not** prevent the user from interacting with other parts
-of the page.
+Inline busy indicators are displayed in the normal flow of the document, use absolute positioning, and will **not** prevent the user from interacting with the element
+obscured by the busy indicator overlay, or other parts of the page. Make sure to disable user interaction with the obscured element(s) if necessary while the busy
+indicator is visible.
 
 > **Note:** When using the inline mode, make sure to provide a `position: relative` style to the parent element of the busy indicator to ensure that it is
 > positioned correctly and constrained within the parent element bounds.
