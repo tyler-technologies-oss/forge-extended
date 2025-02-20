@@ -5,6 +5,7 @@ catalog:
   '@esm-bundle/chai': 4.3.4-fix.0
   '@open-wc/testing': 4.0.0
   '@storybook/addon-a11y': 8.5.4
+  '@storybook/addon-actions': 8.5.4
   '@storybook/addon-essentials': 8.5.4
   '@storybook/addon-links': 8.5.4
   '@storybook/addon-measure': 8.5.4

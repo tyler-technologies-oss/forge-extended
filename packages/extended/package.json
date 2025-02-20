@@ -82,6 +82,7 @@
     "@open-wc/testing": "catalog:",
     "@repo/prettier-config": "workspace:",
     "@storybook/addon-a11y": "catalog:",
+    "@storybook/addon-actions": "catalog:",
     "@storybook/addon-essentials": "catalog:",
     "@storybook/addon-links": "catalog:",
     "@storybook/addon-measure": "catalog:",

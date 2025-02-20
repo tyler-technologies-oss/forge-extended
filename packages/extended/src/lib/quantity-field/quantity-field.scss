@@ -1,4 +1,4 @@
-@use '@tylertech/forge/sass/core/styles/theme' as theme;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/sass/typography' as forge-typography;
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/icon-button' as forge-icon-button;
@@ -29,10 +29,6 @@
   align-items: center;
 }
 
-forge-icon-button {
-  color: #{theme.variable(text-medium)};
-}
-
 //
 // Slotted
 //
@@ -42,21 +38,21 @@ forge-icon-button {
 }
 
 ::slotted([slot='label']) {
-  color: #{theme.variable(text-high)};
+  color: #{forge-theme.variable(text-high)};
 }
 
 ::slotted([slot='support-text']) {
-  color: #{theme.variable(text-medium)};
+  color: #{forge-theme.variable(text-medium)};
 }
 
 //
 // Required
 //
 
-:host([required]) {
+:host(:state(required)) {
   ::slotted([slot='label'])::before {
     content: '*';
-    color: #{theme.variable(error)};
+    color: #{forge-theme.variable(error)};
     margin-inline-end: #{forge-spacing.variable(xxsmall)};
   }
 }
@@ -65,17 +61,17 @@ forge-icon-button {
 // Invalid
 //
 
-:host([invalid]) {
-  ::slotted([slot='label'], [slot='support-text']) {
-    color: #{theme.variable(error)};
+:host(:state(invalid)) {
+  ::slotted(:where([slot='label'], [slot='support-text'])) {
+    color: #{forge-theme.variable(error)};
   }
 
   forge-icon-button {
-    color: #{theme.variable(error)};
+    color: #{forge-theme.variable(error)};
 
     @include forge-icon-button.provide-theme(
       (
-        focus-indicator-color: theme.variable(error)
+        focus-indicator-color: forge-theme.variable(error)
       )
     );
   }
