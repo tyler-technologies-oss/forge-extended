@@ -25,7 +25,7 @@ declare global {
     'forge-confirmation-dialog-action': CustomEvent<void>;
   }
 
-  export type ConformationDialogThems = 'success' | 'error' | 'warning' | 'info' | 'info-secondary';
+  export type ConformationDialogThemes = 'success' | 'error' | 'warning' | 'info' | 'info-secondary';
 
   interface IConfirmationDialogAction extends CustomEvent {
     detail: {
@@ -36,7 +36,7 @@ declare global {
 
 export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = 'forge-confirmation-dialog';
 
-const ICONS: Record<ConformationDialogThems, string> = {
+const ICONS: Record<ConformationDialogThemes, string> = {
   info: 'info_outline',
   'info-secondary': 'info_outline',
   success: 'check_circle_outline',
@@ -76,9 +76,21 @@ export class ConfirmationDialogComponent extends LitElement {
   @property({ type: Boolean, attribute: 'is-busy' })
   public isBusy = false;
 
+  /**
+   * Current theme of the dialog
+   */
   @property({ type: String, attribute: 'theme' })
-  public theme: ConformationDialogThems = 'info';
+  public theme: ConformationDialogThemes = 'info';
 
+  /**
+   * Aria label of the busy indicator when loading
+   */
+  @property({ type: String, attribute: 'aria-label-loading' })
+  public ariaLabelLoading = 'Loading';
+
+  /**
+   * Internal state to show/hide secondary button
+   */
   @state()
   private _showSecondaryButton = true;
 
@@ -99,12 +111,12 @@ export class ConfirmationDialogComponent extends LitElement {
 
   private get _busyIndicator(): TemplateResult | typeof nothing {
     return this.isBusy
-      ? html`<forge-circular-progress slot="end" aria-label="Loading"> </forge-circular-progress>`
+      ? html`<forge-circular-progress slot="end" aria-label=${this.ariaLabelLoading}> </forge-circular-progress>`
       : nothing;
   }
 
   private get _secondaryButtonSlot(): TemplateResult | typeof nothing {
-    return html`<slot
+    return html` <slot
       name="secondary-button-text"
       id="secondary-button-slot"
       @slotchange=${this._handleSlotChange}></slot>`;
