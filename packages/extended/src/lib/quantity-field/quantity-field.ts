@@ -1,5 +1,5 @@
-import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { LitElement, PropertyValues, TemplateResult, html, unsafeCSS } from 'lit';
+import { customElement, property, queryAssignedElements } from 'lit/decorators.js';
 import {
   defineTextFieldComponent,
   defineIconButtonComponent,
@@ -24,7 +24,9 @@ export const QuantityFieldComponentTagName: keyof HTMLElementTagNameMap = 'forge
  * @slot - Reserved for the `<input>` element.
  * @slot label - The label for the field.
  * @slot decrement-button - The decrement button.
+ * @slot decrement-icon - The icon for the decrement button.
  * @slot increment-button - The increment button.
+ * @slot increment-icon - The icon for the increment button.
  * @slot support-text - The support text for the field.
  */
 @customElement(QuantityFieldComponentTagName)
@@ -63,6 +65,34 @@ export class QuantityFieldComponent extends LitElement {
   @property({ attribute: 'increment-label' })
   public incrementLabel = 'Increment';
 
+  @queryAssignedElements()
+  private _defaultSlotElements!: Array<HTMLElement>;
+
+  readonly #internals: ElementInternals;
+
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+  }
+
+  public override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('required')) {
+      if (this.required) {
+        this.#internals.states.add('required');
+      } else {
+        this.#internals.states.delete('required');
+      }
+    }
+
+    if (changedProperties.has('invalid')) {
+      if (this.invalid) {
+        this.#internals.states.add('invalid');
+      } else {
+        this.#internals.states.delete('invalid');
+      }
+    }
+  }
+
   public override render(): TemplateResult {
     return html`
       <div class="container">
@@ -70,7 +100,9 @@ export class QuantityFieldComponent extends LitElement {
         <div class="inner">
           <slot name="decrement-button" @click=${this._onDecrement}>
             <forge-icon-button shape="squared" aria-label=${this.decrementLabel}>
-              <forge-icon name="minus"></forge-icon>
+              <slot name="decrement-icon">
+                <forge-icon name="minus"></forge-icon>
+              </slot>
             </forge-icon-button>
           </slot>
           <forge-text-field .invalid=${this.invalid} .required=${this.required}>
@@ -78,7 +110,9 @@ export class QuantityFieldComponent extends LitElement {
           </forge-text-field>
           <slot name="increment-button" @click=${this._onIncrement}>
             <forge-icon-button shape="squared" aria-label=${this.incrementLabel}>
-              <forge-icon name="plus"></forge-icon>
+              <slot name="increment-icon">
+                <forge-icon name="plus"></forge-icon>
+              </slot>
             </forge-icon-button>
           </slot>
         </div>
@@ -88,20 +122,20 @@ export class QuantityFieldComponent extends LitElement {
   }
 
   private _tryGetInput(): HTMLInputElement {
-    return this.querySelector('input') as HTMLInputElement;
+    return this._defaultSlotElements.find(el => el.tagName === 'INPUT') as HTMLInputElement;
   }
 
   private _onDecrement(): void {
     const input = this._tryGetInput();
     input?.stepDown();
-    input?.dispatchEvent(new Event('input', { bubbles: true }));
-    input?.dispatchEvent(new Event('change', { bubbles: true }));
+    input?.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    input?.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   }
 
   private _onIncrement(): void {
     const input = this._tryGetInput();
     input?.stepUp();
-    input?.dispatchEvent(new Event('input', { bubbles: true }));
-    input?.dispatchEvent(new Event('change', { bubbles: true }));
+    input?.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
+    input?.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   }
 }

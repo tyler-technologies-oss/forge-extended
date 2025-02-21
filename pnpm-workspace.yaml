@@ -5,6 +5,7 @@ catalog:
   '@esm-bundle/chai': 4.3.4-fix.0
   '@open-wc/testing': 4.0.0
   '@storybook/addon-a11y': 8.5.4
+  '@storybook/addon-actions': 8.5.4
   '@storybook/addon-essentials': 8.5.4
   '@storybook/addon-links': 8.5.4
   '@storybook/addon-measure': 8.5.4
@@ -17,13 +18,14 @@ catalog:
   '@storybook/web-components': 8.5.4
   '@storybook/web-components-vite': 8.5.4
   '@tylertech-eslint/eslint-plugin': 2.1.0
-  '@tylertech/forge': 3.6.2
+  '@tylertech/forge': 3.6.3
   '@tylertech/forge-core': 3.1.0
   '@tylertech/stylelint-rules': 5.1.1
   '@tylertech/tyler-icons': 1.18.1
   '@types/mocha': 10.0.10
   '@types/node': 22.13.1
   '@types/sinon': 17.0.3
+  '@typescript-eslint/eslint-plugin': 7.18.0
   '@web/dev-server-esbuild': 1.0.3
   '@web/test-runner': 0.19.0
   '@web/test-runner-commands': 0.9.0

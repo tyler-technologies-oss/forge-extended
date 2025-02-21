@@ -1,12 +1,13 @@
-import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { classMap } from 'lit/directives/class-map.js';
 import {
   defineButtonComponent,
   defineCircularProgressComponent,
   defineDialogComponent,
   defineLinearProgressComponent
 } from '@tylertech/forge';
+import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { classMap } from 'lit/directives/class-map.js';
+import { when } from 'lit/directives/when.js';
 
 import styles from './busy-indicator.scss?inline';
 
@@ -54,15 +55,6 @@ export class BusyIndicatorComponent extends LitElement {
    */
   @property({ type: String })
   public mode: BusyIndicatorMode = 'fullscreen';
-
-  /**
-   * The focus mode for the busy indicator. Determines whether the busy indicator captures focus or not.
-   * - `auto` (default): The busy indicator captures focus and releases it when closed.
-   * - `manual`: The busy indicator does not manage focus.
-   * @default 'auto'
-   */
-  @property({ type: String, attribute: 'focus-mode' })
-  public focusMode: BusyIndicatorFocusMode = 'auto';
 
   /**
    * The title text to display.
@@ -128,53 +120,64 @@ export class BusyIndicatorComponent extends LitElement {
   @property({ type: Boolean })
   public transparent = false;
 
+  /** Holds the previously focused element before the busy indicator was opened. */
   #previousActiveElement: HTMLElement | null = null;
 
   private get _titleTemplate(): TemplateResult | typeof nothing {
-    return this.titleText
-      ? html`<h1 id="title" class="title"><slot name="title">${this.titleText}</slot></h1>`
-      : nothing;
+    return when(
+      this.titleText,
+      () => html`<h1 id="title" class="title"><slot name="title">${this.titleText}</slot></h1>`
+    );
   }
 
   private get _messageTemplate(): TemplateResult | typeof nothing {
-    return !!this.message?.trim()
-      ? html`<p id="message" class="message"><slot name="message">${this.message}</slot></p>`
-      : nothing;
+    return when(
+      this.message?.trim(),
+      () => html`<p id="message" class="message"><slot name="message">${this.message}</slot></p>`
+    );
   }
 
   private get _spinnerTemplate(): TemplateResult | typeof nothing {
-    return this.variant === 'spinner'
-      ? html`<forge-circular-progress
-          class="spinner"
-          aria-hidden="true"
-          ?determinate="${this.determinate}"
-          .progress=${this.progress}></forge-circular-progress>`
-      : nothing;
+    return when(
+      this.variant === 'spinner',
+      () =>
+        html`<div>
+          <forge-circular-progress
+            class="spinner"
+            aria-hidden="true"
+            ?determinate="${this.determinate}"
+            .progress=${this.progress}></forge-circular-progress>
+        </div>`
+    );
   }
 
   private get _contentTemplate(): TemplateResult | typeof nothing {
     const visible = this.variant === 'message-only' || this.message || this.cancelable;
-    return visible ? html`<div class="content">${this._messageTemplate} ${this._cancelButtonTemplate}</div>` : nothing;
+    return when(visible, () => html`<div class="content">${this._messageTemplate} ${this._cancelButtonTemplate}</div>`);
   }
 
   private get _cancelButtonTemplate(): TemplateResult | typeof nothing {
-    return this.cancelable
-      ? html`<forge-button class="cancel-button" variant="outlined" @click=${this._onCancel}>
+    return when(
+      this.cancelable,
+      () =>
+        html`<forge-button class="cancel-button" variant="outlined" @click=${this._onCancel}>
           <slot name="cancel-text">Cancel</slot>
         </forge-button>`
-      : nothing;
+    );
   }
 
   private get _progressBarTemplate(): TemplateResult | typeof nothing {
-    return this.variant === 'progress'
-      ? html`<div class="progress-container">
+    return when(
+      this.variant === 'progress',
+      () =>
+        html`<div class="progress-container">
           <forge-linear-progress
             aria-hidden="true"
             .determinate="${this.determinate}"
             .buffer=${this.buffer}
             .progress=${this.progress}></forge-linear-progress>
         </div>`
-      : nothing;
+    );
   }
 
   public override disconnectedCallback(): void {
@@ -184,8 +187,8 @@ export class BusyIndicatorComponent extends LitElement {
     super.disconnectedCallback();
   }
 
-  public override willUpdate(_changedProperties: PropertyValues<this>): void {
-    if (_changedProperties.has('open')) {
+  public override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('open')) {
       this._tryManageFocus();
     }
   }
@@ -193,16 +196,18 @@ export class BusyIndicatorComponent extends LitElement {
   public override render(): TemplateResult {
     return html`
       <forge-dialog
-        persistent
-        ?open=${this.open}
-        .mode=${this.mode === 'inline' ? 'inline-modal' : 'modal'}
         class=${classMap({ inline: this.mode === 'inline', transparent: this.transparent })}
+        persistent
+        .open=${this.open}
+        .mode=${this.mode === 'inline' ? 'inline-modal' : 'modal'}
         .label=${this.label || this.titleText || ''}
-        .description=${this.description || this.message || ''}
-        .focusMode=${this.focusMode}>
+        .description=${this.description || this.message || ''}>
         <div class="surface">
           ${this._titleTemplate}
-          <div class="layout-container">${this._spinnerTemplate} ${this._contentTemplate}</div>
+          ${when(
+            this.variant === 'spinner' || this.variant === 'message-only' || this.message || this.cancelable,
+            () => html`<div class="layout-container">${this._spinnerTemplate} ${this._contentTemplate}</div>`
+          )}
           ${this._progressBarTemplate}
         </div>
       </forge-dialog>
@@ -218,7 +223,7 @@ export class BusyIndicatorComponent extends LitElement {
   }
 
   private _tryManageFocus(): void {
-    if (this.open && this.focusMode === 'auto') {
+    if (this.open && this.mode === 'fullscreen') {
       this._captureFocusedElement();
     } else if (this.#previousActiveElement) {
       this._releaseFocus();
