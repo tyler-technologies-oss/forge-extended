@@ -47,26 +47,32 @@ const meta = {
         @forge-confirmation-dialog-action=${(e: IConfirmationDialogAction) => onConfirmationDialogAction(e)}
         @forge-dialog-close=${closeDialog}
         ?open=${args.open}
+        .theme=${args.theme}
         .isBusy=${args.isBusy}>
         <div slot="title">${args.title}</div>
         <div slot="message">${args.message}</div>
-        ${args.showSecondaryButton
-          ? html`<forge-button slot="secondary-action">${args.secondaryButtonText}</forge-button>`
+        ${args.secondaryButtonText.length
+          ? html`<div slot="secondary-button-text">${args.secondaryButtonText}</div>`
           : ''}
         <div slot="primary-button-text">${args.primaryButtonText}</div>
       </forge-confirmation-dialog>
     `;
   },
   component,
-  argTypes: {},
+  argTypes: {
+    theme: {
+      control: 'select',
+      options: ['info', 'info-secondary', 'success', 'warning', 'error']
+    }
+  },
   args: {
     open: false,
     isBusy: false,
     title: 'Delete selected images?',
     message: 'Images will be permanently removed from your account and all synced devices.',
-    secondaryButtonText: 'Cancel',
+    theme: 'info',
+    secondaryButtonText: 'No',
     primaryButtonText: 'Yes',
-    showSecondaryButton: true,
     simulateAsync: false
   }
 } satisfies Meta;

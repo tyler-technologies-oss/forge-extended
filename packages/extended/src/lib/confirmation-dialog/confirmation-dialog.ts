@@ -1,8 +1,20 @@
 import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-
+import { customElement, property, queryAssignedNodes, state } from 'lit/decorators.js';
+import { when } from 'lit/directives/when.js';
 import styles from './confirmation-dialog.scss?inline';
-import { defineButtonComponent, defineCircularProgressComponent, defineDialogComponent } from '@tylertech/forge';
+import {
+  defineButtonComponent,
+  defineCircularProgressComponent,
+  defineDialogComponent,
+  IconRegistry
+} from '@tylertech/forge';
+import {
+  tylIconInfoOutline,
+  tylIconLanguage,
+  tylIconCheckCircleOutline,
+  tylIconWarning,
+  tylIconErrorOutline
+} from '@tylertech/tyler-icons/standard';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -13,6 +25,8 @@ declare global {
     'forge-confirmation-dialog-action': CustomEvent<void>;
   }
 
+  export type ConformationDialogThems = 'success' | 'error' | 'warning' | 'info' | 'info-secondary';
+
   interface IConfirmationDialogAction extends CustomEvent {
     detail: {
       primaryAction: boolean;
@@ -21,6 +35,14 @@ declare global {
 }
 
 export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = 'forge-confirmation-dialog';
+
+const ICONS: Record<ConformationDialogThems, string> = {
+  info: 'info_outline',
+  'info-secondary': 'info_outline',
+  success: 'check_circle_outline',
+  warning: 'warning',
+  error: 'error_outline'
+};
 
 /**
  * @tag forge-confirmation-dialog
@@ -31,6 +53,13 @@ export class ConfirmationDialogComponent extends LitElement {
     defineButtonComponent();
     defineDialogComponent();
     defineCircularProgressComponent();
+    IconRegistry.define([
+      tylIconInfoOutline,
+      tylIconLanguage,
+      tylIconCheckCircleOutline,
+      tylIconWarning,
+      tylIconErrorOutline
+    ]);
   }
 
   public static override styles = unsafeCSS(styles);
@@ -47,33 +76,86 @@ export class ConfirmationDialogComponent extends LitElement {
   @property({ type: Boolean, attribute: 'is-busy' })
   public isBusy = false;
 
-  public override render(): TemplateResult {
-    const busyIndicator = this.isBusy
+  @property({ type: String, attribute: 'theme' })
+  public theme: ConformationDialogThems = 'info';
+
+  @state()
+  private _showSecondaryButton = true;
+
+  @queryAssignedNodes({ slot: 'secondary-button-text', flatten: true })
+  private _secondaryButtonNode!: Array<Node>;
+
+  private _handleSlotChange(): void {
+    this._toggleSecondaryButton();
+  }
+
+  public updated(): void {
+    this._toggleSecondaryButton();
+  }
+
+  private _toggleSecondaryButton(): void {
+    this._showSecondaryButton = this._secondaryButtonNode.length > 0;
+  }
+
+  private get _busyIndicator(): TemplateResult | typeof nothing {
+    return this.isBusy
       ? html`<forge-circular-progress slot="end" aria-label="Loading"> </forge-circular-progress>`
       : nothing;
+  }
 
-    const primaryButton = html`<forge-button
+  private get _secondaryButtonSlot(): TemplateResult | typeof nothing {
+    return html`<slot
+      name="secondary-button-text"
+      id="secondary-button-slot"
+      @slotchange=${this._handleSlotChange}></slot>`;
+  }
+
+  private get _secondaryButton(): TemplateResult | typeof nothing {
+    return when(
+      this._showSecondaryButton,
+      () =>
+        html` <forge-button
+          variant="outlined"
+          ?disabled=${this.isBusy}
+          theme=${this.theme}
+          id="secondary-button"
+          @click=${() => this._onAction(false)}>
+          ${this._secondaryButtonSlot}
+        </forge-button>`,
+      () => html`${this._secondaryButtonSlot}`
+    );
+  }
+
+  private get _primaryButton(): TemplateResult | typeof nothing {
+    return html`<forge-button
       ?disabled=${this.isBusy}
+      theme=${this.theme}
       variant="raised"
       id="primary-button"
       @click=${() => this._onAction(true)}>
-      <slot name="primary-button-text"></slot>
-      ${busyIndicator}
+      ${when(
+        this.isBusy,
+        () => this._busyIndicator,
+        () => html`<slot name="primary-button-text"></slot>`
+      )}
     </forge-button>`;
+  }
 
+  public override render(): TemplateResult {
     return html`
       <forge-dialog
         ?open=${this.open}
+        theme=${this.theme}
         @forge-dialog-close=${() => this._resetState()}
         aria-labelledby="confirmation-dialog-title"
         aria-describedby="confirmation-message">
-        <div class="container">
-          <slot name="title" id="confirmation-dialog-title" class="title"></slot>
-          <slot name="message" id="confirmation-message" class="message"></slot>
-          <div class="actions-container">
-            <slot name="secondary-action" @click=${() => this._onAction(false)}></slot>
-            ${primaryButton}
+        <div class="outer-container">
+          <div class="title-message-container">
+            <forge-icon .name=${ICONS[this.theme]} class="icon"></forge-icon>
+            <slot name="title" id="confirmation-dialog-title" class="title"></slot>
+            <slot name="message" id="confirmation-message" class="message"></slot>
           </div>
+          <div class="actions-container">${this._secondaryButton} ${this._primaryButton}</div>
         </div>
       </forge-dialog>
     `;

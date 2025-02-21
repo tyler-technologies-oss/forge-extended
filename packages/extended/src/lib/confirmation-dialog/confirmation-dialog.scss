@@ -7,20 +7,35 @@
 //
 
 :host {
-  display: contents;
+  display: flex;
+  flex-direction: column;
 }
-
 //
 // Base
 //
 
-.container {
+.outer-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: #{forge-spacing.variable(medium)};
+  gap: #{forge-spacing.variable(medium)};
+  max-width: 460px;
+}
+
+.title-message-container {
   padding: #{forge-spacing.variable(medium)};
   box-sizing: border-box;
   max-width: 768px;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  gap: #{forge-spacing.variable(medium)};
+}
+
+.icon {
+  font-size: 48px;
 }
 
 .title {
@@ -31,27 +46,61 @@
 
 .message {
   @include forge-typography.style(body2);
-  color: #{forge-theme.variable(text-medium)};
-
+  color: inherit;
   margin-block: #{forge-spacing.variable(medium)};
   margin-block-end: #{forge-spacing.variable(large)};
+  text-align: center;
 }
 
 .actions-container {
   display: flex;
   gap: #{forge-spacing.variable(medium)};
   align-items: center;
-  justify-content: end;
   flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+
+  forge-button {
+    flex: 1;
+  }
 }
 
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+:host:has([theme='info']) {
+  .title-message-container {
+    background-color: #{forge-theme.variable(info-container-low)};
+    color: #{forge-theme.variable(on-info-container-low)};
+    border: 1px solid #{forge-theme.variable(info-container)};
+  }
+}
+
+:host:has([theme='info-secondary']) {
+  .title-message-container {
+    background-color: #{forge-theme.variable(surface-container-low)};
+    color: #{forge-theme.variable(on-surface-container-low)};
+    border: 1px solid #{forge-theme.variable(surface-container)};
+  }
+}
+
+:host:has([theme='success']) {
+  .title-message-container {
+    background-color: #{forge-theme.variable(success-container-low)};
+    color: #{forge-theme.variable(on-success-container-low)};
+    border: 1px solid #{forge-theme.variable(success-container)};
+  }
+}
+
+:host:has([theme='warning']) {
+  .title-message-container {
+    background-color: #{forge-theme.variable(warning-container-low)};
+    color: #{forge-theme.variable(on-warning-container-low)};
+    border: 1px solid #{forge-theme.variable(warning-container)};
+  }
+}
+
+:host:has([theme='error']) {
+  .title-message-container {
+    background-color: #{forge-theme.variable(error-container-low)};
+    color: #{forge-theme.variable(on-error-container-low)};
+    border: 1px solid #{forge-theme.variable(error-container)};
+  }
 }
