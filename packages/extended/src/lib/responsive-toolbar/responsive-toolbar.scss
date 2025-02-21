@@ -1,0 +1,18 @@
+@use '@tylertech/forge/sass/core/styles/tokens/toolbar/tokens' as forge-toolbar-tokens;
+
+//
+// Host
+//
+
+:host {
+  display: block;
+  position: relative;
+}
+
+//
+// Base
+//
+
+forge-toolbar[auto-height] {
+  --forge-toolbar-min-height: #{forge-toolbar-tokens.get('height')};
+}
