@@ -1,6 +1,6 @@
 import { customElementSveltePlugin } from 'custom-element-svelte-integration';
 import { customElementVuejsPlugin } from 'custom-element-vuejs-integration';
-import { customJSDocTagsPlugin } from 'cem-plugin-custom-jsdoc-tags';
+import { jsDocTagsPlugin } from '@wc-toolkit/jsdoc-tags';
 import forgeBranchNamePlugin from './plugins/cem/branch-name.mjs';
 import forgeTypePathsPlugin from './plugins/cem/type-paths.mjs';
 
@@ -20,7 +20,7 @@ export default {
       fileName: 'forge-extended-vue.d.ts',
       globalTypePath: '../index.d.ts'
     }),
-    customJSDocTagsPlugin({
+    jsDocTagsPlugin({
       hideLogs: true,
       tags: {
         dependency: {
