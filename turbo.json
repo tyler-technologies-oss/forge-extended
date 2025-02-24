@@ -6,7 +6,10 @@
       "dependsOn": ["^build"],
       "outputs": ["dist/**"]
     },
-    "lint": {},
+    "lint": {
+      "outputs": [],
+      "cache": false
+    },
     "format": {},
     "format:check": {},
     "test:ci": {
@@ -16,6 +19,14 @@
       "dependsOn": ["^build"],
       "persistent": true,
       "cache": false
+    },
+    "@tylertech/forge-extended-angular#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
+    },
+    "@tylertech/forge-extended-react#build": {
+      "dependsOn": ["^build"],
+      "outputs": ["dist/**"]
     },
     "@tylertech/forge-extended-angular#dev": {
       "dependsOn": ["@tylertech/forge-extended#build"],
@@ -30,6 +41,10 @@
     },
     "storybook": {
       "persistent": true,
+      "cache": false
+    },
+    "generate-proxies": {
+      "dependsOn": ["^build"],
       "cache": false
     },
     "changeset:version": {}

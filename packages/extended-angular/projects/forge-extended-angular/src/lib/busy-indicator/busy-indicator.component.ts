@@ -46,21 +46,6 @@ export class BusyIndicatorComponent {
     return this.nativeElement.mode;
   }
 
-  /**
-   * The focus mode for the busy indicator. Determines whether the busy indicator captures focus or not.
-   * - `auto` (default): The busy indicator captures focus and releases it when closed.
-   * - `manual`: The busy indicator does not manage focus.
-   */
-  @Input()
-  public set focusMode(value: BusyIndicatorComponentCustomElement['focusMode']) {
-    this.zone.runOutsideAngular(() => {
-      this.nativeElement.focusMode = value;
-    });
-  }
-  public get focusMode(): BusyIndicatorComponentCustomElement['focusMode'] {
-    return this.nativeElement.focusMode;
-  }
-
   /** The title text to display. */
   @Input()
   public set titleText(value: BusyIndicatorComponentCustomElement['titleText']) {
