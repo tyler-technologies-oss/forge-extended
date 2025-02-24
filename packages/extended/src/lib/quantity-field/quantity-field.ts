@@ -28,6 +28,9 @@ export const QuantityFieldComponentTagName: keyof HTMLElementTagNameMap = 'forge
  * @slot increment-button - The increment button.
  * @slot increment-icon - The icon for the increment button.
  * @slot support-text - The support text for the field.
+ *
+ * @state required - Indicates whether the field is in its required state.
+ * @state invalid - Indicates whether the field is in its invalid state.
  */
 @customElement(QuantityFieldComponentTagName)
 export class QuantityFieldComponent extends LitElement {

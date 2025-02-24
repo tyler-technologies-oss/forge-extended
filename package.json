@@ -34,7 +34,7 @@
     "plop:extended": "pnpm run --filter=@tylertech/forge-extended plop"
   },
   "devDependencies": {
-    "@changesets/cli": "2.27.12",
+    "@changesets/cli": "2.28.1",
     "@commitlint/cli": "^19.7.1",
     "@commitlint/config-conventional": "^19.7.1",
     "@repo/eslint-config": "workspace:",
@@ -45,7 +45,7 @@
     "husky": "^9.1.7",
     "lint-staged": "^15.4.3",
     "prettier": "catalog:",
-    "turbo": "^2.4.1",
+    "turbo": "^2.4.2",
     "vite-plugin-ejs": "^1.7.0",
     "vite-plugin-full-reload": "^1.2.0"
   },
@@ -54,7 +54,7 @@
       "reactify-wc>react": ">=17"
     },
     "patchedDependencies": {
-      "@changesets/assemble-release-plan@6.0.5": "patches/@changesets__assemble-release-plan@6.0.5.patch"
+      "@changesets/assemble-release-plan@6.0.6": "patches/@changesets__assemble-release-plan@6.0.6.patch"
     }
   }
 }
