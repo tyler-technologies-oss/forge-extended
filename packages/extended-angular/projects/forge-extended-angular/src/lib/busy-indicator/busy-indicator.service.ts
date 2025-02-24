@@ -14,7 +14,7 @@ export class BusyIndicatorService {
    * @param config The busy indicator component configuration.
    * @param [parent] The parent element to attach this busy indicator instance to.
    */
-  public show(config: Partial<BusyIndicatorComponent>, parent = document.body): BusyIndicatorRef {
+  public open(config: Partial<BusyIndicatorComponent>, parent = document.body): BusyIndicatorRef {
     const element = document.createElement('forge-busy-indicator');
     Object.assign(element, config);
     parent.appendChild(element);
