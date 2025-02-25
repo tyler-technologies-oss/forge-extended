@@ -20,13 +20,13 @@ const meta = {
       { label: 'Third action', value: 'third-action', variant: 'raised' }
     ];
 
-    return html`<div style="width: ${args.demoWidth}px">
+    return html`<div style="width: ${args.demoWidth}px; resize:both; overflow:auto;">
       <forge-card style="--forge-card-padding: 0;">
         <forge-responsive-toolbar>
           <forge-icon-button aria-label="Icon button demo" slot="before-start">
             <forge-icon name="arrow_back" external></forge-icon>
           </forge-icon-button>
-          <div slot="start" class="forge-typography--heading4">This is a really really long title</div>
+          <div slot="start" class="forge-typography--heading4">${args.title}</div>
           <forge-stack inline alignment="center" slot="actions-desktop">
             ${options.map(
               item => html` <forge-button variant=${ifDefined(item.variant)}>${item.label}</forge-button> `
@@ -34,7 +34,7 @@ const meta = {
           </forge-stack>
           <div slot="actions-mobile">
             <forge-menu .options=${options}>
-              <forge-icon-button aria-label="Icon button demo">
+              <forge-icon-button aria-label="Open menu">
                 <forge-icon name="more_vert" external></forge-icon>
               </forge-icon-button>
             </forge-menu>
@@ -56,10 +56,12 @@ const meta = {
   },
   component,
   argTypes: {
-    demoWidth: { control: { type: 'range', min: 360, max: 1260, step: 3 } }
+    demoWidth: { control: { type: 'range', min: 360, max: 1260, step: 3 } },
+    title: { control: 'text' }
   },
   args: {
-    demoWidth: 900
+    demoWidth: 900,
+    title: 'This is a really really long title'
   }
 } satisfies Meta;
 

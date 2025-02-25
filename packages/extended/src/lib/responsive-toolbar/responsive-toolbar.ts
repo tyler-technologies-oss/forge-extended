@@ -13,6 +13,10 @@ declare global {
   }
 }
 
+/**
+ * The amount of space between the title and actions before the title is
+ * considered to be overlapping the actions
+ */
 const BUFFER = 24;
 
 export const ResponsiveToolbarComponentTagName: keyof HTMLElementTagNameMap = 'forge-responsive-toolbar';
