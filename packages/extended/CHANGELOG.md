@@ -1,5 +1,13 @@
 # @tylertech/forge-extended
 
+## 0.1.1
+
+### Patch Changes
+
+- 1854abd: quantity-field: initial release preparation
+- 273f28c: updated the layout and fixed minor bugs
+- cfb1dad: consistency updates and release preparation
+
 ## 0.1.0
 
 ### Minor Changes
