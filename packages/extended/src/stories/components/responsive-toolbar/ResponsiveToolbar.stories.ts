@@ -22,7 +22,10 @@ const meta = {
 
     return html`<div style="width: ${args.demoWidth}px; resize:both; overflow:auto;">
       <forge-card style="--forge-card-padding: 0;">
-        <forge-responsive-toolbar>
+        <forge-responsive-toolbar
+          ?no-border=${args.noBorder}
+          ?auto-height=${args.autoHeight}
+          ?inverted=${args.inverted}>
           <forge-icon-button aria-label="Icon button demo" slot="before-start">
             <forge-icon name="arrow_back" external></forge-icon>
           </forge-icon-button>
@@ -63,11 +66,17 @@ const meta = {
   argTypes: {
     demoWidth: { control: { type: 'range', min: 360, max: 1260, step: 3 } },
     title: { control: 'text' },
+    noBorder: { control: 'boolean' },
+    autoHeight: { control: 'boolean' },
+    inverted: { control: 'boolean' },
     afterEnd: { control: 'boolean', name: 'Show after-end slot content' }
   },
   args: {
     demoWidth: 900,
     title: 'This is a really really long title',
+    noBorder: false,
+    autoHeight: true,
+    inverted: false,
     afterEnd: false
   }
 } satisfies Meta;

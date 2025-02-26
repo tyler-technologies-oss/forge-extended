@@ -51,14 +51,20 @@ export class ResponsiveToolbarComponent extends LitElement {
   /**
    * Maps to the internal toolbar auto-height attribute
    */
-  @property({ type: Boolean, reflect: true, attribute: 'auto-height' })
+  @property({ type: Boolean, attribute: 'auto-height' })
   public autoHeight = true;
 
   /**
-   * Maps to the internal toolbar no-divider attribute
+   * Maps to the internal toolbar no-border attribute
    */
-  @property({ type: Boolean, reflect: true, attribute: 'no-divider' })
-  public noDivider = false;
+  @property({ type: Boolean, attribute: 'no-border' })
+  public noBorder = false;
+
+  /**
+   * Maps to the internal toolbar inverted attribute
+   */
+  @property({ type: Boolean, attribute: 'inverted' })
+  public inverted = false;
 
   /**
    * Element refs that are used to calculate the overflow of the title and actions
@@ -83,7 +89,7 @@ export class ResponsiveToolbarComponent extends LitElement {
     }
 
     return html`
-      <forge-toolbar ?auto-height=${this.autoHeight} ?no-divider=${this.noDivider}>
+      <forge-toolbar ?auto-height=${this.autoHeight} ?no-border=${this.noBorder} ?inverted=${this.inverted}>
         <slot name="before-start" slot="before-start"></slot>
         <div ${ref(this.titleContainer)} slot="start">
           <slot name="start"></slot>
