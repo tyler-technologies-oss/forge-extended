@@ -107,7 +107,7 @@ export class ResponsiveToolbarComponent extends LitElement {
         ?inverted=${this.inverted}
         @slotchange=${this._handleResize}>
         <slot name="before-start" slot="before-start"></slot>
-        <div ${ref(this.titleContainer)} slot="start">
+        <div ${ref(this.startSlotContainer)} slot="start">
           <slot name="start"></slot>
         </div>
 
