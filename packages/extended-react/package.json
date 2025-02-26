@@ -19,7 +19,7 @@
     "clean": "rimraf dist/",
     "prebuild": "pnpm run clean",
     "build": "pnpm run generate-proxies",
-    "lint": "eslint --parser-options tsconfigRootDir:. --ext .ts,.tsx",
+    "lint": "eslint --ext .ts,.tsx",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "generate-proxies": "node scripts/generate-proxies.mjs"
@@ -33,6 +33,7 @@
     "react": ">=17.0.0"
   },
   "devDependencies": {
+    "@repo/eslint-config": "workspace:",
     "@repo/prettier-config": "workspace:",
     "@tylertech-eslint/eslint-plugin": "catalog:",
     "@tylertech/forge": "catalog:",

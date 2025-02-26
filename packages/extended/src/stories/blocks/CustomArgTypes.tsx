@@ -199,6 +199,7 @@ function ComponentArgTypes({ tagName, headingLevel }: { tagName: string; heading
     }) ?? [];
   const cssProperties = declaration.cssProperties;
   const cssParts = declaration.cssParts;
+  const states = declaration.states;
 
   return (
     <div>
@@ -229,6 +230,12 @@ function ComponentArgTypes({ tagName, headingLevel }: { tagName: string; heading
       {!!methods?.length && (
         <Section title="Methods" name={tagName} headingLevel={headingLevel}>
           <MethodsTable items={sortByName(methods)} />
+        </Section>
+      )}
+
+      {!!states?.length && (
+        <Section title="States" name={tagName} headingLevel={headingLevel}>
+          <NameDescriptionTable items={states} />
         </Section>
       )}
 

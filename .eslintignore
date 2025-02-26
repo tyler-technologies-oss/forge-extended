@@ -1,0 +1,8 @@
+node_modules/
+.github
+*.html
+.eslintrc.cjs
+commitlint.config.mjs
+
+packages/eslint-config/
+packages/prettier-config/
