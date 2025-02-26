@@ -69,7 +69,7 @@ export class ResponsiveToolbarComponent extends LitElement {
   /**
    * Element refs that are used to calculate the overflow of the title and actions
    */
-  public titleContainer = createRef<HTMLElement>();
+  public startSlotContainer = createRef<HTMLElement>();
   public endSlotContainer = createRef<HTMLElement>();
 
   /**
@@ -77,7 +77,7 @@ export class ResponsiveToolbarComponent extends LitElement {
    * state to reflect that. This will toggle the visibility of the action slots
    */
   private _handleResize = (): void => {
-    const titleInlineEndEdge = this.titleContainer.value?.getBoundingClientRect().right || 0;
+    const titleInlineEndEdge = this.startSlotContainer.value?.getBoundingClientRect().right || 0;
     const actionsInlineStartEdge = this.endSlotContainer.value?.getBoundingClientRect().left || 0;
 
     if (titleInlineEndEdge + BUFFER >= actionsInlineStartEdge) {
