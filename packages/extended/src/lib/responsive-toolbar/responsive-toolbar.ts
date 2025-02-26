@@ -70,7 +70,7 @@ export class ResponsiveToolbarComponent extends LitElement {
    * Element refs that are used to calculate the overflow of the title and actions
    */
   public titleContainer = createRef<HTMLElement>();
-  public buttonContainer = createRef<HTMLElement>();
+  public endSlotContainer = createRef<HTMLElement>();
 
   /**
    * Determines if the title is overlapping the actions and sets the internal
@@ -78,7 +78,7 @@ export class ResponsiveToolbarComponent extends LitElement {
    */
   private _handleResize = (): void => {
     const titleInlineEndEdge = this.titleContainer.value?.getBoundingClientRect().right || 0;
-    const actionsInlineStartEdge = this.buttonContainer.value?.getBoundingClientRect().left || 0;
+    const actionsInlineStartEdge = this.endSlotContainer.value?.getBoundingClientRect().left || 0;
 
     if (titleInlineEndEdge + BUFFER >= actionsInlineStartEdge) {
       this._isOverflowing = true;
@@ -97,20 +97,15 @@ export class ResponsiveToolbarComponent extends LitElement {
     }
   });
 
-  /**
-   * Listen for slot changes and re-run the handleResize function
-   */
-  public firstUpdated(): void {
-    this.shadowRoot?.querySelectorAll('slot').forEach(slot => {
-      slot.addEventListener('slotchange', this._handleResize);
-    });
-  }
-
   public override render(): TemplateResult {
     const visibilityStyles = { visibility: 'hidden', position: 'absolute', right: 8 };
 
     return html`
-      <forge-toolbar ?auto-height=${this.autoHeight} ?no-border=${this.noBorder} ?inverted=${this.inverted}>
+      <forge-toolbar
+        ?auto-height=${this.autoHeight}
+        ?no-border=${this.noBorder}
+        ?inverted=${this.inverted}
+        @slotchange=${this._handleResize}>
         <slot name="before-start" slot="before-start"></slot>
         <div ${ref(this.titleContainer)} slot="start">
           <slot name="start"></slot>
@@ -118,7 +113,7 @@ export class ResponsiveToolbarComponent extends LitElement {
 
         <div
           slot="end"
-          ${ref(this.buttonContainer)}
+          ${ref(this.endSlotContainer)}
           style=${this._isOverflowing ? styleMap(visibilityStyles) : nothing}>
           <slot name="actions-desktop"></slot>
         </div>
