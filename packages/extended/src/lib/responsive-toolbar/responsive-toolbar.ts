@@ -72,13 +72,7 @@ export class ResponsiveToolbarComponent extends LitElement {
   public titleContainer = createRef<HTMLElement>();
   public buttonContainer = createRef<HTMLElement>();
 
-  /**
-   * Resize observer controller to detect changes in the toolbar width
-   */
-  private _resizeController = new ResizeController(this, {});
-
-  public override render(): TemplateResult {
-    const visibilityStyles = { visibility: 'hidden', position: 'absolute', right: 8 };
+  private _handleResize = (): void => {
     const titleInlineEndEdge = this.titleContainer.value?.getBoundingClientRect().right || 0;
     const actionsInlineStartEdge = this.buttonContainer.value?.getBoundingClientRect().left || 0;
 
@@ -87,6 +81,25 @@ export class ResponsiveToolbarComponent extends LitElement {
     } else {
       this._isOverflowing = false;
     }
+  };
+
+  /**
+   * Resize observer controller to detect changes in the toolbar width
+   */
+  private _resizeController = new ResizeController(this, {
+    callback: () => {
+      this._handleResize();
+    }
+  });
+
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this._handleResize();
+    console.log(this.titleContainer);
+  }
+
+  public override render(): TemplateResult {
+    const visibilityStyles = { visibility: 'hidden', position: 'absolute', right: 8 };
 
     return html`
       <forge-toolbar ?auto-height=${this.autoHeight} ?no-border=${this.noBorder} ?inverted=${this.inverted}>
@@ -105,7 +118,7 @@ export class ResponsiveToolbarComponent extends LitElement {
         <div slot="end" style=${!this._isOverflowing ? styleMap(visibilityStyles) : nothing}>
           <slot name="actions-mobile"></slot>
         </div>
-        <slot name="after-end" slot="after-end"></slot>
+        <slot name="after-end" slot="after-end" @slotchange=${this._handleResize}></slot>
       </forge-toolbar>
     `;
   }
