@@ -23,6 +23,12 @@ export const ResponsiveToolbarComponentTagName: keyof HTMLElementTagNameMap = 'f
 
 /**
  * @tag forge-responsive-toolbar
+ *
+ * @slot before-start - Maps to the toolbar before-start slot
+ * @slot start - Maps to the toolbar start slot
+ * @slot actions-desktop - The content you want to render at larger sizes in the toolbar end slot
+ * @slot actions-mobile - The content you want to render at smaller sizes in the toolbar end slot
+ * @slot after-end - Maps to the toolbar after-end slot
  */
 @customElement(ResponsiveToolbarComponentTagName)
 export class ResponsiveToolbarComponent extends LitElement {

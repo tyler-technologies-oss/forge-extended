@@ -1,5 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/web-components';
-import { html } from 'lit';
+import { html, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 
 import '$lib/responsive-toolbar';
@@ -39,6 +39,11 @@ const meta = {
               </forge-icon-button>
             </forge-menu>
           </div>
+          ${args.afterEnd
+            ? html`<div slot="after-end">
+                <forge-button>After end</forge-button>
+              </div>`
+            : nothing}
         </forge-responsive-toolbar>
 
         <div style="padding: 16px;">
@@ -57,11 +62,13 @@ const meta = {
   component,
   argTypes: {
     demoWidth: { control: { type: 'range', min: 360, max: 1260, step: 3 } },
-    title: { control: 'text' }
+    title: { control: 'text' },
+    afterEnd: { control: 'boolean', name: 'Show after-end slot content' }
   },
   args: {
     demoWidth: 900,
-    title: 'This is a really really long title'
+    title: 'This is a really really long title',
+    afterEnd: false
   }
 } satisfies Meta;
 
