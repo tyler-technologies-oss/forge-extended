@@ -16,3 +16,25 @@
 forge-toolbar[auto-height] {
   --forge-toolbar-min-height: #{forge-toolbar-tokens.get('height')};
 }
+
+//
+// Overflowing state
+//
+
+@mixin overflow {
+  visibility: hidden;
+  position: absolute;
+  right: 8;
+}
+
+:host(:state(overflowing)) {
+  #actions-large {
+    @include overflow;
+  }
+}
+
+:host(:not(:state(overflowing))) {
+  #actions-small {
+    @include overflow;
+  }
+}

@@ -2,10 +2,8 @@ import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { ref, createRef } from 'lit/directives/ref.js';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { customElement, property, state } from 'lit/decorators.js';
-import { styleMap } from 'lit/directives/style-map.js';
-
-import styles from './responsive-toolbar.scss?inline';
 import { defineToolbarComponent } from '@tylertech/forge';
+import styles from './responsive-toolbar.scss?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -34,6 +32,7 @@ export const ResponsiveToolbarComponentTagName: keyof HTMLElementTagNameMap = 'f
 export class ResponsiveToolbarComponent extends LitElement {
   constructor() {
     super();
+    this.#internals = this.attachInternals();
   }
 
   static {
@@ -63,7 +62,7 @@ export class ResponsiveToolbarComponent extends LitElement {
   /**
    * Maps to the internal toolbar inverted attribute
    */
-  @property({ type: Boolean, attribute: 'inverted' })
+  @property({ type: Boolean })
   public inverted = false;
 
   /**
@@ -72,34 +71,34 @@ export class ResponsiveToolbarComponent extends LitElement {
   public startSlotContainer = createRef<HTMLElement>();
   public endSlotContainer = createRef<HTMLElement>();
 
+  readonly #internals: ElementInternals;
+
+  public connectedCallback(): void {
+    super.connectedCallback();
+
+    /**
+     * Resize observer controller to detect changes in the toolbar width and runs
+     * the handleResize function on change
+     */
+    new ResizeController(this, { callback: () => this._handleResize() });
+  }
+
   /**
    * Determines if the title is overlapping the actions and sets the internal
    * state to reflect that. This will toggle the visibility of the action slots
    */
-  private _handleResize = (): void => {
+  private _handleResize(): void {
     const titleInlineEndEdge = this.startSlotContainer.value?.getBoundingClientRect().right || 0;
     const actionsInlineStartEdge = this.endSlotContainer.value?.getBoundingClientRect().left || 0;
 
     if (titleInlineEndEdge + BUFFER >= actionsInlineStartEdge) {
-      this._isOverflowing = true;
+      this.#internals.states.add('overflowing');
     } else {
-      this._isOverflowing = false;
+      this.#internals.states.delete('overflowing');
     }
-  };
-
-  /**
-   * Resize observer controller to detect changes in the toolbar width and runs
-   * the handleResize function on change
-   */
-  private _resizeController = new ResizeController(this, {
-    callback: () => {
-      this._handleResize();
-    }
-  });
+  }
 
   public override render(): TemplateResult {
-    const visibilityStyles = { visibility: 'hidden', position: 'absolute', right: 8 };
-
     return html`
       <forge-toolbar
         ?auto-height=${this.autoHeight}
@@ -111,14 +110,11 @@ export class ResponsiveToolbarComponent extends LitElement {
           <slot name="start"></slot>
         </div>
 
-        <div
-          slot="end"
-          ${ref(this.endSlotContainer)}
-          style=${this._isOverflowing ? styleMap(visibilityStyles) : nothing}>
+        <div slot="end" id="actions-large" ${ref(this.endSlotContainer)} class=${this._isOverflowing ? 'hide' : ''}>
           <slot name="actions-desktop"></slot>
         </div>
 
-        <div slot="end" style=${!this._isOverflowing ? styleMap(visibilityStyles) : nothing}>
+        <div slot="end" id="actions-small" class=${!this._isOverflowing ? 'hide' : ''}>
           <slot name="actions-mobile"></slot>
         </div>
         <slot name="after-end" slot="after-end"></slot>
