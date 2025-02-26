@@ -42,12 +42,6 @@ export class ResponsiveToolbarComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
   /**
-   * Internal state to determine if the toolbar title is overlapping the actions
-   */
-  @state()
-  private _isOverflowing = false;
-
-  /**
    * Maps to the internal toolbar auto-height attribute
    */
   @property({ type: Boolean, attribute: 'auto-height' })
