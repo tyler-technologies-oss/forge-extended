@@ -110,11 +110,11 @@ export class ResponsiveToolbarComponent extends LitElement {
           <slot name="start"></slot>
         </div>
 
-        <div slot="end" id="actions-large" ${ref(this.endSlotContainer)} class=${this._isOverflowing ? 'hide' : ''}>
+        <div slot="end" id="actions-large" ${ref(this.endSlotContainer)}>
           <slot name="actions-desktop"></slot>
         </div>
 
-        <div slot="end" id="actions-small" class=${!this._isOverflowing ? 'hide' : ''}>
+        <div slot="end" id="actions-small">
           <slot name="actions-mobile"></slot>
         </div>
         <slot name="after-end" slot="after-end"></slot>
