@@ -85,4 +85,9 @@ export default meta;
 
 type Story = StoryObj;
 
-export const Demo: Story = {};
+export const Demo: Story = {
+  args: {
+    demoWidth: 855,
+    afterEnd: true
+  }
+};

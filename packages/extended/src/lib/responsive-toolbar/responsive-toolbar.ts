@@ -72,6 +72,10 @@ export class ResponsiveToolbarComponent extends LitElement {
   public titleContainer = createRef<HTMLElement>();
   public buttonContainer = createRef<HTMLElement>();
 
+  /**
+   * Determines if the title is overlapping the actions and sets the internal
+   * state to reflect that. This will toggle the visibility of the action slots
+   */
   private _handleResize = (): void => {
     const titleInlineEndEdge = this.titleContainer.value?.getBoundingClientRect().right || 0;
     const actionsInlineStartEdge = this.buttonContainer.value?.getBoundingClientRect().left || 0;
@@ -84,7 +88,8 @@ export class ResponsiveToolbarComponent extends LitElement {
   };
 
   /**
-   * Resize observer controller to detect changes in the toolbar width
+   * Resize observer controller to detect changes in the toolbar width and runs
+   * the handleResize function on change
    */
   private _resizeController = new ResizeController(this, {
     callback: () => {
@@ -92,10 +97,13 @@ export class ResponsiveToolbarComponent extends LitElement {
     }
   });
 
-  public override connectedCallback(): void {
-    super.connectedCallback();
-    this._handleResize();
-    console.log(this.titleContainer);
+  /**
+   * Listen for slot changes and re-run the handleResize function
+   */
+  public firstUpdated(): void {
+    this.shadowRoot?.querySelectorAll('slot').forEach(slot => {
+      slot.addEventListener('slotchange', this._handleResize);
+    });
   }
 
   public override render(): TemplateResult {
@@ -118,7 +126,7 @@ export class ResponsiveToolbarComponent extends LitElement {
         <div slot="end" style=${!this._isOverflowing ? styleMap(visibilityStyles) : nothing}>
           <slot name="actions-mobile"></slot>
         </div>
-        <slot name="after-end" slot="after-end" @slotchange=${this._handleResize}></slot>
+        <slot name="after-end" slot="after-end"></slot>
       </forge-toolbar>
     `;
   }
