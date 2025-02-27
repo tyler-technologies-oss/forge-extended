@@ -47,19 +47,19 @@ export class ResponsiveToolbarComponent extends LitElement {
   public static override styles: CSSResult = unsafeCSS(styles);
 
   /**
-   * Maps to the internal toolbar auto-height attribute
+   * Forces the internal container to use height: auto for dynamic content that doesn't fit the static height.
    */
   @property({ type: Boolean, attribute: 'auto-height' })
   public autoHeight = true;
 
   /**
-   * Maps to the internal toolbar no-border attribute
+   * Hides the internal divider
    */
   @property({ type: Boolean, attribute: 'no-border' })
   public noBorder = false;
 
   /**
-   * Maps to the internal toolbar inverted attribute
+   * Controls whether a bottom divider (default) or top divider (true) is used.
    */
   @property({ type: Boolean })
   public inverted = false;
