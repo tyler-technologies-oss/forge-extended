@@ -30,11 +30,6 @@ export const ResponsiveToolbarComponentTagName: keyof HTMLElementTagNameMap = 'f
  */
 @customElement(ResponsiveToolbarComponentTagName)
 export class ResponsiveToolbarComponent extends LitElement {
-  constructor() {
-    super();
-    this.#internals = this.attachInternals();
-  }
-
   static {
     defineToolbarComponent();
   }
@@ -66,6 +61,11 @@ export class ResponsiveToolbarComponent extends LitElement {
   public endSlotContainer = createRef<HTMLElement>();
 
   readonly #internals: ElementInternals;
+
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+  }
 
   public connectedCallback(): void {
     super.connectedCallback();
