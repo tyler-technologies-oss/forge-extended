@@ -10,10 +10,12 @@ The Responsive Toolbar dynamically adjusts your toolbar content to prevent overl
 
 This approach eliminates the need for manually configuring breakpoints or container queries, ensuring a seamless adaptive experience without extra calculations. Simply provide your `desktop-actions` slot content and your `mobile-actions` slot content, and the component handles the rest.
 
-<br />
+<Canvas of={ResponsiveToolbarStories.Demo} />
+
 > **Note:** The responsive toolbar will not automatically create a mobile friendly version of your end slot content. You
-should be providing markup for both the `desktop-actions` slot and the `mobile-actions` slot, this lets you fine tune
-the user experience based on available space.
+> should be providing markup for both the `desktop-actions` slot and the `mobile-actions` slot, this lets you fine tune
+> the user experience based on available space.
+
 <br />
 ### Why a responsive-toolbar?
 
@@ -24,10 +26,6 @@ The `<forge-responsive-toolbar>` solves this by automatically adjusting to vario
 ### When to use a responsive-toolbar
 
 The `<forge-responsive-toolbar>` is useful in applications where you know your primary persona could be on anything from a mobile device, to a tablet, and up to an ultrawide monitor. It's especially useful in backoffice applications that might have multiple actions in the end slot combined with a long title in the start slot. Simply being able to swap between a series of `forge-button` components to a `forge-menu` will completely resolve broken layout issues that can occur at slightly lower than optimal screen resolutions.
-
-<Canvas of={ResponsiveToolbarStories.Demo} />
-
-TODO: If applicable, add any additional content for the `Responsive Toolbar` component here.
 
 ## API
 

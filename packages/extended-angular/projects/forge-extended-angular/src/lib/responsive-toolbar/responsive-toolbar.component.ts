@@ -56,27 +56,6 @@ export class ResponsiveToolbarComponent {
     return this.nativeElement.inverted;
   }
 
-  /** Element refs that are used to calculate the overflow of the title and actions */
-  @Input()
-  public set startSlotContainer(value: ResponsiveToolbarComponentCustomElement['startSlotContainer']) {
-    this.zone.runOutsideAngular(() => {
-      this.nativeElement.startSlotContainer = value;
-    });
-  }
-  public get startSlotContainer(): ResponsiveToolbarComponentCustomElement['startSlotContainer'] {
-    return this.nativeElement.startSlotContainer;
-  }
-
-  @Input()
-  public set endSlotContainer(value: ResponsiveToolbarComponentCustomElement['endSlotContainer']) {
-    this.zone.runOutsideAngular(() => {
-      this.nativeElement.endSlotContainer = value;
-    });
-  }
-  public get endSlotContainer(): ResponsiveToolbarComponentCustomElement['endSlotContainer'] {
-    return this.nativeElement.endSlotContainer;
-  }
-
   constructor(
     changeDetectorRef: ChangeDetectorRef,
     protected elementRef: ElementRef<ResponsiveToolbarComponentCustomElement>,
