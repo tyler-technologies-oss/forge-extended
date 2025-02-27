@@ -12,6 +12,12 @@ declare global {
   }
 }
 
+interface IResponsiveToolbarOverflow extends CustomEvent {
+  detail: {
+    overflow: boolean;
+  };
+}
+
 /**
  * The amount of space between the title and actions before the title is
  * considered to be overlapping the actions
@@ -28,6 +34,9 @@ export const ResponsiveToolbarComponentTagName: keyof HTMLElementTagNameMap = 'f
  * @slot actions-desktop - The content you want to render at larger sizes in the toolbar end slot
  * @slot actions-mobile - The content you want to render at smaller sizes in the toolbar end slot
  * @slot after-end - Maps to the toolbar after-end slot
+ * 
+ * @event {CustomEvent<IResponsiveToolbarOverflow>} forge-responsive-toolbar-overflow - Dispatched when the overflow state changes
+
  */
 @customElement(ResponsiveToolbarComponentTagName)
 export class ResponsiveToolbarComponent extends LitElement {
@@ -88,9 +97,20 @@ export class ResponsiveToolbarComponent extends LitElement {
 
     if (titleInlineEndEdge + BUFFER >= actionsInlineStartEdge) {
       this.#internals.states.add('overflowing');
+      this._emitOverflowEvent(true);
     } else {
       this.#internals.states.delete('overflowing');
+      this._emitOverflowEvent(false);
     }
+  }
+
+  private _emitOverflowEvent(isOverflowing: boolean): void {
+    const event = new CustomEvent('forge-responsive-toolbar-overflow', {
+      bubbles: true,
+      cancelable: true,
+      detail: { overflow: isOverflowing }
+    } as IResponsiveToolbarOverflow);
+    this.dispatchEvent(event);
   }
 
   public override render(): TemplateResult {
