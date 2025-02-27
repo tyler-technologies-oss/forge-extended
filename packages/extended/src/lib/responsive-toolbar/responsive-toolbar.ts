@@ -1,8 +1,9 @@
-import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { ref, createRef } from 'lit/directives/ref.js';
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
-import { customElement, property, state } from 'lit/decorators.js';
 import { defineToolbarComponent } from '@tylertech/forge';
+import { LitElement, TemplateResult, html, unsafeCSS, type CSSResult } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import { createRef, ref, type Ref } from 'lit/directives/ref.js';
+
 import styles from './responsive-toolbar.scss?inline';
 
 declare global {
@@ -34,7 +35,7 @@ export class ResponsiveToolbarComponent extends LitElement {
     defineToolbarComponent();
   }
 
-  public static override styles = unsafeCSS(styles);
+  public static override styles: CSSResult = unsafeCSS(styles);
 
   /**
    * Maps to the internal toolbar auto-height attribute
@@ -57,8 +58,8 @@ export class ResponsiveToolbarComponent extends LitElement {
   /**
    * Element refs that are used to calculate the overflow of the title and actions
    */
-  public startSlotContainer = createRef<HTMLElement>();
-  public endSlotContainer = createRef<HTMLElement>();
+  public startSlotContainer: Ref<HTMLElement> = createRef();
+  public endSlotContainer: Ref<HTMLElement> = createRef();
 
   readonly #internals: ElementInternals;
 
