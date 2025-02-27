@@ -88,6 +88,6 @@ type Story = StoryObj;
 export const Demo: Story = {
   args: {
     demoWidth: 855,
-    afterEnd: true
+    afterEnd: false
   }
 };

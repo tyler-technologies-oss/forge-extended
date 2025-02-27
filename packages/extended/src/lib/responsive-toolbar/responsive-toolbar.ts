@@ -58,8 +58,8 @@ export class ResponsiveToolbarComponent extends LitElement {
   /**
    * Element refs that are used to calculate the overflow of the title and actions
    */
-  public startSlotContainer: Ref<HTMLElement> = createRef();
-  public endSlotContainer: Ref<HTMLElement> = createRef();
+  private _startSlotContainer: Ref<HTMLElement> = createRef();
+  private _endSlotContainer: Ref<HTMLElement> = createRef();
 
   readonly #internals: ElementInternals;
 
@@ -83,8 +83,8 @@ export class ResponsiveToolbarComponent extends LitElement {
    * state to reflect that. This will toggle the visibility of the action slots
    */
   private _handleResize(): void {
-    const titleInlineEndEdge = this.startSlotContainer.value?.getBoundingClientRect().right || 0;
-    const actionsInlineStartEdge = this.endSlotContainer.value?.getBoundingClientRect().left || 0;
+    const titleInlineEndEdge = this._startSlotContainer.value?.getBoundingClientRect().right || 0;
+    const actionsInlineStartEdge = this._endSlotContainer.value?.getBoundingClientRect().left || 0;
 
     if (titleInlineEndEdge + BUFFER >= actionsInlineStartEdge) {
       this.#internals.states.add('overflowing');
@@ -101,11 +101,11 @@ export class ResponsiveToolbarComponent extends LitElement {
         ?inverted=${this.inverted}
         @slotchange=${this._handleResize}>
         <slot name="before-start" slot="before-start"></slot>
-        <div ${ref(this.startSlotContainer)} slot="start">
+        <div ${ref(this._startSlotContainer)} slot="start">
           <slot name="start"></slot>
         </div>
 
-        <div slot="end" id="actions-large" ${ref(this.endSlotContainer)}>
+        <div slot="end" id="actions-large" ${ref(this._endSlotContainer)}>
           <slot name="actions-desktop"></slot>
         </div>
 
