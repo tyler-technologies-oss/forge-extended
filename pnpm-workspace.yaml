@@ -4,19 +4,19 @@ catalog:
   '@custom-elements-manifest/analyzer': 0.10.4
   '@esm-bundle/chai': 4.3.4-fix.0
   '@open-wc/testing': 4.0.0
-  '@storybook/addon-a11y': 8.5.8
-  '@storybook/addon-actions': 8.5.8
-  '@storybook/addon-essentials': 8.5.8
-  '@storybook/addon-links': 8.5.8
-  '@storybook/addon-measure': 8.5.8
-  '@storybook/addon-themes': 8.5.8
-  '@storybook/addon-viewport': 8.5.8
-  '@storybook/blocks': 8.5.8
-  '@storybook/preview-api': 8.5.8
-  '@storybook/test': 8.5.8
-  '@storybook/theming': 8.5.8
-  '@storybook/web-components': 8.5.8
-  '@storybook/web-components-vite': 8.5.8
+  '@storybook/addon-a11y': 8.6.2
+  '@storybook/addon-actions': 8.6.2
+  '@storybook/addon-essentials': 8.6.2
+  '@storybook/addon-links': 8.6.2
+  '@storybook/addon-measure': 8.6.2
+  '@storybook/addon-themes': 8.6.2
+  '@storybook/addon-viewport': 8.6.2
+  '@storybook/blocks': 8.6.2
+  '@storybook/preview-api': 8.6.2
+  '@storybook/test': 8.6.2
+  '@storybook/theming': 8.6.2
+  '@storybook/web-components': 8.6.2
+  '@storybook/web-components-vite': 8.6.2
   '@tylertech-eslint/eslint-plugin': 2.1.0
   '@tylertech/forge': 3.6.4
   '@tylertech/forge-core': 3.1.0
@@ -44,7 +44,7 @@ catalog:
   rimraf: 6.0.1
   sass: 1.85.0
   sinon: 19.0.2
-  storybook: 8.5.8
+  storybook: 8.6.2
   storybook-dark-mode: 4.0.2
   stylelint: 16.14.1
   stylelint-config-standard: 37.0.0
