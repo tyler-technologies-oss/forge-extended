@@ -1,6 +1,6 @@
 {
   "name": "@tylertech/forge-extended-react",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A React adapter for Tyler Forge™ Extended Web Components.",
   "repository": "tyler-technologies-oss/forge-extended",
   "author": "Tyler Technologies, Inc.",
