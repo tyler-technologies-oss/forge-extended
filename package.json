@@ -31,6 +31,7 @@
     "storybook:extended": "turbo run storybook --filter=@tylertech/forge-extended",
     "build:storybook:extended": "pnpm run --filter=@tylertech/forge-extended build:storybook ",
     "generate-proxies": "turbo run generate-proxies",
+    "cem": "pnpm run --filter=@tylertech/forge-extended cem",
     "plop:extended": "pnpm run --filter=@tylertech/forge-extended plop"
   },
   "devDependencies": {

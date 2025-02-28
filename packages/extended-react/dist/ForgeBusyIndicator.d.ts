@@ -78,12 +78,18 @@ export interface ForgeBusyIndicatorProps
 
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
+
+  /** Fired when the cancel button is clicked. */
+  onForgeBusyIndicatorCancel?: (event: CustomEvent<CustomEvent<void>>) => void;
 }
 
 /**
  *
  * ---
  *
+ *
+ * ### **Events:**
+ *  - **forge-busy-indicator-cancel** - Fired when the cancel button is clicked.
  *
  * ### **Slots:**
  *  - **title** - The title text to display.

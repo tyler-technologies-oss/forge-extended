@@ -1,7 +1,14 @@
-import React, { forwardRef, useImperativeHandle } from "react";
+import React, {
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+  useEffect,
+} from "react";
 import "@tylertech/forge-extended/busy-indicator";
+import { useEventListener } from "./react-utils.js";
 
 export const ForgeBusyIndicator = forwardRef((props, forwardedRef) => {
+  const ref = useRef(null);
   const {
     open,
     cancelable,
@@ -18,11 +25,19 @@ export const ForgeBusyIndicator = forwardRef((props, forwardedRef) => {
     ...filteredProps
   } = props;
 
+  /** Event listeners - run once */
+  useEventListener(
+    ref,
+    "forge-busy-indicator-cancel",
+    props.onForgeBusyIndicatorCancel,
+  );
+
   useImperativeHandle(forwardedRef, () => ({}));
 
   return React.createElement(
     "forge-busy-indicator",
     {
+      ref,
       ...filteredProps,
       mode: props.mode,
       "title-text": props.titleText || props["title-text"],
