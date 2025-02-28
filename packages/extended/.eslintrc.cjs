@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   ignorePatterns: [
     'node_modules/',
-    'dist/**/*,',
+    'dist/**/*',
     'src/stories/**/*',
     'src/dev/**/*',
     'plugins/**/*',
