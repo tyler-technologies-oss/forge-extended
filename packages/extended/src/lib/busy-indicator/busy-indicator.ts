@@ -32,6 +32,8 @@ export const BusyIndicatorComponentTagName: keyof HTMLElementTagNameMap = 'forge
  * @slot title - The title text to display.
  * @slot message - The message to display.
  * @slot cancel-text - The text for the cancel button.
+ *
+ * @event {CustomEvent<void>} forge-busy-indicator-cancel - Fired when the cancel button is clicked.
  */
 @customElement(BusyIndicatorComponentTagName)
 export class BusyIndicatorComponent extends LitElement {

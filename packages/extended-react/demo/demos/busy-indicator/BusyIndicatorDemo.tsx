@@ -5,7 +5,7 @@ import { useState } from 'react';
 export function BusyIndicatorDemo(): JSX.Element {
   const [open, setOpen] = useState(false);
 
-  function openBusyIndicator() {
+  function openBusyIndicator(): void {
     setOpen(true);
     setTimeout(() => setOpen(false), 5000);
   }
