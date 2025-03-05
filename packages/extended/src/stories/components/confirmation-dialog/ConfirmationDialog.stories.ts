@@ -49,8 +49,8 @@ const meta = {
         ?open=${args.open}
         .theme=${args.theme}
         .isBusy=${args.isBusy}>
-        <div slot="title">${args.title}</div>
-        <div slot="message">${args.message}</div>
+        ${args.title.length ? html`<div slot="title">${args.title}</div>` : ''}
+        ${args.message.length ? html`<div slot="message">${args.message}</div>` : ''}
         ${args.secondaryButtonText.length
           ? html`<div slot="secondary-button-text">${args.secondaryButtonText}</div>`
           : ''}

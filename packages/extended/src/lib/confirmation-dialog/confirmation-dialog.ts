@@ -45,6 +45,13 @@ const ICONS: Record<ConformationDialogThemes, string> = {
 
 /**
  * @tag forge-confirmation-dialog
+ *
+ * @slot title - The title of the dialog
+ * @slot message - The dialog message
+ * @slot secondary-button-text - The text used in the secondary action button
+ * @slot primary-button-text - The text used in the primary action button
+ *
+ * @event {IConfirmationDialogAction} forge-confirmation-dialog-action- Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.
  */
 @customElement(ConfirmationDialogComponentTagName)
 export class ConfirmationDialogComponent extends LitElement {
@@ -76,7 +83,7 @@ export class ConfirmationDialogComponent extends LitElement {
   public isBusy = false;
 
   /**
-   * Current theme of the dialog
+   * Current theme of the confirmation dialog
    */
   @property({ type: String, attribute: 'theme' })
   public theme: ConformationDialogThemes = 'info';

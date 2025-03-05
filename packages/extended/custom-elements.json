@@ -431,6 +431,24 @@
           "kind": "class",
           "description": "",
           "name": "ConfirmationDialogComponent",
+          "slots": [
+            {
+              "description": "The title of the dialog",
+              "name": "title"
+            },
+            {
+              "description": "The dialog message",
+              "name": "message"
+            },
+            {
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
+            },
+            {
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -462,7 +480,7 @@
               },
               "privacy": "public",
               "default": "'info'",
-              "description": "Current theme of the dialog",
+              "description": "Current theme of the confirmation dialog",
               "attribute": "theme"
             },
             {
@@ -579,6 +597,15 @@
               ]
             }
           ],
+          "events": [
+            {
+              "type": {
+                "text": "IConfirmationDialogAction"
+              },
+              "description": "Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action-"
+            }
+          ],
           "attributes": [
             {
               "name": "open",
@@ -604,7 +631,7 @@
                 "text": "ConformationDialogThemes"
               },
               "default": "'info'",
-              "description": "Current theme of the dialog",
+              "description": "Current theme of the confirmation dialog",
               "fieldName": "theme"
             },
             {
@@ -909,7 +936,7 @@
     },
     "ConfirmationDialogComponent": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 49
+      "lineNumber": 56
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",

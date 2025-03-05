@@ -15,12 +15,13 @@
 //
 
 .outer-container {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
   padding: #{forge-spacing.variable(medium)};
   gap: #{forge-spacing.variable(medium)};
-  max-width: 460px;
+  max-width: 480px;
 }
 
 .title-message-container {
