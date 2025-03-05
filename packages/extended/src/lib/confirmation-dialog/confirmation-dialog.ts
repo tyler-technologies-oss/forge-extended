@@ -15,6 +15,7 @@ import {
   tylIconWarning,
   tylIconErrorOutline
 } from '@tylertech/tyler-icons/standard';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -39,8 +40,8 @@ export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = '
 const ICONS: Record<ConformationDialogThemes, string> = {
   info: 'info_outline',
   success: 'check_circle_outline',
-  warning: 'warning',
-  error: 'error_outline'
+  warning: 'error_outline',
+  error: 'warning'
 };
 
 /**
@@ -135,7 +136,7 @@ export class ConfirmationDialogComponent extends LitElement {
         html` <forge-button
           variant="outlined"
           ?disabled=${this.isBusy}
-          theme=${this.theme}
+          theme=${ifDefined(this.theme === 'error' ? this.theme : undefined)}
           id="secondary-button"
           @click=${() => this._onAction(false)}>
           ${this._secondaryButtonSlot}
@@ -147,7 +148,7 @@ export class ConfirmationDialogComponent extends LitElement {
   private get _primaryButton(): TemplateResult | typeof nothing {
     return html`<forge-button
       ?disabled=${this.isBusy}
-      theme=${this.theme}
+      theme=${ifDefined(this.theme === 'error' ? this.theme : undefined)}
       variant="raised"
       id="primary-button"
       @click=${() => this._onAction(true)}>
