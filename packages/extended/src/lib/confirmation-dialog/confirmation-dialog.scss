@@ -26,7 +26,6 @@
 .title-message-container {
   padding: #{forge-spacing.variable(medium)};
   box-sizing: border-box;
-  max-width: 768px;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -35,13 +34,13 @@
 }
 
 .icon {
-  font-size: 48px;
+  font-size: 3.5rem;
 }
 
 .title {
   @include forge-typography.style(heading4);
   text-align: center;
-  text-wrap: pretty;
+  text-wrap: balance;
   margin-block: 0;
   padding-block: 0;
 }
@@ -67,34 +66,14 @@
   }
 }
 
-:host:has([theme='info']) {
-  .title-message-container {
-    background-color: #{forge-theme.variable(info-container-low)};
-    color: #{forge-theme.variable(on-info-container-low)};
-    border: 1px solid #{forge-theme.variable(info-container)};
-  }
-}
+$themes: info, success, warning, error;
 
-:host:has([theme='success']) {
-  .title-message-container {
-    background-color: #{forge-theme.variable(success-container-low)};
-    color: #{forge-theme.variable(on-success-container-low)};
-    border: 1px solid #{forge-theme.variable(success-container)};
-  }
-}
-
-:host:has([theme='warning']) {
-  .title-message-container {
-    background-color: #{forge-theme.variable(warning-container-low)};
-    color: #{forge-theme.variable(on-warning-container-low)};
-    border: 1px solid #{forge-theme.variable(warning-container)};
-  }
-}
-
-:host:has([theme='error']) {
-  .title-message-container {
-    background-color: #{forge-theme.variable(error-container-low)};
-    color: #{forge-theme.variable(on-error-container-low)};
-    border: 1px solid #{forge-theme.variable(error-container)};
+@each $theme in $themes {
+  :host:has([theme='#{$theme}']) {
+    .title-message-container {
+      background-color: #{forge-theme.variable(#{$theme}-container-low)};
+      color: #{forge-theme.variable(on-#{$theme}-container-low)};
+      border: 1px solid #{forge-theme.variable(#{$theme}-container)};
+    }
   }
 }
