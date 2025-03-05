@@ -62,7 +62,7 @@ const meta = {
   argTypes: {
     theme: {
       control: 'select',
-      options: ['info', 'info-secondary', 'success', 'warning', 'error']
+      options: ['info', 'success', 'warning', 'error']
     }
   },
   args: {

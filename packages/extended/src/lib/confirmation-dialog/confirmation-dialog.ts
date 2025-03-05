@@ -25,7 +25,7 @@ declare global {
     'forge-confirmation-dialog-action': CustomEvent<void>;
   }
 
-  export type ConformationDialogThemes = 'success' | 'error' | 'warning' | 'info' | 'info-secondary';
+  export type ConformationDialogThemes = 'success' | 'error' | 'warning' | 'info';
 
   interface IConfirmationDialogAction extends CustomEvent {
     detail: {
@@ -38,7 +38,6 @@ export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = '
 
 const ICONS: Record<ConformationDialogThemes, string> = {
   info: 'info_outline',
-  'info-secondary': 'info_outline',
   success: 'check_circle_outline',
   warning: 'warning',
   error: 'error_outline'
@@ -156,6 +155,7 @@ export class ConfirmationDialogComponent extends LitElement {
   public override render(): TemplateResult {
     return html`
       <forge-dialog
+        fullscreen-threshold="0"
         ?open=${this.open}
         theme=${this.theme}
         @forge-dialog-close=${() => this._resetState()}
