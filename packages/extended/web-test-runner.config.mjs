@@ -1,7 +1,24 @@
 import { esbuildPlugin } from '@web/dev-server-esbuild';
-import { sendKeysPlugin, sendMousePlugin } from '@web/test-runner-commands/plugins';
+import { fromRollup } from '@web/dev-server-rollup';
+import { sendKeysPlugin, sendMousePlugin, setViewportPlugin } from '@web/test-runner-commands/plugins';
 import { fileURLToPath } from 'url';
 import { readdirSync } from 'fs';
+import { compileString } from 'sass';
+import { dirname } from 'path';
+
+/** Custom plugin to inline imports against .scss files as compiled CSS strings. */
+const inlineScss = fromRollup(() => {
+  return {
+    name: 'inline-scss',
+    transform(code, id) {
+      if (id.endsWith('.scss')) {
+        const loadPaths = [dirname(id), 'node_modules/'];
+        const result = compileString(code, { loadPaths });
+        return result.css;
+      }
+    }
+  };
+});
 
 /** Gets all directory names within a given source directory.  */
 export const directoryGroup = source =>
@@ -63,6 +80,8 @@ export default {
   plugins: [
     sendKeysPlugin(),
     sendMousePlugin(),
+    setViewportPlugin(),
+    inlineScss(),
     esbuildPlugin({
       ts: true,
       tsconfig: fileURLToPath(new URL('./tsconfig.json', import.meta.url)),

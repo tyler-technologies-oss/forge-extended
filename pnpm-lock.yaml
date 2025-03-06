@@ -84,6 +84,9 @@ catalogs:
     '@web/dev-server-esbuild':
       specifier: 1.0.4
       version: 1.0.4
+    '@web/dev-server-rollup':
+      specifier: 0.6.4
+      version: 0.6.4
     '@web/test-runner':
       specifier: 0.20.0
       version: 0.20.0
@@ -338,6 +341,9 @@ importers:
       '@web/dev-server-esbuild':
         specifier: 'catalog:'
         version: 1.0.4
+      '@web/dev-server-rollup':
+        specifier: 'catalog:'
+        version: 0.6.4
       '@web/test-runner':
         specifier: 'catalog:'
         version: 0.20.0
