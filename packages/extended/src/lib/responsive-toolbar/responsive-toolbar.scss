@@ -25,7 +25,7 @@ forge-toolbar[auto-height] {
 @mixin overflow {
   visibility: hidden;
   position: absolute;
-  right: #{forge-spacing.variable(xsmall)};
+  right: 8;
 }
 
 :host(:state(overflowing)) {

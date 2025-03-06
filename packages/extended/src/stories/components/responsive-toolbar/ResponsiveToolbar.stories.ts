@@ -20,10 +20,9 @@ const meta = {
       { label: 'Third action', value: 'third-action', variant: 'raised' }
     ];
 
-    return html`
-      <forge-card style="--forge-card-padding: 0;">
+    return html`<div style="width: 960px; resize:both; overflow:auto;">
+      <forge-card style="--forge-card-padding: 0; height: 100%;">
         <forge-responsive-toolbar
-          style="width: 100px;"
           ?no-border=${args.noBorder}
           ?auto-height=${args.autoHeight}
           ?inverted=${args.inverted}>
@@ -52,20 +51,14 @@ const meta = {
 
         <div style="padding: 16px;">
           <p>
-            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-            industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-            scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-            electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of
-            Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like
-            Aldus PageMaker including versions of Lorem Ipsum.
+            To see this component respond, drag this div smaller using the drag handle on the bottom right of the card
           </p>
         </div>
       </forge-card>
-    `;
+    </div>`;
   },
   component,
   argTypes: {
-    demoWidth: { control: { type: 'range', min: 360, max: 1260, step: 3 } },
     title: { control: 'text' },
     noBorder: { control: 'boolean' },
     autoHeight: { control: 'boolean' },
@@ -73,7 +66,6 @@ const meta = {
     afterEnd: { control: 'boolean', name: 'Show after-end slot content' }
   },
   args: {
-    demoWidth: 900,
     title: 'This is a really really long title',
     noBorder: false,
     autoHeight: true,

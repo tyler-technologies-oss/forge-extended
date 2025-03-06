@@ -1,5 +1,6 @@
 import { expect } from '@esm-bundle/chai';
-import { elementUpdated, fixture, html, nextFrame, waitUntil } from '@open-wc/testing';
+import { fixture, html, nextFrame } from '@open-wc/testing';
+import sinon from 'sinon';
 import { ResponsiveToolbarComponent } from './responsive-toolbar';
 import './responsive-toolbar';
 
@@ -16,15 +17,15 @@ describe('ResponsiveToolbar', () => {
     expect(harness.el.inverted).to.be.false;
   });
 
-  // it('the internal overflowing state should not be set when toolbar is large enough to fit the title and actions', async () => {
-  //   const harness = await createFixture({ width: '1440px' });
-  //   expect(harness.el.matches(':state(overflowing)')).to.be.false;
-  // });
+  it('the internal overflowing state should not be set when toolbar is large enough to fit the title and actions', async () => {
+    const harness = await createFixture({ width: '1440px' });
+    expect(harness.el.matches(':state(overflowing)')).to.be.false;
+  });
 
-  // it('the internal overflowing state should be set when toolbar title and actions overlap', async () => {
-  //   const harness = await createFixture({ width: '300px' });
-  //   expect(harness.el.matches(':state(overflowing)')).to.be.true;
-  // });
+  it('the internal overflowing state should be set when toolbar title and actions overlap', async () => {
+    const harness = await createFixture({ width: '300px' });
+    expect(harness.el.matches(':state(overflowing)')).to.be.true;
+  });
 
   it('content should project into the before-start slot', async () => {
     const harness = await createFixture();
@@ -67,6 +68,18 @@ describe('ResponsiveToolbar', () => {
     const harness = await createFixture();
     harness.el.removeAttribute('auto-height');
     expect(harness.el.autoHeight).to.be.false;
+  });
+
+  it('should dispatch forge-responsive-toolbar-overflow event', async () => {
+    const harness = await createFixture();
+    const spy = sinon.spy();
+
+    harness.el.addEventListener('forge-responsive-toolbar-overflow', spy);
+    harness.el.style.width = '300px';
+
+    await nextFrame();
+
+    expect(spy).to.have.been.called;
   });
 });
 

@@ -10,6 +10,10 @@ declare global {
   interface HTMLElementTagNameMap {
     'forge-responsive-toolbar': ResponsiveToolbarComponent;
   }
+
+  interface HTMLElementEventMap {
+    'forge-responsive-toolbar-overflow': CustomEvent<void>;
+  }
 }
 
 interface IResponsiveToolbarOverflow extends CustomEvent {
@@ -84,7 +88,7 @@ export class ResponsiveToolbarComponent extends LitElement {
      * Resize observer controller to detect changes in the toolbar width and runs
      * the handleResize function on change
      */
-    new ResizeController(this, { callback: () => this._handleResize() });
+    new ResizeController(this, { callback: () => requestAnimationFrame(() => this._handleResize()) });
   }
 
   /**
