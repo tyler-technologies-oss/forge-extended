@@ -70,7 +70,7 @@ describe('ResponsiveToolbar', () => {
     expect(harness.el.autoHeight).to.be.false;
   });
 
-  it('should dispatch forge-responsive-toolbar-overflow event', async () => {
+  it('should dispatch forge-responsive-toolbar-overflow event on resize', async () => {
     const harness = await createFixture();
     const spy = sinon.spy();
 
