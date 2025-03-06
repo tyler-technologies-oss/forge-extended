@@ -1,0 +1,41 @@
+@use '@tylertech/forge/sass/core/styles/tokens/toolbar/tokens' as forge-toolbar-tokens;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+
+//
+// Host
+//
+
+:host {
+  display: block;
+  position: relative;
+}
+
+//
+// Base
+//
+
+forge-toolbar[auto-height] {
+  --forge-toolbar-min-height: #{forge-toolbar-tokens.get('height')};
+}
+
+//
+// Overflowing state
+//
+
+@mixin overflow {
+  visibility: hidden;
+  position: absolute;
+  right: 8;
+}
+
+:host(:state(overflowing)) {
+  #actions-desktop {
+    @include overflow;
+  }
+}
+
+:host(:not(:state(overflowing))) {
+  #actions-mobile {
+    @include overflow;
+  }
+}

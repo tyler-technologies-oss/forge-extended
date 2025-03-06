@@ -1,0 +1,32 @@
+import { Meta, Title, Canvas } from '@storybook/blocks';
+import CustomArgTypes from '../../blocks/CustomArgTypes';
+import * as ResponsiveToolbarStories from './ResponsiveToolbar.stories';
+
+<Meta of={ResponsiveToolbarStories} />
+
+<Title />
+
+The Responsive Toolbar dynamically adjusts your toolbar content to prevent overlap on smaller screens. It leverages a `ResizeObserver` to detect when the title content collides with the end slot content. When an overlap is detected, the toolbar automatically hides the `desktop-actions` slot and displays the `mobile-actions` slot instead.
+
+This approach eliminates the need for manually configuring breakpoints or container queries, ensuring a seamless adaptive experience without extra calculations. Simply provide your `desktop-actions` slot content and your `mobile-actions` slot content, and the component handles the rest.
+
+<Canvas of={ResponsiveToolbarStories.Demo} />
+
+> **Note:** The responsive toolbar will not automatically create a mobile friendly version of your end slot content. You
+> should be providing markup for both the `desktop-actions` slot and the `mobile-actions` slot, this lets you fine tune
+> the user experience based on available space.
+
+<br />
+### Why a responsive-toolbar?
+
+The toolbar is a common source of layout issues in back-office applications, often overlooked when adapting to different screen sizes. Managing multiple instances of the core `<forge-toolbar>` across a page can make breakpoint handling complex and inconsistent.
+
+The `<forge-responsive-toolbar>` solves this by automatically adjusting to various screen sizes, preventing hidden content, overlapping text, and broken layouts. It ensures a clean, readable UI without the need for manual breakpoint management.
+
+### When to use a responsive-toolbar
+
+The `<forge-responsive-toolbar>` is useful in applications where you know your primary persona could be on anything from a mobile device, to a tablet, and up to an ultrawide monitor. It's especially useful in backoffice applications that might have multiple actions in the end slot combined with a long title in the start slot. Simply being able to swap between a series of `forge-button` components to a `forge-menu` will completely resolve broken layout issues that can occur at slightly lower than optimal screen resolutions.
+
+## API
+
+<CustomArgTypes />
