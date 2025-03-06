@@ -61,7 +61,7 @@ export class ResponsiveToolbarComponent extends LitElement {
   /**
    * Controls whether a bottom divider (default) or top divider (true) is used.
    */
-  @property({ type: Boolean })
+  @property({ type: Boolean, attribute: 'inverted' })
   public inverted = false;
 
   /**
@@ -125,11 +125,11 @@ export class ResponsiveToolbarComponent extends LitElement {
           <slot name="start"></slot>
         </div>
 
-        <div slot="end" id="actions-large" ${ref(this._endSlotContainer)}>
+        <div slot="end" id="actions-desktop" ${ref(this._endSlotContainer)}>
           <slot name="actions-desktop"></slot>
         </div>
 
-        <div slot="end" id="actions-small">
+        <div slot="end" id="actions-mobile">
           <slot name="actions-mobile"></slot>
         </div>
         <slot name="after-end" slot="after-end"></slot>

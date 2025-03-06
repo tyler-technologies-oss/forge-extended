@@ -20,9 +20,10 @@ const meta = {
       { label: 'Third action', value: 'third-action', variant: 'raised' }
     ];
 
-    return html`<div style="width: ${args.demoWidth}px; resize:both; overflow:auto;">
+    return html`
       <forge-card style="--forge-card-padding: 0;">
         <forge-responsive-toolbar
+          style="width: 100px;"
           ?no-border=${args.noBorder}
           ?auto-height=${args.autoHeight}
           ?inverted=${args.inverted}>
@@ -60,7 +61,7 @@ const meta = {
           </p>
         </div>
       </forge-card>
-    </div>`;
+    `;
   },
   component,
   argTypes: {
