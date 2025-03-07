@@ -1,10 +1,12 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
 import { ConfirmationDialogComponent } from './confirmation-dialog';
+import sinon from 'sinon';
 
 import './confirmation-dialog';
-import { ICircularProgressComponent, IDialogComponent } from '@tylertech/forge';
+import { ButtonComponent, ICircularProgressComponent, IDialogComponent } from '@tylertech/forge';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { sendMouse } from '@web/test-runner-commands';
 
 describe('ConfirmationDialog', () => {
   it('should contain shadow root', async () => {
@@ -78,18 +80,47 @@ describe('ConfirmationDialog', () => {
     expect(harness.el.theme).to.equal('error');
   });
 
-  // it('should set accessible loading label on the busy indicator', async () => {
-  //   const harness = await createFixture({ ariaLabelLoading: 'Loading data' });
-  //   await harness.el.updateComplete;
+  it('content should project into the title slot', async () => {
+    const harness = await createFixture();
+    expect(harness.titleSlot.assignedNodes().length).to.greaterThanOrEqual(1);
+  });
 
-  //   harness.el.open = true;
-  //   harness.el.isBusy = true;
-  //   await harness.el.updateComplete;
+  it('content should project into the message slot', async () => {
+    const harness = await createFixture();
+    expect(harness.messageSlot.assignedNodes().length).to.greaterThanOrEqual(1);
+  });
 
-  //   expect(harness.el.ariaLabelLoading).to.equal('Loading data');
-  //   expect(harness.circularProgressElement.ariaLabel).to.equal('Loading data');
-  //   await expect(harness.el).shadowDom.to.be.accessible();
-  // });
+  it('content should project into the secondary-button-text slot', async () => {
+    const harness = await createFixture();
+    expect(harness.secondaryButtonTextSlot.assignedNodes().length).to.greaterThanOrEqual(1);
+  });
+
+  it('content should project into the primary-button-text slot', async () => {
+    const harness = await createFixture();
+    expect(harness.primaryButtonTextSlot.assignedNodes().length).to.greaterThanOrEqual(1);
+  });
+
+  it('should dispatch primaryAction=true forge-confirmation-dialog-action event when clicking the primary action', async () => {
+    const harness = await createFixture({ open: true });
+    const inputSpy = sinon.spy();
+
+    harness.el.addEventListener('forge-confirmation-dialog-action', inputSpy);
+
+    await harness.clickPrimaryActionButton();
+
+    expect(inputSpy).to.have.been.calledWith(sinon.match.has('detail', sinon.match.has('primaryAction', true)));
+  });
+
+  it('should dispatch primaryAction=false forge-confirmation-dialog-action event when clicking the secondary action', async () => {
+    const harness = await createFixture({ open: true });
+    const inputSpy = sinon.spy();
+
+    harness.el.addEventListener('forge-confirmation-dialog-action', inputSpy);
+
+    await harness.clickSecondaryActionButton();
+
+    expect(inputSpy).to.have.been.calledWith(sinon.match.has('detail', sinon.match.has('primaryAction', false)));
+  });
 });
 
 class ConfirmationDialogHarness {
@@ -99,25 +130,51 @@ class ConfirmationDialogHarness {
     return this.el.shadowRoot?.querySelector('forge-dialog') as IDialogComponent;
   }
 
-  public get secondaryButtonTextSlot(): HTMLElement {
-    return this.el.shadowRoot?.querySelector('#secondary-action-text') as HTMLElement;
+  public get secondaryButtonTextSlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="secondary-button-text"]') as HTMLSlotElement;
   }
 
-  public get primaryButtonTextSlot(): HTMLElement {
-    return this.el.shadowRoot?.querySelector('#primary-action-text') as HTMLElement;
+  public get primaryButtonTextSlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="primary-button-text"]') as HTMLSlotElement;
+  }
+
+  public get secondaryButton(): ButtonComponent {
+    return this.el.shadowRoot!.querySelector('#secondary-button') as ButtonComponent;
+  }
+
+  public get primaryButton(): ButtonComponent {
+    return this.el.shadowRoot!.querySelector('#primary-button') as ButtonComponent;
   }
 
   public get circularProgressElement(): ICircularProgressComponent {
     return this.el.shadowRoot?.querySelector('forge-circular-progress') as ICircularProgressComponent;
   }
 
-  // public get surfaceElement(): HTMLElement {
-  //   return this.el.shadowRoot?.querySelector('.surface') as HTMLElement;
-  // }
+  public get titleSlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="title"]') as HTMLSlotElement;
+  }
 
-  // public get titleElement(): HTMLHeadingElement {
-  //   return this.el.shadowRoot?.querySelector('#title') as HTMLHeadingElement;
-  // }
+  public get messageSlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="message"]') as HTMLSlotElement;
+  }
+
+  public async clickPrimaryActionButton(): Promise<void> {
+    const { top, left, width, height } = this.primaryButton.getBoundingClientRect();
+    await sendMouse({
+      type: 'click',
+      position: [Math.round(left + width / 2), Math.round(top + height / 2)],
+      button: 'left'
+    });
+  }
+
+  public async clickSecondaryActionButton(): Promise<void> {
+    const { top, left, width, height } = this.secondaryButton.getBoundingClientRect();
+    await sendMouse({
+      type: 'click',
+      position: [Math.round(left + width / 2), Math.round(top + height / 2)],
+      button: 'left'
+    });
+  }
 
   public get isOpen(): boolean {
     return this.el.open && this.forgeDialogElement.open;

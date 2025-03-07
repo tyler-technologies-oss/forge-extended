@@ -23,6 +23,7 @@ const meta = {
 
     function onConfirmationDialogAction(e: IConfirmationDialogAction) {
       const isPrimary = e.detail.primaryAction;
+      console.log('Primary action:', isPrimary);
       if (!isPrimary) {
         confirmationDialogRef.value!.open = false;
         return;

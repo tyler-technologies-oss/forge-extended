@@ -476,7 +476,7 @@
               "kind": "field",
               "name": "theme",
               "type": {
-                "text": "ConformationDialogThemes"
+                "text": "ConfirmationDialogTheme"
               },
               "privacy": "public",
               "default": "'info'",
@@ -628,7 +628,7 @@
             {
               "name": "theme",
               "type": {
-                "text": "ConformationDialogThemes"
+                "text": "ConfirmationDialogTheme"
               },
               "default": "'info'",
               "description": "Current theme of the confirmation dialog",
@@ -926,7 +926,7 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 38
     },
-    "ConformationDialogThemes": {
+    "ConfirmationDialogTheme": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 29
     },
