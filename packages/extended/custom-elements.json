@@ -908,7 +908,7 @@
     },
     "HTMLElementEventMap": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 24
+      "lineNumber": 25
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -928,15 +928,15 @@
     },
     "ConformationDialogThemes": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 28
+      "lineNumber": 29
     },
     "IConfirmationDialogAction": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 30
+      "lineNumber": 31
     },
     "ConfirmationDialogComponent": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 56
+      "lineNumber": 57
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",

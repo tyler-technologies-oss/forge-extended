@@ -6,11 +6,11 @@ import {
   defineButtonComponent,
   defineCircularProgressComponent,
   defineDialogComponent,
+  defineIconComponent,
   IconRegistry
 } from '@tylertech/forge';
 import {
   tylIconInfoOutline,
-  tylIconLanguage,
   tylIconCheckCircleOutline,
   tylIconWarning,
   tylIconErrorOutline
@@ -26,7 +26,7 @@ declare global {
     'forge-confirmation-dialog-action': CustomEvent<void>;
   }
 
-  export type ConformationDialogThemes = 'success' | 'error' | 'warning' | 'info';
+  export type ConfirmationDialogTheme = 'success' | 'error' | 'warning' | 'info';
 
   interface IConfirmationDialogAction extends CustomEvent {
     detail: {
@@ -37,7 +37,7 @@ declare global {
 
 export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = 'forge-confirmation-dialog';
 
-const ICONS: Record<ConformationDialogThemes, string> = {
+const ICONS: Record<ConfirmationDialogTheme, string> = {
   info: 'info_outline',
   success: 'check_circle_outline',
   warning: 'error_outline',
@@ -60,13 +60,8 @@ export class ConfirmationDialogComponent extends LitElement {
     defineButtonComponent();
     defineDialogComponent();
     defineCircularProgressComponent();
-    IconRegistry.define([
-      tylIconInfoOutline,
-      tylIconLanguage,
-      tylIconCheckCircleOutline,
-      tylIconWarning,
-      tylIconErrorOutline
-    ]);
+    defineIconComponent();
+    IconRegistry.define([tylIconInfoOutline, tylIconCheckCircleOutline, tylIconWarning, tylIconErrorOutline]);
   }
 
   public static override styles = unsafeCSS(styles);
@@ -87,7 +82,7 @@ export class ConfirmationDialogComponent extends LitElement {
    * Current theme of the confirmation dialog
    */
   @property({ type: String, attribute: 'theme' })
-  public theme: ConformationDialogThemes = 'info';
+  public theme: ConfirmationDialogTheme = 'info';
 
   /**
    * Aria label of the busy indicator when loading
