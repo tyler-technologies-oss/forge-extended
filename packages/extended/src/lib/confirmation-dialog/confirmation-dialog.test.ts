@@ -55,16 +55,6 @@ describe('ConfirmationDialog', () => {
     expect(harness.circularProgressElement.ariaLabel).to.equal('Loading images');
   });
 
-  it('isBusy should reset back to false when dialog is busy and then closes', async () => {
-    const harness = await createFixture({ open: true });
-
-    harness.el.isBusy = true;
-    expect(harness.isBusy).to.be.true;
-    harness.el.open = false;
-    await harness.el.updateComplete;
-    expect(harness.isBusy).to.be.false;
-  });
-
   it('should set the aria-label of the circular progress to the aria-label-loading attribute', async () => {
     const harness = await createFixture({ open: true, isBusy: true });
 
@@ -121,6 +111,17 @@ describe('ConfirmationDialog', () => {
     expect(inputSpy).to.have.been.calledWith(sinon.match.has('detail', sinon.match.has('primaryAction', true)));
   });
 
+  it('should dispatch primaryAction=false forge-confirmation-dialog-action event when clicking the secondary action', async () => {
+    const harness = await createFixture({ open: true });
+    const inputSpy = sinon.spy();
+
+    harness.el.addEventListener('forge-confirmation-dialog-action', inputSpy);
+
+    await harness.clickSecondaryActionButton();
+
+    expect(inputSpy).to.have.been.calledWith(sinon.match.has('detail', sinon.match.has('primaryAction', false)));
+  });
+
   it('should reset the isBusy state of the dialog when closed', async () => {
     const harness = await createFixture({ open: true });
     harness.el.isBusy = true;
@@ -132,17 +133,6 @@ describe('ConfirmationDialog', () => {
 
     expect(harness.open).to.be.false;
     expect(harness.isBusy).to.be.false;
-  });
-
-  it('should dispatch primaryAction=false forge-confirmation-dialog-action event when clicking the secondary action', async () => {
-    const harness = await createFixture({ open: true });
-    const inputSpy = sinon.spy();
-
-    harness.el.addEventListener('forge-confirmation-dialog-action', inputSpy);
-
-    await harness.clickSecondaryActionButton();
-
-    expect(inputSpy).to.have.been.calledWith(sinon.match.has('detail', sinon.match.has('primaryAction', false)));
   });
 
   it('busy indicator should be present when isBusy is set to true', async () => {
