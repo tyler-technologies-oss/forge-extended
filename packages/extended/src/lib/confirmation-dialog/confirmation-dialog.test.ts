@@ -1,5 +1,5 @@
 import { expect } from '@esm-bundle/chai';
-import { fixture, html } from '@open-wc/testing';
+import { fixture, html, nextFrame } from '@open-wc/testing';
 import { ConfirmationDialogComponent } from './confirmation-dialog';
 import sinon from 'sinon';
 
@@ -20,7 +20,7 @@ describe('ConfirmationDialog', () => {
   it('should have expected default state', async () => {
     const harness = await createFixture();
 
-    expect(harness.isOpen).to.be.false;
+    expect(harness.open).to.be.false;
     expect(harness.isBusy).to.be.false;
     expect(harness.theme).to.be.equal('info');
   });
@@ -35,7 +35,7 @@ describe('ConfirmationDialog', () => {
   it('should set open', async () => {
     const harness = await createFixture({ open: true });
 
-    expect(harness.isOpen).to.be.true;
+    expect(harness.open).to.be.true;
   });
 
   it('should set open via attribute', async () => {
@@ -44,7 +44,7 @@ describe('ConfirmationDialog', () => {
     harness.el.setAttribute('open', '');
     await harness.el.updateComplete;
 
-    expect(harness.isOpen).to.be.true;
+    expect(harness.open).to.be.true;
   });
 
   it('should set the aria-label of the circular progress to the ariaLabelLoading property', async () => {
@@ -53,6 +53,16 @@ describe('ConfirmationDialog', () => {
     harness.el.ariaLabelLoading = 'Loading images';
     await harness.el.updateComplete;
     expect(harness.circularProgressElement.ariaLabel).to.equal('Loading images');
+  });
+
+  it('isBusy should reset back to false when dialog is busy and then closes', async () => {
+    const harness = await createFixture({ open: true });
+
+    harness.el.isBusy = true;
+    expect(harness.isBusy).to.be.true;
+    harness.el.open = false;
+    await harness.el.updateComplete;
+    expect(harness.isBusy).to.be.false;
   });
 
   it('should set the aria-label of the circular progress to the aria-label-loading attribute', async () => {
@@ -66,12 +76,12 @@ describe('ConfirmationDialog', () => {
   it('should close when open is set to false', async () => {
     const harness = await createFixture({ open: true });
 
-    expect(harness.isOpen).to.be.true;
+    expect(harness.open).to.be.true;
 
     harness.el.open = false;
     await harness.el.updateComplete;
 
-    expect(harness.isOpen).to.be.false;
+    expect(harness.open).to.be.false;
   });
 
   it('should set theme', async () => {
@@ -111,6 +121,19 @@ describe('ConfirmationDialog', () => {
     expect(inputSpy).to.have.been.calledWith(sinon.match.has('detail', sinon.match.has('primaryAction', true)));
   });
 
+  it('should reset the isBusy state of the dialog when closed', async () => {
+    const harness = await createFixture({ open: true });
+    harness.el.isBusy = true;
+    expect(harness.open).to.be.true;
+    expect(harness.isBusy).to.be.true;
+
+    harness.el.open = false;
+    await harness.el.updateComplete;
+
+    expect(harness.open).to.be.false;
+    expect(harness.isBusy).to.be.false;
+  });
+
   it('should dispatch primaryAction=false forge-confirmation-dialog-action event when clicking the secondary action', async () => {
     const harness = await createFixture({ open: true });
     const inputSpy = sinon.spy();
@@ -120,6 +143,23 @@ describe('ConfirmationDialog', () => {
     await harness.clickSecondaryActionButton();
 
     expect(inputSpy).to.have.been.calledWith(sinon.match.has('detail', sinon.match.has('primaryAction', false)));
+  });
+
+  it('busy indicator should be present when isBusy is set to true', async () => {
+    const harness = await createFixture({ open: true });
+    harness.el.isBusy = true;
+    await harness.el.updateComplete;
+    expect(harness.circularProgressElement).to.exist;
+  });
+
+  it('secondary button should be removed if the secondary-button-slot is removed', async () => {
+    const harness = await createFixture({ open: true, secondaryActionText: 'Cancel' });
+    harness.secondaryButtonTextSlot.assignedElements().forEach(el => el.remove());
+
+    await harness.el.updateComplete;
+    await harness.el.updateComplete;
+
+    expect(harness.secondaryButton).to.not.exist;
   });
 });
 
@@ -158,6 +198,10 @@ class ConfirmationDialogHarness {
     return this.el.shadowRoot!.querySelector('slot[name="message"]') as HTMLSlotElement;
   }
 
+  public get actionsContainer(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('.actions-container') as HTMLSlotElement;
+  }
+
   public async clickPrimaryActionButton(): Promise<void> {
     const { top, left, width, height } = this.primaryButton.getBoundingClientRect();
     await sendMouse({
@@ -176,7 +220,7 @@ class ConfirmationDialogHarness {
     });
   }
 
-  public get isOpen(): boolean {
+  public get open(): boolean {
     return this.el.open && this.forgeDialogElement.open;
   }
 
@@ -194,13 +238,15 @@ interface ConfirmationDialogFixtureConfig {
   isBusy?: boolean;
   theme?: ConfirmationDialogTheme;
   ariaLabelLoading?: string;
+  secondaryActionText?: string;
 }
 
 async function createFixture({
   open = false,
   isBusy = false,
   theme,
-  ariaLabelLoading
+  ariaLabelLoading,
+  secondaryActionText = 'Cancel'
 }: ConfirmationDialogFixtureConfig = {}): Promise<ConfirmationDialogHarness> {
   const el = await fixture<ConfirmationDialogComponent>(html`
     <forge-confirmation-dialog
@@ -210,8 +256,8 @@ async function createFixture({
       ariaLabelLoading=${ifDefined(ariaLabelLoading)}>
       <div slot="title">Title</div>
       <div slot="message">Message</div>
-      <div slot="secondary-button-text" id="secondary-action-text">Secondary button text</div>
-      <div slot="primary-button-text" id="primary-action-text">Primary button text</div>
+      <div slot="secondary-button-text" id="secondary-button-text">${ifDefined(secondaryActionText)}</div>
+      <div slot="primary-button-text">Primary button text</div>
     </forge-confirmation-dialog>
   `);
 

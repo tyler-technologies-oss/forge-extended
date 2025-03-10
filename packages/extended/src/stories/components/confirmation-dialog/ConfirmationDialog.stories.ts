@@ -23,7 +23,6 @@ const meta = {
 
     function onConfirmationDialogAction(e: IConfirmationDialogAction) {
       const isPrimary = e.detail.primaryAction;
-      console.log('Primary action:', isPrimary);
       if (!isPrimary) {
         confirmationDialogRef.value!.open = false;
         return;
@@ -51,12 +50,12 @@ const meta = {
         .theme=${args.theme}
         aria-label-loading=${args.ariaLabelLoading}
         .isBusy=${args.isBusy}>
-        ${args.title.length ? html`<div slot="title">${args.title}</div>` : ''}
-        ${args.message.length ? html`<div slot="message">${args.message}</div>` : ''}
+        ${args.title.length ? html`<span slot="title">${args.title}</span>` : ''}
+        ${args.message.length ? html`<span slot="message">${args.message}</span>` : ''}
         ${args.secondaryButtonText.length
-          ? html`<div slot="secondary-button-text">${args.secondaryButtonText}</div>`
+          ? html`<span slot="secondary-button-text">${args.secondaryButtonText}</span>`
           : ''}
-        <div slot="primary-button-text">${args.primaryButtonText}</div>
+        <span slot="primary-button-text">${args.primaryButtonText}</span>
       </forge-confirmation-dialog>
     `;
   },
