@@ -173,6 +173,24 @@
             },
             {
               "kind": "field",
+              "name": "_titleNodes",
+              "type": {
+                "text": "Node[]"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "_messageNodes",
+              "type": {
+                "text": "Node[]"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
               "name": "_titleTemplate",
               "type": {
                 "text": "TemplateResult | typeof nothing"
@@ -264,6 +282,24 @@
                   "text": "void"
                 }
               }
+            },
+            {
+              "kind": "method",
+              "name": "_handleSlotChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "evt",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
             }
           ],
           "events": [

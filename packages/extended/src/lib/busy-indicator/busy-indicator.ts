@@ -5,7 +5,7 @@ import {
   defineLinearProgressComponent
 } from '@tylertech/forge';
 import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 
@@ -125,17 +125,32 @@ export class BusyIndicatorComponent extends LitElement {
   /** Holds the previously focused element before the busy indicator was opened. */
   #previousActiveElement: HTMLElement | null = null;
 
+  private get _titleNodes(): Node[] {
+    return this.querySelector<HTMLSlotElement>('slot[name="title"]')?.assignedNodes({ flatten: true }) ?? [];
+  }
+
+  private get _messageNodes(): Node[] {
+    return this.querySelector<HTMLSlotElement>('slot[name="message"]')?.assignedNodes({ flatten: true }) ?? [];
+  }
+
   private get _titleTemplate(): TemplateResult | typeof nothing {
+    const hasTitle = !!this.titleText?.trim() || this._titleNodes.length > 0;
     return when(
-      this.titleText,
-      () => html`<h1 id="title" class="title"><slot name="title">${this.titleText}</slot></h1>`
+      hasTitle,
+      () =>
+        html`<h1 id="title" class="title">
+          <slot name="title">${this.titleText}</slot>
+        </h1>`,
+      () => html`<slot name="title"></slot>`
     );
   }
 
   private get _messageTemplate(): TemplateResult | typeof nothing {
+    const hasMessage = !!this.message?.trim() || this._messageNodes.length > 0;
     return when(
-      this.message?.trim(),
-      () => html`<p id="message" class="message"><slot name="message">${this.message}</slot></p>`
+      hasMessage,
+      () => html`<p id="message" class="message"><slot name="message">${this.message}</slot></p>`,
+      () => html`<slot name="message"></slot>`
     );
   }
 
@@ -204,7 +219,7 @@ export class BusyIndicatorComponent extends LitElement {
         .mode=${this.mode === 'inline' ? 'inline-modal' : 'modal'}
         .label=${this.label || this.titleText || ''}
         .description=${this.description || this.message || ''}>
-        <div class="surface">
+        <div class="surface" @slotchange=${this._handleSlotChange}>
           ${this._titleTemplate}
           ${when(
             this.variant === 'spinner' || this.variant === 'message-only' || this.message || this.cancelable,
@@ -239,5 +254,12 @@ export class BusyIndicatorComponent extends LitElement {
   private _releaseFocus(): void {
     this.#previousActiveElement?.focus({ preventScroll: true });
     this.#previousActiveElement = null;
+  }
+
+  private _handleSlotChange(evt: Event): void {
+    const slotName = (evt.target as HTMLElement).slot;
+    if (['title', 'message'].includes(slotName)) {
+      this.requestUpdate();
+    }
   }
 }
