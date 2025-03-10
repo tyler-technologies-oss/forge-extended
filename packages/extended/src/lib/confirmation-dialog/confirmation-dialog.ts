@@ -161,7 +161,7 @@ export class ConfirmationDialogComponent extends LitElement {
         fullscreen-threshold="0"
         ?open=${this.open}
         theme=${this.theme}
-        @forge-dialog-close=${() => this._resetState()}
+        @forge-dialog-close=${() => (this.isBusy = false)}
         aria-labelledby="confirmation-dialog-title"
         aria-describedby="confirmation-message">
         <div class="outer-container">
@@ -174,10 +174,6 @@ export class ConfirmationDialogComponent extends LitElement {
         </div>
       </forge-dialog>
     `;
-  }
-
-  private _resetState(): void {
-    this.isBusy = false;
   }
 
   private _onAction(isPrimary: boolean): void {

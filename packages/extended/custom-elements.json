@@ -570,16 +570,6 @@
             },
             {
               "kind": "method",
-              "name": "_resetState",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
               "name": "_onAction",
               "privacy": "private",
               "return": {
