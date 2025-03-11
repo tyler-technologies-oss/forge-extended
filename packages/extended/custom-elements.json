@@ -506,6 +506,16 @@
             },
             {
               "kind": "field",
+              "name": "_showTitle",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "private",
+              "default": "true",
+              "description": "Internal state to show/hide title"
+            },
+            {
+              "kind": "field",
               "name": "_secondaryButtonNode",
               "type": {
                 "text": "Array<Node>"
@@ -513,14 +523,21 @@
               "privacy": "private"
             },
             {
-              "kind": "method",
-              "name": "_handleSlotChange",
+              "kind": "field",
+              "name": "_titleNode",
+              "type": {
+                "text": "Array<Node>"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#internals",
               "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
+              "type": {
+                "text": "ElementInternals"
+              },
+              "readonly": true
             },
             {
               "kind": "method",
@@ -531,6 +548,34 @@
                   "text": "void"
                 }
               }
+            },
+            {
+              "kind": "method",
+              "name": "_toggleTitle",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "field",
+              "name": "_title",
+              "type": {
+                "text": "TemplateResult | typeof nothing"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "_titleSlot",
+              "type": {
+                "text": "TemplateResult | typeof nothing"
+              },
+              "privacy": "private",
+              "readonly": true
             },
             {
               "kind": "field",
@@ -593,7 +638,7 @@
                 "text": "IConfirmationDialogAction"
               },
               "description": "Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action-"
+              "name": "forge-confirmation-dialog-action"
             }
           ],
           "attributes": [
@@ -918,15 +963,15 @@
     },
     "ConfirmationDialogTheme": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 29
+      "lineNumber": 30
     },
-    "IConfirmationDialogAction": {
+    "ConfirmationDialogActionEventData": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 31
+      "lineNumber": 32
     },
     "ConfirmationDialogComponent": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 57
+      "lineNumber": 55
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",

@@ -1,4 +1,4 @@
-import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, queryAssignedNodes, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import styles from './confirmation-dialog.scss?inline';
@@ -106,6 +106,13 @@ export class ConfirmationDialogComponent extends LitElement {
   @queryAssignedNodes({ slot: 'title', flatten: true })
   private _titleNode!: Array<Node>;
 
+  readonly #internals: ElementInternals;
+
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+  }
+
   public updated(): void {
     this._toggleSecondaryButton();
     this._toggleTitle();
@@ -177,6 +184,12 @@ export class ConfirmationDialogComponent extends LitElement {
         () => html`<slot name="primary-button-text"></slot>`
       )}
     </forge-button>`;
+  }
+
+  public override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('theme')) {
+      this.#internals.states.add(this.theme);
+    }
   }
 
   public override render(): TemplateResult {
