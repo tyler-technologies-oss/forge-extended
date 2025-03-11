@@ -67,6 +67,17 @@
             },
             {
               "kind": "field",
+              "name": "headingLevel",
+              "type": {
+                "text": "1 | 2 | 3 | 4 | 5 | 6"
+              },
+              "privacy": "public",
+              "default": "1",
+              "description": "The heading level for the title.",
+              "attribute": "heading-level"
+            },
+            {
+              "kind": "field",
               "name": "message",
               "type": {
                 "text": "string | undefined"
@@ -173,7 +184,7 @@
             },
             {
               "kind": "field",
-              "name": "_titleNodes",
+              "name": "_slottedTitleNodes",
               "type": {
                 "text": "Node[]"
               },
@@ -182,7 +193,7 @@
             },
             {
               "kind": "field",
-              "name": "_messageNodes",
+              "name": "_slottedMessageNodes",
               "type": {
                 "text": "Node[]"
               },
@@ -337,6 +348,15 @@
               },
               "description": "The title text to display.",
               "fieldName": "titleText"
+            },
+            {
+              "name": "heading-level",
+              "type": {
+                "text": "1 | 2 | 3 | 4 | 5 | 6"
+              },
+              "default": "1",
+              "description": "The heading level for the title.",
+              "fieldName": "headingLevel"
             },
             {
               "name": "message",
@@ -673,7 +693,7 @@
       ]
     }
   ],
-  "branchName": "main",
+  "branchName": "busy-indicator-prep-iteration",
   "forgeTypes": {
     "HTMLElementTagNameMap": {
       "path": "src/lib/quantity-field/quantity-field.ts",
