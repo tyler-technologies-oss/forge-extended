@@ -635,17 +635,246 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ResponsiveToolbarComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-responsive-toolbar'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ResponsiveToolbarComponent",
+          "slots": [
+            {
+              "description": "Maps to the toolbar before-start slot",
+              "name": "before-start"
+            },
+            {
+              "description": "Maps to the toolbar start slot",
+              "name": "start"
+            },
+            {
+              "description": "The content you want to render at larger sizes in the toolbar end slot",
+              "name": "actions-desktop"
+            },
+            {
+              "description": "The content you want to render at smaller sizes in the toolbar end slot",
+              "name": "actions-mobile"
+            },
+            {
+              "description": "Maps to the toolbar after-end slot",
+              "name": "after-end"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "someProperty",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Description of the property.",
+              "attribute": "some-property"
+            },
+            {
+              "kind": "field",
+              "name": "#internals"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<IResponsiveToolbarOverflow>"
+              },
+              "description": "Dispatched when the overflow state changes",
+              "name": "forge-responsive-toolbar-overflow"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "some-property",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Description of the property.",
+              "fieldName": "someProperty"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-responsive-toolbar",
+          "customElement": true
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ResponsiveToolbarComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "autoHeight",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Forces the internal container to use height: auto for dynamic content that doesn't fit the static height."
+            },
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Hides the internal divider"
+            },
+            {
+              "kind": "field",
+              "name": "inverted",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether a bottom divider (default) or top divider (true) is used."
+            },
+            {
+              "kind": "field",
+              "name": "_startSlotContainer",
+              "type": {
+                "text": "Ref<HTMLElement>"
+              },
+              "privacy": "private",
+              "description": "Element refs that are used to calculate the overflow of the title and actions"
+            },
+            {
+              "kind": "field",
+              "name": "_endSlotContainer",
+              "type": {
+                "text": "Ref<HTMLElement>"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "#internals",
+              "privacy": "private",
+              "type": {
+                "text": "ElementInternals"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "_handleResize",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Determines if the title is overlapping the actions and sets the internal\nstate to reflect that. This will toggle the visibility of the action slots"
+            },
+            {
+              "kind": "method",
+              "name": "_emitOverflowEvent",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "isOverflowing",
+                  "type": {
+                    "text": "boolean"
+                  }
+                }
+              ]
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ResponsiveToolbarComponentTagName",
+          "declaration": {
+            "name": "ResponsiveToolbarComponentTagName",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ResponsiveToolbarComponent",
+          "declaration": {
+            "name": "ResponsiveToolbarComponent",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ResponsiveToolbarComponent",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ResponsiveToolbarComponentTagName",
+          "declaration": {
+            "name": "ResponsiveToolbarComponentTagName",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ResponsiveToolbarComponent",
+          "declaration": {
+            "name": "ResponsiveToolbarComponent",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ResponsiveToolbarComponent",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        }
+      ]
     }
   ],
-  "branchName": "main",
+  "branchName": "responsive-toolbar-v2",
   "forgeTypes": {
     "HTMLElementTagNameMap": {
-      "path": "src/lib/quantity-field/quantity-field.ts",
-      "lineNumber": 14
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "lineNumber": 40
     },
     "HTMLElementEventMap": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 19
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "lineNumber": 44
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -666,6 +895,14 @@
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
+    },
+    "ResponsiveToolbarComponent": {
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "lineNumber": 75
+    },
+    "IResponsiveToolbarOverflow": {
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "lineNumber": 49
     }
   }
 }
