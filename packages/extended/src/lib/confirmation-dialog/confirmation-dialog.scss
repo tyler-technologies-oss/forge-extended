@@ -1,4 +1,3 @@
-@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/sass/typography' as forge-typography;
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 
@@ -25,22 +24,14 @@
 }
 
 .title-message-container {
-  padding: #{forge-spacing.variable(medium)};
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   gap: #{forge-spacing.variable(medium)};
-}
-
-.icon {
-  font-size: 3.5rem;
 }
 
 .title {
   @include forge-typography.style(heading4);
-  text-align: center;
   text-wrap: balance;
   margin-block: 0;
   padding-block: 0;
@@ -55,7 +46,6 @@ h1 {
   color: inherit;
   margin-block: #{forge-spacing.variable(medium)};
   margin-block-end: #{forge-spacing.variable(large)};
-  text-align: center;
 }
 
 .actions-container {
@@ -64,21 +54,5 @@ h1 {
   align-items: center;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: center;
-
-  forge-button {
-    flex: 1;
-  }
-}
-
-$themes: info, success, warning, error;
-
-@each $theme in $themes {
-  :host(:state(#{$theme})) {
-    .title-message-container {
-      background-color: #{forge-theme.variable(#{$theme}-container-low)};
-      color: #{forge-theme.variable(on-#{$theme}-container-low)};
-      border: 1px solid #{forge-theme.variable(#{$theme}-container)};
-    }
-  }
+  justify-content: end;
 }

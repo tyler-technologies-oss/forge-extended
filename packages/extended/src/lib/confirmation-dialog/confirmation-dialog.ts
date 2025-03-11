@@ -1,21 +1,8 @@
-import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, queryAssignedNodes, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import styles from './confirmation-dialog.scss?inline';
-import {
-  defineButtonComponent,
-  defineCircularProgressComponent,
-  defineDialogComponent,
-  defineIconComponent,
-  IconRegistry
-} from '@tylertech/forge';
-import {
-  tylIconInfoOutline,
-  tylIconCheckCircleOutline,
-  tylIconWarning,
-  tylIconErrorOutline
-} from '@tylertech/tyler-icons/standard';
-import { ifDefined } from 'lit/directives/if-defined.js';
+import { defineButtonComponent, defineCircularProgressComponent, defineDialogComponent } from '@tylertech/forge';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -27,20 +14,11 @@ declare global {
   }
 }
 
-export type ConfirmationDialogTheme = 'success' | 'error' | 'warning' | 'info';
-
 export interface ConfirmationDialogActionEventData {
   primaryAction: boolean;
 }
 
 export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = 'forge-confirmation-dialog';
-
-const ICONS: Record<ConfirmationDialogTheme, string> = {
-  info: tylIconInfoOutline.name,
-  success: tylIconCheckCircleOutline.name,
-  warning: tylIconErrorOutline.name,
-  error: tylIconWarning.name
-};
 
 /**
  * @tag forge-confirmation-dialog
@@ -58,8 +36,6 @@ export class ConfirmationDialogComponent extends LitElement {
     defineButtonComponent();
     defineDialogComponent();
     defineCircularProgressComponent();
-    defineIconComponent();
-    IconRegistry.define([tylIconInfoOutline, tylIconCheckCircleOutline, tylIconWarning, tylIconErrorOutline]);
   }
 
   public static override styles = unsafeCSS(styles);
@@ -75,12 +51,6 @@ export class ConfirmationDialogComponent extends LitElement {
    */
   @property({ type: Boolean, attribute: 'is-busy' })
   public isBusy = false;
-
-  /**
-   * Current theme of the confirmation dialog
-   */
-  @property({ type: String, attribute: 'theme' })
-  public theme: ConfirmationDialogTheme = 'info';
 
   /**
    * Aria label of the busy indicator when loading
@@ -106,11 +76,8 @@ export class ConfirmationDialogComponent extends LitElement {
   @queryAssignedNodes({ slot: 'title', flatten: true })
   private _titleNode!: Array<Node>;
 
-  readonly #internals: ElementInternals;
-
   constructor() {
     super();
-    this.#internals = this.attachInternals();
   }
 
   public updated(): void {
@@ -162,7 +129,6 @@ export class ConfirmationDialogComponent extends LitElement {
         html` <forge-button
           variant="outlined"
           ?disabled=${this.isBusy}
-          theme=${ifDefined(this.theme === 'error' ? this.theme : undefined)}
           id="secondary-button"
           @click=${() => this._onAction(false)}>
           ${this._secondaryButtonSlot}
@@ -174,7 +140,6 @@ export class ConfirmationDialogComponent extends LitElement {
   private get _primaryButton(): TemplateResult | typeof nothing {
     return html`<forge-button
       ?disabled=${this.isBusy}
-      theme=${ifDefined(this.theme === 'error' ? this.theme : undefined)}
       variant="raised"
       id="primary-button"
       @click=${() => this._onAction(true)}>
@@ -186,24 +151,16 @@ export class ConfirmationDialogComponent extends LitElement {
     </forge-button>`;
   }
 
-  public override willUpdate(changedProperties: PropertyValues<this>): void {
-    if (changedProperties.has('theme')) {
-      this.#internals.states.add(this.theme);
-    }
-  }
-
   public override render(): TemplateResult {
     return html`
       <forge-dialog
         fullscreen-threshold="0"
         ?open=${this.open}
-        theme=${this.theme}
         @forge-dialog-close=${() => (this.isBusy = false)}
         aria-labelledby="confirmation-dialog-title"
         aria-describedby="confirmation-message">
         <div class="outer-container">
           <div class="title-message-container">
-            <forge-icon .name=${ICONS[this.theme]} class="icon"></forge-icon>
             ${this._title}
             <slot name="message" id="confirmation-message" class="message"></slot>
           </div>

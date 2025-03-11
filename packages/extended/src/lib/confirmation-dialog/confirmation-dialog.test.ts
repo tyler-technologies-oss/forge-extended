@@ -1,6 +1,6 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
-import { ConfirmationDialogComponent, ConfirmationDialogTheme } from './confirmation-dialog';
+import { ConfirmationDialogComponent } from './confirmation-dialog';
 import sinon from 'sinon';
 
 import './confirmation-dialog';
@@ -22,7 +22,6 @@ describe('ConfirmationDialog', () => {
 
     expect(harness.open).to.be.false;
     expect(harness.isBusy).to.be.false;
-    expect(harness.theme).to.be.equal('info');
   });
 
   it('should define sub-component dependencies', async () => {
@@ -72,12 +71,6 @@ describe('ConfirmationDialog', () => {
     await harness.el.updateComplete;
 
     expect(harness.open).to.be.false;
-  });
-
-  it('should set theme', async () => {
-    const harness = await createFixture({ theme: 'error' });
-
-    expect(harness.el.theme).to.equal('error');
   });
 
   it('content should project into the title slot', async () => {
@@ -241,16 +234,11 @@ class ConfirmationDialogHarness {
   public get isBusy(): boolean {
     return this.el.isBusy && this.forgeDialogElement.open;
   }
-
-  public get theme(): string {
-    return this.el.theme;
-  }
 }
 
 interface ConfirmationDialogFixtureConfig {
   open?: boolean;
   isBusy?: boolean;
-  theme?: ConfirmationDialogTheme;
   ariaLabelLoading?: string;
   secondaryActionText?: string;
 }
@@ -258,16 +246,11 @@ interface ConfirmationDialogFixtureConfig {
 async function createFixture({
   open = false,
   isBusy = false,
-  theme,
   ariaLabelLoading,
   secondaryActionText = 'Cancel'
 }: ConfirmationDialogFixtureConfig = {}): Promise<ConfirmationDialogHarness> {
   const el = await fixture<ConfirmationDialogComponent>(html`
-    <forge-confirmation-dialog
-      .open=${open}
-      .isBusy=${isBusy}
-      theme=${ifDefined(theme)}
-      ariaLabelLoading=${ifDefined(ariaLabelLoading)}>
+    <forge-confirmation-dialog .open=${open} .isBusy=${isBusy} ariaLabelLoading=${ifDefined(ariaLabelLoading)}>
       <div slot="title">Title</div>
       <div slot="message">Message</div>
       <div slot="secondary-button-text" id="secondary-button-text">${ifDefined(secondaryActionText)}</div>

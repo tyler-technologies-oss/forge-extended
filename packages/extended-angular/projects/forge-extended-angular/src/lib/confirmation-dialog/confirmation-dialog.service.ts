@@ -15,7 +15,7 @@ export class ConfirmationDialogService {
    * @param [parent] The parent element to attach this confirmation dialog instance to.
    */
   public open(config: Partial<ConfirmationDialogComponent>, parent = document.body): ConfirmationDialogRef {
-    const element = document.createElement('forge-confirmation-dialog');
+    const element = document.createElement('forge-confirmation-dialog') as ConfirmationDialogComponent;
     Object.assign(element, config);
     parent.appendChild(element);
     element.open = true;
