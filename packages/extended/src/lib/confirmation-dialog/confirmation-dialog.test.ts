@@ -159,6 +159,18 @@ describe('ConfirmationDialog', () => {
 
     expect(harness.secondaryButton).to.not.exist;
   });
+
+  it('heading element should be removed if the title slot is removed', async () => {
+    const harness = await createFixture({ open: true });
+    expect(harness.headingElement).to.exist;
+
+    harness.titleSlot.assignedElements().forEach(el => el.remove());
+
+    await harness.el.updateComplete;
+    await harness.el.updateComplete;
+
+    expect(harness.headingElement).to.not.exist;
+  });
 });
 
 class ConfirmationDialogHarness {
@@ -178,6 +190,10 @@ class ConfirmationDialogHarness {
 
   public get secondaryButton(): ButtonComponent {
     return this.el.shadowRoot!.querySelector('#secondary-button') as ButtonComponent;
+  }
+
+  public get headingElement(): HTMLElement {
+    return this.el.shadowRoot!.querySelector('h1') as HTMLElement;
   }
 
   public get primaryButton(): ButtonComponent {

@@ -96,19 +96,45 @@ export class ConfirmationDialogComponent extends LitElement {
   @state()
   private _showSecondaryButton = true;
 
+  /**
+   * Internal state to show/hide title
+   */
+  @state()
+  private _showTitle = true;
+
   @queryAssignedNodes({ slot: 'secondary-button-text', flatten: true })
   private _secondaryButtonNode!: Array<Node>;
 
-  private _handleSlotChange(): void {
-    this._toggleSecondaryButton();
-  }
+  @queryAssignedNodes({ slot: 'title', flatten: true })
+  private _titleNode!: Array<Node>;
 
   public updated(): void {
     this._toggleSecondaryButton();
+    this._toggleTitle();
   }
 
   private _toggleSecondaryButton(): void {
     this._showSecondaryButton = this._secondaryButtonNode.length > 0;
+  }
+
+  private _toggleTitle(): void {
+    this._showTitle = this._titleNode.length > 0;
+  }
+
+  private get _title(): TemplateResult | typeof nothing {
+    return when(
+      this._showTitle,
+      () => html`<h1>${this._titleSlot}</h1>`,
+      () => html`${this._titleSlot}`
+    );
+  }
+
+  private get _titleSlot(): TemplateResult | typeof nothing {
+    return html` <slot
+      name="title"
+      id="confirmation-dialog-title"
+      class="title"
+      @slotchange=${this._toggleTitle}></slot>`;
   }
 
   private get _busyIndicator(): TemplateResult | typeof nothing {
@@ -121,7 +147,7 @@ export class ConfirmationDialogComponent extends LitElement {
     return html` <slot
       name="secondary-button-text"
       id="secondary-button-slot"
-      @slotchange=${this._handleSlotChange}></slot>`;
+      @slotchange=${this._toggleSecondaryButton}></slot>`;
   }
 
   private get _secondaryButton(): TemplateResult | typeof nothing {
@@ -167,7 +193,7 @@ export class ConfirmationDialogComponent extends LitElement {
         <div class="outer-container">
           <div class="title-message-container">
             <forge-icon .name=${ICONS[this.theme]} class="icon"></forge-icon>
-            <slot name="title" id="confirmation-dialog-title" class="title"></slot>
+            ${this._title}
             <slot name="message" id="confirmation-message" class="message"></slot>
           </div>
           <div class="actions-container">${this._secondaryButton} ${this._primaryButton}</div>

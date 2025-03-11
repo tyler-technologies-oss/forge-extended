@@ -46,6 +46,10 @@
   padding-block: 0;
 }
 
+h1 {
+  margin: 0;
+}
+
 .message {
   @include forge-typography.style(body2);
   color: inherit;
