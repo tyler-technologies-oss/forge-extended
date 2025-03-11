@@ -21,8 +21,8 @@ const meta = {
       confirmationDialogRef.value!.open = false;
     }
 
-    function onConfirmationDialogAction(e: ConfirmationDialogActionEventData) {
-      console.log(e.detail);
+    function onConfirmationDialogAction(e: CustomEvent<ConfirmationDialogActionEventData>) {
+      console.log(e.detail.primaryAction);
       const isPrimary = e.detail.primaryAction;
       if (!isPrimary) {
         confirmationDialogRef.value!.open = false;
@@ -45,7 +45,8 @@ const meta = {
       <forge-button variant="raised" @click=${handleClick}>Show Confirmation Dialog</forge-button>
       <forge-confirmation-dialog
         ${ref(confirmationDialogRef)}
-        @forge-confirmation-dialog-action=${(e: ConfirmationDialogActionEventData) => onConfirmationDialogAction(e)}
+        @forge-confirmation-dialog-action=${(e: CustomEvent<ConfirmationDialogActionEventData>) =>
+          onConfirmationDialogAction(e)}
         @forge-dialog-close=${closeDialog}
         ?open=${args.open}
         .theme=${args.theme}
