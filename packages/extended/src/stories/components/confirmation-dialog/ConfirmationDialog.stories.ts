@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 
 import '$lib/confirmation-dialog';
-import { ConfirmationDialogComponent } from '$lib/confirmation-dialog';
+import { ConfirmationDialogActionEventData, ConfirmationDialogComponent } from '$lib/confirmation-dialog';
 
 import { createRef, ref } from 'lit/directives/ref.js';
 
@@ -21,7 +21,8 @@ const meta = {
       confirmationDialogRef.value!.open = false;
     }
 
-    function onConfirmationDialogAction(e: IConfirmationDialogAction) {
+    function onConfirmationDialogAction(e: ConfirmationDialogActionEventData) {
+      console.log(e.detail);
       const isPrimary = e.detail.primaryAction;
       if (!isPrimary) {
         confirmationDialogRef.value!.open = false;
@@ -44,7 +45,7 @@ const meta = {
       <forge-button variant="raised" @click=${handleClick}>Show Confirmation Dialog</forge-button>
       <forge-confirmation-dialog
         ${ref(confirmationDialogRef)}
-        @forge-confirmation-dialog-action=${(e: IConfirmationDialogAction) => onConfirmationDialogAction(e)}
+        @forge-confirmation-dialog-action=${(e: ConfirmationDialogActionEventData) => onConfirmationDialogAction(e)}
         @forge-dialog-close=${closeDialog}
         ?open=${args.open}
         .theme=${args.theme}

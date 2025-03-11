@@ -23,25 +23,23 @@ declare global {
   }
 
   interface HTMLElementEventMap {
-    'forge-confirmation-dialog-action': CustomEvent<void>;
+    'forge-confirmation-dialog-action': CustomEvent<ConfirmationDialogActionEventData>;
   }
+}
 
-  export type ConfirmationDialogTheme = 'success' | 'error' | 'warning' | 'info';
+export type ConfirmationDialogTheme = 'success' | 'error' | 'warning' | 'info';
 
-  interface IConfirmationDialogAction extends CustomEvent {
-    detail: {
-      primaryAction: boolean;
-    };
-  }
+export interface ConfirmationDialogActionEventData {
+  primaryAction: boolean;
 }
 
 export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = 'forge-confirmation-dialog';
 
 const ICONS: Record<ConfirmationDialogTheme, string> = {
-  info: 'info_outline',
-  success: 'check_circle_outline',
-  warning: 'error_outline',
-  error: 'warning'
+  info: tylIconInfoOutline.name,
+  success: tylIconCheckCircleOutline.name,
+  warning: tylIconErrorOutline.name,
+  error: tylIconWarning.name
 };
 
 /**
@@ -52,7 +50,7 @@ const ICONS: Record<ConfirmationDialogTheme, string> = {
  * @slot secondary-button-text - The text used in the secondary action button
  * @slot primary-button-text - The text used in the primary action button
  *
- * @event {IConfirmationDialogAction} forge-confirmation-dialog-action- Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.
+ * @event {IConfirmationDialogAction} forge-confirmation-dialog-action - Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.
  */
 @customElement(ConfirmationDialogComponentTagName)
 export class ConfirmationDialogComponent extends LitElement {
@@ -203,11 +201,11 @@ export class ConfirmationDialogComponent extends LitElement {
   }
 
   private _onAction(isPrimary: boolean): void {
-    const event = new CustomEvent('forge-confirmation-dialog-action', {
+    const event = new CustomEvent<ConfirmationDialogActionEventData>('forge-confirmation-dialog-action', {
       bubbles: true,
       cancelable: true,
       detail: { primaryAction: isPrimary }
-    } as IConfirmationDialogAction);
+    });
     this.dispatchEvent(event);
   }
 }
