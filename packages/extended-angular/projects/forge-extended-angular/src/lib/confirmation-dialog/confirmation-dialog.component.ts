@@ -45,17 +45,6 @@ export class ConfirmationDialogComponent {
     return this.nativeElement.isBusy;
   }
 
-  /** Current theme of the dialog */
-  @Input()
-  public set theme(value: ConfirmationDialogComponentCustomElement['theme']) {
-    this.zone.runOutsideAngular(() => {
-      this.nativeElement.theme = value;
-    });
-  }
-  public get theme(): ConfirmationDialogComponentCustomElement['theme'] {
-    return this.nativeElement.theme;
-  }
-
   /** Aria label of the busy indicator when loading */
   @Input()
   public set ariaLabelLoading(value: ConfirmationDialogComponentCustomElement['ariaLabelLoading']) {

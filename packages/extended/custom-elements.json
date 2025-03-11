@@ -474,17 +474,6 @@
             },
             {
               "kind": "field",
-              "name": "theme",
-              "type": {
-                "text": "ConfirmationDialogTheme"
-              },
-              "privacy": "public",
-              "default": "'info'",
-              "description": "Current theme of the confirmation dialog",
-              "attribute": "theme"
-            },
-            {
-              "kind": "field",
               "name": "ariaLabelLoading",
               "type": {
                 "text": "string"
@@ -529,15 +518,6 @@
                 "text": "Array<Node>"
               },
               "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "#internals",
-              "privacy": "private",
-              "type": {
-                "text": "ElementInternals"
-              },
-              "readonly": true
             },
             {
               "kind": "method",
@@ -659,15 +639,6 @@
               "default": "false",
               "description": "Indicates whether the confirmation dialog in a busy state",
               "fieldName": "isBusy"
-            },
-            {
-              "name": "theme",
-              "type": {
-                "text": "ConfirmationDialogTheme"
-              },
-              "default": "'info'",
-              "description": "Current theme of the confirmation dialog",
-              "fieldName": "theme"
             },
             {
               "name": "aria-label-loading",
@@ -943,7 +914,7 @@
     },
     "HTMLElementEventMap": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 25
+      "lineNumber": 12
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -961,17 +932,13 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 38
     },
-    "ConfirmationDialogTheme": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 30
-    },
     "ConfirmationDialogActionEventData": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 32
+      "lineNumber": 17
     },
     "ConfirmationDialogComponent": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 55
+      "lineNumber": 33
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
