@@ -677,61 +677,14 @@
           "members": [
             {
               "kind": "field",
-              "name": "someProperty",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "true",
-              "description": "Description of the property.",
-              "attribute": "some-property"
-            },
-            {
-              "kind": "field",
-              "name": "#internals"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<IResponsiveToolbarOverflow>"
-              },
-              "description": "Dispatched when the overflow state changes",
-              "name": "forge-responsive-toolbar-overflow"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "some-property",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Description of the property.",
-              "fieldName": "someProperty"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-responsive-toolbar",
-          "customElement": true
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ResponsiveToolbarComponent",
-          "members": [
-            {
-              "kind": "field",
               "name": "autoHeight",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
               "default": "true",
-              "description": "Forces the internal container to use height: auto for dynamic content that doesn't fit the static height."
+              "description": "Forces the internal container to use height: auto for dynamic content that doesn't fit the static height.",
+              "attribute": "auto-height"
             },
             {
               "kind": "field",
@@ -741,7 +694,8 @@
               },
               "privacy": "public",
               "default": "false",
-              "description": "Hides the internal divider"
+              "description": "Hides the internal divider",
+              "attribute": "no-border"
             },
             {
               "kind": "field",
@@ -751,7 +705,8 @@
               },
               "privacy": "public",
               "default": "false",
-              "description": "Controls whether a bottom divider (default) or top divider (true) is used."
+              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
+              "attribute": "inverted"
             },
             {
               "kind": "field",
@@ -809,37 +764,53 @@
               ]
             }
           ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<IResponsiveToolbarOverflow>"
+              },
+              "description": "Dispatched when the overflow state changes",
+              "name": "forge-responsive-toolbar-overflow"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "auto-height",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Forces the internal container to use height: auto for dynamic content that doesn't fit the static height.",
+              "fieldName": "autoHeight"
+            },
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Hides the internal divider",
+              "fieldName": "noBorder"
+            },
+            {
+              "name": "inverted",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
+              "fieldName": "inverted"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
+          "tagName": "forge-responsive-toolbar",
           "customElement": true
         }
       ],
       "exports": [
-        {
-          "kind": "js",
-          "name": "ResponsiveToolbarComponentTagName",
-          "declaration": {
-            "name": "ResponsiveToolbarComponentTagName",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ResponsiveToolbarComponent",
-          "declaration": {
-            "name": "ResponsiveToolbarComponent",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ResponsiveToolbarComponent",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
-          }
-        },
         {
           "kind": "js",
           "name": "ResponsiveToolbarComponentTagName",
@@ -870,11 +841,11 @@
   "forgeTypes": {
     "HTMLElementTagNameMap": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 40
+      "lineNumber": 10
     },
     "HTMLElementEventMap": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 44
+      "lineNumber": 14
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -896,13 +867,13 @@
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
     },
-    "ResponsiveToolbarComponent": {
-      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 75
-    },
     "IResponsiveToolbarOverflow": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 49
+      "lineNumber": 19
+    },
+    "ResponsiveToolbarComponent": {
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "lineNumber": 45
     }
   }
 }
