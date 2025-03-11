@@ -142,6 +142,14 @@ describe('ConfirmationDialog', () => {
     expect(harness.circularProgressElement).to.exist;
   });
 
+  it('busy indicator should be removed when isBusy is set to false', async () => {
+    const harness = await createFixture({ open: true, isBusy: true });
+    expect(harness.circularProgressElement).to.exist;
+    harness.el.isBusy = false;
+    await harness.el.updateComplete;
+    expect(harness.circularProgressElement).to.not.exist;
+  });
+
   it('secondary button should be removed if the secondary-button-slot is removed', async () => {
     const harness = await createFixture({ open: true, secondaryActionText: 'Cancel' });
     harness.secondaryButtonTextSlot.assignedElements().forEach(el => el.remove());
