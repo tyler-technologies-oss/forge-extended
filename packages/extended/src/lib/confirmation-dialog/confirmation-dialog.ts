@@ -154,6 +154,7 @@ export class ConfirmationDialogComponent extends LitElement {
   public override render(): TemplateResult {
     return html`
       <forge-dialog
+        persistent
         fullscreen-threshold="0"
         ?open=${this.open}
         @forge-dialog-close=${() => (this.isBusy = false)}
