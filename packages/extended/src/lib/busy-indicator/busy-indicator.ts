@@ -65,6 +65,12 @@ export class BusyIndicatorComponent extends LitElement {
   public titleText?: string;
 
   /**
+   * The heading level for the title.
+   */
+  @property({ attribute: 'heading-level', type: Number })
+  public headingLevel: 1 | 2 | 3 | 4 | 5 | 6 = 1;
+
+  /**
    * The message to display.
    */
   @property()
@@ -125,17 +131,34 @@ export class BusyIndicatorComponent extends LitElement {
   /** Holds the previously focused element before the busy indicator was opened. */
   #previousActiveElement: HTMLElement | null = null;
 
+  private get _slottedTitleNodes(): Node[] {
+    return (
+      this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="title"]')?.assignedNodes({ flatten: true }) ?? []
+    );
+  }
+
+  private get _slottedMessageNodes(): Node[] {
+    return (
+      this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="message"]')?.assignedNodes({ flatten: true }) ?? []
+    );
+  }
+
   private get _titleTemplate(): TemplateResult | typeof nothing {
+    const hasTitle = !!this.titleText?.trim() || this._slottedTitleNodes.length > 0;
     return when(
-      this.titleText,
-      () => html`<h1 id="title" class="title"><slot name="title">${this.titleText}</slot></h1>`
+      hasTitle,
+      // prettier-ignore
+      () => html`<div role="heading" aria-level=${this.headingLevel} id="title" class="title"><slot name="title">${this.titleText}</slot></div>`,
+      () => html`<slot name="title"></slot>`
     );
   }
 
   private get _messageTemplate(): TemplateResult | typeof nothing {
+    const hasMessage = !!this.message?.trim() || this._slottedMessageNodes.length > 0;
     return when(
-      this.message?.trim(),
-      () => html`<p id="message" class="message"><slot name="message">${this.message}</slot></p>`
+      hasMessage,
+      () => html`<p id="message" class="message"><slot name="message">${this.message}</slot></p>`,
+      () => html`<slot name="message"></slot>`
     );
   }
 
@@ -204,7 +227,7 @@ export class BusyIndicatorComponent extends LitElement {
         .mode=${this.mode === 'inline' ? 'inline-modal' : 'modal'}
         .label=${this.label || this.titleText || ''}
         .description=${this.description || this.message || ''}>
-        <div class="surface">
+        <div class="surface" @slotchange=${this._handleSlotChange}>
           ${this._titleTemplate}
           ${when(
             this.variant === 'spinner' || this.variant === 'message-only' || this.message || this.cancelable,
@@ -239,5 +262,12 @@ export class BusyIndicatorComponent extends LitElement {
   private _releaseFocus(): void {
     this.#previousActiveElement?.focus({ preventScroll: true });
     this.#previousActiveElement = null;
+  }
+
+  private _handleSlotChange(evt: Event): void {
+    const slotName = (evt.target as HTMLSlotElement).name;
+    if (['title', 'message'].includes(slotName)) {
+      this.requestUpdate();
+    }
   }
 }

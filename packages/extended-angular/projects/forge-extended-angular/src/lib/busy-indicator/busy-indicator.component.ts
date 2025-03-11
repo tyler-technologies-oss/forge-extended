@@ -57,6 +57,17 @@ export class BusyIndicatorComponent {
     return this.nativeElement.titleText;
   }
 
+  /** The heading level for the title. */
+  @Input()
+  public set headingLevel(value: BusyIndicatorComponentCustomElement['headingLevel']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.headingLevel = value;
+    });
+  }
+  public get headingLevel(): BusyIndicatorComponentCustomElement['headingLevel'] {
+    return this.nativeElement.headingLevel;
+  }
+
   /** The message to display. */
   @Input()
   public set message(value: BusyIndicatorComponentCustomElement['message']) {

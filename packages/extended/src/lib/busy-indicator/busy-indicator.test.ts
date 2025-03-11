@@ -1,5 +1,6 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
+import { nothing } from 'lit';
 import {
   frame,
   IButtonComponent,
@@ -38,6 +39,7 @@ describe('Busy Indicator', () => {
     expect(harness.el.mode).to.equal('fullscreen');
     expect(harness.el.label).not.to.be.ok;
     expect(harness.el.description).not.to.be.ok;
+    expect(harness.el.headingLevel).to.equal(1);
   });
 
   it('should define sub-component dependencies', async () => {
@@ -76,8 +78,31 @@ describe('Busy Indicator', () => {
   it('should set title text', async () => {
     const harness = await createFixture({ titleText: 'Loading...' });
 
+    expect(harness.el.titleText).to.equal('Loading...');
     expect(harness.titleElement).to.be.ok;
     expect(harness.titleElement.innerText).to.equal('Loading...');
+  });
+
+  it('should set title text via slot', async () => {
+    const harness = await createFixture({ titleTextSlot: 'Loading...' });
+
+    await harness.el.updateComplete;
+
+    expect(harness.titleElement).to.be.ok;
+    expect(harness.slottedTitleElement.innerText).to.equal('Loading...');
+  });
+
+  it('should set title heading level', async () => {
+    const harness = await createFixture({ titleText: 'Title', headingLevel: 2 });
+
+    expect(harness.titleElement).to.be.ok;
+    expect(harness.titleElement.ariaLevel).to.equal('2');
+
+    harness.el.headingLevel = 3;
+
+    await harness.el.updateComplete;
+
+    expect(harness.titleElement.ariaLevel).to.equal('3');
   });
 
   it('should set message', async () => {
@@ -278,6 +303,10 @@ class BusyIndicatorHarness {
     return this.el.shadowRoot?.querySelector('#title') as HTMLHeadingElement;
   }
 
+  public get slottedTitleElement(): HTMLSpanElement {
+    return this.el.querySelector('[slot="title"]') as HTMLSpanElement;
+  }
+
   public get messageElement(): HTMLParagraphElement {
     return this.el.shadowRoot?.querySelector('#message') as HTMLParagraphElement;
   }
@@ -335,7 +364,10 @@ interface BusyIndicatorFixtureConfig {
   open?: boolean;
   mode?: BusyIndicatorMode;
   titleText?: string;
+  titleTextSlot?: string;
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
   message?: string;
+  messageTextSlot?: string;
   cancelable?: boolean;
   variant?: BusyIndicatorVariant;
   determinate?: boolean;
@@ -347,6 +379,9 @@ async function createFixture({
   open = false,
   mode,
   titleText,
+  titleTextSlot,
+  headingLevel,
+  messageTextSlot,
   message,
   cancelable,
   variant,
@@ -364,7 +399,10 @@ async function createFixture({
       variant=${ifDefined(variant)}
       ?determinate=${determinate}
       .open=${open}
-      mode=${ifDefined(mode)}>
+      mode=${ifDefined(mode)}
+      heading-level=${ifDefined(headingLevel)}>
+      ${titleTextSlot ? html`<span slot="title">${titleTextSlot}</span>` : nothing}
+      ${messageTextSlot ? html`<span slot="message">${messageTextSlot}</span>` : nothing}
     </forge-busy-indicator>
   `);
 
