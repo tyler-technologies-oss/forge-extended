@@ -53,7 +53,6 @@ jobs:
         uses: JamesIves/github-pages-deploy-action@v4.7.3
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref_name }}
           folder: packages/extended/storybook-static
           target-folder: docs/${{ github.ref_name == 'main' && 'v1' || github.ref_name }}
           clean: true
