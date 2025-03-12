@@ -2,11 +2,11 @@ import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
 import { ConfirmationDialogComponent } from './confirmation-dialog';
 import sinon from 'sinon';
-
-import './confirmation-dialog';
 import { ButtonComponent, ICircularProgressComponent, IDialogComponent } from '@tylertech/forge';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { sendMouse } from '@web/test-runner-commands';
+
+import './confirmation-dialog';
 
 describe('ConfirmationDialog', () => {
   it('should contain shadow root', async () => {
