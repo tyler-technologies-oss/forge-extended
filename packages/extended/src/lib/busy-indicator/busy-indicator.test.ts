@@ -1,6 +1,5 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
-import { nothing } from 'lit';
 import {
   frame,
   IButtonComponent,
@@ -10,6 +9,7 @@ import {
   task
 } from '@tylertech/forge';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
+import { nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import sinon from 'sinon';
 import { BusyIndicatorComponent, BusyIndicatorMode, BusyIndicatorVariant } from './busy-indicator';
@@ -132,6 +132,22 @@ describe('Busy Indicator', () => {
 
     expect(harness.el.description).to.equal('Please wait while we load your data');
     expect(harness.forgeDialogElement.description).to.equal('Please wait while we load your data');
+    await expect(harness.el).shadowDom.to.be.accessible();
+  });
+
+  it('should set accessible label from slotted title', async () => {
+    const title = 'Loading';
+    const harness = await createFixture({ titleTextSlot: title });
+
+    expect(harness.forgeDialogElement.label).to.equal(title);
+    await expect(harness.el).shadowDom.to.be.accessible();
+  });
+
+  it('should set accessible description from message when message is visible', async () => {
+    const message = 'Please wait while we load your data';
+    const harness = await createFixture({ variant: 'message-only', messageTextSlot: message });
+
+    expect(harness.forgeDialogElement.description).to.equal(message);
     await expect(harness.el).shadowDom.to.be.accessible();
   });
 
