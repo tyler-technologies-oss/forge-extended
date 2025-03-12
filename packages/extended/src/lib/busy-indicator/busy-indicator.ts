@@ -5,7 +5,7 @@ import {
   defineLinearProgressComponent
 } from '@tylertech/forge';
 import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
 
@@ -131,17 +131,11 @@ export class BusyIndicatorComponent extends LitElement {
   /** Holds the previously focused element before the busy indicator was opened. */
   #previousActiveElement: HTMLElement | null = null;
 
-  private get _slottedTitleNodes(): Node[] {
-    return (
-      this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="title"]')?.assignedNodes({ flatten: true }) ?? []
-    );
-  }
+  @queryAssignedNodes({ slot: 'title', flatten: true })
+  private _slottedTitleNodes!: Array<Node>;
 
-  private get _slottedMessageNodes(): Node[] {
-    return (
-      this.shadowRoot?.querySelector<HTMLSlotElement>('slot[name="message"]')?.assignedNodes({ flatten: true }) ?? []
-    );
-  }
+  @queryAssignedNodes({ slot: 'message', flatten: true })
+  private _slottedMessageNodes!: Array<Node>;
 
   private get _titleTemplate(): TemplateResult | typeof nothing {
     const hasTitle = !!this.titleText?.trim() || this._slottedTitleNodes.length > 0;
