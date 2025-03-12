@@ -9,7 +9,8 @@ import { useEventListener } from "./react-utils.js";
 
 export const ForgeConfirmationDialog = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
-  const { open, isBusy, ariaLabelLoading, ...filteredProps } = props;
+  const { open, isBusy, label, description, busyLabel, ...filteredProps } =
+    props;
 
   /** Event listeners - run once */
   useEventListener(
@@ -25,8 +26,9 @@ export const ForgeConfirmationDialog = forwardRef((props, forwardedRef) => {
     {
       ref,
       ...filteredProps,
-      "aria-label-loading":
-        props.ariaLabelLoading || props["aria-label-loading"],
+      label: props.label,
+      description: props.description,
+      "busy-label": props.busyLabel || props["busy-label"],
       class: props.className,
       exportparts: props.exportparts,
       for: props.htmlFor,

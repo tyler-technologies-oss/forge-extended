@@ -186,17 +186,19 @@
               "kind": "field",
               "name": "_slottedTitleNodes",
               "type": {
-                "text": "Array<Node>"
+                "text": "Node[]"
               },
-              "privacy": "private"
+              "privacy": "private",
+              "readonly": true
             },
             {
               "kind": "field",
               "name": "_slottedMessageNodes",
               "type": {
-                "text": "Array<Node>"
+                "text": "Node[]"
               },
-              "privacy": "private"
+              "privacy": "private",
+              "readonly": true
             },
             {
               "kind": "field",
@@ -559,15 +561,23 @@
             },
             {
               "kind": "field",
-              "name": "_slottedSecondaryButtonTextNodes",
+              "name": "_slottedTitleNodes",
               "type": {
-                "text": "Array<Node>"
+                "text": "Array<HTMLElement>"
               },
               "privacy": "private"
             },
             {
               "kind": "field",
-              "name": "_slottedTitleNodes",
+              "name": "_slottedMessageNodes",
+              "type": {
+                "text": "Array<HTMLElement>"
+              },
+              "privacy": "private"
+            },
+            {
+              "kind": "field",
+              "name": "_slottedSecondaryButtonTextNodes",
               "type": {
                 "text": "Array<Node>"
               },
@@ -981,8 +991,8 @@
       "lineNumber": 14
     },
     "HTMLElementEventMap": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 20
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 12
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",

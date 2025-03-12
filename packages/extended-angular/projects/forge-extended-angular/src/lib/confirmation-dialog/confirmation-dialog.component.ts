@@ -34,6 +34,28 @@ export class ConfirmationDialogComponent {
     return this.nativeElement.open;
   }
 
+  /** The accessible label for dialog. */
+  @Input()
+  public set label(value: ConfirmationDialogComponentCustomElement['label']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.label = value;
+    });
+  }
+  public get label(): ConfirmationDialogComponentCustomElement['label'] {
+    return this.nativeElement.label;
+  }
+
+  /** The accessible description for dialog. */
+  @Input()
+  public set description(value: ConfirmationDialogComponentCustomElement['description']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.description = value;
+    });
+  }
+  public get description(): ConfirmationDialogComponentCustomElement['description'] {
+    return this.nativeElement.description;
+  }
+
   /** Indicates whether the confirmation dialog in a busy state */
   @Input({ transform: booleanAttribute })
   public set isBusy(value: ConfirmationDialogComponentCustomElement['isBusy']) {
@@ -47,13 +69,13 @@ export class ConfirmationDialogComponent {
 
   /** Aria label of the busy indicator when loading */
   @Input()
-  public set ariaLabelLoading(value: ConfirmationDialogComponentCustomElement['ariaLabelLoading']) {
+  public set busyLabel(value: ConfirmationDialogComponentCustomElement['busyLabel']) {
     this.zone.runOutsideAngular(() => {
-      this.nativeElement.ariaLabelLoading = value;
+      this.nativeElement.busyLabel = value;
     });
   }
-  public get ariaLabelLoading(): ConfirmationDialogComponentCustomElement['ariaLabelLoading'] {
-    return this.nativeElement.ariaLabelLoading;
+  public get busyLabel(): ConfirmationDialogComponentCustomElement['busyLabel'] {
+    return this.nativeElement.busyLabel;
   }
 
   constructor(

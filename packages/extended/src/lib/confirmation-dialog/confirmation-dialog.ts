@@ -1,8 +1,9 @@
 import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property, queryAssignedElements, queryAssignedNodes } from 'lit/decorators.js';
+import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import styles from './confirmation-dialog.scss?inline';
 import { defineButtonComponent, defineCircularProgressComponent, defineDialogComponent } from '@tylertech/forge';
+import { composeSlottedTextContent } from '../utils/slot-utils';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -76,14 +77,14 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   @property({ type: String, attribute: 'busy-label' })
   public busyLabel = 'Loading';
 
-  @queryAssignedElements({ slot: 'title', flatten: true })
-  private _slottedTitleNodes!: Array<HTMLElement>;
+  @queryAssignedNodes({ slot: 'title', flatten: true })
+  private _slottedTitleNodes!: Node[];
 
-  @queryAssignedElements({ slot: 'message', flatten: true })
-  private _slottedMessageNodes!: Array<HTMLElement>;
+  @queryAssignedNodes({ slot: 'message', flatten: true })
+  private _slottedMessageNodes!: Node[];
 
-  @queryAssignedElements({ slot: 'secondary-button-text', flatten: true })
-  private _slottedSecondaryButtonTextNodes!: Array<Node>;
+  @queryAssignedNodes({ slot: 'secondary-button-text', flatten: true })
+  private _slottedSecondaryButtonTextNodes!: Node[];
 
   private get _title(): TemplateResult | typeof nothing {
     const showTitle = this._slottedTitleNodes.length > 0;
@@ -139,7 +140,6 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   }
 
   public override render(): TemplateResult {
-    console.log(this._slottedTitleNodes);
     return html`
       <forge-dialog
         @slotchange=${this._handleSlotChange}
@@ -147,8 +147,8 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
         fullscreen-threshold="0"
         ?open=${this.open}
         @forge-dialog-close=${() => (this.isBusy = false)}
-        .label=${this.label || this._slottedTitleNodes.at(0)?.innerText || ''}
-        .description=${this.description || this._slottedMessageNodes.at(0)?.innerText || ''}>
+        .label=${this.label || composeSlottedTextContent(this._slottedTitleNodes) || ''}
+        .description=${this.description || composeSlottedTextContent(this._slottedMessageNodes) || ''}>
         <div class="outer-container">
           <div class="title-message-container">
             ${this._title}

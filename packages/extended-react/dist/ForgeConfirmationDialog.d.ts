@@ -28,8 +28,14 @@ export interface ForgeConfirmationDialogProps
   /** Indicates whether the confirmation dialog in a busy state */
   isBusy?: boolean;
 
+  /** The accessible label for dialog. */
+  label?: ForgeConfirmationDialogElement["label"];
+
+  /** The accessible description for dialog. */
+  description?: ForgeConfirmationDialogElement["description"];
+
   /** Aria label of the busy indicator when loading */
-  ariaLabelLoading?: ForgeConfirmationDialogElement["ariaLabelLoading"];
+  busyLabel?: ForgeConfirmationDialogElement["busyLabel"];
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;

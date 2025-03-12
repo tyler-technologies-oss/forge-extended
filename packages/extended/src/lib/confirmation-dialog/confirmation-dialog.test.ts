@@ -190,6 +190,22 @@ describe('ConfirmationDialog', () => {
     expect(spy).to.have.been.calledOnce;
     expect(harness.el.open).to.be.false;
   });
+
+  it('should set accessible label from slotted title', async () => {
+    const title = 'Loading';
+    const harness = await createFixture({ title: title });
+
+    expect(harness.forgeDialogElement.label).to.equal(title);
+    await expect(harness.el).shadowDom.to.be.accessible();
+  });
+
+  it('should set accessible description from message when message is visible', async () => {
+    const message = 'Please wait while we load your data';
+    const harness = await createFixture({ message: message });
+
+    expect(harness.forgeDialogElement.description).to.equal(message);
+    await expect(harness.el).shadowDom.to.be.accessible();
+  });
 });
 
 class ConfirmationDialogHarness {
