@@ -39,7 +39,6 @@ export class ConfirmationDialogService {
     parent = document.body
   ): ConfirmationDialogRef {
     const element = document.createElement('forge-confirmation-dialog') as ConfirmationDialogComponent;
-    const dialogRef = new ConfirmationDialogRef(element);
 
     if (title) {
       this._createAndAppendSlottedElement(element, title, 'title');
@@ -58,7 +57,7 @@ export class ConfirmationDialogService {
     parent.appendChild(element);
 
     element.open = true;
-    return dialogRef;
+    return new ConfirmationDialogRef(element);
   }
 
   private _createAndAppendSlottedElement(
