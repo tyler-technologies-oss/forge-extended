@@ -6,7 +6,7 @@ import forgeTypePathsPlugin from './plugins/cem/type-paths.mjs';
 
 export default {
   globs: ['src/lib/**/*.ts'],
-  exclude: ['**/index.ts'],
+  exclude: ['**/index.ts', 'src/lib/utils/**', '**/*.test.ts'],
   plugins: [
     forgeBranchNamePlugin(),
     forgeTypePathsPlugin(),
