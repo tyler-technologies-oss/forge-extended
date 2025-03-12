@@ -693,7 +693,7 @@
       ]
     }
   ],
-  "branchName": "busy-indicator-prep-iteration",
+  "branchName": "main",
   "forgeTypes": {
     "HTMLElementTagNameMap": {
       "path": "src/lib/quantity-field/quantity-field.ts",
