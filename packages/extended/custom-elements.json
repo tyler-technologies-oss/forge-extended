@@ -485,27 +485,7 @@
             },
             {
               "kind": "field",
-              "name": "_showSecondaryButton",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "true",
-              "description": "Internal state to show/hide secondary button"
-            },
-            {
-              "kind": "field",
-              "name": "_showTitle",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "private",
-              "default": "true",
-              "description": "Internal state to show/hide title"
-            },
-            {
-              "kind": "field",
-              "name": "_secondaryButtonNode",
+              "name": "_slottedSecondaryButtonTextNodes",
               "type": {
                 "text": "Array<Node>"
               },
@@ -513,31 +493,11 @@
             },
             {
               "kind": "field",
-              "name": "_titleNode",
+              "name": "_slottedTitleNodes",
               "type": {
                 "text": "Array<Node>"
               },
               "privacy": "private"
-            },
-            {
-              "kind": "method",
-              "name": "_toggleSecondaryButton",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "_toggleTitle",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
             },
             {
               "kind": "field",
@@ -607,6 +567,24 @@
                   "name": "isPrimary",
                   "type": {
                     "text": "boolean"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "_handleSlotChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "evt",
+                  "type": {
+                    "text": "Event"
                   }
                 }
               ]
@@ -936,9 +914,13 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 17
     },
+    "ConfirmationDialogProperties": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 21
+    },
     "ConfirmationDialogComponent": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 33
+      "lineNumber": 39
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",

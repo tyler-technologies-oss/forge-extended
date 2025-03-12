@@ -1,8 +1,10 @@
 import { NgModule } from '@angular/core';
+import { ForgeExtendedConfirmationDialogProxyModule } from './confirmation-dialog-proxy.module';
+import { ConfirmationDialogService } from './confirmation-dialog.service';
 
 @NgModule({
-  providers: [ConfirmationDialogRefService],
-  imports: [ForgeExtendedConfirmationDialogRefroxyModule],
-  exports: [ForgeExtendedConfirmationDialogRefProxyModule]
+  providers: [ConfirmationDialogService],
+  imports: [ForgeExtendedConfirmationDialogProxyModule],
+  exports: [ForgeExtendedConfirmationDialogProxyModule]
 })
-export class ForgeExtendedConfirmationDialogRefModule {}
+export class ForgeExtendedConfirmationDialogModule {}

@@ -49,8 +49,8 @@ const meta = {
           onConfirmationDialogAction(e)}
         @forge-dialog-close=${closeDialog}
         ?open=${args.open}
-        .theme=${args.theme}
         aria-label-loading=${args.ariaLabelLoading}
+        .theme=${args.theme}
         .isBusy=${args.isBusy}>
         ${args.title.length ? html`<span slot="title">${args.title}</span>` : ''}
         ${args.message.length ? html`<span slot="message">${args.message}</span>` : ''}

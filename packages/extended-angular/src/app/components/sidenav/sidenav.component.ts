@@ -51,6 +51,7 @@ export class SidenavComponent implements OnInit {
 
   public componentMenuItems: IMenuItem[] = [
     { label: 'Busy Indicator', value: '/component/busy-indicator' },
+    { label: 'Confirmation Dialog', value: '/component/confirmation-dialog' },
     { label: 'Quantity Field', value: '/component/quantity-field' }
   ];
 

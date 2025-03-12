@@ -18,6 +18,12 @@ export interface ConfirmationDialogActionEventData {
   primaryAction: boolean;
 }
 
+export interface ConfirmationDialogProperties {
+  open: boolean;
+  isBusy: boolean;
+  ariaLabelLoading: string;
+}
+
 export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = 'forge-confirmation-dialog';
 
 /**
@@ -31,7 +37,7 @@ export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = '
  * @event {IConfirmationDialogAction} forge-confirmation-dialog-action - Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.
  */
 @customElement(ConfirmationDialogComponentTagName)
-export class ConfirmationDialogComponent extends LitElement {
+export class ConfirmationDialogComponent extends LitElement implements ConfirmationDialogProperties {
   static {
     defineButtonComponent();
     defineDialogComponent();
@@ -58,55 +64,23 @@ export class ConfirmationDialogComponent extends LitElement {
   @property({ type: String, attribute: 'aria-label-loading' })
   public ariaLabelLoading = 'Loading';
 
-  /**
-   * Internal state to show/hide secondary button
-   */
-  @state()
-  private _showSecondaryButton = true;
-
-  /**
-   * Internal state to show/hide title
-   */
-  @state()
-  private _showTitle = true;
-
   @queryAssignedNodes({ slot: 'secondary-button-text', flatten: true })
-  private _secondaryButtonNode!: Array<Node>;
+  private _slottedSecondaryButtonTextNodes!: Array<Node>;
 
   @queryAssignedNodes({ slot: 'title', flatten: true })
-  private _titleNode!: Array<Node>;
-
-  constructor() {
-    super();
-  }
-
-  public updated(): void {
-    this._toggleSecondaryButton();
-    this._toggleTitle();
-  }
-
-  private _toggleSecondaryButton(): void {
-    this._showSecondaryButton = this._secondaryButtonNode.length > 0;
-  }
-
-  private _toggleTitle(): void {
-    this._showTitle = this._titleNode.length > 0;
-  }
+  private _slottedTitleNodes!: Array<Node>;
 
   private get _title(): TemplateResult | typeof nothing {
+    const showTitle = this._slottedTitleNodes.length > 0;
     return when(
-      this._showTitle,
+      showTitle,
       () => html`<h1>${this._titleSlot}</h1>`,
       () => html`${this._titleSlot}`
     );
   }
 
   private get _titleSlot(): TemplateResult | typeof nothing {
-    return html` <slot
-      name="title"
-      id="confirmation-dialog-title"
-      class="title"
-      @slotchange=${this._toggleTitle}></slot>`;
+    return html` <slot name="title" id="confirmation-dialog-title" class="title"></slot>`;
   }
 
   private get _busyIndicator(): TemplateResult | typeof nothing {
@@ -116,15 +90,13 @@ export class ConfirmationDialogComponent extends LitElement {
   }
 
   private get _secondaryButtonSlot(): TemplateResult | typeof nothing {
-    return html` <slot
-      name="secondary-button-text"
-      id="secondary-button-slot"
-      @slotchange=${this._toggleSecondaryButton}></slot>`;
+    return html` <slot name="secondary-button-text" id="secondary-button-slot"></slot>`;
   }
 
   private get _secondaryButton(): TemplateResult | typeof nothing {
+    const showSecondaryButton = this._slottedSecondaryButtonTextNodes.length > 0;
     return when(
-      this._showSecondaryButton,
+      showSecondaryButton,
       () =>
         html` <forge-button
           variant="outlined"
@@ -154,6 +126,7 @@ export class ConfirmationDialogComponent extends LitElement {
   public override render(): TemplateResult {
     return html`
       <forge-dialog
+        @slotchange=${this._handleSlotChange}
         persistent
         fullscreen-threshold="0"
         ?open=${this.open}
@@ -178,5 +151,12 @@ export class ConfirmationDialogComponent extends LitElement {
       detail: { primaryAction: isPrimary }
     });
     this.dispatchEvent(event);
+  }
+
+  private _handleSlotChange(evt: Event): void {
+    const slotName = (evt.target as HTMLSlotElement).name;
+    if (['title', 'secondary-button-text'].includes(slotName)) {
+      this.requestUpdate();
+    }
   }
 }
