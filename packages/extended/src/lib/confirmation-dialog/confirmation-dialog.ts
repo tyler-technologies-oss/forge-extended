@@ -1,5 +1,5 @@
 import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property, queryAssignedNodes, state } from 'lit/decorators.js';
+import { customElement, property, queryAssignedElements, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import styles from './confirmation-dialog.scss?inline';
 import { defineButtonComponent, defineCircularProgressComponent, defineDialogComponent } from '@tylertech/forge';
@@ -21,7 +21,7 @@ export interface ConfirmationDialogActionEventData {
 export interface ConfirmationDialogProperties {
   open: boolean;
   isBusy: boolean;
-  ariaLabelLoading: string;
+  busyLabel: string;
 }
 
 export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = 'forge-confirmation-dialog';
@@ -53,6 +53,18 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   public open = false;
 
   /**
+   * The accessible label for dialog.
+   */
+  @property()
+  public label: string | undefined;
+
+  /**
+   * The accessible description for dialog.
+   */
+  @property()
+  public description: string | undefined;
+
+  /**
    * Indicates whether the confirmation dialog in a busy state
    */
   @property({ type: Boolean, attribute: 'is-busy' })
@@ -61,14 +73,17 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   /**
    * Aria label of the busy indicator when loading
    */
-  @property({ type: String, attribute: 'aria-label-loading' })
-  public ariaLabelLoading = 'Loading';
+  @property({ type: String, attribute: 'busy-label' })
+  public busyLabel = 'Loading';
 
-  @queryAssignedNodes({ slot: 'secondary-button-text', flatten: true })
+  @queryAssignedElements({ slot: 'title', flatten: true })
+  private _slottedTitleNodes!: Array<HTMLElement>;
+
+  @queryAssignedElements({ slot: 'message', flatten: true })
+  private _slottedMessageNodes!: Array<HTMLElement>;
+
+  @queryAssignedElements({ slot: 'secondary-button-text', flatten: true })
   private _slottedSecondaryButtonTextNodes!: Array<Node>;
-
-  @queryAssignedNodes({ slot: 'title', flatten: true })
-  private _slottedTitleNodes!: Array<Node>;
 
   private get _title(): TemplateResult | typeof nothing {
     const showTitle = this._slottedTitleNodes.length > 0;
@@ -85,7 +100,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
 
   private get _busyIndicator(): TemplateResult | typeof nothing {
     return this.isBusy
-      ? html`<forge-circular-progress slot="end" aria-label=${this.ariaLabelLoading}> </forge-circular-progress>`
+      ? html`<forge-circular-progress slot="end" aria-label=${this.busyLabel}> </forge-circular-progress>`
       : nothing;
   }
 
@@ -124,6 +139,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   }
 
   public override render(): TemplateResult {
+    console.log(this._slottedTitleNodes);
     return html`
       <forge-dialog
         @slotchange=${this._handleSlotChange}
@@ -131,8 +147,8 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
         fullscreen-threshold="0"
         ?open=${this.open}
         @forge-dialog-close=${() => (this.isBusy = false)}
-        aria-labelledby="confirmation-dialog-title"
-        aria-describedby="confirmation-message">
+        .label=${this.label || this._slottedTitleNodes.at(0)?.innerText || ''}
+        .description=${this.description || this._slottedMessageNodes.at(0)?.innerText || ''}>
         <div class="outer-container">
           <div class="title-message-container">
             ${this._title}
@@ -151,6 +167,9 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
       detail: { primaryAction: isPrimary }
     });
     this.dispatchEvent(event);
+    if (!event.defaultPrevented) {
+      this.open = false;
+    }
   }
 
   private _handleSlotChange(evt: Event): void {

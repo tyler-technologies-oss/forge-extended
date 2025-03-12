@@ -186,19 +186,17 @@
               "kind": "field",
               "name": "_slottedTitleNodes",
               "type": {
-                "text": "Node[]"
+                "text": "Array<Node>"
               },
-              "privacy": "private",
-              "readonly": true
+              "privacy": "private"
             },
             {
               "kind": "field",
               "name": "_slottedMessageNodes",
               "type": {
-                "text": "Node[]"
+                "text": "Array<Node>"
               },
-              "privacy": "private",
-              "readonly": true
+              "privacy": "private"
             },
             {
               "kind": "field",
@@ -519,6 +517,26 @@
             },
             {
               "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog.",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
               "name": "isBusy",
               "type": {
                 "text": "boolean"
@@ -530,14 +548,14 @@
             },
             {
               "kind": "field",
-              "name": "ariaLabelLoading",
+              "name": "busyLabel",
               "type": {
                 "text": "string"
               },
               "privacy": "public",
               "default": "'Loading'",
               "description": "Aria label of the busy indicator when loading",
-              "attribute": "aria-label-loading"
+              "attribute": "busy-label"
             },
             {
               "kind": "field",
@@ -666,6 +684,22 @@
               "fieldName": "open"
             },
             {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog.",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog.",
+              "fieldName": "description"
+            },
+            {
               "name": "is-busy",
               "type": {
                 "text": "boolean"
@@ -675,13 +709,13 @@
               "fieldName": "isBusy"
             },
             {
-              "name": "aria-label-loading",
+              "name": "busy-label",
               "type": {
                 "text": "string"
               },
               "default": "'Loading'",
               "description": "Aria label of the busy indicator when loading",
-              "fieldName": "ariaLabelLoading"
+              "fieldName": "busyLabel"
             }
           ],
           "superclass": {

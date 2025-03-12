@@ -10,11 +10,9 @@ import './confirmation-dialog';
 
 describe('ConfirmationDialog', () => {
   it('should contain shadow root', async () => {
-    const el = await fixture<ConfirmationDialogComponent>(
-      html`<forge-confirmation-dialog></forge-confirmation-dialog>`
-    );
+    const harness = await createFixture();
 
-    expect(el.shadowRoot).to.be.ok;
+    expect(harness.el.shadowRoot).to.be.ok;
   });
 
   it('should have expected default state', async () => {
@@ -46,18 +44,18 @@ describe('ConfirmationDialog', () => {
     expect(harness.open).to.be.true;
   });
 
-  it('should set the aria-label of the circular progress to the ariaLabelLoading property', async () => {
+  it('should set the aria-label of the circular progress to the busyLabel property', async () => {
     const harness = await createFixture({ open: true, isBusy: true });
 
-    harness.el.ariaLabelLoading = 'Loading images';
+    harness.el.busyLabel = 'Loading images';
     await harness.el.updateComplete;
     expect(harness.circularProgressElement.ariaLabel).to.equal('Loading images');
   });
 
-  it('should set the aria-label of the circular progress to the aria-label-loading attribute', async () => {
+  it('should set the aria-label of the circular progress to the busy-label attribute', async () => {
     const harness = await createFixture({ open: true, isBusy: true });
 
-    harness.el.setAttribute('aria-label-loading', 'Loading more images');
+    harness.el.setAttribute('busy-label', 'Loading more images');
     await harness.el.updateComplete;
     expect(harness.circularProgressElement.ariaLabel).to.equal('Loading more images');
   });
@@ -164,6 +162,34 @@ describe('ConfirmationDialog', () => {
 
     expect(harness.headingElement).to.not.exist;
   });
+
+  it('should not close when action event is prevented', async () => {
+    const harness = await createFixture({ open: true });
+
+    expect(harness.el.open).to.be.true;
+
+    const spy = sinon.spy(evt => evt.preventDefault());
+    harness.el.addEventListener('forge-confirmation-dialog-action', spy);
+
+    harness.secondaryButton.click();
+
+    expect(spy).to.have.been.calledOnce;
+    expect(harness.el.open).to.be.true;
+  });
+
+  it('should close the dialog when secondary action is clicked and event is not prevented', async () => {
+    const harness = await createFixture({ open: true });
+
+    expect(harness.el.open).to.be.true;
+
+    const spy = sinon.spy();
+    harness.el.addEventListener('forge-confirmation-dialog-action', spy);
+
+    harness.secondaryButton.click();
+
+    expect(spy).to.have.been.calledOnce;
+    expect(harness.el.open).to.be.false;
+  });
 });
 
 class ConfirmationDialogHarness {
@@ -237,6 +263,8 @@ class ConfirmationDialogHarness {
 }
 
 interface ConfirmationDialogFixtureConfig {
+  title?: string;
+  message?: string;
   open?: boolean;
   isBusy?: boolean;
   ariaLabelLoading?: string;
@@ -244,6 +272,8 @@ interface ConfirmationDialogFixtureConfig {
 }
 
 async function createFixture({
+  title = 'Title',
+  message = 'Message',
   open = false,
   isBusy = false,
   ariaLabelLoading,
@@ -251,8 +281,8 @@ async function createFixture({
 }: ConfirmationDialogFixtureConfig = {}): Promise<ConfirmationDialogHarness> {
   const el = await fixture<ConfirmationDialogComponent>(html`
     <forge-confirmation-dialog .open=${open} .isBusy=${isBusy} ariaLabelLoading=${ifDefined(ariaLabelLoading)}>
-      <div slot="title">Title</div>
-      <div slot="message">Message</div>
+      <div slot="title">${ifDefined(title)}</div>
+      <div slot="message">${ifDefined(message)}</div>
       <div slot="secondary-button-text" id="secondary-button-text">${ifDefined(secondaryActionText)}</div>
       <div slot="primary-button-text">Primary button text</div>
     </forge-confirmation-dialog>
