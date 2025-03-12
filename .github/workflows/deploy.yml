@@ -8,15 +8,9 @@ on:
       - 'packages/extended/**'
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 concurrency:
   group: pages-deploy-${{ github.ref }}
   cancel-in-progress: true
-
 
 env:
   CI: true
