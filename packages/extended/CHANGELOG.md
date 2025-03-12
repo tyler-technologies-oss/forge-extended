@@ -1,5 +1,14 @@
 # @tylertech/forge-extended
 
+## 0.1.2
+
+### Patch Changes
+
+- ad6c6f9: use `queryAssignedNodes()`
+- 8859660: [busy-indicator] fixed an a11y issue when using slotted content
+- f0454b4: feat(busy-indicator): added `headingLevel` property and fixed layout bugs
+- f0454b4: improve conditional rendering detection
+
 ## 0.1.1
 
 ### Patch Changes

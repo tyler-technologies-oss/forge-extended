@@ -1,5 +1,17 @@
 # @tylertech/forge-extended-angular
 
+## 0.1.5
+
+### Patch Changes
+
+- f0454b4: feat(busy-indicator): added `headingLevel` property and fixed layout bugs
+- f0454b4: define custom element when injecting `BusyIndicatorService` and allow for optional config parameter
+- Updated dependencies [ad6c6f9]
+- Updated dependencies [8859660]
+- Updated dependencies [f0454b4]
+- Updated dependencies [f0454b4]
+  - @tylertech/forge-extended@0.1.2
+
 ## 0.1.4
 
 ### Patch Changes
