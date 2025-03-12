@@ -1,4 +1,4 @@
-import{j as i,M as s,T as r,C as a}from"./index-IM-2Z-Sp.js";import{useMDXComponents as e}from"./index-Bm6VqZe_.js";import{C as c}from"./CustomArgTypes-C520JYWa.js";import{C as l,D as m}from"./ConfirmationDialog.stories-DuG_YByW.js";import"./iframe-BGTpkhy1.js";import"./_commonjsHelpers-CqkleIqs.js";import"./index-BCI4JQNS.js";import"./index-ogSvIofg.js";import"./utils-B7mp_euL.js";import"./lit-element-CxMangmT.js";import"./base-Bk1rqh9v.js";import"./query-assigned-elements-BRx5EvbJ.js";import"./when-CKc7ldmw.js";import"./directive-helpers-D8tqYSsJ.js";function t(o){const n={blockquote:"blockquote",h2:"h2",li:"li",p:"p",strong:"strong",ul:"ul",...e(),...o.components};return i.jsxs(i.Fragment,{children:[i.jsx(s,{of:l}),`
+import{j as i,M as s,T as r,C as a}from"./index-BsF-1dGp.js";import{useMDXComponents as e}from"./index-cosZv7BU.js";import{C as c}from"./CustomArgTypes-BKj1-pWb.js";import{C as l,D as m}from"./ConfirmationDialog.stories-D1PNWLsl.js";import"./iframe-ll7T1jW2.js";import"./_commonjsHelpers-CqkleIqs.js";import"./index-BCI4JQNS.js";import"./index-ogSvIofg.js";import"./utils-chvBPtJ7.js";import"./lit-element-CxMangmT.js";import"./base-CWxi9ukh.js";import"./slot-utils-D0xsnu3F.js";import"./directive-helpers-D8tqYSsJ.js";function t(o){const n={blockquote:"blockquote",h2:"h2",li:"li",p:"p",strong:"strong",ul:"ul",...e(),...o.components};return i.jsxs(i.Fragment,{children:[i.jsx(s,{of:l}),`
 `,i.jsx(r,{}),`
 `,i.jsx(n.p,{children:"A confirmation dialog is a modal component used to present users with a brief message or alert requiring their decision. It typically includes two actions:"}),`
 `,i.jsxs(n.ul,{children:[`
@@ -13,4 +13,4 @@ import{j as i,M as s,T as r,C as a}from"./index-IM-2Z-Sp.js";import{useMDXCompon
 `,i.jsx(n.h2,{id:"api",children:"API"}),`
 `,i.jsx(c,{}),`
 `,i.jsx(n.h2,{id:"accessibility",children:"Accessibility"}),`
-`,i.jsx(n.p,{children:"In progress"})]})}function k(o={}){const{wrapper:n}={...e(),...o.components};return n?i.jsx(n,{...o,children:i.jsx(t,{...o})}):t(o)}export{k as default};
+`,i.jsx(n.p,{children:"In progress"})]})}function M(o={}){const{wrapper:n}={...e(),...o.components};return n?i.jsx(n,{...o,children:i.jsx(t,{...o})}):t(o)}export{M as default};
