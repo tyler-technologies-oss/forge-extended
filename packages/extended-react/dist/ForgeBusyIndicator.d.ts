@@ -37,6 +37,9 @@ export interface ForgeBusyIndicatorProps
   /** The title text to display. */
   titleText?: ForgeBusyIndicatorElement["titleText"];
 
+  /** The heading level for the title. */
+  headingLevel?: ForgeBusyIndicatorElement["headingLevel"];
+
   /** The message to display. */
   message?: ForgeBusyIndicatorElement["message"];
 

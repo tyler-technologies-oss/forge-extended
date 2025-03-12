@@ -8,25 +8,21 @@ on:
       - 'packages/extended/**'
   workflow_dispatch:
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 concurrency:
-  group: 'pages'
+  group: pages-deploy-${{ github.ref }}
   cancel-in-progress: true
+
+env:
+  CI: true
+  PNPM_CACHE_FOLDER: .pnpm-store
+  TURBO_TELEMETRY_DISABLED: 1
 
 jobs:
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
       - name: Install pnpm
@@ -38,20 +34,19 @@ jobs:
           node-version: 20
           cache: 'pnpm'
 
+      - name: Configure pnpm
+        run: pnpm config set store-dir $PNPM_CACHE_FOLDER
+
       - name: Install dependencies
         run: pnpm i
 
       - name: Build
         run: pnpm run build:storybook:extended
 
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
- 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - name: Deploy 🚀
+        uses: JamesIves/github-pages-deploy-action@v4.7.3
         with:
-          path: './packages/extended/storybook-static'
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+          token: ${{ secrets.GITHUB_TOKEN }}
+          folder: packages/extended/storybook-static
+          target-folder: docs/${{ github.ref_name == 'main' && 'v1' || github.ref_name }}
+          clean: true

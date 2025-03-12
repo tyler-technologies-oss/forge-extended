@@ -1,7 +1,10 @@
 <forge-button variant="raised" id="show-fullscreen-button">Show Fullscreen Busy Indicator</forge-button>
 
 <div class="inline-busy-indicator-container">
-  <forge-busy-indicator mode="inline" title-text="Loading" message="This could take a while..." cancelable open></forge-busy-indicator>
+  <forge-busy-indicator mode="inline" cancelable open>
+    <span slot="title">Loading</span>
+    <span slot="message">This could take a while...</span>
+  </forge-busy-indicator>
   <forge-button id="show-inline-button">Show Inline Busy Indicator</forge-button>
 </div>
 
