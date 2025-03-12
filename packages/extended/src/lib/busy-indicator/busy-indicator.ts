@@ -8,6 +8,7 @@ import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } 
 import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
+import { composeSlottedTextContent } from '../utils/slot-utils';
 
 import styles from './busy-indicator.scss?inline';
 
@@ -132,10 +133,10 @@ export class BusyIndicatorComponent extends LitElement {
   #previousActiveElement: HTMLElement | null = null;
 
   @queryAssignedNodes({ slot: 'title', flatten: true })
-  private _slottedTitleNodes!: Array<Node>;
+  private readonly _slottedTitleNodes!: Node[];
 
   @queryAssignedNodes({ slot: 'message', flatten: true })
-  private _slottedMessageNodes!: Array<Node>;
+  private readonly _slottedMessageNodes!: Node[];
 
   private get _titleTemplate(): TemplateResult | typeof nothing {
     const hasTitle = !!this.titleText?.trim() || this._slottedTitleNodes.length > 0;
@@ -219,8 +220,8 @@ export class BusyIndicatorComponent extends LitElement {
         persistent
         .open=${this.open}
         .mode=${this.mode === 'inline' ? 'inline-modal' : 'modal'}
-        .label=${this.label || this.titleText || ''}
-        .description=${this.description || this.message || ''}>
+        .label=${this.label || this.titleText || composeSlottedTextContent(this._slottedTitleNodes) || ''}
+        .description=${this.description || this.message || composeSlottedTextContent(this._slottedMessageNodes) || ''}>
         <div class="surface" @slotchange=${this._handleSlotChange}>
           ${this._titleTemplate}
           ${when(

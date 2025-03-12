@@ -701,23 +701,23 @@
     },
     "HTMLElementEventMap": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 19
+      "lineNumber": 20
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 24
+      "lineNumber": 25
     },
     "BusyIndicatorVariant": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 25
+      "lineNumber": 26
     },
     "BusyIndicatorFocusMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 26
+      "lineNumber": 27
     },
     "BusyIndicatorComponent": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 38
+      "lineNumber": 39
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
