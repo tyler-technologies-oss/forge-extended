@@ -50,7 +50,6 @@ const meta = {
         @forge-dialog-close=${closeDialog}
         ?open=${args.open}
         aria-label-loading=${args.ariaLabelLoading}
-        .theme=${args.theme}
         .isBusy=${args.isBusy}>
         ${args.title.length ? html`<span slot="title">${args.title}</span>` : ''}
         ${args.message.length ? html`<span slot="message">${args.message}</span>` : ''}
@@ -68,10 +67,6 @@ const meta = {
     title: { control: 'text' },
     message: { control: 'text' },
     ariaLabelLoading: { control: 'text' },
-    theme: {
-      control: 'select',
-      options: ['info', 'success', 'warning', 'error']
-    },
     secondaryButtonText: { control: 'text' },
     primaryButtonText: { control: 'text' },
     simulateAsync: { control: 'boolean' }
@@ -82,7 +77,6 @@ const meta = {
     title: 'Delete selected images?',
     message: 'Images will be permanently removed from your account and all synced devices.',
     ariaLabelLoading: 'Loading data',
-    theme: 'info',
     secondaryButtonText: 'No',
     primaryButtonText: 'Yes',
     simulateAsync: false
