@@ -16,8 +16,12 @@ export class ConfirmationDialogDemoComponent {
   public open = signal(false);
   public isBusy = signal(false);
 
-  public toggleConfirmationDialog(open: boolean): void {
-    this.open.set(open);
+  public openDialog(): void {
+    this.open.set(true);
+  }
+
+  public closeDialog(): void {
+    this.open.set(false);
   }
 
   public openDialogWithService(): void {
@@ -25,19 +29,19 @@ export class ConfirmationDialogDemoComponent {
       title: 'Discard draft?',
       message: 'You have unsaved changes. Are you sure you want to discard them?',
       secondaryButtonText: 'Cancel',
-      primaryButtonText: 'Discard'
+      primaryButtonText: 'Discard',
+      isBusy: false
     });
 
     dialogRef.onAction.pipe(take(1)).subscribe(result => {
       let { primaryAction } = result.detail;
-      dialogRef.nativeElement.isBusy = true;
 
       if (primaryAction) {
+        dialogRef.isBusy = true;
         setTimeout(() => {
-          dialogRef.isBusy = true;
           dialogRef.close();
           this._toastService.show({ theme: 'success', message: 'Changes confirmed' });
-        }, 1000);
+        }, 1500);
       } else {
         dialogRef.close();
         this._toastService.show({ message: 'Changes cancelled' });
@@ -48,14 +52,14 @@ export class ConfirmationDialogDemoComponent {
   public onActionInline(e: CustomEvent<ConfirmationDialogActionEventData>): void {
     let { primaryAction } = e.detail;
     if (!primaryAction) {
-      this.toggleConfirmationDialog(false);
+      this.closeDialog();
       return;
     }
 
     // Perform primary action
     this.isBusy.set(true);
     setTimeout(() => {
-      this.toggleConfirmationDialog(false);
+      this.closeDialog();
     }, 3000);
   }
 }

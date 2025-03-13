@@ -12,7 +12,11 @@ export class ConfirmationDialogRef {
 
   constructor(instance: ConfirmationDialogComponent) {
     this._elementRef = new ElementRef(instance);
-    instance.addEventListener('forge-confirmation-dialog-action', evt => this._onAction.next(evt));
+
+    instance.addEventListener('forge-confirmation-dialog-action', evt => {
+      evt.preventDefault();
+      this._onAction.next(evt);
+    });
   }
 
   public close(): void {

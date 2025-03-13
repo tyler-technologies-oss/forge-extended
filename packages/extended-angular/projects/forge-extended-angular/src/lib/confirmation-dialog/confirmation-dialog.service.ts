@@ -25,8 +25,6 @@ export class ConfirmationDialogService {
    * @param [parent] The parent element to attach this confirmation dialog instance to.
    */
 
-  private _destroyRef: DestroyRef = inject(DestroyRef);
-
   public open(
     {
       title,

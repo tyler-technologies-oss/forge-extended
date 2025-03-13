@@ -161,7 +161,6 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     return html`
       <forge-dialog
         @slotchange=${this._handleSlotChange}
-        persistent
         fullscreen-threshold="0"
         ?open=${this.open}
         @forge-dialog-close=${() => (this.isBusy = false)}
