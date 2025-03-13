@@ -563,7 +563,7 @@
               "kind": "field",
               "name": "_slottedTitleNodes",
               "type": {
-                "text": "Array<HTMLElement>"
+                "text": "Node[]"
               },
               "privacy": "private"
             },
@@ -571,7 +571,7 @@
               "kind": "field",
               "name": "_slottedMessageNodes",
               "type": {
-                "text": "Array<HTMLElement>"
+                "text": "Node[]"
               },
               "privacy": "private"
             },
@@ -579,7 +579,7 @@
               "kind": "field",
               "name": "_slottedSecondaryButtonTextNodes",
               "type": {
-                "text": "Array<Node>"
+                "text": "Node[]"
               },
               "privacy": "private"
             },
@@ -992,7 +992,7 @@
     },
     "HTMLElementEventMap": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 12
+      "lineNumber": 13
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -1012,15 +1012,15 @@
     },
     "ConfirmationDialogActionEventData": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 17
+      "lineNumber": 18
     },
     "ConfirmationDialogProperties": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 21
+      "lineNumber": 22
     },
     "ConfirmationDialogComponent": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 39
+      "lineNumber": 40
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",

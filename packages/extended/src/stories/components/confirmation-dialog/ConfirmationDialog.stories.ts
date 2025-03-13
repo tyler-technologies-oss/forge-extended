@@ -25,7 +25,7 @@ const meta = {
       console.log(e.detail.primaryAction);
       const isPrimary = e.detail.primaryAction;
       if (!isPrimary) {
-        confirmationDialogRef.value!.open = false;
+        closeDialog();
         return;
       } else {
         // This logic (whether async or synchronous) would be managed by the consumer
