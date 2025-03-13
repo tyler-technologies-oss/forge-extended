@@ -56,7 +56,7 @@ const meta = {
         ${args.secondaryButtonText.length
           ? html`<span slot="secondary-button-text">${args.secondaryButtonText}</span>`
           : ''}
-        <span slot="primary-button-text">${args.primaryButtonText}</span>
+        ${args.primaryButtonText.length ? html`<span slot="primary-button-text">${args.primaryButtonText}</span>` : ''}
       </forge-confirmation-dialog>
     `;
   },

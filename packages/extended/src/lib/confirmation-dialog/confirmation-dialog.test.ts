@@ -206,6 +206,17 @@ describe('ConfirmationDialog', () => {
     expect(harness.forgeDialogElement.description).to.equal(message);
     await expect(harness.el).shadowDom.to.be.accessible();
   });
+
+  it('primary button should default to say "confirm" if the primary-button-slot is removed', async () => {
+    const harness = await createFixture({ open: true, primaryActionText: 'Yes' });
+    harness.primaryButtonTextSlot.assignedElements().forEach(el => el.remove());
+
+    await harness.el.updateComplete;
+    await harness.el.updateComplete;
+
+    expect(harness.primaryButton).to.exist;
+    expect(harness.primaryButton.textContent?.trim()).to.equal('Confirm');
+  });
 });
 
 class ConfirmationDialogHarness {
@@ -285,6 +296,7 @@ interface ConfirmationDialogFixtureConfig {
   isBusy?: boolean;
   ariaLabelLoading?: string;
   secondaryActionText?: string;
+  primaryActionText?: string;
 }
 
 async function createFixture({
@@ -293,14 +305,15 @@ async function createFixture({
   open = false,
   isBusy = false,
   ariaLabelLoading,
-  secondaryActionText = 'Cancel'
+  secondaryActionText = 'Cancel',
+  primaryActionText = 'Yes'
 }: ConfirmationDialogFixtureConfig = {}): Promise<ConfirmationDialogHarness> {
   const el = await fixture<ConfirmationDialogComponent>(html`
     <forge-confirmation-dialog .open=${open} .isBusy=${isBusy} ariaLabelLoading=${ifDefined(ariaLabelLoading)}>
       <div slot="title">${ifDefined(title)}</div>
       <div slot="message">${ifDefined(message)}</div>
       <div slot="secondary-button-text" id="secondary-button-text">${ifDefined(secondaryActionText)}</div>
-      <div slot="primary-button-text">Primary button text</div>
+      <div slot="primary-button-text">${ifDefined(primaryActionText)}</div>
     </forge-confirmation-dialog>
   `);
 

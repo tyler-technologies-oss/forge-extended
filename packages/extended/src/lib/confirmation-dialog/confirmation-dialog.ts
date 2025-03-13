@@ -99,14 +99,18 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     return html` <slot name="title" id="confirmation-dialog-title" class="title"></slot>`;
   }
 
-  private get _busyIndicator(): TemplateResult | typeof nothing {
-    return this.isBusy
-      ? html`<forge-circular-progress slot="end" aria-label=${this.busyLabel}> </forge-circular-progress>`
-      : nothing;
-  }
-
   private get _secondaryButtonSlot(): TemplateResult | typeof nothing {
     return html` <slot name="secondary-button-text" id="secondary-button-slot"></slot>`;
+  }
+
+  private get _primaryButtonSlot(): TemplateResult | typeof nothing {
+    return this.isBusy
+      ? html`${this._busyIndicator}`
+      : html`<slot name="primary-button-text" id="primary-button-slot">Confirm</slot>`;
+  }
+
+  private get _busyIndicator(): TemplateResult | typeof nothing {
+    return html`<forge-circular-progress slot="end" aria-label=${this.busyLabel}> </forge-circular-progress>`;
   }
 
   private get _secondaryButton(): TemplateResult | typeof nothing {
@@ -131,11 +135,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
       variant="raised"
       id="primary-button"
       @click=${() => this._onAction(true)}>
-      ${when(
-        this.isBusy,
-        () => this._busyIndicator,
-        () => html`<slot name="primary-button-text"></slot>`
-      )}
+      ${this._primaryButtonSlot}
     </forge-button>`;
   }
 
