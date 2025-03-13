@@ -14,7 +14,6 @@ export class ConfirmationDialogRef {
     this._elementRef = new ElementRef(instance);
 
     instance.addEventListener('forge-confirmation-dialog-action', evt => {
-      evt.preventDefault();
       this._onAction.next(evt);
     });
   }

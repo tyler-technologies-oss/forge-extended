@@ -34,6 +34,8 @@ export class ConfirmationDialogDemoComponent {
     });
 
     dialogRef.onAction.pipe(take(1)).subscribe(result => {
+      result.preventDefault();
+
       let { primaryAction } = result.detail;
 
       if (primaryAction) {
