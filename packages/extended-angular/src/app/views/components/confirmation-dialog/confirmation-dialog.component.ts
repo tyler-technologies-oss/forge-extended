@@ -33,10 +33,10 @@ export class ConfirmationDialogDemoComponent {
       isBusy: false
     });
 
-    dialogRef.onAction.pipe(take(1)).subscribe(result => {
-      result.preventDefault();
+    dialogRef.onAction.pipe(take(1)).subscribe(evt => {
+      evt.preventDefault();
 
-      let { primaryAction } = result.detail;
+      let { primaryAction } = evt.detail;
 
       if (primaryAction) {
         dialogRef.isBusy = true;
