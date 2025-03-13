@@ -26,7 +26,6 @@ import{T as B,r as T,a as w,x as i}from"./lit-element-CxMangmT.js";import{e as C
     </forge-button>`}willUpdate(t){var e;t.has("isBusy")&&G(this,d,this.isBusy?((e=this._primaryButtonRef)==null?void 0:e.clientWidth)+"px":void 0)}render(){return i`
       <forge-dialog
         @slotchange=${this._handleSlotChange}
-        persistent
         fullscreen-threshold="0"
         ?open=${this.open}
         @forge-dialog-close=${()=>this.isBusy=!1}
