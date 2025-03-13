@@ -603,7 +603,7 @@
             },
             {
               "kind": "field",
-              "name": "_busyIndicator",
+              "name": "_secondaryButtonSlot",
               "type": {
                 "text": "TemplateResult | typeof nothing"
               },
@@ -612,7 +612,16 @@
             },
             {
               "kind": "field",
-              "name": "_secondaryButtonSlot",
+              "name": "_primaryButtonSlot",
+              "type": {
+                "text": "TemplateResult | typeof nothing"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "_busyIndicator",
               "type": {
                 "text": "TemplateResult | typeof nothing"
               },

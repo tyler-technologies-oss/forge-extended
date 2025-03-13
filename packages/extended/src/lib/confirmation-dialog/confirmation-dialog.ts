@@ -1,8 +1,14 @@
-import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
+import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
+import { customElement, property, query, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
+import { styleMap } from 'lit/directives/style-map.js';
 import styles from './confirmation-dialog.scss?inline';
-import { defineButtonComponent, defineCircularProgressComponent, defineDialogComponent } from '@tylertech/forge';
+import {
+  ButtonComponent,
+  defineButtonComponent,
+  defineCircularProgressComponent,
+  defineDialogComponent
+} from '@tylertech/forge';
 import { composeSlottedTextContent } from '../utils/slot-utils';
 
 declare global {
@@ -86,6 +92,11 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   @queryAssignedNodes({ slot: 'secondary-button-text', flatten: true })
   private _slottedSecondaryButtonTextNodes!: Node[];
 
+  @query('#primary-button')
+  private _primaryButtonRef!: ButtonComponent | null;
+
+  #primaryButtonWidth: string | undefined;
+
   private get _title(): TemplateResult | typeof nothing {
     const showTitle = this._slottedTitleNodes.length > 0;
     return when(
@@ -105,7 +116,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
 
   private get _primaryButtonSlot(): TemplateResult | typeof nothing {
     return this.isBusy
-      ? html`${this._busyIndicator}`
+      ? this._busyIndicator
       : html`<slot name="primary-button-text" id="primary-button-slot">Confirm</slot>`;
   }
 
@@ -134,9 +145,16 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
       ?disabled=${this.isBusy}
       variant="raised"
       id="primary-button"
+      style=${styleMap({ minWidth: this.#primaryButtonWidth })}
       @click=${() => this._onAction(true)}>
       ${this._primaryButtonSlot}
     </forge-button>`;
+  }
+
+  public override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('isBusy')) {
+      this.#primaryButtonWidth = this.isBusy ? this._primaryButtonRef?.clientWidth + 'px' : undefined;
+    }
   }
 
   public override render(): TemplateResult {
@@ -174,7 +192,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
 
   private _handleSlotChange(evt: Event): void {
     const slotName = (evt.target as HTMLSlotElement).name;
-    if (['title', 'secondary-button-text'].includes(slotName)) {
+    if (['title', 'secondary-button-text', 'primary-button-text'].includes(slotName)) {
       this.requestUpdate();
     }
   }
