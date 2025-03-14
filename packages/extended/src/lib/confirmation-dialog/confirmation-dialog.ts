@@ -186,6 +186,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     this.dispatchEvent(event);
     if (!event.defaultPrevented) {
       this.open = false;
+      this.isBusy = false;
     }
   }
 

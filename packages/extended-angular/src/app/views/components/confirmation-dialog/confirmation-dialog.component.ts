@@ -15,6 +15,7 @@ export class ConfirmationDialogDemoComponent {
 
   public open = signal(false);
   public isBusy = signal(false);
+  public simulateAsync = signal(true);
 
   public openDialog(): void {
     this.open.set(true);
@@ -39,6 +40,11 @@ export class ConfirmationDialogDemoComponent {
       let { primaryAction } = evt.detail;
 
       if (primaryAction) {
+        if (!this.simulateAsync()) {
+          dialogRef.close();
+          this._toastService.show({ theme: 'success', message: 'Changes confirmed' });
+        }
+
         dialogRef.isBusy = true;
         setTimeout(() => {
           dialogRef.close();
@@ -51,17 +57,27 @@ export class ConfirmationDialogDemoComponent {
     });
   }
 
-  public onActionInline(e: CustomEvent<ConfirmationDialogActionEventData>): void {
-    let { primaryAction } = e.detail;
-    if (!primaryAction) {
-      this.closeDialog();
-      return;
-    }
+  public onActionInline(evt: CustomEvent<ConfirmationDialogActionEventData>): void {
+    evt.preventDefault();
+    let { primaryAction } = evt.detail;
 
-    // Perform primary action
-    this.isBusy.set(true);
-    setTimeout(() => {
+    if (primaryAction) {
+      if (!this.simulateAsync()) {
+        this.closeDialog();
+        this._toastService.show({ theme: 'success', message: 'Changes confirmed' });
+      }
+
+      this.isBusy.set(true);
+
+      setTimeout(() => {
+        this.isBusy.set(false);
+        this.closeDialog();
+        this._toastService.show({ theme: 'success', message: 'Changes confirmed' });
+      }, 3000);
+    } else {
+      this.isBusy.set(false);
       this.closeDialog();
-    }, 3000);
+      this._toastService.show({ message: 'Changes cancelled' });
+    }
   }
 }

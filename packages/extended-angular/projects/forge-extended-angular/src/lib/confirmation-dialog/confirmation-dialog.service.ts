@@ -1,8 +1,6 @@
-import { DestroyRef, inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { ConfirmationDialogComponent, ConfirmationDialogProperties } from '@tylertech/forge-extended';
 import { ConfirmationDialogRef } from './confirmation-dialog-ref';
-import { take } from 'rxjs';
-import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 interface ConfirmationDialogServiceConfig extends ConfirmationDialogProperties {
   title: string;
