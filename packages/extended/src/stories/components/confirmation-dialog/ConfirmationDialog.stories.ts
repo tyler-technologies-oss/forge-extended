@@ -1,12 +1,13 @@
 import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
+import { ConfirmationDialogActionEventData, ConfirmationDialogComponent } from '$lib/confirmation-dialog';
+import { createRef, ref } from 'lit/directives/ref.js';
+import { action } from '@storybook/addon-actions';
 
 import '$lib/confirmation-dialog';
-import { ConfirmationDialogActionEventData, ConfirmationDialogComponent } from '$lib/confirmation-dialog';
-
-import { createRef, ref } from 'lit/directives/ref.js';
 
 const component = 'forge-confirmation-dialog';
+const actionAction = action('forge-confirmation-dialog-action');
 
 const meta = {
   title: 'Components/Confirmation Dialog',
@@ -22,7 +23,7 @@ const meta = {
     }
 
     function onConfirmationDialogAction(e: CustomEvent<ConfirmationDialogActionEventData>) {
-      console.log(e.detail.primaryAction);
+      actionAction(e);
       const isPrimary = e.detail.primaryAction;
       if (!isPrimary) {
         closeDialog();
@@ -45,8 +46,7 @@ const meta = {
       <forge-button variant="raised" @click=${handleClick}>Show Confirmation Dialog</forge-button>
       <forge-confirmation-dialog
         ${ref(confirmationDialogRef)}
-        @forge-confirmation-dialog-action=${(e: CustomEvent<ConfirmationDialogActionEventData>) =>
-          onConfirmationDialogAction(e)}
+        @forge-confirmation-dialog-action=${onConfirmationDialogAction}
         @forge-dialog-close=${closeDialog}
         ?open=${args.open}
         busy-label=${args.ariaLabelLoading}
