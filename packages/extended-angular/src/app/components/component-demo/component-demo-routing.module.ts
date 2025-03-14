@@ -14,6 +14,13 @@ const routes: Routes = [
     path: 'busy-indicator',
     loadChildren: () =>
       import('../../views/components/busy-indicator/busy-indicator.module').then(m => m.BusyIndicatorModule)
+  },
+  {
+    path: 'confirmation-dialog',
+    loadChildren: () =>
+      import('../../views/components/confirmation-dialog/confirmation-dialog.module').then(
+        m => m.ConfirmationDialogModule
+      )
   }
 ];
 
