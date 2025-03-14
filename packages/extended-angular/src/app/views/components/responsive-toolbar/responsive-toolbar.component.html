@@ -1,0 +1,20 @@
+<div class="resize-div">
+  <forge-card>
+    <forge-responsive-toolbar [noBorder]="noBorder()" autoHeight="autoHeight()" [inverted]="inverted()">
+      <forge-icon-button aria-label="Icon button demo" slot="before-start">
+        <forge-icon name="arrow_back" external></forge-icon>
+      </forge-icon-button>
+      <div slot="start" class="forge-typography--heading4">Title</div>
+      <forge-stack inline alignment="center" slot="actions-desktop">
+        <forge-button>Tertiary action</forge-button>
+        <forge-button variant="outlined">Secondary action</forge-button>
+        <forge-button variant="raised">Primary action</forge-button>
+      </forge-stack>
+      <div slot="actions-mobile">Actions Mobile</div>
+    </forge-responsive-toolbar>
+
+    <div style="padding: 16px">
+      <p>To see this component respond, drag this div smaller using the drag handle on the bottom right of the card</p>
+    </div>
+  </forge-card>
+</div>

@@ -923,13 +923,13 @@
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
     },
-    "IResponsiveToolbarOverflow": {
+    "ResponsiveToolbarOverflowEventData": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 19
     },
     "ResponsiveToolbarComponent": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 45
+      "lineNumber": 43
     }
   }
 }

@@ -25,7 +25,6 @@ forge-toolbar[auto-height] {
 @mixin overflow {
   visibility: hidden;
   position: absolute;
-  right: 8px;
 }
 
 :host(:state(overflowing)) #actions-desktop,
