@@ -67,6 +67,17 @@
             },
             {
               "kind": "field",
+              "name": "headingLevel",
+              "type": {
+                "text": "1 | 2 | 3 | 4 | 5 | 6"
+              },
+              "privacy": "public",
+              "default": "1",
+              "description": "The heading level for the title.",
+              "attribute": "heading-level"
+            },
+            {
+              "kind": "field",
               "name": "message",
               "type": {
                 "text": "string | undefined"
@@ -173,6 +184,24 @@
             },
             {
               "kind": "field",
+              "name": "_slottedTitleNodes",
+              "type": {
+                "text": "Node[]"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "_slottedMessageNodes",
+              "type": {
+                "text": "Node[]"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
               "name": "_titleTemplate",
               "type": {
                 "text": "TemplateResult | typeof nothing"
@@ -264,6 +293,24 @@
                   "text": "void"
                 }
               }
+            },
+            {
+              "kind": "method",
+              "name": "_handleSlotChange",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "evt",
+                  "type": {
+                    "text": "Event"
+                  }
+                }
+              ]
             }
           ],
           "events": [
@@ -301,6 +348,15 @@
               },
               "description": "The title text to display.",
               "fieldName": "titleText"
+            },
+            {
+              "name": "heading-level",
+              "type": {
+                "text": "1 | 2 | 3 | 4 | 5 | 6"
+              },
+              "default": "1",
+              "description": "The heading level for the title.",
+              "fieldName": "headingLevel"
             },
             {
               "name": "message",
@@ -844,24 +900,24 @@
       "lineNumber": 10
     },
     "HTMLElementEventMap": {
-      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 14
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 20
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 24
+      "lineNumber": 25
     },
     "BusyIndicatorVariant": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 25
+      "lineNumber": 26
     },
     "BusyIndicatorFocusMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 26
+      "lineNumber": 27
     },
     "BusyIndicatorComponent": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 38
+      "lineNumber": 39
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
