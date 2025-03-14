@@ -23,11 +23,10 @@ declare global {
 
 export interface ConfirmationDialogActionEventData {
   value: boolean;
+  type: ConfirmationDialogActionEventType;
 }
 
-export interface ConfirmationDialogActionEventType {
-  value: 'action' | 'light-dismiss';
-}
+export type ConfirmationDialogActionEventType = 'action' | 'light-dismiss';
 
 export interface ConfirmationDialogProperties {
   open: boolean;
@@ -168,6 +167,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
         @slotchange=${this._handleSlotChange}
         fullscreen-threshold="0"
         ?open=${this.open}
+        @forge-dialog-before-close=${(e: CustomEvent<void>) => this._onAction(false, 'light-dismiss', e)}
         @forge-dialog-close=${() => (this.isBusy = false)}
         .label=${this.label || composeSlottedTextContent(this._slottedTitleNodes) || ''}
         .description=${this.description || composeSlottedTextContent(this._slottedMessageNodes) || ''}>
@@ -182,14 +182,21 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     `;
   }
 
-  private _onAction(isPrimary: boolean): void {
-    const event = new CustomEvent<ConfirmationDialogActionEventData>('forge-confirmation-dialog-action', {
+  private _onAction(value: boolean, type: ConfirmationDialogActionEventType = 'action', lightDismissEvt?: Event): void {
+    const actionEvent = new CustomEvent<ConfirmationDialogActionEventData>('forge-confirmation-dialog-action', {
       bubbles: true,
       cancelable: true,
-      detail: { value: isPrimary }
+      detail: {
+        value,
+        type
+      }
     });
-    this.dispatchEvent(event);
-    if (!event.defaultPrevented) {
+
+    this.dispatchEvent(actionEvent);
+
+    if (actionEvent.defaultPrevented && lightDismissEvt) {
+      lightDismissEvt.preventDefault();
+    } else if (!actionEvent.defaultPrevented) {
       this.open = false;
       this.isBusy = false;
     }

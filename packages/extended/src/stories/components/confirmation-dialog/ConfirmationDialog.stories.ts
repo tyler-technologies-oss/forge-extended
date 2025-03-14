@@ -18,20 +18,17 @@ const meta = {
       confirmationDialogRef.value!.open = !confirmationDialogRef.value!.open;
     }
 
-    function closeDialog() {
-      confirmationDialogRef.value!.open = false;
-    }
-
-    function onConfirmationDialogAction(e: CustomEvent<ConfirmationDialogActionEventData>) {
-      closeDialog();
+    function closeDialog(evt: CustomEvent<ConfirmationDialogActionEventData>) {
+      if (args.preventDefault) {
+        evt.preventDefault();
+      }
     }
 
     return html`
       <forge-button variant="raised" @click=${toggleDialog}>Show Confirmation Dialog</forge-button>
       <forge-confirmation-dialog
         ${ref(confirmationDialogRef)}
-        @forge-confirmation-dialog-action=${onConfirmationDialogAction}
-        @forge-dialog-close=${closeDialog}
+        @forge-confirmation-dialog-action=${closeDialog}
         busy-label=${args.busyLabel}
         .isBusy=${args.isBusy}>
         ${args.title.length ? html`<span slot="title">${args.title}</span>` : ''}
@@ -50,7 +47,8 @@ const meta = {
     message: { control: 'text' },
     busyLabel: { control: 'text' },
     secondaryButtonText: { control: 'text' },
-    primaryButtonText: { control: 'text' }
+    primaryButtonText: { control: 'text' },
+    preventDefault: { control: 'boolean' }
   },
   args: {
     isBusy: false,
@@ -58,7 +56,8 @@ const meta = {
     message: 'Images will be permanently removed from your account and all synced devices.',
     busyLabel: 'Loading data',
     secondaryButtonText: 'No',
-    primaryButtonText: 'Yes'
+    primaryButtonText: 'Yes',
+    preventDefault: false
   }
 } satisfies Meta;
 
