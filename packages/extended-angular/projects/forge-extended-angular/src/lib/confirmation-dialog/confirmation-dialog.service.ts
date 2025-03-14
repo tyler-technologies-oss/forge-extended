@@ -9,6 +9,8 @@ interface ConfirmationDialogServiceConfig extends ConfirmationDialogProperties {
   message: string;
   secondaryButtonText: string;
   primaryButtonText: string;
+  description: string;
+  label: string;
   busyLabel: string;
 }
 
@@ -31,6 +33,8 @@ export class ConfirmationDialogService {
       message,
       secondaryButtonText,
       primaryButtonText,
+      description,
+      label,
       busyLabel,
       ...config
     }: Partial<ConfirmationDialogServiceConfig>,
@@ -49,6 +53,12 @@ export class ConfirmationDialogService {
     }
     if (primaryButtonText) {
       this._createAndAppendSlottedElement(element, primaryButtonText, 'primary-button-text');
+    }
+    if (description) {
+      element.description = description;
+    }
+    if (label) {
+      element.label = label;
     }
     if (busyLabel) {
       element.busyLabel = busyLabel;
