@@ -14,8 +14,8 @@ const meta = {
   render: args => {
     const confirmationDialogRef = createRef<ConfirmationDialogComponent>();
 
-    function handleClick() {
-      confirmationDialogRef.value!.open = true;
+    function toggleDialog() {
+      confirmationDialogRef.value!.open = !confirmationDialogRef.value!.open;
     }
 
     function closeDialog() {
@@ -23,33 +23,16 @@ const meta = {
     }
 
     function onConfirmationDialogAction(e: CustomEvent<ConfirmationDialogActionEventData>) {
-      actionAction(e);
-      const isPrimary = e.detail.primaryAction;
-      if (!isPrimary) {
-        closeDialog();
-        return;
-      } else {
-        // This logic (whether async or synchronous) would be managed by the consumer
-        if (!args.simulateAsync) {
-          closeDialog();
-          return;
-        } else {
-          confirmationDialogRef.value!.isBusy = true;
-          setTimeout(() => {
-            closeDialog();
-          }, 2500);
-        }
-      }
+      closeDialog();
     }
 
     return html`
-      <forge-button variant="raised" @click=${handleClick}>Show Confirmation Dialog</forge-button>
+      <forge-button variant="raised" @click=${toggleDialog}>Show Confirmation Dialog</forge-button>
       <forge-confirmation-dialog
         ${ref(confirmationDialogRef)}
         @forge-confirmation-dialog-action=${onConfirmationDialogAction}
         @forge-dialog-close=${closeDialog}
-        ?open=${args.open}
-        busy-label=${args.ariaLabelLoading}
+        busy-label=${args.busyLabel}
         .isBusy=${args.isBusy}>
         ${args.title.length ? html`<span slot="title">${args.title}</span>` : ''}
         ${args.message.length ? html`<span slot="message">${args.message}</span>` : ''}
@@ -62,24 +45,20 @@ const meta = {
   },
   component,
   argTypes: {
-    open: { control: 'boolean' },
     isBusy: { control: 'boolean' },
     title: { control: 'text' },
     message: { control: 'text' },
-    ariaLabelLoading: { control: 'text' },
+    busyLabel: { control: 'text' },
     secondaryButtonText: { control: 'text' },
-    primaryButtonText: { control: 'text' },
-    simulateAsync: { control: 'boolean' }
+    primaryButtonText: { control: 'text' }
   },
   args: {
-    open: false,
     isBusy: false,
     title: 'Delete selected images?',
     message: 'Images will be permanently removed from your account and all synced devices.',
-    ariaLabelLoading: 'Loading data',
+    busyLabel: 'Loading data',
     secondaryButtonText: 'No',
-    primaryButtonText: 'Yes',
-    simulateAsync: false
+    primaryButtonText: 'Yes'
   }
 } satisfies Meta;
 

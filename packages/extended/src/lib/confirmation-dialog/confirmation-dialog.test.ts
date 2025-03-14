@@ -91,7 +91,7 @@ describe('ConfirmationDialog', () => {
     expect(harness.primaryButtonTextSlot.assignedNodes().length).to.greaterThanOrEqual(1);
   });
 
-  it('should dispatch primaryAction=true forge-confirmation-dialog-action event when clicking the primary action', async () => {
+  it('should dispatch value=true forge-confirmation-dialog-action event when clicking the primary action', async () => {
     const harness = await createFixture({ open: true });
     const inputSpy = sinon.spy();
 
@@ -99,10 +99,10 @@ describe('ConfirmationDialog', () => {
 
     await harness.clickPrimaryActionButton();
 
-    expect(inputSpy).to.have.been.calledWith(sinon.match.has('detail', sinon.match.has('primaryAction', true)));
+    expect(inputSpy).to.have.been.calledWith(sinon.match.has('detail', sinon.match.has('value', true)));
   });
 
-  it('should dispatch primaryAction=false forge-confirmation-dialog-action event when clicking the secondary action', async () => {
+  it('should dispatch value=false forge-confirmation-dialog-action event when clicking the secondary action', async () => {
     const harness = await createFixture({ open: true });
     const inputSpy = sinon.spy();
 
@@ -110,7 +110,7 @@ describe('ConfirmationDialog', () => {
 
     await harness.clickSecondaryActionButton();
 
-    expect(inputSpy).to.have.been.calledWith(sinon.match.has('detail', sinon.match.has('primaryAction', false)));
+    expect(inputSpy).to.have.been.calledWith(sinon.match.has('detail', sinon.match.has('value', false)));
   });
 
   it('should reset the isBusy state of the dialog when closed', async () => {

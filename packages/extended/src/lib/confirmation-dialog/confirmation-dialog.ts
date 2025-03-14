@@ -22,7 +22,11 @@ declare global {
 }
 
 export interface ConfirmationDialogActionEventData {
-  primaryAction: boolean;
+  value: boolean;
+}
+
+export interface ConfirmationDialogActionEventType {
+  value: 'action' | 'light-dismiss';
 }
 
 export interface ConfirmationDialogProperties {
@@ -41,7 +45,8 @@ export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = '
  * @slot secondary-button-text - The text used in the secondary action button
  * @slot primary-button-text - The text used in the primary action button
  *
- * @event {IConfirmationDialogAction} forge-confirmation-dialog-action - Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.
+ * @event {ConfirmationDialogActionEventData} forge-confirmation-dialog-action - Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.
+ * @event {ConfirmationDialogActionEventType} forge-confirmation-dialog-action - Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.
  */
 @customElement(ConfirmationDialogComponentTagName)
 export class ConfirmationDialogComponent extends LitElement implements ConfirmationDialogProperties {
@@ -181,7 +186,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     const event = new CustomEvent<ConfirmationDialogActionEventData>('forge-confirmation-dialog-action', {
       bubbles: true,
       cancelable: true,
-      detail: { primaryAction: isPrimary }
+      detail: { value: isPrimary }
     });
     this.dispatchEvent(event);
     if (!event.defaultPrevented) {

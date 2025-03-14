@@ -702,7 +702,7 @@
           "events": [
             {
               "type": {
-                "text": "IConfirmationDialogAction"
+                "text": "ConfirmationDialogActionEventType"
               },
               "description": "Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.",
               "name": "forge-confirmation-dialog-action"
@@ -1039,13 +1039,17 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 24
     },
-    "ConfirmationDialogProperties": {
+    "ConfirmationDialogActionEventType": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 28
     },
+    "ConfirmationDialogProperties": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 32
+    },
     "ConfirmationDialogComponent": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 46
+      "lineNumber": 51
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
