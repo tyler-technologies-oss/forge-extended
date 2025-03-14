@@ -10,6 +10,7 @@ import {
   ForgeButtonModule,
   ForgeCardModule,
   ForgeIconButtonModule,
+  ForgeInlineMessageModule,
   ForgeMenuModule,
   ForgeStackModule
 } from '@tylertech/forge-angular';
@@ -26,7 +27,9 @@ import {
     ForgeStackModule,
     ForgeIconButtonModule,
     ForgeMenuModule,
-    ForgeButtonModule
+    ForgeButtonModule,
+    ForgeInlineMessageModule,
+    ForgeMenuModule
   ]
 })
 export class ResponsiveToolbarModule {}

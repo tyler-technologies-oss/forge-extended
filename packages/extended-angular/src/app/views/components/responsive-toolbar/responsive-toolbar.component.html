@@ -1,20 +1,63 @@
-<div class="resize-div">
-  <forge-card>
+<div class="grid">
+  <forge-inline-message theme="info" class="span-full">
+    <forge-icon slot="icon" name="info"></forge-icon>
+    <p>Resize the browser to see the toolbars adjust</p>
+  </forge-inline-message>
+  <forge-card class="column-span-3">
     <forge-responsive-toolbar [noBorder]="noBorder()" autoHeight="autoHeight()" [inverted]="inverted()">
       <forge-icon-button aria-label="Icon button demo" slot="before-start">
         <forge-icon name="arrow_back" external></forge-icon>
       </forge-icon-button>
-      <div slot="start" class="forge-typography--heading4">Title</div>
+      <div slot="start" class="forge-typography--heading4">Organization details</div>
       <forge-stack inline alignment="center" slot="actions-desktop">
         <forge-button>Tertiary action</forge-button>
         <forge-button variant="outlined">Secondary action</forge-button>
         <forge-button variant="raised">Primary action</forge-button>
       </forge-stack>
-      <div slot="actions-mobile">Actions Mobile</div>
+      <div slot="actions-mobile">
+        <ng-container *ngTemplateOutlet="mobileMenu"></ng-container>
+      </div>
     </forge-responsive-toolbar>
 
     <div style="padding: 16px">
-      <p>To see this component respond, drag this div smaller using the drag handle on the bottom right of the card</p>
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime blanditiis, provident tempore libero pariatur
+        incidunt nostrum quisquam, odio aspernatur eveniet esse maiores? Cum corporis minus natus rem mollitia
+        doloremque obcaecati.
+      </p>
+    </div>
+  </forge-card>
+
+  <forge-card class="column-span-1">
+    <forge-responsive-toolbar [noBorder]="noBorder()" autoHeight="autoHeight()" [inverted]="inverted()">
+      <forge-icon-button aria-label="Icon button demo" slot="before-start">
+        <forge-icon name="arrow_back" external></forge-icon>
+      </forge-icon-button>
+      <div slot="start" class="forge-typography--heading4">User info</div>
+      <forge-stack inline alignment="center" slot="actions-desktop">
+        <forge-button>Tertiary action</forge-button>
+        <forge-button variant="outlined">Secondary action</forge-button>
+        <forge-button variant="raised">Primary action</forge-button>
+      </forge-stack>
+      <div slot="actions-mobile">
+        <ng-container *ngTemplateOutlet="mobileMenu"></ng-container>
+      </div>
+    </forge-responsive-toolbar>
+
+    <div style="padding: 16px">
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime blanditiis, provident tempore libero pariatur
+        incidunt nostrum quisquam, odio aspernatur eveniet esse maiores? Cum corporis minus natus rem mollitia
+        doloremque obcaecati.
+      </p>
     </div>
   </forge-card>
 </div>
+
+<ng-template #mobileMenu>
+  <forge-menu [options]="toolbarActions">
+    <forge-icon-button aria-label="Open menu">
+      <forge-icon name="more_vert"></forge-icon>
+    </forge-icon-button>
+  </forge-menu>
+</ng-template>

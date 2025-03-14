@@ -18,6 +18,11 @@ forge-toolbar[auto-height] {
   --forge-toolbar-min-height: #{forge-toolbar-tokens.get('height')};
 }
 
+#actions-mobile,
+#actions-desktop {
+  margin-inline-start: #{forge-spacing.variable(medium)};
+}
+
 //
 // Overflowing state
 //
