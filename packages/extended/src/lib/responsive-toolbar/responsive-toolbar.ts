@@ -12,14 +12,12 @@ declare global {
   }
 
   interface HTMLElementEventMap {
-    'forge-responsive-toolbar-overflow': CustomEvent<void>;
+    'forge-responsive-toolbar-overflow': CustomEvent<ResponsiveToolbarOverflowEventData>;
   }
 }
 
-interface IResponsiveToolbarOverflow extends CustomEvent {
-  detail: {
-    overflow: boolean;
-  };
+interface ResponsiveToolbarOverflowEventData {
+  overflow: boolean;
 }
 
 /**
@@ -109,11 +107,11 @@ export class ResponsiveToolbarComponent extends LitElement {
   }
 
   private _emitOverflowEvent(isOverflowing: boolean): void {
-    const event = new CustomEvent('forge-responsive-toolbar-overflow', {
+    const event = new CustomEvent<ResponsiveToolbarOverflowEventData>('forge-responsive-toolbar-overflow', {
       bubbles: true,
       cancelable: true,
       detail: { overflow: isOverflowing }
-    } as IResponsiveToolbarOverflow);
+    });
     this.dispatchEvent(event);
   }
 
