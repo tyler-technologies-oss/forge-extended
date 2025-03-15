@@ -1,36 +1,31 @@
+::ng-deep {
+  .app-content.app-content {
+    padding: 0;
+  }
+}
+
 .grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: 1fr;
   gap: 24px;
+  padding: 24px;
 }
+
 forge-card {
   --forge-card-padding: 0;
   height: 100%;
 }
 
-.column-span-1 {
-  grid-column: span 1;
-}
-
-.column-span-2 {
-  grid-column: span 2;
-}
-
-.column-span-3 {
-  grid-column: span 3;
+.buttons-inline {
+  display: flex;
+  align-items: center;
+  gap: 16px;
 }
 
 .span-full {
   grid-column: 1/-1;
 }
 
-/* When the browser is at least 1024px or below */
-@media screen and (max-width: 1024px) {
-  .grid {
-    grid-template-columns: 1fr;
-
-    & > * {
-      grid-column: 1/-1;
-    }
-  }
+.padding-16 {
+  padding: 16px;
 }

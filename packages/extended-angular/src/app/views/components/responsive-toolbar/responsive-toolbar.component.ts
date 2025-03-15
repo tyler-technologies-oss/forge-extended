@@ -1,11 +1,12 @@
-import { Component, signal } from '@angular/core';
-import { IMenuOption } from '@tylertech/forge';
+import { Component } from '@angular/core';
+import { ButtonVariant, IMenuOption } from '@tylertech/forge';
 import { IconRegistry } from '@tylertech/forge';
 import { tylIconMoreVert } from '@tylertech/tyler-icons/standard';
 import { NgTemplateOutlet } from '@angular/common';
+import { tylIconMoveResizeVariant } from '@tylertech/tyler-icons/extended';
 
 interface customMenuOption extends IMenuOption {
-  variant?: 'text' | 'raised' | 'outlined';
+  variant?: ButtonVariant | undefined;
 }
 @Component({
   selector: 'app-responsive-toolbar-demo',
@@ -14,14 +15,8 @@ interface customMenuOption extends IMenuOption {
 })
 export class ResponsiveToolbarDemoComponent {
   static {
-    IconRegistry.define([tylIconMoreVert]);
+    IconRegistry.define([tylIconMoreVert, tylIconMoveResizeVariant]);
   }
-
-  public noBorder = signal(false);
-  public autoHeight = signal(true);
-  public inverted = signal(false);
-
-  public cards = [1, 2, 3, 4];
 
   public toolbarActions: customMenuOption[] = [
     { label: 'Tertiary action ', value: 'add-user', variant: 'text' },

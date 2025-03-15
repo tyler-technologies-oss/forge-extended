@@ -1,54 +1,44 @@
 <div class="grid">
   <forge-inline-message theme="info" class="span-full">
-    <forge-icon slot="icon" name="info"></forge-icon>
-    <p>Resize the browser to see the toolbars adjust</p>
+    <forge-icon slot="icon" name="move_resize_variant"></forge-icon>
+    <p>Resize the browser to see the various toolbars adjust.</p>
   </forge-inline-message>
-  <forge-card class="column-span-3">
+
+  <forge-card class="span-full">
     <forge-responsive-toolbar [noBorder]="noBorder()" autoHeight="autoHeight()" [inverted]="inverted()">
       <forge-icon-button aria-label="Icon button demo" slot="before-start">
         <forge-icon name="arrow_back" external></forge-icon>
       </forge-icon-button>
-      <div slot="start" class="forge-typography--heading4">Organization details</div>
+      <div slot="start" class="forge-typography--heading4">Organization details (Responsive toolbar component)</div>
       <forge-stack inline alignment="center" slot="actions-desktop">
-        <forge-button>Tertiary action</forge-button>
-        <forge-button variant="outlined">Secondary action</forge-button>
-        <forge-button variant="raised">Primary action</forge-button>
+        <ng-container *ngTemplateOutlet="desktopButtons"></ng-container>
       </forge-stack>
       <div slot="actions-mobile">
         <ng-container *ngTemplateOutlet="mobileMenu"></ng-container>
       </div>
     </forge-responsive-toolbar>
-
-    <div style="padding: 16px">
+    <div class="padding-16">
       <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime blanditiis, provident tempore libero pariatur
-        incidunt nostrum quisquam, odio aspernatur eveniet esse maiores? Cum corporis minus natus rem mollitia
-        doloremque obcaecati.
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam sunt maiores suscipit culpa recusandae! Iste
+        quia ut deleniti molestiae fugit et velit ducimus tempore, eaque eos. Repudiandae sequi nihil nisi.
       </p>
     </div>
   </forge-card>
 
-  <forge-card class="column-span-1">
-    <forge-responsive-toolbar [noBorder]="noBorder()" autoHeight="autoHeight()" [inverted]="inverted()">
+  <forge-card class="span-full">
+    <forge-toolbar>
       <forge-icon-button aria-label="Icon button demo" slot="before-start">
         <forge-icon name="arrow_back" external></forge-icon>
       </forge-icon-button>
-      <div slot="start" class="forge-typography--heading4">User info</div>
-      <forge-stack inline alignment="center" slot="actions-desktop">
-        <forge-button>Tertiary action</forge-button>
-        <forge-button variant="outlined">Secondary action</forge-button>
-        <forge-button variant="raised">Primary action</forge-button>
-      </forge-stack>
-      <div slot="actions-mobile">
-        <ng-container *ngTemplateOutlet="mobileMenu"></ng-container>
+      <div slot="start" class="forge-typography--heading4">Organization details (Toolbar component)</div>
+      <div class="buttons-inline" slot="end">
+        <ng-container *ngTemplateOutlet="desktopButtons"></ng-container>
       </div>
-    </forge-responsive-toolbar>
-
-    <div style="padding: 16px">
+    </forge-toolbar>
+    <div class="padding-16">
       <p>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Maxime blanditiis, provident tempore libero pariatur
-        incidunt nostrum quisquam, odio aspernatur eveniet esse maiores? Cum corporis minus natus rem mollitia
-        doloremque obcaecati.
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam sunt maiores suscipit culpa recusandae! Iste
+        quia ut deleniti molestiae fugit et velit ducimus tempore, eaque eos. Repudiandae sequi nihil nisi.
       </p>
     </div>
   </forge-card>
@@ -60,4 +50,10 @@
       <forge-icon name="more_vert"></forge-icon>
     </forge-icon-button>
   </forge-menu>
+</ng-template>
+
+<ng-template #desktopButtons>
+  <forge-button *ngFor="let action of toolbarActions; let i = index" [variant]="action.variant ?? 'text'">
+    {{ action.label }}
+  </forge-button>
 </ng-template>

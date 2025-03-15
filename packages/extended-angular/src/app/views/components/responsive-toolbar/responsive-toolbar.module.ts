@@ -9,10 +9,12 @@ import { ForgeExtendedResponsiveToolbarModule } from 'projects/forge-extended-an
 import {
   ForgeButtonModule,
   ForgeCardModule,
+  ForgeCheckboxModule,
   ForgeIconButtonModule,
   ForgeInlineMessageModule,
   ForgeMenuModule,
-  ForgeStackModule
+  ForgeStackModule,
+  ForgeToolbarModule
 } from '@tylertech/forge-angular';
 
 @NgModule({
@@ -29,7 +31,9 @@ import {
     ForgeMenuModule,
     ForgeButtonModule,
     ForgeInlineMessageModule,
-    ForgeMenuModule
+    ForgeMenuModule,
+    ForgeCheckboxModule,
+    ForgeToolbarModule
   ]
 })
 export class ResponsiveToolbarModule {}
