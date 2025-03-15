@@ -51,7 +51,8 @@ export class SidenavComponent implements OnInit {
 
   public componentMenuItems: IMenuItem[] = [
     { label: 'Busy Indicator', value: '/component/busy-indicator' },
-    { label: 'Quantity Field', value: '/component/quantity-field' }
+    { label: 'Quantity Field', value: '/component/quantity-field' },
+    { label: 'Responsive Toolbar', value: '/component/responsive-toolbar' }
   ];
 
   constructor(

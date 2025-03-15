@@ -1,0 +1,31 @@
+::ng-deep {
+  .app-content.app-content {
+    padding: 0;
+  }
+}
+
+.stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px;
+}
+
+forge-card {
+  --forge-card-padding: 0;
+  height: 100%;
+}
+
+.buttons-inline {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.span-full {
+  grid-column: 1/-1;
+}
+
+.padding-16 {
+  padding: 16px;
+}

@@ -238,6 +238,9 @@ importers:
 
   packages/extended:
     dependencies:
+      '@lit-labs/observers':
+        specifier: ^2.0.4
+        version: 2.0.5
       '@tylertech/forge-core':
         specifier: 'catalog:'
         version: 3.1.0
@@ -2347,6 +2350,9 @@ packages:
     engines: {node: '>=18.0.0'}
     peerDependencies:
       '@inquirer/prompts': '>= 3 < 6'
+
+  '@lit-labs/observers@2.0.5':
+    resolution: {integrity: sha512-DYHc3XhNgfl9RoDFMz99OvnElWIU7ncNga1tYd/9Wez4NOsMDRXsSD6LjFfpHCVfzZic6MdlVfB7+iIuWXl5Ng==}
 
   '@lit-labs/ssr-dom-shim@1.2.1':
     resolution: {integrity: sha512-wx4aBmgeGvFmOKucFKY+8VFJSYZxs9poN3SDNQFF6lT6NrQUnHiPB2PWz2sc4ieEcAaYYzN+1uWahEeTq2aRIQ==}
@@ -11127,6 +11133,11 @@ snapshots:
     dependencies:
       '@inquirer/prompts': 5.3.8
       '@inquirer/type': 1.5.5
+
+  '@lit-labs/observers@2.0.5':
+    dependencies:
+      '@lit/reactive-element': 2.0.4
+      lit-html: 3.2.1
 
   '@lit-labs/ssr-dom-shim@1.2.1': {}
 

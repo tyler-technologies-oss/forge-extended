@@ -71,7 +71,8 @@
   "dependencies": {
     "@tylertech/forge-core": "catalog:",
     "@tylertech/tyler-icons": "catalog:",
-    "lit": "catalog:"
+    "lit": "catalog:",
+    "@lit-labs/observers": "^2.0.4"
   },
   "peerDependencies": {
     "@tylertech/forge": "^3.0.0"
