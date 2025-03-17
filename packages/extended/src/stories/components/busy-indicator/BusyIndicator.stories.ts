@@ -1,13 +1,15 @@
 import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import { createRef, ref } from 'lit/directives/ref.js';
-
 import { BusyIndicatorComponent } from '$lib/busy-indicator';
-import '$lib/busy-indicator';
 import { standaloneStoryParams } from '../../utils';
 import { storyStyles } from '../../decorators';
+import { action } from '@storybook/addon-actions';
+
+import '$lib/busy-indicator';
 
 const component = 'forge-busy-indicator';
+const cancelAction = action('forge-busy-indicator-cancel');
 
 const meta = {
   title: 'Components/Busy Indicator',
@@ -24,7 +26,7 @@ const meta = {
       <forge-button variant="raised" @click=${handleClick}>Show Busy Indicator</forge-button>
       <forge-busy-indicator
         ${ref(busyIndicatorRef)}
-        ?open=${args.open}
+        @forge-busy-indicator-cancel=${cancelAction}
         .mode=${args.mode}
         .titleText="${args.titleText}"
         .message=${args.message}
@@ -37,11 +39,6 @@ const meta = {
     `;
   },
   argTypes: {
-    open: {
-      control: {
-        type: 'boolean'
-      }
-    },
     mode: {
       control: 'select',
       options: ['modal', 'inline']
@@ -52,7 +49,6 @@ const meta = {
     }
   },
   args: {
-    open: false,
     mode: 'modal',
     titleText: '',
     message: 'Please wait while we load your data...',
