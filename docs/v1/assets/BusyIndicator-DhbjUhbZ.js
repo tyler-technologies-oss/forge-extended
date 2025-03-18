@@ -1,4 +1,4 @@
-import{j as e,M as r,T as a,C as i}from"./index-oKvIZERb.js";import{useMDXComponents as o}from"./index-C-tEunhI.js";import{C as l}from"./CustomArgTypes-Ceyj_NIV.js";import{B as c,D as d,I as h}from"./BusyIndicator.stories-K8HEwuQG.js";import"./iframe-SWEcWZHL.js";import"./_commonjsHelpers-CqkleIqs.js";import"./index-BCI4JQNS.js";import"./index-ogSvIofg.js";import"./utils-DbzorOZO.js";import"./lit-element-CxMangmT.js";import"./directive-helpers-D8tqYSsJ.js";import"./base-CuPozXem.js";function s(n){const t={blockquote:"blockquote",code:"code",h2:"h2",h3:"h3",li:"li",p:"p",strong:"strong",ul:"ul",...o(),...n.components};return e.jsxs(e.Fragment,{children:[e.jsx(r,{of:c}),`
+import{j as e,M as r,T as a,C as n}from"./index-CK8WT8fa.js";import{useMDXComponents as o}from"./index-fGh8Jv4Z.js";import{C as l}from"./CustomArgTypes-DOcWIbr4.js";import{B as c,D as d,I as h}from"./BusyIndicator.stories-BMT4oAb3.js";import"./iframe-B780LiWv.js";import"./_commonjsHelpers-CqkleIqs.js";import"./index-BCI4JQNS.js";import"./index-ogSvIofg.js";import"./utils-DbzorOZO.js";import"./lit-element-CxMangmT.js";import"./directive-helpers-D8tqYSsJ.js";import"./base-BuU4Lgx5.js";import"./v4-CtRu48qb.js";import"./service-adapter-CYdhHUUd.js";function s(i){const t={blockquote:"blockquote",code:"code",h2:"h2",h3:"h3",li:"li",p:"p",strong:"strong",ul:"ul",...o(),...i.components};return e.jsxs(e.Fragment,{children:[e.jsx(r,{of:c}),`
 `,e.jsx(a,{}),`
 `,e.jsx(t.p,{children:`Busy indicators are a specialized dialog that is used to indicate that a process is running and the user should wait. It is typically used when a process is
 expected to take more than a few seconds to complete. The busy indicator is modal and will prevent the user from interacting with a part, or the rest of the
@@ -13,13 +13,13 @@ seconds, consider using a progress indicator instead.`]}),`
 `,e.jsx(t.h3,{id:"fullscreen",children:"Fullscreen"}),`
 `,e.jsx(t.p,{children:`The fullscreen mode is the default mode for the busy indicator. It will display a modal dialog that will prevent the user from interacting with the rest of the
 application until the process is complete. The fullscreen mode is best used when the process is expected to take a long time to complete.`}),`
-`,e.jsx(i,{of:d}),`
+`,e.jsx(n,{of:d}),`
 `,e.jsx(t.p,{children:"Fullscreen busy indicators are displayed in the top-layer above all other elements, and use fixed positioning to cover the viewport."}),`
 `,e.jsx(t.h3,{id:"inline",children:"Inline"}),`
 `,e.jsx(t.p,{children:`The inline mode will display the busy indicator inline with the rest of the content. The content will still be rendered within a dialog, but it is non-modal.
 The inline mode is best used when the process is expected to take a short amount of time to complete, while still allowing the user to interact with the rest
 of the application.`}),`
-`,e.jsx(i,{of:h}),`
+`,e.jsx(n,{of:h}),`
 `,e.jsxs(t.p,{children:["Inline busy indicators are displayed in the normal flow of the document, use absolute positioning, and will ",e.jsx(t.strong,{children:"not"}),` prevent the user from interacting with the element
 obscured by the busy indicator overlay, or other parts of the page. Make sure to disable user interaction with the obscured element(s) if necessary while the busy
 indicator is visible.`]}),`
@@ -47,4 +47,4 @@ that the busy indicator is accessible to all users, including those using assist
 the `,e.jsx(t.code,{children:"description"})," attribute. The values will be read out by screen readers to provide context to the user."]}),`
 `,e.jsxs(t.blockquote,{children:[`
 `,e.jsxs(t.p,{children:[e.jsx(t.strong,{children:"Note:"})," By default the accessible lable and description will use the ",e.jsx(t.code,{children:"titleText"})," and ",e.jsx(t.code,{children:"message"})," properties respectively."]}),`
-`]})]})}function k(n={}){const{wrapper:t}={...o(),...n.components};return t?e.jsx(t,{...n,children:e.jsx(s,{...n})}):s(n)}export{k as default};
+`]})]})}function C(i={}){const{wrapper:t}={...o(),...i.components};return t?e.jsx(t,{...i,children:e.jsx(s,{...i})}):s(i)}export{C as default};
