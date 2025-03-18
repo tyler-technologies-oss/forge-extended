@@ -673,9 +673,23 @@
               },
               "parameters": [
                 {
-                  "name": "isPrimary",
+                  "name": "value",
                   "type": {
                     "text": "boolean"
+                  }
+                },
+                {
+                  "name": "type",
+                  "default": "'action'",
+                  "type": {
+                    "text": "ConfirmationDialogActionEventType"
+                  }
+                },
+                {
+                  "name": "lightDismissEvt",
+                  "optional": true,
+                  "type": {
+                    "text": "Event"
                   }
                 }
               ]
@@ -1041,15 +1055,15 @@
     },
     "ConfirmationDialogActionEventType": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 28
+      "lineNumber": 29
     },
     "ConfirmationDialogProperties": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 32
+      "lineNumber": 31
     },
     "ConfirmationDialogComponent": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 51
+      "lineNumber": 50
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",

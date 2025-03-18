@@ -19,7 +19,7 @@ const meta = {
     }
 
     function closeDialog(evt: CustomEvent<ConfirmationDialogActionEventData>) {
-      if (args.preventDefault) {
+      if (args.preventDefault && evt.detail.value) {
         evt.preventDefault();
       }
     }
