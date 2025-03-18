@@ -1,8 +1,8 @@
-import{T as B,r as w,a as T,x as a}from"./lit-element-CxMangmT.js";import{e as C,i as S,t as D,d as z,a as k,b as L,n as f,c as u,f as h,g as N,h as P}from"./slot-utils-D9dibCyK.js";import{a as O}from"./index-CtjQfPVU.js";import{e as A,n as g,t as E}from"./base-Bk1rqh9v.js";/**
+import{T as B,r as w,a as T,x as a}from"./lit-element-CxMangmT.js";import{e as C,i as S,t as D,d as z,a as k,b as L,n as f,c as u,f as h,g as N,h as P}from"./slot-utils-DYsrZvmc.js";import{e as O,n as g,t as A,a as E}from"./base-bu5JzCYH.js";import"./service-adapter-CYdhHUUd.js";/**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */function R(t,e){return(o,n,r)=>{const l=c=>{var y;return((y=c.renderRoot)==null?void 0:y.querySelector(t))??null};return A(o,n,{get(){return l(this)}})}}/**
+ */function R(t,e){return(o,n,r)=>{const l=c=>{var y;return((y=c.renderRoot)==null?void 0:y.querySelector(t))??null};return O(o,n,{get(){return l(this)}})}}/**
  * @license
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
@@ -40,7 +40,7 @@ import{T as B,r as w,a as T,x as a}from"./lit-element-CxMangmT.js";import{e as C
           <div class="actions-container">${this._secondaryButton} ${this._primaryButton}</div>
         </div>
       </forge-dialog>
-    `}_onAction(t,e="action",o){const n=new CustomEvent("forge-confirmation-dialog-action",{bubbles:!0,cancelable:!0,detail:{value:t,type:e}});this.dispatchEvent(n),n.defaultPrevented&&o?o.preventDefault():n.defaultPrevented||(this.open=!1,this.isBusy=!1)}_handleSlotChange(t){const e=t.target.name;["title","secondary-button-text","primary-button-text"].includes(e)&&this.requestUpdate()}};d=new WeakMap;z();k();L();i.styles=w(M);s([g({type:Boolean,attribute:"open"})],i.prototype,"open",2);s([g()],i.prototype,"label",2);s([g()],i.prototype,"description",2);s([g({type:Boolean,attribute:"is-busy"})],i.prototype,"isBusy",2);s([g({type:String,attribute:"busy-label"})],i.prototype,"busyLabel",2);s([f({slot:"title",flatten:!0})],i.prototype,"_slottedTitleNodes",2);s([f({slot:"message",flatten:!0})],i.prototype,"_slottedMessageNodes",2);s([f({slot:"secondary-button-text",flatten:!0})],i.prototype,"_slottedSecondaryButtonTextNodes",2);s([R("#primary-button")],i.prototype,"_primaryButtonRef",2);i=s([E(Z)],i);const F="forge-confirmation-dialog";O("forge-confirmation-dialog-action");const H={title:"Components/Confirmation Dialog",render:t=>{const e=P();function o(){e.value.open=!e.value.open}function n(r){t.preventDefault&&r.detail.value&&r.preventDefault()}return a`
+    `}_onAction(t,e="action",o){const n=new CustomEvent("forge-confirmation-dialog-action",{bubbles:!0,cancelable:!0,detail:{value:t,type:e}});this.dispatchEvent(n),n.defaultPrevented&&o?o.preventDefault():n.defaultPrevented||(this.open=!1,this.isBusy=!1)}_handleSlotChange(t){const e=t.target.name;["title","secondary-button-text","primary-button-text"].includes(e)&&this.requestUpdate()}};d=new WeakMap;z();k();L();i.styles=w(M);s([g({type:Boolean,attribute:"open"})],i.prototype,"open",2);s([g()],i.prototype,"label",2);s([g()],i.prototype,"description",2);s([g({type:Boolean,attribute:"is-busy"})],i.prototype,"isBusy",2);s([g({type:String,attribute:"busy-label"})],i.prototype,"busyLabel",2);s([f({slot:"title",flatten:!0})],i.prototype,"_slottedTitleNodes",2);s([f({slot:"message",flatten:!0})],i.prototype,"_slottedMessageNodes",2);s([f({slot:"secondary-button-text",flatten:!0})],i.prototype,"_slottedSecondaryButtonTextNodes",2);s([R("#primary-button")],i.prototype,"_primaryButtonRef",2);i=s([A(Z)],i);const F="forge-confirmation-dialog";E("forge-confirmation-dialog-action");const H={title:"Components/Confirmation Dialog",render:t=>{const e=P();function o(){e.value.open=!e.value.open}function n(r){t.preventDefault&&r.detail.value&&r.preventDefault()}return a`
       <forge-button variant="raised" @click=${o}>Show Confirmation Dialog</forge-button>
       <forge-confirmation-dialog
         ${N(e)}
