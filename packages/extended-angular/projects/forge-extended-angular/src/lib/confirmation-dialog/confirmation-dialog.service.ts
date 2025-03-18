@@ -7,9 +7,6 @@ interface ConfirmationDialogServiceConfig extends ConfirmationDialogProperties {
   message: string;
   secondaryButtonText: string;
   primaryButtonText: string;
-  description: string;
-  label: string;
-  busyLabel: string;
 }
 
 /**

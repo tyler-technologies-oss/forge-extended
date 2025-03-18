@@ -7,7 +7,8 @@
       <forge-confirmation-dialog
         [open]="open()"
         [isBusy]="isBusy()"
-        (forge-confirmation-dialog-action)="onActionInline($event)">
+        (forge-confirmation-dialog-action)="onActionInline($event)"
+        (forge-dialog-close)="closeDialog()">
         <span slot="title">This is the title</span>
         <span slot="message"
           >Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laborum id corrupti repellendus rem, laboriosam

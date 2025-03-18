@@ -21,17 +21,19 @@ declare global {
   }
 }
 
+export type ConfirmationDialogActionEventType = 'action' | 'light-dismiss';
+
 export interface ConfirmationDialogActionEventData {
   value: boolean;
   type: ConfirmationDialogActionEventType;
 }
 
-export type ConfirmationDialogActionEventType = 'action' | 'light-dismiss';
-
 export interface ConfirmationDialogProperties {
   open: boolean;
   isBusy: boolean;
   busyLabel: string;
+  label: string | undefined;
+  description: string | undefined;
 }
 
 export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = 'forge-confirmation-dialog';
@@ -44,8 +46,7 @@ export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = '
  * @slot secondary-button-text - The text used in the secondary action button
  * @slot primary-button-text - The text used in the primary action button
  *
- * @event {ConfirmationDialogActionEventData} forge-confirmation-dialog-action - Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.
- * @event {ConfirmationDialogActionEventType} forge-confirmation-dialog-action - Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.
+ * @event {CustomEvent<ConfirmationDialogActionEventData>} forge-confirmation-dialog-action - Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.
  */
 @customElement(ConfirmationDialogComponentTagName)
 export class ConfirmationDialogComponent extends LitElement implements ConfirmationDialogProperties {
@@ -82,7 +83,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   public isBusy = false;
 
   /**
-   * Aria label of the busy indicator when loading
+   * ARIA label for the the spinner when loading
    */
   @property({ type: String, attribute: 'busy-label' })
   public busyLabel = 'Loading';
@@ -157,7 +158,8 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
 
   public override willUpdate(changedProperties: PropertyValues<this>): void {
     if (changedProperties.has('isBusy')) {
-      this.#primaryButtonWidth = this.isBusy ? this._primaryButtonRef?.clientWidth + 'px' : undefined;
+      this.#primaryButtonWidth =
+        this.isBusy && this._primaryButtonRef ? `${this._primaryButtonRef.clientWidth}px` : undefined;
     }
   }
 
@@ -165,10 +167,10 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     return html`
       <forge-dialog
         @slotchange=${this._handleSlotChange}
-        fullscreen-threshold="0"
-        ?open=${this.open}
         @forge-dialog-before-close=${(e: CustomEvent<void>) => this._onAction(false, 'light-dismiss', e)}
         @forge-dialog-close=${() => (this.isBusy = false)}
+        fullscreen-threshold="0"
+        ?open=${this.open}
         .label=${this.label || composeSlottedTextContent(this._slottedTitleNodes) || ''}
         .description=${this.description || composeSlottedTextContent(this._slottedMessageNodes) || ''}>
         <div class="outer-container">
@@ -185,6 +187,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   private _onAction(value: boolean, type: ConfirmationDialogActionEventType = 'action', lightDismissEvt?: Event): void {
     const actionEvent = new CustomEvent<ConfirmationDialogActionEventData>('forge-confirmation-dialog-action', {
       bubbles: true,
+      composed: true,
       cancelable: true,
       detail: {
         value,

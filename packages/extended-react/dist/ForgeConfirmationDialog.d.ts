@@ -1,10 +1,7 @@
 import React from "react";
-import {
-  ForgeConfirmationDialog as ForgeConfirmationDialogElement,
-  IConfirmationDialogAction,
-} from "@tylertech/forge-extended/confirmation-dialog";
+import { ForgeConfirmationDialog as ForgeConfirmationDialogElement } from "@tylertech/forge-extended/confirmation-dialog";
 
-export type { ForgeConfirmationDialogElement, IConfirmationDialogAction };
+export type { ForgeConfirmationDialogElement };
 
 export interface ForgeConfirmationDialogProps
   extends Pick<
@@ -34,7 +31,7 @@ export interface ForgeConfirmationDialogProps
   /** The accessible description for dialog. */
   description?: ForgeConfirmationDialogElement["description"];
 
-  /** Aria label of the busy indicator when loading */
+  /** ARIA label for the the spinner when loading */
   busyLabel?: ForgeConfirmationDialogElement["busyLabel"];
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
@@ -60,7 +57,7 @@ export interface ForgeConfirmationDialogProps
 
   /** Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked. */
   onForgeConfirmationDialogAction?: (
-    event: CustomEvent<IConfirmationDialogAction>,
+    event: CustomEvent<CustomEvent<ConfirmationDialogActionEventData>>,
   ) => void;
 }
 

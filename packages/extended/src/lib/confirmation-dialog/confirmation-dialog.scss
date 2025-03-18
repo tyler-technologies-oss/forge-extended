@@ -6,9 +6,9 @@
 //
 
 :host {
-  display: flex;
-  flex-direction: column;
+  display: contents;
 }
+
 //
 // Base
 //
@@ -32,6 +32,7 @@
 
 .title {
   @include forge-typography.style(heading4);
+
   text-wrap: balance;
   margin-block: 0;
   padding-block: 0;
@@ -43,6 +44,7 @@ h1 {
 
 .message {
   @include forge-typography.style(body2);
+
   color: inherit;
   margin-block: #{forge-spacing.variable(medium)};
   margin-block-end: #{forge-spacing.variable(large)};

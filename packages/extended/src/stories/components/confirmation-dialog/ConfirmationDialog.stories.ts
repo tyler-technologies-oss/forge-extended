@@ -18,8 +18,9 @@ const meta = {
       confirmationDialogRef.value!.open = !confirmationDialogRef.value!.open;
     }
 
-    function closeDialog(evt: CustomEvent<ConfirmationDialogActionEventData>) {
-      if (args.preventDefault && evt.detail.value) {
+    function handleAction(evt: CustomEvent<ConfirmationDialogActionEventData>) {
+      actionAction(evt);
+      if (args.preventDefault) {
         evt.preventDefault();
       }
     }
@@ -28,8 +29,7 @@ const meta = {
       <forge-button variant="raised" @click=${toggleDialog}>Show Confirmation Dialog</forge-button>
       <forge-confirmation-dialog
         ${ref(confirmationDialogRef)}
-        @forge-confirmation-dialog-action=${closeDialog}
-        busy-label=${args.busyLabel}
+        @forge-confirmation-dialog-action=${handleAction}
         .isBusy=${args.isBusy}>
         ${args.title.length ? html`<span slot="title">${args.title}</span>` : ''}
         ${args.message.length ? html`<span slot="message">${args.message}</span>` : ''}
@@ -45,7 +45,6 @@ const meta = {
     isBusy: { control: 'boolean' },
     title: { control: 'text' },
     message: { control: 'text' },
-    busyLabel: { control: 'text' },
     secondaryButtonText: { control: 'text' },
     primaryButtonText: { control: 'text' },
     preventDefault: { control: 'boolean' }
@@ -54,7 +53,6 @@ const meta = {
     isBusy: false,
     title: 'Delete selected images?',
     message: 'Images will be permanently removed from your account and all synced devices.',
-    busyLabel: 'Loading data',
     secondaryButtonText: 'No',
     primaryButtonText: 'Yes',
     preventDefault: false

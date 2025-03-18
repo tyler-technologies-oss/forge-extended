@@ -13,6 +13,7 @@ export class ConfirmationDialogDemoComponent {
   private _confirmationDialogService = inject(ConfirmationDialogService);
   private _toastService = inject(ToastService);
 
+  // Inline dialog state
   public open = signal(false);
   public isBusy = signal(false);
   public simulateAsync = signal(true);
@@ -35,48 +36,39 @@ export class ConfirmationDialogDemoComponent {
     });
 
     dialogRef.onAction.pipe(take(1)).subscribe(evt => {
-      evt.preventDefault();
+      console.log('[ConfirmationDialogDemoComponent] openDialogWithService', evt.detail);
 
-      let { primaryAction } = evt.detail;
-
-      if (primaryAction) {
-        if (!this.simulateAsync()) {
-          dialogRef.close();
+      if (evt.detail.value) {
+        if (this.simulateAsync()) {
+          evt.preventDefault(); // Prevent the dialog from closing
+          dialogRef.isBusy = true;
+          this._toastService.show({ theme: 'success', message: 'Changes confirmed (simulate async)' });
+          setTimeout(() => dialogRef.close(), 3000);
+        } else {
           this._toastService.show({ theme: 'success', message: 'Changes confirmed' });
         }
-
-        dialogRef.isBusy = true;
-        setTimeout(() => {
-          dialogRef.close();
-          this._toastService.show({ theme: 'success', message: 'Changes confirmed' });
-        }, 1500);
       } else {
-        dialogRef.close();
         this._toastService.show({ message: 'Changes cancelled' });
       }
     });
   }
 
   public onActionInline(evt: CustomEvent<ConfirmationDialogActionEventData>): void {
-    evt.preventDefault();
-    let { primaryAction } = evt.detail;
+    console.log('[ConfirmationDialogDemoComponent] onActionInline', evt.detail);
 
-    if (primaryAction) {
-      if (!this.simulateAsync()) {
-        this.closeDialog();
+    if (evt.detail.value) {
+      if (this.simulateAsync()) {
+        evt.preventDefault(); // Prevent the dialog from closing
+        this.isBusy.set(true);
+        this._toastService.show({ theme: 'success', message: 'Changes confirmed (simulate async)' });
+        setTimeout(() => {
+          this.isBusy.set(false);
+          this.closeDialog();
+        }, 3000);
+      } else {
         this._toastService.show({ theme: 'success', message: 'Changes confirmed' });
       }
-
-      this.isBusy.set(true);
-
-      setTimeout(() => {
-        this.isBusy.set(false);
-        this.closeDialog();
-        this._toastService.show({ theme: 'success', message: 'Changes confirmed' });
-      }, 3000);
     } else {
-      this.isBusy.set(false);
-      this.closeDialog();
       this._toastService.show({ message: 'Changes cancelled' });
     }
   }

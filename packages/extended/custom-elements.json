@@ -556,7 +556,7 @@
               },
               "privacy": "public",
               "default": "'Loading'",
-              "description": "Aria label of the busy indicator when loading",
+              "description": "ARIA label for the the spinner when loading",
               "attribute": "busy-label"
             },
             {
@@ -716,7 +716,7 @@
           "events": [
             {
               "type": {
-                "text": "ConfirmationDialogActionEventType"
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
               },
               "description": "Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.",
               "name": "forge-confirmation-dialog-action"
@@ -763,7 +763,7 @@
                 "text": "string"
               },
               "default": "'Loading'",
-              "description": "Aria label of the busy indicator when loading",
+              "description": "ARIA label for the the spinner when loading",
               "fieldName": "busyLabel"
             }
           ],
@@ -1049,13 +1049,13 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 39
     },
-    "ConfirmationDialogActionEventData": {
+    "ConfirmationDialogActionEventType": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 24
     },
-    "ConfirmationDialogActionEventType": {
+    "ConfirmationDialogActionEventData": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 29
+      "lineNumber": 26
     },
     "ConfirmationDialogProperties": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
@@ -1063,7 +1063,7 @@
     },
     "ConfirmationDialogComponent": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 50
+      "lineNumber": 51
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
