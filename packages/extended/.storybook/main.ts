@@ -20,7 +20,8 @@ const config: StorybookConfig = {
           }
         }
       }
-    }
+    },
+    './addons/decorator-dialog-closer'
   ],
   staticDirs: ['../src/stories/assets'],
   framework: {
