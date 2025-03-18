@@ -83,7 +83,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   public isBusy = false;
 
   /**
-   * ARIA label for the the spinner when loading
+   * ARIA label for the the busy indicator when loading
    */
   @property({ type: String, attribute: 'busy-label' })
   public busyLabel = 'Loading';
