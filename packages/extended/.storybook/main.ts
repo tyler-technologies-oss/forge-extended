@@ -20,7 +20,8 @@ const config: StorybookConfig = {
           }
         }
       }
-    }
+    },
+    './addons/google-analytics/register.js'
   ],
   staticDirs: ['../src/stories/assets'],
   framework: {
