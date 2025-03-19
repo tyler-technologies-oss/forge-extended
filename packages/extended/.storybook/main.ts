@@ -21,6 +21,7 @@ const config: StorybookConfig = {
         }
       }
     },
+    './addons/google-analytics/register.js',
     './addons/decorator-dialog-closer'
   ],
   staticDirs: ['../src/stories/assets'],
