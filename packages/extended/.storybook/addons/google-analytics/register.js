@@ -9,7 +9,7 @@ addons.register('storybook/google-analytics', api => {
     return;
   }
 
-  ReactGA.initialize('G-BX3LYZ2GHX');
+  ReactGA.initialize('G-76GK0Z2NSN');
 
   api.on(STORY_CHANGED, () => {
     const { path: page } = api.getUrlState();
