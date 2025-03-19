@@ -3,6 +3,7 @@ import { defineToolbarComponent } from '@tylertech/forge';
 import { LitElement, TemplateResult, html, unsafeCSS, type CSSResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref, type Ref } from 'lit/directives/ref.js';
+import { toggleState } from '@tylertech/forge/esm/core/utils/a11y-utils'; // TODO: replace with root level import once available
 
 import styles from './responsive-toolbar.scss?inline';
 
@@ -37,7 +38,7 @@ export const ResponsiveToolbarComponentTagName: keyof HTMLElementTagNameMap = 'f
  * @slot actions-mobile - The content you want to render at smaller sizes in the toolbar end slot
  * @slot after-end - Maps to the toolbar after-end slot
  * 
- * @event {CustomEvent<IResponsiveToolbarOverflow>} forge-responsive-toolbar-overflow - Dispatched when the overflow state changes
+ * @event {CustomEvent<ResponsiveToolbarOverflowEventData>} forge-responsive-toolbar-overflow - Dispatched when the overflow state changes
 
  */
 @customElement(ResponsiveToolbarComponentTagName)
@@ -96,14 +97,9 @@ export class ResponsiveToolbarComponent extends LitElement {
   private _handleResize(): void {
     const titleInlineEndEdge = this._startSlotContainer.value?.getBoundingClientRect().right || 0;
     const actionsInlineStartEdge = this._endSlotContainer.value?.getBoundingClientRect().left || 0;
-
-    if (titleInlineEndEdge + BUFFER >= actionsInlineStartEdge) {
-      this.#internals.states.add('overflowing');
-      this._emitOverflowEvent(true);
-    } else {
-      this.#internals.states.delete('overflowing');
-      this._emitOverflowEvent(false);
-    }
+    const isOverflowing = titleInlineEndEdge + BUFFER >= actionsInlineStartEdge;
+    toggleState(this.#internals, 'overflowing', isOverflowing);
+    this._emitOverflowEvent(isOverflowing);
   }
 
   private _emitOverflowEvent(isOverflowing: boolean): void {
@@ -126,11 +122,9 @@ export class ResponsiveToolbarComponent extends LitElement {
         <div ${ref(this._startSlotContainer)} slot="start">
           <slot name="start"></slot>
         </div>
-
         <div slot="end" id="actions-desktop" ${ref(this._endSlotContainer)}>
           <slot name="actions-desktop"></slot>
         </div>
-
         <div slot="end" id="actions-mobile">
           <slot name="actions-mobile"></slot>
         </div>
