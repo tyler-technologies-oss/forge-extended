@@ -1,5 +1,19 @@
 # @tylertech/forge-extended
 
+## 0.2.0
+
+### Minor Changes
+
+- 215ba6a: Added new confirmation dialog component
+
+### Patch Changes
+
+- ad6c6f9: use `queryAssignedNodes()`
+- 8859660: [busy-indicator] fixed an a11y issue when using slotted content
+- f0454b4: feat(busy-indicator): added `headingLevel` property and fixed layout bugs
+- 8f2ba06: Disable auto-fullscreen on internal dialog
+- f0454b4: improve conditional rendering detection
+
 ## 0.1.1
 
 ### Patch Changes
