@@ -23,6 +23,10 @@ forge-toolbar[auto-height] {
   margin-inline-start: #{forge-spacing.variable(medium)};
 }
 
+[slot='start'] {
+  padding-block: #{forge-spacing.variable(xxxsmall)};
+}
+
 //
 // Overflowing state
 //
