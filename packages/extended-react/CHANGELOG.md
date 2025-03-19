@@ -1,5 +1,22 @@
 # @tylertech/forge-extended-react
 
+## 0.2.0
+
+### Minor Changes
+
+- 215ba6a: Added new confirmation dialog component
+
+### Patch Changes
+
+- f0454b4: feat(busy-indicator): added `headingLevel` property and fixed layout bugs
+- Updated dependencies [ad6c6f9]
+- Updated dependencies [8859660]
+- Updated dependencies [f0454b4]
+- Updated dependencies [8f2ba06]
+- Updated dependencies [215ba6a]
+- Updated dependencies [f0454b4]
+  - @tylertech/forge-extended@0.2.0
+
 ## 0.1.3
 
 ### Patch Changes
