@@ -556,7 +556,7 @@
               },
               "privacy": "public",
               "default": "'Loading'",
-              "description": "ARIA label for the the spinner when loading",
+              "description": "ARIA label for the the busy indicator when loading",
               "attribute": "busy-label"
             },
             {
@@ -763,7 +763,7 @@
                 "text": "string"
               },
               "default": "'Loading'",
-              "description": "ARIA label for the the spinner when loading",
+              "description": "ARIA label for the the busy indicator when loading",
               "fieldName": "busyLabel"
             }
           ],
@@ -1023,7 +1023,7 @@
       ]
     }
   ],
-  "branchName": "confirmation-dialog",
+  "branchName": "google-analytics-plugin",
   "forgeTypes": {
     "HTMLElementTagNameMap": {
       "path": "src/lib/quantity-field/quantity-field.ts",
