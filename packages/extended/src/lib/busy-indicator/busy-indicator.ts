@@ -218,6 +218,7 @@ export class BusyIndicatorComponent extends LitElement {
       <forge-dialog
         class=${classMap({ inline: this.mode === 'inline', transparent: this.transparent })}
         persistent
+        fullscreen-threshold="0"
         .open=${this.open}
         .mode=${this.mode === 'inline' ? 'inline-modal' : 'modal'}
         .label=${this.label || this.titleText || composeSlottedTextContent(this._slottedTitleNodes) || ''}
