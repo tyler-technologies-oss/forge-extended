@@ -19,6 +19,13 @@ const routes: Routes = [
     path: 'responsive-toolbar',
     loadChildren: () =>
       import('../../views/components/responsive-toolbar/responsive-toolbar.module').then(m => m.ResponsiveToolbarModule)
+  },
+  {
+    path: 'confirmation-dialog',
+    loadChildren: () =>
+      import('../../views/components/confirmation-dialog/confirmation-dialog.module').then(
+        m => m.ConfirmationDialogModule
+      )
   }
 ];
 
