@@ -18,11 +18,11 @@ import{E as y,r as x,a as E,x as d}from"./lit-element-CxMangmT.js";import{C as T
  * @license
  * Copyright 2021 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */class M{constructor(e,{target:o,config:r,callback:a,skipInitial:n}){this.t=new Set,this.o=!1,this.i=!1,this.h=e,o!==null&&this.t.add(o??e),this.l=r,this.o=n??this.o,this.callback=a,window.ResizeObserver?(this.u=new ResizeObserver(i=>{this.handleChanges(i),this.h.requestUpdate()}),e.addController(this)):console.warn("ResizeController error: browser does not support ResizeObserver.")}handleChanges(e){var o;this.value=(o=this.callback)==null?void 0:o.call(this,e,this.u)}hostConnected(){for(const e of this.t)this.observe(e)}hostDisconnected(){this.disconnect()}async hostUpdated(){!this.o&&this.i&&this.handleChanges([]),this.i=!1}observe(e){this.t.add(e),this.u.observe(e,this.l),this.i=!0,this.h.requestUpdate()}unobserve(e){this.t.delete(e),this.u.unobserve(e)}disconnect(){this.u.disconnect()}}const V=`/**
+ */class M{constructor(e,{target:o,config:r,callback:a,skipInitial:s}){this.t=new Set,this.o=!1,this.i=!1,this.h=e,o!==null&&this.t.add(o??e),this.l=r,this.o=s??this.o,this.callback=a,window.ResizeObserver?(this.u=new ResizeObserver(i=>{this.handleChanges(i),this.h.requestUpdate()}),e.addController(this)):console.warn("ResizeController error: browser does not support ResizeObserver.")}handleChanges(e){var o;this.value=(o=this.callback)==null?void 0:o.call(this,e,this.u)}hostConnected(){for(const e of this.t)this.observe(e)}hostDisconnected(){this.disconnect()}async hostUpdated(){!this.o&&this.i&&this.handleChanges([]),this.i=!1}observe(e){this.t.add(e),this.u.observe(e,this.l),this.i=!0,this.h.requestUpdate()}unobserve(e){this.t.delete(e),this.u.unobserve(e)}disconnect(){this.u.disconnect()}}const V=`/**
  * @license
  * Copyright Tyler Technologies, Inc. 
  * License: Apache-2.0
- */:host{display:block;position:relative}forge-toolbar[auto-height]{--forge-toolbar-min-height: var(--forge-toolbar-height, 56px)}#actions-mobile,#actions-desktop{margin-inline-start:var(--forge-spacing-medium, 16px)}[slot=start]{padding-block:var(--forge-spacing-xxxsmall, 2px)}:host(:state(overflowing)) #actions-desktop,:host(:not(:state(overflowing))) #actions-mobile{visibility:hidden;position:absolute}`;var W=Object.defineProperty,q=Object.getOwnPropertyDescriptor,w=t=>{throw TypeError(t)},b=(t,e,o,r)=>{for(var a=r>1?void 0:r?q(e,o):e,n=t.length-1,i;n>=0;n--)(i=t[n])&&(a=(r?i(e,o,a):i(a))||a);return r&&a&&W(e,o,a),a},k=(t,e,o)=>e.has(t)||w("Cannot "+o),j=(t,e,o)=>(k(t,e,"read from private field"),o?o.call(t):e.get(t)),L=(t,e,o)=>e.has(t)?w("Cannot add the same private member more than once"):e instanceof WeakSet?e.add(t):e.set(t,o),G=(t,e,o,r)=>(k(t,e,"write to private field"),e.set(t,o),o),c;const X=24,J="forge-responsive-toolbar";let s=class extends E{constructor(){super(),this.autoHeight=!0,this.noBorder=!1,this.inverted=!1,this._startSlotContainer=p(),this._endSlotContainer=p(),L(this,c),G(this,c,this.attachInternals())}connectedCallback(){super.connectedCallback(),new M(this,{callback:()=>requestAnimationFrame(()=>this._handleResize())})}_handleResize(){var r,a;const t=((r=this._startSlotContainer.value)==null?void 0:r.getBoundingClientRect().right)||0,e=((a=this._endSlotContainer.value)==null?void 0:a.getBoundingClientRect().left)||0,o=t+X>=e;A(j(this,c),"overflowing",o),this._emitOverflowEvent(o)}_emitOverflowEvent(t){const e=new CustomEvent("forge-responsive-toolbar-overflow",{bubbles:!0,cancelable:!0,detail:{overflow:t}});this.dispatchEvent(e)}render(){return d`
+ */:host{display:block;position:relative}forge-toolbar[auto-height]{--forge-toolbar-min-height: var(--forge-toolbar-height, 56px)}#end-small,#end-large{margin-inline-start:var(--forge-spacing-medium, 16px)}[slot=start]{padding-block:var(--forge-spacing-xxxsmall, 2px)}:host(:state(overflowing)) #end-large,:host(:not(:state(overflowing))) #end-small{visibility:hidden;position:absolute}`;var W=Object.defineProperty,q=Object.getOwnPropertyDescriptor,w=t=>{throw TypeError(t)},c=(t,e,o,r)=>{for(var a=r>1?void 0:r?q(e,o):e,s=t.length-1,i;s>=0;s--)(i=t[s])&&(a=(r?i(e,o,a):i(a))||a);return r&&a&&W(e,o,a),a},k=(t,e,o)=>e.has(t)||w("Cannot "+o),j=(t,e,o)=>(k(t,e,"read from private field"),o?o.call(t):e.get(t)),L=(t,e,o)=>e.has(t)?w("Cannot add the same private member more than once"):e instanceof WeakSet?e.add(t):e.set(t,o),G=(t,e,o,r)=>(k(t,e,"write to private field"),e.set(t,o),o),b;const X=24,J="forge-responsive-toolbar";let n=class extends E{constructor(){super(),this.autoHeight=!0,this.noBorder=!1,this.inverted=!1,this._startSlotContainer=p(),this._endSlotContainer=p(),L(this,b),G(this,b,this.attachInternals())}connectedCallback(){super.connectedCallback(),new M(this,{callback:()=>requestAnimationFrame(()=>this._handleResize())})}_handleResize(){var r,a;const t=((r=this._startSlotContainer.value)==null?void 0:r.getBoundingClientRect().right)||0,e=((a=this._endSlotContainer.value)==null?void 0:a.getBoundingClientRect().left)||0,o=t+X>=e;A(j(this,b),"overflowing",o),this._emitOverflowEvent(o)}_emitOverflowEvent(t){const e=new CustomEvent("forge-responsive-toolbar-overflow",{bubbles:!0,cancelable:!0,detail:{overflow:t}});this.dispatchEvent(e)}render(){return d`
       <forge-toolbar
         ?auto-height=${this.autoHeight}
         ?no-border=${this.noBorder}
@@ -32,15 +32,17 @@ import{E as y,r as x,a as E,x as d}from"./lit-element-CxMangmT.js";import{C as T
         <div ${f(this._startSlotContainer)} slot="start">
           <slot name="start"></slot>
         </div>
-        <div slot="end" id="actions-desktop" ${f(this._endSlotContainer)}>
-          <slot name="actions-desktop"></slot>
+
+        <div slot="end" id="end-large" ${f(this._endSlotContainer)}>
+          <slot name="end-large"></slot>
         </div>
-        <div slot="end" id="actions-mobile">
-          <slot name="actions-mobile"></slot>
+
+        <div slot="end" id="end-small">
+          <slot name="end-small"></slot>
         </div>
         <slot name="after-end" slot="after-end"></slot>
       </forge-toolbar>
-    `}};c=new WeakMap;U();s.styles=x(V);b([g({type:Boolean,attribute:"auto-height"})],s.prototype,"autoHeight",2);b([g({type:Boolean,attribute:"no-border"})],s.prototype,"noBorder",2);b([g({type:Boolean,attribute:"inverted"})],s.prototype,"inverted",2);s=b([z(J)],s);const K="forge-responsive-toolbar",Q={title:"Components/Responsive Toolbar",render:t=>{const e=[{label:"Add User ",value:"add-user",variant:"text"},{label:"Remove User",value:"remove-user",variant:"outlined"},{label:"Third action",value:"third-action",variant:"raised"}];return d`<div style="width: 960px; resize:both; overflow:auto;">
+    `}};b=new WeakMap;U();n.styles=x(V);c([g({type:Boolean,attribute:"auto-height"})],n.prototype,"autoHeight",2);c([g({type:Boolean,attribute:"no-border"})],n.prototype,"noBorder",2);c([g({type:Boolean,attribute:"inverted"})],n.prototype,"inverted",2);n=c([z(J)],n);const K="forge-responsive-toolbar",Q={title:"Components/Responsive Toolbar",render:t=>{const e=[{label:"Add User ",value:"add-user",variant:"text"},{label:"Remove User",value:"remove-user",variant:"outlined"},{label:"Third action",value:"third-action",variant:"raised"}];return d`<div style="width: 960px; resize:both; overflow:auto;">
       <forge-card style="--forge-card-padding: 0; height: 100%;">
         <forge-responsive-toolbar
           ?no-border=${t.noBorder}
@@ -50,10 +52,10 @@ import{E as y,r as x,a as E,x as d}from"./lit-element-CxMangmT.js";import{C as T
             <forge-icon name="arrow_back" external></forge-icon>
           </forge-icon-button>
           <div slot="start" class="forge-typography--heading4">${t.title}</div>
-          <forge-stack inline alignment="center" slot="actions-desktop">
+          <forge-stack inline alignment="center" slot="end-large">
             ${e.map(o=>d` <forge-button variant=${F(o.variant)}>${o.label}</forge-button> `)}
           </forge-stack>
-          <div slot="actions-mobile">
+          <div slot="end-small">
             <forge-menu .options=${e}>
               <forge-icon-button aria-label="Open menu">
                 <forge-icon name="more_vert" external></forge-icon>
