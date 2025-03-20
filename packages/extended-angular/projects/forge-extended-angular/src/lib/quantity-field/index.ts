@@ -1,2 +1,2 @@
-export * from './quantity-field-element.component';
-export * from './quantity-field-element.module';
+export * from './quantity-field.component';
+export * from './quantity-field.module';

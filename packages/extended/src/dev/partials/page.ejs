@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head.ejs', { title: page.title }) %>
+  </head>
+  <body>
+    <forge-scaffold>
+      <!-- Header -->
+      <%- include('./partials/header.ejs', { title: page.title }); %>
+      
+      <!-- Content -->
+      <main slot="body" class="content">
+        <forge-card class="card<%= !page.options?.length ? ' card--centered' : undefined %>">
+          <!-- Card header-->
+          <forge-toolbar>
+            <h2 slot="start" id="content-title" class="forge-typography--heading4"><%= page.contentTitle ?? page.title %></h2>
+          </forge-toolbar>
+
+          <!-- Card content -->
+          <div class="container" id="demo-content">
+            <!-- Dynamic page include -->
+            <%- include(page.includePath, page.includeData); %>
+          </div>
+        </forge-card>
+      </main>
+    </forge-scaffold>
+  </body>
+</html>

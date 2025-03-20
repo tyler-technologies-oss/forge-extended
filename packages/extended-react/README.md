@@ -1,11 +1,12 @@
-# Tyler Forge™ React Adapter
+# Tyler Forge™ Extended React Adapter
 
-This repository contains the `@tylertech/forge-react` adapter library for working with
-Tyler Forge™ components within a React application. This library contains React wrapper components,
-hooks, and other utilities to improve the developer experience when building applications with Forge.
+This repository contains the `@tylertech/forge-extended-react` adapter library for working with
+Tyler Forge™ Extended components within a React application. This library contains React wrapper components,
+hooks, and other utilities to improve the developer experience when building applications with Forge and
+more specifically Forge extended.
 
-> Note: The `@tylertech/forge-react` package is not required when using Forge with React
-> projects, but it will make the consumption of Forge seamless and feel more native to React developers.
+> Note: The `@tylertech/forge-extended-react` package is not required when using Forge extended with React
+> projects, but it will make the consumption of Forge extended seamless and feel more native to React developers.
 
 ## The problem
 
@@ -50,91 +51,37 @@ When working with events, you will use a specific convention to attach callbacks
 > Prefix the standard Forge event names with `on-*` syntax to add event listener callbacks just
 > as you normally would in React.
 
-## Hooks
+## Using Forge Extended
 
-The library provides React hooks for working with dynamic elements such as dialog, toast, bottom sheet... etc.
-
-> If you are using class components instead, there are also wrapper components for each that consume the hooks to expose
-> them with a declarative API to use as a component.
-
-For example you can show a dialog using a hook like this:
-
-```ts
-import { useForgeDialog } from '@tylertech/forge-react';
-
-const DialogComponent = () => <div>Dialog component</div>;
-
-const SomeComponent = () => {
-  // You provide a component to display in a `<forge-dialog>` as the first parameter, and
-  // any (optional) configuration as the second parameter
-  const [showDialog, hideDialog] = useForgeDialog(DialogComponent, { persistent: true });
-
-  function handleClick(): void {
-    showDialog();
-  }
-
-  return (
-    <ForgeButton>
-      <button type="button" onClick={handleClick}>Show dialog</button>
-    </ForgeButton>
-  );
-};
-```
-
-Alternatively, if you're using components, you can show a dialog like this:
-
-```ts
-import { ForgeDialog } from '@tylertech/forge';
-
-const SomeComponent = () => {
-  const [isOpen, setOpen] = useState(false);
-
-  function handleClick(): void {
-    setOpen(true);
-  }
-
-  return (
-    <ForgeDialog open={isOpen} persistent on-forge-dialog-close={() => setOpen(false)}>
-      <DialogComponent />
-    </ForgeDialog>
-  );
-};
-```
-
-## Using Forge
-
-This library provides React wrapper components for Forge, but it does **not** automatically register the corresponding Forge components with the browser. To do so, you will need to import the Forge component definition function(s) in your React app separately.
+This library provides React wrapper components for Forge extended, but it does **not** automatically register the corresponding Forge
+components with the browser. To do so, you will need to import the Forge extended components in your React app individually.
 
 You typically want to define the components as early as possible in the bootstrapping process of your application. The `index.tsx` is a great place to do so:
 
 ```ts
-import { defineComponents } from '@tylertech/forge';
-
-defineComponents();
+import '@tylertech/forge-extended/quantity-field';
 ```
 
-> Important: this will define **all** components in Forge, causing all of the code to be loaded into your app, even if you aren't using certain components.
-
-To only load specific components, you can import the individual definition functions as needed:
+You can also define the components by importing and calling their respective `define*Component` functions:
 
 ```ts
-import { defineAppBarComponent, defineButtonComponent } from '@tylertech/forge';
+import { defineQuantityFieldComponent, defineBusyIndicatorComponent } from '@tylertech/forge-extended';
 
-defineAppBarComponent();
-defineButtonComponent();
+defineQuantityFieldComponent();
+defineBusyIndicatorComponent();
 ```
 
-> Note: depending on the structure of your application, it can be beneficial to register certain Forge components that are only used in a specific part of your
-> app so that it is bundled only with the code that is using it. This is referred to as code splitting and can improve the performance of your app, especially
-> when using lazy loading.
+> Note: depending on the structure of your application, it can be beneficial to register certain Forge extended components that are only used in a specific part
+> of your app so that it is bundled only with the code that is using it. This is referred to as code splitting and can improve the performance of your app,
+> especially when using lazy loading.
 
 ## Development
 
-The demo application can be started by running `npm start`.
+The demo application can be started by running `pnpm run start`.
 
-To build the library, run the following: `npm run build`.
+To build the library, run the following: `pnpm run build`.
 
-> The built npm package output will be placed in the `dist/forge-react` directory.
+> The built npm package output will be placed in the `dist` directory.
 
 ## TypeScript
 

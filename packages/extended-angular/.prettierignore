@@ -1,0 +1,7 @@
+**/.angular/
+**/.turbo/
+**/dist/
+**/node_modules/
+CHANGELOG.md
+**/README.md
+.gitignore

@@ -1,60 +1,63 @@
 import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 import { createRef, ref } from 'lit/directives/ref.js';
+import { BusyIndicatorComponent } from '$lib/busy-indicator';
+import { standaloneStoryParams } from '../../utils';
+import { storyStyles } from '../../decorators';
+import { action } from '@storybook/addon-actions';
 
-import { BusyIndicatorElement } from '../../../lib/busy-indicator/busy-indicator';
-import '../../../lib/busy-indicator/busy-indicator';
+import '$lib/busy-indicator';
 
 const component = 'forge-busy-indicator';
+const cancelAction = action('forge-busy-indicator-cancel');
 
 const meta = {
   title: 'Components/Busy Indicator',
   component,
   render: args => {
-    const busyIndicatorRef = createRef<BusyIndicatorElement>();
+    const busyIndicatorRef = createRef<BusyIndicatorComponent>();
 
     function handleClick() {
       busyIndicatorRef.value!.open = true;
+      setTimeout(() => (busyIndicatorRef.value!.open = false), 3000);
     }
 
     return html`
       <forge-button variant="raised" @click=${handleClick}>Show Busy Indicator</forge-button>
       <forge-busy-indicator
         ${ref(busyIndicatorRef)}
-        ?open=${args.open}
+        @forge-busy-indicator-cancel=${cancelAction}
+        .mode=${args.mode}
         .titleText="${args.titleText}"
         .message=${args.message}
         .cancelable=${args.cancelable}
-        .spinner=${args.spinner}
+        .variant=${args.variant}
+        .determinate=${args.determinate}
         .progress=${args.progress}
-        .progressBar=${args.progressBar}
-        .progressBarDeterminate=${args.progressBarDeterminate}
         .buffer=${args.buffer}
-        .direction=${args.direction}></forge-busy-indicator>
+        .transparent=${args.transparent}></forge-busy-indicator>
     `;
   },
   argTypes: {
-    open: {
-      control: {
-        type: 'boolean'
-      }
-    },
-    direction: {
+    mode: {
       control: 'select',
-      options: ['row', 'column']
+      options: ['modal', 'inline']
+    },
+    variant: {
+      control: 'select',
+      options: ['spinner', 'progress', 'message-only']
     }
   },
   args: {
-    open: false,
-    titleText: 'Loading...',
-    message: 'Please wait while we load your data',
+    mode: 'modal',
+    titleText: '',
+    message: 'Please wait while we load your data...',
     cancelable: false,
-    spinner: true,
-    progressBar: false,
-    progress: 0,
-    buffer: 0,
-    direction: 'column',
-    progressBarDeterminate: false
+    variant: 'spinner',
+    progress: 0.5,
+    buffer: 1,
+    determinate: false,
+    transparent: false
   }
 } satisfies Meta;
 
@@ -62,8 +65,29 @@ export default meta;
 
 type Story = StoryObj;
 
-export const Demo: Story = {
-  args: {
-    cancelable: true
+export const Demo: Story = {};
+
+export const Inline: Story = {
+  ...standaloneStoryParams,
+  decorators: [
+    storyStyles(`
+    .parent {
+      position: relative;
+      height: 300px;
+      border: 1px solid var(--forge-theme-outline);
+      border-radius: var(--forge-shape-large);
+    }
+  `)
+  ],
+  render: () => {
+    return html`
+      <div class="parent">
+        <forge-busy-indicator
+          open
+          mode="inline"
+          title-text="Loading"
+          message="Please wait while we load your data..."></forge-busy-indicator>
+      </div>
+    `;
   }
 };

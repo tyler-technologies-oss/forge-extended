@@ -1,0 +1,12 @@
+{
+  "name": "@repo/eslint-config",
+  "version": "0.0.0",
+  "private": true,
+  "devDependencies": {
+    "eslint": "^8",
+    "@tylertech-eslint/eslint-plugin": "catalog:",
+    "@typescript-eslint/eslint-plugin": "catalog:",
+    "eslint-config-prettier": "catalog:",
+    "eslint-plugin-prettier": "catalog:"
+  }
+}

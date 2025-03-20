@@ -18,7 +18,7 @@ import { HeaderComponent } from './components/header/header.component';
 // Pages
 import { HomeComponent } from './views/home/home.component';
 
-import { ForgeExtendedQuantityFieldElementModule } from '@tylertech/forge-extended-angular';
+import { ForgeExtendedQuantityFieldModule } from '@tylertech/forge-extended-angular';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, SidenavComponent, HeaderComponent],
@@ -28,7 +28,7 @@ import { ForgeExtendedQuantityFieldElementModule } from '@tylertech/forge-extend
     HttpClientModule,
     DemoCardComponent,
     ForgeModule,
-    ForgeExtendedQuantityFieldElementModule
+    ForgeExtendedQuantityFieldModule
   ],
   providers: [],
   bootstrap: [AppComponent]

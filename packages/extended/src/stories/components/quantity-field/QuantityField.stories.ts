@@ -1,9 +1,13 @@
 import { type Meta, type StoryObj } from '@storybook/web-components';
+import { action } from '@storybook/addon-actions';
 import { html } from 'lit';
 
-import '../../../lib/quantity-field/quantity-field';
+import '$lib/quantity-field';
 
 const component = 'forge-quantity-field';
+
+const changeAction = action('change');
+const inputAction = action('input');
 
 const meta = {
   title: 'Components/Quantity Field',
@@ -12,7 +16,14 @@ const meta = {
     return html`
       <forge-quantity-field .invalid=${args.invalid} .required=${args.required}>
         <label slot="label" for="quantity">Quantity</label>
-        <input id="quantity" type="number" value="1" aria-label="Set a quantity" step="2" />
+        <input
+          id="quantity"
+          type="number"
+          value="1"
+          aria-label="Set a quantity"
+          step="2"
+          @change=${changeAction}
+          @input=${inputAction} />
         <span slot="support-text">Enter a quantity</span>
       </forge-quantity-field>
     `;

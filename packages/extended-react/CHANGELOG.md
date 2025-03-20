@@ -1,87 +1,46 @@
-# v3.0.1 (Wed Aug 21 2024)
+# @tylertech/forge-extended-react
 
-#### 🐛 Bug Fix
+## 0.1.3
 
-- fix: fix package exports and type for legacy tooling compatibility [#13](https://github.com/tyler-technologies-oss/forge-react/pull/13) ([@DRiFTy17](https://github.com/DRiFTy17))
+### Patch Changes
 
-#### Authors: 1
+- cfb1dad: consistency updates and release preparation
+- Updated dependencies [1854abd]
+- Updated dependencies [273f28c]
+- Updated dependencies [cfb1dad]
+  - @tylertech/forge-extended@0.1.1
 
-- Kieran Nichols ([@DRiFTy17](https://github.com/DRiFTy17))
+## 0.1.2
 
----
+### Patch Changes
 
-# v3.0.0 (Tue Jun 11 2024)
+- Updated dependencies [e9d1ed5]
+  - @tylertech/forge-extended@0.1.0
 
-#### 💥 Breaking Change
+## 0.1.1
 
-- feat: release GA 3.0 [#12](https://github.com/tyler-technologies-oss/forge-react/pull/12) ([@DRiFTy17](https://github.com/DRiFTy17))
+### Patch Changes
 
-#### Authors: 1
+- 0b2e765: Fix peer dependencies
 
-- Kieran Nichols ([@DRiFTy17](https://github.com/DRiFTy17))
+## 0.1.0
 
----
+### Minor Changes
 
-# v2.3.0 (Wed Apr 03 2024)
+- 7bb5888: Alpha release
 
-#### 🚀 Enhancement
+### Patch Changes
 
-- feat: add `<ForgeButtonArea>` wrapper [#10](https://github.com/tyler-technologies-oss/forge-react/pull/10) ([@DRiFTy17](https://github.com/DRiFTy17))
+- Updated dependencies [7bb5888]
+  - @tylertech/forge-extended@0.0.1
 
-#### 🐛 Bug Fix
+## 0.1.0
 
-- fix: update Auto [#8](https://github.com/tyler-technologies-oss/forge-react/pull/8) ([@DRiFTy17](https://github.com/DRiFTy17))
+### Minor Changes
 
-#### Authors: 1
+- Alpha release
 
-- Kieran Nichols ([@DRiFTy17](https://github.com/DRiFTy17))
+### Patch Changes
 
----
-
-# v2.2.0 (Mon May 22 2023)
-
-:tada: This release contains work from a new contributor! :tada:
-
-Thank you, Nick Andrews ([@nickonometry](https://github.com/nickonometry)), for all your work!
-
-#### 🚀 Enhancement
-
-- chore(stack): added react wrapper and stack demo [#5](https://github.com/tyler-technologies-oss/forge-react/pull/5) ([@nickonometry](https://github.com/nickonometry))
-
-#### ⚠️ Pushed to `main`
-
-- Merge branch 'main' of https://github.com/tyler-technologies/forge-react ([@DRiFTy17](https://github.com/DRiFTy17))
-
-#### Authors: 2
-
-- Kieran Nichols ([@DRiFTy17](https://github.com/DRiFTy17))
-- Nick Andrews ([@nickonometry](https://github.com/nickonometry))
-
----
-
-# v2.1.0 (Wed Oct 19 2022)
-
-:tada: This release contains work from a new contributor! :tada:
-
-Thank you, Sam Richardson ([@samrichardsontylertech](https://github.com/samrichardsontylertech)), for all your work!
-
-#### 🚀 Enhancement
-
-- feat: add split view component wrappers [#2](https://github.com/tyler-technologies-oss/forge-react/pull/2) ([@samrichardsontylertech](https://github.com/samrichardsontylertech))
-- feat: add keyboard shortcut component wrapper [#3](https://github.com/tyler-technologies-oss/forge-react/pull/3) ([@samrichardsontylertech](https://github.com/samrichardsontylertech))
-
-#### Authors: 1
-
-- Sam Richardson ([@samrichardsontylertech](https://github.com/samrichardsontylertech))
-
----
-
-# v2.0.0 (Sat Jun 25 2022)
-
-#### 🚀 Enhancement
-
-- feat: oss prep [#1](https://github.com/tyler-technologies-oss/forge-react/pull/1) ([@DRiFTy17](https://github.com/DRiFTy17))
-
-#### Authors: 1
-
-- Kieran Nichols ([@DRiFTy17](https://github.com/DRiFTy17))
+- Updated dependencies
+  - @tylertech/forge-extended@0.0.1

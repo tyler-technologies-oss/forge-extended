@@ -2,11 +2,11 @@
 .DS_Store
 .vscode/
 .turbo/
+.pnpm-store/
 node_modules/
 dist/
 types/
 cdn-deployment/
-custom-elements.json
 *.tgz
 *storybook.log
 storybook-static/

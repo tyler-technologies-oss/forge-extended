@@ -1,7 +1,24 @@
 import { esbuildPlugin } from '@web/dev-server-esbuild';
-import { sendKeysPlugin, sendMousePlugin } from '@web/test-runner-commands/plugins';
+import { fromRollup } from '@web/dev-server-rollup';
+import { sendKeysPlugin, sendMousePlugin, setViewportPlugin } from '@web/test-runner-commands/plugins';
 import { fileURLToPath } from 'url';
 import { readdirSync } from 'fs';
+import { compileString } from 'sass';
+import { dirname } from 'path';
+
+/** Custom plugin to inline imports against .scss files as compiled CSS strings. */
+const inlineScss = fromRollup(() => {
+  return {
+    name: 'inline-scss',
+    transform(code, id) {
+      if (id.endsWith('.scss')) {
+        const loadPaths = [dirname(id), 'node_modules/'];
+        const result = compileString(code, { loadPaths });
+        return result.css;
+      }
+    }
+  };
+});
 
 /** Gets all directory names within a given source directory.  */
 export const directoryGroup = source =>
@@ -9,14 +26,28 @@ export const directoryGroup = source =>
     .filter(dirent => dirent.isDirectory())
     .map(dirent => dirent.name);
 
+export const FILTERED_LOGS = ['Lit is in dev mode'];
+
 /**
  * @type {import('@web/test-runner').TestRunnerConfig}
  */
 export default {
-  concurrentBrowsers: 3,
+  // Workaround until https://github.com/modernweb-dev/web/issues/2772 is resolved
+  // TODO: Remove the @ungap/structured-clone dependency once the issue is resolved
+  testRunnerHtml(testFramework) {
+    return `<html><body><script type="module">import structuredClone from '@ungap/structured-clone';window.structuredClone = (value) => structuredClone(value, { lossy: true });</script><script type="module" src="${testFramework}"></script></body></html>`;
+  },
+  concurrency: 1,
   port: 8000,
   nodeResolve: true,
-  testsFinishTimeout: 60000,
+  filterBrowserLogs: ({ args }) => {
+    for (const arg of args) {
+      if (typeof arg === 'string' && FILTERED_LOGS.some(l => arg.includes(l))) {
+        return false;
+      }
+    }
+    return true;
+  },
   testFramework: {
     config: {
       timeout: 5000,
@@ -49,6 +80,8 @@ export default {
   plugins: [
     sendKeysPlugin(),
     sendMousePlugin(),
+    setViewportPlugin(),
+    inlineScss(),
     esbuildPlugin({
       ts: true,
       tsconfig: fileURLToPath(new URL('./tsconfig.json', import.meta.url)),

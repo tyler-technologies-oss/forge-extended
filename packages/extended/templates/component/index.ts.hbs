@@ -1,0 +1,8 @@
+import { {{pascalCase name}}Component, {{pascalCase name}}ComponentTagName } from './{{dashCase name}}';
+import { tryDefine } from '@tylertech/forge-core';
+
+export * from './{{dashCase name}}';
+
+export function define{{pascalCase name}}Component(): void {
+  tryDefine({{pascalCase name}}ComponentTagName, {{pascalCase name}}Component);
+}
