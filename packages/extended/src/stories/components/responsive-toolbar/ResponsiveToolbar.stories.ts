@@ -1,11 +1,12 @@
 import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
+import { IMenuOption } from '@tylertech/forge';
+import { storyStyles } from '../../decorators';
 
 import '$lib/responsive-toolbar';
 
 const component = 'forge-responsive-toolbar';
-import { IMenuOption } from '@tylertech/forge';
 
 interface customMenuOption extends IMenuOption {
   variant?: 'text' | 'raised' | 'outlined';
@@ -13,6 +14,23 @@ interface customMenuOption extends IMenuOption {
 
 const meta = {
   title: 'Components/Responsive Toolbar',
+  decorators: [
+    storyStyles(`
+      .rt-container {
+        max-width: 960px;
+        resize: both;
+        overflow: auto;
+      }
+
+      .rt-card {
+        height: 100%;
+      }
+
+      .rt-content {
+        padding: var(--forge-spacing-medium);
+      }
+    `)
+  ],
   render: args => {
     const options: customMenuOption[] = [
       { label: 'Add User ', value: 'add-user', variant: 'text' },
@@ -20,8 +38,8 @@ const meta = {
       { label: 'Third action', value: 'third-action', variant: 'raised' }
     ];
 
-    return html`<div style="width: 960px; resize:both; overflow:auto;">
-      <forge-card style="--forge-card-padding: 0; height: 100%;">
+    return html`<div class="rt-container">
+      <forge-card no-padding class="rt-card">
         <forge-responsive-toolbar
           ?no-border=${args.noBorder}
           ?auto-height=${args.autoHeight}
@@ -49,11 +67,9 @@ const meta = {
             : nothing}
         </forge-responsive-toolbar>
 
-        <div style="padding: 16px;">
-          <p>
-            To see this component respond, drag this div smaller using the drag handle on the bottom right of the card
-          </p>
-        </div>
+        <p class="rt-content">
+          To see this component respond, drag this div smaller using the drag handle on the bottom right of the card
+        </p>
       </forge-card>
     </div>`;
   },
