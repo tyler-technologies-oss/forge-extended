@@ -66,8 +66,8 @@ export interface ForgeResponsiveToolbarProps
  * ### **Slots:**
  *  - **before-start** - Maps to the toolbar before-start slot
  * - **start** - Maps to the toolbar start slot
- * - **actions-desktop** - The content you want to render at larger sizes in the toolbar end slot
- * - **actions-mobile** - The content you want to render at smaller sizes in the toolbar end slot
+ * - **end-large** - The content you want to render at larger sizes in the toolbar end slot
+ * - **end-small** - The content you want to render at smaller sizes in the toolbar end slot
  * - **after-end** - Maps to the toolbar after-end slot
  */
 export const ForgeResponsiveToolbar: React.ForwardRefExoticComponent<ForgeResponsiveToolbarProps>;

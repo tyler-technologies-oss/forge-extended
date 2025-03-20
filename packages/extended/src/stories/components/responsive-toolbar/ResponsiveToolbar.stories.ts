@@ -30,12 +30,12 @@ const meta = {
             <forge-icon name="arrow_back" external></forge-icon>
           </forge-icon-button>
           <div slot="start" class="forge-typography--heading4">${args.title}</div>
-          <forge-stack inline alignment="center" slot="actions-desktop">
+          <forge-stack inline alignment="center" slot="end-large">
             ${options.map(
               item => html` <forge-button variant=${ifDefined(item.variant)}>${item.label}</forge-button> `
             )}
           </forge-stack>
-          <div slot="actions-mobile">
+          <div slot="end-small">
             <forge-menu .options=${options}>
               <forge-icon-button aria-label="Open menu">
                 <forge-icon name="more_vert" external></forge-icon>

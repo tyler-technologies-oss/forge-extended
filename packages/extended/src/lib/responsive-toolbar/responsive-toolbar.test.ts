@@ -50,14 +50,14 @@ describe('ResponsiveToolbar', () => {
     expect(harness.startSlot.assignedNodes().length).to.greaterThanOrEqual(1);
   });
 
-  it('content should project into the actions-desktop slot', async () => {
+  it('content should project into the end-large slot', async () => {
     const harness = await createFixture();
-    expect(harness.actionsDesktopSlot.assignedNodes().length).to.greaterThanOrEqual(1);
+    expect(harness.endLargeSlot.assignedNodes().length).to.greaterThanOrEqual(1);
   });
 
-  it('content should project into the actions-mobile slot', async () => {
+  it('content should project into the end-small slot', async () => {
     const harness = await createFixture();
-    expect(harness.actionsMobileSlot.assignedNodes().length).to.greaterThanOrEqual(1);
+    expect(harness.endSmallSlot.assignedNodes().length).to.greaterThanOrEqual(1);
   });
 
   it('content should project into the after-end slot', async () => {
@@ -114,12 +114,12 @@ class ResponsiveToolbarHarness {
     return this.el.shadowRoot?.querySelector('slot[name="start"]') as HTMLSlotElement;
   }
 
-  public get actionsDesktopSlot(): HTMLSlotElement {
-    return this.el.shadowRoot?.querySelector('slot[name="actions-desktop"]') as HTMLSlotElement;
+  public get endLargeSlot(): HTMLSlotElement {
+    return this.el.shadowRoot?.querySelector('slot[name="end-large"]') as HTMLSlotElement;
   }
 
-  public get actionsMobileSlot(): HTMLSlotElement {
-    return this.el.shadowRoot?.querySelector('slot[name="actions-mobile"]') as HTMLSlotElement;
+  public get endSmallSlot(): HTMLSlotElement {
+    return this.el.shadowRoot?.querySelector('slot[name="end-small"]') as HTMLSlotElement;
   }
 
   public get afterEndSlot(): HTMLSlotElement {
@@ -143,8 +143,8 @@ async function createFixture({
         <forge-icon name="arrow_back" external></forge-icon>
       </forge-icon-button>
       <div slot="start" class="forge-typography--heading4">Community Services Directory</div>
-      <div slot="actions-desktop">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
-      <div slot="actions-mobile">Mobile actions</div>
+      <div slot="end-large">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+      <div slot="end-small">Mobile actions</div>
       <div slot="after-end">After end</div>
     </forge-responsive-toolbar>
   `);

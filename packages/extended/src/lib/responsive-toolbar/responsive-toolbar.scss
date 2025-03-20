@@ -18,8 +18,8 @@ forge-toolbar[auto-height] {
   --forge-toolbar-min-height: #{forge-toolbar-tokens.get('height')};
 }
 
-#actions-mobile,
-#actions-desktop {
+#end-small,
+#end-large {
   margin-inline-start: #{forge-spacing.variable(medium)};
 }
 
@@ -36,7 +36,7 @@ forge-toolbar[auto-height] {
   position: absolute;
 }
 
-:host(:state(overflowing)) #actions-desktop,
-:host(:not(:state(overflowing))) #actions-mobile {
+:host(:state(overflowing)) #end-large,
+:host(:not(:state(overflowing))) #end-small {
   @include overflow;
 }

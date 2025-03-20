@@ -33,8 +33,8 @@ export const ResponsiveToolbarComponentTagName: keyof HTMLElementTagNameMap = 'f
  *
  * @slot before-start - Maps to the toolbar before-start slot
  * @slot start - Maps to the toolbar start slot
- * @slot actions-desktop - The content you want to render at larger sizes in the toolbar end slot
- * @slot actions-mobile - The content you want to render at smaller sizes in the toolbar end slot
+ * @slot end-large - The content you want to render at larger sizes in the toolbar end slot
+ * @slot end-small - The content you want to render at smaller sizes in the toolbar end slot
  * @slot after-end - Maps to the toolbar after-end slot
  * 
  * @event {CustomEvent<IResponsiveToolbarOverflow>} forge-responsive-toolbar-overflow - Dispatched when the overflow state changes
@@ -127,12 +127,12 @@ export class ResponsiveToolbarComponent extends LitElement {
           <slot name="start"></slot>
         </div>
 
-        <div slot="end" id="actions-desktop" ${ref(this._endSlotContainer)}>
-          <slot name="actions-desktop"></slot>
+        <div slot="end" id="end-large" ${ref(this._endSlotContainer)}>
+          <slot name="end-large"></slot>
         </div>
 
-        <div slot="end" id="actions-mobile">
-          <slot name="actions-mobile"></slot>
+        <div slot="end" id="end-small">
+          <slot name="end-small"></slot>
         </div>
         <slot name="after-end" slot="after-end"></slot>
       </forge-toolbar>

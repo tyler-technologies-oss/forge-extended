@@ -1049,11 +1049,11 @@
             },
             {
               "description": "The content you want to render at larger sizes in the toolbar end slot",
-              "name": "actions-desktop"
+              "name": "end-large"
             },
             {
               "description": "The content you want to render at smaller sizes in the toolbar end slot",
-              "name": "actions-mobile"
+              "name": "end-small"
             },
             {
               "description": "Maps to the toolbar after-end slot",
