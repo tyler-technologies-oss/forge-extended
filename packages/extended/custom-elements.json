@@ -1153,7 +1153,7 @@
           "events": [
             {
               "type": {
-                "text": "CustomEvent<IResponsiveToolbarOverflow>"
+                "text": "CustomEvent<ResponsiveToolbarOverflowEventData>"
               },
               "description": "Dispatched when the overflow state changes",
               "name": "forge-responsive-toolbar-overflow"
@@ -1223,15 +1223,15 @@
       ]
     }
   ],
-  "branchName": "responsive-toolbar-v2",
+  "branchName": "main",
   "forgeTypes": {
     "HTMLElementTagNameMap": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 10
+      "lineNumber": 11
     },
     "HTMLElementEventMap": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 14
+      "lineNumber": 15
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -1271,11 +1271,11 @@
     },
     "ResponsiveToolbarOverflowEventData": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 19
+      "lineNumber": 20
     },
     "ResponsiveToolbarComponent": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 43
+      "lineNumber": 44
     }
   }
 }

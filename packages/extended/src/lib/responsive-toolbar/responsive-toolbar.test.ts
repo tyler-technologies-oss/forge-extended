@@ -1,6 +1,7 @@
 import { expect } from '@esm-bundle/chai';
-import { fixture, html } from '@open-wc/testing';
+import { fixture, html, nextFrame } from '@open-wc/testing';
 import { ResponsiveToolbarComponent } from './responsive-toolbar';
+import sinon from 'sinon';
 
 import './responsive-toolbar';
 
@@ -11,11 +12,6 @@ describe('ResponsiveToolbar', () => {
     expect(el.shadowRoot).to.be.ok;
   });
 });
-import { expect } from '@esm-bundle/chai';
-import { fixture, html, nextFrame } from '@open-wc/testing';
-import sinon from 'sinon';
-import { ResponsiveToolbarComponent } from './responsive-toolbar';
-import './responsive-toolbar';
 
 describe('ResponsiveToolbar', () => {
   it('should contain shadow root', async () => {

@@ -51,7 +51,7 @@ export interface ForgeResponsiveToolbarProps
 
   /** Dispatched when the overflow state changes */
   onForgeResponsiveToolbarOverflow?: (
-    event: CustomEvent<CustomEvent<IResponsiveToolbarOverflow>>,
+    event: CustomEvent<CustomEvent<ResponsiveToolbarOverflowEventData>>,
   ) => void;
 }
 

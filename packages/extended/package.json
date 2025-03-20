@@ -122,6 +122,7 @@
     "plop": "catalog:",
     "postcss-lit": "catalog:",
     "react": "^17.0.2",
+    "react-ga4": "^2.1.0",
     "remark-gfm": "catalog:",
     "rimraf": "catalog:",
     "sass": "catalog:",

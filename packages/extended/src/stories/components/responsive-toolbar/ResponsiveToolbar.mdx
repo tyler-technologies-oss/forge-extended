@@ -6,9 +6,12 @@ import * as ResponsiveToolbarStories from './ResponsiveToolbar.stories';
 
 <Title />
 
-The Responsive Toolbar dynamically adjusts your toolbar content to prevent overlap on smaller screens. It leverages a `ResizeObserver` to detect when the title content collides with the end slot content. When an overlap is detected, the toolbar automatically hides the `desktop-actions` slot and displays the `mobile-actions` slot instead.
+The Responsive Toolbar dynamically adjusts your toolbar content to prevent overlap on smaller screens. It leverages a `ResizeObserver` to detect
+when the title content collides with the end slot content. When an overlap is detected, the toolbar automatically hides the `desktop-actions` slot
+and displays the `mobile-actions` slot instead.
 
-This approach eliminates the need for manually configuring breakpoints or container queries, ensuring a seamless adaptive experience without extra calculations. Simply provide your `desktop-actions` slot content and your `mobile-actions` slot content, and the component handles the rest.
+This approach eliminates the need for manually configuring breakpoints or container queries, ensuring a seamless adaptive experience without extra
+calculations. Simply provide your `desktop-actions` slot content and your `mobile-actions` slot content, and the component handles the rest.
 
 <Canvas of={ResponsiveToolbarStories.Demo} />
 
@@ -16,16 +19,18 @@ This approach eliminates the need for manually configuring breakpoints or contai
 > should be providing markup for both the `desktop-actions` slot and the `mobile-actions` slot, this lets you fine tune
 > the user experience based on available space.
 
-<br />
-### Why a responsive-toolbar?
+### Why a responsive toolbar?
 
-The toolbar is a common source of layout issues in back-office applications, often overlooked when adapting to different screen sizes. Managing multiple instances of the core `<forge-toolbar>` across a page can make breakpoint handling complex and inconsistent.
+The toolbar is a common source of layout issues in applications, often overlooked when adapting to different screen sizes. Managing multiple instances
+of the primitive `<forge-toolbar>` across a page can make breakpoint handling complex and inconsistent.
 
-The `<forge-responsive-toolbar>` solves this by automatically adjusting to various screen sizes, preventing hidden content, overlapping text, and broken layouts. It ensures a clean, readable UI without the need for manual breakpoint management.
+The `<forge-responsive-toolbar>` solves this by automatically adjusting to various container sizes, preventing hidden content, overlapping text, and
+broken layouts. It ensures a clean, readable UI without the need for manual breakpoint management.
 
-### When to use a responsive-toolbar
+### When to use a responsive toolbar
 
-If you know that your application could be potentially used on lower resolutions or mobile devices and you're currently using toolbars with actions in the end slot, then you should use a responsive toolbar instead.
+If you know that your application could potentially be used on lower resolutions or mobile devices, and you're currently using toolbars with actions
+in the end slot, then you should use a responsive toolbar instead.
 
 ## API
 
