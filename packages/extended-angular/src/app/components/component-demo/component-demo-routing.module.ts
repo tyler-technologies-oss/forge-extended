@@ -16,6 +16,11 @@ const routes: Routes = [
       import('../../views/components/busy-indicator/busy-indicator.module').then(m => m.BusyIndicatorModule)
   },
   {
+    path: 'responsive-toolbar',
+    loadChildren: () =>
+      import('../../views/components/responsive-toolbar/responsive-toolbar.module').then(m => m.ResponsiveToolbarModule)
+  },
+  {
     path: 'confirmation-dialog',
     loadChildren: () =>
       import('../../views/components/confirmation-dialog/confirmation-dialog.module').then(

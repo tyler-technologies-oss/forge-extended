@@ -4,7 +4,10 @@
   "newProjectRoot": "projects",
   "cli": {
     "packageManager": "pnpm",
-    "analytics": false
+    "analytics": false,
+    "cache": {
+      "enabled": false
+    }
   },
   "projects": {
     "forge-extended-angular-demo": {

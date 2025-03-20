@@ -67,7 +67,7 @@ export class ConfirmationDialogComponent {
     return this.nativeElement.isBusy;
   }
 
-  /** ARIA label for the the spinner when loading */
+  /** ARIA label for the the busy indicator when loading */
   @Input()
   public set busyLabel(value: ConfirmationDialogComponentCustomElement['busyLabel']) {
     this.zone.runOutsideAngular(() => {
