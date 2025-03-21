@@ -803,6 +803,26 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/filter-sidesheet/facet-context.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "facetContext"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "facetContext",
+          "declaration": {
+            "name": "facetContext",
+            "module": "src/lib/filter-sidesheet/facet-context.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/quantity-field/quantity-field.ts",
       "declarations": [
         {
@@ -1021,13 +1041,355 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/filter-sidesheet/facet-group/facet-group.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "FacetGroupElement",
+          "members": [
+            {
+              "kind": "field",
+              "name": "data",
+              "type": {
+                "text": "any | undefined"
+              },
+              "privacy": "public"
+            },
+            {
+              "kind": "field",
+              "name": "#internals",
+              "privacy": "private",
+              "type": {
+                "text": "ElementInternals"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "title",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "Indicates whether the facet group is opened or closed.",
+              "attribute": "title"
+            },
+            {
+              "kind": "field",
+              "name": "expandable",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Indicates whether the facet group is opened or closed.",
+              "attribute": "expandable"
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the facet group is opened or closed.",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "showDivider",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Show or hide the divider",
+              "attribute": "show-divider"
+            },
+            {
+              "kind": "field",
+              "name": "_header",
+              "type": {
+                "text": "TemplateResult | typeof nothing"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "_expansionPanel",
+              "type": {
+                "text": "TemplateResult | typeof nothing"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "_title",
+              "type": {
+                "text": "TemplateResult | typeof nothing"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "_openIcon",
+              "type": {
+                "text": "TemplateResult | typeof nothing"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "_divider",
+              "type": {
+                "text": "TemplateResult | typeof nothing"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "_facetGroup",
+              "type": {
+                "text": "TemplateResult | typeof nothing"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "method",
+              "name": "_handleHeaderClick",
+              "privacy": "private",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "title",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Indicates whether the facet group is opened or closed.",
+              "fieldName": "title"
+            },
+            {
+              "name": "expandable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Indicates whether the facet group is opened or closed.",
+              "fieldName": "expandable"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the facet group is opened or closed.",
+              "fieldName": "open"
+            },
+            {
+              "name": "show-divider",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Show or hide the divider",
+              "fieldName": "showDivider"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-facet-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FacetGroupElement",
+          "declaration": {
+            "name": "FacetGroupElement",
+            "module": "src/lib/filter-sidesheet/facet-group/facet-group.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "forge-facet-group",
+          "declaration": {
+            "name": "FacetGroupElement",
+            "module": "src/lib/filter-sidesheet/facet-group/facet-group.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/filter-sidesheet/facet-checkbox/facet-checkbox.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "FacetCheckboxElement",
+          "members": [
+            {
+              "kind": "field",
+              "name": "showCount",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Count value",
+              "attribute": "show-count"
+            },
+            {
+              "kind": "field",
+              "name": "count",
+              "type": {
+                "text": "number | null"
+              },
+              "privacy": "public",
+              "default": "null",
+              "description": "Count value",
+              "attribute": "count"
+            },
+            {
+              "kind": "field",
+              "name": "_count",
+              "type": {
+                "text": "TemplateResult | typeof nothing"
+              },
+              "privacy": "private",
+              "readonly": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "show-count",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Count value",
+              "fieldName": "showCount"
+            },
+            {
+              "name": "count",
+              "type": {
+                "text": "number | null"
+              },
+              "default": "null",
+              "description": "Count value",
+              "fieldName": "count"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-facet-checkbox",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FacetCheckboxElement",
+          "declaration": {
+            "name": "FacetCheckboxElement",
+            "module": "src/lib/filter-sidesheet/facet-checkbox/facet-checkbox.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "forge-facet-checkbox",
+          "declaration": {
+            "name": "FacetCheckboxElement",
+            "module": "src/lib/filter-sidesheet/facet-checkbox/facet-checkbox.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/filter-sidesheet/facet-wrapper/facet-wrapper.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "context"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "FilterWrapperElement",
+          "members": [
+            {
+              "kind": "field",
+              "name": "data",
+              "default": "facetContext"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-facet-wrapper",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "context",
+          "declaration": {
+            "name": "context",
+            "module": "src/lib/filter-sidesheet/facet-wrapper/facet-wrapper.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "FilterWrapperElement",
+          "declaration": {
+            "name": "FilterWrapperElement",
+            "module": "src/lib/filter-sidesheet/facet-wrapper/facet-wrapper.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "forge-facet-wrapper",
+          "declaration": {
+            "name": "FilterWrapperElement",
+            "module": "src/lib/filter-sidesheet/facet-wrapper/facet-wrapper.ts"
+          }
+        }
+      ]
     }
   ],
-  "branchName": "google-analytics-plugin",
+  "branchName": "filter-sidesheet",
   "forgeTypes": {
     "HTMLElementTagNameMap": {
-      "path": "src/lib/quantity-field/quantity-field.ts",
-      "lineNumber": 14
+      "path": "src/lib/filter-sidesheet/facet-checkbox/facet-checkbox.ts",
+      "lineNumber": 7
     },
     "HTMLElementEventMap": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
@@ -1068,6 +1430,22 @@
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
+    },
+    "FacetGroupElement": {
+      "path": "src/lib/filter-sidesheet/facet-group/facet-group.ts",
+      "lineNumber": 26
+    },
+    "FacetCheckboxElement": {
+      "path": "src/lib/filter-sidesheet/facet-checkbox/facet-checkbox.ts",
+      "lineNumber": 12
+    },
+    "ContextValue": {
+      "path": "src/lib/filter-sidesheet/facet-wrapper/facet-wrapper.ts",
+      "lineNumber": 11
+    },
+    "FilterWrapperElement": {
+      "path": "src/lib/filter-sidesheet/facet-wrapper/facet-wrapper.ts",
+      "lineNumber": 18
     }
   }
 }

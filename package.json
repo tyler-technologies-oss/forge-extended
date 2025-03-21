@@ -57,5 +57,8 @@
     "patchedDependencies": {
       "@changesets/assemble-release-plan@6.0.6": "patches/@changesets__assemble-release-plan@6.0.6.patch"
     }
+  },
+  "dependencies": {
+    "@lit/context": "^1.1.4"
   }
 }

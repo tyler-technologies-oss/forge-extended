@@ -1,8 +1,9 @@
 import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 
-import '../../../../lib/filter-sidesheet/facet-group/facet-group';
-import '../../../../lib/filter-sidesheet/facet-checkbox/facet-checkbox';
+import '$lib/filter-sidesheet/facet-wrapper/facet-wrapper';
+import '$lib/filter-sidesheet/facet-group/facet-group';
+import '$lib/filter-sidesheet/facet-checkbox/facet-checkbox';
 
 const component = 'forge-facet-group';
 
@@ -25,19 +26,21 @@ const meta = {
         <div slot="body-left">
           <forge-drawer style="--forge-drawer-width: 320px;">
             <div style="margin-block: 8px;">
-              <forge-facet-group
-                title=${args.title}
-                .expandable=${args.expandable}
-                .open=${args.open}
-                .showDivider=${args.showDivider}>
-                ${args.categories.map(
-                  facet => html`
-                    <forge-facet-checkbox value=${facet.value} count=${facet.count}>
-                      ${facet.label}
-                    </forge-facet-checkbox>
-                  `
-                )}
-              </forge-facet-group>
+              <forge-facet-wrapper>
+                <forge-facet-group
+                  title=${args.title}
+                  .expandable=${args.expandable}
+                  .open=${args.open}
+                  .showDivider=${args.showDivider}>
+                  ${args.categories.map(
+                    facet => html`
+                      <forge-facet-checkbox value=${facet.value} count=${facet.count}>
+                        ${facet.label}
+                      </forge-facet-checkbox>
+                    `
+                  )}
+                </forge-facet-group>
+              </forge-facet-wrapper>
             </div>
           </forge-drawer>
         </div>

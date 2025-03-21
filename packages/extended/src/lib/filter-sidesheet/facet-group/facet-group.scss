@@ -18,7 +18,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding-inline: #{forge-spacing.variable(medium)};
+  padding-inline: #{forge-spacing.variable(xsmall)};
 }
 
 .title {
@@ -35,4 +35,16 @@
 
 .footer {
   padding-inline: #{forge-spacing.variable(medium)};
+}
+
+:host(:state(expandable)) {
+  .header {
+    cursor: pointer;
+  }
+}
+
+:host(:not(:state(expandable))) {
+  .header {
+    padding-inline-end: 0;
+  }
 }

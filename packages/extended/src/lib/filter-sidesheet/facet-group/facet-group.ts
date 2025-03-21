@@ -1,7 +1,10 @@
-import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import styles from './facet-group.scss?inline';
+import { consume, ContextProvider, ContextConsumer } from '@lit/context';
+import { FacetContext, facetContext, updateFacetContext } from '../facet-context';
+
 import {
   defineBadgeComponent,
   defineButtonComponent,
@@ -12,6 +15,7 @@ import {
 } from '@tylertech/forge';
 
 import '../facet-checkbox/facet-checkbox';
+import { toggleState } from '@tylertech/forge/esm/core/utils/a11y-utils';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -30,7 +34,20 @@ export class FacetGroupElement extends LitElement {
     defineOpenIconComponent();
   }
 
+  @consume({ context: facetContext, subscribe: true })
+  public facetCtx!: FacetContext;
+
+  @consume({ context: updateFacetContext })
+  private _updateData?: (value: string) => void;
+
   public static override styles = unsafeCSS(styles);
+
+  readonly #internals: ElementInternals;
+
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+  }
 
   /**
    * Indicates whether the facet group is opened or closed.
@@ -42,7 +59,7 @@ export class FacetGroupElement extends LitElement {
    * Indicates whether the facet group is opened or closed.
    */
   @property({ type: Boolean, attribute: 'expandable' })
-  public expandable = false;
+  public expandable = true;
 
   /**
    * Indicates whether the facet group is opened or closed.
@@ -58,10 +75,16 @@ export class FacetGroupElement extends LitElement {
 
   private get _header(): TemplateResult | typeof nothing {
     return html`
+      
+      <div style="font-size: 13px;">Consumer's data: ${this.facetCtx}</div>
+      <input @input=${this._changeContextValue}></input>
+      <br />
       <div
         role=${ifDefined(this.expandable ? 'button' : undefined)}
         tabindex=${ifDefined(this.expandable ? '0' : undefined)}
+        @click=${ifDefined(this.expandable) ? this._handleHeaderClick : null}
         class="header">
+        
         <div class="title">
           <slot name="title" class="title">${this._title}</slot>
           <forge-badge theme="primary">6</forge-badge>
@@ -83,7 +106,7 @@ export class FacetGroupElement extends LitElement {
   }
 
   private get _openIcon(): TemplateResult | typeof nothing {
-    return this.expandable ? html`<forge-open-icon></forge-open-icon>` : nothing;
+    return this.expandable ? html`<forge-open-icon ?open=${this.open}></forge-open-icon>` : nothing;
   }
 
   private get _divider(): TemplateResult | typeof nothing {
@@ -92,7 +115,6 @@ export class FacetGroupElement extends LitElement {
 
   private get _facetGroup(): TemplateResult | typeof nothing {
     return html`
-      ${this._header}
       <div class="body">
         <slot></slot>
       </div>
@@ -102,11 +124,28 @@ export class FacetGroupElement extends LitElement {
     `;
   }
 
+  public override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('expandable')) {
+      toggleState(this.#internals, 'expandable', this.expandable);
+    }
+  }
+
   public override render(): TemplateResult {
     return this.expandable
-      ? html` <div class="container">${this._expansionPanel}</div>
+      ? html` <div class="container">${this._header} ${this._expansionPanel}</div>
           ${this._divider}`
-      : html` <div class="container">${this._facetGroup}</div>
+      : html` <div class="container">${this._header} ${this._facetGroup}</div>
           ${this._divider}`;
+  }
+
+  private _handleHeaderClick(): void {
+    this.open = !this.open;
+  }
+
+  private _changeContextValue(value: Event): void {
+    const input = value.target as HTMLInputElement;
+    if (this._updateData) {
+      this._updateData(input.value);
+    }
   }
 }

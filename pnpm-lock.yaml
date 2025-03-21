@@ -174,6 +174,10 @@ patchedDependencies:
 importers:
 
   .:
+    dependencies:
+      '@lit/context':
+        specifier: ^1.1.4
+        version: 1.1.4
     devDependencies:
       '@changesets/cli':
         specifier: 2.28.1
@@ -2353,6 +2357,9 @@ packages:
 
   '@lit-labs/ssr-dom-shim@1.2.1':
     resolution: {integrity: sha512-wx4aBmgeGvFmOKucFKY+8VFJSYZxs9poN3SDNQFF6lT6NrQUnHiPB2PWz2sc4ieEcAaYYzN+1uWahEeTq2aRIQ==}
+
+  '@lit/context@1.1.4':
+    resolution: {integrity: sha512-0b8wOWNUPcXjGHFtVP+odwhrZBZw+PpCjKWn8IGO10iHT95Xd6FcUAxe1aE7PUtOBvHZoxvrfdBzweYnDW7VNQ==}
 
   '@lit/reactive-element@2.0.4':
     resolution: {integrity: sha512-GFn91inaUa2oHLak8awSIigYz0cU0Payr1rcFsrkf5OJ5eSPxElyZfKh0f2p9FsTiZWXQdWGJeXZICEfXXYSXQ==}
@@ -11135,6 +11142,10 @@ snapshots:
       '@inquirer/type': 1.5.5
 
   '@lit-labs/ssr-dom-shim@1.2.1': {}
+
+  '@lit/context@1.1.4':
+    dependencies:
+      '@lit/reactive-element': 2.0.4
 
   '@lit/reactive-element@2.0.4':
     dependencies:
