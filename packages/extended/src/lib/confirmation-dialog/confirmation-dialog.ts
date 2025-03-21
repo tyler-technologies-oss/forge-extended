@@ -125,9 +125,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   }
 
   private get _titleSlot(): TemplateResult | typeof nothing {
-    return html` <div class="title">
-      <slot name="title" id="confirmation-dialog-title"></slot>
-    </div>`;
+    return html` <slot name="title" id="confirmation-dialog-title" class="title"></slot> `;
   }
 
   private get _closeIconButton(): TemplateResult | typeof nothing {
