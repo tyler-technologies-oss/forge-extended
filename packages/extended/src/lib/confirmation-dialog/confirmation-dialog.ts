@@ -7,8 +7,11 @@ import {
   ButtonComponent,
   defineButtonComponent,
   defineCircularProgressComponent,
-  defineDialogComponent
+  defineDialogComponent,
+  defineIconButtonComponent,
+  IconRegistry
 } from '@tylertech/forge';
+import { tylIconClose } from '@tylertech/tyler-icons/standard';
 import { composeSlottedTextContent } from '../utils/slot-utils';
 
 declare global {
@@ -54,6 +57,9 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     defineButtonComponent();
     defineDialogComponent();
     defineCircularProgressComponent();
+    defineIconButtonComponent();
+
+    IconRegistry.define([tylIconClose]);
   }
 
   public static override styles = unsafeCSS(styles);
@@ -102,6 +108,13 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
 
   #primaryButtonWidth: string | undefined;
 
+  readonly #internals: ElementInternals;
+
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+  }
+
   private get _title(): TemplateResult | typeof nothing {
     const showTitle = this._slottedTitleNodes.length > 0;
     return when(
@@ -112,7 +125,26 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   }
 
   private get _titleSlot(): TemplateResult | typeof nothing {
-    return html` <slot name="title" id="confirmation-dialog-title" class="title"></slot>`;
+    return html` <div class="title">
+      <slot name="title" id="confirmation-dialog-title"></slot>
+    </div>`;
+  }
+
+  private get _closeIconButton(): TemplateResult | typeof nothing {
+    const showCloseIcon = this._slottedTitleNodes.length > 0;
+    if (showCloseIcon) {
+      this.#internals.states.delete('no-title');
+    } else {
+      this.#internals.states.add('no-title');
+    }
+    return when(
+      showCloseIcon,
+      () =>
+        html` <forge-icon-button aria-label="Close confirmation dialog" class="close-button">
+          <forge-icon name="close"></forge-icon>
+        </forge-icon-button>`,
+      () => nothing
+    );
   }
 
   private get _secondaryButtonSlot(): TemplateResult | typeof nothing {
@@ -174,8 +206,8 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
         .label=${this.label || composeSlottedTextContent(this._slottedTitleNodes) || ''}
         .description=${this.description || composeSlottedTextContent(this._slottedMessageNodes) || ''}>
         <div class="outer-container">
-          <div class="title-message-container">
-            ${this._title}
+          ${this._title} ${this._closeIconButton}
+          <div class="message-container">
             <slot name="message" id="confirmation-message" class="message"></slot>
           </div>
           <div class="actions-container">${this._secondaryButton} ${this._primaryButton}</div>

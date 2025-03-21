@@ -619,6 +619,15 @@
             },
             {
               "kind": "field",
+              "name": "_closeIconButton",
+              "type": {
+                "text": "TemplateResult | typeof nothing"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
               "name": "_secondaryButtonSlot",
               "type": {
                 "text": "TemplateResult | typeof nothing"
@@ -1023,7 +1032,7 @@
       ]
     }
   ],
-  "branchName": "google-analytics-plugin",
+  "branchName": "main",
   "forgeTypes": {
     "HTMLElementTagNameMap": {
       "path": "src/lib/quantity-field/quantity-field.ts",
@@ -1031,7 +1040,7 @@
     },
     "HTMLElementEventMap": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 19
+      "lineNumber": 20
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -1051,19 +1060,19 @@
     },
     "ConfirmationDialogActionEventType": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 24
+      "lineNumber": 25
     },
     "ConfirmationDialogActionEventData": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 26
+      "lineNumber": 27
     },
     "ConfirmationDialogProperties": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 31
+      "lineNumber": 32
     },
     "ConfirmationDialogComponent": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 51
+      "lineNumber": 52
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",

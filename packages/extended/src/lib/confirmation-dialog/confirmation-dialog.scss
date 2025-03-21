@@ -14,28 +14,39 @@
 //
 
 .outer-container {
+  position: relative;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  gap: #{forge-spacing.variable(medium)};
   padding: #{forge-spacing.variable(medium)};
-  gap: #{forge-spacing.variable(medium)};
   max-width: 480px;
-}
-
-.title-message-container {
-  box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  gap: #{forge-spacing.variable(medium)};
 }
 
 .title {
   @include forge-typography.style(heading4);
 
   text-wrap: balance;
-  margin-block: 0;
-  padding-block: 0;
+}
+
+:host(:state(no-title)) {
+  .title {
+    display: none;
+  }
+}
+
+.close-button {
+  position: absolute;
+  top: #{forge-spacing.variable(xxsmall)};
+  right: #{forge-spacing.variable(xxsmall)};
+}
+
+.message-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(medium)};
 }
 
 h1 {
