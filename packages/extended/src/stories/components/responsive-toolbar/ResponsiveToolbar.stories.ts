@@ -20,6 +20,8 @@ const meta = {
         max-width: 960px;
         resize: both;
         overflow: auto;
+        border: 1px solid var(--forge-theme-outline);
+        border-radius: 4px;
       }
 
       .rt-card {
@@ -39,7 +41,7 @@ const meta = {
     ];
 
     return html`<div class="rt-container">
-      <forge-card no-padding class="rt-card">
+      <div class="rt-card">
         <forge-responsive-toolbar
           ?no-border=${args.noBorder}
           ?auto-height=${args.autoHeight}
@@ -70,7 +72,7 @@ const meta = {
         <p class="rt-content">
           To see this component respond, drag this div smaller using the drag handle on the bottom right of the card
         </p>
-      </forge-card>
+      </div>
     </div>`;
   },
   component,

@@ -1223,7 +1223,7 @@
       ]
     }
   ],
-  "branchName": "main",
+  "branchName": "responsive-toolbar-v2",
   "forgeTypes": {
     "HTMLElementTagNameMap": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
