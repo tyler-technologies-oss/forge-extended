@@ -1,4 +1,4 @@
-import{E as y,r as x,a as E,x as d}from"./lit-element-CxMangmT.js";import{s as T}from"./decorators-DScKEY3p.js";import{C as R,B as O,a as S,_ as $,c as B,d as A,n as g,b as z,t as N}from"./property-D_Q-X6Xo.js";import{a as p,n as f}from"./ref-BAtbkH2N.js";import{c as I}from"./service-adapter-CRnntHsK.js";/**
+import{E as y,r as k,a as E,x as d}from"./lit-element-CxMangmT.js";import{s as T}from"./decorators-DScKEY3p.js";import{C as R,B as O,a as S,_ as $,c as B,d as A,n as g,b as z,t as N}from"./property-D_Q-X6Xo.js";import{a as p,n as f}from"./ref-BAtbkH2N.js";import{c as I}from"./service-adapter-CRnntHsK.js";/**
  * @license
  * Copyright Tyler Technologies, Inc. 
  * License: Apache-2.0
@@ -22,7 +22,7 @@ import{E as y,r as x,a as E,x as d}from"./lit-element-CxMangmT.js";import{s as T
  * @license
  * Copyright Tyler Technologies, Inc. 
  * License: Apache-2.0
- */:host{display:block;position:relative}forge-toolbar[auto-height]{--forge-toolbar-min-height: var(--forge-toolbar-height, 56px)}#end-small,#end-large{margin-inline-start:var(--forge-spacing-medium, 16px)}[slot=start]{padding-block:var(--forge-spacing-xxxsmall, 2px)}:host(:state(overflowing)) #end-large,:host(:not(:state(overflowing))) #end-small{visibility:hidden;position:absolute}`;var q=Object.defineProperty,j=Object.getOwnPropertyDescriptor,w=t=>{throw TypeError(t)},b=(t,e,o,r)=>{for(var a=r>1?void 0:r?j(e,o):e,s=t.length-1,i;s>=0;s--)(i=t[s])&&(a=(r?i(e,o,a):i(a))||a);return r&&a&&q(e,o,a),a},k=(t,e,o)=>e.has(t)||w("Cannot "+o),L=(t,e,o)=>(k(t,e,"read from private field"),o?o.call(t):e.get(t)),G=(t,e,o)=>e.has(t)?w("Cannot add the same private member more than once"):e instanceof WeakSet?e.add(t):e.set(t,o),X=(t,e,o,r)=>(k(t,e,"write to private field"),e.set(t,o),o),c;const J=24,K="forge-responsive-toolbar";let n=class extends E{constructor(){super(),this.autoHeight=!0,this.noBorder=!1,this.inverted=!1,this._startSlotContainer=p(),this._endSlotContainer=p(),G(this,c),X(this,c,this.attachInternals())}connectedCallback(){super.connectedCallback(),new V(this,{callback:()=>requestAnimationFrame(()=>this._handleResize())})}_handleResize(){var r,a;const t=((r=this._startSlotContainer.value)==null?void 0:r.getBoundingClientRect().right)||0,e=((a=this._endSlotContainer.value)==null?void 0:a.getBoundingClientRect().left)||0,o=t+J>=e;z(L(this,c),"overflowing",o),this._emitOverflowEvent(o)}_emitOverflowEvent(t){const e=new CustomEvent("forge-responsive-toolbar-overflow",{bubbles:!0,cancelable:!0,detail:{overflow:t}});this.dispatchEvent(e)}render(){return d`
+ */:host{display:block;position:relative}forge-toolbar[auto-height]{--forge-toolbar-min-height: var(--forge-toolbar-height, 56px)}#end-small,#end-large{margin-inline-start:var(--forge-spacing-medium, 16px)}[slot=start]{padding-block:var(--forge-spacing-xxxsmall, 2px)}:host(:state(overflowing)) #end-large,:host(:not(:state(overflowing))) #end-small{visibility:hidden;position:absolute}`;var q=Object.defineProperty,j=Object.getOwnPropertyDescriptor,w=t=>{throw TypeError(t)},b=(t,e,o,r)=>{for(var a=r>1?void 0:r?j(e,o):e,s=t.length-1,i;s>=0;s--)(i=t[s])&&(a=(r?i(e,o,a):i(a))||a);return r&&a&&q(e,o,a),a},x=(t,e,o)=>e.has(t)||w("Cannot "+o),L=(t,e,o)=>(x(t,e,"read from private field"),o?o.call(t):e.get(t)),G=(t,e,o)=>e.has(t)?w("Cannot add the same private member more than once"):e instanceof WeakSet?e.add(t):e.set(t,o),X=(t,e,o,r)=>(x(t,e,"write to private field"),e.set(t,o),o),c;const J=24,K="forge-responsive-toolbar";let n=class extends E{constructor(){super(),this.autoHeight=!0,this.noBorder=!1,this.inverted=!1,this._startSlotContainer=p(),this._endSlotContainer=p(),G(this,c),X(this,c,this.attachInternals())}connectedCallback(){super.connectedCallback(),new V(this,{callback:()=>requestAnimationFrame(()=>this._handleResize())})}_handleResize(){var r,a;const t=((r=this._startSlotContainer.value)==null?void 0:r.getBoundingClientRect().right)||0,e=((a=this._endSlotContainer.value)==null?void 0:a.getBoundingClientRect().left)||0,o=t+J>=e;z(L(this,c),"overflowing",o),this._emitOverflowEvent(o)}_emitOverflowEvent(t){const e=new CustomEvent("forge-responsive-toolbar-overflow",{bubbles:!0,cancelable:!0,detail:{overflow:t}});this.dispatchEvent(e)}render(){return d`
       <forge-toolbar
         ?auto-height=${this.autoHeight}
         ?no-border=${this.noBorder}
@@ -42,11 +42,13 @@ import{E as y,r as x,a as E,x as d}from"./lit-element-CxMangmT.js";import{s as T
         </div>
         <slot name="after-end" slot="after-end"></slot>
       </forge-toolbar>
-    `}};c=new WeakMap;F();n.styles=x(W);b([g({type:Boolean,attribute:"auto-height"})],n.prototype,"autoHeight",2);b([g({type:Boolean,attribute:"no-border"})],n.prototype,"noBorder",2);b([g({type:Boolean,attribute:"inverted"})],n.prototype,"inverted",2);n=b([N(K)],n);const Q="forge-responsive-toolbar",Y={title:"Components/Responsive Toolbar",decorators:[T(`
+    `}};c=new WeakMap;F();n.styles=k(W);b([g({type:Boolean,attribute:"auto-height"})],n.prototype,"autoHeight",2);b([g({type:Boolean,attribute:"no-border"})],n.prototype,"noBorder",2);b([g({type:Boolean,attribute:"inverted"})],n.prototype,"inverted",2);n=b([N(K)],n);const Q="forge-responsive-toolbar",Y={title:"Components/Responsive Toolbar",decorators:[T(`
       .rt-container {
         max-width: 960px;
         resize: both;
         overflow: auto;
+        border: 1px solid var(--forge-theme-outline);
+        border-radius: 4px;
       }
 
       .rt-card {
@@ -57,7 +59,7 @@ import{E as y,r as x,a as E,x as d}from"./lit-element-CxMangmT.js";import{s as T
         padding: var(--forge-spacing-medium);
       }
     `)],render:t=>{const e=[{label:"Add User ",value:"add-user",variant:"text"},{label:"Remove User",value:"remove-user",variant:"outlined"},{label:"Third action",value:"third-action",variant:"raised"}];return d`<div class="rt-container">
-      <forge-card no-padding class="rt-card">
+      <div class="rt-card">
         <forge-responsive-toolbar
           ?no-border=${t.noBorder}
           ?auto-height=${t.autoHeight}
@@ -84,7 +86,7 @@ import{E as y,r as x,a as E,x as d}from"./lit-element-CxMangmT.js";import{s as T
         <p class="rt-content">
           To see this component respond, drag this div smaller using the drag handle on the bottom right of the card
         </p>
-      </forge-card>
+      </div>
     </div>`},component:Q,argTypes:{title:{control:"text"},noBorder:{control:"boolean"},autoHeight:{control:"boolean"},inverted:{control:"boolean"},afterEnd:{control:"boolean",name:"Show after-end slot content"}},args:{title:"This is a really really long title",noBorder:!1,autoHeight:!0,inverted:!1,afterEnd:!1}},l={args:{demoWidth:855,afterEnd:!1}};var u,m,_;l.parameters={...l.parameters,docs:{...(u=l.parameters)==null?void 0:u.docs,source:{originalSource:`{
   args: {
     demoWidth: 855,
