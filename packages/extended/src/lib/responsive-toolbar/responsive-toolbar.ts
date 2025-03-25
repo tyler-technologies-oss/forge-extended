@@ -18,7 +18,7 @@ declare global {
 }
 
 interface ResponsiveToolbarOverflowEventData {
-  overflow: boolean;
+  state: boolean;
 }
 
 /**
@@ -106,7 +106,7 @@ export class ResponsiveToolbarComponent extends LitElement {
     const event = new CustomEvent<ResponsiveToolbarOverflowEventData>('forge-responsive-toolbar-overflow', {
       bubbles: true,
       cancelable: true,
-      detail: { overflow: isOverflowing }
+      detail: { state: isOverflowing }
     });
     this.dispatchEvent(event);
   }
