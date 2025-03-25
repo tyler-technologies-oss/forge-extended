@@ -601,15 +601,6 @@
             },
             {
               "kind": "field",
-              "name": "#internals",
-              "privacy": "private",
-              "type": {
-                "text": "ElementInternals"
-              },
-              "readonly": true
-            },
-            {
-              "kind": "field",
               "name": "_title",
               "type": {
                 "text": "TemplateResult | typeof nothing"
