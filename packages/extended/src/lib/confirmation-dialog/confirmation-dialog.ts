@@ -108,13 +108,6 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
 
   #primaryButtonWidth: string | undefined;
 
-  readonly #internals: ElementInternals;
-
-  constructor() {
-    super();
-    this.#internals = this.attachInternals();
-  }
-
   private get _title(): TemplateResult | typeof nothing {
     const showTitle = this._slottedTitleNodes.length > 0;
     return when(
@@ -130,11 +123,6 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
 
   private get _closeIconButton(): TemplateResult | typeof nothing {
     const showCloseIcon = this._slottedTitleNodes.length > 0;
-    if (showCloseIcon) {
-      this.#internals.states.delete('no-title');
-    } else {
-      this.#internals.states.add('no-title');
-    }
     return when(
       showCloseIcon,
       () =>
@@ -198,6 +186,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   }
 
   public override render(): TemplateResult {
+    const showTitleContainer = this._slottedTitleNodes.length > 0;
     return html`
       <forge-dialog
         @slotchange=${this._handleSlotChange}
@@ -208,7 +197,10 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
         .label=${this.label || composeSlottedTextContent(this._slottedTitleNodes) || ''}
         .description=${this.description || composeSlottedTextContent(this._slottedMessageNodes) || ''}>
         <div class="outer-container">
-          ${this._title} ${this._closeIconButton}
+          <div class="title-container" style=${styleMap({ display: showTitleContainer ? 'grid' : 'none' })}>
+            ${this._title}
+            <div class="close-button-container">${this._closeIconButton}</div>
+          </div>
           <div class="message-container">
             <slot name="message" id="confirmation-message"></slot>
           </div>

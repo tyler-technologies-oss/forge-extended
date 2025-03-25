@@ -24,22 +24,23 @@
   max-width: 480px;
 }
 
+.title-container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: #{forge-spacing.variable(medium)};
+}
+
+.close-button-container {
+  height: 24px;
+  margin-block-start: -10px;
+}
+
 .title {
   @include forge-typography.style(heading4);
 
   text-wrap: balance;
-}
-
-:host(:state(no-title)) {
-  .title {
-    display: none;
-  }
-}
-
-.close-button {
-  position: absolute;
-  top: #{forge-spacing.variable(xxsmall)};
-  right: #{forge-spacing.variable(xxsmall)};
+  word-break: break-all;
 }
 
 .message-container {
