@@ -1,10 +1,20 @@
 import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
-import { IMenuOption } from '@tylertech/forge';
+import {
+  defineButtonComponent,
+  defineIconButtonComponent,
+  defineMenuComponent,
+  defineStackComponent,
+  IMenuOption
+} from '@tylertech/forge';
 import { storyStyles } from '../../decorators';
-
 import '$lib/responsive-toolbar';
+
+defineButtonComponent();
+defineStackComponent();
+defineIconButtonComponent();
+defineMenuComponent();
 
 const component = 'forge-responsive-toolbar';
 
