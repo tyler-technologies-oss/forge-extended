@@ -109,12 +109,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   #primaryButtonWidth: string | undefined;
 
   private get _title(): TemplateResult | typeof nothing {
-    const showTitle = this._slottedTitleNodes.length > 0;
-    return when(
-      showTitle,
-      () => html`<h1>${this._titleSlot}</h1>`,
-      () => html`${this._titleSlot}`
-    );
+    return html` <h1>${this._titleSlot}</h1>`;
   }
 
   private get _titleSlot(): TemplateResult | typeof nothing {
@@ -122,19 +117,15 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   }
 
   private get _closeIconButton(): TemplateResult | typeof nothing {
-    const showCloseIcon = this._slottedTitleNodes.length > 0;
-    return when(
-      showCloseIcon,
-      () =>
-        html` <forge-icon-button
-          autofocus
-          aria-label="Close confirmation dialog"
-          class="close-button"
-          @click=${() => this._onAction(false)}>
-          <forge-icon name="close"></forge-icon>
-        </forge-icon-button>`,
-      () => nothing
-    );
+    return html`
+      <forge-icon-button
+        autofocus
+        aria-label="Close confirmation dialog"
+        class="close-button"
+        @click=${() => this._onAction(false)}>
+        <forge-icon name="close"></forge-icon>
+      </forge-icon-button>
+    `;
   }
 
   private get _secondaryButtonSlot(): TemplateResult | typeof nothing {
