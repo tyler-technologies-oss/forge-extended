@@ -17,8 +17,10 @@ declare global {
   }
 }
 
-interface ResponsiveToolbarOverflowEventData {
-  state: boolean;
+export type ResponsiveToolbarOverflowState = 'large' | 'small';
+
+export interface ResponsiveToolbarOverflowEventData {
+  state: ResponsiveToolbarOverflowState;
 }
 
 /**
@@ -97,16 +99,16 @@ export class ResponsiveToolbarComponent extends LitElement {
   private _handleResize(): void {
     const titleInlineEndEdge = this._startSlotContainer.value?.getBoundingClientRect().right || 0;
     const actionsInlineStartEdge = this._endSlotContainer.value?.getBoundingClientRect().left || 0;
-    const isOverflowing = titleInlineEndEdge + BUFFER >= actionsInlineStartEdge;
-    toggleState(this.#internals, 'overflowing', isOverflowing);
-    this._emitOverflowEvent(isOverflowing);
+    const overflowState = titleInlineEndEdge + BUFFER >= actionsInlineStartEdge ? 'small' : 'large';
+    toggleState(this.#internals, 'overflowing', overflowState === 'small');
+    this._emitOverflowEvent(overflowState);
   }
 
-  private _emitOverflowEvent(isOverflowing: boolean): void {
+  private _emitOverflowEvent(overflowState: ResponsiveToolbarOverflowState): void {
     const event = new CustomEvent<ResponsiveToolbarOverflowEventData>('forge-responsive-toolbar-overflow', {
       bubbles: true,
       cancelable: true,
-      detail: { state: isOverflowing }
+      detail: { state: overflowState }
     });
     this.dispatchEvent(event);
   }
