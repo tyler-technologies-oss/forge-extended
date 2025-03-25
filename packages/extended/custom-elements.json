@@ -1142,9 +1142,9 @@
               },
               "parameters": [
                 {
-                  "name": "isOverflowing",
+                  "name": "overflowState",
                   "type": {
-                    "text": "boolean"
+                    "text": "ResponsiveToolbarOverflowState"
                   }
                 }
               ]
@@ -1269,13 +1269,17 @@
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
     },
-    "ResponsiveToolbarOverflowEventData": {
+    "ResponsiveToolbarOverflowState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 20
     },
+    "ResponsiveToolbarOverflowEventData": {
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "lineNumber": 22
+    },
     "ResponsiveToolbarComponent": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 44
+      "lineNumber": 46
     }
   }
 }
