@@ -1,8 +1,8 @@
-import{T as B,r as w,a as T,x as a}from"./lit-element-CxMangmT.js";import{e as C,i as S,t as D,n as z,a as k}from"./ref-BAtbkH2N.js";import{e as A,a as N}from"./base-OKak0x2_.js";import{n as g,t as P}from"./property-D_Q-X6Xo.js";import{d as O,a as R,b as E,n as f,c as u,e as h}from"./slot-utils-Docw9srf.js";import"./service-adapter-CRnntHsK.js";/**
+import{T as B,r as w,a as T,x as a}from"./lit-element-CxMangmT.js";import{e as C,i as S,t as D,d as z,n as k,a as A}from"./index-ix9n7imP.js";import{e as N,a as P}from"./base-ClrdX3yA.js";import{n as g,t as O}from"./property-TIwIivCO.js";import{d as R,a as E,n as f,b as u,c as h}from"./slot-utils-Cxi3prKm.js";import"./service-adapter-BIqBUmPp.js";/**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */function L(t,e){return(o,n,r)=>{const l=c=>{var y;return((y=c.renderRoot)==null?void 0:y.querySelector(t))??null};return A(o,n,{get(){return l(this)}})}}/**
+ */function L(t,e){return(o,n,r)=>{const l=c=>{var y;return((y=c.renderRoot)==null?void 0:y.querySelector(t))??null};return N(o,n,{get(){return l(this)}})}}/**
  * @license
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
@@ -40,10 +40,10 @@ import{T as B,r as w,a as T,x as a}from"./lit-element-CxMangmT.js";import{e as C
           <div class="actions-container">${this._secondaryButton} ${this._primaryButton}</div>
         </div>
       </forge-dialog>
-    `}_onAction(t,e="action",o){const n=new CustomEvent("forge-confirmation-dialog-action",{bubbles:!0,composed:!0,cancelable:!0,detail:{value:t,type:e}});this.dispatchEvent(n),n.defaultPrevented&&o?o.preventDefault():n.defaultPrevented||(this.open=!1,this.isBusy=!1)}_handleSlotChange(t){const e=t.target.name;["title","secondary-button-text","primary-button-text"].includes(e)&&this.requestUpdate()}};d=new WeakMap;O();R();E();i.styles=w(M);s([g({type:Boolean,attribute:"open"})],i.prototype,"open",2);s([g()],i.prototype,"label",2);s([g()],i.prototype,"description",2);s([g({type:Boolean,attribute:"is-busy"})],i.prototype,"isBusy",2);s([g({type:String,attribute:"busy-label"})],i.prototype,"busyLabel",2);s([f({slot:"title",flatten:!0})],i.prototype,"_slottedTitleNodes",2);s([f({slot:"message",flatten:!0})],i.prototype,"_slottedMessageNodes",2);s([f({slot:"secondary-button-text",flatten:!0})],i.prototype,"_slottedSecondaryButtonTextNodes",2);s([L("#primary-button")],i.prototype,"_primaryButtonRef",2);i=s([P(Z)],i);const F="forge-confirmation-dialog",H=N("forge-confirmation-dialog-action"),J={title:"Components/Confirmation Dialog",render:t=>{const e=k();function o(){e.value.open=!e.value.open}function n(r){H(r),t.preventDefault&&r.preventDefault()}return a`
+    `}_onAction(t,e="action",o){const n=new CustomEvent("forge-confirmation-dialog-action",{bubbles:!0,composed:!0,cancelable:!0,detail:{value:t,type:e}});this.dispatchEvent(n),n.defaultPrevented&&o?o.preventDefault():n.defaultPrevented||(this.open=!1,this.isBusy=!1)}_handleSlotChange(t){const e=t.target.name;["title","secondary-button-text","primary-button-text"].includes(e)&&this.requestUpdate()}};d=new WeakMap;z();R();E();i.styles=w(M);s([g({type:Boolean,attribute:"open"})],i.prototype,"open",2);s([g()],i.prototype,"label",2);s([g()],i.prototype,"description",2);s([g({type:Boolean,attribute:"is-busy"})],i.prototype,"isBusy",2);s([g({type:String,attribute:"busy-label"})],i.prototype,"busyLabel",2);s([f({slot:"title",flatten:!0})],i.prototype,"_slottedTitleNodes",2);s([f({slot:"message",flatten:!0})],i.prototype,"_slottedMessageNodes",2);s([f({slot:"secondary-button-text",flatten:!0})],i.prototype,"_slottedSecondaryButtonTextNodes",2);s([L("#primary-button")],i.prototype,"_primaryButtonRef",2);i=s([O(Z)],i);const F="forge-confirmation-dialog",H=P("forge-confirmation-dialog-action"),J={title:"Components/Confirmation Dialog",render:t=>{const e=A();function o(){e.value.open=!e.value.open}function n(r){H(r),t.preventDefault&&r.preventDefault()}return a`
       <forge-button variant="raised" @click=${o}>Show Confirmation Dialog</forge-button>
       <forge-confirmation-dialog
-        ${z(e)}
+        ${k(e)}
         @forge-confirmation-dialog-action=${n}
         .isBusy=${t.isBusy}>
         ${t.title.length?a`<span slot="title">${t.title}</span>`:""}
