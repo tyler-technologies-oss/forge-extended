@@ -49,9 +49,6 @@ h1 {
 .message-container {
   @include forge-typography.style(body2);
 
-  display: flex;
-  flex-direction: column;
-  gap: #{forge-spacing.variable(medium)};
   color: inherit;
 }
 
