@@ -43,6 +43,9 @@
 }
 
 .message-container {
+  @include forge-typography.style(body2);
+
+  color: inherit;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -51,14 +54,6 @@
 
 h1 {
   margin: 0;
-}
-
-.message {
-  @include forge-typography.style(body2);
-
-  color: inherit;
-  margin-block: #{forge-spacing.variable(medium)};
-  margin-block-end: #{forge-spacing.variable(large)};
 }
 
 .actions-container {

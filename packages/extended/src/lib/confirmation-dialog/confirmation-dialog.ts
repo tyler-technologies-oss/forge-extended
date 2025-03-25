@@ -210,7 +210,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
         <div class="outer-container">
           ${this._title} ${this._closeIconButton}
           <div class="message-container">
-            <slot name="message" id="confirmation-message" class="message"></slot>
+            <slot name="message" id="confirmation-message"></slot>
           </div>
           <div class="actions-container">${this._secondaryButton} ${this._primaryButton}</div>
         </div>

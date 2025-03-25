@@ -601,6 +601,15 @@
             },
             {
               "kind": "field",
+              "name": "#internals",
+              "privacy": "private",
+              "type": {
+                "text": "ElementInternals"
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
               "name": "_title",
               "type": {
                 "text": "TemplateResult | typeof nothing"
@@ -1032,7 +1041,7 @@
       ]
     }
   ],
-  "branchName": "main",
+  "branchName": "origin",
   "forgeTypes": {
     "HTMLElementTagNameMap": {
       "path": "src/lib/quantity-field/quantity-field.ts",
@@ -1040,7 +1049,7 @@
     },
     "HTMLElementEventMap": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 20
+      "lineNumber": 22
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -1060,19 +1069,19 @@
     },
     "ConfirmationDialogActionEventType": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 25
+      "lineNumber": 27
     },
     "ConfirmationDialogActionEventData": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 27
+      "lineNumber": 29
     },
     "ConfirmationDialogProperties": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 32
+      "lineNumber": 34
     },
     "ConfirmationDialogComponent": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 52
+      "lineNumber": 54
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
