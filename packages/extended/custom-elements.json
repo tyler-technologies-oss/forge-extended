@@ -619,6 +619,15 @@
             },
             {
               "kind": "field",
+              "name": "_closeIconButton",
+              "type": {
+                "text": "TemplateResult | typeof nothing"
+              },
+              "privacy": "private",
+              "readonly": true
+            },
+            {
+              "kind": "field",
               "name": "_secondaryButtonSlot",
               "type": {
                 "text": "TemplateResult | typeof nothing"
@@ -1255,15 +1264,15 @@
       ]
     }
   ],
-  "branchName": "responsive-toolbar-v2",
+  "branchName": "main",
   "forgeTypes": {
     "HTMLElementTagNameMap": {
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 14
     },
     "HTMLElementEventMap": {
-      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 16
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 22
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -1283,19 +1292,19 @@
     },
     "ConfirmationDialogActionEventType": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 24
+      "lineNumber": 27
     },
     "ConfirmationDialogActionEventData": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 26
+      "lineNumber": 29
     },
     "ConfirmationDialogProperties": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 31
+      "lineNumber": 34
     },
     "ConfirmationDialogComponent": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 51
+      "lineNumber": 54
     },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
