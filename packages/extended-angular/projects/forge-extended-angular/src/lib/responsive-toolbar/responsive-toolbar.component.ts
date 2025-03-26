@@ -6,6 +6,7 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   NgZone,
+  numberAttribute,
   Input
 } from '@angular/core';
 import {
@@ -22,17 +23,6 @@ import {
 export class ResponsiveToolbarComponent {
   /** The forge-responsive-toolbar element. */
   public readonly nativeElement = this.elementRef.nativeElement;
-
-  /** Forces the internal container to use height: auto for dynamic content that doesn't fit the static height. */
-  @Input({ transform: booleanAttribute })
-  public set autoHeight(value: ResponsiveToolbarComponentCustomElement['autoHeight']) {
-    this.zone.runOutsideAngular(() => {
-      this.nativeElement.autoHeight = value;
-    });
-  }
-  public get autoHeight(): ResponsiveToolbarComponentCustomElement['autoHeight'] {
-    return this.nativeElement.autoHeight;
-  }
 
   /** Hides the internal divider */
   @Input({ transform: booleanAttribute })
@@ -54,6 +44,17 @@ export class ResponsiveToolbarComponent {
   }
   public get inverted(): ResponsiveToolbarComponentCustomElement['inverted'] {
     return this.nativeElement.inverted;
+  }
+
+  /** Controls the delay in milliseconds to throttle resize events */
+  @Input({ transform: numberAttribute })
+  public set resizeDelay(value: ResponsiveToolbarComponentCustomElement['resizeDelay']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.resizeDelay = value;
+    });
+  }
+  public get resizeDelay(): ResponsiveToolbarComponentCustomElement['resizeDelay'] {
+    return this.nativeElement.resizeDelay;
   }
 
   constructor(

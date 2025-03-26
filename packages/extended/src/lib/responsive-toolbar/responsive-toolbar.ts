@@ -1,9 +1,10 @@
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { defineToolbarComponent } from '@tylertech/forge';
-import { LitElement, TemplateResult, html, unsafeCSS, type CSSResult } from 'lit';
+import { throttle } from '@tylertech/forge-core';
+import { toggleState } from '@tylertech/forge/esm/core/utils/a11y-utils'; // TODO: replace with root level import once available
+import { LitElement, PropertyValues, TemplateResult, html, unsafeCSS, type CSSResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref, type Ref } from 'lit/directives/ref.js';
-import { toggleState } from '@tylertech/forge/esm/core/utils/a11y-utils'; // TODO: replace with root level import once available
 
 import styles from './responsive-toolbar.scss?inline';
 
@@ -13,21 +14,21 @@ declare global {
   }
 
   interface HTMLElementEventMap {
-    'forge-responsive-toolbar-overflow': CustomEvent<ResponsiveToolbarOverflowEventData>;
+    'forge-responsive-toolbar-update': CustomEvent<ResponsiveToolbarUpdateEventData>;
   }
 }
 
-export type ResponsiveToolbarOverflowState = 'large' | 'small';
+export type ResponsiveToolbarState = 'small' | 'large';
 
-export interface ResponsiveToolbarOverflowEventData {
-  state: ResponsiveToolbarOverflowState;
+export interface ResponsiveToolbarUpdateEventData {
+  state: ResponsiveToolbarState;
 }
 
-/**
- * The amount of space between the title and actions before the title is
- * considered to be overlapping the actions
- */
+/** The amount of space between the title and actions before the title is considered to be overlapping the actions */
 const BUFFER = 24;
+
+/** The delay in milliseconds to throttle resize events */
+const RESIZE_DELAY = 100;
 
 export const ResponsiveToolbarComponentTagName: keyof HTMLElementTagNameMap = 'forge-responsive-toolbar';
 
@@ -39,9 +40,11 @@ export const ResponsiveToolbarComponentTagName: keyof HTMLElementTagNameMap = 'f
  * @slot end-large - The content you want to render at larger sizes in the toolbar end slot
  * @slot end-small - The content you want to render at smaller sizes in the toolbar end slot
  * @slot after-end - Maps to the toolbar after-end slot
- * 
- * @event {CustomEvent<ResponsiveToolbarOverflowEventData>} forge-responsive-toolbar-overflow - Dispatched when the overflow state changes
-
+ *
+ * @state small - The title is overlapping the actions, the large end slot is hidden.
+ * @state large - The title is not overlapping the actions, the small end slot is hidden.
+ *
+ * @event {CustomEvent<ResponsiveToolbarUpdateEventData>} forge-responsive-toolbar-update - Dispatched when the overflow state changes.
  */
 @customElement(ResponsiveToolbarComponentTagName)
 export class ResponsiveToolbarComponent extends LitElement {
@@ -51,64 +54,79 @@ export class ResponsiveToolbarComponent extends LitElement {
 
   public static override styles: CSSResult = unsafeCSS(styles);
 
-  /**
-   * Forces the internal container to use height: auto for dynamic content that doesn't fit the static height.
-   */
-  @property({ type: Boolean, attribute: 'auto-height' })
-  public autoHeight = true;
-
-  /**
-   * Hides the internal divider
-   */
+  /** Hides the divider */
   @property({ type: Boolean, attribute: 'no-border' })
   public noBorder = false;
 
-  /**
-   * Controls whether a bottom divider (default) or top divider (true) is used.
-   */
-  @property({ type: Boolean, attribute: 'inverted' })
+  /** Controls whether a bottom divider (default) or top divider (true) is used. */
+  @property({ type: Boolean })
   public inverted = false;
 
-  /**
-   * Element refs that are used to calculate the overflow of the title and actions
-   */
-  private _startSlotContainer: Ref<HTMLElement> = createRef();
-  private _endSlotContainer: Ref<HTMLElement> = createRef();
+  /** Controls the delay in milliseconds to throttle resize events */
+  @property({ type: Number, attribute: 'resize-delay' })
+  public resizeDelay = RESIZE_DELAY;
 
+  readonly #startSlotContainer: Ref<HTMLElement> = createRef();
+  readonly #endSlotContainer: Ref<HTMLElement> = createRef();
   readonly #internals: ElementInternals;
+  #resizeController: ResizeController | undefined;
+  #currentState: ResponsiveToolbarState | undefined;
+  #throttleDestroy: (() => void) | undefined;
 
   constructor() {
     super();
     this.#internals = this.attachInternals();
   }
 
-  public connectedCallback(): void {
-    super.connectedCallback();
+  public disconnectedCallback(): void {
+    this.#currentState = undefined;
+    this.#throttleDestroy?.();
+    super.disconnectedCallback();
+  }
 
-    /**
-     * Resize observer controller to detect changes in the toolbar width and runs
-     * the handleResize function on change
-     */
-    new ResizeController(this, { callback: () => requestAnimationFrame(() => this._handleResize()) });
+  public override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('resizeDelay') && this.resizeDelay !== changedProperties.get('resizeDelay')) {
+      if (this.#resizeController) {
+        this.#resizeController.unobserve(this);
+        this.removeController(this.#resizeController);
+      }
+      this._initializeResizeController();
+    }
+  }
+
+  private _initializeResizeController(): void {
+    this.#throttleDestroy?.();
+    this.#throttleDestroy = throttle(() => requestAnimationFrame(() => this._handleResize()), this.resizeDelay);
+    this.#resizeController = new ResizeController(this, { callback: this.#throttleDestroy });
   }
 
   /**
    * Determines if the title is overlapping the actions and sets the internal
-   * state to reflect that. This will toggle the visibility of the action slots
+   * state to reflect that. This will toggle the visibility of the small and
+   * large content slots.
    */
   private _handleResize(): void {
-    const titleInlineEndEdge = this._startSlotContainer.value?.getBoundingClientRect().right || 0;
-    const actionsInlineStartEdge = this._endSlotContainer.value?.getBoundingClientRect().left || 0;
-    const overflowState = titleInlineEndEdge + BUFFER >= actionsInlineStartEdge ? 'small' : 'large';
-    toggleState(this.#internals, 'overflowing', overflowState === 'small');
-    this._emitOverflowEvent(overflowState);
+    const titleInlineEndEdge = this.#startSlotContainer.value?.getBoundingClientRect().right || 0;
+    const actionsInlineStartEdge = this.#endSlotContainer.value?.getBoundingClientRect().left || 0;
+    const isSmall = titleInlineEndEdge + BUFFER >= actionsInlineStartEdge;
+    const newState: ResponsiveToolbarState = isSmall ? 'small' : 'large';
+
+    if (this.#currentState === newState) {
+      return;
+    }
+
+    this.#currentState = newState;
+    toggleState(this.#internals, 'small', newState === 'small');
+    toggleState(this.#internals, 'large', newState === 'large');
+    this._emitOverflowEvent(newState);
   }
 
-  private _emitOverflowEvent(overflowState: ResponsiveToolbarOverflowState): void {
-    const event = new CustomEvent<ResponsiveToolbarOverflowEventData>('forge-responsive-toolbar-overflow', {
+  private _emitOverflowEvent(state: ResponsiveToolbarState): void {
+    const event = new CustomEvent<ResponsiveToolbarUpdateEventData>('forge-responsive-toolbar-update', {
       bubbles: true,
+      composed: true,
       cancelable: true,
-      detail: { state: overflowState }
+      detail: { state }
     });
     this.dispatchEvent(event);
   }
@@ -116,19 +134,17 @@ export class ResponsiveToolbarComponent extends LitElement {
   public override render(): TemplateResult {
     return html`
       <forge-toolbar
-        ?auto-height=${this.autoHeight}
+        auto-height
         ?no-border=${this.noBorder}
         ?inverted=${this.inverted}
         @slotchange=${this._handleResize}>
         <slot name="before-start" slot="before-start"></slot>
-        <div ${ref(this._startSlotContainer)} slot="start">
+        <div ${ref(this.#startSlotContainer)} slot="start">
           <slot name="start"></slot>
         </div>
-
-        <div slot="end" id="end-large" ${ref(this._endSlotContainer)}>
+        <div slot="end" id="end-large" ${ref(this.#endSlotContainer)}>
           <slot name="end-large"></slot>
         </div>
-
         <div slot="end" id="end-small">
           <slot name="end-small"></slot>
         </div>

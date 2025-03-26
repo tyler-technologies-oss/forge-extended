@@ -1,3 +1,4 @@
+@use '@tylertech/forge/sass/toolbar' as forge-toolbar;
 @use '@tylertech/forge/sass/core/styles/tokens/toolbar/tokens' as forge-toolbar-tokens;
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 
@@ -15,7 +16,11 @@
 //
 
 forge-toolbar[auto-height] {
-  --forge-toolbar-min-height: #{forge-toolbar-tokens.get('height')};
+  @include forge-toolbar.provide-theme(
+    (
+      min-height: #{forge-toolbar-tokens.get('height')}
+    )
+  );
 }
 
 #end-small,
@@ -28,15 +33,11 @@ forge-toolbar[auto-height] {
 }
 
 //
-// Overflowing state
+// State
 //
 
-@mixin overflow {
+:host(:state(small)) #end-large,
+:host(:state(large)) #end-small {
   visibility: hidden;
   position: absolute;
-}
-
-:host(:state(overflowing)) #end-large,
-:host(:not(:state(overflowing))) #end-small {
-  @include overflow;
 }

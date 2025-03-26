@@ -19,14 +19,14 @@ export interface ForgeResponsiveToolbarProps
     | "onFocus"
     | "onBlur"
   > {
-  /** Forces the internal container to use height: auto for dynamic content that doesn't fit the static height. */
-  autoHeight?: boolean;
-
   /** Hides the internal divider */
   noBorder?: boolean;
 
   /** Controls whether a bottom divider (default) or top divider (true) is used. */
   inverted?: boolean;
+
+  /** Controls the delay in milliseconds to throttle resize events */
+  resizeDelay?: ForgeResponsiveToolbarElement["resizeDelay"];
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
@@ -49,9 +49,9 @@ export interface ForgeResponsiveToolbarProps
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
 
-  /** Dispatched when the overflow state changes */
-  onForgeResponsiveToolbarOverflow?: (
-    event: CustomEvent<CustomEvent<ResponsiveToolbarOverflowEventData>>,
+  /** Dispatched when the overflow state changes. */
+  onForgeResponsiveToolbarUpdate?: (
+    event: CustomEvent<CustomEvent<ResponsiveToolbarUpdateEventData>>,
   ) => void;
 }
 
@@ -61,7 +61,7 @@ export interface ForgeResponsiveToolbarProps
  *
  *
  * ### **Events:**
- *  - **forge-responsive-toolbar-overflow** - Dispatched when the overflow state changes
+ *  - **forge-responsive-toolbar-update** - Dispatched when the overflow state changes.
  *
  * ### **Slots:**
  *  - **before-start** - Maps to the toolbar before-start slot
