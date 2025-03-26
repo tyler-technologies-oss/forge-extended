@@ -2,6 +2,7 @@ import { RouteProps } from 'react-router';
 import { Home } from './core/home/Home';
 import { BusyIndicatorDemo } from './demos/busy-indicator/BusyIndicatorDemo';
 import { QuantityFieldDemo } from './demos/quantity-field/QuantityFieldDemo';
+import { ResponsiveToolbarDemo } from './demos/responsive-toolbar/ResponsiveToolbarDemo';
 
 export interface IAppRoute extends RouteProps {
   path: string;
@@ -18,7 +19,8 @@ const routes: IAppRoute[] = [
     icon: 'settings_input_component',
     routes: [
       { path: '/busy-indicator', component: BusyIndicatorDemo, text: 'Busy Indicator' },
-      { path: '/quantity-field', component: QuantityFieldDemo, text: 'Quantity Field' }
+      { path: '/quantity-field', component: QuantityFieldDemo, text: 'Quantity Field' },
+      { path: '/responsive-toolbar', component: ResponsiveToolbarDemo, text: 'Responsive Toolbar' }
     ]
   }
 ];

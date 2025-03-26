@@ -1,0 +1,63 @@
+<div class="stack">
+  <forge-inline-message theme="info" class="span-full">
+    <forge-icon slot="icon" name="move_resize_variant"></forge-icon>
+    <p>Resize the browser to see the various toolbars adjust.</p>
+  </forge-inline-message>
+
+  <forge-card class="span-full">
+    <forge-responsive-toolbar>
+      <forge-icon-button aria-label="Icon button demo" slot="before-start">
+        <forge-icon name="arrow_back" external></forge-icon>
+      </forge-icon-button>
+      <div slot="start" class="forge-typography--heading4">Organization details (Responsive component)</div>
+      <forge-stack inline alignment="center" slot="end-large">
+        <ng-container *ngTemplateOutlet="desktopButtons"></ng-container>
+      </forge-stack>
+      <div slot="end-small">
+        <ng-container *ngTemplateOutlet="mobileMenu"></ng-container>
+      </div>
+    </forge-responsive-toolbar>
+    <div class="padding-16">
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam sunt maiores suscipit culpa recusandae! Iste
+        quia ut deleniti molestiae fugit et velit ducimus tempore, eaque eos. Repudiandae sequi nihil nisi. Lorem ipsum,
+        dolor sit amet consectetur adipisicing elit. Aperiam sunt maiores suscipit culpa recusandae! Iste quia ut
+        deleniti molestiae fugit et velit ducimus tempore, eaque eos. Repudiandae sequi nihil nisi.
+      </p>
+    </div>
+  </forge-card>
+
+  <forge-card class="span-full">
+    <forge-toolbar>
+      <forge-icon-button aria-label="Icon button demo" slot="before-start">
+        <forge-icon name="arrow_back" external></forge-icon>
+      </forge-icon-button>
+      <div slot="start" class="forge-typography--heading4">Organization details (Toolbar component)</div>
+      <div class="buttons-inline" slot="end">
+        <ng-container *ngTemplateOutlet="desktopButtons"></ng-container>
+      </div>
+    </forge-toolbar>
+    <div class="padding-16">
+      <p>
+        Lorem ipsum, dolor sit amet consectetur adipisicing elit. Aperiam sunt maiores suscipit culpa recusandae! Iste
+        quia ut deleniti molestiae fugit et velit ducimus tempore, eaque eos. Repudiandae sequi nihil nisi. Lorem ipsum,
+        dolor sit amet consectetur adipisicing elit. Aperiam sunt maiores suscipit culpa recusandae! Iste quia ut
+        deleniti molestiae fugit et velit ducimus tempore, eaque eos. Repudiandae sequi nihil nisi.
+      </p>
+    </div>
+  </forge-card>
+</div>
+
+<ng-template #mobileMenu>
+  <forge-menu [options]="toolbarActions">
+    <forge-icon-button aria-label="Open menu">
+      <forge-icon name="more_vert"></forge-icon>
+    </forge-icon-button>
+  </forge-menu>
+</ng-template>
+
+<ng-template #desktopButtons>
+  <forge-button *ngFor="let action of toolbarActions; let i = index" [variant]="action.variant ?? 'text'">
+    {{ action.label }}
+  </forge-button>
+</ng-template>

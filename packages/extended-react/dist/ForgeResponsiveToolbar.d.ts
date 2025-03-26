@@ -1,9 +1,9 @@
 import React from "react";
-import { ForgeConfirmationDialog as ForgeConfirmationDialogElement } from "@tylertech/forge-extended/confirmation-dialog";
+import { ForgeResponsiveToolbar as ForgeResponsiveToolbarElement } from "@tylertech/forge-extended/responsive-toolbar";
 
-export type { ForgeConfirmationDialogElement };
+export type { ForgeResponsiveToolbarElement };
 
-export interface ForgeConfirmationDialogProps
+export interface ForgeResponsiveToolbarProps
   extends Pick<
     React.AllHTMLAttributes<HTMLElement>,
     | "children"
@@ -19,20 +19,14 @@ export interface ForgeConfirmationDialogProps
     | "onFocus"
     | "onBlur"
   > {
-  /** Indicates whether the confirmation dialog is open. */
-  open?: boolean;
+  /** Hides the internal divider */
+  noBorder?: boolean;
 
-  /** Indicates whether the confirmation dialog in a busy state */
-  isBusy?: boolean;
+  /** Controls whether a bottom divider (default) or top divider (true) is used. */
+  inverted?: boolean;
 
-  /** The accessible label for dialog. */
-  label?: ForgeConfirmationDialogElement["label"];
-
-  /** The accessible description for dialog. */
-  description?: ForgeConfirmationDialogElement["description"];
-
-  /** ARIA label for the the busy indicator when loading */
-  busyLabel?: ForgeConfirmationDialogElement["busyLabel"];
+  /** Controls the delay in milliseconds to throttle resize events */
+  resizeDelay?: ForgeResponsiveToolbarElement["resizeDelay"];
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
@@ -55,9 +49,9 @@ export interface ForgeConfirmationDialogProps
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
 
-  /** Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked. */
-  onForgeConfirmationDialogAction?: (
-    event: CustomEvent<CustomEvent<ConfirmationDialogActionEventData>>,
+  /** Dispatched when the overflow state changes. */
+  onForgeResponsiveToolbarUpdate?: (
+    event: CustomEvent<CustomEvent<ResponsiveToolbarUpdateEventData>>,
   ) => void;
 }
 
@@ -67,12 +61,13 @@ export interface ForgeConfirmationDialogProps
  *
  *
  * ### **Events:**
- *  - **forge-confirmation-dialog-action** - Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.
+ *  - **forge-responsive-toolbar-update** - Dispatched when the overflow state changes.
  *
  * ### **Slots:**
- *  - **title** - The title of the dialog
- * - **message** - The dialog message
- * - **secondary-button-text** - The text used in the secondary action button
- * - **primary-button-text** - The text used in the primary action button
+ *  - **before-start** - Maps to the toolbar before-start slot
+ * - **start** - Maps to the toolbar start slot
+ * - **end-large** - The content you want to render at larger sizes in the toolbar end slot
+ * - **end-small** - The content you want to render at smaller sizes in the toolbar end slot
+ * - **after-end** - Maps to the toolbar after-end slot
  */
-export const ForgeConfirmationDialog: React.ForwardRefExoticComponent<ForgeConfirmationDialogProps>;
+export const ForgeResponsiveToolbar: React.ForwardRefExoticComponent<ForgeResponsiveToolbarProps>;
