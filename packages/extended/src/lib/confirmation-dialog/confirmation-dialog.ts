@@ -108,15 +108,20 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
 
   #primaryButtonWidth: string | undefined;
 
-  private get _title(): TemplateResult | typeof nothing {
-    return html` <h1>${this._titleSlot}</h1>`;
+  get #title(): TemplateResult | typeof nothing {
+    const showTitle = this._slottedTitleNodes.length > 0;
+    return when(
+      showTitle,
+      () => html` <h1>${this.#titleSlot}</h1>`,
+      () => html`${this.#titleSlot}`
+    );
   }
 
-  private get _titleSlot(): TemplateResult | typeof nothing {
-    return html` <slot name="title" id="confirmation-dialog-title" class="title"></slot> `;
+  get #titleSlot(): TemplateResult | typeof nothing {
+    return html`<slot name="title" id="confirmation-dialog-title" class="title"></slot> `;
   }
 
-  private get _closeIconButton(): TemplateResult | typeof nothing {
+  get #closeIconButton(): TemplateResult | typeof nothing {
     return html`
       <forge-icon-button autofocus aria-label="Close confirmation dialog" @click=${() => this._onAction(false)}>
         <forge-icon name="close"></forge-icon>
@@ -124,21 +129,21 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     `;
   }
 
-  private get _secondaryButtonSlot(): TemplateResult | typeof nothing {
-    return html` <slot name="secondary-button-text" id="secondary-button-slot"></slot>`;
+  get #secondaryButtonSlot(): TemplateResult | typeof nothing {
+    return html`<slot name="secondary-button-text" id="secondary-button-slot"></slot>`;
   }
 
-  private get _primaryButtonSlot(): TemplateResult | typeof nothing {
+  get #primaryButtonSlot(): TemplateResult | typeof nothing {
     return this.isBusy
-      ? this._busyIndicator
+      ? this.#busyIndicator
       : html`<slot name="primary-button-text" id="primary-button-slot">Confirm</slot>`;
   }
 
-  private get _busyIndicator(): TemplateResult | typeof nothing {
+  get #busyIndicator(): TemplateResult | typeof nothing {
     return html`<forge-circular-progress slot="end" aria-label=${this.busyLabel}> </forge-circular-progress>`;
   }
 
-  private get _secondaryButton(): TemplateResult | typeof nothing {
+  get #secondaryButton(): TemplateResult | typeof nothing {
     const showSecondaryButton = this._slottedSecondaryButtonTextNodes.length > 0;
     return when(
       showSecondaryButton,
@@ -148,20 +153,20 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
           ?disabled=${this.isBusy}
           id="secondary-button"
           @click=${() => this._onAction(false)}>
-          ${this._secondaryButtonSlot}
+          ${this.#secondaryButtonSlot}
         </forge-button>`,
-      () => html`${this._secondaryButtonSlot}`
+      () => html`${this.#secondaryButtonSlot}`
     );
   }
 
-  private get _primaryButton(): TemplateResult | typeof nothing {
+  get #primaryButton(): TemplateResult | typeof nothing {
     return html`<forge-button
       ?disabled=${this.isBusy}
       variant="raised"
       id="primary-button"
       style=${styleMap({ minWidth: this.#primaryButtonWidth })}
       @click=${() => this._onAction(true)}>
-      ${this._primaryButtonSlot}
+      ${this.#primaryButtonSlot}
     </forge-button>`;
   }
 
@@ -185,13 +190,13 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
         .description=${this.description || composeSlottedTextContent(this._slottedMessageNodes) || ''}>
         <div class="outer-container">
           <div class="title-container" style=${styleMap({ display: showTitleContainer ? 'grid' : 'none' })}>
-            ${this._title}
-            <div class="close-button-container">${this._closeIconButton}</div>
+            ${this.#title}
+            <div class="close-button-container">${this.#closeIconButton}</div>
           </div>
           <div class="message-container">
             <slot name="message" id="confirmation-message"></slot>
           </div>
-          <div class="actions-container">${this._secondaryButton} ${this._primaryButton}</div>
+          <div class="actions-container">${this.#secondaryButton} ${this.#primaryButton}</div>
         </div>
       </forge-dialog>
     `;
