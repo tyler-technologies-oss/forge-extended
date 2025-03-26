@@ -1,8 +1,8 @@
-import{T as O,r as R,a as E,x as r}from"./lit-element-CxMangmT.js";import{e as W,i as L,t as M,d as j,a as U,b as q,n as m,c as v,f as C,g as G,h as Y}from"./slot-utils-D6l2wdEE.js";import{e as Z,I as F,t as H,n as d,a as J,b as K}from"./base-DchQP-E2.js";import{d as Q}from"./index-Dturxtqb.js";import"./service-adapter-BgeOCrvH.js";/**
+import{T as O,r as R,a as E,x as r}from"./lit-element-CxMangmT.js";import{e as W,i as L,t as M,d as j,n as U,a as q}from"./index-CKpgADVW.js";import{I as G,t as Y,n as d,a as Z,b as F}from"./property-BRVZ2yJV.js";import{e as H}from"./base-CShCMygk.js";import{d as J,a as K,n as m,c as v,b as C}from"./slot-utils-VleldbIq.js";import{d as Q}from"./index-ZLv2qr-2.js";import"./service-adapter-BCkNwAK1.js";/**
  * @license
  * Copyright 2017 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
- */function V(t,e){return(o,n,i)=>{const p=f=>{var b;return((b=f.renderRoot)==null?void 0:b.querySelector(t))??null};return Z(o,n,{get(){return p(this)}})}}/**
+ */function V(t,e){return(o,n,i)=>{const p=f=>{var b;return((b=f.renderRoot)==null?void 0:b.querySelector(t))??null};return H(o,n,{get(){return p(this)}})}}/**
  * @license
  * Copyright 2018 Google LLC
  * SPDX-License-Identifier: BSD-3-Clause
@@ -47,10 +47,10 @@ import{T as O,r as R,a as E,x as r}from"./lit-element-CxMangmT.js";import{e as W
       style=${T({minWidth:l(this,u)})}
       @click=${()=>this._onAction(!0)}>
       ${l(this,a,A)}
-    </forge-button>`};j();U();q();Q();F.define([H]);s.styles=R(tt);c([d({type:Boolean,attribute:"open"})],s.prototype,"open",2);c([d()],s.prototype,"label",2);c([d()],s.prototype,"description",2);c([d({type:Boolean,attribute:"is-busy"})],s.prototype,"isBusy",2);c([d({type:String,attribute:"busy-label"})],s.prototype,"busyLabel",2);c([m({slot:"title",flatten:!0})],s.prototype,"_slottedTitleNodes",2);c([m({slot:"message",flatten:!0})],s.prototype,"_slottedMessageNodes",2);c([m({slot:"secondary-button-text",flatten:!0})],s.prototype,"_slottedSecondaryButtonTextNodes",2);c([V("#primary-button")],s.prototype,"_primaryButtonRef",2);s=c([J(it)],s);const rt="forge-confirmation-dialog",at=K("forge-confirmation-dialog-action"),st={title:"Components/Confirmation Dialog",render:t=>{const e=Y();function o(){e.value.open=!e.value.open}function n(i){at(i),t.preventDefault&&i.preventDefault()}return r`
+    </forge-button>`};j();J();K();Q();G.define([Y]);s.styles=R(tt);c([d({type:Boolean,attribute:"open"})],s.prototype,"open",2);c([d()],s.prototype,"label",2);c([d()],s.prototype,"description",2);c([d({type:Boolean,attribute:"is-busy"})],s.prototype,"isBusy",2);c([d({type:String,attribute:"busy-label"})],s.prototype,"busyLabel",2);c([m({slot:"title",flatten:!0})],s.prototype,"_slottedTitleNodes",2);c([m({slot:"message",flatten:!0})],s.prototype,"_slottedMessageNodes",2);c([m({slot:"secondary-button-text",flatten:!0})],s.prototype,"_slottedSecondaryButtonTextNodes",2);c([V("#primary-button")],s.prototype,"_primaryButtonRef",2);s=c([Z(it)],s);const rt="forge-confirmation-dialog",at=F("forge-confirmation-dialog-action"),st={title:"Components/Confirmation Dialog",render:t=>{const e=q();function o(){e.value.open=!e.value.open}function n(i){at(i),t.preventDefault&&i.preventDefault()}return r`
       <forge-button variant="raised" @click=${o}>Show Confirmation Dialog</forge-button>
       <forge-confirmation-dialog
-        ${G(e)}
+        ${U(e)}
         @forge-confirmation-dialog-action=${n}
         .isBusy=${t.isBusy}>
         ${t.title.length?r`<span slot="title">${t.title}</span>`:""}
@@ -58,4 +58,4 @@ import{T as O,r as R,a as E,x as r}from"./lit-element-CxMangmT.js";import{e as W
         ${t.secondaryButtonText.length?r`<span slot="secondary-button-text">${t.secondaryButtonText}</span>`:""}
         ${t.primaryButtonText.length?r`<span slot="primary-button-text">${t.primaryButtonText}</span>`:""}
       </forge-confirmation-dialog>
-    `},component:rt,argTypes:{isBusy:{control:"boolean"},title:{control:"text"},message:{control:"text"},secondaryButtonText:{control:"text"},primaryButtonText:{control:"text"},preventDefault:{control:"boolean"}},args:{isBusy:!1,title:"Delete selected images?",message:"Images will be permanently removed from your account and all synced devices.",secondaryButtonText:"No",primaryButtonText:"Yes",preventDefault:!1}},g={};var _,$,B;g.parameters={...g.parameters,docs:{...(_=g.parameters)==null?void 0:_.docs,source:{originalSource:"{}",...(B=($=g.parameters)==null?void 0:$.docs)==null?void 0:B.source}}};const lt=["Demo"],ut=Object.freeze(Object.defineProperty({__proto__:null,Demo:g,__namedExportsOrder:lt,default:st},Symbol.toStringTag,{value:"Module"}));export{ut as C,g as D};
+    `},component:rt,argTypes:{isBusy:{control:"boolean"},title:{control:"text"},message:{control:"text"},secondaryButtonText:{control:"text"},primaryButtonText:{control:"text"},preventDefault:{control:"boolean"}},args:{isBusy:!1,title:"Delete selected images?",message:"Images will be permanently removed from your account and all synced devices.",secondaryButtonText:"No",primaryButtonText:"Yes",preventDefault:!1}},g={};var _,$,B;g.parameters={...g.parameters,docs:{...(_=g.parameters)==null?void 0:_.docs,source:{originalSource:"{}",...(B=($=g.parameters)==null?void 0:$.docs)==null?void 0:B.source}}};const lt=["Demo"],ht=Object.freeze(Object.defineProperty({__proto__:null,Demo:g,__namedExportsOrder:lt,default:st},Symbol.toStringTag,{value:"Module"}));export{ht as C,g as D};
