@@ -118,11 +118,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
 
   private get _closeIconButton(): TemplateResult | typeof nothing {
     return html`
-      <forge-icon-button
-        autofocus
-        aria-label="Close confirmation dialog"
-        class="close-button"
-        @click=${() => this._onAction(false)}>
+      <forge-icon-button autofocus aria-label="Close confirmation dialog" @click=${() => this._onAction(false)}>
         <forge-icon name="close"></forge-icon>
       </forge-icon-button>
     `;
