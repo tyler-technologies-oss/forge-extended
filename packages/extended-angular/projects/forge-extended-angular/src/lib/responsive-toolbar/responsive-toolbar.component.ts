@@ -24,7 +24,7 @@ export class ResponsiveToolbarComponent {
   /** The forge-responsive-toolbar element. */
   public readonly nativeElement = this.elementRef.nativeElement;
 
-  /** Hides the internal divider */
+  /** Hides the divider */
   @Input({ transform: booleanAttribute })
   public set noBorder(value: ResponsiveToolbarComponentCustomElement['noBorder']) {
     this.zone.runOutsideAngular(() => {

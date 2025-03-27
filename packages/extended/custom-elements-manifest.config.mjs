@@ -3,6 +3,7 @@ import { customElementVuejsPlugin } from 'custom-element-vuejs-integration';
 import { jsDocTagsPlugin } from '@wc-toolkit/jsdoc-tags';
 import forgeBranchNamePlugin from './plugins/cem/branch-name.mjs';
 import forgeTypePathsPlugin from './plugins/cem/type-paths.mjs';
+import forgeMemberDenyListPlugin from './plugins/cem/member-deny-list.mjs';
 
 export default {
   globs: ['src/lib/**/*.ts'],
@@ -10,6 +11,7 @@ export default {
   plugins: [
     forgeBranchNamePlugin(),
     forgeTypePathsPlugin(),
+    forgeMemberDenyListPlugin(),
     customElementSveltePlugin({
       outdir: 'dist/types/svelte/',
       fileName: 'forge-extended-svelte.d.ts',

@@ -4,6 +4,17 @@ let currentFilename = '';
 // This is a map of all types we care about across all modules and their corresponding paths and line numbers
 const ALL_TYPES = {};
 
+const EXCLUDED_TYPES = [
+  'HTMLElement',
+  'SVGElement',
+  'Element',
+  'Node',
+  'Document',
+  'Window',
+  'HTMLElementTagNameMap',
+  'HTMLElementEventMap'
+];
+
 /**
  * This plugin attempts to add root relative paths to each non-primitive type in the manifest.
  */
@@ -29,6 +40,10 @@ export default function forgeTypePathsPlugin() {
           node.kind === ts.SyntaxKind.TypeOperator ||
           node.kind === ts.SyntaxKind.IndexedAccessType)
       ) {
+        if (EXCLUDED_TYPES.includes(node.name.escapedText)) {
+          return;
+        }
+
         const lineNumber = ts.getLineAndCharacterOfPosition(node.getSourceFile(), node.getStart()).line + 1;
         ALL_TYPES[node.name.escapedText] = {
           path: currentFilename,

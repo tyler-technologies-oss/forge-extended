@@ -44,27 +44,19 @@ export class QuantityFieldComponent extends LitElement {
 
   public static override styles = unsafeCSS(styles);
 
-  /**
-   * Indicates whether the field is invalid.
-   */
+  /** Indicates whether the field is invalid. */
   @property({ type: Boolean })
   public invalid = false;
 
-  /**
-   * Indicates whether the field is required.
-   */
+  /** Indicates whether the field is required. */
   @property({ type: Boolean })
   public required = false;
 
-  /**
-   * The accessible label for the decrement button.
-   */
+  /** The accessible label for the decrement button. */
   @property({ attribute: 'decrement-label' })
   public decrementLabel = 'Decrement';
 
-  /**
-   * The accessible label for the increment button.
-   */
+  /** The accessible label for the increment button. */
   @property({ attribute: 'increment-label' })
   public incrementLabel = 'Increment';
 
@@ -101,7 +93,7 @@ export class QuantityFieldComponent extends LitElement {
       <div class="container">
         <slot name="label"></slot>
         <div class="inner">
-          <slot name="decrement-button" @click=${this._onDecrement}>
+          <slot name="decrement-button" @click=${this.#onDecrement}>
             <forge-icon-button shape="squared" aria-label=${this.decrementLabel}>
               <slot name="decrement-icon">
                 <forge-icon name="minus"></forge-icon>
@@ -111,7 +103,7 @@ export class QuantityFieldComponent extends LitElement {
           <forge-text-field .invalid=${this.invalid} .required=${this.required}>
             <slot></slot>
           </forge-text-field>
-          <slot name="increment-button" @click=${this._onIncrement}>
+          <slot name="increment-button" @click=${this.#onIncrement}>
             <forge-icon-button shape="squared" aria-label=${this.incrementLabel}>
               <slot name="increment-icon">
                 <forge-icon name="plus"></forge-icon>
@@ -124,19 +116,19 @@ export class QuantityFieldComponent extends LitElement {
     `;
   }
 
-  private _tryGetInput(): HTMLInputElement {
+  #tryGetInput(): HTMLInputElement {
     return this._defaultSlotElements.find(el => el.tagName === 'INPUT') as HTMLInputElement;
   }
 
-  private _onDecrement(): void {
-    const input = this._tryGetInput();
+  #onDecrement(): void {
+    const input = this.#tryGetInput();
     input?.stepDown();
     input?.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
     input?.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   }
 
-  private _onIncrement(): void {
-    const input = this._tryGetInput();
+  #onIncrement(): void {
+    const input = this.#tryGetInput();
     input?.stepUp();
     input?.dispatchEvent(new Event('input', { bubbles: true, composed: true }));
     input?.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
