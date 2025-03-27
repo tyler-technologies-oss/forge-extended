@@ -47,51 +47,35 @@ export class BusyIndicatorComponent extends LitElement {
 
   public static override styles = unsafeCSS(styles);
 
-  /**
-   * Indicates whether the busy indicator is open.
-   */
+  /** Indicates whether the busy indicator is open. */
   @property({ type: Boolean })
   public open = false;
 
-  /**
-   * Whether the busy indicator is fullscreen or inline.
-   */
+  /** Whether the busy indicator is fullscreen or inline. */
   @property({ type: String })
   public mode: BusyIndicatorMode = 'fullscreen';
 
-  /**
-   * The title text to display.
-   */
+  /** The title text to display. */
   @property({ attribute: 'title-text' })
   public titleText?: string;
 
-  /**
-   * The heading level for the title.
-   */
+  /** The heading level for the title. */
   @property({ attribute: 'heading-level', type: Number })
   public headingLevel: 1 | 2 | 3 | 4 | 5 | 6 = 1;
 
-  /**
-   * The message to display.
-   */
+  /** The message to display. */
   @property()
   public message?: string;
 
-  /**
-   * The accessible label for dialog.
-   */
+  /** The accessible label for dialog. */
   @property()
   public label: string | undefined;
 
-  /**
-   * The accessible description for dialog.
-   */
+  /** The accessible description for dialog. */
   @property()
   public description: string | undefined;
 
-  /**
-   * Indicates whether the cancel button is displayed.
-   */
+  /** Indicates whether the cancel button is displayed. */
   @property({ type: Boolean })
   public cancelable = false;
 
@@ -105,27 +89,19 @@ export class BusyIndicatorComponent extends LitElement {
   @property()
   public variant: BusyIndicatorVariant = 'spinner';
 
-  /**
-   * Indicates whether the loading indicator is determinate.
-   */
+  /** Indicates whether the loading indicator is determinate. */
   @property({ type: Boolean })
   public determinate = false;
 
-  /**
-   * The progress amount for the progress bar.
-   */
+  /** The progress amount for the progress bar. */
   @property({ type: Number })
   public progress = 0;
 
-  /**
-   * The buffer amount for the progress bar.
-   */
+  /** The buffer amount for the progress bar. */
   @property({ type: Number })
   public buffer = 0;
 
-  /**
-   * Indicates whether the busy indicator surface should be transparent (no background or elevation).
-   */
+  /** Indicates whether the busy indicator surface should be transparent (no background or elevation). */
   @property({ type: Boolean })
   public transparent = false;
 
@@ -138,7 +114,7 @@ export class BusyIndicatorComponent extends LitElement {
   @queryAssignedNodes({ slot: 'message', flatten: true })
   private readonly _slottedMessageNodes!: Node[];
 
-  private get _titleTemplate(): TemplateResult | typeof nothing {
+  get #titleTemplate(): TemplateResult | typeof nothing {
     const hasTitle = !!this.titleText?.trim() || this._slottedTitleNodes.length > 0;
     return when(
       hasTitle,
@@ -148,7 +124,7 @@ export class BusyIndicatorComponent extends LitElement {
     );
   }
 
-  private get _messageTemplate(): TemplateResult | typeof nothing {
+  get #messageTemplate(): TemplateResult | typeof nothing {
     const hasMessage = !!this.message?.trim() || this._slottedMessageNodes.length > 0;
     return when(
       hasMessage,
@@ -157,7 +133,7 @@ export class BusyIndicatorComponent extends LitElement {
     );
   }
 
-  private get _spinnerTemplate(): TemplateResult | typeof nothing {
+  get #spinnerTemplate(): TemplateResult | typeof nothing {
     return when(
       this.variant === 'spinner',
       () =>
@@ -171,22 +147,22 @@ export class BusyIndicatorComponent extends LitElement {
     );
   }
 
-  private get _contentTemplate(): TemplateResult | typeof nothing {
+  get #contentTemplate(): TemplateResult | typeof nothing {
     const visible = this.variant === 'message-only' || this.message || this.cancelable;
-    return when(visible, () => html`<div class="content">${this._messageTemplate} ${this._cancelButtonTemplate}</div>`);
+    return when(visible, () => html`<div class="content">${this.#messageTemplate} ${this.#cancelButtonTemplate}</div>`);
   }
 
-  private get _cancelButtonTemplate(): TemplateResult | typeof nothing {
+  get #cancelButtonTemplate(): TemplateResult | typeof nothing {
     return when(
       this.cancelable,
       () =>
-        html`<forge-button class="cancel-button" variant="outlined" @click=${this._onCancel}>
+        html`<forge-button class="cancel-button" variant="outlined" @click=${this.#onCancel}>
           <slot name="cancel-text">Cancel</slot>
         </forge-button>`
     );
   }
 
-  private get _progressBarTemplate(): TemplateResult | typeof nothing {
+  get #progressBarTemplate(): TemplateResult | typeof nothing {
     return when(
       this.variant === 'progress',
       () =>
@@ -202,14 +178,14 @@ export class BusyIndicatorComponent extends LitElement {
 
   public override disconnectedCallback(): void {
     if (this.#previousActiveElement) {
-      this._releaseFocus();
+      this.#releaseFocus();
     }
     super.disconnectedCallback();
   }
 
   public override willUpdate(changedProperties: PropertyValues<this>): void {
     if (changedProperties.has('open')) {
-      this._tryManageFocus();
+      this.#tryManageFocus();
     }
   }
 
@@ -223,19 +199,19 @@ export class BusyIndicatorComponent extends LitElement {
         .mode=${this.mode === 'inline' ? 'inline-modal' : 'modal'}
         .label=${this.label || this.titleText || composeSlottedTextContent(this._slottedTitleNodes) || ''}
         .description=${this.description || this.message || composeSlottedTextContent(this._slottedMessageNodes) || ''}>
-        <div class="surface" @slotchange=${this._handleSlotChange}>
-          ${this._titleTemplate}
+        <div class="surface" @slotchange=${this.#handleSlotChange}>
+          ${this.#titleTemplate}
           ${when(
             this.variant === 'spinner' || this.variant === 'message-only' || this.message || this.cancelable,
-            () => html`<div class="layout-container">${this._spinnerTemplate} ${this._contentTemplate}</div>`
+            () => html`<div class="layout-container">${this.#spinnerTemplate} ${this.#contentTemplate}</div>`
           )}
-          ${this._progressBarTemplate}
+          ${this.#progressBarTemplate}
         </div>
       </forge-dialog>
     `;
   }
 
-  private _onCancel(): void {
+  #onCancel(): void {
     const event = new CustomEvent('forge-busy-indicator-cancel', { bubbles: true, cancelable: true });
     this.dispatchEvent(event);
     if (!event.defaultPrevented) {
@@ -243,24 +219,24 @@ export class BusyIndicatorComponent extends LitElement {
     }
   }
 
-  private _tryManageFocus(): void {
+  #tryManageFocus(): void {
     if (this.open && this.mode === 'fullscreen') {
-      this._captureFocusedElement();
+      this.#captureFocusedElement();
     } else if (this.#previousActiveElement) {
-      this._releaseFocus();
+      this.#releaseFocus();
     }
   }
 
-  private _captureFocusedElement(): void {
+  #captureFocusedElement(): void {
     this.#previousActiveElement = document.activeElement as HTMLElement;
   }
 
-  private _releaseFocus(): void {
+  #releaseFocus(): void {
     this.#previousActiveElement?.focus({ preventScroll: true });
     this.#previousActiveElement = null;
   }
 
-  private _handleSlotChange(evt: Event): void {
+  #handleSlotChange(evt: Event): void {
     const slotName = (evt.target as HTMLSlotElement).name;
     if (['title', 'message'].includes(slotName)) {
       this.requestUpdate();

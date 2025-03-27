@@ -171,146 +171,6 @@
               "default": "false",
               "description": "Indicates whether the busy indicator surface should be transparent (no background or elevation).",
               "attribute": "transparent"
-            },
-            {
-              "kind": "field",
-              "name": "#previousActiveElement",
-              "privacy": "private",
-              "type": {
-                "text": "HTMLElement | null"
-              },
-              "default": "null",
-              "description": "Holds the previously focused element before the busy indicator was opened."
-            },
-            {
-              "kind": "field",
-              "name": "_slottedTitleNodes",
-              "type": {
-                "text": "Node[]"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_slottedMessageNodes",
-              "type": {
-                "text": "Node[]"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_titleTemplate",
-              "type": {
-                "text": "TemplateResult | typeof nothing"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_messageTemplate",
-              "type": {
-                "text": "TemplateResult | typeof nothing"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_spinnerTemplate",
-              "type": {
-                "text": "TemplateResult | typeof nothing"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_contentTemplate",
-              "type": {
-                "text": "TemplateResult | typeof nothing"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_cancelButtonTemplate",
-              "type": {
-                "text": "TemplateResult | typeof nothing"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_progressBarTemplate",
-              "type": {
-                "text": "TemplateResult | typeof nothing"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "method",
-              "name": "_onCancel",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "_tryManageFocus",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "_captureFocusedElement",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "_releaseFocus",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "_handleSlotChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "evt",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
             }
           ],
           "events": [
@@ -558,168 +418,6 @@
               "default": "'Loading'",
               "description": "ARIA label for the the busy indicator when loading",
               "attribute": "busy-label"
-            },
-            {
-              "kind": "field",
-              "name": "_slottedTitleNodes",
-              "type": {
-                "text": "Node[]"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_slottedMessageNodes",
-              "type": {
-                "text": "Node[]"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_slottedSecondaryButtonTextNodes",
-              "type": {
-                "text": "Node[]"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "_primaryButtonRef",
-              "type": {
-                "text": "ButtonComponent | null"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "#primaryButtonWidth",
-              "privacy": "private",
-              "type": {
-                "text": "string | undefined"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "_title",
-              "type": {
-                "text": "TemplateResult | typeof nothing"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_titleSlot",
-              "type": {
-                "text": "TemplateResult | typeof nothing"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_closeIconButton",
-              "type": {
-                "text": "TemplateResult | typeof nothing"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_secondaryButtonSlot",
-              "type": {
-                "text": "TemplateResult | typeof nothing"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_primaryButtonSlot",
-              "type": {
-                "text": "TemplateResult | typeof nothing"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_busyIndicator",
-              "type": {
-                "text": "TemplateResult | typeof nothing"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_secondaryButton",
-              "type": {
-                "text": "TemplateResult | typeof nothing"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "_primaryButton",
-              "type": {
-                "text": "TemplateResult | typeof nothing"
-              },
-              "privacy": "private",
-              "readonly": true
-            },
-            {
-              "kind": "method",
-              "name": "_onAction",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "boolean"
-                  }
-                },
-                {
-                  "name": "type",
-                  "default": "'action'",
-                  "type": {
-                    "text": "ConfirmationDialogActionEventType"
-                  }
-                },
-                {
-                  "name": "lightDismissEvt",
-                  "optional": true,
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
-            },
-            {
-              "kind": "method",
-              "name": "_handleSlotChange",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "evt",
-                  "type": {
-                    "text": "Event"
-                  }
-                }
-              ]
             }
           ],
           "events": [
@@ -806,238 +504,6 @@
           "declaration": {
             "name": "ConfirmationDialogComponent",
             "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ResponsiveToolbarComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-responsive-toolbar'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ResponsiveToolbarComponent",
-          "slots": [
-            {
-              "description": "Maps to the toolbar before-start slot",
-              "name": "before-start"
-            },
-            {
-              "description": "Maps to the toolbar start slot",
-              "name": "start"
-            },
-            {
-              "description": "The content you want to render at larger sizes in the toolbar end slot",
-              "name": "end-large"
-            },
-            {
-              "description": "The content you want to render at smaller sizes in the toolbar end slot",
-              "name": "end-small"
-            },
-            {
-              "description": "Maps to the toolbar after-end slot",
-              "name": "after-end"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Hides the internal divider",
-              "attribute": "no-border"
-            },
-            {
-              "kind": "field",
-              "name": "inverted",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
-              "attribute": "inverted"
-            },
-            {
-              "kind": "field",
-              "name": "resizeDelay",
-              "privacy": "public",
-              "default": "100",
-              "description": "Controls the delay in milliseconds to throttle resize events",
-              "attribute": "resize-delay",
-              "type": {
-                "text": "number"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "#startSlotContainer",
-              "privacy": "private",
-              "type": {
-                "text": "Ref<HTMLElement>"
-              },
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "#endSlotContainer",
-              "privacy": "private",
-              "type": {
-                "text": "Ref<HTMLElement>"
-              },
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "#internals",
-              "privacy": "private",
-              "type": {
-                "text": "ElementInternals"
-              },
-              "readonly": true
-            },
-            {
-              "kind": "field",
-              "name": "#resizeController",
-              "privacy": "private",
-              "type": {
-                "text": "ResizeController | undefined"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "#currentState",
-              "privacy": "private",
-              "type": {
-                "text": "ResponsiveToolbarState | undefined"
-              }
-            },
-            {
-              "kind": "field",
-              "name": "#throttleDestroy",
-              "privacy": "private",
-              "type": {
-                "text": "(() => void) | undefined"
-              }
-            },
-            {
-              "kind": "method",
-              "name": "_initializeResizeController",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "_handleResize",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "description": "Determines if the title is overlapping the actions and sets the internal\nstate to reflect that. This will toggle the visibility of the action slots."
-            },
-            {
-              "kind": "method",
-              "name": "_emitOverflowEvent",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "state",
-                  "type": {
-                    "text": "ResponsiveToolbarState"
-                  }
-                }
-              ]
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ResponsiveToolbarUpdateEventData>"
-              },
-              "description": "Dispatched when the overflow state changes.",
-              "name": "forge-responsive-toolbar-update"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Hides the internal divider",
-              "fieldName": "noBorder"
-            },
-            {
-              "name": "inverted",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
-              "fieldName": "inverted"
-            },
-            {
-              "name": "resize-delay",
-              "default": "RESIZE_DELAY",
-              "description": "Controls the delay in milliseconds to throttle resize events",
-              "fieldName": "resizeDelay"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-responsive-toolbar",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ResponsiveToolbarComponentTagName",
-          "declaration": {
-            "name": "ResponsiveToolbarComponentTagName",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ResponsiveToolbarComponent",
-          "declaration": {
-            "name": "ResponsiveToolbarComponent",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ResponsiveToolbarComponent",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
           }
         }
       ]
@@ -1132,53 +598,6 @@
               "default": "'Increment'",
               "description": "The accessible label for the increment button.",
               "attribute": "increment-label"
-            },
-            {
-              "kind": "field",
-              "name": "_defaultSlotElements",
-              "type": {
-                "text": "Array<HTMLElement>"
-              },
-              "privacy": "private"
-            },
-            {
-              "kind": "field",
-              "name": "#internals",
-              "privacy": "private",
-              "type": {
-                "text": "ElementInternals"
-              },
-              "readonly": true
-            },
-            {
-              "kind": "method",
-              "name": "_tryGetInput",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "HTMLInputElement"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "_onDecrement",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
-            },
-            {
-              "kind": "method",
-              "name": "_onIncrement",
-              "privacy": "private",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              }
             }
           ],
           "attributes": [
@@ -1262,18 +681,162 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ResponsiveToolbarComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-responsive-toolbar'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ResponsiveToolbarComponent",
+          "slots": [
+            {
+              "description": "Maps to the toolbar before-start slot",
+              "name": "before-start"
+            },
+            {
+              "description": "Maps to the toolbar start slot",
+              "name": "start"
+            },
+            {
+              "description": "The content you want to render at larger sizes in the toolbar end slot",
+              "name": "end-large"
+            },
+            {
+              "description": "The content you want to render at smaller sizes in the toolbar end slot",
+              "name": "end-small"
+            },
+            {
+              "description": "Maps to the toolbar after-end slot",
+              "name": "after-end"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Hides the divider",
+              "attribute": "no-border"
+            },
+            {
+              "kind": "field",
+              "name": "inverted",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
+              "attribute": "inverted"
+            },
+            {
+              "kind": "field",
+              "name": "resizeDelay",
+              "privacy": "public",
+              "default": "100",
+              "description": "Controls the delay in milliseconds to throttle resize events",
+              "attribute": "resize-delay",
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ResponsiveToolbarUpdateEventData>"
+              },
+              "description": "Dispatched when the overflow state changes.",
+              "name": "forge-responsive-toolbar-update"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Hides the divider",
+              "fieldName": "noBorder"
+            },
+            {
+              "name": "inverted",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
+              "fieldName": "inverted"
+            },
+            {
+              "name": "resize-delay",
+              "default": "RESIZE_DELAY",
+              "description": "Controls the delay in milliseconds to throttle resize events",
+              "fieldName": "resizeDelay"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-responsive-toolbar",
+          "customElement": true,
+          "states": [
+            {
+              "name": "small",
+              "description": "The title is overlapping the actions, the large end slot is hidden."
+            },
+            {
+              "name": "large",
+              "description": "The title is not overlapping the actions, the small end slot is hidden."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ResponsiveToolbarComponentTagName",
+          "declaration": {
+            "name": "ResponsiveToolbarComponentTagName",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ResponsiveToolbarComponent",
+          "declaration": {
+            "name": "ResponsiveToolbarComponent",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ResponsiveToolbarComponent",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        }
+      ]
     }
   ],
   "branchName": "main",
   "forgeTypes": {
-    "HTMLElementTagNameMap": {
-      "path": "src/lib/quantity-field/quantity-field.ts",
-      "lineNumber": 14
-    },
-    "HTMLElementEventMap": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 22
-    },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 25
@@ -1306,6 +869,10 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 54
     },
+    "QuantityFieldComponent": {
+      "path": "src/lib/quantity-field/quantity-field.ts",
+      "lineNumber": 35
+    },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 21
@@ -1316,11 +883,7 @@
     },
     "ResponsiveToolbarComponent": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 50
-    },
-    "QuantityFieldComponent": {
-      "path": "src/lib/quantity-field/quantity-field.ts",
-      "lineNumber": 35
+      "lineNumber": 49
     }
   }
 }
