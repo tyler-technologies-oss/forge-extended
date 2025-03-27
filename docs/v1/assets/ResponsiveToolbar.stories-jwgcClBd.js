@@ -221,9 +221,8 @@ import{E as xe,r as tt,a as it,x as re}from"./lit-element-CxMangmT.js";import{L 
           To see this component respond, drag this div smaller using the drag handle on the bottom right of the card
         </p>
       </div>
-    </div>`},component:so,argTypes:{title:{control:"text"},noBorder:{control:"boolean"},inverted:{control:"boolean"},afterEnd:{control:"boolean",name:"Show after-end slot content"}},args:{title:"This is a really really long title",noBorder:!1,inverted:!1,afterEnd:!1}},Z={args:{demoWidth:855,afterEnd:!1}};var Te,Ie,Ce;Z.parameters={...Z.parameters,docs:{...(Te=Z.parameters)==null?void 0:Te.docs,source:{originalSource:`{
+    </div>`},component:so,argTypes:{title:{control:"text"},noBorder:{control:"boolean"},inverted:{control:"boolean"},afterEnd:{control:"boolean",name:"Show after-end slot content"}},args:{title:"This is a really really long title",noBorder:!1,inverted:!1,afterEnd:!1}},Z={args:{afterEnd:!1}};var Te,Ie,Ce;Z.parameters={...Z.parameters,docs:{...(Te=Z.parameters)==null?void 0:Te.docs,source:{originalSource:`{
   args: {
-    demoWidth: 855,
     afterEnd: false
   }
 }`,...(Ce=(Ie=Z.parameters)==null?void 0:Ie.docs)==null?void 0:Ce.source}}};const ao=["Demo"],Lo=Object.freeze(Object.defineProperty({__proto__:null,Demo:Z,__namedExportsOrder:ao,default:no},Symbol.toStringTag,{value:"Module"}));export{Z as D,Lo as R};
