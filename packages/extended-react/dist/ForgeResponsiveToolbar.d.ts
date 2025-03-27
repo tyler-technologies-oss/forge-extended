@@ -19,7 +19,7 @@ export interface ForgeResponsiveToolbarProps
     | "onFocus"
     | "onBlur"
   > {
-  /** Hides the internal divider */
+  /** Hides the divider */
   noBorder?: boolean;
 
   /** Controls whether a bottom divider (default) or top divider (true) is used. */
