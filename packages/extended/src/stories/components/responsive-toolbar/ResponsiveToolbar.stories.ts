@@ -8,7 +8,6 @@ import {
   defineStackComponent,
   IMenuOption
 } from '@tylertech/forge';
-import { storyStyles } from '../../decorators';
 import '$lib/responsive-toolbar';
 import { action } from '@storybook/addon-actions';
 
@@ -27,25 +26,6 @@ interface CustomMenuOption extends IMenuOption {
 
 const meta = {
   title: 'Components/Responsive Toolbar',
-  decorators: [
-    storyStyles(`
-      .rt-container {
-        max-width: 960px;
-        resize: horizontal;
-        overflow: auto;
-        border: 1px solid var(--forge-theme-outline);
-        border-radius: 4px;
-      }
-
-      .rt-card {
-        height: 100%;
-      }
-
-      .rt-content {
-        padding: var(--forge-spacing-medium);
-      }
-    `)
-  ],
   render: args => {
     const options: CustomMenuOption[] = [
       { label: 'Add User ', value: 'add-user', variant: 'text' },
@@ -53,40 +33,82 @@ const meta = {
       { label: 'Third action', value: 'third-action', variant: 'raised' }
     ];
 
-    return html`<div class="rt-container">
-      <div class="rt-card">
-        <forge-responsive-toolbar
-          @forge-responsive-toolbar-update=${updateAction}
-          ?no-border=${args.noBorder}
-          ?inverted=${args.inverted}>
-          <forge-icon-button aria-label="Icon button demo" slot="before-start">
-            <forge-icon name="arrow_back" external></forge-icon>
-          </forge-icon-button>
-          <div slot="start" class="forge-typography--heading4">${args.title}</div>
-          <forge-stack inline alignment="center" slot="end-large">
-            ${options.map(
-              item => html` <forge-button variant=${ifDefined(item.variant)}>${item.label}</forge-button> `
-            )}
-          </forge-stack>
-          <div slot="end-small">
-            <forge-menu .options=${options} id="example-menu">
-              <forge-icon-button aria-label="Open menu">
-                <forge-icon name="more_vert" external></forge-icon>
-              </forge-icon-button>
-            </forge-menu>
+    return html`
+      <forge-split-view auto-close-threshold="120">
+        <forge-split-view-panel>
+          <div class="container">
+            <forge-card>
+              <forge-responsive-toolbar
+                @forge-responsive-toolbar-update=${updateAction}
+                ?no-border=${args.noBorder}
+                ?inverted=${args.inverted}>
+                <forge-icon-button aria-label="Icon button demo" slot="before-start">
+                  <forge-icon name="arrow_back" external></forge-icon>
+                </forge-icon-button>
+                <div slot="start" class="forge-typography--heading4">${args.title}</div>
+                <forge-stack inline alignment="center" slot="end-large">
+                  ${options.map(
+                    item => html` <forge-button variant=${ifDefined(item.variant)}>${item.label}</forge-button> `
+                  )}
+                </forge-stack>
+                <div slot="end-small">
+                  <forge-menu .options=${options} id="example-menu">
+                    <forge-icon-button aria-label="Open menu">
+                      <forge-icon name="more_vert" external></forge-icon>
+                    </forge-icon-button>
+                  </forge-menu>
+                </div>
+                ${args.afterEnd
+                  ? html`<div slot="after-end">
+                      <forge-button>After end</forge-button>
+                    </div>`
+                  : nothing}
+              </forge-responsive-toolbar>
+              <div class="info">
+                <forge-stack inline alignment="start">
+                  <p>Resize the split view component to see the responsive behavior.</p>
+                  <forge-icon name="arrow_forward" external></forge-icon>
+                </forge-stack>
+              </div>
+            </forge-card>
           </div>
-          ${args.afterEnd
-            ? html`<div slot="after-end">
-                <forge-button>After end</forge-button>
-              </div>`
-            : nothing}
-        </forge-responsive-toolbar>
+        </forge-split-view-panel>
+        <forge-split-view-panel size="150"> </forge-split-view-panel>
+      </forge-split-view>
 
-        <p class="rt-content">
-          To see this component respond, drag this div smaller using the drag handle on the bottom right of the card
-        </p>
-      </div>
-    </div>`;
+      <style>
+        forge-card {
+          --forge-card-padding: 0;
+        }
+
+        forge-split-view {
+          height: 300px;
+        }
+
+        .info {
+          padding: 16px;
+          margin-top: 64px;
+          display: flex;
+          justify-content: end;
+          /* position: absolute;
+          top: 138px;
+          right: 24px;
+          padding: 16px; */
+        }
+
+        .info p {
+          margin: 0;
+        }
+
+        forge-split-view forge-split-view-panel:last-child {
+          background-color: var(--forge-theme-surface-dim);
+          display: grid;
+          place-content: center;
+          place-items: center;
+          text-align: center;
+        }
+      </style>
+    `;
   },
   component,
   argTypes: {
@@ -96,7 +118,7 @@ const meta = {
     afterEnd: { control: 'boolean', name: 'Show after-end slot content' }
   },
   args: {
-    title: 'This is a really really long title',
+    title: 'User management',
     noBorder: false,
     inverted: false,
     afterEnd: false
