@@ -5,6 +5,7 @@ import {
   defineButtonComponent,
   defineIconButtonComponent,
   defineMenuComponent,
+  defineSplitViewComponent,
   defineStackComponent,
   IMenuOption
 } from '@tylertech/forge';
@@ -15,6 +16,7 @@ defineButtonComponent();
 defineStackComponent();
 defineIconButtonComponent();
 defineMenuComponent();
+defineSplitViewComponent();
 
 const updateAction = action('forge-responsive-toolbar-update');
 
