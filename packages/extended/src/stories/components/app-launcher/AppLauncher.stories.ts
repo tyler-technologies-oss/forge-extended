@@ -8,7 +8,13 @@ const component = 'forge-app-launcher';
 const meta = {
   title: 'Components/App Launcher',
   render: args => {
-    return html`<forge-app-launcher></forge-app-launcher>`;
+    return html`
+      <forge-card no-padding>
+        <forge-toolbar no-border>
+          <forge-app-launcher slot="end"></forge-app-launcher>
+        </forge-toolbar>
+      </forge-card>
+    `;
   },
   component,
   argTypes: {},
