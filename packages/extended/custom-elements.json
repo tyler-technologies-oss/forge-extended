@@ -4,6 +4,80 @@
   "modules": [
     {
       "kind": "javascript-module",
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AppLauncherComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-app-launcher'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AppLauncherComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "someProperty",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Description of the property.",
+              "attribute": "some-property"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "some-property",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Description of the property.",
+              "fieldName": "someProperty"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-app-launcher",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLauncherComponentTagName",
+          "declaration": {
+            "name": "AppLauncherComponentTagName",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLauncherComponent",
+          "declaration": {
+            "name": "AppLauncherComponent",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLauncherComponent",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "declarations": [
         {
@@ -837,6 +911,10 @@
   ],
   "branchName": "main",
   "forgeTypes": {
+    "AppLauncherComponent": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 17
+    },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 25
