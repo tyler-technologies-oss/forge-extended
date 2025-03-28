@@ -47,7 +47,7 @@ const meta = {
                 <forge-icon-button aria-label="Icon button demo" slot="before-start">
                   <forge-icon name="arrow_back" external></forge-icon>
                 </forge-icon-button>
-                <div slot="start" class="forge-typography--heading4">${args.title}</div>
+                <div slot="start" class="title forge-typography--heading4">${args.title}</div>
                 <forge-stack inline alignment="center" slot="end-large">
                   ${options.map(
                     item => html` <forge-button variant=${ifDefined(item.variant)}>${item.label}</forge-button> `
@@ -79,6 +79,10 @@ const meta = {
       </forge-split-view>
 
       <style>
+        .title {
+          white-space: nowrap;
+        }
+
         forge-split-view {
           height: 300px;
         }
