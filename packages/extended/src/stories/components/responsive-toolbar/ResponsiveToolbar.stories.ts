@@ -39,7 +39,7 @@ const meta = {
       <forge-split-view auto-close-threshold="120">
         <forge-split-view-panel>
           <div class="container">
-            <forge-card>
+            <forge-card no-padding>
               <forge-responsive-toolbar
                 @forge-responsive-toolbar-update=${updateAction}
                 ?no-border=${args.noBorder}
@@ -79,10 +79,6 @@ const meta = {
       </forge-split-view>
 
       <style>
-        forge-card {
-          --forge-card-padding: 0;
-        }
-
         forge-split-view {
           height: 300px;
         }
@@ -92,10 +88,6 @@ const meta = {
           margin-top: 64px;
           display: flex;
           justify-content: end;
-          /* position: absolute;
-          top: 138px;
-          right: 24px;
-          padding: 16px; */
         }
 
         .info p {
