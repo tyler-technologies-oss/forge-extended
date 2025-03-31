@@ -232,7 +232,7 @@ import{E as Xe,r as wt,a as St,x as _e}from"./lit-element-CxMangmT.js";import{k 
                 <forge-icon-button aria-label="Icon button demo" slot="before-start">
                   <forge-icon name="arrow_back" external></forge-icon>
                 </forge-icon-button>
-                <div slot="start" class="forge-typography--heading4">${o.title}</div>
+                <div slot="start" class="title forge-typography--heading4">${o.title}</div>
                 <forge-stack inline alignment="center" slot="end-large">
                   ${e.map(t=>_e` <forge-button variant=${Jo(t.variant)}>${t.label}</forge-button> `)}
                 </forge-stack>
@@ -260,6 +260,10 @@ import{E as Xe,r as wt,a as St,x as _e}from"./lit-element-CxMangmT.js";import{k 
       </forge-split-view>
 
       <style>
+        .title {
+          white-space: nowrap;
+        }
+
         forge-split-view {
           height: 300px;
         }
