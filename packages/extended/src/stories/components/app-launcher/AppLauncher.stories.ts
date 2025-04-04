@@ -2,8 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 
 import '$lib/app-launcher';
-import { AppLauncherCustomLink, AppLauncherOption, AppLauncherOptionGroup } from '$lib/app-launcher';
-import { group } from 'console';
+import { AppLauncherCustomLink, AppLauncherOptionGroup } from '$lib/app-launcher';
 
 interface AppLauncherOptionReg {
   applicationName: string;
@@ -1686,7 +1685,55 @@ function groupAppsByProduct(apps: AppLauncherOptionReg[]): AppLauncherOptionGrou
 }
 
 // Example usage:
-const groupedData = groupAppsByProduct(data);
+// const groupedData = groupAppsByProduct(data);
+const allApps = data.map(d => {
+  return {
+    label: d.label,
+    iconName: 'texture',
+    uri: d.uri,
+    target: '_blank'
+  };
+});
+
+console.log(allApps);
+
+const contextualApps: AppLauncherOptionGroup[] = [
+  {
+    label: 'Payments',
+    apps: [
+      {
+        label: 'Payments Administration',
+        iconName: 'payment',
+        uri: 'www.google.com',
+        target: '_blank'
+      },
+      {
+        label: 'PEP Administration',
+        iconName: 'admin_panel_settings',
+        uri: 'www.google.com',
+        target: '_blank'
+      },
+      {
+        label: 'Permissions',
+        iconName: 'security',
+        uri: 'www.google.com',
+        target: '_blank'
+      },
+      {
+        label: 'Batch Integration',
+        iconName: 'batch_prediction',
+        uri: 'www.google.com',
+        target: '_blank'
+      },
+      {
+        label: 'System Integration',
+        iconName: 'settings_system_daydream',
+        uri: 'www.google.com',
+        target: '_blank'
+      }
+    ]
+  }
+];
 
 const meta = {
   title: 'Components/App Launcher',
@@ -1694,7 +1741,11 @@ const meta = {
     return html`
       <forge-card no-padding>
         <forge-toolbar no-border>
-          <forge-app-launcher .customLinks=${customLinks} .allApps=${groupedData} slot="end"></forge-app-launcher>
+          <forge-app-launcher
+            .customLinks=${customLinks}
+            .allApps=${allApps}
+            .contextualApps=${contextualApps}
+            slot="end"></forge-app-launcher>
         </forge-toolbar>
         <!-- <forge-app-bar no-border>
           <forge-app-launcher slot="end"></forge-app-launcher>

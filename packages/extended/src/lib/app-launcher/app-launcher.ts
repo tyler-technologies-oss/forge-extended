@@ -48,7 +48,7 @@ export interface AppLauncherOptionResult {
 export interface AppLauncherOption {
   label: string;
   uri: string;
-  icon: string;
+  iconName: string;
   target?: string;
 }
 
@@ -110,14 +110,14 @@ export class AppLauncherComponent extends LitElement {
   @property({ type: String, attribute: 'app-view' })
   public appView: AppView = 'list';
 
-  @property({ type: Object })
-  public contextualApps!: AppLauncherOptionGroup;
+  @property({ type: Array })
+  public contextualApps: AppLauncherOptionGroup[] = [];
 
   @property({ type: Array })
   public customLinks: any[] = [];
 
   @property({ type: Array })
-  public allApps: AppLauncherOptionGroup[] = [];
+  public allApps: AppLauncherOption[] = [];
 
   @state()
   private _filterText = '';
@@ -125,13 +125,13 @@ export class AppLauncherComponent extends LitElement {
   @queryAsync('#search-field')
   private _searchField!: HTMLInputElement;
 
-  #appContainer(appName: string): TemplateResult | typeof nothing {
+  #appContainer(app: AppLauncherOption): TemplateResult | typeof nothing {
     return html`
       <forge-list-item class="app-list-item">
         <forge-avatar class="app-avatar" slot="start">
-          <forge-icon name="accessibility" external></forge-icon>
+          <forge-icon name=${app.iconName} external></forge-icon>
         </forge-avatar>
-        <a href="http://www.google.com">${appName}</a>
+        <a href="http://www.google.com">${app.label}</a>
       </forge-list-item>
     `;
   }
@@ -171,16 +171,13 @@ export class AppLauncherComponent extends LitElement {
     return when(
       showContextualApps,
       () => html`
-        <div class="app-group v-stack grid-scroll">
-          <h3>Payments</h3>
-          <forge-list>
-            ${this.#appContainer('Payments Administration')} ${this.#appContainer('PEP Administration')}
-            ${this.#appContainer('Permissions')} ${this.#appContainer('Batch Integration')}
-            ${this.#appContainer('System Integration')}
-          </forge-list>
-
-          <h3>CorpDev</h3>
-          <forge-list> ${this.#appContainer('Admin Center')} ${this.#appContainer('Ops Center')} </forge-list>
+        <div class="app-group v-stack">
+          ${this.contextualApps.map(
+            app => html`
+              <h3>${app.label}</h3>
+              <forge-list> ${app.apps.map(a => this.#appContainer(a))} </forge-list>
+            `
+          )}
         </div>
       `,
       () => nothing
@@ -193,9 +190,7 @@ export class AppLauncherComponent extends LitElement {
       showAllApps,
       () => html`
         <div class="app-group">
-          ${this.filteredApps.map(
-            app => html` <forge-list> ${app.apps.map(a => this.#appContainer(a.applicationName))} </forge-list> `
-          )}
+          ${this.filteredApps.map(app => html` <forge-list> ${this.#appContainer(app)} </forge-list> `)}
         </div>
       `,
       () => nothing
@@ -264,11 +259,11 @@ export class AppLauncherComponent extends LitElement {
     );
   }
 
-  get filteredApps(): AppLauncherOptionGroup[] {
+  get filteredApps(): AppLauncherOption[] {
     return this.allApps.filter(app => app.label.toLowerCase().includes(this._filterText));
   }
 
-  set filteredApps(value: AppLauncherOptionGroup[]) {
+  set filteredApps(value: AppLauncherOption[]) {
     this.filteredApps = value;
   }
 
@@ -318,9 +313,6 @@ export class AppLauncherComponent extends LitElement {
   private _onInputChange(e: Event): void {
     const target = e.target as HTMLInputElement;
     this._filterText = target.value.toLowerCase();
-    if (!this._filterText) {
-      this.filteredApps = this.allApps;
-    }
   }
 
   private async _switchToAllAppsView(): Promise<void> {
