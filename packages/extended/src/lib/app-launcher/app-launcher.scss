@@ -1,40 +1,202 @@
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/animation' as forge-animation;
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/scrollbar' as forge-scrollbar;
+@use '@tylertech/forge/sass/core/styles/tokens/scrollbar/tokens' as forge-scrollbar-tokens;
 
 //
 // Host
 //
 
 :host {
+  --avatar-size: 32px;
   display: contents;
   padding: 0;
+
+  & * {
+    box-sizing: border-box;
+  }
 }
 
 //
 // Base
 //
 
+h2 {
+  @include forge-typography.style(heading2);
+
+  margin: 0;
+}
+
+h3 {
+  @include forge-typography.style(heading1);
+
+  margin: 0;
+}
+
 forge-popover {
   --forge-popover-background: #{forge-theme.variable(surface-dim)};
 }
 
-.container {
-  width: 768px;
+.v-stack {
   display: flex;
   flex-direction: column;
   gap: #{forge-spacing.variable(medium)};
+}
+
+.h-stack {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: #{forge-spacing.variable(medium)};
+}
+
+.p-16 {
   padding: #{forge-spacing.variable(medium)};
 }
 
+.p-16i {
+  padding-inline: #{forge-spacing.variable(medium)};
+}
+
+.search-container {
+  padding-inline: #{forge-spacing.variable(medium)};
+  padding-block-start: #{forge-spacing.variable(medium)};
+}
+
+.overflow-scroll {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.outer-container {
+  max-height: 90dvh;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.inner-container {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 0;
+  padding: #{forge-spacing.variable(medium)};
+  padding-block-start: 0;
+  width: 500px;
+
+  forge-card {
+    --forge-card-overflow: hidden;
+    min-height: 0;
+  }
+}
+
+.apps-view {
+  overflow: hidden;
+  height: 100%;
+}
+
 .header {
+  --forge-toolbar-background: none;
+}
+
+.breadcrumbs {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: #{forge-spacing.variable(small)};
+
+  span {
+    @include forge-typography.style(label1);
+
+    &[role='button'] {
+      text-decoration: underline;
+      cursor: pointer;
+    }
+  }
+}
+
+.view-toggle-container {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: end;
+}
 
-  h2 {
-    @include forge-typography.style(heading5);
+.app-group {
+  height: calc(100%);
+  overflow-y: auto;
+}
 
-    margin: 0;
+.app-list-item {
+  --forge-list-item-padding: #{forge-spacing.variable(medium)};
+  --forge-list-item-height: calc(var(--avatar-size) + #{forge-spacing.variable(medium)});
+  --forge-list-item-gap: #{forge-spacing.variable(medium)};
+  --forge-list-item-shape: #{forge-spacing.variable(xsmall)};
+}
+
+.app-avatar {
+  --forge-avatar-size: var(--avatar-size);
+  --forge-avatar-background: #{forge-theme.variable(tertiary-container-low)};
+  --forge-avatar-color: #{forge-theme.variable(on-tertiary-container-low)};
+
+  forge-icon {
+    font-size: calc(var(--avatar-size) * 0.75);
+  }
+}
+
+.view-all-apps-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: #{forge-spacing.variable(medium)};
+}
+
+.custom-links-card {
+  margin-block-start: #{forge-spacing.variable(medium)};
+}
+
+.custom-links {
+  display: flex;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(xsmall)};
+  --forge-list-item-padding: 24px;
+  --forge-list-item-shape: #{forge-spacing.variable(xsmall)};
+}
+
+.keyboard-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: #{forge-spacing.variable(medium)};
+  gap: #{forge-spacing.variable(xlarge)};
+  height: 40px;
+  border-block-start: 1px solid #{forge-theme.variable(outline)};
+  background-color: #{forge-theme.variable(surface)};
+}
+
+.keyboard-indicator-container {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.keyboard-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.keyboard-indicator-label {
+  @include forge-typography.style(body1);
+}
+
+.view-all-apps-button {
+  display: flex;
+  padding-inline: #{forge-spacing.variable(medium)};
+  padding-block-end: #{forge-spacing.variable(medium)};
+
+  forge-button {
+    flex: 1;
   }
 }

@@ -29,6 +29,35 @@
               "default": "true",
               "description": "Description of the property.",
               "attribute": "some-property"
+            },
+            {
+              "kind": "field",
+              "name": "index",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "0",
+              "attribute": "index"
+            },
+            {
+              "kind": "field",
+              "name": "appView",
+              "type": {
+                "text": "AppView"
+              },
+              "privacy": "public",
+              "default": "'list'",
+              "attribute": "app-view"
+            },
+            {
+              "kind": "field",
+              "name": "contextualApps",
+              "type": {
+                "text": "AppLauncherOptionGroup"
+              },
+              "privacy": "public",
+              "attribute": "contextualApps"
             }
           ],
           "attributes": [
@@ -40,6 +69,29 @@
               "default": "true",
               "description": "Description of the property.",
               "fieldName": "someProperty"
+            },
+            {
+              "name": "index",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "fieldName": "index"
+            },
+            {
+              "name": "app-view",
+              "type": {
+                "text": "AppView"
+              },
+              "default": "'list'",
+              "fieldName": "appView"
+            },
+            {
+              "name": "contextualApps",
+              "type": {
+                "text": "AppLauncherOptionGroup"
+              },
+              "fieldName": "contextualApps"
             }
           ],
           "superclass": {
@@ -909,11 +961,35 @@
       ]
     }
   ],
-  "branchName": "main",
+  "branchName": "origin",
   "forgeTypes": {
+    "AppLauncherConfig": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 42
+    },
+    "AppLauncherOptionResult": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 45
+    },
+    "AppLauncherOption": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 48
+    },
+    "AppLauncherOptionGroup": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 55
+    },
+    "AppLauncherOptionsCallback": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 60
+    },
+    "AppView": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 62
+    },
     "AppLauncherComponent": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 17
+      "lineNumber": 69
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
