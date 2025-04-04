@@ -1,7 +1,6 @@
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
-import { defineToolbarComponent } from '@tylertech/forge';
+import { defineToolbarComponent, toggleState } from '@tylertech/forge';
 import { throttle } from '@tylertech/forge-core';
-import { toggleState } from '@tylertech/forge/esm/core/utils/a11y-utils'; // TODO: replace with root level import once available
 import { LitElement, PropertyValues, TemplateResult, html, unsafeCSS, type CSSResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { createRef, ref, type Ref } from 'lit/directives/ref.js';
