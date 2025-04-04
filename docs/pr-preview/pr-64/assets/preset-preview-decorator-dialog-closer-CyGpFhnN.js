@@ -1,1 +1,0 @@
-import{d as _}from"./service-adapter-BqxTd8rK.js";const{addons:E}=__STORYBOOK_MODULE_PREVIEW_API__,{DOCS_RENDERED:e}=__STORYBOOK_MODULE_CORE_EVENTS__;E.getChannel().on(e,()=>{_(document.body,"dialog[open]").forEach(o=>o.close())});
