@@ -57,7 +57,7 @@
     "react-router-dom": "^5.3.4",
     "rimraf": "catalog:",
     "sass": "catalog:",
-    "typescript": "~5.4.5",
+    "typescript": "~5.8.2",
     "vite": "catalog:",
     "vite-tsconfig-paths": "catalog:"
   }

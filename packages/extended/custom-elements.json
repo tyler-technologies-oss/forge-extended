@@ -835,7 +835,7 @@
       ]
     }
   ],
-  "branchName": "origin",
+  "branchName": "main",
   "forgeTypes": {
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -875,15 +875,15 @@
     },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 21
+      "lineNumber": 20
     },
     "ResponsiveToolbarUpdateEventData": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 23
+      "lineNumber": 22
     },
     "ResponsiveToolbarComponent": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 49
+      "lineNumber": 48
     }
   }
 }
