@@ -1687,7 +1687,6 @@ function groupAppsByProduct(apps: AppLauncherOptionReg[]): AppLauncherOptionGrou
 
 // Example usage:
 const groupedData = groupAppsByProduct(data);
-console.log(groupedData);
 
 const meta = {
   title: 'Components/App Launcher',

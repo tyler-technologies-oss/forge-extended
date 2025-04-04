@@ -78,6 +78,11 @@ forge-popover {
   min-height: 0;
 }
 
+::view-transition-old(outer-container),
+::view-transition-new(outer-container) {
+  animation-duration: 4s;
+}
+
 .inner-container {
   display: grid;
   grid-template-rows: 1fr auto;

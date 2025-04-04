@@ -1,8 +1,6 @@
 import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state, queryAsync } from 'lit/decorators.js';
-import { ref, createRef } from 'lit/directives/ref.js';
 import { when } from 'lit/directives/when.js';
-import dummyData from './app-launcher-dummy-data.json' assert { type: 'json' };
 
 import styles from './app-launcher.scss?inline';
 import {
@@ -17,8 +15,7 @@ import {
   defineToolbarComponent,
   defineTooltipComponent,
   defineViewSwitcherComponent,
-  IconRegistry,
-  TextFieldComponent
+  IconRegistry
 } from '@tylertech/forge';
 import {
   tylIconApps,
@@ -120,7 +117,7 @@ export class AppLauncherComponent extends LitElement {
   public customLinks: any[] = [];
 
   @property({ type: Array })
-  public allApps: any[] = [];
+  public allApps: AppLauncherOptionGroup[] = [];
 
   @state()
   private _filterText = '';
@@ -267,8 +264,12 @@ export class AppLauncherComponent extends LitElement {
     );
   }
 
-  get filteredApps(): any[] {
+  get filteredApps(): AppLauncherOptionGroup[] {
     return this.allApps.filter(app => app.label.toLowerCase().includes(this._filterText));
+  }
+
+  set filteredApps(value: AppLauncherOptionGroup[]) {
+    this.filteredApps = value;
   }
 
   public override render(): TemplateResult {
@@ -317,6 +318,9 @@ export class AppLauncherComponent extends LitElement {
   private _onInputChange(e: Event): void {
     const target = e.target as HTMLInputElement;
     this._filterText = target.value.toLowerCase();
+    if (!this._filterText) {
+      this.filteredApps = this.allApps;
+    }
   }
 
   private async _switchToAllAppsView(): Promise<void> {
