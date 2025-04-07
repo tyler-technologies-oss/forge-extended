@@ -111,10 +111,10 @@ export class AppLauncherComponent extends LitElement {
   public appView: AppView = 'list';
 
   @property({ type: Array })
-  public contextualApps: AppLauncherOptionGroup[] = [];
+  public relatedApps: AppLauncherOption[] = [];
 
   @property({ type: Array })
-  public customLinks: any[] = [];
+  public customLinks: AppLauncherCustomLink[] = [];
 
   @property({ type: Array })
   public allApps: AppLauncherOption[] = [];
@@ -125,13 +125,13 @@ export class AppLauncherComponent extends LitElement {
   @queryAsync('#search-field')
   private _searchField!: HTMLInputElement;
 
-  #appContainer(app: AppLauncherOption): TemplateResult | typeof nothing {
+  #appListItem(app: AppLauncherOption): TemplateResult | typeof nothing {
     return html`
       <forge-list-item class="app-list-item">
         <forge-avatar class="app-avatar" slot="start">
           <forge-icon name=${app.iconName} external></forge-icon>
         </forge-avatar>
-        <a href="http://www.google.com">${app.label}</a>
+        <a href="http://www.google.com" target="_blank">${app.label}</a>
       </forge-list-item>
     `;
   }
@@ -166,31 +166,18 @@ export class AppLauncherComponent extends LitElement {
     `;
   }
 
-  get #contextualApps(): TemplateResult | typeof nothing {
-    const showContextualApps = this.index === 0;
-    return when(
-      showContextualApps,
-      () => html`
-        <div class="app-group v-stack">
-          ${this.contextualApps.map(
-            app => html`
-              <h3>${app.label}</h3>
-              <forge-list> ${app.apps.map(a => this.#appContainer(a))} </forge-list>
-            `
-          )}
-        </div>
-      `,
-      () => nothing
-    );
+  get #relatedAppsTitleSlot(): TemplateResult | typeof nothing {
+    return html`<slot name="related-apps-title" id="related-apps-title-slot">Related apps</slot>`;
   }
 
-  get #allApps(): TemplateResult | typeof nothing {
-    const showAllApps = this.index === 1;
+  get #relatedApps(): TemplateResult | typeof nothing {
+    const showrelatedApps = this.index === 0;
     return when(
-      showAllApps,
+      showrelatedApps,
       () => html`
-        <div class="app-group">
-          ${this.filteredApps.map(app => html` <forge-list> ${this.#appContainer(app)} </forge-list> `)}
+        <div class="app-group v-stack">
+          <h3>${this.#relatedAppsTitleSlot}</h3>
+          <forge-list>${this.relatedApps.map(app => html` ${this.#appListItem(app)} `)}</forge-list>
         </div>
       `,
       () => nothing
@@ -213,6 +200,28 @@ export class AppLauncherComponent extends LitElement {
     );
   }
 
+  get #allAppsTitleSlot(): TemplateResult | typeof nothing {
+    return html`<slot name="all-apps-title" id="all-apps-title-slot">All apps</slot>`;
+  }
+
+  get #allApps(): TemplateResult | typeof nothing {
+    const showAllApps = this.index === 1;
+    return when(
+      showAllApps,
+      () => html`
+        <div class="app-group v-stack">
+          <h3>${this.#allAppsTitleSlot}</h3>
+          <forge-list>${this.filteredApps.map(app => html` ${this.#appListItem(app)} `)}</forge-list>
+        </div>
+      `,
+      () => nothing
+    );
+  }
+
+  get #viewAllAppsButtonSlot(): TemplateResult | typeof nothing {
+    return html`<slot name="view-all-apps-button-text" id="view-all-apps-button-text-slot">View all apps</slot>`;
+  }
+
   get #viewAllAppsButton(): TemplateResult | typeof nothing {
     const showAllAppsButton = this.index === 0;
     return when(
@@ -220,7 +229,7 @@ export class AppLauncherComponent extends LitElement {
       () => html`
         <div class="view-all-apps-button" slot="footer">
           <forge-button variant="outlined" @click=${this._switchToAllAppsView}>
-            <span>View all apps</span>
+            <span>${this.#viewAllAppsButtonSlot}</span>
             <forge-icon name="chevron_right"></forge-icon>
           </forge-button>
         </div>
@@ -229,28 +238,26 @@ export class AppLauncherComponent extends LitElement {
     );
   }
 
+  get #customLinksTitleSlot(): TemplateResult | typeof nothing {
+    return html`<slot name="custom-links-title" id="custom-links-title-slot">Custom links</slot>`;
+  }
+
   get #customLinks(): TemplateResult | typeof nothing {
     return when(
       this.customLinks.length > 0,
       () => html`
         <forge-card class="custom-links-card">
           <div class="custom-links">
-            <h3>My links</h3>
+            <h3>${this.#customLinksTitleSlot}</h3>
             <forge-list>
-              <forge-list-item>
-                <forge-icon slot="start" name="open_in_new"></forge-icon>
-                <a href="http://www.google.com">Payments documentation</a>
-              </forge-list-item>
-
-              <forge-list-item>
-                <forge-icon slot="start" name="open_in_new"></forge-icon>
-                <a href="http://www.google.com">Frequently Asked Questions</a>
-              </forge-list-item>
-
-              <forge-list-item>
-                <forge-icon slot="start" name="open_in_new"></forge-icon>
-                <a href="http://www.google.com">Community Services Directory</a>
-              </forge-list-item>
+              ${this.customLinks.map(
+                link => html`
+                  <forge-list-item>
+                    <forge-icon name="open_in_new" slot="start"></forge-icon>
+                    <a href=${link.uri} target="_blank">${link.label}</a>
+                  </forge-list-item>
+                `
+              )}
             </forge-list>
           </div>
         </forge-card>
@@ -279,7 +286,7 @@ export class AppLauncherComponent extends LitElement {
             <forge-card no-padding>
               <forge-scaffold>
                 ${this.#searchAllAppsField}
-                <div class="v-stack p-16" slot="body">${this.#contextualApps} ${this.#allApps}</div>
+                <div class="v-stack p-16" slot="body">${this.#relatedApps} ${this.#allApps}</div>
                 ${this.#viewAllAppsButton}
               </forge-scaffold>
             </forge-card>

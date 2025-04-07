@@ -41,19 +41,19 @@
             },
             {
               "kind": "field",
-              "name": "contextualApps",
+              "name": "relatedApps",
               "type": {
-                "text": "AppLauncherOptionGroup[]"
+                "text": "AppLauncherOption[]"
               },
               "privacy": "public",
               "default": "[]",
-              "attribute": "contextualApps"
+              "attribute": "relatedApps"
             },
             {
               "kind": "field",
               "name": "customLinks",
               "type": {
-                "text": "any[]"
+                "text": "AppLauncherCustomLink[]"
               },
               "privacy": "public",
               "default": "[]",
@@ -63,7 +63,7 @@
               "kind": "field",
               "name": "allApps",
               "type": {
-                "text": "AppLauncherOptionGroup[]"
+                "text": "AppLauncherOption[]"
               },
               "privacy": "public",
               "default": "[]",
@@ -73,7 +73,7 @@
               "kind": "field",
               "name": "filteredApps",
               "type": {
-                "text": "AppLauncherOptionGroup[]"
+                "text": "AppLauncherOption[]"
               }
             }
           ],
@@ -95,17 +95,17 @@
               "fieldName": "appView"
             },
             {
-              "name": "contextualApps",
+              "name": "relatedApps",
               "type": {
-                "text": "AppLauncherOptionGroup[]"
+                "text": "AppLauncherOption[]"
               },
               "default": "[]",
-              "fieldName": "contextualApps"
+              "fieldName": "relatedApps"
             },
             {
               "name": "customLinks",
               "type": {
-                "text": "any[]"
+                "text": "AppLauncherCustomLink[]"
               },
               "default": "[]",
               "fieldName": "customLinks"
@@ -113,7 +113,7 @@
             {
               "name": "allApps",
               "type": {
-                "text": "AppLauncherOptionGroup[]"
+                "text": "AppLauncherOption[]"
               },
               "default": "[]",
               "fieldName": "allApps"

@@ -4,6 +4,7 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/core/styles/scrollbar' as forge-scrollbar;
 @use '@tylertech/forge/sass/core/styles/tokens/scrollbar/tokens' as forge-scrollbar-tokens;
+@use '../utils/mixins';
 
 //
 // Host
@@ -40,34 +41,15 @@ forge-popover {
 }
 
 .v-stack {
-  display: flex;
-  flex-direction: column;
-  gap: #{forge-spacing.variable(medium)};
-}
-
-.h-stack {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: #{forge-spacing.variable(medium)};
+  @include mixins.stack;
 }
 
 .p-16 {
   padding: #{forge-spacing.variable(medium)};
 }
 
-.p-16i {
-  padding-inline: #{forge-spacing.variable(medium)};
-}
-
-.search-container {
-  padding-inline: #{forge-spacing.variable(medium)};
-  padding-block-start: #{forge-spacing.variable(medium)};
-}
-
-.overflow-scroll {
-  height: 100%;
-  overflow-y: scroll;
+.header {
+  --forge-toolbar-background: none;
 }
 
 .outer-container {
@@ -78,9 +60,9 @@ forge-popover {
   min-height: 0;
 }
 
-::view-transition-old(outer-container),
-::view-transition-new(outer-container) {
-  animation-duration: 4s;
+.search-container {
+  padding-inline: #{forge-spacing.variable(medium)};
+  padding-block-start: #{forge-spacing.variable(medium)};
 }
 
 .inner-container {
@@ -95,37 +77,6 @@ forge-popover {
     --forge-card-overflow: hidden;
     min-height: 0;
   }
-}
-
-.apps-view {
-  overflow: hidden;
-  height: 100%;
-}
-
-.header {
-  --forge-toolbar-background: none;
-}
-
-.breadcrumbs {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: #{forge-spacing.variable(small)};
-
-  span {
-    @include forge-typography.style(label1);
-
-    &[role='button'] {
-      text-decoration: underline;
-      cursor: pointer;
-    }
-  }
-}
-
-.view-toggle-container {
-  display: flex;
-  align-items: center;
-  justify-content: end;
 }
 
 .app-group {
@@ -150,21 +101,27 @@ forge-popover {
   }
 }
 
-.view-all-apps-container {
+.view-all-apps-button {
   display: flex;
-  align-items: center;
-  justify-content: center;
   padding-inline: #{forge-spacing.variable(medium)};
+  padding-block-end: #{forge-spacing.variable(medium)};
+
+  forge-button {
+    flex: 1;
+  }
 }
 
 .custom-links-card {
   margin-block-start: #{forge-spacing.variable(medium)};
+  max-height: 204px;
 }
 
 .custom-links {
   display: flex;
   flex-direction: column;
   gap: #{forge-spacing.variable(xsmall)};
+  overflow-y: auto;
+  height: 100%;
   --forge-list-item-padding: 24px;
   --forge-list-item-shape: #{forge-spacing.variable(xsmall)};
 }
@@ -194,14 +151,4 @@ forge-popover {
 
 .keyboard-indicator-label {
   @include forge-typography.style(body1);
-}
-
-.view-all-apps-button {
-  display: flex;
-  padding-inline: #{forge-spacing.variable(medium)};
-  padding-block-end: #{forge-spacing.variable(medium)};
-
-  forge-button {
-    flex: 1;
-  }
 }

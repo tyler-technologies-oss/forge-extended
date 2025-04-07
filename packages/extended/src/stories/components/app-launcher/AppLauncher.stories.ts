@@ -2,7 +2,7 @@ import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
 
 import '$lib/app-launcher';
-import { AppLauncherCustomLink, AppLauncherOptionGroup } from '$lib/app-launcher';
+import { AppLauncherCustomLink, AppLauncherOption, AppLauncherOptionGroup } from '$lib/app-launcher';
 
 interface AppLauncherOptionReg {
   applicationName: string;
@@ -21,7 +21,7 @@ const component = 'forge-app-launcher';
 const customLinks: AppLauncherCustomLink[] = [
   {
     label: 'Payments Documentation',
-    uri: 'http://www.google.com'
+    uri: 'https://www.google.com'
   },
   {
     label: 'Frequently Asked Questions',
@@ -29,6 +29,22 @@ const customLinks: AppLauncherCustomLink[] = [
   },
   {
     label: 'Community Services Directory',
+    uri: 'http://www.google.com'
+  },
+  {
+    label: 'Another Custom Link',
+    uri: 'http://www.google.com'
+  },
+  {
+    label: 'Another Custom Link',
+    uri: 'http://www.google.com'
+  },
+  {
+    label: 'Another Custom Link',
+    uri: 'http://www.google.com'
+  },
+  {
+    label: 'Another Custom Link',
     uri: 'http://www.google.com'
   }
 ];
@@ -1690,48 +1706,42 @@ const allApps = data.map(d => {
   return {
     label: d.label,
     iconName: 'texture',
-    uri: d.uri,
-    target: '_blank'
+    uri: d.uri
   };
-});
+}) as AppLauncherOption[];
 
 console.log(allApps);
 
-const contextualApps: AppLauncherOptionGroup[] = [
+const relatedApps: AppLauncherOption[] = [
   {
-    label: 'Payments',
-    apps: [
-      {
-        label: 'Payments Administration',
-        iconName: 'payment',
-        uri: 'www.google.com',
-        target: '_blank'
-      },
-      {
-        label: 'PEP Administration',
-        iconName: 'admin_panel_settings',
-        uri: 'www.google.com',
-        target: '_blank'
-      },
-      {
-        label: 'Permissions',
-        iconName: 'security',
-        uri: 'www.google.com',
-        target: '_blank'
-      },
-      {
-        label: 'Batch Integration',
-        iconName: 'batch_prediction',
-        uri: 'www.google.com',
-        target: '_blank'
-      },
-      {
-        label: 'System Integration',
-        iconName: 'settings_system_daydream',
-        uri: 'www.google.com',
-        target: '_blank'
-      }
-    ]
+    label: 'Payments Administration',
+    iconName: 'payment',
+    uri: 'www.google.com',
+    target: '_blank'
+  },
+  {
+    label: 'PEP Administration',
+    iconName: 'admin_panel_settings',
+    uri: 'www.google.com',
+    target: '_blank'
+  },
+  {
+    label: 'Permissions',
+    iconName: 'security',
+    uri: 'www.google.com',
+    target: '_blank'
+  },
+  {
+    label: 'Batch Integration',
+    iconName: 'batch_prediction',
+    uri: 'www.google.com',
+    target: '_blank'
+  },
+  {
+    label: 'System Integration',
+    iconName: 'settings_system_daydream',
+    uri: 'www.google.com',
+    target: '_blank'
   }
 ];
 
@@ -1741,22 +1751,29 @@ const meta = {
     return html`
       <forge-card no-padding>
         <forge-toolbar no-border>
-          <forge-app-launcher
-            .customLinks=${customLinks}
-            .allApps=${allApps}
-            .contextualApps=${contextualApps}
-            slot="end"></forge-app-launcher>
+          <forge-app-launcher .customLinks=${customLinks} .allApps=${allApps} .relatedApps=${relatedApps} slot="end">
+            <span slot="related-apps-title">${args.relatedAppsTitle}</span>
+            <span slot="all-apps-title">${args.allAppsTitle}</span>
+            <span slot="view-all-apps-button-text">${args.viewAllAppsButtonText}</span>
+            <span slot="custom-links-title">${args.customLinksTitle}</span>
+          </forge-app-launcher>
         </forge-toolbar>
-        <!-- <forge-app-bar no-border>
-          <forge-app-launcher slot="end"></forge-app-launcher>
-        </forge-app-bar> -->
       </forge-card>
     `;
   },
 
   component,
-  argTypes: {},
-  args: {}
+  argTypes: {
+    relatedAppsTitle: { control: 'text' },
+    allAppsTitle: { control: 'text' },
+    viewAllAppsButtonText: { control: 'text' }
+  },
+  args: {
+    relatedAppsTitle: 'Related apps',
+    allAppsTitle: 'All apps',
+    viewAllAppsButtonText: 'View all apps',
+    customLinksTitle: 'Custom links'
+  }
 } satisfies Meta;
 
 export default meta;
