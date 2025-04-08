@@ -191,6 +191,15 @@ describe('ConfirmationDialog', () => {
     expect(harness.el.open).to.be.false;
   });
 
+  it('should not close when the backdrop is clicked', async () => {
+    const harness = await createFixture({ open: true });
+
+    expect(harness.el.open).to.be.true;
+    await sendMouse({ type: 'click', position: [0, 0], button: 'left' });
+
+    expect(harness.el.open).to.be.true;
+  });
+
   it('should set accessible label from slotted title', async () => {
     const title = 'Loading';
     const harness = await createFixture({ title: title });
