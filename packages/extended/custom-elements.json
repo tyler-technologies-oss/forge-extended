@@ -853,7 +853,7 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 39
     },
-    "ConfirmationDialogActionEventType": {
+    "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 28
     },
