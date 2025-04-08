@@ -9,7 +9,8 @@ import {
   defineCircularProgressComponent,
   defineDialogComponent,
   defineIconButtonComponent,
-  IconRegistry
+  IconRegistry,
+  IDialogBeforeCloseEventData
 } from '@tylertech/forge';
 import { tylIconClose } from '@tylertech/tyler-icons/standard';
 import { composeSlottedTextContent } from '../utils/slot-utils';
@@ -182,7 +183,8 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     return html`
       <forge-dialog
         @slotchange=${this._handleSlotChange}
-        @forge-dialog-before-close=${(e: CustomEvent<void>) => this._onAction(false, 'light-dismiss', e)}
+        @forge-dialog-before-close=${(e: CustomEvent<IDialogBeforeCloseEventData>) =>
+          this._onAction(false, 'light-dismiss', e)}
         @forge-dialog-close=${() => (this.isBusy = false)}
         fullscreen-threshold="0"
         ?open=${this.open}
@@ -202,7 +204,12 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     `;
   }
 
-  private _onAction(value: boolean, type: ConfirmationDialogActionEventType = 'action', lightDismissEvt?: Event): void {
+  private _onAction(
+    value: boolean,
+    type: ConfirmationDialogActionEventType = 'action',
+    evt?: CustomEvent<IDialogBeforeCloseEventData>
+  ): void {
+    const reason = evt?.detail?.reason;
     const actionEvent = new CustomEvent<ConfirmationDialogActionEventData>('forge-confirmation-dialog-action', {
       bubbles: true,
       composed: true,
@@ -215,8 +222,13 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
 
     this.dispatchEvent(actionEvent);
 
-    if (actionEvent.defaultPrevented && lightDismissEvt) {
-      lightDismissEvt.preventDefault();
+    if (evt && evt.detail?.reason === 'backdrop') {
+      evt.preventDefault();
+      return;
+    }
+
+    if (actionEvent.defaultPrevented) {
+      evt?.preventDefault();
     } else if (!actionEvent.defaultPrevented) {
       this.open = false;
       this.isBusy = false;
