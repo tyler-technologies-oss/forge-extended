@@ -153,7 +153,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
           variant="outlined"
           ?disabled=${this.isBusy}
           id="secondary-button"
-          @click=${() => this._onAction(false)}>
+          @click=${() => this._onAction(false, 'action')}>
           ${this.#secondaryButtonSlot}
         </forge-button>`,
       () => html`${this.#secondaryButtonSlot}`
@@ -166,7 +166,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
       variant="raised"
       id="primary-button"
       style=${styleMap({ minWidth: this.#primaryButtonWidth })}
-      @click=${() => this._onAction(true)}>
+      @click=${() => this._onAction(true, 'action')}>
       ${this.#primaryButtonSlot}
     </forge-button>`;
   }
@@ -209,7 +209,6 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     type: ConfirmationDialogActionEventType = 'action',
     evt?: CustomEvent<IDialogBeforeCloseEventData>
   ): void {
-    const reason = evt?.detail?.reason;
     const actionEvent = new CustomEvent<ConfirmationDialogActionEventData>('forge-confirmation-dialog-action', {
       bubbles: true,
       composed: true,
@@ -222,7 +221,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
 
     this.dispatchEvent(actionEvent);
 
-    if (evt && evt.detail?.reason === 'backdrop') {
+    if (evt?.detail?.reason === 'backdrop' && type === 'light-dismiss') {
       evt.preventDefault();
       return;
     }
