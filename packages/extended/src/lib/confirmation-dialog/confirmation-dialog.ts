@@ -153,7 +153,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
           variant="outlined"
           ?disabled=${this.isBusy}
           id="secondary-button"
-          @click=${() => this._onAction(false, 'action')}>
+          @click=${() => this._onAction(false)}>
           ${this.#secondaryButtonSlot}
         </forge-button>`,
       () => html`${this.#secondaryButtonSlot}`
@@ -166,7 +166,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
       variant="raised"
       id="primary-button"
       style=${styleMap({ minWidth: this.#primaryButtonWidth })}
-      @click=${() => this._onAction(true, 'action')}>
+      @click=${() => this._onAction(true)}>
       ${this.#primaryButtonSlot}
     </forge-button>`;
   }
