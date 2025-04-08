@@ -2,7 +2,7 @@ import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
 import { ConfirmationDialogComponent } from './confirmation-dialog';
 import sinon from 'sinon';
-import { ButtonComponent, ICircularProgressComponent, IDialogComponent } from '@tylertech/forge';
+import { ButtonComponent, IBackdropComponent, ICircularProgressComponent, IDialogComponent } from '@tylertech/forge';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { sendMouse } from '@web/test-runner-commands';
 
@@ -189,6 +189,15 @@ describe('ConfirmationDialog', () => {
 
     expect(spy).to.have.been.calledOnce;
     expect(harness.el.open).to.be.false;
+  });
+
+  it('should not close when the backdrop is clicked', async () => {
+    const harness = await createFixture({ open: true });
+
+    expect(harness.el.open).to.be.true;
+    await sendMouse({ type: 'click', position: [0, 0], button: 'left' });
+
+    expect(harness.el.open).to.be.true;
   });
 
   it('should set accessible label from slotted title', async () => {
