@@ -38,14 +38,14 @@ import{T as O,r as R,a as E,x as r}from"./lit-element-CxMangmT.js";import{e as W
           variant="outlined"
           ?disabled=${this.isBusy}
           id="secondary-button"
-          @click=${()=>this._onAction(!1,"action")}>
+          @click=${()=>this._onAction(!1)}>
           ${l(this,a,h)}
         </forge-button>`,()=>r`${l(this,a,h)}`)};I=function(){return r`<forge-button
       ?disabled=${this.isBusy}
       variant="raised"
       id="primary-button"
       style=${T({minWidth:l(this,u)})}
-      @click=${()=>this._onAction(!0,"action")}>
+      @click=${()=>this._onAction(!0)}>
       ${l(this,a,A)}
     </forge-button>`};j();J();K();Q();G.define([Y]);s.styles=R(tt);c([g({type:Boolean,attribute:"open"})],s.prototype,"open",2);c([g()],s.prototype,"label",2);c([g()],s.prototype,"description",2);c([g({type:Boolean,attribute:"is-busy"})],s.prototype,"isBusy",2);c([g({type:String,attribute:"busy-label"})],s.prototype,"busyLabel",2);c([m({slot:"title",flatten:!0})],s.prototype,"_slottedTitleNodes",2);c([m({slot:"message",flatten:!0})],s.prototype,"_slottedMessageNodes",2);c([m({slot:"secondary-button-text",flatten:!0})],s.prototype,"_slottedSecondaryButtonTextNodes",2);c([V("#primary-button")],s.prototype,"_primaryButtonRef",2);s=c([Z(it)],s);const rt="forge-confirmation-dialog",at=F("forge-confirmation-dialog-action"),st={title:"Components/Confirmation Dialog",render:t=>{const e=q();function o(){e.value.open=!e.value.open}function n(i){at(i),t.preventDefault&&i.preventDefault()}return r`
       <forge-button variant="raised" @click=${o}>Show Confirmation Dialog</forge-button>
