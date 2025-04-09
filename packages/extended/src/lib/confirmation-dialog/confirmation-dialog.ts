@@ -9,7 +9,8 @@ import {
   defineCircularProgressComponent,
   defineDialogComponent,
   defineIconButtonComponent,
-  IconRegistry
+  IconRegistry,
+  IDialogBeforeCloseEventData
 } from '@tylertech/forge';
 import { tylIconClose } from '@tylertech/tyler-icons/standard';
 import { composeSlottedTextContent } from '../utils/slot-utils';
@@ -24,11 +25,11 @@ declare global {
   }
 }
 
-export type ConfirmationDialogActionEventType = 'action' | 'light-dismiss';
+export type ConfirmationDialogActionEventReason = 'action' | 'light-dismiss';
 
 export interface ConfirmationDialogActionEventData {
   value: boolean;
-  type: ConfirmationDialogActionEventType;
+  reason: ConfirmationDialogActionEventReason;
 }
 
 export interface ConfirmationDialogProperties {
@@ -123,7 +124,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
 
   get #closeIconButton(): TemplateResult | typeof nothing {
     return html`
-      <forge-icon-button autofocus aria-label="Close confirmation dialog" @click=${() => this._onAction(false)}>
+      <forge-icon-button autofocus aria-label="Close confirmation dialog" @click=${() => this.#onAction(false)}>
         <forge-icon name="close"></forge-icon>
       </forge-icon-button>
     `;
@@ -152,7 +153,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
           variant="outlined"
           ?disabled=${this.isBusy}
           id="secondary-button"
-          @click=${() => this._onAction(false)}>
+          @click=${() => this.#onAction(false)}>
           ${this.#secondaryButtonSlot}
         </forge-button>`,
       () => html`${this.#secondaryButtonSlot}`
@@ -165,7 +166,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
       variant="raised"
       id="primary-button"
       style=${styleMap({ minWidth: this.#primaryButtonWidth })}
-      @click=${() => this._onAction(true)}>
+      @click=${() => this.#onAction(true)}>
       ${this.#primaryButtonSlot}
     </forge-button>`;
   }
@@ -181,8 +182,8 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     const showTitleContainer = this._slottedTitleNodes.length > 0;
     return html`
       <forge-dialog
-        @slotchange=${this._handleSlotChange}
-        @forge-dialog-before-close=${(e: CustomEvent<void>) => this._onAction(false, 'light-dismiss', e)}
+        @slotchange=${this.#handleSlotChange}
+        @forge-dialog-before-close=${this.#onBeforeClose}
         @forge-dialog-close=${() => (this.isBusy = false)}
         fullscreen-threshold="0"
         ?open=${this.open}
@@ -202,28 +203,40 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     `;
   }
 
-  private _onAction(value: boolean, type: ConfirmationDialogActionEventType = 'action', lightDismissEvt?: Event): void {
+  #onAction(
+    value: boolean,
+    reason: ConfirmationDialogActionEventReason = 'action',
+    lightDismissEvt?: CustomEvent<IDialogBeforeCloseEventData>
+  ): void {
     const actionEvent = new CustomEvent<ConfirmationDialogActionEventData>('forge-confirmation-dialog-action', {
       bubbles: true,
       composed: true,
       cancelable: true,
       detail: {
         value,
-        type
+        reason
       }
     });
 
     this.dispatchEvent(actionEvent);
 
     if (actionEvent.defaultPrevented && lightDismissEvt) {
-      lightDismissEvt.preventDefault();
+      lightDismissEvt?.preventDefault();
     } else if (!actionEvent.defaultPrevented) {
       this.open = false;
       this.isBusy = false;
     }
   }
 
-  private _handleSlotChange(evt: Event): void {
+  #onBeforeClose(evt: CustomEvent<IDialogBeforeCloseEventData>): void {
+    if (evt.detail.reason === 'backdrop') {
+      evt.preventDefault();
+      return;
+    }
+    this.#onAction(false, 'light-dismiss', evt);
+  }
+
+  #handleSlotChange(evt: Event): void {
     const slotName = (evt.target as HTMLSlotElement).name;
     if (['title', 'secondary-button-text', 'primary-button-text'].includes(slotName)) {
       this.requestUpdate();
