@@ -15,7 +15,8 @@ import {
   defineToolbarComponent,
   defineTooltipComponent,
   defineViewSwitcherComponent,
-  IconRegistry
+  IconRegistry,
+  toggleState
 } from '@tylertech/forge';
 import {
   tylIconApps,
@@ -119,11 +120,38 @@ export class AppLauncherComponent extends LitElement {
   @property({ type: Array })
   public allApps: AppLauncherOption[] = [];
 
+  @property({ type: Boolean, attribute: 'small-screen' })
+  public smallScreen = false;
+
   @state()
   private _filterText = '';
 
   @queryAsync('#search-field')
   private _searchField!: HTMLInputElement;
+
+  #mediaQuery = window.matchMedia('(max-width: 768px)');
+  readonly #internals: ElementInternals;
+
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+  }
+
+  public connectedCallback(): void {
+    super.connectedCallback();
+    this.#mediaQuery.addEventListener('change', this.#handleMediaChange);
+    this.#handleMediaChange(this.#mediaQuery);
+  }
+
+  public disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.#mediaQuery.removeEventListener('change', this.#handleMediaChange);
+  }
+
+  #handleMediaChange: (e: MediaQueryList | MediaQueryListEvent) => void = (e: MediaQueryList | MediaQueryListEvent) => {
+    this.smallScreen = e.matches;
+    toggleState(this.#internals, 'smallScreen', this.smallScreen);
+  };
 
   #appListItem(app: AppLauncherOption): TemplateResult | typeof nothing {
     return html`
@@ -279,7 +307,11 @@ export class AppLauncherComponent extends LitElement {
       <forge-icon-button aria-label="Open app launcher" id="app-launcher-trigger">
         <forge-icon name="apps"></forge-icon>
       </forge-icon-button>
-      <forge-popover anchor="app-launcher-trigger" placement="left-start" position-strategy="fixed">
+      <forge-popover
+        anchor="app-launcher-trigger"
+        placement="left-start"
+        position-strategy="fixed"
+        .noAnchor="${this.smallScreen}">
         <div class="outer-container">
           ${this.#header}
           <div class="inner-container">
