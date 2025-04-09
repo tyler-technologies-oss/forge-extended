@@ -1,5 +1,29 @@
 # @tylertech/forge-extended-angular
 
+## 0.2.0
+
+### Minor Changes
+
+- b806223: Bump dependencies and support Forge 3.8.0
+- 215ba6a: Added new confirmation dialog component
+- 87f4059: Added new responsive toolbar component
+
+### Patch Changes
+
+- f0454b4: feat(busy-indicator): added `headingLevel` property and fixed layout bugs
+- f0454b4: define custom element when injecting `BusyIndicatorService` and allow for optional config parameter
+- Updated dependencies [ad6c6f9]
+- Updated dependencies [8859660]
+- Updated dependencies [b806223]
+- Updated dependencies [f0454b4]
+- Updated dependencies [2820210]
+- Updated dependencies [8f2ba06]
+- Updated dependencies [c09b85e]
+- Updated dependencies [215ba6a]
+- Updated dependencies [f0454b4]
+- Updated dependencies [87f4059]
+  - @tylertech/forge-extended@0.2.0
+
 ## 0.1.4
 
 ### Patch Changes
