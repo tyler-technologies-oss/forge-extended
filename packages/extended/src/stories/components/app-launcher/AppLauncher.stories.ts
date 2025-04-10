@@ -1720,6 +1720,84 @@ const relatedApps: AppLauncherOption[] = [
     uri: 'www.google.com',
     target: '_blank'
   }
+  // {
+  //   label: 'System Integration',
+  //   iconName: 'settings_system_daydream',
+  //   uri: 'www.google.com',
+  //   target: '_blank'
+  // },
+  // {
+  //   label: 'System Integration',
+  //   iconName: 'settings_system_daydream',
+  //   uri: 'www.google.com',
+  //   target: '_blank'
+  // },
+  // {
+  //   label: 'System Integration',
+  //   iconName: 'settings_system_daydream',
+  //   uri: 'www.google.com',
+  //   target: '_blank'
+  // },
+  // {
+  //   label: 'System Integration',
+  //   iconName: 'settings_system_daydream',
+  //   uri: 'www.google.com',
+  //   target: '_blank'
+  // },
+  // {
+  //   label: 'System Integration',
+  //   iconName: 'settings_system_daydream',
+  //   uri: 'www.google.com',
+  //   target: '_blank'
+  // },
+  // {
+  //   label: 'System Integration',
+  //   iconName: 'settings_system_daydream',
+  //   uri: 'www.google.com',
+  //   target: '_blank'
+  // },
+  // {
+  //   label: 'System Integration',
+  //   iconName: 'settings_system_daydream',
+  //   uri: 'www.google.com',
+  //   target: '_blank'
+  // },
+  // {
+  //   label: 'System Integration',
+  //   iconName: 'settings_system_daydream',
+  //   uri: 'www.google.com',
+  //   target: '_blank'
+  // },
+  // {
+  //   label: 'System Integration',
+  //   iconName: 'settings_system_daydream',
+  //   uri: 'www.google.com',
+  //   target: '_blank'
+  // },
+  // {
+  //   label: 'System Integration',
+  //   iconName: 'settings_system_daydream',
+  //   uri: 'www.google.com',
+  //   target: '_blank'
+  // },
+  // {
+  //   label: 'System Integration',
+  //   iconName: 'settings_system_daydream',
+  //   uri: 'www.google.com',
+  //   target: '_blank'
+  // },
+  // {
+  //   label: 'System Integration',
+  //   iconName: 'settings_system_daydream',
+  //   uri: 'www.google.com',
+  //   target: '_blank'
+  // },
+  // {
+  //   label: 'System Integration',
+  //   iconName: 'settings_system_daydream',
+  //   uri: 'www.google.com',
+  //   target: '_blank'
+  // }
 ];
 
 const meta = {
@@ -1727,25 +1805,26 @@ const meta = {
   render: args => {
     return html`
       <forge-card no-padding>
-        <forge-toolbar no-border>
+        <forge-app-bar no-border theme-mode="scoped">
           <forge-app-launcher
-            no-border=${args.noBorder}
-            .customLinks=${customLinks}
+            .fullscreen=${args.fullscreen}
+            .customLinks=${args.showCustomLinks ? customLinks : []}
             .allApps=${allApps}
-            .relatedApps=${relatedApps}
+            .relatedApps=${args.showRelatedApps ? relatedApps : []}
             slot="end">
             <span slot="related-apps-title">${args.relatedAppsTitle}</span>
             <span slot="all-apps-title">${args.allAppsTitle}</span>
             <span slot="view-all-apps-button-text">${args.viewAllAppsButtonText}</span>
             <span slot="custom-links-title">${args.customLinksTitle}</span>
           </forge-app-launcher>
-        </forge-toolbar>
+        </forge-app-bar>
       </forge-card>
     `;
   },
 
   component,
   argTypes: {
+    fullscreen: { control: 'boolean' },
     showRelatedApps: { control: 'boolean' },
     showCustomLinks: { control: 'boolean' },
     relatedAppsTitle: { control: 'text' },
@@ -1753,6 +1832,7 @@ const meta = {
     viewAllAppsButtonText: { control: 'text' }
   },
   args: {
+    fullscreen: false,
     showRelatedApps: true,
     showCustomLinks: true,
     relatedAppsTitle: 'Related apps',

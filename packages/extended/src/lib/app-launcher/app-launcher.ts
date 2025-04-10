@@ -1,4 +1,4 @@
-import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state, queryAsync } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { cache } from 'lit/directives/cache.js';
@@ -131,6 +131,9 @@ export class AppLauncherComponent extends LitElement {
   @property({ type: Boolean, attribute: 'small-screen' })
   public smallScreen = false;
 
+  @property({ type: Boolean, attribute: 'fullscreen' })
+  public fullscreen = false;
+
   @state()
   private _filterText = '';
 
@@ -154,6 +157,14 @@ export class AppLauncherComponent extends LitElement {
   public disconnectedCallback(): void {
     super.disconnectedCallback();
     this.#mediaQuery.removeEventListener('change', this.#handleMediaChange);
+  }
+
+  public override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('relatedApps')) {
+      if (!this.relatedApps.length) {
+        this.appView = 'all';
+      }
+    }
   }
 
   #handleMediaChange: (e: MediaQueryList | MediaQueryListEvent, isInitial?: boolean) => void = (
@@ -183,6 +194,7 @@ export class AppLauncherComponent extends LitElement {
 
   get #appLauncherIcon(): TemplateResult | typeof nothing {
     return html`<forge-icon-button
+      theme="app-bar"
       aria-label="Open app launcher"
       id="app-launcher-trigger"
       @click=${() => (this.open = !this.open)}>
@@ -251,7 +263,12 @@ export class AppLauncherComponent extends LitElement {
       () => html`
         <forge-text-field density=${this.smallScreen ? 'large' : 'small'} id="search-field">
           <forge-icon name="search" slot="leading"></forge-icon>
-          <input type="text" placeholder="Search apps" @input=${this._onInputChange} id="search-field" />
+          <input
+            type="text"
+            placeholder="Search by product or app"
+            @input=${this._onInputChange}
+            id="search-field"
+            autocomplete="off" />
         </forge-text-field>
       `,
       () => nothing
@@ -288,7 +305,7 @@ export class AppLauncherComponent extends LitElement {
     return when(
       showAllAppsButton,
       () => html`
-        <forge-button variant="outlined" @click=${this._switchToAllAppsView}>
+        <forge-button variant="raised" @click=${this._switchToAllAppsView}>
           <span>${this.#viewAllAppsButtonSlot}</span>
           <forge-icon name="chevron_right"></forge-icon>
         </forge-button>
@@ -465,7 +482,8 @@ export class AppLauncherComponent extends LitElement {
         html`${cache(
           html` ${this.#appLauncherIcon}
             <forge-popover
-              placement="left-start"
+              arrow
+              placement="bottom-end"
               position-strategy="fixed"
               anchor="app-launcher-trigger"
               @forge-popover-toggle=${async (e: CustomEvent<IPopoverToggleEventData>) => {
@@ -503,6 +521,7 @@ export class AppLauncherComponent extends LitElement {
         ${cache(
           html`${this.#appLauncherIcon}
             <forge-dialog
+              .fullscreen=${this.fullscreen}
               persistent
               fullscreen-threshold="0"
               .open=${this.open}
@@ -542,7 +561,9 @@ export class AppLauncherComponent extends LitElement {
     this.appView = 'related';
     this._filterText = '';
     this.open = false;
-    this._appLauncherPopover.open = false;
+    if (this._appLauncherPopover) {
+      this._appLauncherPopover.open = false;
+    }
   }
 
   private async _switchToAllAppsView(): Promise<void> {

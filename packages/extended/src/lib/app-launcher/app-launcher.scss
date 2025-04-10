@@ -136,6 +136,7 @@ forge-popover {
   height: 40px;
   border-block-start: 1px solid #{forge-theme.variable(outline)};
   background-color: #{forge-theme.variable(surface)};
+  border-radius: 0 0 8px 8px;
 }
 
 .keyboard-indicator-container {
@@ -192,7 +193,6 @@ forge-dialog {
     display: grid;
     grid-template-rows: auto 1fr auto;
     gap: #{forge-spacing.variable(medium)};
-    // align-items: end;
     padding: #{forge-spacing.variable(medium)};
     min-height: 0;
 
