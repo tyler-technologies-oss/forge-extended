@@ -1,23 +1,17 @@
 import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
+import icons from './icons.json';
 
 import '$lib/app-launcher';
-import { AppLauncherCustomLink, AppLauncherOption, AppLauncherOptionGroup } from '$lib/app-launcher';
-
-interface AppLauncherOptionReg {
-  applicationName: string;
-  applicationID: string;
-  label: string;
-  helpText: string;
-  iconName: string;
-  uri: string;
-  action: string;
-  category: string;
-  priority: number;
-  product: string;
-}
+import { AppLauncherCustomLink, AppLauncherOption } from '$lib/app-launcher';
 
 const component = 'forge-app-launcher';
+
+const selectRandomIconForDemo = () => {
+  const randomIndex = Math.floor(Math.random() * icons.length);
+  return icons[randomIndex].name;
+};
+
 const customLinks: AppLauncherCustomLink[] = [
   {
     label: 'Payments Documentation',
@@ -1684,33 +1678,16 @@ const data = [
   }
 ];
 
-function groupAppsByProduct(apps: AppLauncherOptionReg[]): AppLauncherOptionGroup[] {
-  const productMap: Record<string, AppLauncherOptionReg[]> = {};
-
-  for (const app of apps) {
-    if (!productMap[app.product]) {
-      productMap[app.product] = [];
-    }
-    productMap[app.product].push(app);
-  }
-
-  return Object.entries(productMap).map(([product, apps]) => ({
-    label: product,
-    apps
-  }));
-}
-
-// Example usage:
-// const groupedData = groupAppsByProduct(data);
 const allApps = data.map(d => {
   return {
     label: d.label,
-    iconName: 'texture',
+    iconName: selectRandomIconForDemo(),
     uri: d.uri
   };
 }) as AppLauncherOption[];
 
-console.log(allApps);
+// console.log(allApps);
+// console.log(icons);
 
 const relatedApps: AppLauncherOption[] = [
   {
@@ -1751,12 +1728,7 @@ const meta = {
     return html`
       <forge-card no-padding>
         <forge-toolbar no-border>
-          <forge-app-launcher
-            no-border=${args.noBorder}
-            .customLinks=${customLinks}
-            .allApps=${allApps}
-            .relatedApps=${relatedApps}
-            slot="end">
+          <forge-app-launcher no-border=${args.noBorder} .allApps=${allApps} slot="end">
             <span slot="related-apps-title">${args.relatedAppsTitle}</span>
             <span slot="all-apps-title">${args.allAppsTitle}</span>
             <span slot="view-all-apps-button-text">${args.viewAllAppsButtonText}</span>

@@ -11,7 +11,7 @@
 //
 
 :host {
-  --avatar-size: 32px;
+  --avatar-size: 48px;
   --inner-container-width: 500px;
   display: contents;
   padding: 0;
@@ -25,13 +25,13 @@
 // Base
 //
 
-h2 {
-  @include forge-typography.style(heading2);
+h1 {
+  @include forge-typography.style(heading3);
 
   margin: 0;
 }
 
-h3 {
+h2 {
   @include forge-typography.style(heading1);
 
   margin: 0;
@@ -154,11 +154,72 @@ forge-popover {
   @include forge-typography.style(body1);
 }
 
-:host(:state(smallScreen)) {
+.empty-state {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  height: 100%;
+
+  svg {
+    height: 128px;
+    width: 128px;
+  }
+
+  p {
+    @include forge-typography.style(subheading2);
+    text-align: center;
+  }
+}
+
+forge-dialog {
+  --forge-dialog-width: 100vw;
+  --forge-dialog-height: 100dvh;
+
+  --avatar-size: 48px;
   --inner-container-width: 100%;
 
-  forge-popover {
-    --forge-popover-height: 100dvh;
-    --forge-popover-width: 100dvw;
+  forge-card {
+    min-height: 0;
+  }
+
+  .dialog-container {
+    width: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+
+  .related-apps {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: #{forge-spacing.variable(medium)};
+    // align-items: end;
+    padding: #{forge-spacing.variable(medium)};
+    min-height: 0;
+
+    forge-button {
+      --forge-button-height: 48px;
+    }
+  }
+
+  .all-apps {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: #{forge-spacing.variable(medium)};
+    padding: #{forge-spacing.variable(medium)};
+    min-height: 0;
+  }
+
+  .scroll-container {
+    padding-block: #{forge-spacing.variable(medium)};
+    overflow-y: auto;
+    height: 100%;
+
+    h2 {
+      padding-inline-start: #{forge-spacing.variable(medium)};
+    }
+  }
+
+  .view-all-apps-button {
+    padding: 0;
   }
 }
