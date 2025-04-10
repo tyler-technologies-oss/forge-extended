@@ -1728,7 +1728,12 @@ const meta = {
     return html`
       <forge-card no-padding>
         <forge-toolbar no-border>
-          <forge-app-launcher no-border=${args.noBorder} .allApps=${allApps} slot="end">
+          <forge-app-launcher
+            no-border=${args.noBorder}
+            .customLinks=${customLinks}
+            .allApps=${allApps}
+            .relatedApps=${relatedApps}
+            slot="end">
             <span slot="related-apps-title">${args.relatedAppsTitle}</span>
             <span slot="all-apps-title">${args.allAppsTitle}</span>
             <span slot="view-all-apps-button-text">${args.viewAllAppsButtonText}</span>
