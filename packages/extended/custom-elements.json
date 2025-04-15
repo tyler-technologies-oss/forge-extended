@@ -833,9 +833,117 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/responsive-grid/responsive-grid.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ResponsiveGridComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-responsive-grid'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ResponsiveGridComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "maxColumnCount",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "3",
+              "attribute": "max-column-count"
+            },
+            {
+              "kind": "field",
+              "name": "gap",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "16",
+              "attribute": "gap"
+            },
+            {
+              "kind": "field",
+              "name": "minColumnSize",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "320",
+              "attribute": "min-column-size"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "max-column-count",
+              "type": {
+                "text": "number"
+              },
+              "default": "3",
+              "fieldName": "maxColumnCount"
+            },
+            {
+              "name": "gap",
+              "type": {
+                "text": "number"
+              },
+              "default": "16",
+              "fieldName": "gap"
+            },
+            {
+              "name": "min-column-size",
+              "type": {
+                "text": "number"
+              },
+              "default": "320",
+              "fieldName": "minColumnSize"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-responsive-grid",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ResponsiveGridComponentTagName",
+          "declaration": {
+            "name": "ResponsiveGridComponentTagName",
+            "module": "src/lib/responsive-grid/responsive-grid.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ResponsiveGridComponent",
+          "declaration": {
+            "name": "ResponsiveGridComponent",
+            "module": "src/lib/responsive-grid/responsive-grid.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ResponsiveGridComponent",
+            "module": "src/lib/responsive-grid/responsive-grid.ts"
+          }
+        }
+      ]
     }
   ],
-  "branchName": "main",
+  "branchName": "forge-grid-prototyping",
   "forgeTypes": {
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -884,6 +992,10 @@
     "ResponsiveToolbarComponent": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 48
+    },
+    "ResponsiveGridComponent": {
+      "path": "src/lib/responsive-grid/responsive-grid.ts",
+      "lineNumber": 17
     }
   }
 }
