@@ -1,0 +1,20 @@
+<div class="demo-container">
+  <h2>Rich Text Editor</h2>
+  <p>A simple rich text editor component using Tiptap.</p>
+
+  <h3>Basic Example</h3>
+  <forge-rich-text-editor></forge-rich-text-editor>
+
+  <h3>With Initial Content</h3>
+  <forge-rich-text-editor 
+    content="<h2>Hello World!</h2><p>This is a <strong>rich text editor</strong> built with <em>Tiptap</em>.</p>"
+  ></forge-rich-text-editor>
+
+  <h3>Readonly Example</h3>
+  <forge-rich-text-editor 
+    readonly 
+    content="<h2>Read-only Content</h2><p>This content cannot be edited.</p>"
+  ></forge-rich-text-editor>
+</div>
+
+<script type="module" src="rich-text-editor.ts"></script>

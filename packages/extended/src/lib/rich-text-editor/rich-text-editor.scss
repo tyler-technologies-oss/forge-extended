@@ -1,0 +1,102 @@
+:host {
+  display: block;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+// :host([disabled]) {
+//   opacity: 0.5;
+//   pointer-events: none;
+// }
+
+// .forge-rich-text-editor {
+//   display: flex;
+//   flex-direction: column;
+//   width: 100%;
+//   border: 1px solid var(--forge-border-color, forge-theme.$forge-border-color);
+//   border-radius: var(--forge-border-radius, forge-theme.$forge-border-radius);
+//   overflow: hidden;
+//   box-sizing: border-box;
+//   transition: border-color 0.2s ease;
+
+//   &:focus-within {
+//     border-color: var(--forge-accent-color, forge-theme.$forge-accent-color);
+//   }
+// }
+
+// .editor-content {
+//   flex: 1;
+//   padding: 1rem;
+//   overflow-y: auto;
+//   // background-color: var(--forge-background-color, forge-theme.$forge-background-color);
+
+//   &:focus {
+//     outline: none;
+//   }
+
+//   p {
+//     margin: 0 0 1em 0;
+//   }
+
+//   .ProseMirror {
+//     outline: none;
+//     word-break: break-word;
+
+//     > * + * {
+//       margin-top: 0.75em;
+//     }
+
+//     ul,
+//     ol {
+//       padding: 0 1rem;
+//     }
+
+//     h1,
+//     h2,
+//     h3,
+//     h4,
+//     h5,
+//     h6 {
+//       line-height: 1.1;
+//       font-weight: 600;
+//     }
+
+//     blockquote {
+//       padding-left: 1rem;
+//       border-left: 2px solid var(--forge-theme-outline);
+//     }
+
+//     code {
+//       background-color: var(--forge-scaffolding-color, forge-theme.$forge-scaffolding-color);
+//       padding: 0.2em 0.4em;
+//       border-radius: var(--forge-border-radius, forge-theme.$forge-border-radius);
+//       font-family: monospace;
+//     }
+
+//     pre {
+//       background-color: var(--forge-scaffolding-color, forge-theme.$forge-scaffolding-color);
+//       padding: 0.75rem 1rem;
+//       border-radius: var(--forge-border-radius, forge-theme.$forge-border-radius);
+//       overflow-x: auto;
+
+//       code {
+//         background: none;
+//         padding: 0;
+//       }
+//     }
+
+//     hr {
+//       border: none;
+//       border-top: 1px solid var(--forge-border-color, forge-theme.$forge-border-color);
+//       margin: 1rem 0;
+//     }
+//   }
+// }
