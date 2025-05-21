@@ -853,25 +853,43 @@
           "members": [
             {
               "kind": "field",
-              "name": "someProperty",
+              "name": "open",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
               "default": "true",
               "description": "Description of the property.",
-              "attribute": "some-property"
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "currentTheme",
+              "type": {
+                "text": "CurrentTheme"
+              },
+              "privacy": "public",
+              "default": "'light'",
+              "attribute": "current-theme"
             }
           ],
           "attributes": [
             {
-              "name": "some-property",
+              "name": "open",
               "type": {
                 "text": "boolean"
               },
               "default": "true",
               "description": "Description of the property.",
-              "fieldName": "someProperty"
+              "fieldName": "open"
+            },
+            {
+              "name": "current-theme",
+              "type": {
+                "text": "CurrentTheme"
+              },
+              "default": "'light'",
+              "fieldName": "currentTheme"
             }
           ],
           "superclass": {
@@ -909,7 +927,7 @@
       ]
     }
   ],
-  "branchName": "main",
+  "branchName": "theme-switcher",
   "forgeTypes": {
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -959,9 +977,17 @@
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 48
     },
+    "CurrentTheme": {
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "lineNumber": 24
+    },
+    "ThemeToggleThemeEventData": {
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "lineNumber": 26
+    },
     "ThemeToggleComponent": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 17
+      "lineNumber": 33
     }
   }
 }

@@ -10,7 +10,6 @@ import {
 } from '@tylertech/forge';
 import { tylIconWbSunny, tylIconTonality } from '@tylertech/tyler-icons/standard';
 import { tylIconMoonWaningCrescent } from '@tylertech/tyler-icons/extended';
-import darkThemeCss from '@tylertech/forge/dist/forge-dark.css?raw'; // raw CSS string
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -36,6 +35,10 @@ export class ThemeToggleComponent extends LitElement {
     super();
     this.currentTheme = (localStorage.getItem(THEME_KEY) as CurrentTheme) || 'system';
     this.#setTheme();
+  }
+
+  connectedCallback(): void {
+    super.connectedCallback();
     this._emitThemeChange(this.currentTheme);
   }
 
@@ -56,7 +59,7 @@ export class ThemeToggleComponent extends LitElement {
   public open = true;
 
   @property({ type: String, attribute: 'current-theme' })
-  public currentTheme: CurrentTheme = 'light';
+  public currentTheme: CurrentTheme = 'system';
 
   private _emitThemeChange(theme: CurrentTheme): void {
     const event = new CustomEvent<ThemeToggleThemeEventData>('forge-theme-toggle-update', {
