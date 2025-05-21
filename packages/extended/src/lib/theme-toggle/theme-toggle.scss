@@ -1,0 +1,15 @@
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+
+:host {
+  display: contents;
+}
+
+//
+// Base
+//
+
+.title {
+  @include forge-typography.style(heading1);
+  margin-block-end: #{forge-spacing.variable(xxxsmall)};
+}
