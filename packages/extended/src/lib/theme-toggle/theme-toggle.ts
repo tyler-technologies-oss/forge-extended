@@ -10,6 +10,7 @@ import {
 } from '@tylertech/forge';
 import { tylIconWbSunny, tylIconTonality } from '@tylertech/tyler-icons/standard';
 import { tylIconMoonWaningCrescent } from '@tylertech/tyler-icons/extended';
+import darkThemeCss from '@tylertech/forge/dist/forge-dark.css?raw'; // raw CSS string
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -17,10 +18,14 @@ declare global {
   }
 }
 
-const THEME_KEY = 'tyler-forge-theme';
+const THEME_KEY = 'data-forge-theme';
 export const ThemeToggleComponentTagName: keyof HTMLElementTagNameMap = 'forge-theme-toggle';
 
 type CurrentTheme = 'light' | 'dark' | 'system';
+
+export interface ThemeToggleThemeEventData {
+  theme: CurrentTheme;
+}
 
 /**
  * @tag forge-theme-toggle
@@ -29,7 +34,9 @@ type CurrentTheme = 'light' | 'dark' | 'system';
 export class ThemeToggleComponent extends LitElement {
   constructor() {
     super();
-    this.currentTheme = (localStorage.getItem(THEME_KEY) as CurrentTheme) || 'light';
+    this.currentTheme = (localStorage.getItem(THEME_KEY) as CurrentTheme) || 'system';
+    this.#setTheme();
+    this._emitThemeChange(this.currentTheme);
   }
 
   static {
@@ -51,11 +58,23 @@ export class ThemeToggleComponent extends LitElement {
   @property({ type: String, attribute: 'current-theme' })
   public currentTheme: CurrentTheme = 'light';
 
+  private _emitThemeChange(theme: CurrentTheme): void {
+    const event = new CustomEvent<ThemeToggleThemeEventData>('forge-theme-toggle-update', {
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+      detail: { theme }
+    });
+    this.dispatchEvent(event);
+  }
+
   public override render(): TemplateResult {
     return html`
-    ${this.currentTheme}
-    <div class="title">Theme</div>
-      <forge-button-toggle-group aria-label="Choose communication type" .value=${this.currentTheme} @forge-button-toggle-group-change=${this.#onThemeChange}>
+      <div class="title">Theme</div>
+      <forge-button-toggle-group
+        aria-label="Choose communication type"
+        .value=${this.currentTheme}
+        @forge-button-toggle-group-change=${this.#onThemeChange}>
         <forge-button-toggle value="light">
           <forge-icon slot="start" name="wb_sunny"></forge-icon>
           <span>Light</span>
@@ -67,12 +86,27 @@ export class ThemeToggleComponent extends LitElement {
         <forge-button-toggle value="system">
           <forge-icon slot="start" name="tonality"></forge-icon>
           <span>System</span>
+        </forge-button-toggle>
       </forge-button-toggle-group>
     `;
   }
 
   #onThemeChange(evt: CustomEvent<CurrentTheme>): void {
     this.currentTheme = evt.detail;
+    this.#setTheme();
+  }
+
+  #setTheme(): void {
+    this.#setThemeOnHtmlEl();
+    this.#setThemeLocalStorage();
+    this._emitThemeChange(this.currentTheme);
+  }
+
+  #setThemeOnHtmlEl(): void {
+    document.documentElement.setAttribute(THEME_KEY, this.currentTheme);
+  }
+
+  #setThemeLocalStorage(): void {
     localStorage.setItem(THEME_KEY, this.currentTheme);
   }
 }
