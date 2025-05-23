@@ -33,7 +33,7 @@ export interface ThemeToggleThemeEventData {
 export class ThemeToggleComponent extends LitElement {
   constructor() {
     super();
-    this.currentTheme = (localStorage.getItem(THEME_KEY) as CurrentTheme) || 'system';
+    this.currentTheme = (localStorage.getItem(THEME_KEY) as CurrentTheme) || this.#detectPrefersColorScheme();
     this.#setTheme();
   }
 
@@ -53,11 +53,8 @@ export class ThemeToggleComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
   /**
-   * Description of the property.
+   * The current theme that is applied to the component. The default value is 'system'.
    */
-  @property({ type: Boolean, attribute: 'open' })
-  public open = true;
-
   @property({ type: String, attribute: 'current-theme' })
   public currentTheme: CurrentTheme = 'system';
 
@@ -78,15 +75,15 @@ export class ThemeToggleComponent extends LitElement {
         aria-label="Choose communication type"
         .value=${this.currentTheme}
         @forge-button-toggle-group-change=${this.#onThemeChange}>
-        <forge-button-toggle value="light">
+        <forge-button-toggle .value=${'light'}>
           <forge-icon slot="start" name="wb_sunny"></forge-icon>
           <span>Light</span>
         </forge-button-toggle>
-        <forge-button-toggle value="dark">
+        <forge-button-toggle .value=${'dark'}>
           <forge-icon slot="start" name="moon_waning_crescent"></forge-icon>
           <span>Dark</span>
         </forge-button-toggle>
-        <forge-button-toggle value="system">
+        <forge-button-toggle .value=${'system'}>
           <forge-icon slot="start" name="tonality"></forge-icon>
           <span>System</span>
         </forge-button-toggle>
@@ -111,5 +108,13 @@ export class ThemeToggleComponent extends LitElement {
 
   #setThemeLocalStorage(): void {
     localStorage.setItem(THEME_KEY, this.currentTheme);
+  }
+
+  #detectPrefersColorScheme(): CurrentTheme {
+    if (window.matchMedia('(prefers-color-scheme)').media !== 'not all') {
+      const darkThemeTest = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      return darkThemeTest ? 'dark' : 'light';
+    }
+    return 'light';
   }
 }

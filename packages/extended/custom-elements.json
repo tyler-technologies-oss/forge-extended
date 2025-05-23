@@ -853,42 +853,24 @@
           "members": [
             {
               "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "true",
-              "description": "Description of the property.",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
               "name": "currentTheme",
               "type": {
                 "text": "CurrentTheme"
               },
               "privacy": "public",
-              "default": "'light'",
+              "default": "'system'",
+              "description": "The current theme that is applied to the component. The default value is 'system'.",
               "attribute": "current-theme"
             }
           ],
           "attributes": [
             {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Description of the property.",
-              "fieldName": "open"
-            },
-            {
               "name": "current-theme",
               "type": {
                 "text": "CurrentTheme"
               },
-              "default": "'light'",
+              "default": "'system'",
+              "description": "The current theme that is applied to the component. The default value is 'system'.",
               "fieldName": "currentTheme"
             }
           ],
@@ -979,15 +961,15 @@
     },
     "CurrentTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 24
+      "lineNumber": 23
     },
     "ThemeToggleThemeEventData": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 26
+      "lineNumber": 25
     },
     "ThemeToggleComponent": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 33
+      "lineNumber": 32
     }
   }
 }
