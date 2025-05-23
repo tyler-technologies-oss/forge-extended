@@ -20,26 +20,26 @@ declare global {
 const THEME_KEY = 'data-forge-theme';
 export const ThemeToggleComponentTagName: keyof HTMLElementTagNameMap = 'forge-theme-toggle';
 
-type CurrentTheme = 'light' | 'dark' | 'system';
+export type ThemeToggleCurrentTheme = 'light' | 'dark' | 'system';
 
 export interface ThemeToggleThemeEventData {
-  theme: CurrentTheme;
+  theme: ThemeToggleCurrentTheme;
 }
 
 /**
  * @tag forge-theme-toggle
+ *
+ * @slot title - The title shown above the toggle buttons
+ *
+ * @event {CustomEvent<ThemeToggleThemeEventData>} forge-theme-toggle-update - Fired when the theme is changed
  */
 @customElement(ThemeToggleComponentTagName)
 export class ThemeToggleComponent extends LitElement {
   constructor() {
     super();
-    this.currentTheme = (localStorage.getItem(THEME_KEY) as CurrentTheme) || this.#detectPrefersColorScheme();
+    this.currentTheme =
+      (localStorage.getItem(THEME_KEY) as ThemeToggleCurrentTheme) || this.#detectPrefersColorScheme();
     this.#setTheme();
-  }
-
-  connectedCallback(): void {
-    super.connectedCallback();
-    this._emitThemeChange(this.currentTheme);
   }
 
   static {
@@ -53,20 +53,12 @@ export class ThemeToggleComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
   /**
-   * The current theme that is applied to the component. The default value is 'system'.
+   * The current theme that is applied to the component. The default value is 'system'
    */
-  @property({ type: String, attribute: 'current-theme' })
-  public currentTheme: CurrentTheme = 'system';
 
-  private _emitThemeChange(theme: CurrentTheme): void {
-    const event = new CustomEvent<ThemeToggleThemeEventData>('forge-theme-toggle-update', {
-      bubbles: true,
-      composed: true,
-      cancelable: true,
-      detail: { theme }
-    });
-    this.dispatchEvent(event);
-  }
+  // TODO public get currentTheme readonly @state
+  @property({ type: String, attribute: 'current-theme' })
+  public currentTheme: ThemeToggleCurrentTheme = 'system';
 
   get #titleSlot(): TemplateResult | typeof nothing {
     return html`<slot name="title" id="theme-toggle-title">Theme</slot> `;
@@ -79,15 +71,15 @@ export class ThemeToggleComponent extends LitElement {
         aria-label="Choose communication type"
         .value=${this.currentTheme}
         @forge-button-toggle-group-change=${this.#onThemeChange}>
-        <forge-button-toggle .value=${'light'}>
+        <forge-button-toggle .value=${'light'} id="light-button">
           <forge-icon slot="start" name="wb_sunny"></forge-icon>
           <span>Light</span>
         </forge-button-toggle>
-        <forge-button-toggle .value=${'dark'}>
+        <forge-button-toggle .value=${'dark'} id="dark-button">
           <forge-icon slot="start" name="moon_waning_crescent"></forge-icon>
           <span>Dark</span>
         </forge-button-toggle>
-        <forge-button-toggle .value=${'system'}>
+        <forge-button-toggle .value=${'system'} id="system-button">
           <forge-icon slot="start" name="tonality"></forge-icon>
           <span>System</span>
         </forge-button-toggle>
@@ -95,7 +87,7 @@ export class ThemeToggleComponent extends LitElement {
     `;
   }
 
-  #onThemeChange(evt: CustomEvent<CurrentTheme>): void {
+  #onThemeChange(evt: CustomEvent<ThemeToggleCurrentTheme>): void {
     this.currentTheme = evt.detail;
     this.#setTheme();
   }
@@ -103,7 +95,7 @@ export class ThemeToggleComponent extends LitElement {
   #setTheme(): void {
     this.#setThemeOnHtmlEl();
     this.#setThemeLocalStorage();
-    this._emitThemeChange(this.currentTheme);
+    this.#emitThemeChange(this.currentTheme);
   }
 
   #setThemeOnHtmlEl(): void {
@@ -114,7 +106,17 @@ export class ThemeToggleComponent extends LitElement {
     localStorage.setItem(THEME_KEY, this.currentTheme);
   }
 
-  #detectPrefersColorScheme(): CurrentTheme {
+  #emitThemeChange(theme: ThemeToggleCurrentTheme): void {
+    const event = new CustomEvent<ThemeToggleThemeEventData>('forge-theme-toggle-update', {
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+      detail: { theme }
+    });
+    this.dispatchEvent(event);
+  }
+
+  #detectPrefersColorScheme(): ThemeToggleCurrentTheme {
     if (window.matchMedia('(prefers-color-scheme)').media !== 'not all') {
       const darkThemeTest = window.matchMedia('(prefers-color-scheme: dark)').matches;
       return darkThemeTest ? 'dark' : 'light';
