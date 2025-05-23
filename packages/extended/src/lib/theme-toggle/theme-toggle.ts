@@ -1,4 +1,4 @@
-import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
+import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 
 import styles from './theme-toggle.scss?inline';
@@ -68,9 +68,13 @@ export class ThemeToggleComponent extends LitElement {
     this.dispatchEvent(event);
   }
 
+  get #titleSlot(): TemplateResult | typeof nothing {
+    return html`<slot name="title" id="theme-toggle-title">Theme</slot> `;
+  }
+
   public override render(): TemplateResult {
     return html`
-      <div class="title">Theme</div>
+      <div class="title">${this.#titleSlot}</div>
       <forge-button-toggle-group
         aria-label="Choose communication type"
         .value=${this.currentTheme}
