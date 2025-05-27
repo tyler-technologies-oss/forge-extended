@@ -20,7 +20,7 @@ declare global {
 const THEME_KEY = 'data-forge-theme';
 export const ThemeToggleComponentTagName: keyof HTMLElementTagNameMap = 'forge-theme-toggle';
 
-export type ThemeToggleCurrentTheme = 'light' | 'dark' | 'system';
+export type ThemeToggleCurrentTheme = 'light' | 'dark';
 
 export interface ThemeToggleThemeEventData {
   theme: ThemeToggleCurrentTheme;

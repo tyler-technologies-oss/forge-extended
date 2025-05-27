@@ -5,7 +5,7 @@ import { ThemeToggleComponent, ThemeToggleCurrentTheme } from './theme-toggle';
 import './theme-toggle';
 import sinon from 'sinon';
 import { ButtonToggleComponent } from '@tylertech/forge';
-import { sendMouse } from '@web/test-runner-commands';
+import { emulateMedia, sendMouse } from '@web/test-runner-commands';
 
 describe('ThemeToggle', () => {
   it('should contain shadow root', async () => {
@@ -15,7 +15,7 @@ describe('ThemeToggle', () => {
   });
 
   it('should dispatch update event when theme changes to light', async () => {
-    const harness = await createFixture({ currentTheme: 'dark' });
+    const harness = await createFixture();
     const spy = sinon.spy();
 
     harness.el.addEventListener('forge-theme-toggle-update', spy);
@@ -26,7 +26,7 @@ describe('ThemeToggle', () => {
   });
 
   it('should dispatch update event when theme changes to dark', async () => {
-    const harness = await createFixture({ currentTheme: 'light' });
+    const harness = await createFixture();
     const spy = sinon.spy();
 
     harness.el.addEventListener('forge-theme-toggle-update', spy);
@@ -37,7 +37,7 @@ describe('ThemeToggle', () => {
   });
 
   it('should dispatch update event when theme changes to system', async () => {
-    const harness = await createFixture({ currentTheme: 'light' });
+    const harness = await createFixture();
     const spy = sinon.spy();
 
     harness.el.addEventListener('forge-theme-toggle-update', spy);
@@ -48,7 +48,7 @@ describe('ThemeToggle', () => {
   });
 
   it('should update the HTML element with the appropriate data attribute value when theme changes to light', async () => {
-    const harness = await createFixture({ currentTheme: 'dark' });
+    const harness = await createFixture();
 
     await harness.clickLightThemeButton();
     await nextFrame();
@@ -57,7 +57,7 @@ describe('ThemeToggle', () => {
   });
 
   it('should update the HTML element with the appropriate data attribute value when theme changes to dark', async () => {
-    const harness = await createFixture({ currentTheme: 'light' });
+    const harness = await createFixture();
 
     await harness.clickDarkThemeButton();
     await nextFrame();
@@ -65,17 +65,17 @@ describe('ThemeToggle', () => {
     expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('dark');
   });
 
-  it('should update the HTML element with the appropriate data attribute value when theme changes to system', async () => {
-    const harness = await createFixture({ currentTheme: 'light' });
+  // it('should update the HTML element with the appropriate data attribute value when theme changes to system', async () => {
+  //   const harness = await createFixture();
 
-    await harness.clickSystemThemeButton();
-    await nextFrame();
+  //   await harness.clickSystemThemeButton();
+  //   await nextFrame();
 
-    expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('system');
-  });
+  //   expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('system');
+  // });
 
   it('should set local storage when theme is set to light', async () => {
-    const harness = await createFixture({ currentTheme: 'dark' });
+    const harness = await createFixture();
 
     await harness.clickLightThemeButton();
     await nextFrame();
@@ -84,7 +84,7 @@ describe('ThemeToggle', () => {
   });
 
   it('should set local storage when theme is set to dark', async () => {
-    const harness = await createFixture({ currentTheme: 'light' });
+    const harness = await createFixture();
 
     await harness.clickDarkThemeButton();
     await nextFrame();
@@ -92,12 +92,25 @@ describe('ThemeToggle', () => {
     expect(localStorage.getItem('data-forge-theme')).to.equal('dark');
   });
 
-  it('should check prefers-color-scheme=dark and set theme properly', async () => {
+  it('should detect prefers-color-scheme=dark and set theme', async () => {
     localStorage.clear();
-    const harness = await createFixture({ currentTheme: 'system' });
+    await emulateMedia({ colorScheme: 'dark' });
+    expect(matchMedia('(prefers-color-scheme: dark)').matches).to.be.true;
 
-    const mediaQueryList = window.matchMedia('(prefers-color-scheme: light)');
-    mediaQueryList.dispatchEvent(new Event('change'));
+    const harness = await createFixture();
+
+    await nextFrame();
+
+    expect(localStorage.getItem('data-forge-theme')).to.equal('dark');
+    expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('dark');
+  });
+
+  it('should detect prefers-color-scheme=light and set theme', async () => {
+    localStorage.clear();
+    await emulateMedia({ colorScheme: 'light' });
+    expect(matchMedia('(prefers-color-scheme: light)').matches).to.be.true;
+
+    const harness = await createFixture();
 
     await nextFrame();
 
@@ -105,10 +118,6 @@ describe('ThemeToggle', () => {
     expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('light');
   });
 });
-
-interface ThemeToggleFixtureConfig {
-  currentTheme?: ThemeToggleCurrentTheme;
-}
 
 class ThemeToggleHarness {
   constructor(public el: ThemeToggleComponent) {}
@@ -161,9 +170,9 @@ class ThemeToggleHarness {
   }
 }
 
-async function createFixture({ currentTheme = 'light' }: ThemeToggleFixtureConfig = {}): Promise<ThemeToggleHarness> {
+async function createFixture(): Promise<ThemeToggleHarness> {
   const el = await fixture<ThemeToggleComponent>(html`
-    <forge-theme-toggle current-theme="${currentTheme}">
+    <forge-theme-toggle>
       <span slot="title">Theme</span>
     </forge-theme-toggle>
   `);
