@@ -58,7 +58,7 @@ export class ThemeToggleComponent extends LitElement {
 
   // TODO public get currentTheme readonly @state
   @property({ type: String, attribute: 'current-theme' })
-  public currentTheme: ThemeToggleCurrentTheme = 'system';
+  public currentTheme: ThemeToggleCurrentTheme = 'light';
 
   get #titleSlot(): TemplateResult | typeof nothing {
     return html`<slot name="title" id="theme-toggle-title">Theme</slot> `;
@@ -117,10 +117,9 @@ export class ThemeToggleComponent extends LitElement {
   }
 
   #detectPrefersColorScheme(): ThemeToggleCurrentTheme {
-    if (window.matchMedia('(prefers-color-scheme)').media !== 'not all') {
-      const darkThemeTest = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      return darkThemeTest ? 'dark' : 'light';
-    }
-    return 'light';
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+
+    return prefersDark ? 'dark' : prefersLight ? 'light' : 'light';
   }
 }
