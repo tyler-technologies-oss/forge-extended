@@ -65,15 +65,6 @@ describe('ThemeToggle', () => {
     expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('dark');
   });
 
-  // it('should update the HTML element with the appropriate data attribute value when theme changes to system', async () => {
-  //   const harness = await createFixture();
-
-  //   await harness.clickSystemThemeButton();
-  //   await nextFrame();
-
-  //   expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('system');
-  // });
-
   it('should set local storage when theme is set to light', async () => {
     const harness = await createFixture();
 

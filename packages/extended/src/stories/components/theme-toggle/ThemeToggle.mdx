@@ -6,7 +6,9 @@ import * as ThemeToggleStories from './ThemeToggle.stories';
 
 <Title />
 
-TODO: A basic description of the `Theme Toggle` component goes here.
+The `forge-theme-toggle`component lets users choose between light, dark, and system theme preferences. It provides a consistent experience to our users with some additional functionality built in. It simply updates a `data-forge-theme` attribute on the `<html>` element and stores the selection in localStorage as well using `data-forge-theme` as the key.
+
+> It's important to note that the component doesn’t actually apply any CSS, it's up to integrating application teams to react to the attribute change and handle theming accordingly.
 
 <Canvas of={ThemeToggleStories.Demo} />
 

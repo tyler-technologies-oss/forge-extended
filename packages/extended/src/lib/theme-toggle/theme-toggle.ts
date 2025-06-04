@@ -37,7 +37,7 @@ export interface ThemeToggleThemeEventData {
 export class ThemeToggleComponent extends LitElement {
   constructor() {
     super();
-    this.currentTheme =
+    this.#currentTheme =
       (localStorage.getItem(THEME_KEY) as ThemeToggleCurrentTheme) || this.#detectPrefersColorScheme();
     this.#setTheme();
   }
@@ -52,13 +52,7 @@ export class ThemeToggleComponent extends LitElement {
 
   public static override styles = unsafeCSS(styles);
 
-  /**
-   * The current theme that is applied to the component. The default value is 'system'
-   */
-
-  // TODO public get currentTheme readonly @state
-  @property({ type: String, attribute: 'current-theme' })
-  public currentTheme: ThemeToggleCurrentTheme = 'light';
+  #currentTheme: ThemeToggleCurrentTheme = 'light';
 
   get #titleSlot(): TemplateResult | typeof nothing {
     return html`<slot name="title" id="theme-toggle-title">Theme</slot> `;
@@ -69,7 +63,7 @@ export class ThemeToggleComponent extends LitElement {
       <div class="title">${this.#titleSlot}</div>
       <forge-button-toggle-group
         aria-label="Choose communication type"
-        .value=${this.currentTheme}
+        .value=${this.#currentTheme}
         @forge-button-toggle-group-change=${this.#onThemeChange}>
         <forge-button-toggle .value=${'light'} id="light-button">
           <forge-icon slot="start" name="wb_sunny"></forge-icon>
@@ -88,22 +82,22 @@ export class ThemeToggleComponent extends LitElement {
   }
 
   #onThemeChange(evt: CustomEvent<ThemeToggleCurrentTheme>): void {
-    this.currentTheme = evt.detail;
+    this.#currentTheme = evt.detail;
     this.#setTheme();
   }
 
   #setTheme(): void {
     this.#setThemeOnHtmlEl();
     this.#setThemeLocalStorage();
-    this.#emitThemeChange(this.currentTheme);
+    this.#emitThemeChange(this.#currentTheme);
   }
 
   #setThemeOnHtmlEl(): void {
-    document.documentElement.setAttribute(THEME_KEY, this.currentTheme);
+    document.documentElement.setAttribute(THEME_KEY, this.#currentTheme);
   }
 
   #setThemeLocalStorage(): void {
-    localStorage.setItem(THEME_KEY, this.currentTheme);
+    localStorage.setItem(THEME_KEY, this.#currentTheme);
   }
 
   #emitThemeChange(theme: ThemeToggleCurrentTheme): void {

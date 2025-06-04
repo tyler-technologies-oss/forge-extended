@@ -856,19 +856,7 @@
               "name": "title"
             }
           ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "currentTheme",
-              "type": {
-                "text": "ThemeToggleCurrentTheme"
-              },
-              "privacy": "public",
-              "default": "'system'",
-              "description": "The current theme that is applied to the component. The default value is 'system'",
-              "attribute": "current-theme"
-            }
-          ],
+          "members": [],
           "events": [
             {
               "type": {
@@ -876,17 +864,6 @@
               },
               "description": "Fired when the theme is changed",
               "name": "forge-theme-toggle-update"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "current-theme",
-              "type": {
-                "text": "ThemeToggleCurrentTheme"
-              },
-              "default": "'system'",
-              "description": "The current theme that is applied to the component. The default value is 'system'",
-              "fieldName": "currentTheme"
             }
           ],
           "superclass": {
