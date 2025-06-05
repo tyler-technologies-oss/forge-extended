@@ -83,7 +83,7 @@ describe('ThemeToggle', () => {
     expect(localStorage.getItem('data-forge-theme')).to.equal('dark');
   });
 
-  it('should detect prefers-color-scheme=dark and set theme', async () => {
+  it('should detect prefers-color-scheme=dark and set data-forge-theme attr on html element to dark', async () => {
     localStorage.clear();
     await emulateMedia({ colorScheme: 'dark' });
     expect(matchMedia('(prefers-color-scheme: dark)').matches).to.be.true;
@@ -92,11 +92,11 @@ describe('ThemeToggle', () => {
 
     await nextFrame();
 
-    expect(localStorage.getItem('data-forge-theme')).to.equal('dark');
+    expect(harness.systemButton.getAttribute('selected')).to.exist;
     expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('dark');
   });
 
-  it('should detect prefers-color-scheme=light and set theme', async () => {
+  it('should detect prefers-color-scheme=light and set data-forge-theme attr on html element to light', async () => {
     localStorage.clear();
     await emulateMedia({ colorScheme: 'light' });
     expect(matchMedia('(prefers-color-scheme: light)').matches).to.be.true;
@@ -105,7 +105,63 @@ describe('ThemeToggle', () => {
 
     await nextFrame();
 
+    expect(harness.systemButton.getAttribute('selected')).to.exist;
+    expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('light');
+  });
+
+  it('should set local storage to light when clicking the light theme button toggle', async () => {
+    const harness = await createFixture();
+
+    await harness.clickLightThemeButton();
+    await nextFrame();
+
+    expect(harness.lightButton.getAttribute('selected')).to.exist;
     expect(localStorage.getItem('data-forge-theme')).to.equal('light');
+  });
+
+  it('should set local storage to dark when clicking the dark theme button toggle', async () => {
+    const harness = await createFixture();
+
+    await harness.clickDarkThemeButton();
+    await nextFrame();
+
+    expect(harness.darkButton.getAttribute('selected')).to.exist;
+    expect(localStorage.getItem('data-forge-theme')).to.equal('dark');
+  });
+
+  it('should set local storage to system when clicking the system theme button toggle', async () => {
+    const harness = await createFixture();
+
+    await harness.clickSystemThemeButton();
+    await nextFrame();
+
+    expect(harness.systemButton.getAttribute('selected')).to.exist;
+    expect(localStorage.getItem('data-forge-theme')).to.equal('system');
+  });
+
+  it('should detect prefers-color-scheme and set dark theme when system is the local storage value', async () => {
+    localStorage.setItem('data-forge-theme', 'system');
+    await emulateMedia({ colorScheme: 'dark' });
+    expect(matchMedia('(prefers-color-scheme: dark)').matches).to.be.true;
+
+    const harness = await createFixture();
+
+    await nextFrame();
+
+    expect(harness.systemButton.getAttribute('selected')).to.exist;
+    expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('dark');
+  });
+
+  it('should detect prefers-color-scheme and set light theme when system is the local storage value', async () => {
+    localStorage.setItem('data-forge-theme', 'system');
+    await emulateMedia({ colorScheme: 'light' });
+    expect(matchMedia('(prefers-color-scheme: light)').matches).to.be.true;
+
+    const harness = await createFixture();
+
+    await nextFrame();
+
+    expect(harness.systemButton.getAttribute('selected')).to.exist;
     expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('light');
   });
 });

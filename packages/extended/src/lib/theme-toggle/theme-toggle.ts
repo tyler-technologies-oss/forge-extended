@@ -1,5 +1,5 @@
 import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 
 import styles from './theme-toggle.scss?inline';
 import {
@@ -20,7 +20,7 @@ declare global {
 const THEME_KEY = 'data-forge-theme';
 export const ThemeToggleComponentTagName: keyof HTMLElementTagNameMap = 'forge-theme-toggle';
 
-export type ThemeToggleCurrentTheme = 'light' | 'dark';
+export type ThemeToggleCurrentTheme = 'light' | 'dark' | 'system';
 
 export interface ThemeToggleThemeEventData {
   theme: ThemeToggleCurrentTheme;
@@ -37,9 +37,11 @@ export interface ThemeToggleThemeEventData {
 export class ThemeToggleComponent extends LitElement {
   constructor() {
     super();
-    this.#currentTheme =
-      (localStorage.getItem(THEME_KEY) as ThemeToggleCurrentTheme) || this.#detectPrefersColorScheme();
-    this.#setTheme();
+    this._theme = (localStorage.getItem(THEME_KEY) as ThemeToggleCurrentTheme) ?? 'system';
+    if (this._theme === 'system') {
+      this.#setThemeLocalStorage(this._theme);
+    }
+    this.#setThemeOnHtmlEl();
   }
 
   static {
@@ -52,7 +54,8 @@ export class ThemeToggleComponent extends LitElement {
 
   public static override styles = unsafeCSS(styles);
 
-  #currentTheme: ThemeToggleCurrentTheme = 'light';
+  @state()
+  protected _theme: ThemeToggleCurrentTheme = 'system';
 
   get #titleSlot(): TemplateResult | typeof nothing {
     return html`<slot name="title" id="theme-toggle-title">Theme</slot> `;
@@ -63,17 +66,17 @@ export class ThemeToggleComponent extends LitElement {
       <div class="title">${this.#titleSlot}</div>
       <forge-button-toggle-group
         aria-label="Choose communication type"
-        .value=${this.#currentTheme}
+        .value=${this._theme}
         @forge-button-toggle-group-change=${this.#onThemeChange}>
-        <forge-button-toggle .value=${'light'} id="light-button">
+        <forge-button-toggle value="light" id="light-button">
           <forge-icon slot="start" name="wb_sunny"></forge-icon>
           <span>Light</span>
         </forge-button-toggle>
-        <forge-button-toggle .value=${'dark'} id="dark-button">
+        <forge-button-toggle value="dark" id="dark-button">
           <forge-icon slot="start" name="moon_waning_crescent"></forge-icon>
           <span>Dark</span>
         </forge-button-toggle>
-        <forge-button-toggle .value=${'system'} id="system-button">
+        <forge-button-toggle value="system" id="system-button">
           <forge-icon slot="start" name="tonality"></forge-icon>
           <span>System</span>
         </forge-button-toggle>
@@ -82,22 +85,26 @@ export class ThemeToggleComponent extends LitElement {
   }
 
   #onThemeChange(evt: CustomEvent<ThemeToggleCurrentTheme>): void {
-    this.#currentTheme = evt.detail;
+    this._theme = evt.detail;
     this.#setTheme();
   }
 
   #setTheme(): void {
     this.#setThemeOnHtmlEl();
-    this.#setThemeLocalStorage();
-    this.#emitThemeChange(this.#currentTheme);
+    this.#setThemeLocalStorage(this._theme);
+    this.#emitThemeChange(this._theme);
   }
 
   #setThemeOnHtmlEl(): void {
-    document.documentElement.setAttribute(THEME_KEY, this.#currentTheme);
+    if (this._theme === 'system') {
+      document.documentElement.setAttribute(THEME_KEY, this.#detectPrefersColorScheme());
+      return;
+    }
+    document.documentElement.setAttribute(THEME_KEY, this._theme);
   }
 
-  #setThemeLocalStorage(): void {
-    localStorage.setItem(THEME_KEY, this.#currentTheme);
+  #setThemeLocalStorage(theme: string): void {
+    localStorage.setItem(THEME_KEY, theme);
   }
 
   #emitThemeChange(theme: ThemeToggleCurrentTheme): void {
@@ -111,9 +118,11 @@ export class ThemeToggleComponent extends LitElement {
   }
 
   #detectPrefersColorScheme(): ThemeToggleCurrentTheme {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-    const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    this._theme = 'system';
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
 
-    return prefersDark ? 'dark' : prefersLight ? 'light' : 'light';
+    return 'light';
   }
 }
