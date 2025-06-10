@@ -3,7 +3,7 @@
   "private": true,
   "license": "Apache-2.0",
   "author": "Tyler Technologies, Inc.",
-  "packageManager": "pnpm@10.7.1",
+  "packageManager": "pnpm@10.11.0",
   "engines": {
     "node": ">=18",
     "pnpm": ">=10"
@@ -35,28 +35,37 @@
     "plop:extended": "pnpm run --filter=@tylertech/forge-extended plop"
   },
   "devDependencies": {
-    "@changesets/cli": "2.28.1",
-    "@commitlint/cli": "^19.8.0",
-    "@commitlint/config-conventional": "^19.8.0",
+    "@changesets/cli": "2.29.4",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
     "@repo/eslint-config": "workspace:",
     "@repo/prettier-config": "workspace:",
     "@types/node": "catalog:",
-    "commitlint": "^19.8.0",
+    "commitlint": "^19.8.1",
     "eslint": "catalog:",
     "husky": "^9.1.7",
-    "lint-staged": "^15.5.0",
+    "lint-staged": "^16.1.0",
     "prettier": "catalog:",
-    "turbo": "^2.5.0",
+    "turbo": "^2.5.3",
     "vite-plugin-ejs": "^1.7.0",
     "vite-plugin-full-reload": "^1.2.0"
   },
   "pnpm": {
     "overrides": {
       "reactify-wc>react": ">=17",
-      "@typescript-eslint/typescript-estree": "^8.28.0"
+      "@typescript-eslint/typescript-estree": "^8.33.0"
     },
     "patchedDependencies": {
-      "@changesets/assemble-release-plan@6.0.6": "patches/@changesets__assemble-release-plan@6.0.6.patch"
-    }
+      "@changesets/assemble-release-plan@6.0.8": "patches/@changesets__assemble-release-plan@6.0.8.patch"
+    },
+    "onlyBuiltDependencies": [
+      "@parcel/watcher",
+      "core-js-pure",
+      "esbuild",
+      "lmdb",
+      "msgpackr-extract",
+      "nice-napi",
+      "node-sass"
+    ]
   }
 }

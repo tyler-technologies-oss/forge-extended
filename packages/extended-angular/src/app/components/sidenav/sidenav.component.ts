@@ -13,7 +13,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import { IExpansionPanelComponent, IconRegistry } from '@tylertech/forge';
-import { tylIconHome, tylIconSettings, tylIconSettingsInputComponent } from '@tylertech/tyler-icons/standard';
+import { tylIconHome, tylIconSettings, tylIconSettingsInputComponent } from '@tylertech/tyler-icons';
 
 IconRegistry.define([tylIconHome, tylIconSettingsInputComponent, tylIconSettings]);
 

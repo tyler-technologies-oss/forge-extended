@@ -12,7 +12,7 @@ import {
   IconRegistry,
   IDialogBeforeCloseEventData
 } from '@tylertech/forge';
-import { tylIconClose } from '@tylertech/tyler-icons/standard';
+import { tylIconClose } from '@tylertech/tyler-icons';
 import { composeSlottedTextContent } from '../utils/slot-utils';
 
 declare global {

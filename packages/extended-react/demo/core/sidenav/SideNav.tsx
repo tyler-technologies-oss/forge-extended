@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IExpansionPanelComponent, IListItemSelectEventData, IconRegistry } from '@tylertech/forge';
-import { tylIconHome, tylIconSettingsInputComponent, tylIconSettings } from '@tylertech/tyler-icons/standard';
+import { tylIconHome, tylIconSettingsInputComponent, tylIconSettings } from '@tylertech/tyler-icons';
 import {
   ForgeDrawer,
   ForgeExpansionPanel,

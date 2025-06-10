@@ -1,9 +1,4 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  useEffect,
-} from "react";
+import React, { forwardRef, useRef, useEffect } from "react";
 import "@tylertech/forge-extended/responsive-toolbar";
 import { useEventListener } from "./react-utils.js";
 
@@ -18,12 +13,17 @@ export const ForgeResponsiveToolbar = forwardRef((props, forwardedRef) => {
     props.onForgeResponsiveToolbarUpdate,
   );
 
-  useImperativeHandle(forwardedRef, () => ({}));
-
   return React.createElement(
     "forge-responsive-toolbar",
     {
-      ref,
+      ref: (node) => {
+        ref.current = node;
+        if (typeof forwardedRef === "function") {
+          forwardedRef(node);
+        } else if (forwardedRef) {
+          forwardedRef.current = node;
+        }
+      },
       ...filteredProps,
       "resize-delay": props.resizeDelay || props["resize-delay"],
       class: props.className,

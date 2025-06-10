@@ -1,8 +1,8 @@
-import { type Meta, type StoryObj } from '@storybook/web-components';
+import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 import { ConfirmationDialogActionEventData, ConfirmationDialogComponent } from '$lib/confirmation-dialog';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 import '$lib/confirmation-dialog';
 
