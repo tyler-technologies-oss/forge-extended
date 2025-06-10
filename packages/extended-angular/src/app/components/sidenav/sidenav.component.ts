@@ -23,10 +23,10 @@ export interface IMenuItem {
 }
 
 @Component({
-    selector: 'app-sidenav',
-    styleUrls: ['./sidenav.component.scss'],
-    templateUrl: './sidenav.component.html',
-    standalone: false
+  selector: 'app-sidenav',
+  styleUrls: ['./sidenav.component.scss'],
+  templateUrl: './sidenav.component.html',
+  standalone: false
 })
 export class SidenavComponent implements OnInit {
   public selectedPath: string;

@@ -5,10 +5,10 @@ import { ConfirmationDialogService } from 'projects/forge-extended-angular/src/l
 import { take } from 'rxjs';
 
 @Component({
-    selector: 'app-confirmation-dialog-demo',
-    templateUrl: './confirmation-dialog.component.html',
-    styleUrls: ['./confirmation-dialog.component.scss'],
-    standalone: false
+  selector: 'app-confirmation-dialog-demo',
+  templateUrl: './confirmation-dialog.component.html',
+  styleUrls: ['./confirmation-dialog.component.scss'],
+  standalone: false
 })
 export class ConfirmationDialogDemoComponent {
   private _confirmationDialogService = inject(ConfirmationDialogService);
