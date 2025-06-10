@@ -6,7 +6,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   NgZone,
-  Input
+  Input,
+  inject
 } from '@angular/core';
 import {
   ConfirmationDialogComponent as ConfirmationDialogComponentCustomElement,
@@ -17,9 +18,13 @@ import {
 @Component({
   selector: 'forge-confirmation-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>'
+  template: '<ng-content></ng-content>',
+  standalone: false
 })
 export class ConfirmationDialogComponent {
+  protected elementRef = inject<ElementRef<ConfirmationDialogComponentCustomElement>>(ElementRef);
+  protected zone = inject(NgZone);
+
   /** The forge-confirmation-dialog element. */
   public readonly nativeElement = this.elementRef.nativeElement;
 
@@ -78,12 +83,9 @@ export class ConfirmationDialogComponent {
     return this.nativeElement.busyLabel;
   }
 
-  constructor(
-    changeDetectorRef: ChangeDetectorRef,
-    protected elementRef: ElementRef<ConfirmationDialogComponentCustomElement>,
-    protected zone: NgZone
-  ) {
+  constructor() {
     defineConfirmationDialogComponent();
+    const changeDetectorRef = inject(ChangeDetectorRef);
     changeDetectorRef.detach();
   }
 }

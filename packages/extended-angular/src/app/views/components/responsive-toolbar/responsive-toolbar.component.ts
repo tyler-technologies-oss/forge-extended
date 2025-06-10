@@ -9,9 +9,10 @@ interface customMenuOption extends IMenuOption {
   variant?: ButtonVariant | undefined;
 }
 @Component({
-  selector: 'app-responsive-toolbar-demo',
-  templateUrl: './responsive-toolbar.component.html',
-  styleUrls: ['./responsive-toolbar.component.scss']
+    selector: 'app-responsive-toolbar-demo',
+    templateUrl: './responsive-toolbar.component.html',
+    styleUrls: ['./responsive-toolbar.component.scss'],
+    standalone: false
 })
 export class ResponsiveToolbarDemoComponent {
   static {

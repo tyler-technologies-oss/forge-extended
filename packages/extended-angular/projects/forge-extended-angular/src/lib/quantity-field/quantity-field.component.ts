@@ -6,7 +6,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   NgZone,
-  Input
+  Input,
+  inject
 } from '@angular/core';
 import {
   QuantityFieldComponent as QuantityFieldComponentCustomElement,
@@ -17,9 +18,13 @@ import {
 @Component({
   selector: 'forge-quantity-field',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>'
+  template: '<ng-content></ng-content>',
+  standalone: false
 })
 export class QuantityFieldComponent {
+  protected elementRef = inject<ElementRef<QuantityFieldComponentCustomElement>>(ElementRef);
+  protected zone = inject(NgZone);
+
   /** The forge-quantity-field element. */
   public readonly nativeElement = this.elementRef.nativeElement;
 
@@ -67,12 +72,9 @@ export class QuantityFieldComponent {
     return this.nativeElement.incrementLabel;
   }
 
-  constructor(
-    changeDetectorRef: ChangeDetectorRef,
-    protected elementRef: ElementRef<QuantityFieldComponentCustomElement>,
-    protected zone: NgZone
-  ) {
+  constructor() {
     defineQuantityFieldComponent();
+    const changeDetectorRef = inject(ChangeDetectorRef);
     changeDetectorRef.detach();
   }
 }

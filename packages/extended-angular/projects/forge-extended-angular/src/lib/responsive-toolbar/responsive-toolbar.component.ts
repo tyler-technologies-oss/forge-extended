@@ -7,7 +7,8 @@ import {
   ChangeDetectorRef,
   NgZone,
   numberAttribute,
-  Input
+  Input,
+  inject
 } from '@angular/core';
 import {
   ResponsiveToolbarComponent as ResponsiveToolbarComponentCustomElement,
@@ -18,9 +19,13 @@ import {
 @Component({
   selector: 'forge-responsive-toolbar',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>'
+  template: '<ng-content></ng-content>',
+  standalone: false
 })
 export class ResponsiveToolbarComponent {
+  protected elementRef = inject<ElementRef<ResponsiveToolbarComponentCustomElement>>(ElementRef);
+  protected zone = inject(NgZone);
+
   /** The forge-responsive-toolbar element. */
   public readonly nativeElement = this.elementRef.nativeElement;
 
@@ -57,12 +62,9 @@ export class ResponsiveToolbarComponent {
     return this.nativeElement.resizeDelay;
   }
 
-  constructor(
-    changeDetectorRef: ChangeDetectorRef,
-    protected elementRef: ElementRef<ResponsiveToolbarComponentCustomElement>,
-    protected zone: NgZone
-  ) {
+  constructor() {
     defineResponsiveToolbarComponent();
+    const changeDetectorRef = inject(ChangeDetectorRef);
     changeDetectorRef.detach();
   }
 }
