@@ -2,13 +2,14 @@ import { Component, Output, EventEmitter, Input } from '@angular/core';
 import { ToastService } from '@tylertech/forge-angular';
 import { IAppBarSearchInputEventData, IconRegistry } from '@tylertech/forge';
 import { toggleClass } from '@tylertech/forge-core';
-import { tylIconTylerTalkingTLogo } from '@tylertech/tyler-icons/custom';
-import { tylIconBrightness3 } from '@tylertech/tyler-icons/extended';
-import { tylIconWbSunny } from '@tylertech/tyler-icons/standard';
+import { tylIconTylerTalkingTLogo } from '@tylertech/tyler-icons';
+import { tylIconBrightness3 } from '@tylertech/tyler-icons';
+import { tylIconWbSunny } from '@tylertech/tyler-icons';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html'
+  templateUrl: './header.component.html',
+  standalone: false
 })
 export class HeaderComponent {
   private _isDark = false;

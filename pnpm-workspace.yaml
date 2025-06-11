@@ -5,54 +5,44 @@ catalog:
   '@custom-elements-manifest/analyzer': 0.10.4
   '@esm-bundle/chai': 4.3.4-fix.0
   '@open-wc/testing': 4.0.0
-  '@storybook/addon-a11y': 8.6.12
-  '@storybook/addon-actions': 8.6.12
-  '@storybook/addon-essentials': 8.6.12
-  '@storybook/addon-links': 8.6.12
-  '@storybook/addon-measure': 8.6.12
-  '@storybook/addon-themes': 8.6.12
-  '@storybook/addon-viewport': 8.6.12
-  '@storybook/blocks': 8.6.12
-  '@storybook/components': 8.6.12
-  '@storybook/manager-api': 8.6.12
-  '@storybook/preview-api': 8.6.12
-  '@storybook/test': 8.6.12
-  '@storybook/theming': 8.6.12
-  '@storybook/web-components': 8.6.12
-  '@storybook/web-components-vite': 8.6.12
+  '@storybook/addon-a11y': 9.0.6
+  '@storybook/addon-docs': 9.0.6
+  '@storybook/addon-links': 9.0.6
+  '@storybook/addon-themes': 9.0.6
+  '@storybook/web-components-vite': 9.0.6
   '@tylertech-eslint/eslint-plugin': 2.1.0
-  '@tylertech/forge': 3.8.0
-  '@tylertech/forge-core': 3.1.0
-  '@tylertech/stylelint-rules': 5.1.1
-  '@tylertech/tyler-icons': 1.19.0
+  '@tylertech/forge': 3.9.0
+  '@tylertech/forge-core': 3.2.1
+  '@tylertech/stylelint-rules': 5.1.2
+  '@tylertech/tyler-icons': 2.0.3
   '@types/mocha': 10.0.10
-  '@types/node': 22.14.0
+  '@types/node': 22.15.31
   '@types/sinon': 17.0.4
   '@typescript-eslint/eslint-plugin': 7.18.0
+  '@vueless/storybook-dark-mode': 9.0.5
   '@web/dev-server-esbuild': 1.0.4
   '@web/dev-server-rollup': 0.6.4
-  '@web/test-runner': 0.20.0
+  '@web/test-runner': 0.20.2
   '@web/test-runner-commands': 0.9.0
   '@web/test-runner-junit-reporter': 0.8.0
   '@web/test-runner-playwright': 0.11.0
   eslint: 8.57.1
   eslint-config-prettier: 9.1.0
-  eslint-plugin-prettier: 5.2.6
-  glob: 11.0.1
-  lit: 3.2.1
+  eslint-plugin-prettier: 5.4.1
+  glob: 11.0.2
+  lit: 3.3.0
   lit-analyzer: 2.0.3
   plop: 4.0.1
   postcss-lit: 1.2.0
   prettier: 3.5.3
   remark-gfm: 4.0.1
   rimraf: 6.0.1
-  sass: 1.85.0
-  sinon: 19.0.2
-  storybook: 8.6.12
-  storybook-dark-mode: 4.0.2
-  stylelint: 16.14.1
-  stylelint-config-standard: 37.0.0
+  sass: 1.89.2
+  sinon: 20.0.0
+  storybook: 9.0.6
+  stylelint: 16.20.0
+  stylelint-config-standard: 38.0.0
   tslib: 2.8.1
-  vite: 6.2.5
-  vite-plugin-dts: 4.5.3
+  vite: 6.3.5
+  vite-plugin-dts: 4.5.4
   vite-tsconfig-paths: 5.1.4
