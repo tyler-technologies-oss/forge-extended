@@ -19,16 +19,16 @@ export interface ForgeConfirmationDialogProps
     | "onFocus"
     | "onBlur"
   > {
-  /** Indicates whether the confirmation dialog is open. */
+  /** Indicates whether the confirmation dialog is open */
   open?: boolean;
 
-  /** Indicates whether the confirmation dialog in a busy state */
+  /** Indicates whether the confirmation dialog is in a busy state */
   isBusy?: boolean;
 
-  /** The accessible label for dialog. */
+  /** The accessible label for dialog */
   label?: ForgeConfirmationDialogElement["label"];
 
-  /** The accessible description for dialog. */
+  /** The accessible description for dialog */
   description?: ForgeConfirmationDialogElement["description"];
 
   /** ARIA label for the the busy indicator when loading */
@@ -55,7 +55,7 @@ export interface ForgeConfirmationDialogProps
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
 
-  /** Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked. */
+  /** Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked. */
   onForgeConfirmationDialogAction?: (
     event: CustomEvent<CustomEvent<ConfirmationDialogActionEventData>>,
   ) => void;
@@ -67,7 +67,7 @@ export interface ForgeConfirmationDialogProps
  *
  *
  * ### **Events:**
- *  - **forge-confirmation-dialog-action** - Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.
+ *  - **forge-confirmation-dialog-action** - Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.
  *
  * ### **Slots:**
  *  - **title** - The title of the dialog

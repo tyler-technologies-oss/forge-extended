@@ -50,7 +50,7 @@ export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = '
  * @slot secondary-button-text - The text used in the secondary action button
  * @slot primary-button-text - The text used in the primary action button
  *
- * @event {CustomEvent<ConfirmationDialogActionEventData>} forge-confirmation-dialog-action - Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.
+ * @event {CustomEvent<ConfirmationDialogActionEventData>} forge-confirmation-dialog-action - Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.
  */
 @customElement(ConfirmationDialogComponentTagName)
 export class ConfirmationDialogComponent extends LitElement implements ConfirmationDialogProperties {
@@ -66,25 +66,25 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   public static override styles = unsafeCSS(styles);
 
   /**
-   * Indicates whether the confirmation dialog is open.
+   * Indicates whether the confirmation dialog is open
    */
   @property({ type: Boolean, attribute: 'open' })
   public open = false;
 
   /**
-   * The accessible label for dialog.
+   * The accessible label for dialog
    */
   @property()
   public label: string | undefined;
 
   /**
-   * The accessible description for dialog.
+   * The accessible description for dialog
    */
   @property()
   public description: string | undefined;
 
   /**
-   * Indicates whether the confirmation dialog in a busy state
+   * Indicates whether the confirmation dialog is in a busy state
    */
   @property({ type: Boolean, attribute: 'is-busy' })
   public isBusy = false;

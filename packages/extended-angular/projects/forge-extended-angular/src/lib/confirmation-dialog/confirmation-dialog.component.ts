@@ -28,7 +28,7 @@ export class ConfirmationDialogComponent {
   /** The forge-confirmation-dialog element. */
   public readonly nativeElement = this.elementRef.nativeElement;
 
-  /** Indicates whether the confirmation dialog is open. */
+  /** Indicates whether the confirmation dialog is open */
   @Input({ transform: booleanAttribute })
   public set open(value: ConfirmationDialogComponentCustomElement['open']) {
     this.zone.runOutsideAngular(() => {
@@ -39,7 +39,7 @@ export class ConfirmationDialogComponent {
     return this.nativeElement.open;
   }
 
-  /** The accessible label for dialog. */
+  /** The accessible label for dialog */
   @Input()
   public set label(value: ConfirmationDialogComponentCustomElement['label']) {
     this.zone.runOutsideAngular(() => {
@@ -50,7 +50,7 @@ export class ConfirmationDialogComponent {
     return this.nativeElement.label;
   }
 
-  /** The accessible description for dialog. */
+  /** The accessible description for dialog */
   @Input()
   public set description(value: ConfirmationDialogComponentCustomElement['description']) {
     this.zone.runOutsideAngular(() => {
@@ -61,7 +61,7 @@ export class ConfirmationDialogComponent {
     return this.nativeElement.description;
   }
 
-  /** Indicates whether the confirmation dialog in a busy state */
+  /** Indicates whether the confirmation dialog is in a busy state */
   @Input({ transform: booleanAttribute })
   public set isBusy(value: ConfirmationDialogComponentCustomElement['isBusy']) {
     this.zone.runOutsideAngular(() => {
