@@ -1,4 +1,4 @@
-import{j as e,M as r}from"./blocks-lvuTw-5n.js";import{useMDXComponents as s}from"./index-BTfj9dqN.js";import"./iframe-B4Cu-SEm.js";import"./_commonjsHelpers-CqkleIqs.js";function o(t){const n={a:"a",code:"code",h1:"h1",h2:"h2",p:"p",pre:"pre",...s(),...t.components};return e.jsxs(e.Fragment,{children:[e.jsx(r,{title:"Frameworks/Svelte"}),`
+import{j as e,M as r}from"./blocks-B01wsc_1.js";import{useMDXComponents as s}from"./index-DPqleXLU.js";import"./iframe-0nIMwu0I.js";import"./_commonjsHelpers-CqkleIqs.js";function o(t){const n={a:"a",code:"code",h1:"h1",h2:"h2",p:"p",pre:"pre",...s(),...t.components};return e.jsxs(e.Fragment,{children:[e.jsx(r,{title:"Frameworks/Svelte"}),`
 `,e.jsx(n.h1,{id:"svelte",children:"Svelte"}),`
 `,e.jsxs(n.p,{children:["Svelte has ",e.jsx(n.a,{href:"https://custom-elements-everywhere.com/#svelte",rel:"nofollow",children:"decent support"})," for custom elements and can mostly be used without a problem."]}),`
 `,e.jsx(n.h2,{id:"installation",children:"Installation"}),`

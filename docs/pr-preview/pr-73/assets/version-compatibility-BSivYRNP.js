@@ -1,4 +1,4 @@
-import{j as e,M as c}from"./blocks-lvuTw-5n.js";import{useMDXComponents as n}from"./index-BTfj9dqN.js";import"./iframe-B4Cu-SEm.js";import"./_commonjsHelpers-CqkleIqs.js";function r(d){const t={code:"code",h1:"h1",h2:"h2",p:"p",table:"table",tbody:"tbody",td:"td",th:"th",thead:"thead",tr:"tr",...n(),...d.components};return e.jsxs(e.Fragment,{children:[e.jsx(c,{title:"Getting Started/Version Compatibility"}),`
+import{j as e,M as c}from"./blocks-B01wsc_1.js";import{useMDXComponents as n}from"./index-DPqleXLU.js";import"./iframe-0nIMwu0I.js";import"./_commonjsHelpers-CqkleIqs.js";function r(d){const t={code:"code",h1:"h1",h2:"h2",p:"p",table:"table",tbody:"tbody",td:"td",th:"th",thead:"thead",tr:"tr",...n(),...d.components};return e.jsxs(e.Fragment,{children:[e.jsx(c,{title:"Getting Started/Version Compatibility"}),`
 `,e.jsx(t.h1,{id:"version-compatibility",children:"Version Compatibility"}),`
 `,e.jsx(t.p,{children:"The following tables describe the version compatibility between the extended library packages and their peer dependencies:"}),`
 `,e.jsx(t.h2,{id:"tylertechforge-extended",children:"@tylertech/forge-extended"}),`

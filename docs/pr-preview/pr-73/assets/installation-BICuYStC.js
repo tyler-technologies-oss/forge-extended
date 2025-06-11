@@ -1,4 +1,4 @@
-import{j as e,M as i}from"./blocks-lvuTw-5n.js";import{useMDXComponents as o}from"./index-BTfj9dqN.js";import"./iframe-B4Cu-SEm.js";import"./_commonjsHelpers-CqkleIqs.js";function t(r){const n={a:"a",blockquote:"blockquote",code:"code",h1:"h1",h2:"h2",li:"li",p:"p",pre:"pre",strong:"strong",ul:"ul",...o(),...r.components};return e.jsxs(e.Fragment,{children:[e.jsx(i,{title:"Getting Started/Installation"}),`
+import{j as e,M as i}from"./blocks-B01wsc_1.js";import{useMDXComponents as o}from"./index-DPqleXLU.js";import"./iframe-0nIMwu0I.js";import"./_commonjsHelpers-CqkleIqs.js";function t(r){const n={a:"a",blockquote:"blockquote",code:"code",h1:"h1",h2:"h2",li:"li",p:"p",pre:"pre",strong:"strong",ul:"ul",...o(),...r.components};return e.jsxs(e.Fragment,{children:[e.jsx(i,{title:"Getting Started/Installation"}),`
 `,e.jsx(n.h1,{id:"installation",children:"Installation"}),`
 `,e.jsx(n.p,{children:`To get started, install both the core Tyler Forge library and the extended library (if the core library is already installed,
 see version compatibility table below):`}),`
