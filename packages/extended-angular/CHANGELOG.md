@@ -1,5 +1,16 @@
 # @tylertech/forge-extended-angular
 
+## 1.0.0
+
+### Major Changes
+
+- e922ea4: initial stable release
+
+### Patch Changes
+
+- Updated dependencies [e922ea4]
+  - @tylertech/forge-extended@1.0.0
+
 ## 0.2.0
 
 ### Minor Changes
