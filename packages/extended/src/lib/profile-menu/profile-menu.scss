@@ -1,0 +1,69 @@
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
+
+//
+// Host
+//
+
+:host {
+  display: contents;
+}
+
+//
+// Base
+//
+
+.popover-inner-container {
+  padding: #{forge-spacing.variable(medium)};
+}
+
+.popover-inner {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  gap: #{forge-spacing.variable(medium)};
+  align-items: center;
+}
+
+.popover-avatar {
+  --forge-avatar-size: 56px;
+  --forge-avatar-shape: #{forge-shape.variable(extra-large)};
+  --forge-avatar-background: #{forge-theme.variable(secondary-container-low)};
+  --forge-avatar-color: #{forge-theme.variable(on-secondary-container-low)};
+
+  &::part(root) {
+    font-size: calc(var(--forge-avatar-size) * 0.4);
+  }
+}
+
+.user-info-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.full-name {
+  @include forge-typography.style(heading2);
+}
+
+.email {
+  @include forge-typography.style(body1);
+}
+
+.additional-links {
+  padding-block: #{forge-spacing.variable(xsmall)};
+}
+
+.theme {
+  padding: #{forge-spacing.variable(medium)};
+}
+
+.toolbar-actions {
+  display: flex;
+  align-items: center;
+  gap: #{forge-spacing.variable(medium)};
+}
+
+.sign-out-button {
+  --forge-button-color: #{forge-theme.variable(text-high)};
+}

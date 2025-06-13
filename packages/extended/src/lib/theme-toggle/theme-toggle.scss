@@ -1,5 +1,7 @@
 @use '@tylertech/forge/sass/typography' as forge-typography;
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
 
 :host {
   display: contents;
@@ -11,5 +13,22 @@
 
 .title {
   @include forge-typography.style(heading1);
-  margin-block-end: #{forge-spacing.variable(xxxsmall)};
+  margin-block-end: #{forge-spacing.variable(xsmall)};
+}
+
+forge-button-toggle-group {
+  --forge-button-toggle-group-height: 32px;
+  --forge-button-toggle-group-outline-width: 0;
+  --forge-button-toggle-group-shape: #{forge-shape.variable(large)};
+
+  &::part(root) {
+    background-color: #{forge-theme.variable(surface-container-low)};
+  }
+}
+
+forge-button-toggle {
+  --forge-button-toggle-color: #{forge-theme.variable(text-high)};
+  --forge-button-toggle-selected-color: #{forge-theme.variable(text-high)};
+  --forge-button-toggle-selected-background: white;
+  --forge-button-toggle-shape: #{forge-shape.variable(large)};
 }

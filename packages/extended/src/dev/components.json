@@ -2,5 +2,6 @@
   { "label": "Busy Indicator", "path": "/pages/busy-indicator/busy-indicator.html", "tags": ["dialog", "loading"] },
   { "label": "Confirmation Dialog", "path": "/pages/confirmation-dialog/confirmation-dialog.html" },
   { "label": "Quantity Field", "path": "/pages/quantity-field/quantity-field.html", "tags": ["input"] },
-  { "label": "Theme Toggle", "path": "/pages/theme-toggle/theme-toggle.html" }
+  { "label": "Theme Toggle", "path": "/pages/theme-toggle/theme-toggle.html" },
+  { "label": "Profile Menu", "path": "/pages/profile-menu/profile-menu.html" }
 ]

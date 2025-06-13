@@ -65,7 +65,7 @@ export class ThemeToggleComponent extends LitElement {
     return html`
       <div class="title">${this.#titleSlot}</div>
       <forge-button-toggle-group
-        aria-label="Choose communication type"
+        aria-label="Select a theme"
         .value=${this._theme}
         @forge-button-toggle-group-change=${this.#onThemeChange}>
         <forge-button-toggle value="light" id="light-button">
@@ -118,7 +118,6 @@ export class ThemeToggleComponent extends LitElement {
   }
 
   #detectPrefersColorScheme(): ThemeToggleCurrentTheme {
-    this._theme = 'system';
     if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
       return 'dark';
     }
