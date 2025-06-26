@@ -5,6 +5,7 @@
 
 :host {
   display: contents;
+  --toggle-background: #{forge-theme.variable(surface-dim)};
 }
 
 //
@@ -22,13 +23,29 @@ forge-button-toggle-group {
   --forge-button-toggle-group-shape: #{forge-shape.variable(large)};
 
   &::part(root) {
-    background-color: #{forge-theme.variable(surface-container-low)};
+    background-color: var(--toggle-background);
   }
 }
 
 forge-button-toggle {
   --forge-button-toggle-color: #{forge-theme.variable(text-high)};
   --forge-button-toggle-selected-color: #{forge-theme.variable(text-high)};
-  --forge-button-toggle-selected-background: white;
+  --forge-button-toggle-selected-background: #{forge-theme.variable(surface-bright)};
   --forge-button-toggle-shape: #{forge-shape.variable(large)};
+
+  &[selected]::part(root) {
+    border: 1px solid #{forge-theme.variable(outline-low)};
+  }
+}
+
+//
+// State
+//
+
+:host(:state(light)) {
+  --toggle-background: #{forge-theme.variable(surface-dim)};
+}
+
+:host(:state(dark)) {
+  --toggle-background: #{forge-theme.variable(surface-container-low)};
 }

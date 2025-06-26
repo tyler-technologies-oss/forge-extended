@@ -1,8 +1,7 @@
 import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
-
-import styles from './profile-menu.scss?inline';
+import { tylIconLogout } from '@tylertech/tyler-icons/standard';
 import {
   defineAvatarComponent,
   defineButtonComponent,
@@ -14,8 +13,9 @@ import {
   IconRegistry
 } from '@tylertech/forge';
 
+import styles from './profile-menu.scss?inline';
+
 import '../theme-toggle/theme-toggle';
-import { tylIconLogout } from '@tylertech/tyler-icons/standard';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -44,6 +44,18 @@ export class ProfileMenuComponent extends LitElement {
 
   public static override styles = unsafeCSS(styles);
 
+  /** The full name of the user */
+  @property({ attribute: 'full-name' })
+  public fullName = '';
+
+  /** The full name of the user */
+  @property({ attribute: 'email' })
+  public email = '';
+
+  /** ARIA label for the user profile avatar button */
+  @property({ type: String, attribute: 'button-label' })
+  public buttonLabel = 'Open profile popup';
+
   /**
    * Indicates whether the theme toggle is visible
    */
@@ -55,6 +67,10 @@ export class ProfileMenuComponent extends LitElement {
 
   @queryAssignedNodes({ slot: 'sign-out-button-text', flatten: true })
   private _slottedSignOutButtonTextNodes!: Node[];
+
+  get #avatarButtonSlot(): TemplateResult | typeof nothing {
+    return html`<slot name="avatar-button-slot" id="avatar-button-slot"></slot>`;
+  }
 
   get #linkSlot(): TemplateResult | typeof nothing {
     return html`<slot name="link" id="link-slot"></slot>`;
@@ -94,7 +110,7 @@ export class ProfileMenuComponent extends LitElement {
       () => html`
         <forge-toolbar inverted>
           <div slot="end">
-            <forge-button id="sign-out-button" @click=${() => this.#onAction()}>
+            <forge-button class="sign-out-button" id="sign-out-button" @click=${() => this.#onAction()}>
               ${this.#signOutButtonSlot}
               <forge-icon name="logout" external slot="end"></forge-icon>
             </forge-button>
@@ -106,11 +122,11 @@ export class ProfileMenuComponent extends LitElement {
   }
 
   public override render(): TemplateResult {
+    // prettier-ignore
     return html`
-      <forge-icon-button aria-label="Open profile popup" id="popover-trigger">
-        <forge-avatar text="Leslie Knope" letter-count="2" id="button-avatar"></forge-avatar>
+      <forge-icon-button aria-label="${this.buttonLabel}" id="popover-trigger">
+        <forge-avatar .text=${this.fullName} id="button-avatar"></forge-avatar>
       </forge-icon-button>
-
       <forge-popover
         anchor="popover-trigger"
         placement="bottom-end"
@@ -120,18 +136,19 @@ export class ProfileMenuComponent extends LitElement {
         <div class="popover-inner-container">
           <div class="popover-inner">
             <forge-avatar
-              text="Leslie Knope"
-              letter-count="2"
+              .text=${this.fullName}
               class="popover-avatar"
               id="popover-avatar"></forge-avatar>
             <div class="user-info-container">
-              <div class="full-name">Nick Andrews</div>
-              <div class="email">nick.andrews@tylertech.com</div>
+              <div class="full-name">${this.fullName}</div>
+              <div class="email">${this.email}</div>
             </div>
           </div>
         </div>
-        ${when(this._slottedLinkNodes.length > 0, () => html`<forge-divider></forge-divider>`)} ${this.#links}
-        ${this.#themeToggle} ${this.#signOutButton}
+        ${when(this._slottedLinkNodes.length > 0, () => html`<forge-divider></forge-divider>`)} 
+        ${this.#links}
+        ${this.#themeToggle} 
+        ${this.#signOutButton}
       </forge-popover>
     `;
   }

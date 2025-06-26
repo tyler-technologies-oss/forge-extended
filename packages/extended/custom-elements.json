@@ -527,14 +527,58 @@
           "members": [
             {
               "kind": "field",
-              "name": "open",
+              "name": "fullName",
               "type": {
-                "text": "boolean"
+                "text": "string"
               },
               "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open.",
-              "attribute": "open"
+              "default": "''",
+              "description": "The full name of the user",
+              "attribute": "full-name"
+            },
+            {
+              "kind": "field",
+              "name": "email",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The full name of the user",
+              "attribute": "email"
+            },
+            {
+              "kind": "field",
+              "name": "avatarLetterCount",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "2",
+              "description": "The full name of the user",
+              "attribute": "avatar-letter-count"
+            },
+            {
+              "kind": "field",
+              "name": "avatarIcon",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The name of an alternative icon to display in the avatar.",
+              "attribute": "avatar-icon"
+            },
+            {
+              "kind": "field",
+              "name": "buttonLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Open profile popup'",
+              "description": "ARIA label for the user profile avatar button",
+              "attribute": "button-label"
             },
             {
               "kind": "field",
@@ -544,19 +588,55 @@
               },
               "privacy": "public",
               "default": "false",
-              "description": "Indicates whether the confirmation dialog is open.",
+              "description": "Indicates whether the theme toggle is visible",
               "attribute": "theme-toggle"
             }
           ],
           "attributes": [
             {
-              "name": "open",
+              "name": "full-name",
               "type": {
-                "text": "boolean"
+                "text": "string"
               },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open.",
-              "fieldName": "open"
+              "default": "''",
+              "description": "The full name of the user",
+              "fieldName": "fullName"
+            },
+            {
+              "name": "email",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The full name of the user",
+              "fieldName": "email"
+            },
+            {
+              "name": "avatar-letter-count",
+              "type": {
+                "text": "number"
+              },
+              "default": "2",
+              "description": "The full name of the user",
+              "fieldName": "avatarLetterCount"
+            },
+            {
+              "name": "avatar-icon",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The name of an alternative icon to display in the avatar.",
+              "fieldName": "avatarIcon"
+            },
+            {
+              "name": "button-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Open profile popup'",
+              "description": "ARIA label for the user profile avatar button",
+              "fieldName": "buttonLabel"
             },
             {
               "name": "theme-toggle",
@@ -564,7 +644,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Indicates whether the confirmation dialog is open.",
+              "description": "Indicates whether the theme toggle is visible",
               "fieldName": "themeToggle"
             }
           ],

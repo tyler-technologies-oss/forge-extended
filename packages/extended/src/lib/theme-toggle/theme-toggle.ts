@@ -6,7 +6,8 @@ import {
   defineButtonToggleGroupComponent,
   defineIconButtonComponent,
   definePopoverComponent,
-  IconRegistry
+  IconRegistry,
+  toggleState
 } from '@tylertech/forge';
 import { tylIconWbSunny, tylIconTonality } from '@tylertech/tyler-icons/standard';
 import { tylIconMoonWaningCrescent } from '@tylertech/tyler-icons/extended';
@@ -37,11 +38,13 @@ export interface ThemeToggleThemeEventData {
 export class ThemeToggleComponent extends LitElement {
   constructor() {
     super();
+    this.#internals = this.attachInternals();
     this._theme = (localStorage.getItem(THEME_KEY) as ThemeToggleCurrentTheme) ?? 'system';
     if (this._theme === 'system') {
       this.#setThemeLocalStorage(this._theme);
     }
-    this.#setThemeOnHtmlEl();
+    this.#setThemeAttributes();
+    this.#setCssState();
   }
 
   static {
@@ -53,6 +56,8 @@ export class ThemeToggleComponent extends LitElement {
   }
 
   public static override styles = unsafeCSS(styles);
+
+  readonly #internals: ElementInternals;
 
   @state()
   protected _theme: ThemeToggleCurrentTheme = 'system';
@@ -90,17 +95,36 @@ export class ThemeToggleComponent extends LitElement {
   }
 
   #setTheme(): void {
-    this.#setThemeOnHtmlEl();
+    this.#setThemeAttributes();
+    this.#setCssState();
     this.#setThemeLocalStorage(this._theme);
     this.#emitThemeChange(this._theme);
   }
 
-  #setThemeOnHtmlEl(): void {
+  #setThemeAttributes(): void {
+    this.setAttribute(THEME_KEY, this._theme);
     if (this._theme === 'system') {
       document.documentElement.setAttribute(THEME_KEY, this.#detectPrefersColorScheme());
       return;
     }
-    document.documentElement.setAttribute(THEME_KEY, this._theme);
+  }
+
+  #setCssState(): void {
+    switch (this._theme) {
+      case 'light':
+        toggleState(this.#internals, 'light', true);
+        toggleState(this.#internals, 'dark', false);
+        break;
+      case 'dark':
+        toggleState(this.#internals, 'dark', true);
+        toggleState(this.#internals, 'light', false);
+        break;
+      case 'system':
+        const themeTest = this.#detectPrefersColorScheme();
+        toggleState(this.#internals, 'light', themeTest === 'light');
+        toggleState(this.#internals, 'dark', themeTest === 'dark');
+        break;
+    }
   }
 
   #setThemeLocalStorage(theme: string): void {
