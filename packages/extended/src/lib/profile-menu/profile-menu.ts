@@ -68,10 +68,6 @@ export class ProfileMenuComponent extends LitElement {
   @queryAssignedNodes({ slot: 'sign-out-button-text', flatten: true })
   private _slottedSignOutButtonTextNodes!: Node[];
 
-  get #avatarButtonSlot(): TemplateResult | typeof nothing {
-    return html`<slot name="avatar-button-slot" id="avatar-button-slot"></slot>`;
-  }
-
   get #linkSlot(): TemplateResult | typeof nothing {
     return html`<slot name="link" id="link-slot"></slot>`;
   }
@@ -95,7 +91,7 @@ export class ProfileMenuComponent extends LitElement {
       showThemeToggle,
       () => html`
         <forge-divider></forge-divider>
-        <div class="theme">
+        <div class="theme-toggle-container">
           <forge-theme-toggle></forge-theme-toggle>
         </div>
       `,
@@ -110,7 +106,7 @@ export class ProfileMenuComponent extends LitElement {
       () => html`
         <forge-toolbar inverted>
           <div slot="end">
-            <forge-button class="sign-out-button" id="sign-out-button" @click=${() => this.#onAction()}>
+            <forge-button class="sign-out-button" id="sign-out-button" @click=${() => this.#onSignOut()}>
               ${this.#signOutButtonSlot}
               <forge-icon name="logout" external slot="end"></forge-icon>
             </forge-button>
@@ -128,6 +124,7 @@ export class ProfileMenuComponent extends LitElement {
         <forge-avatar .text=${this.fullName} id="button-avatar"></forge-avatar>
       </forge-icon-button>
       <forge-popover
+        id="user-profile-popover"
         anchor="popover-trigger"
         placement="bottom-end"
         arrow
@@ -153,8 +150,12 @@ export class ProfileMenuComponent extends LitElement {
     `;
   }
 
-  #onAction(): void {
-    console.log('on-action');
+  #onSignOut(): void {
+    const event = new Event('forge-user-profile-sign-out', {
+      bubbles: true,
+      composed: true
+    });
+    this.dispatchEvent(event);
   }
 
   #handleSlotChange(evt: Event): void {

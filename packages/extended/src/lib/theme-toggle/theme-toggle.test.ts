@@ -1,6 +1,6 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html, nextFrame } from '@open-wc/testing';
-import { ThemeToggleComponent, ThemeToggleCurrentTheme } from './theme-toggle';
+import { ThemeToggleComponent } from './theme-toggle';
 
 import './theme-toggle';
 import sinon from 'sinon';
