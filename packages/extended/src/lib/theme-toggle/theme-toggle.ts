@@ -43,7 +43,7 @@ export class ThemeToggleComponent extends LitElement {
     if (this._theme === 'system') {
       this.#setThemeLocalStorage(this._theme);
     }
-    this.#setThemeAttributes();
+    this.#setAttributeOnHtmlEl();
     this.#setCssState();
   }
 
@@ -95,18 +95,19 @@ export class ThemeToggleComponent extends LitElement {
   }
 
   #setTheme(): void {
-    this.#setThemeAttributes();
+    this.#setAttributeOnHtmlEl();
     this.#setCssState();
     this.#setThemeLocalStorage(this._theme);
     this.#emitThemeChange(this._theme);
   }
 
-  #setThemeAttributes(): void {
-    this.setAttribute(THEME_KEY, this._theme);
+  #setAttributeOnHtmlEl(): void {
+    const htmlEl = document.documentElement;
     if (this._theme === 'system') {
-      document.documentElement.setAttribute(THEME_KEY, this.#detectPrefersColorScheme());
+      htmlEl.setAttribute(THEME_KEY, this.#detectPrefersColorScheme());
       return;
     }
+    htmlEl.setAttribute(THEME_KEY, this._theme);
   }
 
   #setCssState(): void {
