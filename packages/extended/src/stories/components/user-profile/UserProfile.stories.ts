@@ -5,18 +5,18 @@ import { tylIconSettings } from '@tylertech/tyler-icons/standard';
 import { tylIconAccount } from '@tylertech/tyler-icons/extended';
 import { action } from '@storybook/addon-actions';
 
-import '$lib/profile-menu';
-import '$lib/profile-menu/profile-link';
+import '$lib/user-profile';
+import '$lib/user-profile/profile-link';
 
 defineListComponent();
 const actionAction = action('forge-user-profile-sign-out');
 
 IconRegistry.define([tylIconSettings, tylIconAccount]);
 
-const component = 'forge-profile-menu';
+const component = 'forge-user-profile';
 
 const meta = {
-  title: 'Components/Profile Menu',
+  title: 'Components/User Profile',
   render: args => {
     function onSignOut(evt: Event) {
       actionAction(evt);
@@ -27,7 +27,7 @@ const meta = {
         }
       </style>
       <forge-app-bar theme-mode="scoped" title-text="Forge Extended">
-        <forge-profile-menu
+        <forge-user-profile
           @forge-user-profile-sign-out=${onSignOut}
           slot="end"
           button-label="${args.buttonAriaLabel}"
@@ -47,7 +47,7 @@ const meta = {
           ${args.signOutButtonText.length
             ? html`<span slot="sign-out-button-text">${args.signOutButtonText}</span>`
             : ''}
-        </forge-profile-menu>
+        </forge-user-profile>
       </forge-app-bar>`;
   },
   component,

@@ -510,159 +510,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/profile-menu/profile-menu.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ProfileMenuComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-profile-menu'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ProfileMenuComponent",
-          "slots": [
-            {
-              "description": "Slot for additional profile navigation links",
-              "name": "link"
-            },
-            {
-              "description": "Slot for the sign out button text",
-              "name": "sign-out-button-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "fullName",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The full name of the user",
-              "attribute": "full-name"
-            },
-            {
-              "kind": "field",
-              "name": "email",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The email address of the user",
-              "attribute": "email"
-            },
-            {
-              "kind": "field",
-              "name": "buttonLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Open user profile'",
-              "description": "ARIA label for the user profile avatar button",
-              "attribute": "button-label"
-            },
-            {
-              "kind": "field",
-              "name": "themeToggle",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the theme toggle is visible",
-              "attribute": "theme-toggle"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "Event"
-              },
-              "description": "Fired when the sign out button is clicked.",
-              "name": "forge-user-profile-sign-out"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "full-name",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The full name of the user",
-              "fieldName": "fullName"
-            },
-            {
-              "name": "email",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The email address of the user",
-              "fieldName": "email"
-            },
-            {
-              "name": "button-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Open user profile'",
-              "description": "ARIA label for the user profile avatar button",
-              "fieldName": "buttonLabel"
-            },
-            {
-              "name": "theme-toggle",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the theme toggle is visible",
-              "fieldName": "themeToggle"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-profile-menu",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ProfileMenuComponentTagName",
-          "declaration": {
-            "name": "ProfileMenuComponentTagName",
-            "module": "src/lib/profile-menu/profile-menu.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ProfileMenuComponent",
-          "declaration": {
-            "name": "ProfileMenuComponent",
-            "module": "src/lib/profile-menu/profile-menu.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ProfileMenuComponent",
-            "module": "src/lib/profile-menu/profile-menu.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/quantity-field/quantity-field.ts",
       "declarations": [
         {
@@ -1055,7 +902,160 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/profile-menu/profile-link/profile-link.ts",
+      "path": "src/lib/user-profile/user-profile.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "UserProfileComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-user-profile'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "UserProfileComponent",
+          "slots": [
+            {
+              "description": "Slot for additional profile navigation links",
+              "name": "link"
+            },
+            {
+              "description": "Slot for the sign out button text",
+              "name": "sign-out-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "fullName",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The full name of the user",
+              "attribute": "full-name"
+            },
+            {
+              "kind": "field",
+              "name": "email",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The email address of the user",
+              "attribute": "email"
+            },
+            {
+              "kind": "field",
+              "name": "buttonLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Open user profile'",
+              "description": "ARIA label for the user profile avatar button",
+              "attribute": "button-label"
+            },
+            {
+              "kind": "field",
+              "name": "themeToggle",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the theme toggle is visible",
+              "attribute": "theme-toggle"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "Event"
+              },
+              "description": "Fired when the sign out button is clicked.",
+              "name": "forge-user-profile-sign-out"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "full-name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The full name of the user",
+              "fieldName": "fullName"
+            },
+            {
+              "name": "email",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The email address of the user",
+              "fieldName": "email"
+            },
+            {
+              "name": "button-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Open user profile'",
+              "description": "ARIA label for the user profile avatar button",
+              "fieldName": "buttonLabel"
+            },
+            {
+              "name": "theme-toggle",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the theme toggle is visible",
+              "fieldName": "themeToggle"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-user-profile",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "UserProfileComponentTagName",
+          "declaration": {
+            "name": "UserProfileComponentTagName",
+            "module": "src/lib/user-profile/user-profile.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "UserProfileComponent",
+          "declaration": {
+            "name": "UserProfileComponent",
+            "module": "src/lib/user-profile/user-profile.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "UserProfileComponent",
+            "module": "src/lib/user-profile/user-profile.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
           "kind": "variable",
@@ -1084,7 +1084,7 @@
           "name": "ProfileLinkComponentTagName",
           "declaration": {
             "name": "ProfileLinkComponentTagName",
-            "module": "src/lib/profile-menu/profile-link/profile-link.ts"
+            "module": "src/lib/user-profile/profile-link/profile-link.ts"
           }
         },
         {
@@ -1092,14 +1092,14 @@
           "name": "ProfileLinkComponent",
           "declaration": {
             "name": "ProfileLinkComponent",
-            "module": "src/lib/profile-menu/profile-link/profile-link.ts"
+            "module": "src/lib/user-profile/profile-link/profile-link.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
             "name": "ProfileLinkComponent",
-            "module": "src/lib/profile-menu/profile-link/profile-link.ts"
+            "module": "src/lib/user-profile/profile-link/profile-link.ts"
           }
         }
       ]
@@ -1139,10 +1139,6 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
-    "ProfileMenuComponent": {
-      "path": "src/lib/profile-menu/profile-menu.ts",
-      "lineNumber": 37
-    },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
@@ -1171,8 +1167,12 @@
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 37
     },
+    "UserProfileComponent": {
+      "path": "src/lib/user-profile/user-profile.ts",
+      "lineNumber": 37
+    },
     "ProfileLinkComponent": {
-      "path": "src/lib/profile-menu/profile-link/profile-link.ts",
+      "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "lineNumber": 18
     }
   }

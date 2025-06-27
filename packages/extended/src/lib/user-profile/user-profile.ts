@@ -13,20 +13,20 @@ import {
   IconRegistry
 } from '@tylertech/forge';
 
-import styles from './profile-menu.scss?inline';
+import styles from './user-profile.scss?inline';
 
 import '../theme-toggle/theme-toggle';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'forge-profile-menu': ProfileMenuComponent;
+    'forge-user-profile': UserProfileComponent;
   }
 }
 
-export const ProfileMenuComponentTagName: keyof HTMLElementTagNameMap = 'forge-profile-menu';
+export const UserProfileComponentTagName: keyof HTMLElementTagNameMap = 'forge-user-profile';
 
 /**
- * @tag forge-profile-menu
+ * @tag forge-user-profile
  *
  * @slot link - Slot for additional profile navigation links
  * @slot sign-out-button-text - Slot for the sign out button text
@@ -34,8 +34,8 @@ export const ProfileMenuComponentTagName: keyof HTMLElementTagNameMap = 'forge-p
  * @event {Event} forge-user-profile-sign-out - Fired when the sign out button is clicked.
  */
 
-@customElement(ProfileMenuComponentTagName)
-export class ProfileMenuComponent extends LitElement {
+@customElement(UserProfileComponentTagName)
+export class UserProfileComponent extends LitElement {
   static {
     defineAvatarComponent();
     defineButtonComponent();

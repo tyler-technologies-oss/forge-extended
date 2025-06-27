@@ -1,16 +1,16 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html, nextFrame } from '@open-wc/testing';
-import { ProfileMenuComponent } from './profile-menu';
+import { UserProfileComponent } from './user-profile';
 
-import './profile-menu';
+import './user-profile';
 import './profile-link/profile-link';
 import { AvatarComponent, ButtonComponent, PopoverComponent } from '@tylertech/forge';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 import sinon from 'sinon';
 
-describe('ProfileMenu', () => {
+describe('UserProfile', () => {
   it('should contain shadow root', async () => {
-    const el = await fixture<ProfileMenuComponent>(html`<forge-profile-menu></forge-profile-menu>`);
+    const el = await fixture<UserProfileComponent>(html`<forge-user-profile></forge-user-profile>`);
 
     expect(el.shadowRoot).to.be.ok;
   });
@@ -108,7 +108,7 @@ describe('ProfileMenu', () => {
 });
 
 class UserProfileHarness {
-  constructor(public el: ProfileMenuComponent) {}
+  constructor(public el: UserProfileComponent) {}
 
   public get htmlElement(): HTMLElement {
     return document.documentElement;
@@ -188,8 +188,8 @@ async function createFixture({
   profileLinkIcon = 'settings',
   signOutButtonText = 'Sign out'
 }: UserProfileFixtureConfig = {}): Promise<UserProfileHarness> {
-  const el = await fixture<ProfileMenuComponent>(html`
-    <forge-profile-menu .buttonLabel=${buttonLabel} .themeToggle=${themeToggle} .fullName=${fullName} .email=${email}>
+  const el = await fixture<UserProfileComponent>(html`
+    <forge-user-profile .buttonLabel=${buttonLabel} .themeToggle=${themeToggle} .fullName=${fullName} .email=${email}>
       ${profileLinkTitle
         ? html`<forge-profile-link slot="link">
             <forge-icon slot="icon" name=${profileLinkIcon} external></forge-icon>
@@ -197,29 +197,8 @@ async function createFixture({
           </forge-profile-link>`
         : ''}
       ${signOutButtonText ? html`<div slot="sign-out-button-text">${signOutButtonText}</div>` : ''}
-    </forge-profile-menu>
+    </forge-user-profile>
   `);
 
   return new UserProfileHarness(el);
 }
-
-// <forge-profile-menu
-//   slot="end"
-//   button-label="${args.buttonAriaLabel}"
-//   ?theme-toggle=${args.showThemeToggle}
-//   full-name="Nick Andrews"
-//   email="nick.andrews@tylertech.com">
-//   ${args.showSlottedLinks
-//     ? html`<forge-profile-link slot="link">
-//           <forge-icon slot="icon" name="settings" external></forge-icon>
-//           <a href="http://www.google.com" target="_blank">Settings</a>
-//         </forge-profile-link>
-//         <forge-profile-link slot="link">
-//           <forge-icon slot="icon" name="account" external></forge-icon>
-//           <a href="http://www.google.com" target="_blank">Profile</a>
-//         </forge-profile-link>`
-//     : html``}
-//   ${args.signOutButtonText.length
-//     ? html`<span slot="sign-out-button-text">${args.signOutButtonText}</span>`
-//     : ''}
-// </forge-profile-menu>

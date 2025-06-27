@@ -1,2 +1,2 @@
 import '$dev/shared';
-import '$lib/profile-menu';
+import '$lib/user-profile';
