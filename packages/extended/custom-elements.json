@@ -524,6 +524,16 @@
           "kind": "class",
           "description": "",
           "name": "ProfileMenuComponent",
+          "slots": [
+            {
+              "description": "Slot for additional profile navigation links",
+              "name": "link"
+            },
+            {
+              "description": "Slot for the sign out button text",
+              "name": "sign-out-button-text"
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -544,30 +554,8 @@
               },
               "privacy": "public",
               "default": "''",
-              "description": "The full name of the user",
+              "description": "The email address of the user",
               "attribute": "email"
-            },
-            {
-              "kind": "field",
-              "name": "avatarLetterCount",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "2",
-              "description": "The full name of the user",
-              "attribute": "avatar-letter-count"
-            },
-            {
-              "kind": "field",
-              "name": "avatarIcon",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The name of an alternative icon to display in the avatar.",
-              "attribute": "avatar-icon"
             },
             {
               "kind": "field",
@@ -576,7 +564,7 @@
                 "text": "string"
               },
               "privacy": "public",
-              "default": "'Open profile popup'",
+              "default": "'Open user profile'",
               "description": "ARIA label for the user profile avatar button",
               "attribute": "button-label"
             },
@@ -590,6 +578,15 @@
               "default": "false",
               "description": "Indicates whether the theme toggle is visible",
               "attribute": "theme-toggle"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "Event"
+              },
+              "description": "Fired when the sign out button is clicked.",
+              "name": "forge-user-profile-sign-out"
             }
           ],
           "attributes": [
@@ -608,33 +605,15 @@
                 "text": "string"
               },
               "default": "''",
-              "description": "The full name of the user",
+              "description": "The email address of the user",
               "fieldName": "email"
-            },
-            {
-              "name": "avatar-letter-count",
-              "type": {
-                "text": "number"
-              },
-              "default": "2",
-              "description": "The full name of the user",
-              "fieldName": "avatarLetterCount"
-            },
-            {
-              "name": "avatar-icon",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The name of an alternative icon to display in the avatar.",
-              "fieldName": "avatarIcon"
             },
             {
               "name": "button-label",
               "type": {
                 "text": "string"
               },
-              "default": "'Open profile popup'",
+              "default": "'Open user profile'",
               "description": "ARIA label for the user profile avatar button",
               "fieldName": "buttonLabel"
             },
@@ -1090,55 +1069,12 @@
           "kind": "class",
           "description": "",
           "name": "ProfileLinkComponent",
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open.",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "themeToggle",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open.",
-              "attribute": "theme-toggle"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open.",
-              "fieldName": "open"
-            },
-            {
-              "name": "theme-toggle",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open.",
-              "fieldName": "themeToggle"
-            }
-          ],
+          "members": [],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-profile-menu-option",
+          "tagName": "forge-profile-link",
           "customElement": true
         }
       ],
@@ -1205,7 +1141,7 @@
     },
     "ProfileMenuComponent": {
       "path": "src/lib/profile-menu/profile-menu.ts",
-      "lineNumber": 31
+      "lineNumber": 37
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
@@ -1225,15 +1161,15 @@
     },
     "ThemeToggleCurrentTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 23
+      "lineNumber": 24
     },
     "ThemeToggleThemeEventData": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 25
+      "lineNumber": 26
     },
     "ThemeToggleComponent": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 36
+      "lineNumber": 37
     },
     "ProfileLinkComponent": {
       "path": "src/lib/profile-menu/profile-link/profile-link.ts",

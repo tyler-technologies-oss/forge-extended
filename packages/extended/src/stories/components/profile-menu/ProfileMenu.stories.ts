@@ -1,13 +1,15 @@
 import { type Meta, type StoryObj } from '@storybook/web-components';
 import { html } from 'lit';
-
-import '$lib/profile-menu';
-import '$lib/profile-menu/profile-link';
 import { defineListComponent, IconRegistry } from '@tylertech/forge';
 import { tylIconSettings } from '@tylertech/tyler-icons/standard';
 import { tylIconAccount } from '@tylertech/tyler-icons/extended';
+import { action } from '@storybook/addon-actions';
+
+import '$lib/profile-menu';
+import '$lib/profile-menu/profile-link';
 
 defineListComponent();
+const actionAction = action('forge-user-profile-sign-out');
 
 IconRegistry.define([tylIconSettings, tylIconAccount]);
 
@@ -16,6 +18,9 @@ const component = 'forge-profile-menu';
 const meta = {
   title: 'Components/Profile Menu',
   render: args => {
+    function onSignOut(evt: Event) {
+      actionAction(evt);
+    }
     return html` <style>
         body {
           padding: 0 !important;
@@ -23,6 +28,7 @@ const meta = {
       </style>
       <forge-app-bar theme-mode="scoped" title-text="Forge Extended">
         <forge-profile-menu
+          @forge-user-profile-sign-out=${onSignOut}
           slot="end"
           button-label="${args.buttonAriaLabel}"
           ?theme-toggle=${args.showThemeToggle}

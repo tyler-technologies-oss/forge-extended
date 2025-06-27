@@ -13,7 +13,7 @@ declare global {
 export const ProfileLinkComponentTagName: keyof HTMLElementTagNameMap = 'forge-profile-link';
 
 /**
- * @tag forge-profile-menu-option
+ * @tag forge-profile-link
  */
 @customElement(ProfileLinkComponentTagName)
 export class ProfileLinkComponent extends LitElement {
@@ -23,18 +23,6 @@ export class ProfileLinkComponent extends LitElement {
   }
 
   public static override styles = unsafeCSS(styles);
-
-  /**
-   * Indicates whether the confirmation dialog is open.
-   */
-  @property({ type: Boolean, attribute: 'open' })
-  public open = false;
-
-  /**
-   * Indicates whether the confirmation dialog is open.
-   */
-  @property({ type: Boolean, attribute: 'theme-toggle' })
-  public themeToggle = false;
 
   public override render(): TemplateResult {
     return html`

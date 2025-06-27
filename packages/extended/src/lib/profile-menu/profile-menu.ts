@@ -27,7 +27,13 @@ export const ProfileMenuComponentTagName: keyof HTMLElementTagNameMap = 'forge-p
 
 /**
  * @tag forge-profile-menu
+ *
+ * @slot link - Slot for additional profile navigation links
+ * @slot sign-out-button-text - Slot for the sign out button text
+ *
+ * @event {Event} forge-user-profile-sign-out - Fired when the sign out button is clicked.
  */
+
 @customElement(ProfileMenuComponentTagName)
 export class ProfileMenuComponent extends LitElement {
   static {
@@ -48,13 +54,13 @@ export class ProfileMenuComponent extends LitElement {
   @property({ attribute: 'full-name' })
   public fullName = '';
 
-  /** The full name of the user */
+  /** The email address of the user */
   @property({ attribute: 'email' })
   public email = '';
 
   /** ARIA label for the user profile avatar button */
   @property({ type: String, attribute: 'button-label' })
-  public buttonLabel = 'Open profile popup';
+  public buttonLabel = 'Open user profile';
 
   /**
    * Indicates whether the theme toggle is visible
