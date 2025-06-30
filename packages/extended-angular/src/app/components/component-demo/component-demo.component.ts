@@ -7,6 +7,6 @@ import { Component, Input } from '@angular/core';
   standalone: false
 })
 export class ComponentDemoComponent {
-  @Input('name')
+  @Input()
   public componentName?: string;
 }

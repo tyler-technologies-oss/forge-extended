@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ButtonVariant, IMenuOption } from '@tylertech/forge';
 import { IconRegistry } from '@tylertech/forge';
 import { tylIconMoreVert } from '@tylertech/tyler-icons';
-import { NgTemplateOutlet } from '@angular/common';
 import { tylIconMoveResizeVariant } from '@tylertech/tyler-icons';
 
 interface customMenuOption extends IMenuOption {
