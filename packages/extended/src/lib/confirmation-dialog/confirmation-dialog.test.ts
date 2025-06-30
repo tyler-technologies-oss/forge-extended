@@ -202,7 +202,7 @@ describe('ConfirmationDialog', () => {
 
   it('should set accessible label from slotted title', async () => {
     const title = 'Loading';
-    const harness = await createFixture({ title: title });
+    const harness = await createFixture({ title });
 
     expect(harness.forgeDialogElement.label).to.equal(title);
     await expect(harness.el).shadowDom.to.be.accessible();
@@ -210,7 +210,7 @@ describe('ConfirmationDialog', () => {
 
   it('should set accessible description from message when message is visible', async () => {
     const message = 'Please wait while we load your data';
-    const harness = await createFixture({ message: message });
+    const harness = await createFixture({ message });
 
     expect(harness.forgeDialogElement.description).to.equal(message);
     await expect(harness.el).shadowDom.to.be.accessible();

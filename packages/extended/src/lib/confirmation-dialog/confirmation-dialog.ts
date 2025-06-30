@@ -118,9 +118,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     );
   }
 
-  get #titleSlot(): TemplateResult | typeof nothing {
-    return html`<slot name="title" id="confirmation-dialog-title" class="title"></slot> `;
-  }
+  readonly #titleSlot = html`<slot name="title" id="confirmation-dialog-title" class="title"></slot> `;
 
   get #closeIconButton(): TemplateResult | typeof nothing {
     return html`
@@ -130,9 +128,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     `;
   }
 
-  get #secondaryButtonSlot(): TemplateResult | typeof nothing {
-    return html`<slot name="secondary-button-text" id="secondary-button-slot"></slot>`;
-  }
+  readonly #secondaryButtonSlot = html`<slot name="secondary-button-text" id="secondary-button-slot"></slot>`;
 
   get #primaryButtonSlot(): TemplateResult | typeof nothing {
     return this.isBusy

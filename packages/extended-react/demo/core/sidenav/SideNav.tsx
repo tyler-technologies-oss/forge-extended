@@ -13,9 +13,9 @@ import {
 import { useHistory } from 'react-router';
 import routeConfig, { IAppRoute } from '../../route-config';
 
-type SideNavProps = {
+interface SideNavProps {
   slot: string;
-};
+}
 
 function SideNav(props: PropsWithChildren<SideNavProps>): JSX.Element {
   const history = useHistory();

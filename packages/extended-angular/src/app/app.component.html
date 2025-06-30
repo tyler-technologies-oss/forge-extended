@@ -3,8 +3,8 @@
   <app-sidenav
     slot="body-left"
     [open]="isDrawerOpen"
-    (onClose)="isDrawerOpen = false"
-    (onModalChange)="canCloseDrawer = $event"></app-sidenav>
+    (modalClose)="isDrawerOpen = false"
+    (modalChange)="canCloseDrawer = $event"></app-sidenav>
   <main class="app-content" slot="body">
     <router-outlet></router-outlet>
   </main>

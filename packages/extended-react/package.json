@@ -19,7 +19,7 @@
     "clean": "rimraf dist/",
     "prebuild": "pnpm run clean",
     "build": "pnpm run generate-proxies",
-    "lint": "eslint --ext .ts,.tsx",
+    "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "generate-proxies": "node scripts/generate-proxies.mjs"
@@ -32,7 +32,6 @@
     "react": ">=17.0.0"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:",
     "@repo/prettier-config": "workspace:",
     "@tylertech-eslint/eslint-plugin": "catalog:",
     "@tylertech/forge": "catalog:",
@@ -40,11 +39,11 @@
     "@tylertech/forge-react": "^3.1.0",
     "@tylertech/tyler-icons": "catalog:",
     "@types/node": "catalog:",
-    "@types/react": "^17.0.87",
-    "@types/react-dom": "^17.0.26",
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
-    "@vitejs/plugin-react": "^4.5.0",
+    "@vitejs/plugin-react": "^4.6.0",
     "change-case": "^5.4.4",
     "custom-element-react-wrappers": "^1.7.2",
     "eslint": "catalog:",
