@@ -1,4 +1,4 @@
-import{j as e,M as r}from"./blocks-B01wsc_1.js";import{useMDXComponents as s}from"./index-DPqleXLU.js";import"./iframe-0nIMwu0I.js";import"./_commonjsHelpers-CqkleIqs.js";function o(n){const t={a:"a",blockquote:"blockquote",code:"code",em:"em",h1:"h1",h2:"h2",p:"p",pre:"pre",strong:"strong",...s(),...n.components};return e.jsxs(e.Fragment,{children:[e.jsx(r,{title:"Frameworks/React"}),`
+import{j as e,M as r}from"./blocks-jm6ffF5r.js";import{useMDXComponents as s}from"./index-CwZC63EC.js";import"./iframe-BHL0eVuP.js";import"./_commonjsHelpers-CqkleIqs.js";function o(n){const t={a:"a",blockquote:"blockquote",code:"code",em:"em",h1:"h1",h2:"h2",p:"p",pre:"pre",strong:"strong",...s(),...n.components};return e.jsxs(e.Fragment,{children:[e.jsx(r,{title:"Frameworks/React"}),`
 `,e.jsx(t.h1,{id:"react",children:"React"}),`
 `,e.jsxs(t.p,{children:[`Direct support for custom elements in React has been a requested feature for long time. As you can see on
 `,e.jsx(t.a,{href:"https://custom-elements-everywhere.com/#react",rel:"nofollow",children:"Custom Elements Everywhere"})," React scores quite low."]}),`

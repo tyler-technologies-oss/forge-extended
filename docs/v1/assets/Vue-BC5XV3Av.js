@@ -1,4 +1,4 @@
-import{j as e,M as r}from"./blocks-B01wsc_1.js";import{useMDXComponents as s}from"./index-DPqleXLU.js";import"./iframe-0nIMwu0I.js";import"./_commonjsHelpers-CqkleIqs.js";function o(t){const n={a:"a",code:"code",h1:"h1",h2:"h2",p:"p",pre:"pre",...s(),...t.components};return e.jsxs(e.Fragment,{children:[e.jsx(r,{title:"Frameworks/Vue"}),`
+import{j as e,M as r}from"./blocks-jm6ffF5r.js";import{useMDXComponents as s}from"./index-CwZC63EC.js";import"./iframe-BHL0eVuP.js";import"./_commonjsHelpers-CqkleIqs.js";function o(t){const n={a:"a",code:"code",h1:"h1",h2:"h2",p:"p",pre:"pre",...s(),...t.components};return e.jsxs(e.Fragment,{children:[e.jsx(r,{title:"Frameworks/Vue"}),`
 `,e.jsx(n.h1,{id:"vue",children:"Vue"}),`
 `,e.jsxs(n.p,{children:["Vue has ",e.jsx(n.a,{href:"https://custom-elements-everywhere.com/#vue",rel:"nofollow",children:"great support"})," for custom elements and can be used directly."]}),`
 `,e.jsx(n.h2,{id:"installation",children:"Installation"}),`
