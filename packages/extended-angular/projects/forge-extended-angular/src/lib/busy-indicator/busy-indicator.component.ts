@@ -7,7 +7,8 @@ import {
   ChangeDetectorRef,
   NgZone,
   numberAttribute,
-  Input
+  Input,
+  inject
 } from '@angular/core';
 import {
   BusyIndicatorComponent as BusyIndicatorComponentCustomElement,
@@ -18,9 +19,13 @@ import {
 @Component({
   selector: 'forge-busy-indicator',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>'
+  template: '<ng-content></ng-content>',
+  standalone: false
 })
 export class BusyIndicatorComponent {
+  protected elementRef = inject<ElementRef<BusyIndicatorComponentCustomElement>>(ElementRef);
+  protected zone = inject(NgZone);
+
   /** The forge-busy-indicator element. */
   public readonly nativeElement = this.elementRef.nativeElement;
 
@@ -172,12 +177,9 @@ export class BusyIndicatorComponent {
     return this.nativeElement.transparent;
   }
 
-  constructor(
-    changeDetectorRef: ChangeDetectorRef,
-    protected elementRef: ElementRef<BusyIndicatorComponentCustomElement>,
-    protected zone: NgZone
-  ) {
+  constructor() {
     defineBusyIndicatorComponent();
+    const changeDetectorRef = inject(ChangeDetectorRef);
     changeDetectorRef.detach();
   }
 }

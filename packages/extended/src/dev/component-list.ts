@@ -1,6 +1,6 @@
 import componentsJson from './components.json';
 import { IconRegistry, ListComponent } from '@tylertech/forge';
-import { tylIconChevronRight } from '@tylertech/tyler-icons/standard';
+import { tylIconChevronRight } from '@tylertech/tyler-icons';
 import './component-list.scss';
 
 IconRegistry.define(tylIconChevronRight);

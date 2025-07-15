@@ -61,7 +61,8 @@ export default function (plop) {
           type: 'modify',
           path: 'src/dev/components.json',
           pattern: /(})(\n)(])$/gm,
-          template: '$1,\n  { "label": "{{titleCase (sentenceCase name)}}", "path": "/pages/{{dashCase name}}/{{dashCase name}}.html" }\n$3'
+          template:
+            '$1,\n  { "label": "{{titleCase (sentenceCase name)}}", "path": "/pages/{{dashCase name}}/{{dashCase name}}.html" }\n$3'
         });
       }
 

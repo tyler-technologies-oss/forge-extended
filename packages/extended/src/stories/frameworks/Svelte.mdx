@@ -1,0 +1,40 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Frameworks/Svelte" />
+
+# Svelte
+
+Svelte has [decent support](https://custom-elements-everywhere.com/#svelte) for custom elements and can mostly be used without a problem.
+
+## Installation
+
+To use Forge Extended in your Svelte application, install the following package from npm:
+
+```bash
+npm install @tylertech/forge-extended
+```
+
+## Importing Components
+
+To use Forge Extended components in your Svelte application, import the components you need from the `@tylertech/forge-extended` package.
+
+```svelte
+<script>
+  import '@tylertech/forge-extended/responsive-toolbar';
+</script>
+
+<forge-responsive-toolbar></forge-responsive-toolbar>
+```
+
+## TypeScript Support
+
+If you are using TypeScript in your Svelte application, we also include typings for all Forge Extended components. You can add a reference to those
+typings in your `tsconfig.json` file:
+
+```json
+{
+  "compilerOptions": {
+    "types": ["@tylertech/forge-extended/dist/types/svelte/forge-extended-svelte.d.ts"]
+  }
+}
+```

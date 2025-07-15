@@ -13,8 +13,8 @@ import '@tylertech/forge/esm/toolbar';
 import '@tylertech/forge/esm/toast';
 
 // Icons
-import { tylIconForgeLogo } from '@tylertech/tyler-icons/custom';
-import { tylIconBrightness3, tylIconWbSunny } from '@tylertech/tyler-icons/standard';
+import { tylIconForgeLogo } from '@tylertech/tyler-icons';
+import { tylIconBrightness3, tylIconWbSunny } from '@tylertech/tyler-icons';
 import { IconRegistry } from '@tylertech/forge';
 
 IconRegistry.define([tylIconForgeLogo, tylIconWbSunny, tylIconBrightness3]);

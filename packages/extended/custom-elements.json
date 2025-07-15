@@ -374,7 +374,7 @@
               },
               "privacy": "public",
               "default": "false",
-              "description": "Indicates whether the confirmation dialog is open.",
+              "description": "Indicates whether the confirmation dialog is open",
               "attribute": "open"
             },
             {
@@ -384,7 +384,7 @@
                 "text": "string | undefined"
               },
               "privacy": "public",
-              "description": "The accessible label for dialog.",
+              "description": "The accessible label for dialog",
               "attribute": "label"
             },
             {
@@ -394,7 +394,7 @@
                 "text": "string | undefined"
               },
               "privacy": "public",
-              "description": "The accessible description for dialog.",
+              "description": "The accessible description for dialog",
               "attribute": "description"
             },
             {
@@ -405,7 +405,7 @@
               },
               "privacy": "public",
               "default": "false",
-              "description": "Indicates whether the confirmation dialog in a busy state",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
               "attribute": "is-busy"
             },
             {
@@ -425,7 +425,7 @@
               "type": {
                 "text": "CustomEvent<ConfirmationDialogActionEventData>"
               },
-              "description": "Fired when an action button is clicked. Will contain false if the secondary button is clicked, true if the primary button is clicked.",
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
               "name": "forge-confirmation-dialog-action"
             }
           ],
@@ -436,7 +436,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Indicates whether the confirmation dialog is open.",
+              "description": "Indicates whether the confirmation dialog is open",
               "fieldName": "open"
             },
             {
@@ -444,7 +444,7 @@
               "type": {
                 "text": "string | undefined"
               },
-              "description": "The accessible label for dialog.",
+              "description": "The accessible label for dialog",
               "fieldName": "label"
             },
             {
@@ -452,7 +452,7 @@
               "type": {
                 "text": "string | undefined"
               },
-              "description": "The accessible description for dialog.",
+              "description": "The accessible description for dialog",
               "fieldName": "description"
             },
             {
@@ -461,7 +461,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Indicates whether the confirmation dialog in a busy state",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
               "fieldName": "isBusy"
             },
             {

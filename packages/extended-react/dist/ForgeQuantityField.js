@@ -1,4 +1,4 @@
-import React, { forwardRef, useImperativeHandle } from "react";
+import React, { forwardRef } from "react";
 import "@tylertech/forge-extended/quantity-field";
 
 export const ForgeQuantityField = forwardRef((props, forwardedRef) => {
@@ -9,8 +9,6 @@ export const ForgeQuantityField = forwardRef((props, forwardedRef) => {
     incrementLabel,
     ...filteredProps
   } = props;
-
-  useImperativeHandle(forwardedRef, () => ({}));
 
   return React.createElement(
     "forge-quantity-field",

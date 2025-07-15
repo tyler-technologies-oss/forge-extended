@@ -1,8 +1,8 @@
 /// <reference types="../../../typings/scss.d.ts" />
 
 import React from 'react';
-import { HeaderMdx, Markdown, useOf } from '@storybook/blocks';
-import { Code } from '@storybook/components';
+import { HeaderMdx, Markdown, useOf } from '@storybook/addon-docs/blocks';
+import { Code } from 'storybook/internal/components';
 import {
   TagItem,
   getBranchName,

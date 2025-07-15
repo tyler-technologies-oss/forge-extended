@@ -1,6 +1,6 @@
 {
   "name": "@tylertech/forge-extended-react",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "description": "A React adapter for Tyler Forge™ Extended Web Components.",
   "repository": "tyler-technologies-oss/forge-extended",
   "author": "Tyler Technologies, Inc.",
@@ -19,13 +19,12 @@
     "clean": "rimraf dist/",
     "prebuild": "pnpm run clean",
     "build": "pnpm run generate-proxies",
-    "lint": "eslint --ext .ts,.tsx",
+    "lint": "eslint .",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "generate-proxies": "node scripts/generate-proxies.mjs"
   },
   "dependencies": {
-    "reactify-wc": "^4.0.0",
     "tslib": "catalog:"
   },
   "peerDependencies": {
@@ -33,7 +32,6 @@
     "react": ">=17.0.0"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:",
     "@repo/prettier-config": "workspace:",
     "@tylertech-eslint/eslint-plugin": "catalog:",
     "@tylertech/forge": "catalog:",
@@ -41,23 +39,23 @@
     "@tylertech/forge-react": "^3.1.0",
     "@tylertech/tyler-icons": "catalog:",
     "@types/node": "catalog:",
-    "@types/react": "^17.0.83",
-    "@types/react-dom": "^17.0.26",
+    "@types/react": "^18.3.23",
+    "@types/react-dom": "^18.3.7",
     "@types/react-router": "^5.1.20",
     "@types/react-router-dom": "^5.3.3",
-    "@vitejs/plugin-react": "^4.3.4",
+    "@vitejs/plugin-react": "^4.6.0",
     "change-case": "^5.4.4",
-    "custom-element-react-wrappers": "^1.7.0",
+    "custom-element-react-wrappers": "^1.7.2",
     "eslint": "catalog:",
     "eslint-plugin-prettier": "catalog:",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-    "react-error-overlay": "^6.0.11",
+    "react-error-overlay": "^6.1.0",
     "react-router": "^5.3.4",
     "react-router-dom": "^5.3.4",
     "rimraf": "catalog:",
     "sass": "catalog:",
-    "typescript": "~5.8.2",
+    "typescript": "~5.8.3",
     "vite": "catalog:",
     "vite-tsconfig-paths": "catalog:"
   }

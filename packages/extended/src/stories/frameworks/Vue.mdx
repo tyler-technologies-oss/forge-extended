@@ -1,0 +1,67 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Frameworks/Vue" />
+
+# Vue
+
+Vue has [great support](https://custom-elements-everywhere.com/#vue) for custom elements and can be used directly.
+
+## Installation
+
+To use Forge Extended in your Vue application, install the following package from npm:
+
+```bash
+npm install @tylertech/forge-extended
+```
+
+## Configure Vue
+
+To make sure Vue plays nice with custom elements, you need to configure the compiler to allow certain elements. The Vue
+documentation has a section on [using custom elements in Vue](https://vuejs.org/guide/extras/web-components.html#using-custom-elements-in-vue)
+that explains what you need to do.
+
+If you're using the Vue plugin with Vite, you can use the following in your Vite config:
+
+```js
+import { defineConfig } from 'vite';
+import vue from '@vitejs/plugin-vue';
+
+export default defineConfig({
+  plugins: [
+    vue({
+      template: {
+        compilerOptions: {
+          isCustomElement: tag => tag.startsWith('forge-')
+        }
+      }
+    })
+  ]
+});
+```
+
+## Importing Components
+
+To use Forge components in your Vue application, import the components you need from the `@tylertech/forge-extended` package.
+
+```html
+<template>
+  <forge-responsive-toolbar></forge-responsive-toolbar>
+</template>
+
+<script setup>
+  import '@tylertech/forge-extended/responsive-toolbar';
+</script>
+```
+
+## TypeScript Support
+
+If you are using TypeScript in your Vue application, we also include typings for all Forge Extended components. You can add a reference to those
+typings in your `tsconfig.json` file:
+
+```json
+{
+  "compilerOptions": {
+    "types": ["@tylertech/forge-extended/dist/types/vue/forge-extended-vue.d.ts"]
+  }
+}
+```

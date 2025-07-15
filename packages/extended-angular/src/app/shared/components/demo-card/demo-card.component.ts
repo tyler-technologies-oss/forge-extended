@@ -7,7 +7,6 @@ import { ForgeCardModule } from '@tylertech/forge-angular';
   exportAs: 'app-demo-card',
   templateUrl: './demo-card.component.html',
   styleUrls: ['./demo-card.component.scss'],
-  standalone: true,
   imports: [CommonModule, ForgeCardModule]
 })
 export class DemoCardComponent {

@@ -6,7 +6,8 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   NgZone,
-  Input
+  Input,
+  inject
 } from '@angular/core';
 import {
   ConfirmationDialogComponent as ConfirmationDialogComponentCustomElement,
@@ -17,13 +18,17 @@ import {
 @Component({
   selector: 'forge-confirmation-dialog',
   changeDetection: ChangeDetectionStrategy.OnPush,
-  template: '<ng-content></ng-content>'
+  template: '<ng-content></ng-content>',
+  standalone: false
 })
 export class ConfirmationDialogComponent {
+  protected elementRef = inject<ElementRef<ConfirmationDialogComponentCustomElement>>(ElementRef);
+  protected zone = inject(NgZone);
+
   /** The forge-confirmation-dialog element. */
   public readonly nativeElement = this.elementRef.nativeElement;
 
-  /** Indicates whether the confirmation dialog is open. */
+  /** Indicates whether the confirmation dialog is open */
   @Input({ transform: booleanAttribute })
   public set open(value: ConfirmationDialogComponentCustomElement['open']) {
     this.zone.runOutsideAngular(() => {
@@ -34,7 +39,7 @@ export class ConfirmationDialogComponent {
     return this.nativeElement.open;
   }
 
-  /** The accessible label for dialog. */
+  /** The accessible label for dialog */
   @Input()
   public set label(value: ConfirmationDialogComponentCustomElement['label']) {
     this.zone.runOutsideAngular(() => {
@@ -45,7 +50,7 @@ export class ConfirmationDialogComponent {
     return this.nativeElement.label;
   }
 
-  /** The accessible description for dialog. */
+  /** The accessible description for dialog */
   @Input()
   public set description(value: ConfirmationDialogComponentCustomElement['description']) {
     this.zone.runOutsideAngular(() => {
@@ -56,7 +61,7 @@ export class ConfirmationDialogComponent {
     return this.nativeElement.description;
   }
 
-  /** Indicates whether the confirmation dialog in a busy state */
+  /** Indicates whether the confirmation dialog is in a busy state */
   @Input({ transform: booleanAttribute })
   public set isBusy(value: ConfirmationDialogComponentCustomElement['isBusy']) {
     this.zone.runOutsideAngular(() => {
@@ -78,12 +83,9 @@ export class ConfirmationDialogComponent {
     return this.nativeElement.busyLabel;
   }
 
-  constructor(
-    changeDetectorRef: ChangeDetectorRef,
-    protected elementRef: ElementRef<ConfirmationDialogComponentCustomElement>,
-    protected zone: NgZone
-  ) {
+  constructor() {
     defineConfirmationDialogComponent();
+    const changeDetectorRef = inject(ChangeDetectorRef);
     changeDetectorRef.detach();
   }
 }

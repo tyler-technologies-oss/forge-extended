@@ -6,7 +6,7 @@ import {
   defineIconComponent,
   IconRegistry
 } from '@tylertech/forge';
-import { tylIconPlus, tylIconMinus } from '@tylertech/tyler-icons/extended';
+import { tylIconPlus, tylIconMinus } from '@tylertech/tyler-icons';
 
 import styles from './quantity-field.scss?inline';
 
