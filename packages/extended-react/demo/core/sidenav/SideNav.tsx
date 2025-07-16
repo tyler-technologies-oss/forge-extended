@@ -1,7 +1,7 @@
 import { PropsWithChildren, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IExpansionPanelComponent, IListItemSelectEventData, IconRegistry } from '@tylertech/forge';
-import { tylIconHome, tylIconSettingsInputComponent, tylIconSettings } from '@tylertech/tyler-icons/standard';
+import { tylIconHome, tylIconSettingsInputComponent, tylIconSettings } from '@tylertech/tyler-icons';
 import {
   ForgeDrawer,
   ForgeExpansionPanel,
@@ -13,9 +13,9 @@ import {
 import { useHistory } from 'react-router';
 import routeConfig, { IAppRoute } from '../../route-config';
 
-type SideNavProps = {
+interface SideNavProps {
   slot: string;
-};
+}
 
 function SideNav(props: PropsWithChildren<SideNavProps>): JSX.Element {
   const history = useHistory();

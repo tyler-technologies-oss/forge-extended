@@ -1,16 +1,18 @@
-import { Component, Output, EventEmitter, Input } from '@angular/core';
+import { Component, Output, EventEmitter, Input, inject } from '@angular/core';
 import { ToastService } from '@tylertech/forge-angular';
 import { IAppBarSearchInputEventData, IconRegistry } from '@tylertech/forge';
 import { toggleClass } from '@tylertech/forge-core';
-import { tylIconTylerTalkingTLogo } from '@tylertech/tyler-icons/custom';
-import { tylIconBrightness3 } from '@tylertech/tyler-icons/extended';
-import { tylIconWbSunny } from '@tylertech/tyler-icons/standard';
+import { tylIconTylerTalkingTLogo } from '@tylertech/tyler-icons';
+import { tylIconBrightness3 } from '@tylertech/tyler-icons';
+import { tylIconWbSunny } from '@tylertech/tyler-icons';
 
 @Component({
   selector: 'app-header',
-  templateUrl: './header.component.html'
+  templateUrl: './header.component.html',
+  standalone: false
 })
 export class HeaderComponent {
+  private _toastService = inject(ToastService);
   private _isDark = false;
   public themeSwitcherIcon: string = tylIconBrightness3.name;
 
@@ -19,7 +21,7 @@ export class HeaderComponent {
   @Output()
   public menuClicked = new EventEmitter<void>();
 
-  constructor(private _toastService: ToastService) {
+  constructor() {
     IconRegistry.define([tylIconTylerTalkingTLogo, tylIconWbSunny, tylIconBrightness3]);
   }
 

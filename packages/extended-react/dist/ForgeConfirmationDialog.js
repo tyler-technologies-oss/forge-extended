@@ -1,9 +1,4 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  useEffect,
-} from "react";
+import React, { forwardRef, useRef, useEffect } from "react";
 import "@tylertech/forge-extended/confirmation-dialog";
 import { useEventListener } from "./react-utils.js";
 
@@ -19,12 +14,17 @@ export const ForgeConfirmationDialog = forwardRef((props, forwardedRef) => {
     props.onForgeConfirmationDialogAction,
   );
 
-  useImperativeHandle(forwardedRef, () => ({}));
-
   return React.createElement(
     "forge-confirmation-dialog",
     {
-      ref,
+      ref: (node) => {
+        ref.current = node;
+        if (typeof forwardedRef === "function") {
+          forwardedRef(node);
+        } else if (forwardedRef) {
+          forwardedRef.current = node;
+        }
+      },
       ...filteredProps,
       label: props.label,
       description: props.description,

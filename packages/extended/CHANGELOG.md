@@ -1,5 +1,11 @@
 # @tylertech/forge-extended
 
+## 1.0.0
+
+### Major Changes
+
+- e922ea4: initial stable release
+
 ## 0.2.0
 
 ### Minor Changes

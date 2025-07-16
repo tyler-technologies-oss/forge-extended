@@ -71,7 +71,7 @@ export class ConfirmationDialogService {
     slotContent: string,
     slotName: string
   ): void {
-    let span = document.createElement('span') as HTMLSpanElement;
+    const span = document.createElement('span') as HTMLSpanElement;
     span.innerText = slotContent;
     span.slot = slotName;
     dialog.appendChild(span);

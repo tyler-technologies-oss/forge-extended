@@ -1,5 +1,4 @@
 import type { StorybookConfig } from '@storybook/web-components-vite';
-import { dirname } from 'path';
 import remarkGfm from 'remark-gfm';
 import tsconfigPaths from 'vite-tsconfig-paths';
 
@@ -7,10 +6,9 @@ const config: StorybookConfig = {
   stories: ['../src/stories/**/*.mdx', '../src/stories/**/*.stories.@(js|jsx|mjs|ts|tsx)'],
   addons: [
     '@storybook/addon-links',
-    '@storybook/addon-essentials',
     '@storybook/addon-a11y',
     '@storybook/addon-themes',
-    'storybook-dark-mode',
+    '@vueless/storybook-dark-mode',
     {
       name: '@storybook/addon-docs',
       options: {
@@ -35,7 +33,13 @@ const config: StorybookConfig = {
   async viteFinal(config) {
     const { mergeConfig } = await import('vite');
     return mergeConfig(config, {
-      root: dirname(require.resolve('@storybook/builder-vite')),
+      css: {
+        preprocessorOptions: {
+          scss: {
+            api: 'modern'
+          }
+        }
+      },
       plugins: [tsconfigPaths()]
     });
   }

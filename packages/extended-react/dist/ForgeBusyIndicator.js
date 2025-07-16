@@ -1,9 +1,4 @@
-import React, {
-  forwardRef,
-  useImperativeHandle,
-  useRef,
-  useEffect,
-} from "react";
+import React, { forwardRef, useRef, useEffect } from "react";
 import "@tylertech/forge-extended/busy-indicator";
 import { useEventListener } from "./react-utils.js";
 
@@ -33,12 +28,17 @@ export const ForgeBusyIndicator = forwardRef((props, forwardedRef) => {
     props.onForgeBusyIndicatorCancel,
   );
 
-  useImperativeHandle(forwardedRef, () => ({}));
-
   return React.createElement(
     "forge-busy-indicator",
     {
-      ref,
+      ref: (node) => {
+        ref.current = node;
+        if (typeof forwardedRef === "function") {
+          forwardedRef(node);
+        } else if (forwardedRef) {
+          forwardedRef.current = node;
+        }
+      },
       ...filteredProps,
       mode: props.mode,
       "title-text": props.titleText || props["title-text"],

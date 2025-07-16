@@ -1,5 +1,5 @@
-import { addons } from '@storybook/preview-api';
-import { DOCS_RENDERED } from '@storybook/core-events';
+import { addons } from 'storybook/preview-api';
+import { DOCS_RENDERED } from 'storybook/internal/core-events';
 import { deepQuerySelectorAll } from '@tylertech/forge-core';
 
 addons.getChannel().on(DOCS_RENDERED, () => {

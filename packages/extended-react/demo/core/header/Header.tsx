@@ -1,7 +1,7 @@
 import { IAppBarComponent, IconRegistry } from '@tylertech/forge';
 import { PropsWithChildren, useEffect } from 'react';
 import { ForgeAppBar, ForgeIcon } from '@tylertech/forge-react';
-import { tylIconTylerTalkingTLogo } from '@tylertech/tyler-icons/custom';
+import { tylIconTylerTalkingTLogo } from '@tylertech/tyler-icons';
 import { useHistory } from 'react-router-dom';
 
 export interface HeaderProps {

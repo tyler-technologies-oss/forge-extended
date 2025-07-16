@@ -7,7 +7,8 @@ import { take } from 'rxjs';
 @Component({
   selector: 'app-confirmation-dialog-demo',
   templateUrl: './confirmation-dialog.component.html',
-  styleUrls: ['./confirmation-dialog.component.scss']
+  styleUrls: ['./confirmation-dialog.component.scss'],
+  standalone: false
 })
 export class ConfirmationDialogDemoComponent {
   private _confirmationDialogService = inject(ConfirmationDialogService);

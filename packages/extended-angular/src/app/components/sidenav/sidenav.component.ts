@@ -1,10 +1,12 @@
 import { Location } from '@angular/common';
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   ElementRef,
   EventEmitter,
   HostListener,
+  inject,
   Input,
   OnInit,
   Output,
@@ -13,7 +15,7 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { NavigationEnd, Router } from '@angular/router';
 import { IExpansionPanelComponent, IconRegistry } from '@tylertech/forge';
-import { tylIconHome, tylIconSettings, tylIconSettingsInputComponent } from '@tylertech/tyler-icons/standard';
+import { tylIconHome, tylIconSettings, tylIconSettingsInputComponent } from '@tylertech/tyler-icons';
 
 IconRegistry.define([tylIconHome, tylIconSettingsInputComponent, tylIconSettings]);
 
@@ -25,9 +27,14 @@ export interface IMenuItem {
 @Component({
   selector: 'app-sidenav',
   styleUrls: ['./sidenav.component.scss'],
-  templateUrl: './sidenav.component.html'
+  templateUrl: './sidenav.component.html',
+  standalone: false
 })
-export class SidenavComponent implements OnInit {
+export class SidenavComponent implements OnInit, AfterViewInit {
+  private _router = inject(Router);
+  private _location = inject(Location);
+  private _cd = inject(ChangeDetectorRef);
+
   public selectedPath: string;
 
   @ViewChild('componentExpansionPanel', { static: false, read: ElementRef })
@@ -41,8 +48,8 @@ export class SidenavComponent implements OnInit {
   public drawerType: string;
   public isSmallViewPort: boolean;
 
-  @Output() public onClose = new EventEmitter();
-  @Output() public onModalChange = new EventEmitter<boolean>();
+  @Output() public modalClose = new EventEmitter();
+  @Output() public modalChange = new EventEmitter<boolean>();
 
   @HostListener('window:resize')
   public onResize(): void {
@@ -56,12 +63,8 @@ export class SidenavComponent implements OnInit {
     { label: 'Responsive Toolbar', value: '/component/responsive-toolbar' }
   ];
 
-  constructor(
-    router: Router,
-    private _location: Location,
-    private _cd: ChangeDetectorRef
-  ) {
-    router.events.pipe(takeUntilDestroyed()).subscribe(event => {
+  constructor() {
+    this._router.events.pipe(takeUntilDestroyed()).subscribe(event => {
       if (event instanceof NavigationEnd) {
         if (this.open) {
           this.closeSidenav();
@@ -77,7 +80,7 @@ export class SidenavComponent implements OnInit {
     } else {
       this.isSmallViewPort = false;
     }
-    this.onModalChange.emit(this.isSmallViewPort);
+    this.modalChange.emit(this.isSmallViewPort);
   }
 
   public openSidenav(): void {
@@ -86,14 +89,14 @@ export class SidenavComponent implements OnInit {
 
   public closeSidenav(): void {
     this.open = false;
-    this.onClose.emit();
+    this.modalClose.emit();
   }
 
   public ngOnInit(): void {
     window.requestAnimationFrame(() => {
       this.updateViewportSize();
       if (!this.open) {
-        this.onClose.emit();
+        this.modalClose.emit();
       }
     });
   }

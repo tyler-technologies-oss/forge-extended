@@ -1,4 +1,4 @@
-import { createContext, useState } from 'react';
+import { createContext } from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import { ForgeCard } from '@tylertech/forge-react';
 import './App.scss';
@@ -6,11 +6,15 @@ import Header from './core/header/Header';
 import SideNav from './core/sidenav/SideNav';
 import routeConfig, { IAppRoute } from './route-config';
 
-export const TestContext = createContext(undefined as any);
+export type ContextValue =
+  | {
+      value: string;
+    }
+  | undefined;
+
+export const TestContext = createContext(undefined as ContextValue);
 
 function App(): JSX.Element {
-  const [open, setOpen] = useState(true);
-
   return (
     <BrowserRouter>
       <Header slot="header" />

@@ -1,4 +1,4 @@
-import { type Meta, type StoryObj } from '@storybook/web-components';
+import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import {
@@ -10,7 +10,7 @@ import {
   IMenuOption
 } from '@tylertech/forge';
 import '$lib/responsive-toolbar';
-import { action } from '@storybook/addon-actions';
+import { action } from 'storybook/actions';
 
 defineButtonComponent();
 defineStackComponent();
