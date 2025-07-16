@@ -22,7 +22,16 @@
       "$lib": ["src/lib"],
       "$lib/*": ["src/lib/*"]
     },
-    "types": ["vite/client", "mocha", "node", "sinon"]
+    "types": ["vite/client", "mocha", "node", "sinon"],
+    "plugins": [
+      {
+        "name": "ts-lit-plugin",
+        "rules": {
+          "no-incompatible-type-binding": "off",
+          "no-complex-attribute-binding": "off"
+        }
+      }
+    ]
   },
   "include": ["src/**/*.ts", "typings/scss.d.ts"]
 }

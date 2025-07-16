@@ -1,8 +1,7 @@
-import { type Meta, type StoryObj } from '@storybook/web-components';
+import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 import { IconRegistry } from '@tylertech/forge';
-import { tylIconHistory, tylIconSettings } from '@tylertech/tyler-icons/standard';
-import { tylIconAccount } from '@tylertech/tyler-icons/extended';
+import { tylIconHistory, tylIconSettings, tylIconAccount } from '@tylertech/tyler-icons';
 
 import '$lib/user-profile/profile-link';
 

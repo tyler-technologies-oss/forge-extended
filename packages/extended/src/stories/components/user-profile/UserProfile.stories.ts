@@ -1,9 +1,8 @@
-import { type Meta, type StoryObj } from '@storybook/web-components';
-import { html } from 'lit';
+import { type Meta, type StoryObj } from '@storybook/web-components-vite';
+import { html, nothing } from 'lit';
 import { defineListComponent, IconRegistry } from '@tylertech/forge';
-import { tylIconSettings } from '@tylertech/tyler-icons/standard';
-import { tylIconAccount } from '@tylertech/tyler-icons/extended';
-import { action } from '@storybook/addon-actions';
+import { tylIconSettings, tylIconAccount } from '@tylertech/tyler-icons';
+import { action } from 'storybook/actions';
 
 import '$lib/user-profile';
 import '$lib/user-profile/profile-link';
@@ -18,39 +17,32 @@ const component = 'forge-user-profile';
 const meta = {
   title: 'Components/User Profile',
   render: args => {
-    function onSignOut(evt: Event) {
-      actionAction(evt);
-    }
-    return html` <style>
-        body {
-          padding: 0 !important;
-        }
-      </style>
-      <forge-app-bar theme-mode="scoped" title-text="Forge Extended">
-        <forge-user-profile
-          @forge-user-profile-sign-out=${onSignOut}
-          slot="end"
-          button-label="${args.buttonAriaLabel}"
-          ?theme-toggle=${args.showThemeToggle}
-          full-name="Nick Andrews"
-          email="nick.andrews@tylertech.com">
-          ${args.showSlottedLinks
-            ? html`<forge-profile-link slot="link">
-                  <forge-icon slot="icon" name="settings" external></forge-icon>
-                  <a href="http://www.google.com" target="_blank">Settings</a>
-                </forge-profile-link>
-                <forge-profile-link slot="link">
-                  <forge-icon slot="icon" name="account" external></forge-icon>
-                  <a href="http://www.google.com" target="_blank">Profile</a>
-                </forge-profile-link>`
-            : html``}
-          ${args.signOutButtonText.length
-            ? html`<span slot="sign-out-button-text">${args.signOutButtonText}</span>`
-            : ''}
-        </forge-user-profile>
-      </forge-app-bar>`;
+    // prettier-ignore
+    return html`<forge-app-bar theme-mode="scoped" title-text="Forge Extended">
+      <forge-user-profile
+        @forge-user-profile-sign-out=${(evt: Event) => actionAction(evt)}
+        slot="end"
+        button-label="${args.buttonAriaLabel}"
+        ?theme-toggle=${args.showThemeToggle}
+        full-name="First Last"
+        email="first.last@tylertech.com">
+        ${args.showSlottedLinks ? html`<forge-profile-link slot="link">
+          <forge-icon slot="icon" name="settings"></forge-icon>
+          <a href="http://www.google.com" target="_blank">Settings</a>
+        </forge-profile-link>
+        <forge-profile-link slot="link">
+          <forge-icon slot="icon" name="account"></forge-icon>
+          <a href="http://www.google.com" target="_blank">Profile</a>
+        </forge-profile-link>
+        ` : nothing}
+        ${args.signOutButtonText.length ? html`<span slot="sign-out-button-text">${args.signOutButtonText}</span>` : ''}
+      </forge-user-profile>
+    </forge-app-bar>`;
   },
   component,
+  subcomponents: {
+    ['Profile Link']: 'forge-profile-link'
+  },
   argTypes: {
     signOutButtonText: { control: 'text' },
     buttonAriaLabel: { control: 'text' },

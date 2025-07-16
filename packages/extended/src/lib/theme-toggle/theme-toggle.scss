@@ -34,7 +34,15 @@ forge-button-toggle {
   --forge-button-toggle-shape: #{forge-shape.variable(large)};
 
   &[selected]::part(root) {
-    border: 1px solid #{forge-theme.variable(outline-low)};
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid #{forge-theme.variable(outline-low)};
+      border-radius: inherit;
+    }
   }
 }
 
@@ -43,7 +51,7 @@ forge-button-toggle {
 //
 
 :host(:state(light)) {
-  --toggle-background: #{forge-theme.variable(surface-dim)};
+  --toggle-background: #{forge-theme.variable(surface-container-minimum)};
 }
 
 :host(:state(dark)) {

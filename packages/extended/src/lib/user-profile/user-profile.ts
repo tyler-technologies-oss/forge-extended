@@ -1,7 +1,7 @@
 import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
-import { tylIconLogout } from '@tylertech/tyler-icons/standard';
+import { tylIconLogout } from '@tylertech/tyler-icons';
 import {
   defineAvatarComponent,
   defineButtonComponent,
@@ -13,13 +13,18 @@ import {
   IconRegistry
 } from '@tylertech/forge';
 
-import styles from './user-profile.scss?inline';
-
 import '../theme-toggle/theme-toggle';
+import './profile-link/profile-link';
+
+import styles from './user-profile.scss?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
     'forge-user-profile': UserProfileComponent;
+  }
+
+  interface HTMLElementEventMap {
+    'forge-user-profile-sign-out': Event;
   }
 }
 
@@ -55,16 +60,14 @@ export class UserProfileComponent extends LitElement {
   public fullName = '';
 
   /** The email address of the user */
-  @property({ attribute: 'email' })
+  @property()
   public email = '';
 
   /** ARIA label for the user profile avatar button */
-  @property({ type: String, attribute: 'button-label' })
+  @property({ attribute: 'button-label' })
   public buttonLabel = 'Open user profile';
 
-  /**
-   * Indicates whether the theme toggle is visible
-   */
+  /** Indicates whether the theme toggle is visible */
   @property({ type: Boolean, attribute: 'theme-toggle' })
   public themeToggle = false;
 
@@ -74,19 +77,14 @@ export class UserProfileComponent extends LitElement {
   @queryAssignedNodes({ slot: 'sign-out-button-text', flatten: true })
   private _slottedSignOutButtonTextNodes!: Node[];
 
-  get #linkSlot(): TemplateResult | typeof nothing {
-    return html`<slot name="link" id="link-slot"></slot>`;
-  }
-
-  get #signOutButtonSlot(): TemplateResult | typeof nothing {
-    return html`<slot name="sign-out-button-text" id="sign-out-button-slot"></slot>`;
-  }
+  readonly #linkSlot = html`<slot name="link" id="link-slot"></slot>`;
+  readonly #signOutButtonSlot = html`<slot name="sign-out-button-text" id="sign-out-button-slot"></slot>`;
 
   get #links(): TemplateResult | typeof nothing {
     const showLinks = this._slottedLinkNodes.length > 0;
     return when(
       showLinks,
-      () => html` <forge-list> ${this.#linkSlot} </forge-list> `,
+      () => html` <forge-list>${this.#linkSlot}</forge-list> `,
       () => this.#linkSlot
     );
   }
@@ -112,7 +110,7 @@ export class UserProfileComponent extends LitElement {
       () => html`
         <forge-toolbar inverted>
           <div slot="end">
-            <forge-button class="sign-out-button" id="sign-out-button" @click=${() => this.#onSignOut()}>
+            <forge-button class="sign-out-button" id="sign-out-button" @click=${this.#handleSignOut}>
               ${this.#signOutButtonSlot}
               <forge-icon name="logout" external slot="end"></forge-icon>
             </forge-button>
@@ -126,7 +124,7 @@ export class UserProfileComponent extends LitElement {
   public override render(): TemplateResult {
     // prettier-ignore
     return html`
-      <forge-icon-button aria-label="${this.buttonLabel}" id="popover-trigger">
+      <forge-icon-button theme="app-bar" aria-label="${this.buttonLabel}" id="popover-trigger">
         <forge-avatar .text=${this.fullName} id="button-avatar"></forge-avatar>
       </forge-icon-button>
       <forge-popover
@@ -146,7 +144,7 @@ export class UserProfileComponent extends LitElement {
             <div class="email">${this.email}</div>
           </div>
         </div>
-        ${when(this._slottedLinkNodes.length > 0, () => html`<forge-divider></forge-divider>`)} 
+        ${when(this._slottedLinkNodes.length, () => html`<forge-divider></forge-divider>`)} 
         ${this.#links}
         ${this.#themeToggle} 
         ${this.#signOutButton}
@@ -154,7 +152,7 @@ export class UserProfileComponent extends LitElement {
     `;
   }
 
-  #onSignOut(): void {
+  #handleSignOut(): void {
     const event = new Event('forge-user-profile-sign-out', {
       bubbles: true,
       composed: true

@@ -1,8 +1,8 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
+import { defineListComponent } from '@tylertech/forge';
 
 import styles from './profile-link.scss?inline';
-import { defineDividerComponent, defineListComponent } from '@tylertech/forge';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -14,12 +14,14 @@ export const ProfileLinkComponentTagName: keyof HTMLElementTagNameMap = 'forge-p
 
 /**
  * @tag forge-profile-link
+ *
+ * @slot icon - The icon to display in the profile link.
+ * @slot - The `<a>` element for the link.
  */
 @customElement(ProfileLinkComponentTagName)
 export class ProfileLinkComponent extends LitElement {
   static {
     defineListComponent();
-    defineDividerComponent();
   }
 
   public static override styles = unsafeCSS(styles);

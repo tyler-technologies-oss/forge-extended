@@ -1069,6 +1069,16 @@
           "kind": "class",
           "description": "",
           "name": "ProfileLinkComponent",
+          "slots": [
+            {
+              "description": "The icon to display in the profile link.",
+              "name": "icon"
+            },
+            {
+              "description": "The `<a>` element for the link.",
+              "name": ""
+            }
+          ],
           "members": [],
           "superclass": {
             "name": "LitElement",
@@ -1105,7 +1115,7 @@
       ]
     }
   ],
-  "branchName": "theme-switcher",
+  "branchName": "user-profile",
   "forgeTypes": {
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -1145,15 +1155,15 @@
     },
     "ThemeToggleCurrentTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 24
+      "lineNumber": 27
     },
     "ThemeToggleThemeEventData": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 26
+      "lineNumber": 29
     },
     "ThemeToggleComponent": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 37
+      "lineNumber": 40
     },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
@@ -1169,11 +1179,11 @@
     },
     "UserProfileComponent": {
       "path": "src/lib/user-profile/user-profile.ts",
-      "lineNumber": 37
+      "lineNumber": 42
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
-      "lineNumber": 18
+      "lineNumber": 21
     }
   }
 }

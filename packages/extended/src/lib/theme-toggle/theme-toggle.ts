@@ -1,7 +1,5 @@
-import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
-
-import styles from './theme-toggle.scss?inline';
+import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
 import {
   defineButtonToggleGroupComponent,
   defineIconButtonComponent,
@@ -9,12 +7,17 @@ import {
   IconRegistry,
   toggleState
 } from '@tylertech/forge';
-import { tylIconWbSunny, tylIconTonality } from '@tylertech/tyler-icons/standard';
-import { tylIconMoonWaningCrescent } from '@tylertech/tyler-icons/extended';
+import { tylIconWbSunny, tylIconTonality, tylIconMoonWaningCrescent } from '@tylertech/tyler-icons';
+
+import styles from './theme-toggle.scss?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
     'forge-theme-toggle': ThemeToggleComponent;
+  }
+
+  interface HTMLElementEventMap {
+    'forge-theme-toggle-update': CustomEvent<ThemeToggleThemeEventData>;
   }
 }
 
@@ -39,7 +42,7 @@ export class ThemeToggleComponent extends LitElement {
   constructor() {
     super();
     this.#internals = this.attachInternals();
-    this._theme = (localStorage.getItem(THEME_KEY) as ThemeToggleCurrentTheme) ?? 'system';
+    this._theme = (window.localStorage.getItem(THEME_KEY) as ThemeToggleCurrentTheme) ?? 'system';
     if (this._theme === 'system') {
       this.#setThemeLocalStorage(this._theme);
     }
@@ -60,11 +63,9 @@ export class ThemeToggleComponent extends LitElement {
   readonly #internals: ElementInternals;
 
   @state()
-  protected _theme: ThemeToggleCurrentTheme = 'system';
+  private _theme: ThemeToggleCurrentTheme = 'system';
 
-  get #titleSlot(): TemplateResult | typeof nothing {
-    return html`<slot name="title" id="theme-toggle-title">Theme</slot> `;
-  }
+  readonly #titleSlot = html`<slot name="title" id="theme-toggle-title">Theme</slot> `;
 
   public override render(): TemplateResult {
     return html`
@@ -72,7 +73,8 @@ export class ThemeToggleComponent extends LitElement {
       <forge-button-toggle-group
         aria-label="Select a theme"
         .value=${this._theme}
-        @forge-button-toggle-group-change=${this.#onThemeChange}>
+        mandatory
+        @forge-button-toggle-group-change=${this.#handleThemeChange}>
         <forge-button-toggle value="light" id="light-button">
           <forge-icon slot="start" name="wb_sunny"></forge-icon>
           <span>Light</span>
@@ -89,7 +91,7 @@ export class ThemeToggleComponent extends LitElement {
     `;
   }
 
-  #onThemeChange(evt: CustomEvent<ThemeToggleCurrentTheme>): void {
+  #handleThemeChange(evt: CustomEvent<ThemeToggleCurrentTheme>): void {
     this._theme = evt.detail;
     this.#setTheme();
   }
@@ -120,16 +122,17 @@ export class ThemeToggleComponent extends LitElement {
         toggleState(this.#internals, 'dark', true);
         toggleState(this.#internals, 'light', false);
         break;
-      case 'system':
+      case 'system': {
         const themeTest = this.#detectPrefersColorScheme();
         toggleState(this.#internals, 'light', themeTest === 'light');
         toggleState(this.#internals, 'dark', themeTest === 'dark');
         break;
+      }
     }
   }
 
   #setThemeLocalStorage(theme: string): void {
-    localStorage.setItem(THEME_KEY, theme);
+    window.localStorage.setItem(THEME_KEY, theme);
   }
 
   #emitThemeChange(theme: ThemeToggleCurrentTheme): void {
@@ -143,10 +146,6 @@ export class ThemeToggleComponent extends LitElement {
   }
 
   #detectPrefersColorScheme(): ThemeToggleCurrentTheme {
-    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-
-    return 'light';
+    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 }

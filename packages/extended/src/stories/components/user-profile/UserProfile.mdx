@@ -1,4 +1,4 @@
-import { Meta, Title, Canvas } from '@storybook/blocks';
+import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
 import CustomArgTypes from '../../blocks/CustomArgTypes';
 import * as UserProfileStories from './UserProfile.stories';
 import * as ProfileLinkStory from './ProfileLink.stories';
@@ -8,21 +8,41 @@ import * as ThemeToggleStory from './ThemeToggle.stories';
 
 <Title />
 
-The `forge-user-profile` component is a versatile solution adhering to the Forge design language for displaying authenticated user information within a Tyler application. It encapsulates a trigger button and a popover that reveals the signed-in user's name, email, and sign-out option. It also has support for optional features like a theme switcher and custom link slots.
+The `<forge-user-profile>` component is a versatile solution adhering to the Forge design language for displaying authenticated
+user information within an application. It encapsulates a trigger button and a popover that reveals the signed-in user's
+name, email, and sign out option. It also has support for optional features like a theme toggle and custom link slots.
 
 <Canvas of={UserProfileStories.Demo} />
 
+## Usage
+
+It's important to note that the `<forge-user-profile>` component is designed to be used within a `<forge-app-bar>`. This ensures that the user profile is
+integrated seamlessly into the application's navigation structure. The component can be placed in the `end` slot of the `<forge-app-bar>`, which is
+typically reserved for user-related actions.
+
+### App Bar Theme Mode
+
+Due to the `<forge-user-profile>` being comprised of multiple components, including the `<forge-popover>`, you need to set the `theme-mode="scoped"` attribute
+on the `<forge-app-bar>` to ensure that it inherits the correct design and the app bar's theme tokens do not cascade down into the user profile popover. If you
+do not set this attribute, the user profile popover may not display correctly.
+
+See the [Forge App Bar documentation](https://forge.tylerdev.io/main/?path=/docs/components-app-bar--docs#theme-mode) for more details on the `theme-mode` attribute.
+
 ## Custom Links
 
-The `forge-profile-link` component is a utility component for rendering accessible, visually consistent links within the `forge-user-profile` popover. This component is configured to render in the `link` slot of the `forge-user-profile`. It supports an optional icon and ensures links are part of a fully accessible list structure.
+The `<forge-profile-link>` component is a utility component for rendering accessible, visually consistent links within the
+`<forge-user-profile>` popover. This component is configured to render in the `link` slot of the `<forge-user-profile>`. It
+supports an optional icon and ensures links are part of a fully accessible list structure.
 
 <Canvas of={ProfileLinkStory.Demo} />
 
 ## Theme Toggle
 
-The `forge-theme-toggle` is an optional utility component designed specifically for the user profile. It provides an accessible UI for switching between light, dark, and system themes. It adds a `data-forge-theme` attribute on the HTML element and persists the user's preference in local storage, enabling application teams to provide consistent theming across the Tyler Cloud eco-system.
+You can also include a theme toggle within the user profile popover by specifying the `theme-toggle` attribute. This allows
+users to switch between light and dark themes directly from their profile menu.
 
-<Canvas of={ThemeToggleStory.Demo} />
+The theme toggle will set the `data-forge-theme` attribute on the `<html>` element, which you can use CSS to target for styling
+and the correct theme.
 
 ## API
 
@@ -30,5 +50,4 @@ The `forge-theme-toggle` is an optional utility component designed specifically 
 
 ## Accessibility
 
-- Ensure you provide appropriate `button-label` text for the `aria-label` of the profile button if you need something other than the default
-- If your application does not support dark theme, make sure to remove the theme toggle by setting the property to false
+- Ensure you provide appropriate `button-label` text for the `aria-label` of the profile button if you need something other than the default.
