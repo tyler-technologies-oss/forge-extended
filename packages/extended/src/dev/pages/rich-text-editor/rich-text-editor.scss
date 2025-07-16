@@ -1,0 +1,16 @@
+forge-rich-text-context {
+  height: 800px;
+
+  .toolbar {
+    --forge-card-elevation: var(--forge-elevation-12);
+  }
+
+  .content-container {
+    margin: var(--forge-spacing-large) auto;
+    background-color: var(--forge-theme-surface-container-low);
+
+    .content-card {
+      max-width: 500px;
+    }
+  }
+}

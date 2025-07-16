@@ -1,3 +1,5 @@
+@use 'prosemirror-view/style/prosemirror.css';
+
 :host {
   display: block;
 }
@@ -12,36 +14,53 @@
   display: none;
 }
 
+.tiptap:focus-visible {
+  outline: none;
+}
+
+.forge-rich-text-editor {
+  border: var(--forge-border-thin) solid var(--forge-theme-outline);
+  border-radius: var(--forge-shape-medium);
+}
+
+.editor-toolbar {
+  display: flex;
+  align-items: center;
+  gap: var(--forge-spacing-xxsmall);
+  padding: var(--forge-spacing-xxsmall);
+  background-color: var(--forge-theme-surface);
+  border-bottom: var(--forge-border-thin) solid var(--forge-theme-outline);
+  border-start-start-radius: inherit;
+  border-start-end-radius: inherit;
+  min-height: 45px;
+
+  --forge-icon-button-toggle-on-background-color: var(--forge-theme-surface-container-low);
+  --forge-icon-button-toggle-on-icon-color: var(--forge-theme-text-high);
+}
+
+.editor-content-wrapper {
+  display: grid;
+  position: relative;
+  border-radius: 0 0 var(--forge-shape-medium);
+
+  forge-focus-indicator {
+    border-radius: inherit;
+  }
+}
+
+.editor-content {
+  .tiptap {
+    display: grid;
+    padding: 0 var(--forge-spacing-medium);
+  }
+}
+
 // :host([disabled]) {
 //   opacity: 0.5;
 //   pointer-events: none;
 // }
 
-// .forge-rich-text-editor {
-//   display: flex;
-//   flex-direction: column;
-//   width: 100%;
-//   border: 1px solid var(--forge-border-color, forge-theme.$forge-border-color);
-//   border-radius: var(--forge-border-radius, forge-theme.$forge-border-radius);
-//   overflow: hidden;
-//   box-sizing: border-box;
-//   transition: border-color 0.2s ease;
-
-//   &:focus-within {
-//     border-color: var(--forge-accent-color, forge-theme.$forge-accent-color);
-//   }
-// }
-
 // .editor-content {
-//   flex: 1;
-//   padding: 1rem;
-//   overflow-y: auto;
-//   // background-color: var(--forge-background-color, forge-theme.$forge-background-color);
-
-//   &:focus {
-//     outline: none;
-//   }
-
 //   p {
 //     margin: 0 0 1em 0;
 //   }

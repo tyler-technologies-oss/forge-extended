@@ -70,19 +70,21 @@
   },
   "dependencies": {
     "@lit-labs/observers": "^2.0.5",
-    "@tiptap/core": "^2.11.9",
-    "@tiptap/extension-image": "^2.11.9",
-    "@tiptap/extension-link": "^2.11.9",
-    "@tiptap/extension-placeholder": "^2.11.9",
-    "@tiptap/extension-table": "^2.11.9",
-    "@tiptap/extension-table-cell": "^2.11.9",
-    "@tiptap/extension-table-header": "^2.11.9",
-    "@tiptap/extension-table-row": "^2.11.9",
-    "@tiptap/pm": "^2.11.9",
-    "@tiptap/starter-kit": "^2.11.9",
+    "@lit/context": "^1.1.5",
+    "@tiptap/core": "^3.0.7",
+    "@tiptap/extension-bold": "^3.0.7",
+    "@tiptap/extension-document": "^3.0.7",
+    "@tiptap/extension-italic": "^3.0.7",
+    "@tiptap/extension-paragraph": "^3.0.7",
+    "@tiptap/extension-text": "^3.0.7",
+    "@tiptap/extension-underline": "^3.0.7",
+    "@tiptap/extensions": "^3.0.7",
+    "@tiptap/starter-kit": "^3.0.7",
+    "@tiptap/pm": "^3.0.7",
     "@tylertech/forge-core": "catalog:",
     "@tylertech/tyler-icons": "catalog:",
-    "lit": "catalog:"
+    "lit": "catalog:",
+    "prosemirror-view": "^1.39.2"
   },
   "peerDependencies": {
     "@tylertech/forge": "^3.0.0"
