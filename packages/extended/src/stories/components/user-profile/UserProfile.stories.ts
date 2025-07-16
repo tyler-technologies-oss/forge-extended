@@ -1,13 +1,13 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit';
-import { defineListComponent, IconRegistry } from '@tylertech/forge';
+import { defineAppBarComponent, IconRegistry } from '@tylertech/forge';
 import { tylIconSettings, tylIconAccount } from '@tylertech/tyler-icons';
 import { action } from 'storybook/actions';
 
 import '$lib/user-profile';
 import '$lib/user-profile/profile-link';
 
-defineListComponent();
+defineAppBarComponent();
 const actionAction = action('forge-user-profile-sign-out');
 
 IconRegistry.define([tylIconSettings, tylIconAccount]);
