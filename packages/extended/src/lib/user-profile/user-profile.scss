@@ -15,14 +15,11 @@
 // Base
 //
 
-.popover-inner-container {
-  padding: #{forge-spacing.variable(medium)};
-}
-
-.popover-inner {
+.user-info-container {
   display: grid;
   grid-template-columns: 56px 1fr;
   gap: #{forge-spacing.variable(medium)};
+  padding: #{forge-spacing.variable(medium)};
   align-items: center;
 }
 
@@ -37,7 +34,7 @@
   }
 }
 
-.user-info-container {
+.user-info {
   display: flex;
   flex-direction: column;
 }

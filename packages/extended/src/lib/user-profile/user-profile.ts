@@ -136,16 +136,14 @@ export class UserProfileComponent extends LitElement {
         arrow
         position-strategy="fixed"
         @slotchange=${this.#handleSlotChange}>
-        <div class="popover-inner-container">
-          <div class="popover-inner">
-            <forge-avatar
-              .text=${this.fullName}
-              class="popover-avatar"
-              id="popover-avatar"></forge-avatar>
-            <div class="user-info-container">
-              <div class="full-name">${this.fullName}</div>
-              <div class="email">${this.email}</div>
-            </div>
+        <div class="user-info-container">
+          <forge-avatar
+            .text=${this.fullName}
+            class="popover-avatar"
+            id="popover-avatar"></forge-avatar>
+          <div class="user-info">
+            <div class="full-name">${this.fullName}</div>
+            <div class="email">${this.email}</div>
           </div>
         </div>
         ${when(this._slottedLinkNodes.length > 0, () => html`<forge-divider></forge-divider>`)} 

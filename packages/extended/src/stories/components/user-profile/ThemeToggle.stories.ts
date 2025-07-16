@@ -6,6 +6,7 @@ import '$lib/theme-toggle/theme-toggle';
 const component = 'forge-theme-toggle';
 
 const meta = {
+  tags: ['hidden'],
   title: 'Components/User Profile/Theme Toggle',
   render: args => {
     return html` <forge-theme-toggle></forge-theme-toggle> `;

@@ -11,6 +11,7 @@ IconRegistry.define([tylIconSettings, tylIconAccount, tylIconHistory]);
 const component = 'forge-profile-link';
 
 const meta = {
+  tags: ['hidden'],
   title: 'Components/User Profile/Profile Link',
   render: args => {
     return html`
