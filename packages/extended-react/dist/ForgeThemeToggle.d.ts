@@ -54,6 +54,9 @@ export interface ForgeThemeToggleProps
  * ### **Events:**
  *  - **forge-theme-toggle-update** - Fired when the theme is changed
  *
+ * ### **Methods:**
+ *  - **setTheme(value: _ThemeToggleTheme_): _void_** - Sets the current theme.
+ *
  * ### **Slots:**
  *  - **title** - The title shown above the toggle buttons
  */

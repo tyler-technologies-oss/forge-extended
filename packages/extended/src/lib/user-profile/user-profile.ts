@@ -12,6 +12,8 @@ import {
   defineToolbarComponent,
   IconRegistry
 } from '@tylertech/forge';
+import { ThemeToggleComponent, ThemeToggleTheme } from '../theme-toggle/theme-toggle';
+import { createRef, ref } from 'lit/directives/ref.js';
 
 import '../theme-toggle/theme-toggle';
 import './profile-link/profile-link';
@@ -74,11 +76,9 @@ export class UserProfileComponent extends LitElement {
   @queryAssignedNodes({ slot: 'link', flatten: true })
   private _slottedLinkNodes!: Node[];
 
-  @queryAssignedNodes({ slot: 'sign-out-button-text', flatten: true })
-  private _slottedSignOutButtonTextNodes!: Node[];
-
   readonly #linkSlot = html`<slot name="link" id="link-slot"></slot>`;
   readonly #signOutButtonSlot = html`<slot name="sign-out-button-text" id="sign-out-button-slot">Sign Out</slot>`;
+  readonly #themeToggleRef = createRef<ThemeToggleComponent>();
 
   get #links(): TemplateResult | typeof nothing {
     const showLinks = this._slottedLinkNodes.length > 0;
@@ -96,7 +96,7 @@ export class UserProfileComponent extends LitElement {
       () => html`
         <forge-divider></forge-divider>
         <div class="theme-toggle-container">
-          <forge-theme-toggle></forge-theme-toggle>
+          <forge-theme-toggle ${ref(this.#themeToggleRef)}></forge-theme-toggle>
         </div>
       `,
       () => nothing
@@ -145,6 +145,13 @@ export class UserProfileComponent extends LitElement {
         ${this.#signOutButton}
       </forge-popover>
     `;
+  }
+
+  /** Sets the theme for the theme toggle. */
+  public setTheme(value: ThemeToggleTheme): void {
+    if (this.#themeToggleRef.value) {
+      this.#themeToggleRef.value.setTheme(value);
+    }
   }
 
   #handleSignOut(): void {

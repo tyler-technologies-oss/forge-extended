@@ -72,6 +72,13 @@ export class UserProfileComponent {
     return this.nativeElement.themeToggle;
   }
 
+  /** Sets the theme for the theme toggle. */
+  public setTheme(
+    ...args: Parameters<UserProfileComponentCustomElement['setTheme']>
+  ): ReturnType<UserProfileComponentCustomElement['setTheme']> {
+    return this.zone.runOutsideAngular(() => this.nativeElement.setTheme(...args));
+  }
+
   constructor() {
     defineUserProfileComponent();
     const changeDetectorRef = inject(ChangeDetectorRef);

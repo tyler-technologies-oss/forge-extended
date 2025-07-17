@@ -27,6 +27,13 @@ export class ThemeToggleComponent {
   /** The forge-theme-toggle element. */
   public readonly nativeElement = this.elementRef.nativeElement;
 
+  /** Sets the current theme. */
+  public setTheme(
+    ...args: Parameters<ThemeToggleComponentCustomElement['setTheme']>
+  ): ReturnType<ThemeToggleComponentCustomElement['setTheme']> {
+    return this.zone.runOutsideAngular(() => this.nativeElement.setTheme(...args));
+  }
+
   constructor() {
     defineThemeToggleComponent();
     const changeDetectorRef = inject(ChangeDetectorRef);

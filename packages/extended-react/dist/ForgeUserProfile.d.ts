@@ -67,6 +67,9 @@ export interface ForgeUserProfileProps
  * ### **Events:**
  *  - **forge-user-profile-sign-out** - Fired when the sign out button is clicked.
  *
+ * ### **Methods:**
+ *  - **setTheme(value: _ThemeToggleTheme_): _void_** - Sets the theme for the theme toggle.
+ *
  * ### **Slots:**
  *  - **link** - Slot for additional profile navigation links
  * - **sign-out-button-text** - Slot for the sign out button text

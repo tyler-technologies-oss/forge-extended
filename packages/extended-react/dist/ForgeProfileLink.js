@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import "@tylertech/forge-extended/profile-link";
+import "@tylertech/forge-extended/user-profile/profile-link";
 
 export const ForgeProfileLink = forwardRef((props, forwardedRef) => {
   return React.createElement(

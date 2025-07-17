@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeProfileLink as ForgeProfileLinkElement } from "@tylertech/forge-extended/profile-link";
+import { ForgeProfileLink as ForgeProfileLinkElement } from "@tylertech/forge-extended/user-profile/profile-link";
 
 export type { ForgeProfileLinkElement };
 

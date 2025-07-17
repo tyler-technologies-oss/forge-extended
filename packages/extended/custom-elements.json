@@ -904,6 +904,25 @@
               "default": "false",
               "description": "Indicates whether the theme toggle is visible",
               "attribute": "theme-toggle"
+            },
+            {
+              "kind": "method",
+              "name": "setTheme",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "ThemeToggleTheme"
+                  }
+                }
+              ],
+              "description": "Sets the theme for the theme toggle."
             }
           ],
           "events": [
@@ -1009,7 +1028,27 @@
               "name": "title"
             }
           ],
-          "members": [],
+          "members": [
+            {
+              "kind": "method",
+              "name": "setTheme",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "ThemeToggleTheme"
+                  }
+                }
+              ],
+              "description": "Sets the current theme."
+            }
+          ],
           "events": [
             {
               "type": {
@@ -1167,19 +1206,19 @@
     },
     "UserProfileComponent": {
       "path": "src/lib/user-profile/user-profile.ts",
-      "lineNumber": 42
+      "lineNumber": 44
     },
-    "ThemeToggleCurrentTheme": {
+    "ThemeToggleTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 27
+      "lineNumber": 28
     },
-    "ThemeToggleThemeEventData": {
+    "ThemeToggleUpdateEventData": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 29
+      "lineNumber": 30
     },
     "ThemeToggleComponent": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 40
+      "lineNumber": 41
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",

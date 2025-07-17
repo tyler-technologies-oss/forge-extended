@@ -17,17 +17,18 @@ declare global {
   }
 
   interface HTMLElementEventMap {
-    'forge-theme-toggle-update': CustomEvent<ThemeToggleThemeEventData>;
+    'forge-theme-toggle-update': CustomEvent<ThemeToggleUpdateEventData>;
   }
 }
 
-const THEME_KEY = 'data-forge-theme';
+const LOCAL_STORAGE_KEY = '.forge-theme';
+const THEME_ATTRIBUTE = 'data-forge-theme';
 export const ThemeToggleComponentTagName: keyof HTMLElementTagNameMap = 'forge-theme-toggle';
 
-export type ThemeToggleCurrentTheme = 'light' | 'dark' | 'system';
+export type ThemeToggleTheme = 'light' | 'dark' | 'system';
 
-export interface ThemeToggleThemeEventData {
-  theme: ThemeToggleCurrentTheme;
+export interface ThemeToggleUpdateEventData {
+  theme: ThemeToggleTheme;
 }
 
 /**
@@ -39,17 +40,6 @@ export interface ThemeToggleThemeEventData {
  */
 @customElement(ThemeToggleComponentTagName)
 export class ThemeToggleComponent extends LitElement {
-  constructor() {
-    super();
-    this.#internals = this.attachInternals();
-    this._theme = (window.localStorage.getItem(THEME_KEY) as ThemeToggleCurrentTheme) ?? 'system';
-    if (this._theme === 'system') {
-      this.#setThemeLocalStorage(this._theme);
-    }
-    this.#setAttributeOnHtmlEl();
-    this.#setCssState();
-  }
-
   static {
     defineIconButtonComponent();
     definePopoverComponent();
@@ -60,10 +50,21 @@ export class ThemeToggleComponent extends LitElement {
 
   public static override styles = unsafeCSS(styles);
 
+  @state()
+  private _theme: ThemeToggleTheme = 'system';
+
   readonly #internals: ElementInternals;
 
-  @state()
-  private _theme: ThemeToggleCurrentTheme = 'system';
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+    this._theme = (window.localStorage.getItem(LOCAL_STORAGE_KEY) as ThemeToggleTheme) ?? 'system';
+    if (this._theme === 'system') {
+      this.#setThemeLocalStorage(this._theme);
+    }
+    this.#setAttributeOnHtmlEl();
+    this.#setCssState();
+  }
 
   readonly #titleSlot = html`<slot name="title" id="theme-toggle-title">Theme</slot> `;
 
@@ -91,7 +92,15 @@ export class ThemeToggleComponent extends LitElement {
     `;
   }
 
-  #handleThemeChange(evt: CustomEvent<ThemeToggleCurrentTheme>): void {
+  /** Sets the current theme. */
+  public setTheme(value: ThemeToggleTheme): void {
+    this._theme = value;
+    this.#setAttributeOnHtmlEl();
+    this.#setCssState();
+    this.#setThemeLocalStorage(this._theme);
+  }
+
+  #handleThemeChange(evt: CustomEvent<ThemeToggleTheme>): void {
     this._theme = evt.detail;
     this.#setTheme();
   }
@@ -106,10 +115,10 @@ export class ThemeToggleComponent extends LitElement {
   #setAttributeOnHtmlEl(): void {
     const htmlEl = document.documentElement;
     if (this._theme === 'system') {
-      htmlEl.setAttribute(THEME_KEY, this.#detectPrefersColorScheme());
+      htmlEl.setAttribute(THEME_ATTRIBUTE, this.#detectPrefersColorScheme());
       return;
     }
-    htmlEl.setAttribute(THEME_KEY, this._theme);
+    htmlEl.setAttribute(THEME_ATTRIBUTE, this._theme);
   }
 
   #setCssState(): void {
@@ -132,11 +141,11 @@ export class ThemeToggleComponent extends LitElement {
   }
 
   #setThemeLocalStorage(theme: string): void {
-    window.localStorage.setItem(THEME_KEY, theme);
+    window.localStorage.setItem(LOCAL_STORAGE_KEY, theme);
   }
 
-  #emitThemeChange(theme: ThemeToggleCurrentTheme): void {
-    const event = new CustomEvent<ThemeToggleThemeEventData>('forge-theme-toggle-update', {
+  #emitThemeChange(theme: ThemeToggleTheme): void {
+    const event = new CustomEvent<ThemeToggleUpdateEventData>('forge-theme-toggle-update', {
       bubbles: true,
       composed: true,
       cancelable: true,
@@ -145,7 +154,7 @@ export class ThemeToggleComponent extends LitElement {
     this.dispatchEvent(event);
   }
 
-  #detectPrefersColorScheme(): ThemeToggleCurrentTheme {
+  #detectPrefersColorScheme(): ThemeToggleTheme {
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 }
