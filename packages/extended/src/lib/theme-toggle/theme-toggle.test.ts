@@ -1,11 +1,11 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html, nextFrame } from '@open-wc/testing';
 import { ThemeToggleComponent } from './theme-toggle';
-
-import './theme-toggle';
 import sinon from 'sinon';
 import { ButtonToggleComponent } from '@tylertech/forge';
 import { emulateMedia, sendMouse } from '@web/test-runner-commands';
+
+import './theme-toggle';
 
 describe('ThemeToggle', () => {
   it('should contain shadow root', async () => {
@@ -71,7 +71,7 @@ describe('ThemeToggle', () => {
     await harness.clickLightThemeButton();
     await nextFrame();
 
-    expect(localStorage.getItem('data-forge-theme')).to.equal('light');
+    expect(localStorage.getItem('.forge-theme')).to.equal('light');
   });
 
   it('should set local storage when theme is set to dark', async () => {
@@ -80,7 +80,7 @@ describe('ThemeToggle', () => {
     await harness.clickDarkThemeButton();
     await nextFrame();
 
-    expect(localStorage.getItem('data-forge-theme')).to.equal('dark');
+    expect(localStorage.getItem('.forge-theme')).to.equal('dark');
   });
 
   it('should detect prefers-color-scheme=dark and set data-forge-theme attr on html element to dark', async () => {
@@ -116,7 +116,7 @@ describe('ThemeToggle', () => {
     await nextFrame();
 
     expect(harness.lightButton.getAttribute('selected')).to.exist;
-    expect(localStorage.getItem('data-forge-theme')).to.equal('light');
+    expect(localStorage.getItem('.forge-theme')).to.equal('light');
   });
 
   it('should set local storage to dark when clicking the dark theme button toggle', async () => {
@@ -126,7 +126,7 @@ describe('ThemeToggle', () => {
     await nextFrame();
 
     expect(harness.darkButton.getAttribute('selected')).to.exist;
-    expect(localStorage.getItem('data-forge-theme')).to.equal('dark');
+    expect(localStorage.getItem('.forge-theme')).to.equal('dark');
   });
 
   it('should set local storage to system when clicking the system theme button toggle', async () => {
@@ -136,11 +136,11 @@ describe('ThemeToggle', () => {
     await nextFrame();
 
     expect(harness.systemButton.getAttribute('selected')).to.exist;
-    expect(localStorage.getItem('data-forge-theme')).to.equal('system');
+    expect(localStorage.getItem('.forge-theme')).to.equal('system');
   });
 
   it('should detect prefers-color-scheme and set dark theme when system is the local storage value', async () => {
-    localStorage.setItem('data-forge-theme', 'system');
+    localStorage.setItem('.forge-theme', 'system');
     await emulateMedia({ colorScheme: 'dark' });
     expect(matchMedia('(prefers-color-scheme: dark)').matches).to.be.true;
 
@@ -153,7 +153,7 @@ describe('ThemeToggle', () => {
   });
 
   it('should detect prefers-color-scheme and set light theme when system is the local storage value', async () => {
-    localStorage.setItem('data-forge-theme', 'system');
+    localStorage.setItem('.forge-theme', 'system');
     await emulateMedia({ colorScheme: 'light' });
     expect(matchMedia('(prefers-color-scheme: light)').matches).to.be.true;
 

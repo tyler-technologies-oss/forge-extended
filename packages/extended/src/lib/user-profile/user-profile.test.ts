@@ -15,23 +15,19 @@ describe('UserProfile', () => {
     expect(el.shadowRoot).to.be.ok;
   });
 
-  it('should contain a sign out button when sign out button text is passed into the slot', async () => {
-    const harness = await createFixture({ signOutButtonText: 'Sign out' });
+  it('should use default sign out text when no sign out text is slotted', async () => {
+    const harness = await createFixture();
     const signOutButton = harness.signOutButton;
 
-    expect(signOutButton).to.exist;
-  });
-
-  it('should not contain a sign out button when no sign out text is passed into the slot', async () => {
-    const harness = await createFixture({ signOutButtonText: '' });
-    const signOutButton = harness.signOutButton;
-
-    expect(signOutButton).to.not.exist;
+    expect(signOutButton.textContent?.trim()).to.equal('Sign Out');
   });
 
   it('content should project into the sign out button slot', async () => {
-    const harness = await createFixture({ signOutButtonText: 'Sign out' });
-    expect(harness.signOutButtonSlot.assignedNodes().length).to.greaterThanOrEqual(1);
+    const harness = await createFixture({ signOutButtonText: 'Custom Sign Out' });
+    const assignedNodes = harness.signOutButtonSlot.assignedNodes();
+
+    expect(assignedNodes.length).to.greaterThanOrEqual(1);
+    expect(assignedNodes[0].textContent?.trim()).to.equal('Custom Sign Out');
   });
 
   it('content should project into the link slot', async () => {
@@ -186,7 +182,7 @@ async function createFixture({
   email = 'harley.andrews@doggos.com',
   profileLinkTitle = 'Profile Link',
   profileLinkIcon = 'settings',
-  signOutButtonText = 'Sign out'
+  signOutButtonText
 }: UserProfileFixtureConfig = {}): Promise<UserProfileHarness> {
   const el = await fixture<UserProfileComponent>(html`
     <forge-user-profile .buttonLabel=${buttonLabel} .themeToggle=${themeToggle} .fullName=${fullName} .email=${email}>
@@ -196,7 +192,7 @@ async function createFixture({
             <a href="http://www.google.com" target="_blank">${profileLinkTitle}</a>
           </forge-profile-link>`
         : ''}
-      ${signOutButtonText ? html`<div slot="sign-out-button-text">${signOutButtonText}</div>` : ''}
+      ${signOutButtonText ? html`<span slot="sign-out-button-text">${signOutButtonText}</span>` : null}
     </forge-user-profile>
   `);
 
