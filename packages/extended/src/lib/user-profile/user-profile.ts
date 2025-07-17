@@ -78,7 +78,7 @@ export class UserProfileComponent extends LitElement {
   private _slottedSignOutButtonTextNodes!: Node[];
 
   readonly #linkSlot = html`<slot name="link" id="link-slot"></slot>`;
-  readonly #signOutButtonSlot = html`<slot name="sign-out-button-text" id="sign-out-button-slot"></slot>`;
+  readonly #signOutButtonSlot = html`<slot name="sign-out-button-text" id="sign-out-button-slot">Sign out</slot>`;
 
   get #links(): TemplateResult | typeof nothing {
     const showLinks = this._slottedLinkNodes.length > 0;
