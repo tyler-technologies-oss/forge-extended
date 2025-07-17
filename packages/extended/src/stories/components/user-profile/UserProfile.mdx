@@ -46,6 +46,16 @@ users to switch between light and dark themes directly from their profile menu.
 The theme toggle will set the `data-forge-theme` attribute on the `<html>` element, which you can use CSS to target for styling
 and the correct theme.
 
+#### Usage example
+
+```css
+@use '@tylertech/forge/sass/theme/theme-dark';
+
+html[data-forge-theme='dark'] {
+  @include theme-dark.theme-properties;
+}
+```
+
 ## API
 
 <CustomArgTypes />
