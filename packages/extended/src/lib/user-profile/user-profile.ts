@@ -78,7 +78,7 @@ export class UserProfileComponent extends LitElement {
   private _slottedSignOutButtonTextNodes!: Node[];
 
   readonly #linkSlot = html`<slot name="link" id="link-slot"></slot>`;
-  readonly #signOutButtonSlot = html`<slot name="sign-out-button-text" id="sign-out-button-slot">Sign out</slot>`;
+  readonly #signOutButtonSlot = html`<slot name="sign-out-button-text" id="sign-out-button-slot">Sign Out</slot>`;
 
   get #links(): TemplateResult | typeof nothing {
     const showLinks = this._slottedLinkNodes.length > 0;
@@ -104,21 +104,16 @@ export class UserProfileComponent extends LitElement {
   }
 
   get #signOutButton(): TemplateResult | typeof nothing {
-    const showSignOutButton = this._slottedSignOutButtonTextNodes.length > 0;
-    return when(
-      showSignOutButton,
-      () => html`
-        <forge-toolbar inverted>
-          <div slot="end">
-            <forge-button class="sign-out-button" id="sign-out-button" @click=${this.#handleSignOut}>
-              ${this.#signOutButtonSlot}
-              <forge-icon name="logout" external slot="end"></forge-icon>
-            </forge-button>
-          </div>
-        </forge-toolbar>
-      `,
-      () => html`${this.#signOutButtonSlot}`
-    );
+    return html`
+      <forge-toolbar inverted>
+        <div slot="end">
+          <forge-button class="sign-out-button" id="sign-out-button" @click=${this.#handleSignOut}>
+            ${this.#signOutButtonSlot}
+            <forge-icon name="logout" external slot="end"></forge-icon>
+          </forge-button>
+        </div>
+      </forge-toolbar>
+    `;
   }
 
   public override render(): TemplateResult {

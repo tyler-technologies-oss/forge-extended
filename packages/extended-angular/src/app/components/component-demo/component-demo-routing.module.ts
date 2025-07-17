@@ -26,6 +26,10 @@ const routes: Routes = [
       import('../../views/components/confirmation-dialog/confirmation-dialog.module').then(
         m => m.ConfirmationDialogModule
       )
+  },
+  {
+    path: 'user-profile',
+    loadChildren: () => import('../../views/components/user-profile/user-profile.module').then(m => m.UserProfileModule)
   }
 ];
 

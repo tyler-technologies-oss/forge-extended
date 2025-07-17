@@ -3,6 +3,6 @@ import { tryDefine } from '@tylertech/forge-core';
 
 export * from './profile-link';
 
-export function defineProfileMenuOptionComponent(): void {
+export function defineProfileLinkComponent(): void {
   tryDefine(ProfileLinkComponentTagName, ProfileLinkComponent);
 }

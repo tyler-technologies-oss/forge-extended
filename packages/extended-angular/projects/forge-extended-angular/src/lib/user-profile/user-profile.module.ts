@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { defineUserProfileComponent } from '@tylertech/forge-extended';
 
+import { ForgeExtendedProfileLinkModule } from '../profile-link/profile-link.module';
 import { UserProfileComponent } from './user-profile.component';
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, ForgeExtendedProfileLinkModule],
   declarations: [UserProfileComponent],
-  exports: [UserProfileComponent]
+  exports: [UserProfileComponent, ForgeExtendedProfileLinkModule]
 })
 export class ForgeExtendedUserProfileModule {
   constructor() {
