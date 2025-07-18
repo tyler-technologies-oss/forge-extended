@@ -60,7 +60,8 @@ export class SidenavComponent implements OnInit, AfterViewInit {
     { label: 'Busy Indicator', value: '/component/busy-indicator' },
     { label: 'Confirmation Dialog', value: '/component/confirmation-dialog' },
     { label: 'Quantity Field', value: '/component/quantity-field' },
-    { label: 'Responsive Toolbar', value: '/component/responsive-toolbar' }
+    { label: 'Responsive Toolbar', value: '/component/responsive-toolbar' },
+    { label: 'User Profile', value: '/component/user-profile' }
   ];
 
   constructor() {

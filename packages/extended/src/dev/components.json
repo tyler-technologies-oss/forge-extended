@@ -1,6 +1,8 @@
 [
   { "label": "Busy Indicator", "path": "/pages/busy-indicator/busy-indicator.html", "tags": ["dialog", "loading"] },
-  { "label": "Quantity Field", "path": "/pages/quantity-field/quantity-field.html", "tags": ["input"] },
   { "label": "Confirmation Dialog", "path": "/pages/confirmation-dialog/confirmation-dialog.html" },
-  { "label": "Rich Text Editor", "path": "/pages/rich-text-editor/rich-text-editor.html" }
+  { "label": "Quantity Field", "path": "/pages/quantity-field/quantity-field.html", "tags": ["input"] },
+  { "label": "Rich Text Editor", "path": "/pages/rich-text-editor/rich-text-editor.html" },
+  { "label": "Theme Toggle", "path": "/pages/theme-toggle/theme-toggle.html" },
+  { "label": "User Profile", "path": "/pages/user-profile/user-profile.html" }
 ]

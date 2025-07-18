@@ -1,7 +1,4 @@
-<forge-app-bar slot="header" id="page-app-bar" title-text="<%= site.title %><%= title ? ` | ${title}` : null %>" href="/">
+<forge-app-bar theme-mode="scoped" slot="header" id="page-app-bar" title-text="<%= site.title %><%= title ? ` | ${title}` : null %>" href="/">
   <forge-icon name="forge_logo" slot="logo"></forge-icon>
-  <forge-icon-button slot="end" id="dark-theme-button">
-    <forge-icon name="brightness_3"></forge-icon>
-  </forge-icon-button>
-  <forge-tooltip slot="end" anchor="dark-theme-button" type="label" placement="left">Toggle theme</forge-tooltip>
+  <forge-user-profile slot="end" theme-toggle full-name="First Last" email="first.last@example.com"></forge-user-profile>
 </forge-app-bar>
