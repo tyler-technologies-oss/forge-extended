@@ -5,5 +5,8 @@
   "outDir": "projects/forge-extended-angular/src/lib",
   "outDirExcludePrefix": "forge-",
   "modulePrefix": "ForgeExtended",
-  "useDefineFunction": true
+  "useDefineFunction": true,
+  "componentDependencies": {
+    "forge-user-profile": ["forge-profile-link"]
+  }
 }

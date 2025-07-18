@@ -1,10 +1,6 @@
 import { Component, Output, EventEmitter, Input, inject } from '@angular/core';
 import { ToastService } from '@tylertech/forge-angular';
-import { IAppBarSearchInputEventData, IconRegistry } from '@tylertech/forge';
-import { toggleClass } from '@tylertech/forge-core';
-import { tylIconTylerTalkingTLogo } from '@tylertech/tyler-icons';
-import { tylIconBrightness3 } from '@tylertech/tyler-icons';
-import { tylIconWbSunny } from '@tylertech/tyler-icons';
+import { IAppBarSearchInputEventData } from '@tylertech/forge';
 
 @Component({
   selector: 'app-header',
@@ -13,17 +9,11 @@ import { tylIconWbSunny } from '@tylertech/tyler-icons';
 })
 export class HeaderComponent {
   private _toastService = inject(ToastService);
-  private _isDark = false;
-  public themeSwitcherIcon: string = tylIconBrightness3.name;
 
   @Input() public showDrawerToggle = false;
 
   @Output()
   public menuClicked = new EventEmitter<void>();
-
-  constructor() {
-    IconRegistry.define([tylIconTylerTalkingTLogo, tylIconWbSunny, tylIconBrightness3]);
-  }
 
   public onMenuClicked(): void {
     this.menuClicked.next();
@@ -31,11 +21,5 @@ export class HeaderComponent {
 
   public onSearch(evt: CustomEvent<IAppBarSearchInputEventData>): void {
     this._toastService.show(`Search: ${evt.detail}`);
-  }
-
-  public toggleTheme(): void {
-    this._isDark = !this._isDark;
-    toggleClass(document.body, this._isDark, 'app-theme-dark');
-    this.themeSwitcherIcon = this._isDark ? tylIconWbSunny.name : tylIconBrightness3.name;
   }
 }

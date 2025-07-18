@@ -4,6 +4,7 @@ import '@tylertech/forge/dist/forge-core.css';
 import '@tylertech/forge/dist/forge.css';
 
 // Components
+import '$lib/user-profile/user-profile';
 import '@tylertech/forge/esm/scaffold';
 import '@tylertech/forge/esm/app-bar';
 import '@tylertech/forge/esm/card';
