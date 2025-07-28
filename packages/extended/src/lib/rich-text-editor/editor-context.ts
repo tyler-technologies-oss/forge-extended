@@ -1,6 +1,6 @@
 import { createContext } from '@lit/context';
-import { Editor, Extensions } from '@tiptap/core';
-import type { RichTextContextComponent } from './rich-text-context';
+import { Editor } from '@tiptap/core';
+import { RichTextEditorFeature } from './features/rich-text-editor-feature';
 
 /**
  * The shape of the editor context that will be provided to sub-components.
@@ -9,16 +9,20 @@ export interface EditorContext {
   /** The TipTap editor instance */
   readonly editor: Editor | null;
 
-  /** The registered Tiptap features */
-  readonly extensions: Extensions;
-
   /** Whether the editor is disabled */
   readonly disabled: boolean;
 
-  /** Whether the editor is in read-only mode */
+  /** Whether the editor is read-only */
   readonly readOnly: boolean;
 
-  readonly contextElement: RichTextContextComponent;
+  /** The text content of the editor */
+  content: string;
+
+  /** Sets the element to instantiate the editor against. */
+  setEditorElement: (element: HTMLElement) => void;
+
+  /** Register a new feature (extension) with the editor */
+  registerFeature: (feature: RichTextEditorFeature) => void;
 }
 
 /**

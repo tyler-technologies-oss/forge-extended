@@ -1,5 +1,3 @@
-@use 'prosemirror-view/style/prosemirror.css';
-
 :host {
   display: block;
 }
@@ -12,10 +10,6 @@
 
 :host([hidden]) {
   display: none;
-}
-
-.tiptap:focus-visible {
-  outline: none;
 }
 
 .forge-rich-text-editor {
@@ -37,85 +31,3 @@
   --forge-icon-button-toggle-on-background-color: var(--forge-theme-surface-container-low);
   --forge-icon-button-toggle-on-icon-color: var(--forge-theme-text-high);
 }
-
-.editor-content-wrapper {
-  display: grid;
-  position: relative;
-  border-radius: 0 0 var(--forge-shape-medium);
-
-  forge-focus-indicator {
-    border-radius: inherit;
-  }
-}
-
-.editor-content {
-  .tiptap {
-    display: grid;
-    padding: 0 var(--forge-spacing-medium);
-  }
-}
-
-// :host([disabled]) {
-//   opacity: 0.5;
-//   pointer-events: none;
-// }
-
-// .editor-content {
-//   p {
-//     margin: 0 0 1em 0;
-//   }
-
-//   .ProseMirror {
-//     outline: none;
-//     word-break: break-word;
-
-//     > * + * {
-//       margin-top: 0.75em;
-//     }
-
-//     ul,
-//     ol {
-//       padding: 0 1rem;
-//     }
-
-//     h1,
-//     h2,
-//     h3,
-//     h4,
-//     h5,
-//     h6 {
-//       line-height: 1.1;
-//       font-weight: 600;
-//     }
-
-//     blockquote {
-//       padding-left: 1rem;
-//       border-left: 2px solid var(--forge-theme-outline);
-//     }
-
-//     code {
-//       background-color: var(--forge-scaffolding-color, forge-theme.$forge-scaffolding-color);
-//       padding: 0.2em 0.4em;
-//       border-radius: var(--forge-border-radius, forge-theme.$forge-border-radius);
-//       font-family: monospace;
-//     }
-
-//     pre {
-//       background-color: var(--forge-scaffolding-color, forge-theme.$forge-scaffolding-color);
-//       padding: 0.75rem 1rem;
-//       border-radius: var(--forge-border-radius, forge-theme.$forge-border-radius);
-//       overflow-x: auto;
-
-//       code {
-//         background: none;
-//         padding: 0;
-//       }
-//     }
-
-//     hr {
-//       border: none;
-//       border-top: 1px solid var(--forge-border-color, forge-theme.$forge-border-color);
-//       margin: 1rem 0;
-//     }
-//   }
-// }

@@ -1,8 +1,8 @@
 import { consume } from '@lit/context';
 import { Document } from '@tiptap/extension-document';
-import Underline from '@tiptap/extension-underline';
 import { Paragraph } from '@tiptap/extension-paragraph';
 import { Text } from '@tiptap/extension-text';
+import Underline from '@tiptap/extension-underline';
 import { IconRegistry } from '@tylertech/forge';
 import { tylIconFormatUnderlined } from '@tylertech/tyler-icons';
 import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
@@ -44,11 +44,11 @@ export class RteUnderlineComponent extends LitElement {
   private readonly _editorContext!: EditorContext;
 
   public firstUpdated(_changedProperties: PropertyValues<this>): void {
-    this._editorContext?.contextElement.registerToolElement(this);
+    this._editorContext?.registerFeature(this);
   }
 
   public override render(): TemplateResult {
-    const { editor, disabled, readOnly } = this._editorContext;
+    const { editor, disabled, readOnly } = this._editorContext ?? {};
     const isDisabled = disabled || readOnly || !editor;
     const isActive = editor?.isActive(Underline.name);
 

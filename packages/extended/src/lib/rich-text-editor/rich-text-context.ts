@@ -1,8 +1,9 @@
 import { provide } from '@lit/context';
-import { Editor } from '@tiptap/core';
-import { css, html, LitElement, TemplateResult } from 'lit';
-import { customElement, query, state } from 'lit/decorators.js';
+import { Editor as TipTapEditor } from '@tiptap/core';
+import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
 import { editorContext, EditorContext } from './editor-context';
+import { RichTextEditorFeature } from './features/rich-text-editor-feature';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -14,6 +15,11 @@ export const RichTextContextComponentTagName: keyof HTMLElementTagNameMap = 'for
 
 /**
  * @tag forge-rich-text-context
+ *
+ * @description
+ * This component provides the context for the rich text editor and all auxiliary components.
+ * It initializes the editor and provides methods to set the editor element and register features.
+ * It also provides the editor context to child components.
  */
 @customElement(RichTextContextComponentTagName)
 export class RichTextContextComponent extends LitElement {
@@ -23,18 +29,56 @@ export class RichTextContextComponent extends LitElement {
     }
   `;
 
+  /** The ID of the element to instantiate the editor against. */
+  @property({ type: String, attribute: 'editor-id' })
+  public editorId = 'editor';
+
+  /** The content of the editor. */
+  @property({ type: String })
+  public content = '';
+
+  /** Whether the editor is disabled. */
+  @property({ type: Boolean })
+  public disabled = false;
+
+  /** Whether the editor is in readonly mode. */
+  @property({ type: Boolean, attribute: 'readonly' })
+  public readOnly = false;
+
+  /** The TipTap editor instance */
   @state()
-  private _editor: Editor | null = null;
+  private _editor: TipTapEditor | undefined = undefined;
 
-  #toolElements: Set<LitElement> = new Set();
-  #initFrame: number | null = null;
+  #featureInstances: Set<RichTextEditorFeature> = new Set();
+  #initFrame: number | undefined;
+  #editorElement: HTMLElement | undefined;
 
-  public registerToolElement(tool: LitElement): void {
-    this.#toolElements.add(tool);
+  /**
+   * Sets the editor element that the editor will be initialized against.
+   *
+   * Initialization cannot occur until this element is set, as the editor needs a DOM element to attach to.
+   *
+   * @param element The element to set as the editor element.
+   */
+  #setEditorElement(element: HTMLElement): void {
+    this.#editorElement = element;
+  }
+
+  /**
+   * Registers a feature instance with the editor context.
+   *
+   * We use a requestAnimationFrame to ensure that the editor is initialized after all features have been registered.
+   * This prevents issues with the editor not being ready when features try to access it, as well as avoiding
+   * multiple initializations of the editor.
+   *
+   * @param instance The feature instance to register.
+   */
+  #registerFeature(instance: RichTextEditorFeature): void {
+    this.#featureInstances.add(instance);
 
     if (this.#initFrame) {
       window.cancelAnimationFrame(this.#initFrame);
-      this.#initFrame = null;
+      this.#initFrame = undefined;
     }
 
     this.#initFrame = window.requestAnimationFrame(() => this.#initEditor());
@@ -42,20 +86,34 @@ export class RichTextContextComponent extends LitElement {
 
   /** Provide the editor context to child components. */
   @provide({ context: editorContext })
-  protected _editorContext: EditorContext = {
-    contextElement: this,
+  public editorContext: EditorContext = {
     editor: null,
-    extensions: [],
     disabled: false,
-    readOnly: false
+    readOnly: false,
+    content: '',
+    setEditorElement: this.#setEditorElement.bind(this),
+    registerFeature: this.#registerFeature.bind(this)
   };
-
-  @query('.editor-content')
-  private _editorElement!: HTMLElement;
 
   public override disconnectedCallback(): void {
     this.#destroyEditor();
     super.disconnectedCallback();
+  }
+
+  public override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('content')) {
+      // TODO: how to update content dynamically?
+      // this.editorContext.editor.content = this.content;
+    }
+
+    if (changedProperties.has('disabled') || changedProperties.has('readOnly')) {
+      this.editorContext.editor?.setEditable(!this.disabled && !this.readOnly);
+      this.editorContext = {
+        ...this.editorContext,
+        disabled: this.disabled,
+        readOnly: this.readOnly
+      };
+    }
   }
 
   public override render(): TemplateResult {
@@ -63,24 +121,28 @@ export class RichTextContextComponent extends LitElement {
   }
 
   #initEditor(): void {
-    if (!this._editorElement) {
-      return;
+    this.#destroyEditor();
+
+    // Features can contain duplicate extensions. Make sure to filter out any duplicates
+    const extensions = Array.from(this.#featureInstances)
+      .flatMap(toolEl => toolEl.tools)
+      .filter((ext, index, self) => self.findIndex(e => e.name === ext.name) === index);
+
+    if (!this.#editorElement) {
+      throw new Error('Editor element is not set. Please set the editor element before initializing the editor.');
     }
 
-    this._editor?.destroy();
+    if (!extensions.length) {
+      throw new Error('No extensions provided to the editor. Please register at least one feature.');
+    }
 
-    const tools = Array.from(this.#toolElements).flatMap(toolEl => (toolEl as any).tools);
-
-    this._editor = new Editor({
-      element: this._editorElement,
-      extensions: tools,
-      content: this.content,
-      editable: !(this.disabled || this.readOnly),
+    this._editor = new TipTapEditor({
+      element: this.#editorElement,
+      extensions,
+      content: this.editorContext.content,
+      editable: !(this.editorContext.disabled || this.editorContext.readOnly),
       injectCSS: false,
-      onTransaction: () => {
-        this.#toolElements.forEach(tool => tool.requestUpdate());
-        // this.requestUpdate();
-      },
+      onTransaction: () => this.#featureInstances.forEach(tool => tool.requestUpdate()),
       coreExtensionOptions: {
         clipboardTextSerializer: {
           blockSeparator: '\n'
@@ -88,8 +150,8 @@ export class RichTextContextComponent extends LitElement {
       },
       onUpdate: ({ editor }) => {
         const content = editor.getHTML();
-        if (content !== this.content) {
-          this.content = content;
+        if (content !== this.editorContext.content) {
+          this.editorContext.content = content;
           this.dispatchEvent(
             new CustomEvent('change', {
               detail: { content },
@@ -101,18 +163,14 @@ export class RichTextContextComponent extends LitElement {
       }
     });
 
-    // Update context with the new editor instance
-    this._editorContext = {
-      ...this._editorContext,
+    this.editorContext = {
+      ...this.editorContext,
       editor: this._editor
     };
   }
 
-  /**
-   * Destroys the editor instance.
-   */
   #destroyEditor(): void {
     this._editor?.destroy();
-    this._editor = null;
+    this._editor = undefined;
   }
 }

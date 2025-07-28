@@ -44,11 +44,11 @@ export class RteItalicComponent extends LitElement {
   private readonly _editorContext!: EditorContext;
 
   public firstUpdated(_changedProperties: PropertyValues<this>): void {
-    this._editorContext?.contextElement.registerToolElement(this);
+    this._editorContext?.registerFeature(this);
   }
 
   public override render(): TemplateResult {
-    const { editor, disabled, readOnly } = this._editorContext;
+    const { editor, disabled, readOnly } = this._editorContext ?? {};
     const isDisabled = disabled || readOnly || !editor;
     const isActive = editor?.isActive(Italic.name);
 

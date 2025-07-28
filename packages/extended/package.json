@@ -79,8 +79,6 @@
     "@tiptap/extension-text": "^3.0.7",
     "@tiptap/extension-underline": "^3.0.7",
     "@tiptap/extensions": "^3.0.7",
-    "@tiptap/starter-kit": "^3.0.7",
-    "@tiptap/pm": "^3.0.7",
     "@tylertech/forge-core": "catalog:",
     "@tylertech/tyler-icons": "catalog:",
     "lit": "catalog:",

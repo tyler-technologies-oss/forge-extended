@@ -9,20 +9,21 @@ import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { editorContext, EditorContext } from '../editor-context';
 import './core/rich-text-feature-button';
+import { RichTextEditorFeature } from './rich-text-editor-feature';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'forge-rich-text-feature-bold': RichTextFeatureBoldComponent;
+    'forge-rte-bold': RichTextFeatureBoldComponent;
   }
 }
 
-export const RichTextFeatureBoldComponentTagName: keyof HTMLElementTagNameMap = 'forge-rich-text-feature-bold';
+export const RichTextFeatureBoldComponentTagName: keyof HTMLElementTagNameMap = 'forge-rte-bold';
 
 /**
- * @tag forge-rich-text-feature-bold
+ * @tag forge-rte-bold
  */
 @customElement(RichTextFeatureBoldComponentTagName)
-export class RichTextFeatureBoldComponent extends LitElement {
+export class RichTextFeatureBoldComponent extends LitElement implements RichTextEditorFeature {
   static {
     IconRegistry.define(tylIconFormatBold);
   }
@@ -37,14 +38,14 @@ export class RichTextFeatureBoldComponent extends LitElement {
   @property({ type: String })
   public label = 'Bold';
 
-  public tools = [Document, Paragraph, Text, Bold];
+  public readonly tools = [Document, Paragraph, Text, Bold];
 
   @state()
   @consume({ context: editorContext, subscribe: true })
   private readonly _editorContext!: EditorContext;
 
   public firstUpdated(_changedProperties: PropertyValues<this>): void {
-    this.dispatchEvent(new CustomEvent('forge-rich-text-feature-ready', { bubbles: true, composed: true }));
+    this._editorContext?.registerFeature(this);
   }
 
   public override render(): TemplateResult {
@@ -58,8 +59,7 @@ export class RichTextFeatureBoldComponent extends LitElement {
         label=${this.label}
         icon=${tylIconFormatBold.name}
         ?disabled=${isDisabled}
-        ?active=${isActive}>
-      </forge-rte-tool-button>
+        ?active=${isActive}></forge-rte-tool-button>
     `;
   }
 
