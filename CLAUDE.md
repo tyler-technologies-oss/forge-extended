@@ -128,6 +128,24 @@ pnpm plop:extended story
 - Styles: Import as `?inline` and use with `unsafeCSS()`
 - Slots: Use `@queryAssignedNodes()` or `@queryAssignedElements()` for slotted content
 
+### SCSS Imports
+
+Use these proper Forge SCSS imports (do NOT use `@use '@tylertech/forge-core/styles'`):
+
+Component token location:
+@use '@tylertech/forge/sass/core/styles/tokens
+
+```scss
+// Typography styles
+@use '@tylertech/forge/sass/typography' as forge-typography;
+
+// Spacing utilities
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+
+// Theme tokens and colors
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+```
+
 ### Testing
 
 - Each component requires a `.test.ts` file
@@ -170,3 +188,10 @@ src/lib/[component-name]/
 - Type definitions are generated for Svelte and Vue integrations
 - React/Angular packages provide proper framework-specific wrappers
 - Always test components in isolation before framework integration
+
+## Development notes
+
+- Never use inline styles on HTML elements
+- When using a color, make sure to always use color tokens from Forge
+- For anything involving spacing, like gap, padding, etc. Use the spacing tokens from Forge
+- Always check other components for reference to know when to use readonly modifiers, getters, and private variables (prefixed with #)

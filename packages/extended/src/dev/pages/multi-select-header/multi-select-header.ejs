@@ -1,0 +1,32 @@
+<h2>Default behavior with selected count:</h2>
+<forge-multi-select-header selected-count="5">
+  <div slot="actions">
+    <button>Select All</button>
+    <button>Clear</button>
+    <button>Actions</button>
+  </div>
+</forge-multi-select-header>
+
+<h2>With custom selected text suffix:</h2>
+<forge-multi-select-header selected-count="3" selected-text="rows selected for processing">
+  <div slot="end">
+    <button>Process</button>
+    <button>Clear Selection</button>
+  </div>
+</forge-multi-select-header>
+
+<h2>With custom start content:</h2>
+<forge-multi-select-header selected-count="3">
+  <div slot="start">
+    <h3 class="forge-typography--heading4">Custom Multi Select Header</h3>
+  </div>
+  <div slot="actions">
+    <button>Select All</button>
+    <button>Clear</button>
+    <button>Actions</button>
+  </div>
+</forge-multi-select-header>
+
+<p>This component displays the number of selected items and is designed to appear above multi-select lists or data tables. The count is always shown, and the text after the count can be customized.</p>
+
+<script type="module" src="multi-select-header.ts"></script>
