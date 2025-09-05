@@ -4,11 +4,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-Tyler Forge™ Extended is a monorepo containing multiple packages of prebuilt web components that implement Tyler Forge™ design patterns. The main package `@tylertech/forge-extended` builds on the core `@tylertech/forge` library (peer dependency) and provides higher-level composed components.
+Tyler Forge™ Extended is a monorepo containing multiple packages of prebuilt web components that implement Tyler Forge™ design patterns. These components are typically larger, more complex, and encapsulate a larger pattern or design to help developers create user interfaces more efficiently. The main focus of these components is strict design and accessibility, and they are intended to offer limited volatility. The components in this library are intended to be used in conjunction with the core Tyler Forge library. The main package `@tylertech/forge-extended` builds on the core `@tylertech/forge` library (peer dependency) and provides higher-level composed components.
 
 ## Architecture
 
 ### Monorepo Structure
+
 - Uses **pnpm workspaces** with **Turborepo** for task orchestration
 - Main packages:
   - `packages/extended/` - Core web components library (TypeScript + Lit)
@@ -16,6 +17,7 @@ Tyler Forge™ Extended is a monorepo containing multiple packages of prebuilt w
   - `packages/extended-react/` - React wrapper components
 
 ### Component Architecture
+
 - **Lit-based web components** with TypeScript
 - Each component follows the pattern:
   - `src/lib/[component-name]/[component-name].ts` - Main component class
@@ -27,12 +29,14 @@ Tyler Forge™ Extended is a monorepo containing multiple packages of prebuilt w
 - Components define their own dependencies from `@tylertech/forge` in static blocks
 
 ### Build System
+
 - **Vite** for building with custom config for library mode
 - Outputs ES modules with preserved directory structure
 - **TypeScript** definitions generated via `vite-plugin-dts`
 - **Custom Elements Manifest** generation for documentation and framework integrations
 
 ### Testing
+
 - **Web Test Runner** with Playwright
 - Tests organized by component groups
 - Coverage thresholds: statements 98.5%, branches 95.5%, functions 96.5%, lines 98.5%
@@ -41,6 +45,7 @@ Tyler Forge™ Extended is a monorepo containing multiple packages of prebuilt w
 ## Common Development Commands
 
 ### Development
+
 ```bash
 # Run Storybook for component development
 pnpm storybook:extended
@@ -53,6 +58,7 @@ pnpm dev
 ```
 
 ### Building
+
 ```bash
 # Build extended package only
 pnpm build:extended
@@ -62,6 +68,7 @@ pnpm build
 ```
 
 ### Testing
+
 ```bash
 # Run tests for extended package (watch mode with coverage)
 pnpm test:extended
@@ -77,6 +84,7 @@ pnpm run --filter=@tylertech/forge-extended test --group=quantity-field
 ```
 
 ### Code Quality
+
 ```bash
 # Lint all packages
 pnpm lint
@@ -92,6 +100,7 @@ pnpm cem
 ```
 
 ### Component Generation
+
 ```bash
 # Create new component with templates
 pnpm plop:extended component
@@ -99,36 +108,41 @@ pnpm plop:extended component
 # Create demo page only
 pnpm plop:extended demo
 
-# Create storybook story only  
+# Create storybook story only
 pnpm plop:extended story
 ```
 
 ## Key Conventions
 
 ### Component Creation
+
 - Use Plop generator to scaffold new components: `pnpm plop:extended component`
 - Components must be added to `src/lib/index.ts` exports (auto-handled by Plop)
 - Follow naming convention: `forge-[component-name]` for tag names
 - Define component dependencies in static blocks
 
 ### Import Patterns
+
 - Forge core components: Import definition functions, call in static blocks
 - Tyler icons: Import and register with `IconRegistry.define()`
 - Styles: Import as `?inline` and use with `unsafeCSS()`
 - Slots: Use `@queryAssignedNodes()` or `@queryAssignedElements()` for slotted content
 
 ### Testing
+
 - Each component requires a `.test.ts` file
 - Tests use `@open-wc/testing` with Chai assertions
 - Coverage thresholds are enforced - aim for high coverage
 
 ### Framework Wrappers
+
 - Angular and React wrappers are generated from the main package
 - Run `pnpm generate-proxies` after adding new components to create framework bindings
 
 ## File Organization
 
 ### Core Package Structure
+
 ```
 packages/extended/src/
 ├── lib/                          # Component source files
@@ -141,6 +155,7 @@ packages/extended/src/
 ```
 
 ### Component File Structure
+
 ```
 src/lib/[component-name]/
 ├── [component-name].ts           # Main component class
