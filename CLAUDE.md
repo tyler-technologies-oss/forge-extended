@@ -195,3 +195,4 @@ src/lib/[component-name]/
 - When using a color, make sure to always use color tokens from Forge
 - For anything involving spacing, like gap, padding, etc. Use the spacing tokens from Forge
 - Always check other components for reference to know when to use readonly modifiers, getters, and private variables (prefixed with #)
+- Everytime a new feature is added to a component, write a test for it
