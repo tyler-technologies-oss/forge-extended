@@ -1,5 +1,6 @@
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 
 :host {
   display: block;
@@ -11,4 +12,8 @@
 
 .selected-text {
   @include forge-typography.style(body1);
+}
+
+.select-all-button {
+  margin-inline-start: var(--forge-spacing-medium);
 }

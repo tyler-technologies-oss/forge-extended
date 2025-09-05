@@ -8,6 +8,7 @@ interface MultiSelectHeaderFixtureConfig {
   selectedCount?: number;
   selectedText?: string;
   noBorder?: boolean;
+  showSelectAll?: boolean;
 }
 
 class MultiSelectHeaderHarness {
@@ -29,6 +30,10 @@ class MultiSelectHeaderHarness {
   public get actionsSlot(): HTMLSlotElement {
     return this.el.shadowRoot!.querySelector('slot[name="actions"]') as HTMLSlotElement;
   }
+
+  public get selectAllButton(): HTMLElement | null {
+    return this.el.shadowRoot!.querySelector('forge-button');
+  }
 }
 
 describe('MultiSelectHeaderComponent', () => {
@@ -46,7 +51,9 @@ describe('MultiSelectHeaderComponent', () => {
     expect(harness.el.selectedCount).to.equal(0);
     expect(harness.el.selectedText).to.equal('of items selected');
     expect(harness.el.noBorder).to.be.true;
+    expect(harness.el.showSelectAll).to.be.false;
     expect(harness.selectedCountText).to.equal('0 of items selected');
+    expect(harness.selectAllButton).to.be.null;
   });
 
   describe('selectedCount property', () => {
@@ -139,6 +146,35 @@ describe('MultiSelectHeaderComponent', () => {
       await harness.el.updateComplete;
 
       expect(harness.toolbarElement.hasAttribute('no-border')).to.be.true;
+    });
+  });
+
+  describe('showSelectAll property', () => {
+    it('should not show Select All button when showSelectAll is false', async () => {
+      const harness = await createFixture({ showSelectAll: false });
+
+      expect(harness.el.showSelectAll).to.be.false;
+      expect(harness.selectAllButton).to.be.null;
+    });
+
+    it('should show Select All button when showSelectAll is true', async () => {
+      const harness = await createFixture({ showSelectAll: true });
+
+      expect(harness.el.showSelectAll).to.be.true;
+      expect(harness.selectAllButton).to.be.ok;
+      expect(harness.selectAllButton?.textContent?.trim()).to.equal('Select All');
+    });
+
+    it('should update Select All button visibility when showSelectAll changes', async () => {
+      const harness = await createFixture({ showSelectAll: false });
+
+      expect(harness.selectAllButton).to.be.null;
+
+      harness.el.showSelectAll = true;
+      await harness.el.updateComplete;
+
+      expect(harness.selectAllButton).to.be.ok;
+      expect(harness.selectAllButton?.textContent?.trim()).to.equal('Select All');
     });
   });
 

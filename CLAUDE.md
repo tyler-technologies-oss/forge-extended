@@ -196,3 +196,5 @@ src/lib/[component-name]/
 - For anything involving spacing, like gap, padding, etc. Use the spacing tokens from Forge
 - Always check other components for reference to know when to use readonly modifiers, getters, and private variables (prefixed with #)
 - Everytime a new feature is added to a component, write a test for it
+- When adding margins to an element, always use logical properties, ie: margin-inline-start, margin-block-end, etc.
+- When adding a new property or slot to a component, add an appropriate storybook control for it

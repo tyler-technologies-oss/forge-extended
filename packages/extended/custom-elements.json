@@ -524,28 +524,110 @@
           "kind": "class",
           "description": "",
           "name": "MultiSelectHeaderComponent",
+          "slots": [
+            {
+              "description": "Content before the start section",
+              "name": "before-start"
+            },
+            {
+              "description": "Content in the start section (typically title/labels)",
+              "name": "start"
+            },
+            {
+              "description": "Content for the Select All button (when showSelectAll is true)",
+              "name": "select-all"
+            },
+            {
+              "description": "Action buttons (maps to the toolbar end slot)",
+              "name": "actions"
+            },
+            {
+              "description": "Content after the end section",
+              "name": "after-end"
+            }
+          ],
           "members": [
             {
               "kind": "field",
-              "name": "someProperty",
+              "name": "selectedCount",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "0",
+              "description": "The number of selected items",
+              "attribute": "selected-count"
+            },
+            {
+              "kind": "field",
+              "name": "selectedText",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'of items selected'",
+              "description": "Custom text to display after the count. Defaults to \"of items selected\"",
+              "attribute": "selected-text"
+            },
+            {
+              "kind": "field",
+              "name": "noBorder",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
               "default": "true",
-              "description": "Description of the property.",
-              "attribute": "some-property"
+              "description": "Hides the bottom border",
+              "attribute": "no-border"
+            },
+            {
+              "kind": "field",
+              "name": "showSelectAll",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Shows the Select All button next to the selected count",
+              "attribute": "show-select-all"
             }
           ],
           "attributes": [
             {
-              "name": "some-property",
+              "name": "selected-count",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "The number of selected items",
+              "fieldName": "selectedCount"
+            },
+            {
+              "name": "selected-text",
+              "type": {
+                "text": "string"
+              },
+              "default": "'of items selected'",
+              "description": "Custom text to display after the count. Defaults to \"of items selected\"",
+              "fieldName": "selectedText"
+            },
+            {
+              "name": "no-border",
               "type": {
                 "text": "boolean"
               },
               "default": "true",
-              "description": "Description of the property.",
-              "fieldName": "someProperty"
+              "description": "Hides the bottom border",
+              "fieldName": "noBorder"
+            },
+            {
+              "name": "show-select-all",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Shows the Select All button next to the selected count",
+              "fieldName": "showSelectAll"
             }
           ],
           "superclass": {
@@ -1264,7 +1346,7 @@
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "lineNumber": 17
+      "lineNumber": 25
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
