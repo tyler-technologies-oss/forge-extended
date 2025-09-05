@@ -1,4 +1,5 @@
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/typography' as forge-typography;
 
 :host {
   display: block;
@@ -6,4 +7,8 @@
   forge-toolbar {
     --forge-toolbar-background: #{forge-theme.variable(primary-container-low)};
   }
+}
+
+.selected-text {
+  @include forge-typography.style(body1);
 }

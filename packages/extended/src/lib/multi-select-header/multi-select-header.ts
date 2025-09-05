@@ -32,9 +32,9 @@ export class MultiSelectHeaderComponent extends LitElement {
   @property({ type: Number, attribute: 'selected-count' })
   public selectedCount = 0;
 
-  /** Custom text to display after the count. Defaults to "item(s) selected" */
+  /** Custom text to display after the count. Defaults to "of items selected" */
   @property({ type: String, attribute: 'selected-text' })
-  public selectedText?: string;
+  public selectedText = 'of items selected';
 
   /** Hides the bottom border */
   @property({ type: Boolean, attribute: 'no-border' })
@@ -45,9 +45,7 @@ export class MultiSelectHeaderComponent extends LitElement {
       <forge-toolbar ?no-border=${this.noBorder}>
         <div slot="start">
           <slot name="start">
-            <span class="forge-typography--body1">
-              ${this.selectedCount} ${this.selectedText || `item${this.selectedCount === 1 ? '' : 's'} selected`}
-            </span>
+            <span class="selected-text"> ${this.selectedCount} ${this.selectedText} </span>
           </slot>
         </div>
         <slot name="actions" slot="end"></slot>

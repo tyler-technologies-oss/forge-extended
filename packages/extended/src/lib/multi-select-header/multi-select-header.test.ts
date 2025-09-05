@@ -18,7 +18,7 @@ class MultiSelectHeaderHarness {
   }
 
   public get selectedCountText(): string {
-    const span = this.el.shadowRoot!.querySelector('span.forge-typography--body1');
+    const span = this.el.shadowRoot!.querySelector('span.selected-text');
     return span?.textContent?.trim() || '';
   }
 
@@ -44,42 +44,42 @@ describe('MultiSelectHeaderComponent', () => {
     const harness = await createFixture();
 
     expect(harness.el.selectedCount).to.equal(0);
-    expect(harness.el.selectedText).to.be.undefined;
+    expect(harness.el.selectedText).to.equal('of items selected');
     expect(harness.el.noBorder).to.be.true;
-    expect(harness.selectedCountText).to.equal('0 items selected');
+    expect(harness.selectedCountText).to.equal('0 of items selected');
   });
 
   describe('selectedCount property', () => {
-    it('should display singular text for selectedCount = 1', async () => {
+    it('should display count with default text for selectedCount = 1', async () => {
       const harness = await createFixture({ selectedCount: 1 });
 
       expect(harness.el.selectedCount).to.equal(1);
-      expect(harness.selectedCountText).to.equal('1 item selected');
+      expect(harness.selectedCountText).to.equal('1 of items selected');
     });
 
-    it('should display plural text for selectedCount > 1', async () => {
+    it('should display count with default text for selectedCount > 1', async () => {
       const harness = await createFixture({ selectedCount: 5 });
 
       expect(harness.el.selectedCount).to.equal(5);
-      expect(harness.selectedCountText).to.equal('5 items selected');
+      expect(harness.selectedCountText).to.equal('5 of items selected');
     });
 
-    it('should display plural text for selectedCount = 0', async () => {
+    it('should display count with default text for selectedCount = 0', async () => {
       const harness = await createFixture({ selectedCount: 0 });
 
       expect(harness.el.selectedCount).to.equal(0);
-      expect(harness.selectedCountText).to.equal('0 items selected');
+      expect(harness.selectedCountText).to.equal('0 of items selected');
     });
 
     it('should update text when selectedCount changes', async () => {
       const harness = await createFixture({ selectedCount: 3 });
 
-      expect(harness.selectedCountText).to.equal('3 items selected');
+      expect(harness.selectedCountText).to.equal('3 of items selected');
 
       harness.el.selectedCount = 1;
       await harness.el.updateComplete;
 
-      expect(harness.selectedCountText).to.equal('1 item selected');
+      expect(harness.selectedCountText).to.equal('1 of items selected');
     });
   });
 
@@ -94,19 +94,19 @@ describe('MultiSelectHeaderComponent', () => {
       expect(harness.selectedCountText).to.equal('3 rows selected for processing');
     });
 
-    it('should fall back to default text when selectedText is empty', async () => {
+    it('should display empty text when selectedText is empty', async () => {
       const harness = await createFixture({
         selectedCount: 2,
         selectedText: ''
       });
 
-      expect(harness.selectedCountText).to.equal('2 items selected');
+      expect(harness.selectedCountText).to.equal('2 ');
     });
 
     it('should update text when selectedText changes', async () => {
       const harness = await createFixture({ selectedCount: 4 });
 
-      expect(harness.selectedCountText).to.equal('4 items selected');
+      expect(harness.selectedCountText).to.equal('4 of items selected');
 
       harness.el.selectedText = 'custom items selected';
       await harness.el.updateComplete;
@@ -193,7 +193,7 @@ async function createFixture({
   const el = await fixture<MultiSelectHeaderComponent>(html`
     <forge-multi-select-header
       .selectedCount=${selectedCount ?? 0}
-      .selectedText=${selectedText}
+      .selectedText=${selectedText ?? 'of items selected'}
       .noBorder=${noBorder ?? true}>
     </forge-multi-select-header>
   `);
