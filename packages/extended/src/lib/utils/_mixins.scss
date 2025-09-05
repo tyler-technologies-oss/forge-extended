@@ -1,0 +1,11 @@
+@mixin stack($gap: 16px, $isInline: false) {
+  @if $isInline {
+    flex-direction: row;
+    align-items: center;
+  } @else {
+    flex-direction: column;
+  }
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}

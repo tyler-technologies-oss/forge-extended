@@ -4,6 +4,379 @@
   "modules": [
     {
       "kind": "javascript-module",
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AppLauncherComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-app-launcher'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AppLauncherComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the dialog or popover is open.",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "appView",
+              "type": {
+                "text": "AppView"
+              },
+              "privacy": "public",
+              "default": "'related'",
+              "description": "The current view of the app launcher, either 'related' or 'all'",
+              "attribute": "appView"
+            },
+            {
+              "kind": "field",
+              "name": "relatedApps",
+              "type": {
+                "text": "AppLauncherOption[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "description": "An array of related apps for the related apps view",
+              "attribute": "relatedApps"
+            },
+            {
+              "kind": "field",
+              "name": "customLinks",
+              "type": {
+                "text": "AppLauncherCustomLink[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "description": "An array of custom links for the custom-links slot",
+              "attribute": "customLinks"
+            },
+            {
+              "kind": "field",
+              "name": "allApps",
+              "type": {
+                "text": "AppLauncherOption[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "attribute": "allApps"
+            },
+            {
+              "kind": "field",
+              "name": "smallScreen",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "small-screen"
+            },
+            {
+              "kind": "field",
+              "name": "fullscreen",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "attribute": "fullscreen"
+            },
+            {
+              "kind": "field",
+              "name": "filteredApps",
+              "type": {
+                "text": "AppLauncherOption[]"
+              },
+              "privacy": "public"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the dialog or popover is open.",
+              "fieldName": "open"
+            },
+            {
+              "name": "appView",
+              "type": {
+                "text": "AppView"
+              },
+              "default": "'related'",
+              "description": "The current view of the app launcher, either 'related' or 'all'",
+              "fieldName": "appView"
+            },
+            {
+              "name": "relatedApps",
+              "type": {
+                "text": "AppLauncherOption[]"
+              },
+              "default": "[]",
+              "description": "An array of related apps for the related apps view",
+              "fieldName": "relatedApps"
+            },
+            {
+              "name": "customLinks",
+              "type": {
+                "text": "AppLauncherCustomLink[]"
+              },
+              "default": "[]",
+              "description": "An array of custom links for the custom-links slot",
+              "fieldName": "customLinks"
+            },
+            {
+              "name": "allApps",
+              "type": {
+                "text": "AppLauncherOption[]"
+              },
+              "default": "[]",
+              "fieldName": "allApps"
+            },
+            {
+              "name": "small-screen",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "smallScreen"
+            },
+            {
+              "name": "fullscreen",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "fieldName": "fullscreen"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-app-launcher",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLauncherComponentTagName",
+          "declaration": {
+            "name": "AppLauncherComponentTagName",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLauncherComponent",
+          "declaration": {
+            "name": "AppLauncherComponent",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLauncherComponent",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ConfirmationDialogComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-confirmation-dialog'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ConfirmationDialogComponent",
+          "slots": [
+            {
+              "description": "The title of the dialog",
+              "name": "title"
+            },
+            {
+              "description": "The dialog message",
+              "name": "message"
+            },
+            {
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
+            },
+            {
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
+            },
+            {
+              "kind": "field",
+              "name": "busyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+              },
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
+            },
+            {
+              "name": "busy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-confirmation-dialog",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponentTagName",
+          "declaration": {
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponent",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "declarations": [
         {
@@ -333,177 +706,152 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
+          "name": "ResponsiveToolbarComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-confirmation-dialog'"
+          "default": "'forge-responsive-toolbar'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "ConfirmationDialogComponent",
+          "name": "ResponsiveToolbarComponent",
           "slots": [
             {
-              "description": "The title of the dialog",
-              "name": "title"
+              "description": "Maps to the toolbar before-start slot",
+              "name": "before-start"
             },
             {
-              "description": "The dialog message",
-              "name": "message"
+              "description": "Maps to the toolbar start slot",
+              "name": "start"
             },
             {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
+              "description": "The content you want to render at larger sizes in the toolbar end slot",
+              "name": "end-large"
             },
             {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
+              "description": "The content you want to render at smaller sizes in the toolbar end slot",
+              "name": "end-small"
+            },
+            {
+              "description": "Maps to the toolbar after-end slot",
+              "name": "after-end"
             }
           ],
           "members": [
             {
               "kind": "field",
-              "name": "open",
+              "name": "noBorder",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
               "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "attribute": "open"
+              "description": "Hides the divider",
+              "attribute": "no-border"
             },
             {
               "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "isBusy",
+              "name": "inverted",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
               "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
+              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
+              "attribute": "inverted"
             },
             {
               "kind": "field",
-              "name": "busyLabel",
-              "type": {
-                "text": "string"
-              },
+              "name": "resizeDelay",
               "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
+              "default": "100",
+              "description": "Controls the delay in milliseconds to throttle resize events",
+              "attribute": "resize-delay",
+              "type": {
+                "text": "number"
+              }
             }
           ],
           "events": [
             {
               "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+                "text": "CustomEvent<ResponsiveToolbarUpdateEventData>"
               },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
+              "description": "Dispatched when the overflow state changes.",
+              "name": "forge-responsive-toolbar-update"
             }
           ],
           "attributes": [
             {
-              "name": "open",
+              "name": "no-border",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "fieldName": "open"
+              "description": "Hides the divider",
+              "fieldName": "noBorder"
             },
             {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog",
-              "fieldName": "description"
-            },
-            {
-              "name": "is-busy",
+              "name": "inverted",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
+              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
+              "fieldName": "inverted"
             },
             {
-              "name": "busy-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
+              "name": "resize-delay",
+              "default": "RESIZE_DELAY",
+              "description": "Controls the delay in milliseconds to throttle resize events",
+              "fieldName": "resizeDelay"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-confirmation-dialog",
-          "customElement": true
+          "tagName": "forge-responsive-toolbar",
+          "customElement": true,
+          "states": [
+            {
+              "name": "small",
+              "description": "The title is overlapping the actions, the large end slot is hidden."
+            },
+            {
+              "name": "large",
+              "description": "The title is not overlapping the actions, the small end slot is hidden."
+            }
+          ]
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
+          "name": "ResponsiveToolbarComponentTagName",
           "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+            "name": "ResponsiveToolbarComponentTagName",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
           }
         },
         {
           "kind": "js",
-          "name": "ConfirmationDialogComponent",
+          "name": "ResponsiveToolbarComponent",
           "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+            "name": "ResponsiveToolbarComponent",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+            "name": "ResponsiveToolbarComponent",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
           }
         }
       ]
@@ -684,152 +1032,86 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "ResponsiveToolbarComponentTagName",
+          "name": "ThemeToggleComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-responsive-toolbar'"
+          "default": "'forge-theme-toggle'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "ResponsiveToolbarComponent",
+          "name": "ThemeToggleComponent",
           "slots": [
             {
-              "description": "Maps to the toolbar before-start slot",
-              "name": "before-start"
-            },
-            {
-              "description": "Maps to the toolbar start slot",
-              "name": "start"
-            },
-            {
-              "description": "The content you want to render at larger sizes in the toolbar end slot",
-              "name": "end-large"
-            },
-            {
-              "description": "The content you want to render at smaller sizes in the toolbar end slot",
-              "name": "end-small"
-            },
-            {
-              "description": "Maps to the toolbar after-end slot",
-              "name": "after-end"
+              "description": "The title shown above the toggle buttons",
+              "name": "title"
             }
           ],
           "members": [
             {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
+              "kind": "method",
+              "name": "setTheme",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
               },
-              "privacy": "public",
-              "default": "false",
-              "description": "Hides the divider",
-              "attribute": "no-border"
-            },
-            {
-              "kind": "field",
-              "name": "inverted",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
-              "attribute": "inverted"
-            },
-            {
-              "kind": "field",
-              "name": "resizeDelay",
-              "privacy": "public",
-              "default": "100",
-              "description": "Controls the delay in milliseconds to throttle resize events",
-              "attribute": "resize-delay",
-              "type": {
-                "text": "number"
-              }
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "ThemeToggleTheme"
+                  }
+                }
+              ],
+              "description": "Sets the current theme."
             }
           ],
           "events": [
             {
               "type": {
-                "text": "CustomEvent<ResponsiveToolbarUpdateEventData>"
+                "text": "CustomEvent<ThemeToggleThemeEventData>"
               },
-              "description": "Dispatched when the overflow state changes.",
-              "name": "forge-responsive-toolbar-update"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Hides the divider",
-              "fieldName": "noBorder"
-            },
-            {
-              "name": "inverted",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
-              "fieldName": "inverted"
-            },
-            {
-              "name": "resize-delay",
-              "default": "RESIZE_DELAY",
-              "description": "Controls the delay in milliseconds to throttle resize events",
-              "fieldName": "resizeDelay"
+              "description": "Fired when the theme is changed",
+              "name": "forge-theme-toggle-update"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-responsive-toolbar",
-          "customElement": true,
-          "states": [
-            {
-              "name": "small",
-              "description": "The title is overlapping the actions, the large end slot is hidden."
-            },
-            {
-              "name": "large",
-              "description": "The title is not overlapping the actions, the small end slot is hidden."
-            }
-          ]
+          "tagName": "forge-theme-toggle",
+          "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ResponsiveToolbarComponentTagName",
+          "name": "ThemeToggleComponentTagName",
           "declaration": {
-            "name": "ResponsiveToolbarComponentTagName",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+            "name": "ThemeToggleComponentTagName",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
           }
         },
         {
           "kind": "js",
-          "name": "ResponsiveToolbarComponent",
+          "name": "ThemeToggleComponent",
           "declaration": {
-            "name": "ResponsiveToolbarComponent",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+            "name": "ThemeToggleComponent",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "ResponsiveToolbarComponent",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+            "name": "ThemeToggleComponent",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
           }
         }
       ]
@@ -1008,86 +1290,114 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "path": "src/lib/app-launcher/app-link/app-link.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "ThemeToggleComponentTagName",
+          "name": "AppLinkComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-theme-toggle'"
+          "default": "'forge-app-link'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "ThemeToggleComponent",
+          "name": "AppLinkComponent",
           "slots": [
             {
-              "description": "The title shown above the toggle buttons",
-              "name": "title"
+              "description": "The `<a>` element for the link.",
+              "name": ""
             }
           ],
-          "members": [
-            {
-              "kind": "method",
-              "name": "setTheme",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "ThemeToggleTheme"
-                  }
-                }
-              ],
-              "description": "Sets the current theme."
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ThemeToggleThemeEventData>"
-              },
-              "description": "Fired when the theme is changed",
-              "name": "forge-theme-toggle-update"
-            }
-          ],
+          "members": [],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-theme-toggle",
+          "tagName": "forge-app-link",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ThemeToggleComponentTagName",
+          "name": "AppLinkComponentTagName",
           "declaration": {
-            "name": "ThemeToggleComponentTagName",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
+            "name": "AppLinkComponentTagName",
+            "module": "src/lib/app-launcher/app-link/app-link.ts"
           }
         },
         {
           "kind": "js",
-          "name": "ThemeToggleComponent",
+          "name": "AppLinkComponent",
           "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
+            "name": "AppLinkComponent",
+            "module": "src/lib/app-launcher/app-link/app-link.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
+            "name": "AppLinkComponent",
+            "module": "src/lib/app-launcher/app-link/app-link.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/app-launcher/custom-link/custom-link.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "CustomLinkComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-custom-link'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "CustomLinkComponent",
+          "slots": [
+            {
+              "description": "The `<a>` element for the link.",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-custom-link",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "CustomLinkComponentTagName",
+          "declaration": {
+            "name": "CustomLinkComponentTagName",
+            "module": "src/lib/app-launcher/custom-link/custom-link.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "CustomLinkComponent",
+          "declaration": {
+            "name": "CustomLinkComponent",
+            "module": "src/lib/app-launcher/custom-link/custom-link.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "CustomLinkComponent",
+            "module": "src/lib/app-launcher/custom-link/custom-link.ts"
           }
         }
       ]
@@ -1154,23 +1464,31 @@
       ]
     }
   ],
-  "branchName": "user-profile",
+  "branchName": "app-launcher",
   "forgeTypes": {
-    "BusyIndicatorMode": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 25
+    "AppLauncherOptionResult": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 48
     },
-    "BusyIndicatorVariant": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 26
+    "AppLauncherOption": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 51
     },
-    "BusyIndicatorFocusMode": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 27
+    "AppLauncherOptionGroup": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 58
     },
-    "BusyIndicatorComponent": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 39
+    "AppLauncherCustomLink": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 63
+    },
+    "AppView": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 68
+    },
+    "AppLauncherComponent": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 75
     },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
@@ -1188,9 +1506,21 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
-    "QuantityFieldComponent": {
-      "path": "src/lib/quantity-field/quantity-field.ts",
-      "lineNumber": 35
+    "BusyIndicatorMode": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 25
+    },
+    "BusyIndicatorVariant": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 26
+    },
+    "BusyIndicatorFocusMode": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 27
+    },
+    "BusyIndicatorComponent": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 39
     },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
@@ -1204,9 +1534,9 @@
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 48
     },
-    "UserProfileComponent": {
-      "path": "src/lib/user-profile/user-profile.ts",
-      "lineNumber": 44
+    "QuantityFieldComponent": {
+      "path": "src/lib/quantity-field/quantity-field.ts",
+      "lineNumber": 35
     },
     "ThemeToggleTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
@@ -1219,6 +1549,18 @@
     "ThemeToggleComponent": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 41
+    },
+    "UserProfileComponent": {
+      "path": "src/lib/user-profile/user-profile.ts",
+      "lineNumber": 44
+    },
+    "AppLinkComponent": {
+      "path": "src/lib/app-launcher/app-link/app-link.ts",
+      "lineNumber": 20
+    },
+    "CustomLinkComponent": {
+      "path": "src/lib/app-launcher/custom-link/custom-link.ts",
+      "lineNumber": 20
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",

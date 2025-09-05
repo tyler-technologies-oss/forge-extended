@@ -1,0 +1,209 @@
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/animation' as forge-animation;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/scrollbar' as forge-scrollbar;
+@use '@tylertech/forge/sass/core/styles/tokens/scrollbar/tokens' as forge-scrollbar-tokens;
+@use '../utils/mixins';
+
+//
+// Host
+//
+
+:host {
+  --avatar-size: 48px;
+  --inner-container-width: 500px;
+  display: contents;
+  padding: 0;
+
+  & * {
+    box-sizing: border-box;
+  }
+}
+
+//
+// Base
+//
+
+h1 {
+  @include forge-typography.style(heading3);
+
+  margin: 0;
+}
+
+h2 {
+  @include forge-typography.style(heading1);
+
+  margin: 0;
+}
+
+forge-popover {
+  --forge-popover-background: #{forge-theme.variable(surface-dim)};
+}
+
+.v-stack {
+  @include mixins.stack;
+}
+
+.p-16 {
+  padding: #{forge-spacing.variable(medium)};
+}
+
+.header {
+  --forge-toolbar-background: none;
+}
+
+.outer-container {
+  width: 100%;
+  max-height: 90dvh;
+  display: grid;
+  grid-template-rows: 56px auto;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.search-container {
+  padding-inline: #{forge-spacing.variable(medium)};
+  padding-block-start: #{forge-spacing.variable(medium)};
+}
+
+.inner-container {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  min-height: 0;
+  padding: #{forge-spacing.variable(medium)};
+  padding-block-start: 0;
+  width: var(--inner-container-width);
+
+  forge-card {
+    --forge-card-overflow: hidden;
+    min-height: 0;
+  }
+}
+
+.app-group {
+  height: calc(100%);
+  overflow-y: auto;
+}
+
+.view-all-apps-button {
+  display: flex;
+  padding-inline: #{forge-spacing.variable(medium)};
+  padding-block-end: #{forge-spacing.variable(medium)};
+
+  forge-button {
+    flex: 1;
+  }
+}
+
+.custom-links-card {
+  margin-block-start: #{forge-spacing.variable(medium)};
+  max-height: 204px;
+}
+
+.custom-links {
+  display: flex;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(xsmall)};
+  overflow-y: auto;
+  height: 100%;
+  --forge-list-item-padding: 24px;
+  --forge-list-item-shape: #{forge-spacing.variable(xsmall)};
+}
+
+.keyboard-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-inline: #{forge-spacing.variable(medium)};
+  gap: #{forge-spacing.variable(xlarge)};
+  height: 40px;
+  border-block-start: 1px solid #{forge-theme.variable(outline)};
+  background-color: #{forge-theme.variable(surface)};
+  border-radius: 0 0 8px 8px;
+}
+
+.keyboard-indicator-container {
+  display: flex;
+  align-items: center;
+  gap: 3rem;
+}
+
+.keyboard-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.keyboard-indicator-label {
+  @include forge-typography.style(body1);
+}
+
+.empty-state {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  height: 100%;
+
+  svg {
+    height: 128px;
+    width: 128px;
+  }
+
+  p {
+    @include forge-typography.style(subheading2);
+    text-align: center;
+  }
+}
+
+forge-dialog {
+  --forge-dialog-width: 100vw;
+  --forge-dialog-height: 100dvh;
+
+  --avatar-size: 48px;
+  --inner-container-width: 100%;
+
+  forge-card {
+    min-height: 0;
+  }
+
+  .dialog-container {
+    width: 100%;
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+
+  .related-apps {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    gap: #{forge-spacing.variable(medium)};
+    padding: #{forge-spacing.variable(medium)};
+    min-height: 0;
+
+    forge-button {
+      --forge-button-height: 48px;
+    }
+  }
+
+  .all-apps {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: #{forge-spacing.variable(medium)};
+    padding: #{forge-spacing.variable(medium)};
+    min-height: 0;
+  }
+
+  .scroll-container {
+    padding-block: #{forge-spacing.variable(medium)};
+    overflow-y: auto;
+    height: 100%;
+
+    h2 {
+      padding-inline-start: #{forge-spacing.variable(medium)};
+    }
+  }
+
+  .view-all-apps-button {
+    padding: 0;
+  }
+}

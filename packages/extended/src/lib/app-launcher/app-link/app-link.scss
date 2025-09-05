@@ -1,0 +1,19 @@
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+
+.app-list-item {
+  --forge-list-item-padding: #{forge-spacing.variable(medium)};
+  --forge-list-item-height: calc(var(--avatar-size) + #{forge-spacing.variable(medium)});
+  --forge-list-item-gap: #{forge-spacing.variable(medium)};
+  --forge-list-item-shape: #{forge-spacing.variable(xsmall)};
+}
+
+.app-avatar {
+  --forge-avatar-size: var(--avatar-size);
+  --forge-avatar-background: #{forge-theme.variable(tertiary-container-low)};
+  --forge-avatar-color: #{forge-theme.variable(on-tertiary-container-low)};
+
+  forge-icon {
+    font-size: calc(var(--avatar-size) * 0.75);
+  }
+}
