@@ -202,6 +202,7 @@ src/lib/[component-name]/
 - Always put return types on functions
 - Import location for ifDefined is import { ifDefined } from 'lit/directives/if-defined.js';
 - No need to add a import './' line to the test files
+- Always update the MDX storybook docs when new features are added to a component, things like events, slots, properties, etc
 
 ### Conditional Content Pattern
 

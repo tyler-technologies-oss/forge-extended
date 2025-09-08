@@ -17,8 +17,12 @@ const meta = {
   title: 'Components/Multi Select Header',
   component,
   render: args => {
+    const handleSelectAll = action('forge-multi-select-header-select-all');
     return html`
-      <forge-multi-select-header .text=${args.text} .noBorder=${args.noBorder}>
+      <forge-multi-select-header
+        .text=${args.text}
+        .noBorder=${args.noBorder}
+        @forge-multi-select-header-select-all=${handleSelectAll}>
         ${args.selectAllText ? html`<span slot="select-all-button-text">${args.selectAllText}</span>` : ''}
         <forge-button slot="actions" variant="outlined">Forge button</forge-button>
         <forge-icon-button slot="actions" aria-label="Select all items">
@@ -42,7 +46,7 @@ const meta = {
   args: {
     text: '3 items selected',
     noBorder: false,
-    selectAllText: ''
+    selectAllText: 'Select All'
   }
 } satisfies Meta;
 

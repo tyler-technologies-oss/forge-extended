@@ -4,8 +4,6 @@ import { MultiSelectHeaderComponent } from './multi-select-header';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { ButtonComponent } from '@tylertech/forge';
 
-import './';
-
 interface MultiSelectHeaderFixtureConfig {
   text?: string;
   noBorder?: boolean;
@@ -22,10 +20,6 @@ class MultiSelectHeaderHarness {
   public get displayText(): string {
     const span = this.el.shadowRoot!.querySelector('span.selected-text');
     return span?.textContent?.trim() || '';
-  }
-
-  public get startSlot(): HTMLSlotElement {
-    return this.el.shadowRoot!.querySelector('slot[name="start"]') as HTMLSlotElement;
   }
 
   public get actionsSlot(): HTMLSlotElement {
@@ -120,30 +114,11 @@ describe('MultiSelectHeaderComponent', () => {
   });
 
   describe('slots', () => {
-    it('should have start slot available', async () => {
-      const harness = await createFixture();
-
-      expect(harness.startSlot).to.be.ok;
-      expect(harness.startSlot.name).to.equal('start');
-    });
-
     it('should have actions slot available', async () => {
       const harness = await createFixture();
 
       expect(harness.actionsSlot).to.be.ok;
       expect(harness.actionsSlot.name).to.equal('actions');
-    });
-
-    it('should display custom start content when provided', async () => {
-      const el = await fixture<MultiSelectHeaderComponent>(html`
-        <forge-multi-select-header text="2 items selected">
-          <div slot="start" class="custom-content">Custom Header</div>
-        </forge-multi-select-header>
-      `);
-
-      const customContent = el.querySelector('.custom-content');
-      expect(customContent).to.be.ok;
-      expect(customContent?.textContent).to.equal('Custom Header');
     });
 
     it('should display action buttons when provided', async () => {
@@ -163,6 +138,20 @@ describe('MultiSelectHeaderComponent', () => {
     it('content should project into the select-all-button-text slot', async () => {
       const harness = await createFixture();
       expect(harness.selectAllButtonTextSlot.assignedNodes().length).to.greaterThanOrEqual(1);
+    });
+
+    it('should dispatch select-all event when select-all button is clicked', async () => {
+      const harness = await createFixture({ selectAllButtonText: 'Select All' });
+      let eventFired = false;
+
+      harness.el.addEventListener('forge-multi-select-header-select-all', () => {
+        eventFired = true;
+      });
+
+      harness.selectAllButton.click();
+      await harness.el.updateComplete;
+
+      expect(eventFired).to.be.true;
     });
   });
 });

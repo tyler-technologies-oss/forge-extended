@@ -526,48 +526,25 @@
           "name": "MultiSelectHeaderComponent",
           "slots": [
             {
-              "description": "Content before the start section",
-              "name": "before-start"
-            },
-            {
-              "description": "Content in the start section (typically title/labels)",
-              "name": "start"
-            },
-            {
-              "description": "Content for the Select All button (when showSelectAll is true)",
-              "name": "select-all"
+              "description": "Text content for the select-all button",
+              "name": "select-all-button-text"
             },
             {
               "description": "Action buttons (maps to the toolbar end slot)",
               "name": "actions"
-            },
-            {
-              "description": "Content after the end section",
-              "name": "after-end"
             }
           ],
           "members": [
             {
               "kind": "field",
-              "name": "selectedCount",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "0",
-              "description": "The number of selected items",
-              "attribute": "selected-count"
-            },
-            {
-              "kind": "field",
-              "name": "selectedText",
+              "name": "text",
               "type": {
                 "text": "string"
               },
               "privacy": "public",
-              "default": "'of items selected'",
-              "description": "Custom text to display after the count. Defaults to \"of items selected\"",
-              "attribute": "selected-text"
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "attribute": "text"
             },
             {
               "kind": "field",
@@ -579,37 +556,26 @@
               "default": "true",
               "description": "Hides the bottom border",
               "attribute": "no-border"
-            },
+            }
+          ],
+          "events": [
             {
-              "kind": "field",
-              "name": "showSelectAll",
               "type": {
-                "text": "boolean"
+                "text": "CustomEvent"
               },
-              "privacy": "public",
-              "default": "false",
-              "description": "Shows the Select All button next to the selected count",
-              "attribute": "show-select-all"
+              "description": "Fired when the select-all button is clicked",
+              "name": "forge-multi-select-header-select-all"
             }
           ],
           "attributes": [
             {
-              "name": "selected-count",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "The number of selected items",
-              "fieldName": "selectedCount"
-            },
-            {
-              "name": "selected-text",
+              "name": "text",
               "type": {
                 "text": "string"
               },
-              "default": "'of items selected'",
-              "description": "Custom text to display after the count. Defaults to \"of items selected\"",
-              "fieldName": "selectedText"
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "fieldName": "text"
             },
             {
               "name": "no-border",
@@ -619,15 +585,6 @@
               "default": "true",
               "description": "Hides the bottom border",
               "fieldName": "noBorder"
-            },
-            {
-              "name": "show-select-all",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Shows the Select All button next to the selected count",
-              "fieldName": "showSelectAll"
             }
           ],
           "superclass": {
@@ -1346,7 +1303,7 @@
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "lineNumber": 25
+      "lineNumber": 28
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
