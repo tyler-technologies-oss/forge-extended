@@ -4,6 +4,8 @@ import { MultiSelectHeaderComponent } from './multi-select-header';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { ButtonComponent } from '@tylertech/forge';
 
+import './';
+
 interface MultiSelectHeaderFixtureConfig {
   text?: string;
   noBorder?: boolean;

@@ -1,5 +1,5 @@
-<h2>Default behavior with selected count:</h2>
-<forge-multi-select-header selected-count="3">
+<h2>Default behavior with selection text:</h2>
+<forge-multi-select-header text="3 items selected">
   <div slot="actions">
     <forge-icon-button aria-label="Select all items">
       <forge-icon name="check"></forge-icon>
@@ -13,8 +13,8 @@
   </div>
 </forge-multi-select-header>
 
-<h2>With custom selected text suffix:</h2>
-<forge-multi-select-header selected-count="3" selected-text="rows selected for processing">
+<h2>With custom text format:</h2>
+<forge-multi-select-header text="3 rows selected for processing">
   <div slot="actions">
     <forge-icon-button aria-label="Select all items">
       <forge-icon name="check"></forge-icon>
@@ -29,6 +29,6 @@
 </forge-multi-select-header>
 
 
-<p>This component displays the number of selected items and is designed to appear above multi-select lists or data tables. The count is always shown, and the text after the count can be customized.</p>
+<p>This component displays selection information and is designed to appear above multi-select lists or data tables. The displayed text is fully customizable.</p>
 
 <script type="module" src="multi-select-header.ts"></script>

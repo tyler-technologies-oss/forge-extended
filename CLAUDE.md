@@ -201,6 +201,7 @@ src/lib/[component-name]/
 - When writing docs for a component, you don't need to include any information about slots. Those are generated automatically from code
 - Always put return types on functions
 - Import location for ifDefined is import { ifDefined } from 'lit/directives/if-defined.js';
+- No need to add a import './' line to the test files
 
 ### Conditional Content Pattern
 

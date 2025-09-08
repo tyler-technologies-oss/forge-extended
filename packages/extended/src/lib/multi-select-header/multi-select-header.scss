@@ -13,7 +13,7 @@
 .start-container {
   display: flex;
   align-items: center;
-  gap: var(--forge-spacing-medium);
+  gap: #{forge-spacing.variable(medium)};
 }
 
 .selected-text {

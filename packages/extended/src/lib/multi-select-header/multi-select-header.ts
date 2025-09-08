@@ -16,11 +16,9 @@ export const MultiSelectHeaderComponentTagName: keyof HTMLElementTagNameMap = 'f
 /**
  * @tag forge-multi-select-header
  *
- * @slot before-start - Content before the start section
  * @slot start - Content in the start section (typically title/labels)
- * @slot select-all - Content for the Select All button (when showSelectAll is true)
+ * @slot select-all-button-text - Text content for the select-all button
  * @slot actions - Action buttons (maps to the toolbar end slot)
- * @slot after-end - Content after the end section
  */
 @customElement(MultiSelectHeaderComponentTagName)
 export class MultiSelectHeaderComponent extends LitElement {
@@ -42,7 +40,7 @@ export class MultiSelectHeaderComponent extends LitElement {
   @queryAssignedNodes({ slot: 'select-all-button-text', flatten: true })
   private _slottedSelectAllNodes!: Node[];
 
-  readonly #selectAllSlot = html`<slot name="select-all-button-text" id="select-all-button-slot"></slot>`;
+  readonly #selectAllSlot = html`<slot name="select-all-button-text"></slot>`;
 
   get #selectAllButton(): TemplateResult | typeof nothing {
     const showSelectAllButton = this._slottedSelectAllNodes.length > 0;
