@@ -1,5 +1,5 @@
-import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { LitElement, TemplateResult, html, unsafeCSS, nothing } from 'lit';
+import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { defineToolbarComponent, defineButtonComponent } from '@tylertech/forge';
 
@@ -43,28 +43,38 @@ export class MultiSelectHeaderComponent extends LitElement {
   @property({ type: Boolean, attribute: 'no-border' })
   public noBorder = true;
 
-  /** Shows the Select All button next to the selected count */
-  @property({ type: Boolean, attribute: 'show-select-all' })
-  public showSelectAll = false;
+  @queryAssignedNodes({ slot: 'select-all-button-text', flatten: true })
+  private _slottedSelectAllNodes!: Node[];
+
+  readonly #selectAllSlot = html`<slot name="select-all-button-text" id="select-all-button-slot"></slot>`;
+
+  get #selectAllButton(): TemplateResult | typeof nothing {
+    const showSelectAllButton = this._slottedSelectAllNodes.length > 0;
+    return when(
+      showSelectAllButton,
+      () => html` <forge-button id="select-all-button"> ${this.#selectAllSlot} </forge-button>`,
+      () => html`${this.#selectAllSlot}`
+    );
+  }
 
   public override render(): TemplateResult {
     return html`
-      <forge-toolbar ?no-border=${this.noBorder}>
+      <forge-toolbar ?no-border=${this.noBorder} @slotchange=${this.#handleSlotChange}>
         <div slot="start">
           <slot name="start">
-            <span class="selected-text"> ${this.selectedCount} ${this.selectedText} </span>
-            ${when(
-              this.showSelectAll,
-              () => html`
-                <forge-button variant="text" class="select-all-button">
-                  <slot name="select-all">Select All</slot>
-                </forge-button>
-              `
-            )}
+            <span class="selected-text">${this.selectedCount} ${this.selectedText}</span>
+            ${this.#selectAllButton}
           </slot>
         </div>
         <slot name="actions" slot="end"></slot>
       </forge-toolbar>
     `;
+  }
+
+  #handleSlotChange(evt: Event): void {
+    const slotName = (evt.target as HTMLSlotElement).name;
+    if (['select-all-button-text', 'start', 'actions'].includes(slotName)) {
+      this.requestUpdate();
+    }
   }
 }

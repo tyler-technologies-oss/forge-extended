@@ -198,3 +198,47 @@ src/lib/[component-name]/
 - Everytime a new feature is added to a component, write a test for it
 - When adding margins to an element, always use logical properties, ie: margin-inline-start, margin-block-end, etc.
 - When adding a new property or slot to a component, add an appropriate storybook control for it
+- When writing docs for a component, you don't need to include any information about slots. Those are generated automatically from code
+- Always put return types on functions
+
+### Conditional Content Pattern
+
+When you need to conditionally show/hide elements based on user-provided content, prefer using slots with `@queryAssignedNodes` over boolean properties. This pattern:
+
+- **Use `@queryAssignedNodes({ slot: 'slot-name', flatten: true })` to detect slotted content**
+- **Use `when()` directive with `slottedNodes.length > 0` condition to conditionally render wrapper elements**
+- **Add slot change handler to trigger re-renders: `@slotchange=${this.#handleSlotChange}`**
+- **Always render the slot itself, but conditionally render its wrapper based on content presence**
+- **Use `nothing` from lit for the else case when you don't want to render anything**
+
+**Implementation pattern:**
+```typescript
+@queryAssignedNodes({ slot: 'optional-content', flatten: true })
+private _slottedNodes!: Node[];
+
+readonly #contentSlot = html`<slot name="optional-content"></slot>`;
+
+get #conditionalContent(): TemplateResult | typeof nothing {
+  const hasContent = this._slottedNodes.length > 0;
+  return when(
+    hasContent,
+    () => html`<wrapper-element>${this.#contentSlot}</wrapper-element>`,
+    () => html`${this.#contentSlot}`  // Always render slot for detection
+  );
+}
+
+#handleSlotChange(evt: Event): void {
+  const slotName = (evt.target as HTMLSlotElement).name;
+  if (['optional-content', 'other-watched-slots'].includes(slotName)) {
+    this.requestUpdate();
+  }
+}
+```
+
+**When to use this pattern:**
+
+- Optional buttons or actions (like "Select All" buttons, secondary buttons)
+- Optional content sections that users may or may not want to show
+- Anything where the presence of content should determine visibility
+
+**Example:** See `confirmation-dialog.ts` (secondary button) and `multi-select-header.ts` (select-all button)

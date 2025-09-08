@@ -1,14 +1,13 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
 import { MultiSelectHeaderComponent } from './multi-select-header';
-
-import './';
+import { ifDefined } from 'lit/directives/if-defined.js';
 
 interface MultiSelectHeaderFixtureConfig {
   selectedCount?: number;
   selectedText?: string;
   noBorder?: boolean;
-  showSelectAll?: boolean;
+  selectAllButtonText?: string;
 }
 
 class MultiSelectHeaderHarness {
@@ -34,6 +33,10 @@ class MultiSelectHeaderHarness {
   public get selectAllButton(): HTMLElement | null {
     return this.el.shadowRoot!.querySelector('forge-button');
   }
+
+  public get selectAllButtonText(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="select-all-button-text"]') as HTMLSlotElement;
+  }
 }
 
 describe('MultiSelectHeaderComponent', () => {
@@ -51,9 +54,8 @@ describe('MultiSelectHeaderComponent', () => {
     expect(harness.el.selectedCount).to.equal(0);
     expect(harness.el.selectedText).to.equal('of items selected');
     expect(harness.el.noBorder).to.be.true;
-    expect(harness.el.showSelectAll).to.be.false;
     expect(harness.selectedCountText).to.equal('0 of items selected');
-    expect(harness.selectAllButton).to.be.null;
+    expect(harness.selectAllButtonText).to.equal('Select all');
   });
 
   describe('selectedCount property', () => {
@@ -107,7 +109,7 @@ describe('MultiSelectHeaderComponent', () => {
         selectedText: ''
       });
 
-      expect(harness.selectedCountText).to.equal('2 ');
+      expect(harness.selectedCountText).to.equal('2');
     });
 
     it('should update text when selectedText changes', async () => {
@@ -149,32 +151,45 @@ describe('MultiSelectHeaderComponent', () => {
     });
   });
 
-  describe('showSelectAll property', () => {
-    it('should not show Select All button when showSelectAll is false', async () => {
-      const harness = await createFixture({ showSelectAll: false });
+  describe('select-all-button-text slot', () => {
+    it('should not show Select All button when no slot content provided', async () => {
+      const harness = await createFixture();
 
-      expect(harness.el.showSelectAll).to.be.false;
       expect(harness.selectAllButton).to.be.null;
     });
 
-    it('should show Select All button when showSelectAll is true', async () => {
-      const harness = await createFixture({ showSelectAll: true });
+    it('should show Select All button when slot content is provided', async () => {
+      const harness = await createFixture({ selectAllButtonText: 'Select All Items' });
 
-      expect(harness.el.showSelectAll).to.be.true;
       expect(harness.selectAllButton).to.be.ok;
-      expect(harness.selectAllButton?.textContent?.trim()).to.equal('Select All');
+      expect(harness.selectAllButton?.textContent?.trim()).to.equal('Select All Items');
     });
 
-    it('should update Select All button visibility when showSelectAll changes', async () => {
-      const harness = await createFixture({ showSelectAll: false });
+    it('should show Select All button with whitespace-only content', async () => {
+      const harness = await createFixture({ selectAllButtonText: ' ' });
 
-      expect(harness.selectAllButton).to.be.null;
+      expect(harness.selectAllButton).to.be.ok;
+      expect(harness.selectAllButton?.textContent?.trim()).to.equal('');
+    });
 
-      harness.el.showSelectAll = true;
+    it('content should project into the select-all-button-text slot', async () => {
+      const harness = await createFixture({ selectAllButtonText: 'Select All' });
+      const slot = harness.el.shadowRoot!.querySelector('slot[name="select-all-button-text"]') as HTMLSlotElement;
+
+      expect(slot.assignedNodes().length).to.greaterThanOrEqual(1);
+    });
+
+    it('select all button should be removed if the select-all-button-text slot content is removed', async () => {
+      const harness = await createFixture({ selectAllButtonText: 'Select All' });
+      const slot = harness.el.shadowRoot!.querySelector('slot[name="select-all-button-text"]') as HTMLSlotElement;
+
+      expect(harness.selectAllButton).to.be.ok;
+
+      // Remove slotted content
+      slot.assignedElements().forEach(el => el.remove());
       await harness.el.updateComplete;
 
-      expect(harness.selectAllButton).to.be.ok;
-      expect(harness.selectAllButton?.textContent?.trim()).to.equal('Select All');
+      expect(harness.selectAllButton).to.be.null;
     });
   });
 
@@ -224,13 +239,15 @@ describe('MultiSelectHeaderComponent', () => {
 async function createFixture({
   selectedCount,
   selectedText,
-  noBorder
+  noBorder,
+  selectAllButtonText = 'Select all'
 }: MultiSelectHeaderFixtureConfig = {}): Promise<MultiSelectHeaderHarness> {
   const el = await fixture<MultiSelectHeaderComponent>(html`
     <forge-multi-select-header
       .selectedCount=${selectedCount ?? 0}
       .selectedText=${selectedText ?? 'of items selected'}
       .noBorder=${noBorder ?? true}>
+      <div slot="select-all-button-text" id="select-all-button-text">${ifDefined(selectAllButtonText)}</div>
     </forge-multi-select-header>
   `);
   return new MultiSelectHeaderHarness(el);

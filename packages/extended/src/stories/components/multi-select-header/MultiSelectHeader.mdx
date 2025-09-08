@@ -6,11 +6,46 @@ import * as MultiSelectHeaderStories from './MultiSelectHeader.stories';
 
 <Title />
 
-TODO: A basic description of the `Multi Select Header` component goes here.
+The Multi Select Header provides a consistent toolbar interface for displaying selection state and actions when multiple items are selected in data tables, lists, or grids. It builds upon the `<forge-toolbar>` component with a distinctive light blue background to visually indicate an active selection state.
 
 <Canvas of={MultiSelectHeaderStories.Demo} />
 
-TODO: If applicable, add any additional content for the `Multi Select Header` component here.
+## Usage
+
+The Multi Select Header is designed to appear when users have selected one or more items from a collection. It displays the count of selected items with customizable text and provides space for relevant actions like delete, export, or bulk operations.
+
+### Basic Implementation
+
+```html
+<forge-multi-select-header selected-count="3">
+  <forge-icon-button slot="actions" aria-label="Delete selected">
+    <forge-icon name="delete"></forge-icon>
+  </forge-icon-button>
+</forge-multi-select-header>
+```
+
+### With Custom Text
+
+```html
+<forge-multi-select-header selected-count="5" selected-text="rows selected for processing"> </forge-multi-select-header>
+```
+
+### With Select All Button
+
+```html
+<forge-multi-select-header selected-count="3">
+  <span slot="select-all">Select All Items</span>
+</forge-multi-select-header>
+```
+
+## When to Use
+
+Use the Multi Select Header when:
+
+- Users can select multiple items from a data table, list, or grid
+- You need to provide bulk actions for selected items
+- You want to clearly communicate selection state to users
+- You need a consistent selection interface across your application
 
 ## API
 
@@ -18,4 +53,7 @@ TODO: If applicable, add any additional content for the `Multi Select Header` co
 
 ## Accessibility
 
-TODO: If applicable, add accessibility guidelines for the `Multi Select Header` component here.
+- Ensure action buttons have descriptive `aria-label` attributes
+- The selected count text provides clear feedback to screen readers
+- Action buttons should be keyboard accessible
+- Consider announcing selection changes to screen readers in your application logic
