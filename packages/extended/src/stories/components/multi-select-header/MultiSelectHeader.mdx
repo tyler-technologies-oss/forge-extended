@@ -12,12 +12,12 @@ The Multi Select Header provides a consistent toolbar interface for displaying s
 
 ## Usage
 
-The Multi Select Header is designed to appear when users have selected one or more items from a collection. It displays the count of selected items with customizable text and provides space for relevant actions like delete, export, or bulk operations.
+The Multi Select Header is designed to appear when users have selected one or more items from a collection. It displays custom text (typically showing selection count) and provides space for relevant actions like delete, export, or bulk operations.
 
 ### Basic Implementation
 
 ```html
-<forge-multi-select-header selected-count="3">
+<forge-multi-select-header text="3 items selected">
   <forge-icon-button slot="actions" aria-label="Delete selected">
     <forge-icon name="delete"></forge-icon>
   </forge-icon-button>
@@ -27,14 +27,14 @@ The Multi Select Header is designed to appear when users have selected one or mo
 ### With Custom Text
 
 ```html
-<forge-multi-select-header selected-count="5" selected-text="rows selected for processing"> </forge-multi-select-header>
+<forge-multi-select-header text="5 rows selected for processing"></forge-multi-select-header>
 ```
 
 ### With Select All Button
 
 ```html
-<forge-multi-select-header selected-count="3">
-  <span slot="select-all">Select All Items</span>
+<forge-multi-select-header text="3 items selected">
+  <span slot="select-all-button-text">Select All Items</span>
 </forge-multi-select-header>
 ```
 
@@ -54,6 +54,6 @@ Use the Multi Select Header when:
 ## Accessibility
 
 - Ensure action buttons have descriptive `aria-label` attributes
-- The selected count text provides clear feedback to screen readers
+- The header text provides clear feedback to screen readers
 - Action buttons should be keyboard accessible
 - Consider announcing selection changes to screen readers in your application logic

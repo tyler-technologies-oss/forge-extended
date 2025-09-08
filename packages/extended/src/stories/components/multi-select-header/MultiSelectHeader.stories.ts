@@ -18,10 +18,7 @@ const meta = {
   component,
   render: args => {
     return html`
-      <forge-multi-select-header
-        .selectedCount=${args.selectedCount}
-        .selectedText=${args.selectedText}
-        .noBorder=${args.noBorder}>
+      <forge-multi-select-header .text=${args.text} .noBorder=${args.noBorder}>
         ${args.selectAllText ? html`<span slot="select-all-button-text">${args.selectAllText}</span>` : ''}
         <forge-button slot="actions" variant="outlined">Forge button</forge-button>
         <forge-icon-button slot="actions" aria-label="Select all items">
@@ -38,14 +35,12 @@ const meta = {
     `;
   },
   argTypes: {
-    selectedCount: { control: 'number' },
-    selectedText: { control: 'text' },
+    text: { control: 'text' },
     noBorder: { control: 'boolean' },
     selectAllText: { control: 'text' }
   },
   args: {
-    selectedCount: 3,
-    selectedText: '',
+    text: '3 items selected',
     noBorder: false,
     selectAllText: ''
   }

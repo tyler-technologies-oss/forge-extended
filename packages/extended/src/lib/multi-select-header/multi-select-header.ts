@@ -31,13 +31,9 @@ export class MultiSelectHeaderComponent extends LitElement {
 
   public static override styles = unsafeCSS(styles);
 
-  /** The number of selected items */
-  @property({ type: Number, attribute: 'selected-count' })
-  public selectedCount = 0;
-
-  /** Custom text to display after the count. Defaults to "of items selected" */
-  @property({ type: String, attribute: 'selected-text' })
-  public selectedText = 'of items selected';
+  /** The text to display in the header (typically showing selection count) */
+  @property({ type: String })
+  public text = '';
 
   /** Hides the bottom border */
   @property({ type: Boolean, attribute: 'no-border' })
@@ -62,8 +58,10 @@ export class MultiSelectHeaderComponent extends LitElement {
       <forge-toolbar ?no-border=${this.noBorder} @slotchange=${this.#handleSlotChange}>
         <div slot="start">
           <slot name="start">
-            <span class="selected-text">${this.selectedCount} ${this.selectedText}</span>
-            ${this.#selectAllButton}
+            <div class="start-container">
+              <span class="selected-text">${this.text}</span>
+              ${this.#selectAllButton}
+            </div>
           </slot>
         </div>
         <slot name="actions" slot="end"></slot>

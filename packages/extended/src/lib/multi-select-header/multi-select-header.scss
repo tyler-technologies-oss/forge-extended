@@ -10,10 +10,12 @@
   }
 }
 
-.selected-text {
-  @include forge-typography.style(body1);
+.start-container {
+  display: flex;
+  align-items: center;
+  gap: var(--forge-spacing-medium);
 }
 
-.select-all-button {
-  margin-inline-start: var(--forge-spacing-medium);
+.selected-text {
+  @include forge-typography.style(body1);
 }

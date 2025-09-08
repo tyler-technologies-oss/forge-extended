@@ -200,6 +200,7 @@ src/lib/[component-name]/
 - When adding a new property or slot to a component, add an appropriate storybook control for it
 - When writing docs for a component, you don't need to include any information about slots. Those are generated automatically from code
 - Always put return types on functions
+- Import location for ifDefined is import { ifDefined } from 'lit/directives/if-defined.js';
 
 ### Conditional Content Pattern
 
@@ -212,6 +213,7 @@ When you need to conditionally show/hide elements based on user-provided content
 - **Use `nothing` from lit for the else case when you don't want to render anything**
 
 **Implementation pattern:**
+
 ```typescript
 @queryAssignedNodes({ slot: 'optional-content', flatten: true })
 private _slottedNodes!: Node[];
