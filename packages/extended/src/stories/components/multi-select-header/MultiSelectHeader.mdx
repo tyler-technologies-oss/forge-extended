@@ -1,6 +1,9 @@
 import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
 import CustomArgTypes from '../../blocks/CustomArgTypes';
 import * as MultiSelectHeaderStories from './MultiSelectHeader.stories';
+import * as BasicImplementationStories from './BasicImplementation.stories';
+import * as WithCustomTextStories from './WithCustomText.stories';
+import * as WithSelectAllButtonStories from './WithSelectAllButton.stories';
 
 <Meta of={MultiSelectHeaderStories} />
 
@@ -16,6 +19,8 @@ The Multi Select Header is designed to appear when users have selected one or mo
 
 ### Basic Implementation
 
+<Canvas of={BasicImplementationStories.Demo} />
+
 ```html
 <forge-multi-select-header text="3 items selected">
   <forge-icon-button slot="actions" aria-label="Delete selected">
@@ -26,11 +31,15 @@ The Multi Select Header is designed to appear when users have selected one or mo
 
 ### With Custom Text
 
+<Canvas of={WithCustomTextStories.Demo} />
+
 ```html
 <forge-multi-select-header text="5 rows selected for processing"></forge-multi-select-header>
 ```
 
 ### With Select All Button
+
+<Canvas of={WithSelectAllButtonStories.Demo} />
 
 ```html
 <forge-multi-select-header text="3 items selected">
