@@ -81,8 +81,7 @@ export class MultiSelectHeaderComponent extends LitElement {
   #handleSelectAllClick(): void {
     const event = new CustomEvent('forge-multi-select-header-select-all', {
       bubbles: true,
-      composed: true,
-      cancelable: true
+      composed: true
     });
     this.dispatchEvent(event);
   }
