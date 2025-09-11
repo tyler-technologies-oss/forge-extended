@@ -1,13 +1,12 @@
 import { consume } from '@lit/context';
-import { Document } from '@tiptap/extension-document';
-import { Paragraph } from '@tiptap/extension-paragraph';
-import { Text } from '@tiptap/extension-text';
 import Underline from '@tiptap/extension-underline';
 import { IconRegistry } from '@tylertech/forge';
 import { tylIconFormatUnderlined } from '@tylertech/tyler-icons';
 import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { editorContext, EditorContext } from '../editor-context';
+import { RichTextEditorFeature } from './rich-text-editor-feature';
+
 import './core/rich-text-feature-button';
 
 declare global {
@@ -22,7 +21,7 @@ export const RteUnderlineComponentTagName: keyof HTMLElementTagNameMap = 'forge-
  * @tag forge-rte-underline
  */
 @customElement(RteUnderlineComponentTagName)
-export class RteUnderlineComponent extends LitElement {
+export class RteUnderlineComponent extends LitElement implements RichTextEditorFeature {
   static {
     IconRegistry.define(tylIconFormatUnderlined);
   }
@@ -33,11 +32,15 @@ export class RteUnderlineComponent extends LitElement {
     }
   `;
 
-  /** The label for the underline button */
+  /**
+   * The accessible label for the button.
+   * @default 'Underline'
+   * @attribute
+   */
   @property({ type: String })
-  public label = Underline.name;
+  public label = 'Underline';
 
-  public tools = [Document, Paragraph, Text, Underline];
+  public readonly extensions = [Underline];
 
   @state()
   @consume({ context: editorContext, subscribe: true })
@@ -48,17 +51,13 @@ export class RteUnderlineComponent extends LitElement {
   }
 
   public override render(): TemplateResult {
-    const { editor, disabled, readOnly } = this._editorContext ?? {};
-    const isDisabled = disabled || readOnly || !editor;
-    const isActive = editor?.isActive(Underline.name);
-
     return html`
       <forge-rte-tool-button
         @forge-rte-tool-toggle=${this._toggle}
         label=${this.label}
         icon=${tylIconFormatUnderlined.name}
-        ?disabled=${isDisabled}
-        ?active=${isActive}></forge-rte-tool-button>
+        ?disabled=${!this._editorContext.isEditable()}
+        ?active=${this._editorContext.isActive(Underline.name)}></forge-rte-tool-button>
     `;
   }
 

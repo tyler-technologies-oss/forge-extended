@@ -1,16 +1,32 @@
-forge-rich-text-context {
-  height: 800px;
+forge-rich-text-editor {
+  height: 300px;
+}
 
+forge-rich-text-context {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--forge-theme-outline);
+  background-color: var(--forge-theme-surface-container-minimum);
+  
   .toolbar {
     --forge-card-elevation: var(--forge-elevation-12);
+
+    width: 75%;
+    margin: var(--forge-spacing-small) auto 0;
   }
-
+  
   .content-container {
-    margin: var(--forge-spacing-large) auto;
-    background-color: var(--forge-theme-surface-container-low);
-
+    width: 100%;
+    height: 500px;
+    overflow: auto;
+    
     .content-card {
-      max-width: 500px;
+      --forge-card-padding: 0;
+
+      margin: var(--forge-spacing-large) auto;
+      max-width: 90%;
+      height: calc(100% - var(--forge-spacing-large) * 2);
     }
   }
 }
+

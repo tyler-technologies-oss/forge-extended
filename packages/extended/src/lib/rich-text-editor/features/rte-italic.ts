@@ -1,13 +1,12 @@
 import { consume } from '@lit/context';
-import { Document } from '@tiptap/extension-document';
 import Italic from '@tiptap/extension-italic';
-import { Paragraph } from '@tiptap/extension-paragraph';
-import { Text } from '@tiptap/extension-text';
 import { IconRegistry } from '@tylertech/forge';
 import { tylIconFormatItalic } from '@tylertech/tyler-icons';
 import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { editorContext, EditorContext } from '../editor-context';
+import { RichTextEditorFeature } from './rich-text-editor-feature';
+
 import './core/rich-text-feature-button';
 
 declare global {
@@ -22,7 +21,7 @@ export const RteItalicComponentTagName: keyof HTMLElementTagNameMap = 'forge-rte
  * @tag forge-rte-italic
  */
 @customElement(RteItalicComponentTagName)
-export class RteItalicComponent extends LitElement {
+export class RteItalicComponent extends LitElement implements RichTextEditorFeature {
   static {
     IconRegistry.define(tylIconFormatItalic);
   }
@@ -33,11 +32,15 @@ export class RteItalicComponent extends LitElement {
     }
   `;
 
-  /** The label for the italic button */
+  /**
+   * The accessible label for the button.
+   * @default 'Italic'
+   * @attribute
+   */
   @property({ type: String })
-  public label = Italic.name;
+  public label = 'Italic';
 
-  public tools = [Document, Paragraph, Text, Italic];
+  public readonly extensions = [Italic];
 
   @state()
   @consume({ context: editorContext, subscribe: true })
@@ -48,17 +51,13 @@ export class RteItalicComponent extends LitElement {
   }
 
   public override render(): TemplateResult {
-    const { editor, disabled, readOnly } = this._editorContext ?? {};
-    const isDisabled = disabled || readOnly || !editor;
-    const isActive = editor?.isActive(Italic.name);
-
     return html`
       <forge-rte-tool-button
         @forge-rte-tool-toggle=${this._toggle}
         label=${this.label}
         icon=${tylIconFormatItalic.name}
-        ?disabled=${isDisabled}
-        ?active=${isActive}></forge-rte-tool-button>
+        ?disabled=${!this._editorContext.isEditable()}
+        ?active=${this._editorContext.isActive(Italic.name)}></forge-rte-tool-button>
     `;
   }
 

@@ -1,7 +1,7 @@
 import { consume } from '@lit/context';
-import { Bold } from '@tiptap/extension-bold';
+import { ListItem, OrderedList } from '@tiptap/extension-list';
 import { IconRegistry } from '@tylertech/forge';
-import { tylIconFormatBold } from '@tylertech/tyler-icons';
+import { tylIconFormatListNumbered } from '@tylertech/tyler-icons';
 import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { editorContext, EditorContext } from '../editor-context';
@@ -11,19 +11,19 @@ import './core/rich-text-feature-button';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'forge-rte-bold': RichTextFeatureBoldComponent;
+    'forge-rte-ordered-list': RteOrderedListComponent;
   }
 }
 
-export const RichTextFeatureBoldComponentTagName: keyof HTMLElementTagNameMap = 'forge-rte-bold';
+export const RteOrderedListComponentTagName: keyof HTMLElementTagNameMap = 'forge-rte-ordered-list';
 
 /**
- * @tag forge-rte-bold
+ * @tag forge-rte-ordered-list
  */
-@customElement(RichTextFeatureBoldComponentTagName)
-export class RichTextFeatureBoldComponent extends LitElement implements RichTextEditorFeature {
+@customElement(RteOrderedListComponentTagName)
+export class RteOrderedListComponent extends LitElement implements RichTextEditorFeature {
   static {
-    IconRegistry.define(tylIconFormatBold);
+    IconRegistry.define(tylIconFormatListNumbered);
   }
 
   public static override styles = css`
@@ -34,13 +34,13 @@ export class RichTextFeatureBoldComponent extends LitElement implements RichText
 
   /**
    * The accessible label for the button.
-   * @default 'Bold'
+   * @default 'Ordered List'
    * @attribute
    */
   @property({ type: String })
-  public label = 'Bold';
+  public label = 'Ordered List';
 
-  public readonly extensions = [Bold];
+  public readonly extensions = [OrderedList, ListItem];
 
   @state()
   @consume({ context: editorContext, subscribe: true })
@@ -55,13 +55,13 @@ export class RichTextFeatureBoldComponent extends LitElement implements RichText
       <forge-rte-tool-button
         @forge-rte-tool-toggle=${this._toggle}
         label=${this.label}
-        icon=${tylIconFormatBold.name}
+        icon=${tylIconFormatListNumbered.name}
         ?disabled=${!this._editorContext.isEditable()}
-        ?active=${this._editorContext.isActive(Bold.name)}></forge-rte-tool-button>
+        ?active=${this._editorContext.isActive(OrderedList.name)}></forge-rte-tool-button>
     `;
   }
 
-  private async _toggle(_evt: CustomEvent): Promise<void> {
-    this._editorContext.editor?.chain().focus().toggleBold().run();
+  private _toggle(_evt: CustomEvent<boolean>): void {
+    this._editorContext.editor?.chain().focus().toggleOrderedList().run();
   }
 }

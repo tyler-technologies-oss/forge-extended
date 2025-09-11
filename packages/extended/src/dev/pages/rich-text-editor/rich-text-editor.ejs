@@ -1,16 +1,24 @@
-<h2 class="forge-typography--heading4">Rich Text Editor (standalone)</h2>
+<h2 class="forge-typography--heading4">Standalone</h2>
 <forge-rich-text-editor>
   <forge-rte-standard-tools></forge-rte-standard-tools>
+  <forge-rte-feature-divider></forge-rte-feature-divider>
+  <forge-rte-code></forge-rte-code>
+  <forge-rte-link></forge-rte-link>
   <!-- <forge-rte-forge-typography></forge-rte-forge-typography> -->
   <!-- <forge-rte-bold></forge-rte-bold>
   <forge-rte-italic></forge-rte-italic> -->
   <!-- <forge-rte-underline></forge-rte-underline> -->
 </forge-rich-text-editor>
 
-<h2 class="forge-typography--heading4">Rich Text Editor (composed)</h2>
+<h2 class="forge-typography--heading4">Renderer</h2>
+<forge-rich-text-renderer></forge-rich-text-renderer>
+
+<h2 class="forge-typography--heading4">Composed</h2>
 <forge-rich-text-context>
   <forge-card class="toolbar" raised>
-    <forge-rte-standard-tools></forge-rte-standard-tools>
+    <div>
+      <forge-rte-standard-tools></forge-rte-standard-tools>
+    </div>
   </forge-card>
   <div class="content-container">
     <forge-card class="content-card" raised>

@@ -15,6 +15,9 @@
 .forge-rich-text-editor {
   border: var(--forge-border-thin) solid var(--forge-theme-outline);
   border-radius: var(--forge-shape-medium);
+  height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 
 .editor-toolbar {

@@ -1,5 +1,8 @@
 import { provide } from '@lit/context';
-import { Editor as TipTapEditor } from '@tiptap/core';
+import { type AnyExtension, Editor as TipTapEditor } from '@tiptap/core';
+import { Document } from '@tiptap/extension-document';
+import { Text } from '@tiptap/extension-text';
+import { Paragraph } from '@tiptap/extension-paragraph';
 import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { editorContext, EditorContext } from './editor-context';
@@ -13,6 +16,8 @@ declare global {
 
 export const RichTextContextComponentTagName: keyof HTMLElementTagNameMap = 'forge-rich-text-context';
 
+const DEFAULT_EXTENSIONS: AnyExtension[] = [Document, Text, Paragraph];
+
 /**
  * @tag forge-rich-text-context
  *
@@ -20,6 +25,8 @@ export const RichTextContextComponentTagName: keyof HTMLElementTagNameMap = 'for
  * This component provides the context for the rich text editor and all auxiliary components.
  * It initializes the editor and provides methods to set the editor element and register features.
  * It also provides the editor context to child components.
+ *
+ * @event {CustomEvent<{ json: Record<string, any> }>} change - Fired when the content of the editor changes.
  */
 @customElement(RichTextContextComponentTagName)
 export class RichTextContextComponent extends LitElement {
@@ -91,6 +98,12 @@ export class RichTextContextComponent extends LitElement {
     disabled: false,
     readOnly: false,
     content: '',
+    isActive(identifier: string | object) {
+      return this.editor?.isActive(identifier) ?? false;
+    },
+    isEditable() {
+      return !this.disabled && !this.readOnly && !!this.editor;
+    },
     setEditorElement: this.#setEditorElement.bind(this),
     registerFeature: this.#registerFeature.bind(this)
   };
@@ -101,9 +114,8 @@ export class RichTextContextComponent extends LitElement {
   }
 
   public override willUpdate(changedProperties: PropertyValues<this>): void {
-    if (changedProperties.has('content')) {
-      // TODO: how to update content dynamically?
-      // this.editorContext.editor.content = this.content;
+    if (this.hasUpdated && changedProperties.has('content')) {
+      this.editorContext.editor?.commands.setContent(this.content);
     }
 
     if (changedProperties.has('disabled') || changedProperties.has('readOnly')) {
@@ -120,20 +132,21 @@ export class RichTextContextComponent extends LitElement {
     return html`<slot></slot>`;
   }
 
+  public toJSON(): object | undefined {
+    return this._editor?.getJSON();
+  }
+
   #initEditor(): void {
     this.#destroyEditor();
 
     // Features can contain duplicate extensions. Make sure to filter out any duplicates
-    const extensions = Array.from(this.#featureInstances)
-      .flatMap(toolEl => toolEl.tools)
-      .filter((ext, index, self) => self.findIndex(e => e.name === ext.name) === index);
+    const featureExtensions = Array.from(this.#featureInstances).flatMap(feature => feature.extensions);
+    const extensions = [...DEFAULT_EXTENSIONS, ...featureExtensions].filter(
+      (ext, index, self) => self.findIndex(e => e.name === ext.name) === index
+    );
 
     if (!this.#editorElement) {
       throw new Error('Editor element is not set. Please set the editor element before initializing the editor.');
-    }
-
-    if (!extensions.length) {
-      throw new Error('No extensions provided to the editor. Please register at least one feature.');
     }
 
     this._editor = new TipTapEditor({
@@ -142,24 +155,21 @@ export class RichTextContextComponent extends LitElement {
       content: this.editorContext.content,
       editable: !(this.editorContext.disabled || this.editorContext.readOnly),
       injectCSS: false,
-      onTransaction: () => this.#featureInstances.forEach(tool => tool.requestUpdate()),
+      onTransaction: () => this.#featureInstances.forEach(feature => feature.requestUpdate()),
       coreExtensionOptions: {
         clipboardTextSerializer: {
           blockSeparator: '\n'
         }
       },
       onUpdate: ({ editor }) => {
-        const content = editor.getHTML();
-        if (content !== this.editorContext.content) {
-          this.editorContext.content = content;
-          this.dispatchEvent(
-            new CustomEvent('change', {
-              detail: { content },
-              bubbles: true,
-              composed: true
-            })
-          );
-        }
+        const json = editor.getJSON();
+        this.dispatchEvent(
+          new CustomEvent('change', {
+            detail: { json },
+            bubbles: true,
+            composed: true
+          })
+        );
       }
     });
 

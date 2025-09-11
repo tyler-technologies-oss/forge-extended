@@ -1,6 +1,6 @@
-import { AnyExtension } from '@tiptap/core';
+import { type AnyExtension } from '@tiptap/core';
 
 export interface RichTextEditorFeature {
-  readonly tools: AnyExtension[];
+  readonly extensions: AnyExtension[];
   requestUpdate(): void;
 }

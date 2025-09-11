@@ -1,7 +1,7 @@
 import { consume } from '@lit/context';
-import { Bold } from '@tiptap/extension-bold';
+import { Strike } from '@tiptap/extension-strike';
 import { IconRegistry } from '@tylertech/forge';
-import { tylIconFormatBold } from '@tylertech/tyler-icons';
+import { tylIconFormatStrikethrough } from '@tylertech/tyler-icons';
 import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { editorContext, EditorContext } from '../editor-context';
@@ -11,19 +11,19 @@ import './core/rich-text-feature-button';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'forge-rte-bold': RichTextFeatureBoldComponent;
+    'forge-rte-strike': RichTextFeatureStrikeComponent;
   }
 }
 
-export const RichTextFeatureBoldComponentTagName: keyof HTMLElementTagNameMap = 'forge-rte-bold';
+export const RichTextFeatureStrikeComponentTagName: keyof HTMLElementTagNameMap = 'forge-rte-strike';
 
 /**
- * @tag forge-rte-bold
+ * @tag forge-rte-strike
  */
-@customElement(RichTextFeatureBoldComponentTagName)
-export class RichTextFeatureBoldComponent extends LitElement implements RichTextEditorFeature {
+@customElement(RichTextFeatureStrikeComponentTagName)
+export class RichTextFeatureStrikeComponent extends LitElement implements RichTextEditorFeature {
   static {
-    IconRegistry.define(tylIconFormatBold);
+    IconRegistry.define(tylIconFormatStrikethrough);
   }
 
   public static override styles = css`
@@ -34,13 +34,13 @@ export class RichTextFeatureBoldComponent extends LitElement implements RichText
 
   /**
    * The accessible label for the button.
-   * @default 'Bold'
+   * @default 'Strikethrough'
    * @attribute
    */
   @property({ type: String })
-  public label = 'Bold';
+  public label = 'Strikethrough';
 
-  public readonly extensions = [Bold];
+  public readonly extensions = [Strike];
 
   @state()
   @consume({ context: editorContext, subscribe: true })
@@ -55,13 +55,13 @@ export class RichTextFeatureBoldComponent extends LitElement implements RichText
       <forge-rte-tool-button
         @forge-rte-tool-toggle=${this._toggle}
         label=${this.label}
-        icon=${tylIconFormatBold.name}
+        icon=${tylIconFormatStrikethrough.name}
         ?disabled=${!this._editorContext.isEditable()}
-        ?active=${this._editorContext.isActive(Bold.name)}></forge-rte-tool-button>
+        ?active=${this._editorContext.isActive(Strike.name)}></forge-rte-tool-button>
     `;
   }
 
   private async _toggle(_evt: CustomEvent): Promise<void> {
-    this._editorContext.editor?.chain().focus().toggleBold().run();
+    this._editorContext.editor?.chain().focus().toggleStrike().run();
   }
 }

@@ -15,6 +15,12 @@ export interface EditorContext {
   /** Whether the editor is read-only */
   readonly readOnly: boolean;
 
+  /** Determines if a feature is active. */
+  isActive(identifier: string | object): boolean;
+
+  /** Whether the editor is editable. */
+  isEditable(): boolean;
+
   /** The text content of the editor */
   content: string;
 

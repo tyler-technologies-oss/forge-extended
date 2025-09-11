@@ -53,7 +53,8 @@ export class RteToolButtonComponent extends LitElement {
         toggle
         ?pressed=${this.active}
         @forge-icon-button-toggle=${this._toggle}
-        @pointerdown=${this._pointerDown}
+        @pointerdown=${this.#handlePointerDown}
+        @keydown=${this.#handleKeydown}
         ?disabled=${this.disabled}
         aria-label=${this.label}>
         <forge-icon .name=${this.icon}></forge-icon>
@@ -67,7 +68,17 @@ export class RteToolButtonComponent extends LitElement {
     this.dispatchEvent(new CustomEvent('forge-rte-tool-toggle', { detail: evt.detail }));
   }
 
-  private _pointerDown(evt: PointerEvent): void {
+  #handlePointerDown(evt: PointerEvent | KeyboardEvent): void {
     evt.preventDefault();
+  }
+
+  #handleKeydown(evt: KeyboardEvent): void {
+    if ([' ', 'Enter'].includes(evt.key)) {
+      evt.preventDefault();
+
+      if (evt.key === 'Enter') {
+        (evt.target as HTMLElement).click();
+      }
+    }
   }
 }
