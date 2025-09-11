@@ -1,5 +1,16 @@
 # @tylertech/forge-extended-angular
 
+## 1.1.0
+
+### Minor Changes
+
+- 3c79421: Created the new user profile component and dependency components
+
+### Patch Changes
+
+- Updated dependencies [3c79421]
+  - @tylertech/forge-extended@1.1.0
+
 ## 1.0.0
 
 ### Major Changes
