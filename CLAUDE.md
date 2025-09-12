@@ -128,6 +128,25 @@ pnpm plop:extended story
 - Styles: Import as `?inline` and use with `unsafeCSS()`
 - Slots: Use `@queryAssignedNodes()` or `@queryAssignedElements()` for slotted content
 
+### Icon Usage
+
+**ALWAYS define icons when using `forge-icon` or `forge-icon-button` components:**
+
+```typescript
+import { IconRegistry } from '@tylertech/forge';
+import { tylIconName1, tylIconName2 } from '@tylertech/tyler-icons';
+
+IconRegistry.define([tylIconName1, tylIconName2]);
+```
+
+This pattern must be followed in:
+- Core web components
+- Angular demo components 
+- React demo components
+- Any component using Forge icons
+
+Icons must be explicitly registered before they can be used by Forge components at runtime.
+
 ### SCSS Imports
 
 Use these proper Forge SCSS imports (do NOT use `@use '@tylertech/forge-core/styles'`):

@@ -30,6 +30,11 @@ const routes: Routes = [
   {
     path: 'user-profile',
     loadChildren: () => import('../../views/components/user-profile/user-profile.module').then(m => m.UserProfileModule)
+  },
+  {
+    path: 'multi-select-header',
+    loadChildren: () =>
+      import('../../views/components/multi-select-header/multi-select-header.module').then(m => m.MultiSelectHeaderModule)
   }
 ];
 
