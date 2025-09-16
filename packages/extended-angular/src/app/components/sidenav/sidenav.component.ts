@@ -59,6 +59,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
   public componentMenuItems: IMenuItem[] = [
     { label: 'Busy Indicator', value: '/component/busy-indicator' },
     { label: 'Confirmation Dialog', value: '/component/confirmation-dialog' },
+    { label: 'Multi Select Header', value: '/component/multi-select-header' },
     { label: 'Quantity Field', value: '/component/quantity-field' },
     { label: 'Responsive Toolbar', value: '/component/responsive-toolbar' },
     { label: 'User Profile', value: '/component/user-profile' }
