@@ -31,37 +31,31 @@ export function MultiSelectHeaderDemo(): JSX.Element {
       <div>
         {/* Configuration Controls */}
         <div style={{ marginBottom: '16px', display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-          <ForgeCheckbox 
-            checked={noBorder} 
-            onChange={(e: CustomEvent<boolean>) => setNoBorder((e.target as HTMLInputElement).checked)}
-          >
+          <ForgeCheckbox
+            checked={noBorder}
+            onChange={(e: CustomEvent<boolean>) => setNoBorder((e.target as HTMLInputElement).checked)}>
             <label>No border</label>
           </ForgeCheckbox>
-          <ForgeCheckbox 
-            checked={showSelectAllButton} 
-            onChange={(e: CustomEvent<boolean>) =>  setShowSelectAllButton((e.target as HTMLInputElement).checked)}
-          >
+          <ForgeCheckbox
+            checked={showSelectAllButton}
+            onChange={(e: CustomEvent<boolean>) => setShowSelectAllButton((e.target as HTMLInputElement).checked)}>
             <label>Show select all button</label>
           </ForgeCheckbox>
-          <ForgeCheckbox 
-            checked={showActions} 
-            onChange={(e: CustomEvent<boolean>) => setShowActions((e.target as HTMLInputElement).checked)}
-          >
+          <ForgeCheckbox
+            checked={showActions}
+            onChange={(e: CustomEvent<boolean>) => setShowActions((e.target as HTMLInputElement).checked)}>
             <label>Show action buttons</label>
           </ForgeCheckbox>
         </div>
 
         {/* Demo Component */}
-        <ForgeMultiSelectHeader 
+        <ForgeMultiSelectHeader
           text={selectionText}
           noBorder={noBorder}
-          onForgeMultiSelectHeaderSelectAll={handleSelectAll}
-        >
+          onForgeMultiSelectHeaderSelectAll={handleSelectAll}>
           {/* Select All Button Text (conditionally rendered) */}
-          {showSelectAllButton && (
-            <span slot="select-all-button-text">Select all</span>
-          )}
-          
+          {showSelectAllButton && <span slot="select-all-button-text">Select all</span>}
+
           {/* Action Buttons (conditionally rendered) */}
           {showActions && (
             <div slot="actions">
