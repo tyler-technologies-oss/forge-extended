@@ -34,7 +34,9 @@ const routes: Routes = [
   {
     path: 'multi-select-header',
     loadChildren: () =>
-      import('../../views/components/multi-select-header/multi-select-header.module').then(m => m.MultiSelectHeaderModule)
+      import('../../views/components/multi-select-header/multi-select-header.module').then(
+        m => m.MultiSelectHeaderModule
+      )
   }
 ];
 

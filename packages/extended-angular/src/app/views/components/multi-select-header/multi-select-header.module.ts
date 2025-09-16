@@ -1,6 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ForgeButtonModule, ForgeCheckboxModule, ForgeStackModule, ForgeIconModule, ForgeIconButtonModule } from '@tylertech/forge-angular';
+import {
+  ForgeButtonModule,
+  ForgeCheckboxModule,
+  ForgeStackModule,
+  ForgeIconModule,
+  ForgeIconButtonModule
+} from '@tylertech/forge-angular';
 
 import { DemoCardComponent } from '../../../shared/components/demo-card/demo-card.component';
 import { MultiSelectHeaderDemoComponent } from './multi-select-header.component';
