@@ -5,6 +5,7 @@ import { ForgeExtendedConfirmationDialogModule } from './confirmation-dialog/con
 import { ForgeExtendedResponsiveToolbarModule } from './responsive-toolbar/responsive-toolbar.module';
 import { ForgeExtendedProfileLinkModule } from './profile-link/profile-link.module';
 import { ForgeExtendedUserProfileModule } from './user-profile/user-profile.module';
+import { ForgeExtendedMultiSelectHeaderModule } from './multi-select-header/multi-select-header.module';
 
 @NgModule({
   exports: [
@@ -13,7 +14,8 @@ import { ForgeExtendedUserProfileModule } from './user-profile/user-profile.modu
     ForgeExtendedConfirmationDialogModule,
     ForgeExtendedResponsiveToolbarModule,
     ForgeExtendedProfileLinkModule,
-    ForgeExtendedUserProfileModule
+    ForgeExtendedUserProfileModule,
+    ForgeExtendedMultiSelectHeaderModule
   ]
 })
 export class ForgeExtendedModule {}
