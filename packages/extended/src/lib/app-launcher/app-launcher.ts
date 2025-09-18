@@ -425,6 +425,8 @@ export class AppLauncherComponent extends LitElement {
   ) => {
     this._smallScreen = e.matches;
     if (!isInitial) {
+      // eslint-disable-next-line no-console
+      console.log('Media change:', { matches: e.matches, open: this.open, popover: !!this._appLauncherPopover });
       requestAnimationFrame(() => {
         if (this._appLauncherPopover && this.open) {
           this._appLauncherPopover.open = true;
