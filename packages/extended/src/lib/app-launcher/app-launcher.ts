@@ -426,7 +426,7 @@ export class AppLauncherComponent extends LitElement {
     this._smallScreen = e.matches;
     if (!isInitial) {
       requestAnimationFrame(() => {
-        if (this._appLauncherPopover) {
+        if (this._appLauncherPopover && this.open) {
           this._appLauncherPopover.open = true;
         }
       });
