@@ -4,6 +4,439 @@
   "modules": [
     {
       "kind": "javascript-module",
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AppLauncherComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-app-launcher'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AppLauncherComponent",
+          "slots": [
+            {
+              "description": "Title text for the related apps section",
+              "name": "related-apps-title"
+            },
+            {
+              "description": "Title text for the all apps view",
+              "name": "all-apps-title"
+            },
+            {
+              "description": "Text for the button that switches to all apps view",
+              "name": "view-all-apps-button-text"
+            },
+            {
+              "description": "Title text for the custom links section",
+              "name": "custom-links-title"
+            },
+            {
+              "description": "Individual custom link items using forge-custom-link",
+              "name": "custom-link"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the dialog or popover is open.",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "appView",
+              "type": {
+                "text": "AppView"
+              },
+              "privacy": "public",
+              "default": "'related'",
+              "description": "The current view of the app launcher, either 'related' or 'all'.",
+              "attribute": "appView"
+            },
+            {
+              "kind": "field",
+              "name": "relatedApps",
+              "type": {
+                "text": "AppLauncherOption[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "description": "An array of related apps for the related apps view.",
+              "attribute": "relatedApps"
+            },
+            {
+              "kind": "field",
+              "name": "customLinks",
+              "type": {
+                "text": "AppLauncherCustomLink[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "description": "An array of custom links for the custom-links slot.",
+              "attribute": "customLinks"
+            },
+            {
+              "kind": "field",
+              "name": "allApps",
+              "type": {
+                "text": "AppLauncherOption[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "description": "An array of all available apps for the all apps view.",
+              "attribute": "allApps"
+            },
+            {
+              "kind": "field",
+              "name": "breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "768",
+              "description": "The breakpoint in pixels for responsive behavior. Below this value, the component will display as a dialog instead of a popover.",
+              "attribute": "breakpoint"
+            },
+            {
+              "kind": "field",
+              "name": "launcherAriaLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Open app launcher'",
+              "description": "ARIA label for the app launcher trigger button",
+              "attribute": "launcher-aria-label"
+            },
+            {
+              "kind": "field",
+              "name": "backAriaLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Go back'",
+              "description": "ARIA label for the back button",
+              "attribute": "back-aria-label"
+            },
+            {
+              "kind": "field",
+              "name": "closeAriaLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Close app launcher'",
+              "description": "ARIA label for the close button",
+              "attribute": "close-aria-label"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the dialog or popover is open.",
+              "fieldName": "open"
+            },
+            {
+              "name": "appView",
+              "type": {
+                "text": "AppView"
+              },
+              "default": "'related'",
+              "description": "The current view of the app launcher, either 'related' or 'all'.",
+              "fieldName": "appView"
+            },
+            {
+              "name": "relatedApps",
+              "type": {
+                "text": "AppLauncherOption[]"
+              },
+              "default": "[]",
+              "description": "An array of related apps for the related apps view.",
+              "fieldName": "relatedApps"
+            },
+            {
+              "name": "customLinks",
+              "type": {
+                "text": "AppLauncherCustomLink[]"
+              },
+              "default": "[]",
+              "description": "An array of custom links for the custom-links slot.",
+              "fieldName": "customLinks"
+            },
+            {
+              "name": "allApps",
+              "type": {
+                "text": "AppLauncherOption[]"
+              },
+              "default": "[]",
+              "description": "An array of all available apps for the all apps view.",
+              "fieldName": "allApps"
+            },
+            {
+              "name": "breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "default": "768",
+              "description": "The breakpoint in pixels for responsive behavior. Below this value, the component will display as a dialog instead of a popover.",
+              "fieldName": "breakpoint"
+            },
+            {
+              "name": "launcher-aria-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Open app launcher'",
+              "description": "ARIA label for the app launcher trigger button",
+              "fieldName": "launcherAriaLabel"
+            },
+            {
+              "name": "back-aria-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Go back'",
+              "description": "ARIA label for the back button",
+              "fieldName": "backAriaLabel"
+            },
+            {
+              "name": "close-aria-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Close app launcher'",
+              "description": "ARIA label for the close button",
+              "fieldName": "closeAriaLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-app-launcher",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLauncherComponentTagName",
+          "declaration": {
+            "name": "AppLauncherComponentTagName",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLauncherComponent",
+          "declaration": {
+            "name": "AppLauncherComponent",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLauncherComponent",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ConfirmationDialogComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-confirmation-dialog'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ConfirmationDialogComponent",
+          "slots": [
+            {
+              "description": "The title of the dialog",
+              "name": "title"
+            },
+            {
+              "description": "The dialog message",
+              "name": "message"
+            },
+            {
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
+            },
+            {
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
+            },
+            {
+              "kind": "field",
+              "name": "busyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+              },
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
+            },
+            {
+              "name": "busy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-confirmation-dialog",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponentTagName",
+          "declaration": {
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponent",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "declarations": [
         {
@@ -327,183 +760,6 @@
           "declaration": {
             "name": "BusyIndicatorComponent",
             "module": "src/lib/busy-indicator/busy-indicator.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-confirmation-dialog'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ConfirmationDialogComponent",
-          "slots": [
-            {
-              "description": "The title of the dialog",
-              "name": "title"
-            },
-            {
-              "description": "The dialog message",
-              "name": "message"
-            },
-            {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
-            },
-            {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "isBusy",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
-            },
-            {
-              "kind": "field",
-              "name": "busyLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
-              },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "fieldName": "open"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog",
-              "fieldName": "description"
-            },
-            {
-              "name": "is-busy",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
-            },
-            {
-              "name": "busy-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-confirmation-dialog",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
-          "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponent",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         }
       ]
@@ -1207,6 +1463,120 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/app-launcher/app-link/app-link.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AppLinkComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-app-link'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AppLinkComponent",
+          "slots": [
+            {
+              "description": "The `<a>` element for the link.",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-app-link",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLinkComponentTagName",
+          "declaration": {
+            "name": "AppLinkComponentTagName",
+            "module": "src/lib/app-launcher/app-link/app-link.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLinkComponent",
+          "declaration": {
+            "name": "AppLinkComponent",
+            "module": "src/lib/app-launcher/app-link/app-link.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLinkComponent",
+            "module": "src/lib/app-launcher/app-link/app-link.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/app-launcher/custom-link/custom-link.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "CustomLinkComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-custom-link'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "CustomLinkComponent",
+          "slots": [
+            {
+              "description": "The `<a>` element for the link.",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-custom-link",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "CustomLinkComponentTagName",
+          "declaration": {
+            "name": "CustomLinkComponentTagName",
+            "module": "src/lib/app-launcher/custom-link/custom-link.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "CustomLinkComponent",
+          "declaration": {
+            "name": "CustomLinkComponent",
+            "module": "src/lib/app-launcher/custom-link/custom-link.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "CustomLinkComponent",
+            "module": "src/lib/app-launcher/custom-link/custom-link.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
@@ -1267,23 +1637,23 @@
       ]
     }
   ],
-  "branchName": "multi-select-header-claude",
+  "branchName": "app-launcher-rewrite",
   "forgeTypes": {
-    "BusyIndicatorMode": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 25
+    "AppLauncherOption": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 41
     },
-    "BusyIndicatorVariant": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 26
+    "AppLauncherCustomLink": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 48
     },
-    "BusyIndicatorFocusMode": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 27
+    "AppView": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 53
     },
-    "BusyIndicatorComponent": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 39
+    "AppLauncherComponent": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 66
     },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
@@ -1300,6 +1670,22 @@
     "ConfirmationDialogComponent": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
+    },
+    "BusyIndicatorMode": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 25
+    },
+    "BusyIndicatorVariant": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 26
+    },
+    "BusyIndicatorFocusMode": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 27
+    },
+    "BusyIndicatorComponent": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 39
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
@@ -1336,6 +1722,14 @@
     "UserProfileComponent": {
       "path": "src/lib/user-profile/user-profile.ts",
       "lineNumber": 44
+    },
+    "AppLinkComponent": {
+      "path": "src/lib/app-launcher/app-link/app-link.ts",
+      "lineNumber": 20
+    },
+    "CustomLinkComponent": {
+      "path": "src/lib/app-launcher/custom-link/custom-link.ts",
+      "lineNumber": 20
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",

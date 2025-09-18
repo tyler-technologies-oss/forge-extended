@@ -1,0 +1,6 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+
+forge-list-item {
+  --forge-list-item-padding: 24px;
+  --forge-list-item-shape: #{forge-spacing.variable(xsmall)};
+}

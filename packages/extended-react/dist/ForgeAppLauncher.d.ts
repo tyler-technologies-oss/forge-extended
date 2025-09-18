@@ -1,0 +1,83 @@
+import React from "react";
+import { ForgeAppLauncher as ForgeAppLauncherElement } from "@tylertech/forge-extended/app-launcher";
+
+export type { ForgeAppLauncherElement };
+
+export interface ForgeAppLauncherProps
+  extends Pick<
+    React.AllHTMLAttributes<HTMLElement>,
+    | "children"
+    | "dir"
+    | "hidden"
+    | "id"
+    | "lang"
+    | "slot"
+    | "style"
+    | "title"
+    | "translate"
+    | "onClick"
+    | "onFocus"
+    | "onBlur"
+  > {
+  /** Indicates whether the dialog or popover is open. */
+  open?: boolean;
+
+  /** The current view of the app launcher, either 'related' or 'all'. */
+  appView?: ForgeAppLauncherElement["appView"];
+
+  /** An array of related apps for the related apps view. */
+  relatedApps?: ForgeAppLauncherElement["relatedApps"];
+
+  /** An array of custom links for the custom-links slot. */
+  customLinks?: ForgeAppLauncherElement["customLinks"];
+
+  /** An array of all available apps for the all apps view. */
+  allApps?: ForgeAppLauncherElement["allApps"];
+
+  /** The breakpoint in pixels for responsive behavior. Below this value, the component will display as a dialog instead of a popover. */
+  breakpoint?: ForgeAppLauncherElement["breakpoint"];
+
+  /** ARIA label for the app launcher trigger button */
+  launcherAriaLabel?: ForgeAppLauncherElement["launcherAriaLabel"];
+
+  /** ARIA label for the back button */
+  backAriaLabel?: ForgeAppLauncherElement["backAriaLabel"];
+
+  /** ARIA label for the close button */
+  closeAriaLabel?: ForgeAppLauncherElement["closeAriaLabel"];
+
+  /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
+  className?: string;
+
+  /** Contains a space-separated list of the part names of the element that should be exposed on the host element. */
+  exportparts?: string;
+
+  /** Used for labels to link them with their inputs (using input id). */
+  htmlFor?: string;
+
+  /** Used to help React identify which items have changed, are added, or are removed within a list. */
+  key?: number | string;
+
+  /** Contains a space-separated list of the part names of the element. Part names allows CSS to select and style specific elements in a shadow tree via the ::part pseudo-element. */
+  part?: string;
+
+  /** A mutable ref object whose `.current` property is initialized to the passed argument (`initialValue`). The returned object will persist for the full lifetime of the component. */
+  ref?: any;
+
+  /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
+  tabIndex?: number;
+}
+
+/**
+ *
+ * ---
+ *
+ *
+ * ### **Slots:**
+ *  - **related-apps-title** - Title text for the related apps section
+ * - **all-apps-title** - Title text for the all apps view
+ * - **view-all-apps-button-text** - Text for the button that switches to all apps view
+ * - **custom-links-title** - Title text for the custom links section
+ * - **custom-link** - Individual custom link items using forge-custom-link
+ */
+export const ForgeAppLauncher: React.ForwardRefExoticComponent<ForgeAppLauncherProps>;
