@@ -7,6 +7,9 @@ import { AppLauncherOption } from '$lib/app-launcher';
 import '$lib/app-launcher';
 import '$lib/app-launcher/custom-link';
 import '$lib/app-launcher/app-link';
+import { defineAppBarComponent } from '@tylertech/forge';
+
+defineAppBarComponent();
 
 const component = 'forge-app-launcher';
 
