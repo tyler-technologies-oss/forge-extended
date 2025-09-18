@@ -7,9 +7,6 @@ import { AppLauncherOption } from '$lib/app-launcher';
 import '$lib/app-launcher';
 import '$lib/app-launcher/custom-link';
 import '$lib/app-launcher/app-link';
-import { defineAppBarComponent } from '@tylertech/forge';
-
-defineAppBarComponent();
 
 const component = 'forge-app-launcher';
 
@@ -63,31 +60,28 @@ const meta = {
   title: 'Components/App Launcher',
   render: args => {
     return html`
-      <forge-app-bar no-border theme-mode="scoped">
-        <forge-app-launcher
-          .allApps=${allApps}
-          .relatedApps=${args.showRelatedApps ? relatedApps : []}
-          .breakpoint=${args.breakpoint}
-          slot="end">
-          <span slot="related-apps-title">${args.relatedAppsTitle}</span>
-          <span slot="all-apps-title">${args.allAppsTitle}</span>
-          <span slot="view-all-apps-button-text">${args.viewAllAppsButtonText}</span>
-          <span slot="custom-links-title">${args.customLinksTitle}</span>
-          ${args.showCustomLinks
-            ? html`
-                <forge-custom-link slot="custom-link">
-                  <a href="http://www.google.com" target="_blank">Payments Documentation</a>
-                </forge-custom-link>
-                <forge-custom-link slot="custom-link">
-                  <a href="http://www.google.com" target="_blank">Frequently Asked Questions</a>
-                </forge-custom-link>
-                <forge-custom-link slot="custom-link">
-                  <a href="http://www.google.com" target="_blank">Community Services Directory</a>
-                </forge-custom-link>
-              `
-            : nothing}
-        </forge-app-launcher>
-      </forge-app-bar>
+      <forge-app-launcher
+        .allApps=${allApps}
+        .relatedApps=${args.showRelatedApps ? relatedApps : []}
+        .breakpoint=${args.breakpoint}>
+        <span slot="related-apps-title">${args.relatedAppsTitle}</span>
+        <span slot="all-apps-title">${args.allAppsTitle}</span>
+        <span slot="view-all-apps-button-text">${args.viewAllAppsButtonText}</span>
+        <span slot="custom-links-title">${args.customLinksTitle}</span>
+        ${args.showCustomLinks
+          ? html`
+              <forge-custom-link slot="custom-link">
+                <a href="http://www.google.com" target="_blank">Payments Documentation</a>
+              </forge-custom-link>
+              <forge-custom-link slot="custom-link">
+                <a href="http://www.google.com" target="_blank">Frequently Asked Questions</a>
+              </forge-custom-link>
+              <forge-custom-link slot="custom-link">
+                <a href="http://www.google.com" target="_blank">Community Services Directory</a>
+              </forge-custom-link>
+            `
+          : nothing}
+      </forge-app-launcher>
     `;
   },
 
