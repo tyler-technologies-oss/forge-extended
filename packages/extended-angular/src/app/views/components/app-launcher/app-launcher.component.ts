@@ -1,8 +1,31 @@
 import { Component } from '@angular/core';
 import { IconRegistry } from '@tylertech/forge';
-import { tylIconFavorite, tylIconGridView } from '@tylertech/tyler-icons';
+import {
+  tylIconPayment,
+  tylIconAdminPanelSettings,
+  tylIconSecurity,
+  tylIconBatchPrediction,
+  tylIconSettingsSystemDaydream,
+  tylIconAccountBalance,
+  tylIconDashboard,
+  tylIconCalculate,
+  tylIconReportProblem,
+  tylIconHomeWork
+} from '@tylertech/tyler-icons';
+import { AppLauncherOption } from '@tylertech/forge-extended';
 
-IconRegistry.define([tylIconFavorite, tylIconGridView]);
+IconRegistry.define([
+  tylIconPayment,
+  tylIconAdminPanelSettings,
+  tylIconSecurity,
+  tylIconBatchPrediction,
+  tylIconSettingsSystemDaydream,
+  tylIconAccountBalance,
+  tylIconDashboard,
+  tylIconCalculate,
+  tylIconReportProblem,
+  tylIconHomeWork
+]);
 
 @Component({
   selector: 'app-app-launcher-demo',
@@ -11,66 +34,115 @@ IconRegistry.define([tylIconFavorite, tylIconGridView]);
   standalone: false
 })
 export class AppLauncherDemoComponent {
-  public appData = [
+  public breakpoint = 768;
+
+  // Full app data for main demo
+  public allApps: AppLauncherOption[] = [
     {
-      id: 'app-1',
-      name: 'Tyler ERP',
-      description: 'Enterprise Resource Planning',
-      icon: 'grid_view',
-      url: 'https://example.com/erp',
-      category: 'Business'
+      label: 'Cashiering',
+      iconName: 'payment',
+      uri: 'https://demo.ci.cashiering.tylerapp.com/cashiering/ui',
+      target: '_blank'
     },
     {
-      id: 'app-2',
-      name: 'Tyler CRM',
-      description: 'Customer Relationship Management',
-      icon: 'favorite',
-      url: 'https://example.com/crm',
-      category: 'Business'
+      label: 'Enterprise Justice',
+      iconName: 'account_balance',
+      uri: 'https://demo.ci.hub.tylerapp.com/main',
+      target: '_blank'
     },
     {
-      id: 'app-3',
-      name: 'Tyler Analytics',
-      description: 'Business Intelligence Dashboard',
-      icon: 'grid_view',
-      url: 'https://example.com/analytics',
-      category: 'Analytics'
+      label: 'Hub',
+      iconName: 'dashboard',
+      uri: 'https://demo.ci.hub.tylerapp.com/main',
+      target: '_blank'
     },
     {
-      id: 'app-4',
-      name: 'Tyler HR',
-      description: 'Human Resources Management',
-      icon: 'favorite',
-      url: 'https://example.com/hr',
-      category: 'Business'
+      label: 'Enterprise Assessment & Tax',
+      iconName: 'calculate',
+      uri: 'https://demo.ci.hub.tylerapp.com/main',
+      target: '_blank'
+    },
+    {
+      label: 'Enterprise Service Requests',
+      iconName: 'report_problem',
+      uri: 'https://demo.ci.esr.tylerapp.com/search',
+      target: '_blank'
+    },
+    {
+      label: 'Enterprise Permitting & Licensing',
+      iconName: 'home_work',
+      uri: 'https://demo.ci.energov.tylerdev.io/epl/energov-shell/',
+      target: '_blank'
     }
   ];
 
-  public customLinks = [
+  public relatedApps: AppLauncherOption[] = [
     {
-      id: 'custom-1',
-      label: 'Add New Application',
-      icon: 'grid_view',
-      action: () => this.onAddNewApp()
+      label: 'Payments Administration',
+      iconName: 'payment',
+      uri: 'http://www.google.com',
+      target: '_blank'
     },
     {
-      id: 'custom-2',
-      label: 'Manage Applications',
-      icon: 'favorite',
-      action: () => this.onManageApps()
+      label: 'PEP Administration',
+      iconName: 'admin_panel_settings',
+      uri: 'http://www.google.com',
+      target: '_blank'
+    },
+    {
+      label: 'Permissions',
+      iconName: 'security',
+      uri: 'http://www.google.com',
+      target: '_blank'
+    },
+    {
+      label: 'Batch Integration',
+      iconName: 'batch_prediction',
+      uri: 'http://www.google.com',
+      target: '_blank'
+    },
+    {
+      label: 'System Integration',
+      iconName: 'settings_system_daydream',
+      uri: 'http://www.google.com',
+      target: '_blank'
+    }
+  ];
+
+  // Simplified data for basic demo
+  public basicAllApps: AppLauncherOption[] = [
+    {
+      label: 'Cashiering',
+      iconName: 'payment',
+      uri: '#'
+    },
+    {
+      label: 'Hub',
+      iconName: 'dashboard',
+      uri: '#'
+    },
+    {
+      label: 'Enterprise Justice',
+      iconName: 'account_balance',
+      uri: '#'
+    }
+  ];
+
+  public basicRelatedApps: AppLauncherOption[] = [
+    {
+      label: 'Payments Administration',
+      iconName: 'payment',
+      uri: '#'
+    },
+    {
+      label: 'Permissions',
+      iconName: 'security',
+      uri: '#'
     }
   ];
 
   public onAppClick(event: CustomEvent): void {
     const app = event.detail;
     console.log('App clicked:', app);
-  }
-
-  public onAddNewApp(): void {
-    console.log('Add new application clicked');
-  }
-
-  public onManageApps(): void {
-    console.log('Manage applications clicked');
   }
 }

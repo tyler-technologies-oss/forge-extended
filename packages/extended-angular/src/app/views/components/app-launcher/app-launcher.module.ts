@@ -7,6 +7,7 @@ import { DemoCardComponent } from '../../../shared/components/demo-card/demo-car
 import { ForgeExtendedAppLauncherModule } from 'projects/forge-extended-angular/src/lib/app-launcher/app-launcher.module';
 import { ForgeExtendedAppLinkModule } from 'projects/forge-extended-angular/src/lib/app-link/app-link.module';
 import { ForgeExtendedCustomLinkModule } from 'projects/forge-extended-angular/src/lib/custom-link/custom-link.module';
+import { ForgeAppBarModule } from '@tylertech/forge-angular';
 
 @NgModule({
   declarations: [AppLauncherDemoComponent],
@@ -16,7 +17,8 @@ import { ForgeExtendedCustomLinkModule } from 'projects/forge-extended-angular/s
     DemoCardComponent,
     ForgeExtendedAppLauncherModule,
     ForgeExtendedAppLinkModule,
-    ForgeExtendedCustomLinkModule
+    ForgeExtendedCustomLinkModule,
+    ForgeAppBarModule
   ]
 })
 export class AppLauncherModule {}
