@@ -378,6 +378,8 @@ export class AppLauncherComponent extends LitElement {
                 if (newState === 'closed') {
                   await this._appLauncherPopover.hideAsync();
                   this.#resetState();
+                } else if (newState === 'open') {
+                  this.open = true;
                 }
               }}
               id="app-launcher-popover">
