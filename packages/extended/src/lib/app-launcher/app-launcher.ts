@@ -183,6 +183,8 @@ export class AppLauncherComponent extends LitElement {
     if (changedProperties.has('relatedApps')) {
       if (!this.relatedApps.length) {
         this.appView = 'all';
+      } else if (this.appView === 'all' && this.relatedApps.length) {
+        this.appView = 'related';
       }
     }
     if (changedProperties.has('breakpoint')) {
