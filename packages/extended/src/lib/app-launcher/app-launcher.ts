@@ -197,7 +197,7 @@ export class AppLauncherComponent extends LitElement {
       theme="app-bar"
       aria-label=${this.launcherAriaLabel}
       id="app-launcher-trigger"
-      @click=${() => (this.open = !this.open)}>
+      @click=${this._smallScreen ? () => (this.open = !this.open) : undefined}>
       <forge-icon name="apps"></forge-icon>
     </forge-icon-button>`;
   }
@@ -427,8 +427,6 @@ export class AppLauncherComponent extends LitElement {
   ) => {
     this._smallScreen = e.matches;
     if (!isInitial && this.isConnected) {
-      // eslint-disable-next-line no-console
-      console.log('Media change:', { matches: e.matches, open: this.open, popover: !!this._appLauncherPopover });
       requestAnimationFrame(() => {
         if (this._appLauncherPopover && this.open) {
           this._appLauncherPopover.open = true;
