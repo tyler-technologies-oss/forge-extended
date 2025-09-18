@@ -1,6 +1,6 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html, nextFrame } from '@open-wc/testing';
-import { AppLauncherComponent, AppLauncherOption, AppLauncherCustomLink, AppView } from './app-launcher';
+import { AppLauncherComponent, AppLauncherOption, AppLauncherCustomLink } from './app-launcher';
 import { PopoverComponent, DialogComponent } from '@tylertech/forge';
 import sinon from 'sinon';
 
@@ -18,7 +18,6 @@ describe('AppLauncher', () => {
       const el = await fixture<AppLauncherComponent>(html`<forge-app-launcher></forge-app-launcher>`);
 
       expect(el.open).to.be.false;
-      expect(el.appView).to.equal('all'); // Defaults to 'all' when no related apps
       expect(el.relatedApps).to.deep.equal([]);
       expect(el.customLinks).to.deep.equal([]);
       expect(el.allApps).to.deep.equal([]);
@@ -40,27 +39,34 @@ describe('AppLauncher', () => {
   });
 
   describe('String/Enum properties', () => {
-    it('should update appView property', async () => {
+    it('should switch views through user interactions', async () => {
       const harness = await createFixture();
 
-      expect(harness.el.appView).to.equal('related');
+      // Should start in related view (view all apps button should be visible)
+      expect(harness.viewAllAppsButton).to.exist;
+      expect(harness.backButton).to.not.exist;
 
-      harness.el.appView = 'all';
+      // Click View All Apps button to switch to all view
+      harness.viewAllAppsButton!.click();
       await nextFrame();
 
-      expect(harness.el.appView).to.equal('all');
+      // Should now be in all view (back button should be visible, view all apps button hidden)
+      expect(harness.backButton).to.exist;
+      expect(harness.viewAllAppsButton).to.not.exist;
     });
 
     it('should default to all view when no related apps provided', async () => {
       const harness = await createFixture({ relatedApps: [] });
 
-      expect(harness.el.appView).to.equal('all');
+      // Should be in all view (search field visible, no view all apps button, no back button since no related apps)
+      expect(harness.searchField).to.exist;
+      expect(harness.viewAllAppsButton).to.not.exist;
+      expect(harness.backButton).to.not.exist;
     });
 
     it('should show search field when in all view', async () => {
       const harness = await createFixture({
-        appView: 'all',
-        relatedApps: [] // Ensure it stays in all view
+        relatedApps: [] // No related apps means it starts in all view
       });
 
       expect(harness.searchField).to.exist;
@@ -68,10 +74,8 @@ describe('AppLauncher', () => {
 
     it('should hide search field when in related view', async () => {
       const harness = await createFixture({
-        appView: 'related',
-        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }]
+        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }] // Has related apps, starts in related view
       });
-      await nextFrame();
 
       expect(harness.searchField).to.not.exist;
     });
@@ -158,9 +162,12 @@ describe('AppLauncher', () => {
   describe('Back button aria-label property', () => {
     it('should set the aria-label of the back button to the backAriaLabel property', async () => {
       const harness = await createFixture({
-        appView: 'all',
-        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }] // Ensure back button shows
+        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }] // Start in related view
       });
+
+      // Click View All Apps button to get to all view where back button shows
+      harness.viewAllAppsButton!.click();
+      await nextFrame();
 
       harness.el.backAriaLabel = 'Return to previous view';
       await nextFrame();
@@ -172,9 +179,12 @@ describe('AppLauncher', () => {
 
     it('should set the aria-label of the back button via the back-aria-label attribute', async () => {
       const harness = await createFixture({
-        appView: 'all',
-        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }] // Ensure back button shows
+        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }] // Start in related view
       });
+
+      // Click View All Apps button to get to all view where back button shows
+      harness.viewAllAppsButton!.click();
+      await nextFrame();
 
       harness.el.setAttribute('back-aria-label', 'Navigate back');
       await nextFrame();
@@ -186,9 +196,12 @@ describe('AppLauncher', () => {
 
     it('should have default back button aria-label value', async () => {
       const harness = await createFixture({
-        appView: 'all',
-        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }] // Ensure back button shows
+        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }] // Start in related view
       });
+
+      // Click View All Apps button to get to all view where back button shows
+      harness.viewAllAppsButton!.click();
+      await nextFrame();
 
       expect(harness.el.backAriaLabel).to.equal('Go back');
 
@@ -235,13 +248,11 @@ describe('AppLauncher', () => {
   describe('State management', () => {
     it('should reset state when close button is clicked', async () => {
       const harness = await createFixture({
-        appView: 'all',
         open: true,
         relatedApps: [] // Ensure we stay in all view
       });
 
       // Set up initial state that will be reset
-      harness.el.appView = 'all';
       harness.el.open = true;
       await nextFrame();
 
@@ -261,7 +272,6 @@ describe('AppLauncher', () => {
       await nextFrame();
 
       // Verify resetState behavior
-      expect(harness.el.appView).to.equal('related');
       expect(harness.el.open).to.be.false;
 
       // Check that search field is not visible in related view (indicates filter was cleared)
@@ -272,12 +282,10 @@ describe('AppLauncher', () => {
       const harness = await createFixture();
 
       // Change state from defaults
-      harness.el.appView = 'all';
       harness.el.open = true;
       await nextFrame();
 
       // Verify state is changed
-      expect(harness.el.appView).to.equal('all');
       expect(harness.el.open).to.be.true;
 
       // Trigger reset by clicking close button
@@ -288,7 +296,6 @@ describe('AppLauncher', () => {
       await nextFrame();
 
       // Verify reset to initial state
-      expect(harness.el.appView).to.equal('related');
       expect(harness.el.open).to.be.false;
     });
   });
@@ -310,13 +317,11 @@ describe('AppLauncher', () => {
         }) as MediaQueryList;
 
       const harness = await createFixture({
-        appView: 'all',
         open: true,
         relatedApps: [] // Stay in all view
       });
 
       // Set up initial state that will be reset
-      harness.el.appView = 'all';
       harness.el.open = true;
 
       // Simulate typing in search field to set filter text
@@ -324,7 +329,6 @@ describe('AppLauncher', () => {
       await nextFrame();
 
       // Verify initial state
-      expect(harness.el.appView).to.equal('all');
       expect(harness.el.open).to.be.true;
       expect(harness.searchField).to.exist;
 
@@ -342,7 +346,6 @@ describe('AppLauncher', () => {
       await nextFrame();
 
       // Verify resetState was called by checking the state changes
-      expect(harness.el.appView).to.equal('related');
       expect(harness.el.open).to.be.false;
 
       // Search field should not be visible in related view (indicates filter was cleared)
@@ -368,18 +371,15 @@ describe('AppLauncher', () => {
         }) as MediaQueryList;
 
       const harness = await createFixture({
-        appView: 'all',
         open: true,
         relatedApps: []
       });
 
       // Set up initial state
-      harness.el.appView = 'all';
       harness.el.open = true;
       await nextFrame();
 
       // Verify initial state
-      expect(harness.el.appView).to.equal('all');
       expect(harness.el.open).to.be.true;
 
       const popover = harness.popover;
@@ -395,7 +395,6 @@ describe('AppLauncher', () => {
       await nextFrame();
 
       // State should remain unchanged
-      expect(harness.el.appView).to.equal('all');
       expect(harness.el.open).to.be.true;
 
       // Restore original matchMedia
@@ -444,13 +443,11 @@ describe('AppLauncher', () => {
         }) as MediaQueryList;
 
       const harness = await createFixture({
-        appView: 'all',
         open: true,
         relatedApps: [] // Stay in all view
       });
 
       // Set up initial state that will be reset
-      harness.el.appView = 'all';
       harness.el.open = true;
 
       // Simulate typing in search field to set filter text
@@ -458,7 +455,6 @@ describe('AppLauncher', () => {
       await nextFrame();
 
       // Verify initial state
-      expect(harness.el.appView).to.equal('all');
       expect(harness.el.open).to.be.true;
       expect(harness.searchField).to.exist;
 
@@ -475,7 +471,6 @@ describe('AppLauncher', () => {
       await nextFrame();
 
       // Verify resetState was called by checking the state changes
-      expect(harness.el.appView).to.equal('related');
       expect(harness.el.open).to.be.false;
 
       // Search field should not be visible in related view (indicates filter was cleared)
@@ -526,7 +521,6 @@ describe('AppLauncher', () => {
         }) as MediaQueryList;
 
       const dialogHarness = await createFixture({
-        appView: 'all',
         open: true,
         relatedApps: []
       });
@@ -545,7 +539,6 @@ describe('AppLauncher', () => {
       await nextFrame();
 
       // Verify dialog reset
-      expect(dialogHarness.el.appView).to.equal('related');
       expect(dialogHarness.el.open).to.be.false;
 
       // Test popover close - mock large screen
@@ -562,7 +555,6 @@ describe('AppLauncher', () => {
         }) as MediaQueryList;
 
       const popoverHarness = await createFixture({
-        appView: 'all',
         open: true,
         relatedApps: []
       });
@@ -584,7 +576,6 @@ describe('AppLauncher', () => {
       await nextFrame();
 
       // Verify popover reset matches dialog reset
-      expect(popoverHarness.el.appView).to.equal('related');
       expect(popoverHarness.el.open).to.be.false;
 
       // Restore original matchMedia
@@ -602,7 +593,7 @@ describe('AppLauncher', () => {
       ];
 
       const harness = await createFixture({
-        appView: 'all',
+        relatedApps: [], // No related apps means it starts in all view
         allApps
       });
 
@@ -645,7 +636,7 @@ describe('AppLauncher', () => {
       ];
 
       const harness = await createFixture({
-        appView: 'all',
+        relatedApps: [], // No related apps means it starts in all view
         allApps
       });
 
@@ -673,7 +664,7 @@ describe('AppLauncher', () => {
       ];
 
       const harness = await createFixture({
-        appView: 'all',
+        relatedApps: [], // No related apps means it starts in all view
         allApps
       });
 
@@ -698,7 +689,7 @@ describe('AppLauncher', () => {
       ];
 
       const harness = await createFixture({
-        appView: 'all',
+        relatedApps: [], // No related apps means it starts in all view
         allApps
       });
 
@@ -720,7 +711,6 @@ describe('AppLauncher', () => {
 
     it('should not show empty state when search field is empty', async () => {
       const harness = await createFixture({
-        appView: 'all',
         allApps: [] // No apps
       });
 
@@ -793,7 +783,7 @@ describe('AppLauncher', () => {
 
     it('should handle slotchange events for all-apps-title slot', async () => {
       const harness = await createFixture({
-        appView: 'all', // This will show the all apps title
+        // This will show the all apps title
         relatedApps: [] // Ensure we stay in all view
       });
 
@@ -849,7 +839,6 @@ describe('AppLauncher', () => {
 
     it('should handle slotchange when all-apps-title content changes', async () => {
       const harness = await createFixture({
-        appView: 'all',
         relatedApps: [] // Ensure we stay in all view
       });
 
@@ -887,7 +876,7 @@ describe('AppLauncher', () => {
   describe('View All Apps button functionality', () => {
     it('should switch to all apps view when View All Apps button is clicked', async () => {
       const harness = await createFixture({
-        appView: 'related', // Start in related view
+        // Start in related view
         relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }], // Ensure we have related apps
         allApps: [
           { label: 'All App 1', iconName: 'app1', uri: 'http://app1.com' },
@@ -896,7 +885,6 @@ describe('AppLauncher', () => {
       });
 
       // Verify initial state is related view
-      expect(harness.el.appView).to.equal('related');
 
       // Verify the View All Apps button is visible in related view
       const viewAllAppsButton = harness.viewAllAppsButton;
@@ -910,7 +898,6 @@ describe('AppLauncher', () => {
       await nextFrame();
 
       // Verify the view switched to 'all'
-      expect(harness.el.appView).to.equal('all');
 
       // Verify search field is now visible in all view
       expect(harness.searchField).to.exist;
@@ -921,18 +908,18 @@ describe('AppLauncher', () => {
 
     it('should switch back to related apps view when back arrow button is clicked', async () => {
       const harness = await createFixture({
-        appView: 'all', // Start in all view
-        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }], // Ensure we have related apps
+        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }], // Start in related view
         allApps: [
           { label: 'All App 1', iconName: 'app1', uri: 'http://app1.com' },
           { label: 'All App 2', iconName: 'app2', uri: 'http://app2.com' }
         ]
       });
 
-      // Verify initial state is all view
-      expect(harness.el.appView).to.equal('all');
+      // First need to get to all view by clicking View All Apps button
+      harness.viewAllAppsButton!.click();
+      await nextFrame();
 
-      // Verify search field is visible in all view
+      // Now verify we're in all view with search field visible
       expect(harness.searchField).to.exist;
 
       // Verify the back button is visible in all view
@@ -947,7 +934,6 @@ describe('AppLauncher', () => {
       await nextFrame();
 
       // Verify the view switched back to 'related'
-      expect(harness.el.appView).to.equal('related');
 
       // Verify search field is no longer visible in related view
       expect(harness.searchField).to.not.exist;
@@ -961,16 +947,18 @@ describe('AppLauncher', () => {
 
     it('should clear search field input when switching back to related apps view', async () => {
       const harness = await createFixture({
-        appView: 'all', // Start in all view
-        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }], // Ensure we have related apps
+        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }], // Start in related view
         allApps: [
           { label: 'Payment System', iconName: 'payment', uri: 'http://payment.com' },
           { label: 'User Management', iconName: 'users', uri: 'http://users.com' }
         ]
       });
 
-      // Verify we're in all view with search field visible
-      expect(harness.el.appView).to.equal('all');
+      // First need to get to all view by clicking View All Apps button
+      harness.viewAllAppsButton!.click();
+      await nextFrame();
+
+      // Verify we're now in all view with search field visible
       expect(harness.searchField).to.exist;
 
       // Type something in the search field
@@ -992,7 +980,6 @@ describe('AppLauncher', () => {
       await nextFrame();
 
       // Verify we're back in related view
-      expect(harness.el.appView).to.equal('related');
 
       // Switch back to all view to check if search field was cleared
       const viewAllAppsButton = harness.viewAllAppsButton;
@@ -1001,7 +988,6 @@ describe('AppLauncher', () => {
       await nextFrame();
 
       // Verify we're back in all view
-      expect(harness.el.appView).to.equal('all');
       expect(harness.searchField).to.exist;
 
       // Verify the search field input value has been cleared
@@ -1046,7 +1032,7 @@ class AppLauncherHarness {
   }
 
   public get backButton(): HTMLElement | null {
-    return this.el.shadowRoot!.querySelector('forge-icon-button[aria-label="Go back"]') as HTMLElement;
+    return this.el.shadowRoot!.querySelector('forge-icon-button[slot="before-start"]') as HTMLElement;
   }
 
   public get appList(): HTMLElement | null {
@@ -1076,7 +1062,6 @@ class AppLauncherHarness {
 
 interface AppLauncherFixtureConfig {
   open?: boolean;
-  appView?: AppView;
   relatedApps?: AppLauncherOption[];
   customLinks?: AppLauncherCustomLink[];
   allApps?: AppLauncherOption[];
@@ -1085,7 +1070,6 @@ interface AppLauncherFixtureConfig {
 
 async function createFixture({
   open = false,
-  appView = 'related',
   relatedApps = [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }],
   customLinks = [],
   allApps = [
@@ -1097,7 +1081,6 @@ async function createFixture({
   const el = await fixture<AppLauncherComponent>(html`
     <forge-app-launcher
       .open=${open}
-      .appView=${appView}
       .relatedApps=${relatedApps}
       .customLinks=${customLinks}
       .allApps=${allApps}

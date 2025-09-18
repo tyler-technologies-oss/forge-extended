@@ -95,8 +95,8 @@ export class AppLauncherComponent extends LitElement {
   public open = false;
 
   /** The current view of the app launcher, either 'related' or 'all'. */
-  @property({ type: String })
-  public appView: AppView = 'related';
+  @state()
+  private _appView: AppView = 'related';
 
   /** An array of related apps for the related apps view. */
   @property({ type: Array })
@@ -167,7 +167,7 @@ export class AppLauncherComponent extends LitElement {
   public connectedCallback(): void {
     super.connectedCallback();
     if (!this.relatedApps.length) {
-      this.appView = 'all';
+      this._appView = 'all';
     }
     this.#setupMediaQuery();
   }
@@ -182,9 +182,9 @@ export class AppLauncherComponent extends LitElement {
   public override willUpdate(changedProperties: PropertyValues<this>): void {
     if (changedProperties.has('relatedApps')) {
       if (!this.relatedApps.length) {
-        this.appView = 'all';
-      } else if (this.appView === 'all' && this.relatedApps.length) {
-        this.appView = 'related';
+        this._appView = 'all';
+      } else if (this._appView === 'all' && this.relatedApps.length) {
+        this._appView = 'related';
       }
     }
     if (changedProperties.has('breakpoint')) {
@@ -203,7 +203,7 @@ export class AppLauncherComponent extends LitElement {
   }
 
   get #backButton(): TemplateResult | typeof nothing {
-    const showBackButton = this.appView === 'all' && this.relatedApps.length;
+    const showBackButton = this._appView === 'all' && this.relatedApps.length;
     return when(
       showBackButton,
       () => html`
@@ -237,7 +237,7 @@ export class AppLauncherComponent extends LitElement {
   }
 
   get #relatedApps(): TemplateResult | typeof nothing {
-    const showrelatedApps = this.appView === 'related';
+    const showrelatedApps = this._appView === 'related';
     return when(
       showrelatedApps,
       () => html`
@@ -249,7 +249,7 @@ export class AppLauncherComponent extends LitElement {
   }
 
   get #searchAllAppsField(): TemplateResult | typeof nothing {
-    const showSearchInput = this.appView === 'all';
+    const showSearchInput = this._appView === 'all';
     return when(
       showSearchInput,
       () => html`
@@ -268,7 +268,7 @@ export class AppLauncherComponent extends LitElement {
   }
 
   get #allApps(): TemplateResult | typeof nothing {
-    const showAllApps = this.appView === 'all';
+    const showAllApps = this._appView === 'all';
     return when(
       showAllApps,
       () => html`
@@ -285,7 +285,7 @@ export class AppLauncherComponent extends LitElement {
   }
 
   get #viewAllAppsButton(): TemplateResult | typeof nothing {
-    const showAllAppsButton = this.appView === 'related';
+    const showAllAppsButton = this._appView === 'related';
     return when(
       showAllAppsButton,
       () => html`
@@ -316,7 +316,7 @@ export class AppLauncherComponent extends LitElement {
 
   get #searchContainer(): TemplateResult | typeof nothing {
     return when(
-      this.appView === 'all',
+      this._appView === 'all',
       () => html`<div class="search-container">${this.#searchAllAppsField}</div>`,
       () => nothing
     );
@@ -332,7 +332,7 @@ export class AppLauncherComponent extends LitElement {
 
   get #viewAllAppsButtonContainer(): TemplateResult | typeof nothing {
     return when(
-      this.appView === 'related',
+      this._appView === 'related',
       () => html`<div class="view-all-apps-button">${this.#viewAllAppsButton}</div>`,
       () => nothing
     );
@@ -348,7 +348,7 @@ export class AppLauncherComponent extends LitElement {
 
   get #containerContent(): TemplateResult {
     const innerContainerClass =
-      this.appView === 'related' && this._smallScreen ? 'inner-container related-view' : 'inner-container';
+      this._appView === 'related' && this._smallScreen ? 'inner-container related-view' : 'inner-container';
     return html`
       <div class="outer-container">
         ${this.#header}
@@ -439,12 +439,12 @@ export class AppLauncherComponent extends LitElement {
   }
 
   async #transitionToView(newView: AppView): Promise<void> {
-    if (this.appView === newView) {
+    if (this._appView === newView) {
       return;
     }
 
     // Change the view
-    this.appView = newView;
+    this._appView = newView;
 
     // Reset filter text when going back to related view
     if (newView === 'related') {
@@ -465,7 +465,7 @@ export class AppLauncherComponent extends LitElement {
   }
 
   #resetState(): void {
-    this.appView = 'related';
+    this._appView = 'related';
     this._filterText = '';
     this.open = false;
     if (this._appLauncherPopover) {
