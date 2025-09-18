@@ -3,6 +3,6 @@ import { tryDefine } from '@tylertech/forge-core';
 
 export * from './custom-link';
 
-export function defineUserProfileComponent(): void {
+export function defineCustomLinkComponent(): void {
   tryDefine(CustomLinkComponentTagName, CustomLinkComponent);
 }

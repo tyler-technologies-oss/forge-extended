@@ -7,4 +7,6 @@ export * from './user-profile';
 export * from './user-profile/profile-link';
 export * from './multi-select-header';
 export * from './app-launcher';
+export * from './app-launcher/app-link';
+export * from './app-launcher/custom-link';
 // -- EXPORTS PLACEHOLDER (DO NOT REMOVE) --
