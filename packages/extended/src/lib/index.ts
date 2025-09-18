@@ -5,5 +5,6 @@ export * from './confirmation-dialog';
 export * from './theme-toggle';
 export * from './user-profile';
 export * from './user-profile/profile-link';
+export * from './multi-select-header';
 export * from './app-launcher';
 // -- EXPORTS PLACEHOLDER (DO NOT REMOVE) --
