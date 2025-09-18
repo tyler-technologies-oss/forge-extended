@@ -526,7 +526,6 @@ describe('AppLauncher', () => {
       });
 
       // Set up state for dialog
-      dialogHarness.el.appView = 'all';
       dialogHarness.el.open = true;
       await nextFrame();
 
@@ -560,7 +559,6 @@ describe('AppLauncher', () => {
       });
 
       // Set up state for popover
-      popoverHarness.el.appView = 'all';
       popoverHarness.el.open = true;
       await nextFrame();
 
@@ -723,7 +721,7 @@ describe('AppLauncher', () => {
   describe('Slot change handling', () => {
     it('should handle slotchange events for monitored slots and trigger update', async () => {
       const harness = await createFixture({
-        appView: 'related' // Ensure related apps view to render related-apps-title slot
+        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }] // Ensure related apps view to render related-apps-title slot
       });
 
       // Spy on requestUpdate to verify it gets called
@@ -753,7 +751,7 @@ describe('AppLauncher', () => {
 
     it('should handle slotchange events for view-all-apps-button-text slot', async () => {
       const harness = await createFixture({
-        appView: 'related' // This will show the "View all apps" button
+        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }] // This will show the "View all apps" button
       });
 
       // Spy on requestUpdate
