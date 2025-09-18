@@ -424,7 +424,7 @@ export class AppLauncherComponent extends LitElement {
     isInitial?: boolean
   ) => {
     this._smallScreen = e.matches;
-    if (!isInitial) {
+    if (!isInitial && this.isConnected) {
       // eslint-disable-next-line no-console
       console.log('Media change:', { matches: e.matches, open: this.open, popover: !!this._appLauncherPopover });
       requestAnimationFrame(() => {
