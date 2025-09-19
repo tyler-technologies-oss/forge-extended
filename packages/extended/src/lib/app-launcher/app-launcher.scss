@@ -8,8 +8,8 @@
 //
 
 :host {
-  --avatar-size: 48px;
-  --inner-container-width: 500px;
+  --forge-app-launcher-avatar-size: 48px;
+  --forge-app-launcher-width: 500px;
   display: contents;
   padding: 0;
 
@@ -75,7 +75,7 @@ forge-popover {
   min-height: 0;
   padding: #{forge-spacing.variable(medium)};
   padding-block-start: 0;
-  width: var(--inner-container-width);
+  width: var(--forge-app-launcher-width);
 
   &.related-view {
     grid-template-rows: auto 1fr;
@@ -146,7 +146,7 @@ forge-dialog {
   --forge-dialog-height: 100dvh;
 
   --avatar-size: 48px;
-  --inner-container-width: 100%;
+  --forge-app-launcher-width: 100%;
 
   forge-card {
     min-height: 0;
@@ -155,8 +155,4 @@ forge-dialog {
   .view-all-apps-button {
     padding: 0;
   }
-}
-
-.dialog-body {
-  padding: #{forge-spacing.variable(medium)};
 }

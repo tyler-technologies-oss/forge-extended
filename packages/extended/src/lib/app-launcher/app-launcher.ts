@@ -64,6 +64,9 @@ export const AppLauncherComponentTagName: keyof HTMLElementTagNameMap = 'forge-a
  * @slot view-all-apps-button-text - Text for the button that switches to all apps view
  * @slot custom-links-title - Title text for the custom links section
  * @slot custom-link - Individual custom link items using forge-custom-link
+ *
+ * @cssproperty --forge-app-launcher-width - Controls the width of the app launcher container. Default is 500px for popover mode, 100% for dialog mode.
+ * @cssproperty --forge-app-launcher-avatar-size - Controls the size of the app launcher avatar. Default is 48px.
  */
 @customElement(AppLauncherComponentTagName)
 export class AppLauncherComponent extends LitElement {
