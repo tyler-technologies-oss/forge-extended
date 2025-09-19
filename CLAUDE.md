@@ -226,6 +226,7 @@ src/lib/[component-name]/
 - To run component tests, the command is pnpm run test:extended
 - Never use npm in this repo, ALWAYS use pnpm
 - When using ANY forge web component in a Lit component, always make sure it has it's define function imported and called. For example: definePopoverComponent();
+- When using the @property decorator in lit for complex properties like arrays, always make sure to pass attribute: false into the options object it to make sure the React wrappers generate correctly
 
 ### Conditional Content Pattern
 
