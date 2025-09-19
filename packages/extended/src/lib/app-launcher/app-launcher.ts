@@ -11,6 +11,7 @@ import {
   defineIconButtonComponent,
   defineIconComponent,
   defineListComponent,
+  definePopoverComponent,
   defineScaffoldComponent,
   defineTextFieldComponent,
   defineToolbarComponent,
@@ -66,6 +67,7 @@ export const AppLauncherComponentTagName: keyof HTMLElementTagNameMap = 'forge-a
 @customElement(AppLauncherComponentTagName)
 export class AppLauncherComponent extends LitElement {
   static {
+    definePopoverComponent();
     defineAvatarComponent();
     defineCardComponent();
     defineIconButtonComponent();
@@ -197,7 +199,7 @@ export class AppLauncherComponent extends LitElement {
       theme="app-bar"
       aria-label=${this.launcherAriaLabel}
       id="app-launcher-trigger"
-      @click=${this._smallScreen ? () => (this.open = !this.open) : undefined}>
+      @click=${this._smallScreen ? () => (this.open = !this.open) : null}>
       <forge-icon name="apps"></forge-icon>
     </forge-icon-button>`;
   }

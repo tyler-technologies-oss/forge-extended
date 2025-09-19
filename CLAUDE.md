@@ -225,6 +225,7 @@ src/lib/[component-name]/
 - Always update the MDX storybook docs when new features are added to a component, things like events, slots, properties, etc
 - To run component tests, the command is pnpm run test:extended
 - Never use npm in this repo, ALWAYS use pnpm
+- When using ANY forge web component in a Lit component, always make sure it has it's define function imported and called. For example: definePopoverComponent();
 
 ### Conditional Content Pattern
 
