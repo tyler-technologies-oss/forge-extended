@@ -7,8 +7,11 @@ import { AppLauncherOption } from '$lib/app-launcher';
 import '$lib/app-launcher';
 import '$lib/app-launcher/custom-link';
 import '$lib/app-launcher/app-link';
+import { defineAppBarComponent } from '@tylertech/forge';
 
 const component = 'forge-app-launcher';
+
+defineAppBarComponent();
 
 const selectRandomIconForDemo = () => {
   const randomIndex = Math.floor(Math.random() * icons.length);
@@ -70,28 +73,31 @@ const meta = {
 
     return html`
       ${style}
-      <forge-app-launcher
-        .allApps=${allApps}
-        .relatedApps=${args.showRelatedApps ? relatedApps : []}
-        .breakpoint=${args.breakpoint}>
-        <span slot="related-apps-title">${args.relatedAppsTitle}</span>
-        <span slot="all-apps-title">${args.allAppsTitle}</span>
-        <span slot="view-all-apps-button-text">${args.viewAllAppsButtonText}</span>
-        <span slot="custom-links-title">${args.customLinksTitle}</span>
-        ${args.showCustomLinks
-          ? html`
-              <forge-custom-link slot="custom-link">
-                <a href="http://www.google.com" target="_blank">Payments Documentation</a>
-              </forge-custom-link>
-              <forge-custom-link slot="custom-link">
-                <a href="http://www.google.com" target="_blank">Frequently Asked Questions</a>
-              </forge-custom-link>
-              <forge-custom-link slot="custom-link">
-                <a href="http://www.google.com" target="_blank">Community Services Directory</a>
-              </forge-custom-link>
-            `
-          : nothing}
-      </forge-app-launcher>
+      <forge-app-bar theme-mode="scoped" title-text="App Launcher">
+        <forge-app-launcher
+          slot="end"
+          .allApps=${allApps}
+          .relatedApps=${args.showRelatedApps ? relatedApps : []}
+          .breakpoint=${args.breakpoint}>
+          <span slot="related-apps-title">${args.relatedAppsTitle}</span>
+          <span slot="all-apps-title">${args.allAppsTitle}</span>
+          <span slot="view-all-apps-button-text">${args.viewAllAppsButtonText}</span>
+          <span slot="custom-links-title">${args.customLinksTitle}</span>
+          ${args.showCustomLinks
+            ? html`
+                <forge-custom-link slot="custom-link">
+                  <a href="http://www.google.com" target="_blank">Payments Documentation</a>
+                </forge-custom-link>
+                <forge-custom-link slot="custom-link">
+                  <a href="http://www.google.com" target="_blank">Frequently Asked Questions</a>
+                </forge-custom-link>
+                <forge-custom-link slot="custom-link">
+                  <a href="http://www.google.com" target="_blank">Community Services Directory</a>
+                </forge-custom-link>
+              `
+            : nothing}
+        </forge-app-launcher>
+      </forge-app-bar>
     `;
   },
 
