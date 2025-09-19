@@ -51,17 +51,6 @@ export class AppLauncherComponent {
     return this.nativeElement.relatedApps;
   }
 
-  /** An array of custom links for the custom-links slot. */
-  @Input()
-  public set customLinks(value: AppLauncherComponentCustomElement['customLinks']) {
-    this.zone.runOutsideAngular(() => {
-      this.nativeElement.customLinks = value;
-    });
-  }
-  public get customLinks(): AppLauncherComponentCustomElement['customLinks'] {
-    return this.nativeElement.customLinks;
-  }
-
   /** An array of all available apps for the all apps view. */
   @Input()
   public set allApps(value: AppLauncherComponentCustomElement['allApps']) {

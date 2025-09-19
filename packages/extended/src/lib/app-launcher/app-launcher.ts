@@ -98,15 +98,11 @@ export class AppLauncherComponent extends LitElement {
   public open = false;
 
   /** An array of related apps for the related apps view. */
-  @property({ type: Array })
+  @property({ type: Array, attribute: false })
   public relatedApps: AppLauncherOption[] = [];
 
-  /** An array of custom links for the custom-links slot. */
-  @property({ type: Array })
-  public customLinks: AppLauncherCustomLink[] = [];
-
   /** An array of all available apps for the all apps view. */
-  @property({ type: Array })
+  @property({ type: Array, attribute: false })
   public allApps: AppLauncherOption[] = [];
 
   /** The breakpoint in pixels for responsive behavior. Below this value, the component will display as a dialog instead of a popover. */

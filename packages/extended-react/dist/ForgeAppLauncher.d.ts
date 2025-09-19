@@ -22,15 +22,6 @@ export interface ForgeAppLauncherProps
   /** Indicates whether the dialog or popover is open. */
   open?: boolean;
 
-  /** An array of related apps for the related apps view. */
-  relatedApps?: ForgeAppLauncherElement["relatedApps"];
-
-  /** An array of custom links for the custom-links slot. */
-  customLinks?: ForgeAppLauncherElement["customLinks"];
-
-  /** An array of all available apps for the all apps view. */
-  allApps?: ForgeAppLauncherElement["allApps"];
-
   /** The breakpoint in pixels for responsive behavior. Below this value, the component will display as a dialog instead of a popover. */
   breakpoint?: ForgeAppLauncherElement["breakpoint"];
 
@@ -63,6 +54,12 @@ export interface ForgeAppLauncherProps
 
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
+
+  /** An array of related apps for the related apps view. */
+  relatedApps?: ForgeAppLauncherElement["relatedApps"];
+
+  /** An array of all available apps for the all apps view. */
+  allApps?: ForgeAppLauncherElement["allApps"];
 }
 
 /**

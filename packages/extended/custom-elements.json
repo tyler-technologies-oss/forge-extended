@@ -70,19 +70,7 @@
               },
               "privacy": "public",
               "default": "[]",
-              "description": "An array of related apps for the related apps view.",
-              "attribute": "relatedApps"
-            },
-            {
-              "kind": "field",
-              "name": "customLinks",
-              "type": {
-                "text": "AppLauncherCustomLink[]"
-              },
-              "privacy": "public",
-              "default": "[]",
-              "description": "An array of custom links for the custom-links slot.",
-              "attribute": "customLinks"
+              "description": "An array of related apps for the related apps view."
             },
             {
               "kind": "field",
@@ -92,8 +80,7 @@
               },
               "privacy": "public",
               "default": "[]",
-              "description": "An array of all available apps for the all apps view.",
-              "attribute": "allApps"
+              "description": "An array of all available apps for the all apps view."
             },
             {
               "kind": "field",
@@ -149,33 +136,6 @@
               "default": "false",
               "description": "Indicates whether the dialog or popover is open.",
               "fieldName": "open"
-            },
-            {
-              "name": "relatedApps",
-              "type": {
-                "text": "AppLauncherOption[]"
-              },
-              "default": "[]",
-              "description": "An array of related apps for the related apps view.",
-              "fieldName": "relatedApps"
-            },
-            {
-              "name": "customLinks",
-              "type": {
-                "text": "AppLauncherCustomLink[]"
-              },
-              "default": "[]",
-              "description": "An array of custom links for the custom-links slot.",
-              "fieldName": "customLinks"
-            },
-            {
-              "name": "allApps",
-              "type": {
-                "text": "AppLauncherOption[]"
-              },
-              "default": "[]",
-              "description": "An array of all available apps for the all apps view.",
-              "fieldName": "allApps"
             },
             {
               "name": "breakpoint",
