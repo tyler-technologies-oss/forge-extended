@@ -59,7 +59,17 @@ const relatedApps: AppLauncherOption[] = [
 const meta = {
   title: 'Components/App Launcher',
   render: args => {
+    const style = html`
+      <style>
+        forge-app-launcher {
+          --forge-app-launcher-width: ${args.width}px;
+          --forge-app-launcher-avatar-size: ${args.avatarSize}px;
+        }
+      </style>
+    `;
+
     return html`
+      ${style}
       <forge-app-launcher
         .allApps=${allApps}
         .relatedApps=${args.showRelatedApps ? relatedApps : []}
@@ -92,7 +102,9 @@ const meta = {
     relatedAppsTitle: { control: 'text' },
     allAppsTitle: { control: 'text' },
     viewAllAppsButtonText: { control: 'text' },
-    breakpoint: { control: { type: 'number', min: 320, max: 1920, step: 10 } }
+    breakpoint: { control: { type: 'number', min: 320, max: 1920, step: 10 } },
+    width: { control: { type: 'number', min: 300, max: 800, step: 10 } },
+    avatarSize: { control: { type: 'number', min: 24, max: 96, step: 4 } }
   },
   args: {
     showRelatedApps: true,
@@ -101,7 +113,9 @@ const meta = {
     allAppsTitle: 'All apps',
     viewAllAppsButtonText: 'View all apps',
     customLinksTitle: 'Custom links',
-    breakpoint: 768
+    breakpoint: 768,
+    width: 500,
+    avatarSize: 48
   }
 } satisfies Meta;
 
