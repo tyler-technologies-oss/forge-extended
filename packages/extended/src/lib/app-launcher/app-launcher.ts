@@ -169,7 +169,7 @@ export class AppLauncherComponent extends LitElement {
 
   public connectedCallback(): void {
     super.connectedCallback();
-    if (!this.relatedApps.length) {
+    if (!this.relatedApps?.length) {
       this._appView = 'all';
     }
     this.#setupMediaQuery();
@@ -184,9 +184,9 @@ export class AppLauncherComponent extends LitElement {
 
   public override willUpdate(changedProperties: PropertyValues<this>): void {
     if (changedProperties.has('relatedApps')) {
-      if (!this.relatedApps.length) {
+      if (!this.relatedApps?.length) {
         this._appView = 'all';
-      } else if (this._appView === 'all' && this.relatedApps.length) {
+      } else if (this._appView === 'all' && this.relatedApps?.length) {
         this._appView = 'related';
       }
     }
@@ -206,7 +206,7 @@ export class AppLauncherComponent extends LitElement {
   }
 
   get #backButton(): TemplateResult | typeof nothing {
-    const showBackButton = this._appView === 'all' && this.relatedApps.length;
+    const showBackButton = this._appView === 'all' && this.relatedApps?.length;
     return when(
       showBackButton,
       () => html`
@@ -245,7 +245,7 @@ export class AppLauncherComponent extends LitElement {
       showrelatedApps,
       () => html`
         ${this.#relatedAppsTitleSlot}
-        <forge-list>${this.relatedApps.map(app => html` ${this.#appListItem(app)} `)}</forge-list>
+        <forge-list>${this.relatedApps?.map(app => html` ${this.#appListItem(app)} `)}</forge-list>
       `,
       () => nothing
     );
@@ -276,11 +276,11 @@ export class AppLauncherComponent extends LitElement {
       showAllApps,
       () => html`
         ${when(
-          !this.#filteredApps.length && this._filterText,
+          !this.#filteredApps?.length && this._filterText,
           () => html`${this.#emptyState}`,
           () =>
             html` <h2>${this.#allAppsTitleSlot}</h2>
-              <forge-list>${this.#filteredApps.map(app => html` ${this.#appListItem(app)} `)}</forge-list>`
+              <forge-list>${this.#filteredApps?.map(app => html` ${this.#appListItem(app)} `)}</forge-list>`
         )}
       `,
       () => nothing
@@ -361,7 +361,7 @@ export class AppLauncherComponent extends LitElement {
   }
 
   get #filteredApps(): AppLauncherOption[] {
-    return this.allApps.filter(app => app.label.toLowerCase().includes(this._filterText));
+    return this.allApps?.filter(app => app.label.toLowerCase().includes(this._filterText));
   }
 
   public override render(): TemplateResult {

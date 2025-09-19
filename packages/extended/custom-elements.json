@@ -1631,19 +1631,19 @@
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 43
+      "lineNumber": 41
     },
     "AppLauncherCustomLink": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 50
+      "lineNumber": 48
     },
     "AppView": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 55
+      "lineNumber": 53
     },
     "AppLauncherComponent": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 71
+      "lineNumber": 69
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
