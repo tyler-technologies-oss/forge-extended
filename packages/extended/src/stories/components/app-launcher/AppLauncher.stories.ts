@@ -62,17 +62,7 @@ const relatedApps: AppLauncherOption[] = [
 const meta = {
   title: 'Components/App Launcher',
   render: args => {
-    const style = html`
-      <style>
-        forge-app-launcher {
-          --forge-app-launcher-width: ${args.width}px;
-          --forge-app-launcher-avatar-size: ${args.avatarSize}px;
-        }
-      </style>
-    `;
-
     return html`
-      ${style}
       <forge-app-bar theme-mode="scoped" title-text="App Launcher">
         <forge-app-launcher
           slot="end"
