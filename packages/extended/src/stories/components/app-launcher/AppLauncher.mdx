@@ -22,10 +22,31 @@ When using the app launcher within an app bar, you should set the `theme-mode="s
 
 ```html
 <forge-app-bar theme-mode="scoped">
-  <forge-app-launcher slot="end" .allApps="${allApps}" .relatedApps="${relatedApps}">
+  <forge-app-launcher slot="end" id="app-launcher">
     <!-- Content slots -->
   </forge-app-launcher>
 </forge-app-bar>
+
+<script>
+  const appLauncher = document.querySelector('#app-launcher');
+
+  const allApps = [
+    {
+      label: 'Payments Administration',
+      iconName: 'payment',
+      uri: 'http://www.google.com',
+      target: '_blank'
+    },
+    {
+      label: 'PEP Administration',
+      iconName: 'admin_panel_settings',
+      uri: 'http://www.google.com',
+      target: '_blank'
+    }
+  ];
+
+  appLauncher.allApps = allApps;
+</script>
 ```
 
 ## Views
@@ -74,11 +95,17 @@ The component automatically adapts to screen size using a configurable media que
 The default breakpoint is 768px, but can be customized using the `breakpoint` property:
 
 ```html
-<!-- Default breakpoint of 768px -->
-<forge-app-launcher .allApps="${allApps}"></forge-app-launcher>
-
 <!-- Custom breakpoint of 1024px -->
-<forge-app-launcher .allApps="${allApps}" .breakpoint="${1024}"></forge-app-launcher>
+<forge-app-bar theme-mode="scoped">
+  <forge-app-launcher slot="end" id="app-launcher">
+    <!-- Content slots -->
+  </forge-app-launcher>
+</forge-app-bar>
+
+<script>
+  const appLauncher = document.querySelector('#app-launcher');
+  appLauncher.breakpoint = 1024;
+</script>
 ```
 
 ## API
