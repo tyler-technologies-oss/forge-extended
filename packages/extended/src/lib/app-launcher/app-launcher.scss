@@ -42,13 +42,10 @@ forge-popover {
   @include mixins.stack;
 }
 
-.p-16 {
-  padding: #{forge-spacing.variable(medium)};
-}
-
-.v-stack.p-16 {
+.scroll-container {
   height: 100%;
   min-height: 0;
+  padding: #{forge-spacing.variable(medium)};
 }
 
 .header {
