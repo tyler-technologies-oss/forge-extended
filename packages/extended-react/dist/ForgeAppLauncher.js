@@ -4,7 +4,6 @@ import "@tylertech/forge-extended/app-launcher";
 export const ForgeAppLauncher = forwardRef((props, forwardedRef) => {
   const {
     open,
-    appView,
     relatedApps,
     customLinks,
     allApps,
@@ -19,7 +18,6 @@ export const ForgeAppLauncher = forwardRef((props, forwardedRef) => {
     "forge-app-launcher",
     {
       ...filteredProps,
-      appView: props.appView,
       relatedApps: props.relatedApps,
       customLinks: props.customLinks,
       allApps: props.allApps,

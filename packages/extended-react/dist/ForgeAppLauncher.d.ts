@@ -22,9 +22,6 @@ export interface ForgeAppLauncherProps
   /** Indicates whether the dialog or popover is open. */
   open?: boolean;
 
-  /** The current view of the app launcher, either 'related' or 'all'. */
-  appView?: ForgeAppLauncherElement["appView"];
-
   /** An array of related apps for the related apps view. */
   relatedApps?: ForgeAppLauncherElement["relatedApps"];
 
@@ -79,5 +76,9 @@ export interface ForgeAppLauncherProps
  * - **view-all-apps-button-text** - Text for the button that switches to all apps view
  * - **custom-links-title** - Title text for the custom links section
  * - **custom-link** - Individual custom link items using forge-custom-link
+ *
+ * ### **CSS Properties:**
+ *  - **--forge-app-launcher-width** - Controls the width of the app launcher container. Default is 500px for popover mode, 100% for dialog mode. _(default: undefined)_
+ * - **--forge-app-launcher-avatar-size** - Controls the size of the app launcher avatar. Default is 48px. _(default: undefined)_
  */
 export const ForgeAppLauncher: React.ForwardRefExoticComponent<ForgeAppLauncherProps>;

@@ -40,17 +40,6 @@ export class AppLauncherComponent {
     return this.nativeElement.open;
   }
 
-  /** The current view of the app launcher, either 'related' or 'all'. */
-  @Input()
-  public set appView(value: AppLauncherComponentCustomElement['appView']) {
-    this.zone.runOutsideAngular(() => {
-      this.nativeElement.appView = value;
-    });
-  }
-  public get appView(): AppLauncherComponentCustomElement['appView'] {
-    return this.nativeElement.appView;
-  }
-
   /** An array of related apps for the related apps view. */
   @Input()
   public set relatedApps(value: AppLauncherComponentCustomElement['relatedApps']) {
