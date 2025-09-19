@@ -25,10 +25,8 @@ import {
   tylIconOpenInNew,
   tylIconSearch,
   tylIconChevronRight,
-  tylIconList,
   tylIconClose,
-  tylIconArrowBack,
-  tylIconHome
+  tylIconArrowBack
 } from '@tylertech/tyler-icons';
 
 import styles from './app-launcher.scss?inline';
@@ -88,10 +86,8 @@ export class AppLauncherComponent extends LitElement {
       tylIconOpenInNew,
       tylIconSearch,
       tylIconChevronRight,
-      tylIconList,
       tylIconClose,
-      tylIconArrowBack,
-      tylIconHome
+      tylIconArrowBack
     ]);
   }
 
@@ -100,10 +96,6 @@ export class AppLauncherComponent extends LitElement {
   /** Indicates whether the dialog or popover is open. */
   @property({ type: Boolean })
   public open = false;
-
-  /** The current view of the app launcher, either 'related' or 'all'. */
-  @state()
-  private _appView: AppView = 'related';
 
   /** An array of related apps for the related apps view. */
   @property({ type: Array })
@@ -132,6 +124,10 @@ export class AppLauncherComponent extends LitElement {
   /** ARIA label for the close button */
   @property({ type: String, attribute: 'close-aria-label' })
   public closeAriaLabel = 'Close app launcher';
+
+  /** The current view of the app launcher, either 'related' or 'all'. */
+  @state()
+  private _appView: AppView = 'related';
 
   @state()
   private _filterText = '';
