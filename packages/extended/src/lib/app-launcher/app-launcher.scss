@@ -42,7 +42,7 @@ forge-popover {
   @include mixins.stack;
 }
 
-.scroll-container {
+.app-list-container {
   height: 100%;
   min-height: 0;
   padding: #{forge-spacing.variable(medium)};
