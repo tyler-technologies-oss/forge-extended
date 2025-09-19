@@ -6,6 +6,7 @@ import { query } from 'lit/decorators/query.js';
 
 import {
   defineAvatarComponent,
+  defineButtonComponent,
   defineCardComponent,
   defineDialogComponent,
   defineIconButtonComponent,
@@ -67,16 +68,17 @@ export const AppLauncherComponentTagName: keyof HTMLElementTagNameMap = 'forge-a
 @customElement(AppLauncherComponentTagName)
 export class AppLauncherComponent extends LitElement {
   static {
-    definePopoverComponent();
     defineAvatarComponent();
+    defineButtonComponent();
     defineCardComponent();
+    defineDialogComponent();
     defineIconButtonComponent();
     defineIconComponent();
     defineListComponent();
+    definePopoverComponent();
+    defineScaffoldComponent();
     defineTextFieldComponent();
     defineToolbarComponent();
-    defineScaffoldComponent();
-    defineDialogComponent();
 
     IconRegistry.define([
       tylIconApps,
