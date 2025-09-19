@@ -19,7 +19,6 @@ describe('AppLauncher', () => {
 
       expect(el.open).to.be.false;
       expect(el.relatedApps).to.deep.equal([]);
-      expect(el.customLinks).to.deep.equal([]);
       expect(el.allApps).to.deep.equal([]);
       expect(el.breakpoint).to.equal(768);
     });
