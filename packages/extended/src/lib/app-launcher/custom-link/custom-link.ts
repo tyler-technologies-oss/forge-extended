@@ -1,8 +1,9 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { defineListComponent } from '@tylertech/forge';
+import { defineListComponent, IconRegistry } from '@tylertech/forge';
 
 import styles from './custom-link.scss?inline';
+import { tylIconOpenInNew } from '@tylertech/tyler-icons';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -21,6 +22,8 @@ export const CustomLinkComponentTagName: keyof HTMLElementTagNameMap = 'forge-cu
 export class CustomLinkComponent extends LitElement {
   static {
     defineListComponent();
+
+    IconRegistry.define([tylIconOpenInNew]);
   }
 
   public static override styles = unsafeCSS(styles);
@@ -28,7 +31,7 @@ export class CustomLinkComponent extends LitElement {
   public override render(): TemplateResult {
     return html`
       <forge-list-item>
-        <forge-icon slot="start" name="open_in_new" external></forge-icon>
+        <forge-icon slot="start" name="open_in_new"></forge-icon>
         <slot></slot>
       </forge-list-item>
     `;
