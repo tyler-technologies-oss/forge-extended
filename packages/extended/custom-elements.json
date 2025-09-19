@@ -1679,7 +1679,7 @@
     },
     "CustomLinkComponent": {
       "path": "src/lib/app-launcher/custom-link/custom-link.ts",
-      "lineNumber": 20
+      "lineNumber": 21
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",

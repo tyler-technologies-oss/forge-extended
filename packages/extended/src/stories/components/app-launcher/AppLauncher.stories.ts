@@ -66,6 +66,7 @@ const meta = {
       <forge-app-bar theme-mode="scoped" title-text="App Launcher">
         <forge-app-launcher
           slot="end"
+          style="--forge-app-launcher-width: ${args.width}px; --forge-app-launcher-avatar-size: ${args.avatarSize}px;"
           .allApps=${allApps}
           .relatedApps=${args.showRelatedApps ? relatedApps : []}
           .breakpoint=${args.breakpoint}>
