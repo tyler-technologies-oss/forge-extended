@@ -332,7 +332,7 @@ export class AppLauncherComponent extends LitElement {
   get #appContent(): TemplateResult {
     return html`
       <div class="app-list-container v-stack">
-        <div class="app-group v-stack">${this.#relatedApps} ${this.#allApps}</div>
+        <div class="scroll-container v-stack">${this.#relatedApps} ${this.#allApps}</div>
       </div>
     `;
   }
