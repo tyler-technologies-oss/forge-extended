@@ -69,6 +69,35 @@ A comprehensive view displaying all available applications with:
 - Complete list of applications in the Tyler Cloud ecosystem
 - Back button to return to the related apps view (when available)
 
+### Loading View
+
+A skeleton loading state that displays while application data is being fetched:
+
+- Configurable number of skeleton placeholders via the `numberOfSkeletons` property
+- Replaces all other content when the `loading` property is set to `true`
+- Provides visual feedback during async operations
+- Automatically returns to the previous view when loading completes
+
+```html
+<forge-app-launcher loading number-of-skeletons="8">
+  <!-- Slots will be hidden during loading state -->
+</forge-app-launcher>
+
+<script>
+  const appLauncher = document.querySelector('forge-app-launcher');
+
+  // Show loading state
+  appLauncher.loading = true;
+  appLauncher.numberOfSkeletons = 6;
+
+  // Simulate data loading
+  setTimeout(() => {
+    appLauncher.loading = false;
+    // Set your app data here
+  }, 2000);
+</script>
+```
+
 ## Custom Links
 
 The component supports custom links through the `<forge-custom-link>` utility component, which provides accessible and visually consistent links within the launcher. Custom links appear in a separate section and are ideal for documentation, FAQ pages, or other supplementary resources.

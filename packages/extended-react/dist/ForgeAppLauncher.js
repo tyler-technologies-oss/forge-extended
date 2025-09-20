@@ -6,10 +6,12 @@ export const ForgeAppLauncher = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
   const {
     open,
+    loading,
     breakpoint,
     launcherAriaLabel,
     backAriaLabel,
     closeAriaLabel,
+    numberOfSkeletons,
     relatedApps,
     allApps,
     ...filteredProps
@@ -36,12 +38,15 @@ export const ForgeAppLauncher = forwardRef((props, forwardedRef) => {
         props.launcherAriaLabel || props["launcher-aria-label"],
       "back-aria-label": props.backAriaLabel || props["back-aria-label"],
       "close-aria-label": props.closeAriaLabel || props["close-aria-label"],
+      "number-of-skeletons":
+        props.numberOfSkeletons || props["number-of-skeletons"],
       class: props.className,
       exportparts: props.exportparts,
       for: props.htmlFor,
       part: props.part,
       tabindex: props.tabIndex,
       open: props.open ? "" : undefined,
+      loading: props.loading ? "" : undefined,
       style: { ...props.style },
     },
     props.children,

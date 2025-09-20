@@ -138,6 +138,32 @@ forge-popover {
   }
 }
 
+.loading-state {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  height: 100%;
+  gap: #{forge-spacing.variable(small)};
+
+  forge-skeleton {
+    height: calc(var(--forge-app-launcher-avatar-size) + #{forge-spacing.variable(xsmall)});
+    width: 100%;
+    --forge-skeleton-margin: 0;
+  }
+
+  .title-skeleton {
+    height: 16px;
+    width: 96px;
+    justify-self: start;
+  }
+
+  .button-skeleton {
+    height: 36px;
+    width: 100%;
+    flex: 1;
+  }
+}
+
 forge-dialog {
   --forge-dialog-width: 100vw;
   --forge-dialog-height: 100dvh;

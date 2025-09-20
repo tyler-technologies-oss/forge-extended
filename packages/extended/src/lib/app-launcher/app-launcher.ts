@@ -14,6 +14,7 @@ import {
   defineListComponent,
   definePopoverComponent,
   defineScaffoldComponent,
+  defineSkeletonComponent,
   defineTextFieldComponent,
   defineToolbarComponent,
   IconRegistry,
@@ -50,7 +51,7 @@ export interface AppLauncherCustomLink {
   uri: string;
 }
 
-export type AppView = 'related' | 'all';
+export type AppView = 'related' | 'all' | 'loading';
 
 export const AppLauncherComponentTagName: keyof HTMLElementTagNameMap = 'forge-app-launcher';
 
@@ -80,6 +81,7 @@ export class AppLauncherComponent extends LitElement {
     defineScaffoldComponent();
     defineTextFieldComponent();
     defineToolbarComponent();
+    defineSkeletonComponent();
 
     IconRegistry.define([
       tylIconApps,
@@ -121,9 +123,21 @@ export class AppLauncherComponent extends LitElement {
   @property({ type: String, attribute: 'close-aria-label' })
   public closeAriaLabel = 'Close app launcher';
 
-  /** The current view of the app launcher, either 'related' or 'all'. */
+  /** Indicates whether the app launcher is in a loading state. */
+  @property({ type: Boolean })
+  public loading = false;
+
+  /** Number of skeleton items to show in the loading state. */
+  @property({ type: Number, attribute: 'number-of-skeletons' })
+  public numberOfSkeletons = 5;
+
+  /** The current view of the app launcher, either 'related', 'all', or 'loading'. */
   @state()
   private _appView: AppView = 'related';
+
+  /** The previous view before entering loading state. */
+  @state()
+  private _previousView: Exclude<AppView, 'loading'> = 'related';
 
   @state()
   private _filterText = '';
@@ -179,13 +193,29 @@ export class AppLauncherComponent extends LitElement {
   }
 
   public override willUpdate(changedProperties: PropertyValues<this>): void {
-    if (changedProperties.has('relatedApps')) {
-      if (!this.relatedApps?.length) {
-        this._appView = 'all';
-      } else if (this._appView === 'all' && this.relatedApps?.length) {
-        this._appView = 'related';
+    if (changedProperties.has('loading')) {
+      if (this.loading) {
+        // Store current view before switching to loading
+        if (this._appView !== 'loading') {
+          this._previousView = this._appView;
+        }
+        this._appView = 'loading';
+      } else {
+        // Restore previous view when loading completes
+        this._appView = this._previousView;
       }
     }
+
+    if (changedProperties.has('relatedApps') && !this.loading) {
+      if (!this.relatedApps?.length) {
+        this._appView = 'all';
+        this._previousView = 'all';
+      } else if (this._appView === 'all' && this.relatedApps?.length) {
+        this._appView = 'related';
+        this._previousView = 'related';
+      }
+    }
+
     if (changedProperties.has('breakpoint')) {
       this.#setupMediaQuery();
     }
@@ -283,12 +313,26 @@ export class AppLauncherComponent extends LitElement {
     );
   }
 
+  get #loading(): TemplateResult | typeof nothing {
+    return when(
+      this._appView === 'loading',
+      () => html`
+        <div class="loading-state">
+          <forge-skeleton class="title-skeleton"></forge-skeleton>
+          ${Array.from({ length: this.numberOfSkeletons }, () => html`<forge-skeleton></forge-skeleton>`)}
+          <forge-skeleton class="button-skeleton"></forge-skeleton>
+        </div>
+      `,
+      () => nothing
+    );
+  }
+
   get #viewAllAppsButton(): TemplateResult | typeof nothing {
     const showAllAppsButton = this._appView === 'related';
     return when(
       showAllAppsButton,
       () => html`
-        <forge-button variant="raised" @click=${this.#switchToAllAppsView}>
+        <forge-button variant="raised" ?disabled=${this.loading} @click=${this.#switchToAllAppsView}>
           <span>${this.#viewAllAppsButtonSlot}</span>
           <forge-icon name="chevron_right"></forge-icon>
         </forge-button>
@@ -324,7 +368,7 @@ export class AppLauncherComponent extends LitElement {
   get #appContent(): TemplateResult {
     return html`
       <div class="app-list-container v-stack">
-        <div class="scroll-container v-stack">${this.#relatedApps} ${this.#allApps}</div>
+        <div class="scroll-container v-stack">${this.#relatedApps} ${this.#allApps} ${this.#loading}</div>
       </div>
     `;
   }
@@ -466,7 +510,9 @@ export class AppLauncherComponent extends LitElement {
   }
 
   #resetState(): void {
-    this._appView = 'related';
+    this.loading = false;
+    this._appView = this.relatedApps?.length ? 'related' : 'all';
+    this._previousView = this._appView;
     this._filterText = '';
     this.open = false;
     if (this._appLauncherPopover) {

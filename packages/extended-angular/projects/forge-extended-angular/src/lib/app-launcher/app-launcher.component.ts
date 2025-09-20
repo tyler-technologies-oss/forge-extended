@@ -106,6 +106,28 @@ export class AppLauncherComponent {
     return this.nativeElement.closeAriaLabel;
   }
 
+  /** Indicates whether the app launcher is in a loading state. */
+  @Input({ transform: booleanAttribute })
+  public set loading(value: AppLauncherComponentCustomElement['loading']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.loading = value;
+    });
+  }
+  public get loading(): AppLauncherComponentCustomElement['loading'] {
+    return this.nativeElement.loading;
+  }
+
+  /** Number of skeleton items to show in the loading state. */
+  @Input({ transform: numberAttribute })
+  public set numberOfSkeletons(value: AppLauncherComponentCustomElement['numberOfSkeletons']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.numberOfSkeletons = value;
+    });
+  }
+  public get numberOfSkeletons(): AppLauncherComponentCustomElement['numberOfSkeletons'] {
+    return this.nativeElement.numberOfSkeletons;
+  }
+
   constructor() {
     defineAppLauncherComponent();
     const changeDetectorRef = inject(ChangeDetectorRef);

@@ -22,6 +22,9 @@ export interface ForgeAppLauncherProps
   /** Indicates whether the dialog or popover is open. */
   open?: boolean;
 
+  /** Indicates whether the app launcher is in a loading state. */
+  loading?: boolean;
+
   /** The breakpoint in pixels for responsive behavior. Below this value, the component will display as a dialog instead of a popover. */
   breakpoint?: ForgeAppLauncherElement["breakpoint"];
 
@@ -33,6 +36,9 @@ export interface ForgeAppLauncherProps
 
   /** ARIA label for the close button */
   closeAriaLabel?: ForgeAppLauncherElement["closeAriaLabel"];
+
+  /** Number of skeleton items to show in the loading state. */
+  numberOfSkeletons?: ForgeAppLauncherElement["numberOfSkeletons"];
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;

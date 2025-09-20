@@ -125,6 +125,28 @@
               "default": "'Close app launcher'",
               "description": "ARIA label for the close button",
               "attribute": "close-aria-label"
+            },
+            {
+              "kind": "field",
+              "name": "loading",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the app launcher is in a loading state.",
+              "attribute": "loading"
+            },
+            {
+              "kind": "field",
+              "name": "numberOfSkeletons",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "5",
+              "description": "Number of skeleton items to show in the loading state.",
+              "attribute": "number-of-skeletons"
             }
           ],
           "attributes": [
@@ -172,6 +194,24 @@
               "default": "'Close app launcher'",
               "description": "ARIA label for the close button",
               "fieldName": "closeAriaLabel"
+            },
+            {
+              "name": "loading",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the app launcher is in a loading state.",
+              "fieldName": "loading"
+            },
+            {
+              "name": "number-of-skeletons",
+              "type": {
+                "text": "number"
+              },
+              "default": "5",
+              "description": "Number of skeleton items to show in the loading state.",
+              "fieldName": "numberOfSkeletons"
             }
           ],
           "superclass": {
@@ -1591,19 +1631,19 @@
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 41
+      "lineNumber": 42
     },
     "AppLauncherCustomLink": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 48
+      "lineNumber": 49
     },
     "AppView": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 53
+      "lineNumber": 54
     },
     "AppLauncherComponent": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 69
+      "lineNumber": 70
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
