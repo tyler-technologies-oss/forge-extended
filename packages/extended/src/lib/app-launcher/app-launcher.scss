@@ -10,6 +10,7 @@
 :host {
   --forge-app-launcher-avatar-size: 48px;
   --forge-app-launcher-width: 500px;
+  --forge-app-launcher-max-height: 90dvh;
   display: contents;
   padding: 0;
 
@@ -54,7 +55,7 @@ forge-popover {
 
 .outer-container {
   width: 100%;
-  max-height: 90dvh;
+  max-height: var(--forge-app-launcher-max-height);
   display: grid;
   grid-template-rows: auto 1fr;
   overflow: hidden;
@@ -168,6 +169,7 @@ forge-dialog {
   --forge-dialog-width: 100vw;
   --forge-dialog-height: 100dvh;
   --forge-app-launcher-width: 100%;
+  --forge-app-launcher-max-height: 100dvh;
 
   forge-card {
     min-height: 0;

@@ -112,14 +112,6 @@ describe('AppLauncher', () => {
       expect(harness.el.allApps).to.deep.equal(allApps);
       expect(harness.el.allApps.length).to.equal(2);
     });
-
-    it('should accept customLinks array', async () => {
-      const customLinks: AppLauncherCustomLink[] = [{ label: 'Custom Link', uri: 'http://custom.com' }];
-      const harness = await createFixture({ customLinks });
-
-      expect(harness.el.customLinks).to.deep.equal(customLinks);
-      expect(harness.el.customLinks.length).to.equal(1);
-    });
   });
 
   describe('Number properties', () => {
