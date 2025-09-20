@@ -1,0 +1,16 @@
+.demo-section {
+  margin-block-end: 2rem;
+
+  h3 {
+    margin-block-end: 1rem;
+    font-size: 1.125rem;
+    font-weight: 500;
+    color: var(--forge-theme-text-primary);
+  }
+}
+
+.components-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}

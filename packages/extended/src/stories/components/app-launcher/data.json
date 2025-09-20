@@ -1,0 +1,272 @@
+[
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Cashiering",
+    "applicationID": "cashiering-webui",
+    "label": "Cashiering",
+    "helpText": "Point of sale payment collection and cashiering solution.",
+    "icon": {
+      "type": "Image",
+      "uri": "https://cdn.forge.tylertech.com/v1/icons/svg/extended/account_cash.svg",
+      "name": "Cashiering Icon"
+    },
+    "uri": "https://demo.ci.cashiering.tylerapp.com/cashiering/ui",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 100,
+    "product": "Cashiering"
+  },
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Enterprise Justice",
+    "applicationID": "enterprise-justice",
+    "label": "Enterprise Justice",
+    "helpText": "Complete case management solution for county courts through statewide systems",
+    "icon": {
+      "type": "image",
+      "uri": "https://cdn.forge.tylertech.com/v1/icons/svg/standard/account_balance.svg",
+      "name": "Enterprise Justice Icon"
+    },
+    "uri": "https://demo.ci.hub.tylerapp.com/main/05ccce58-c322-435a-ba88-988746ca5986",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 0,
+    "product": "Enterprise Justice"
+  },
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Hub",
+    "applicationID": "TylerHub-Main",
+    "label": "Hub",
+    "helpText": "Role-based dashboard for job functions, processes and tasks",
+    "icon": {
+      "type": "Image",
+      "uri": "https://cdn.forge.tylertech.com/v1/icons/svg/standard/dashboard.svg",
+      "name": "web_asset"
+    },
+    "uri": "https://demo.ci.hub.tylerapp.com/main",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 100,
+    "product": "Hub"
+  },
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Enterprise Assessment & Tax",
+    "applicationID": "enterprise-assessment-and-tax",
+    "label": "Enterprise Assessment & Tax",
+    "helpText": "Complete solution from appraisal through tax collection",
+    "icon": {
+      "type": "image",
+      "uri": "https://cdn.forge.tylertech.com/v1/icons/svg/standard/calculate.svg",
+      "name": "Enterprise Assessment & Tax Icon"
+    },
+    "uri": "https://demo.ci.hub.tylerapp.com/main/05ccce58-c322-435a-ba88-988746ca5986",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 0,
+    "product": "Enterprise Assessment & Tax"
+  },
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Enterprise Service Requests",
+    "applicationID": "Tyler311-Search",
+    "label": "Enterprise Service Requests",
+    "helpText": "Integrated solution for non-emergency inquiries and complaints",
+    "icon": {
+      "type": "Image",
+      "uri": "https://cdn.forge.tylertech.com/v1/icons/svg/standard/report_problem.svg",
+      "name": "web_asset"
+    },
+    "uri": "https://demo.ci.esr.tylerapp.com/search",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 100,
+    "product": "Enterprise Service Requests"
+  },
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Enterprise Permitting & Licensing",
+    "applicationID": "enterprise-permitting-&-licensing",
+    "label": "Enterprise Permitting & Licensing",
+    "helpText": "Comprehensive, Automated, Integrated Permitting & Licensing software for Local Government.",
+    "icon": {
+      "type": "image",
+      "uri": "https://cdn.forge.tylertech.com/v1/icons/svg/standard/home_work.svg",
+      "name": "home_work"
+    },
+    "uri": "https://demo.ci.energov.tylerdev.io/epl/energov-shell/#/menu/user",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 100,
+    "product": "Enterprise Permitting & Licensing"
+  },
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Employee Access",
+    "applicationID": "TESP.EmployeeSelfService",
+    "label": "Employee Access",
+    "helpText": "Employee Access Application",
+    "icon": {
+      "type": "image",
+      "uri": "https://demo.tcpci.com/tesp/employee-selfservice/images/ess_icon.svg",
+      "name": "/tesp/employee-selfservice/images/ess_icon.svg"
+    },
+    "uri": "https://demo.tcpci.com/tesp/employee-selfservice",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 100,
+    "product": "Employee Access"
+  },
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Enterprise CAD",
+    "applicationID": "enterprise-public-safety",
+    "label": "Enterprise CAD",
+    "helpText": "Computer-aided Dispatch for Emergency Response",
+    "icon": {
+      "type": "image",
+      "uri": "https://cdn.forge.tylertech.com/v1/icons/svg/extended/shield_outline.svg",
+      "name": "Enterprise CAD Icon"
+    },
+    "uri": "https://demo.ci.hub.tylerapp.com/main/05ccce58-c322-435a-ba88-988746ca5986",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 0,
+    "product": "Enterprise CAD"
+  },
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Parks & Recreation",
+    "applicationID": "parks-recreation",
+    "label": "Parks & Recreation",
+    "helpText": "Facilities and programs solution for parks",
+    "icon": {
+      "type": "image",
+      "uri": "https://cdn.forge.tylertech.com/v1/icons/svg/extended/pine_tree.svg",
+      "name": "Parks & Recreation Icon"
+    },
+    "uri": "https://demo.ci.hub.tylerapp.com/main/05ccce58-c322-435a-ba88-988746ca5986",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 0,
+    "product": "Parks & Recreation"
+  },
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Content Manager",
+    "applicationID": "content-manager",
+    "label": "Content Manager",
+    "helpText": "Capture, deliver, manage, and archive electronic information in Tyler solutions",
+    "icon": {
+      "type": "image",
+      "uri": "https://cdn.forge.tylertech.com/v1/icons/svg/extended/usb_flash_drive.svg",
+      "name": "Content Manager Icon"
+    },
+    "uri": "https://demo.ci.hub.tylerapp.com/main/05ccce58-c322-435a-ba88-988746ca5986",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 0,
+    "product": "Content Manager"
+  },
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Time & Attendance",
+    "applicationID": "time-attendance",
+    "label": "Time & Attendance",
+    "helpText": "Complete solution for timekeeping, scheduling, and export to payroll. Integrating product with ERP Payroll.",
+    "icon": {
+      "type": "image",
+      "uri": "https://cdn.forge.tylertech.com/v1/icons/svg/extended/calendar_clock.svg",
+      "name": "Time & Attendance Icon"
+    },
+    "uri": "https://demo.ci.hub.tylerapp.com/main/05ccce58-c322-435a-ba88-988746ca5986",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 0,
+    "product": "Time & Attendance"
+  },
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Open Finance",
+    "applicationID": "open-finance",
+    "label": "Open Finance",
+    "helpText": "A citizen-facing financial transparency solution integrated with all Tyler ERP systems.",
+    "icon": {
+      "type": "image",
+      "uri": "https://cdn.forge.tylertech.com/v1/icons/svg/extended/chart_histogram.svg",
+      "name": "Open Finance Icon"
+    },
+    "uri": "https://demo.ci.hub.tylerapp.com/main/05ccce58-c322-435a-ba88-988746ca5986",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 0,
+    "product": "Open Finance"
+  },
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Executive Insights",
+    "applicationID": "efile-analytics",
+    "label": "Executive Insights",
+    "helpText": "Analytics application implemented across a wide range of Tyler product lines.",
+    "icon": {
+      "type": "image",
+      "uri": "https://cdn.forge.tylertech.com/v1/icons/svg/standard/insights.svg",
+      "name": "Executive Insights Icon"
+    },
+    "uri": "https://demo.ci.hub.tylerapp.com/main/05ccce58-c322-435a-ba88-988746ca5986",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 0,
+    "product": "Executive Insights"
+  },
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Engagement Builder",
+    "applicationID": "engagement-builder",
+    "label": "Engagement Builder",
+    "helpText": "Low-code form/application development platform",
+    "icon": {
+      "type": "image",
+      "uri": "https://cdn.forge.tylertech.com/v1/icons/svg/extended/file_document.svg",
+      "name": "Engagement Builder Icon"
+    },
+    "uri": "https://demo.ci.hub.tylerapp.com/main/05ccce58-c322-435a-ba88-988746ca5986",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 0,
+    "product": "Engagement Builder"
+  },
+  {
+    "admin": false,
+    "showProductBage": false,
+    "applicationName": "Notify Dashboard",
+    "applicationID": "TNDashboard",
+    "label": "Notify",
+    "helpText": "Manage Notify",
+    "icon": {
+      "type": "image",
+      "uri": "https://demo.tcpci.com/tn/dashboard/images/application-icon.svg",
+      "name": "/tn/dashboard/images/application-icon.svg"
+    },
+    "uri": "https://demo.tcpci.com/tn/dashboard",
+    "action": "Main",
+    "category": "Launcher",
+    "priority": 1000,
+    "product": "Notify"
+  }
+]
