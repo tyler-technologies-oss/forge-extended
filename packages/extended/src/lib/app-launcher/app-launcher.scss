@@ -11,6 +11,7 @@
   --forge-app-launcher-avatar-size: 48px;
   --forge-app-launcher-width: 500px;
   --forge-app-launcher-max-height: 90dvh;
+  --forge-app-launcher-view-all-apps-button-height: 36px;
   display: contents;
   padding: 0;
 
@@ -103,6 +104,7 @@ forge-popover {
   margin-block-end: #{forge-spacing.variable(medium)};
 
   forge-button {
+    --forge-button-height: var(--forge-app-launcher-view-all-apps-button-height);
     flex: 1;
   }
 }
@@ -170,6 +172,7 @@ forge-dialog {
   --forge-dialog-height: 100dvh;
   --forge-app-launcher-width: 100%;
   --forge-app-launcher-max-height: 100dvh;
+  --forge-app-launcher-view-all-apps-button-height: 56px;
 
   forge-card {
     min-height: 0;

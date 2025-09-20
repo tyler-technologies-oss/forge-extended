@@ -67,6 +67,7 @@ export const AppLauncherComponentTagName: keyof HTMLElementTagNameMap = 'forge-a
  * @cssproperty --forge-app-launcher-width - Controls the width of the app launcher container. Default is 500px for popover mode, 100% for dialog mode.
  * @cssproperty --forge-app-launcher-avatar-size - Controls the size of the app launcher avatar. Default is 48px.
  * @cssproperty --forge-app-launcher-max-height - Controls the maximum height of the app launchers inner-container. Default is 90dvh for popover mode. 100dvh for dialog mode.
+ * @cssproperty --forge-app-launcher-view-all-apps-button-height - The height of the button that switches to the all apps view. Default is 36px for popover mode. 56px for dialog mode.
  */
 @customElement(AppLauncherComponentTagName)
 export class AppLauncherComponent extends LitElement {
