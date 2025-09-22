@@ -44,12 +44,6 @@ forge-popover {
   @include mixins.stack;
 }
 
-.app-list-container {
-  height: 100%;
-  min-height: 0;
-  padding: #{forge-spacing.variable(medium)};
-}
-
 .header {
   --forge-toolbar-background: none;
 }
@@ -61,6 +55,12 @@ forge-popover {
   grid-template-rows: auto 1fr;
   overflow: hidden;
   min-height: 0;
+}
+
+.app-list-container {
+  height: 100%;
+  min-height: 0;
+  padding: #{forge-spacing.variable(medium)};
 }
 
 .search-container {
@@ -152,6 +152,7 @@ forge-popover {
     height: calc(var(--forge-app-launcher-avatar-size) + #{forge-spacing.variable(xsmall)});
     width: 100%;
     --forge-skeleton-margin: 0;
+    cursor: progress;
   }
 
   .title-skeleton {
@@ -164,6 +165,10 @@ forge-popover {
     height: 36px;
     width: 100%;
     flex: 1;
+  }
+
+  .loading-text {
+    @include mixins.sr-only;
   }
 }
 

@@ -320,9 +320,13 @@ export class AppLauncherComponent extends LitElement {
       this._appView === 'loading',
       () => html`
         <div class="loading-state">
-          <forge-skeleton class="title-skeleton"></forge-skeleton>
-          ${Array.from({ length: this.numberOfSkeletons }, () => html`<forge-skeleton></forge-skeleton>`)}
-          <forge-skeleton class="button-skeleton"></forge-skeleton>
+          <forge-skeleton class="title-skeleton" aria-hidden="true"></forge-skeleton>
+          ${Array.from(
+            { length: this.numberOfSkeletons },
+            () => html`<forge-skeleton aria-hidden="true"></forge-skeleton>`
+          )}
+          <forge-skeleton class="button-skeleton" aria-hidden="true"></forge-skeleton>
+          <span class="loading-text">Loading apps</span>
         </div>
       `,
       () => nothing

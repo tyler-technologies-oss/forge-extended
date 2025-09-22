@@ -9,3 +9,13 @@
   flex-direction: column;
   gap: $gap;
 }
+
+@mixin sr-only {
+  position: absolute;
+  top: auto;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  width: 1px;
+  height: 1px;
+  white-space: nowrap;
+}
