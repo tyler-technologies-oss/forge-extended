@@ -28,33 +28,33 @@ const allApps = data.map(d => {
 
 const relatedApps: AppLauncherOption[] = [
   {
-    label: 'Payments Administration',
+    label: 'Canva',
     iconName: 'payment',
-    uri: 'www.google.com',
+    uri: 'https://google.com',
     target: '_blank'
   },
   {
-    label: 'PEP Administration',
+    label: 'Figma',
     iconName: 'admin_panel_settings',
-    uri: 'www.google.com',
+    uri: 'https://google.com',
     target: '_blank'
   },
   {
-    label: 'Permissions',
+    label: 'GitHub',
     iconName: 'security',
-    uri: 'www.google.com',
+    uri: 'https://google.com',
     target: '_blank'
   },
   {
-    label: 'Batch Integration',
+    label: 'Slack',
     iconName: 'batch_prediction',
-    uri: 'www.google.com',
+    uri: 'https://google.com',
     target: '_blank'
   },
   {
-    label: 'System Integration',
+    label: 'Trello',
     iconName: 'settings_system_daydream',
-    uri: 'www.google.com',
+    uri: 'https://google.com',
     target: '_blank'
   }
 ];

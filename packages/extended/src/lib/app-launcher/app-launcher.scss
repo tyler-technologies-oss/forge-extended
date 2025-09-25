@@ -8,10 +8,6 @@
 //
 
 :host {
-  --forge-app-launcher-avatar-size: 48px;
-  --forge-app-launcher-width: 500px;
-  --forge-app-launcher-max-height: 90dvh;
-  --forge-app-launcher-view-all-apps-button-height: 36px;
   display: contents;
   padding: 0;
 
@@ -23,6 +19,13 @@
 //
 // Base
 //
+
+.outer-container {
+  --_forge-app-launcher-avatar-size: 48px;
+  --_forge-app-launcher-width: 500px;
+  --_forge-app-launcher-max-height: 90dvh;
+  --_forge-app-launcher-view-all-apps-button-height: 36px;
+}
 
 h1 {
   @include forge-typography.style(heading3);
@@ -50,7 +53,7 @@ forge-popover {
 
 .outer-container {
   width: 100%;
-  max-height: var(--forge-app-launcher-max-height);
+  max-height: var(--_forge-app-launcher-max-height);
   display: grid;
   grid-template-rows: auto 1fr;
   overflow: hidden;
@@ -74,7 +77,7 @@ forge-popover {
   min-height: 0;
   padding: #{forge-spacing.variable(medium)};
   padding-block-start: 0;
-  width: var(--forge-app-launcher-width);
+  width: var(--_forge-app-launcher-width);
 
   &.related-view {
     grid-template-rows: auto 1fr;
@@ -104,7 +107,7 @@ forge-popover {
   margin-block-end: #{forge-spacing.variable(medium)};
 
   forge-button {
-    --forge-button-height: var(--forge-app-launcher-view-all-apps-button-height);
+    --forge-button-height: var(--_forge-app-launcher-view-all-apps-button-height);
     flex: 1;
   }
 }
@@ -149,7 +152,7 @@ forge-popover {
   gap: #{forge-spacing.variable(small)};
 
   forge-skeleton {
-    height: calc(var(--forge-app-launcher-avatar-size) + #{forge-spacing.variable(xsmall)});
+    height: calc(var(--_forge-app-launcher-avatar-size) + #{forge-spacing.variable(xsmall)});
     width: 100%;
     --forge-skeleton-margin: 0;
     cursor: progress;
@@ -159,32 +162,5 @@ forge-popover {
     height: 16px;
     width: 96px;
     justify-self: start;
-  }
-
-  .button-skeleton {
-    height: 36px;
-    width: 100%;
-    flex: 1;
-  }
-
-  .loading-text {
-    @include mixins.sr-only;
-  }
-}
-
-forge-dialog {
-  --forge-dialog-width: 100vw;
-  --forge-dialog-height: 100dvh;
-  --forge-app-launcher-width: 100%;
-  --forge-app-launcher-max-height: 100dvh;
-  --forge-app-launcher-view-all-apps-button-height: 56px;
-  --forge-app-launcher-avatar-size: 56px;
-
-  forge-card {
-    min-height: 0;
-  }
-
-  .view-all-apps-button {
-    padding: 0;
   }
 }

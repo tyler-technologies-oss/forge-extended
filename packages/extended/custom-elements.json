@@ -26,6 +26,14 @@
             {
               "description": "Controls the size of the app launcher avatar. Default is 48px.",
               "name": "--forge-app-launcher-avatar-size"
+            },
+            {
+              "description": "Controls the maximum height of the app launchers inner-container. Default is 90dvh for popover mode. 100dvh for dialog mode.",
+              "name": "--forge-app-launcher-max-height"
+            },
+            {
+              "description": "The height of the button that switches to the all apps view. Default is 36px for popover mode. 56px for dialog mode.",
+              "name": "--forge-app-launcher-view-all-apps-button-height"
             }
           ],
           "slots": [
@@ -1643,7 +1651,7 @@
     },
     "AppLauncherComponent": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 70
+      "lineNumber": 72
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
