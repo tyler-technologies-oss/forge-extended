@@ -34,8 +34,6 @@ IconRegistry.define([
   standalone: false
 })
 export class AppLauncherDemoComponent {
-  public breakpoint = 768;
-
   // Full app data for main demo
   public allApps: AppLauncherOption[] = [
     {

@@ -13,6 +13,11 @@ declare global {
 
 export const AppLauncherLinkComponentTagName: keyof HTMLElementTagNameMap = 'forge-app-launcher-link';
 
+export interface AppLauncherLink {
+  label: string;
+  uri: string;
+}
+
 /**
  * @tag forge-app-launcher-link
  *

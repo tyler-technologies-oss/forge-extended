@@ -1,9 +1,9 @@
 import React from "react";
-import { ForgeCustomLink as ForgeCustomLinkElement } from "@tylertech/forge-extended/app-launcher/custom-link";
+import { ForgeAppLauncherLink as ForgeAppLauncherLinkElement } from "@tylertech/forge-extended/app-launcher/app-launcher-link";
 
-export type { ForgeCustomLinkElement };
+export type { ForgeAppLauncherLinkElement };
 
-export interface ForgeCustomLinkProps
+export interface ForgeAppLauncherLinkProps
   extends Pick<
     React.AllHTMLAttributes<HTMLElement>,
     | "children"
@@ -49,4 +49,4 @@ export interface ForgeCustomLinkProps
  * ### **Slots:**
  *  - _default_ - The `<a>` element for the link.
  */
-export const ForgeCustomLink: React.ForwardRefExoticComponent<ForgeCustomLinkProps>;
+export const ForgeAppLauncherLink: React.ForwardRefExoticComponent<ForgeAppLauncherLinkProps>;

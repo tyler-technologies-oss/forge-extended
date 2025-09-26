@@ -1,6 +1,6 @@
 import { IconRegistry } from '@tylertech/forge';
 import { AppLauncherOption } from '@tylertech/forge-extended';
-import { ForgeAppLauncher, ForgeCustomLink } from '@tylertech/forge-extended-react';
+import { ForgeAppLauncher, ForgeAppLauncherLink } from '@tylertech/forge-extended-react';
 import {
   tylIconPayment,
   tylIconAccountBalance,
@@ -63,17 +63,17 @@ export function AppLauncherDemo(): JSX.Element {
         <span slot="related-apps-title">Related apps</span>
         <span slot="all-apps-title">All apps</span>
         <span slot="view-all-apps-button-text">View all apps</span>
-        <span slot="custom-links-title">Custom links</span>
-        <ForgeCustomLink slot="custom-link">
+        <span slot="app-launcher-links-title">Custom links</span>
+        <ForgeAppLauncherLink slot="app-launcher-link">
           <a href="https://example.com/docs" target="_blank">
             Documentation
           </a>
-        </ForgeCustomLink>
-        <ForgeCustomLink slot="custom-link">
+        </ForgeAppLauncherLink>
+        <ForgeAppLauncherLink slot="app-launcher-link">
           <a href="https://example.com/faq" target="_blank">
             FAQ
           </a>
-        </ForgeCustomLink>
+        </ForgeAppLauncherLink>
       </ForgeAppLauncher>
     </>
   );

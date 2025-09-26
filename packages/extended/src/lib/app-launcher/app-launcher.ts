@@ -142,7 +142,7 @@ export class AppLauncherComponent extends LitElement {
   private _appLauncherPopover!: PopoverComponent;
 
   @queryAssignedNodes({ slot: 'app-launcher-link', flatten: true })
-  private _slottedCustomLinkNodes!: Node[];
+  private _slottedAppLauncherLinkNodes!: Node[];
 
   #mediaQuery?: MediaQueryList;
   #breakpoint = 768;
@@ -340,8 +340,8 @@ export class AppLauncherComponent extends LitElement {
     );
   }
 
-  get #customLinks(): TemplateResult | typeof nothing {
-    const showLinks = this._slottedCustomLinkNodes.length > 0;
+  get #AppLauncherLinks(): TemplateResult | typeof nothing {
+    const showLinks = this._slottedAppLauncherLinkNodes.length > 0;
     return when(
       showLinks,
       () => html`
@@ -394,7 +394,7 @@ export class AppLauncherComponent extends LitElement {
     return html`
       <div class="outer-container">
         ${this.#header}
-        <div class="${innerContainerClass}">${this.#mainCard} ${this.#customLinks}</div>
+        <div class="${innerContainerClass}">${this.#mainCard} ${this.#AppLauncherLinks}</div>
       </div>
     `;
   }

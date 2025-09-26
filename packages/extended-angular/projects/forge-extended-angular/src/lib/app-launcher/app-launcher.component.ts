@@ -6,7 +6,6 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   NgZone,
-  numberAttribute,
   Input,
   inject
 } from '@angular/core';
@@ -62,17 +61,6 @@ export class AppLauncherComponent {
     return this.nativeElement.allApps;
   }
 
-  /** The breakpoint in pixels for responsive behavior. Below this value, the component will display as a dialog instead of a popover. */
-  @Input({ transform: numberAttribute })
-  public set breakpoint(value: AppLauncherComponentCustomElement['breakpoint']) {
-    this.zone.runOutsideAngular(() => {
-      this.nativeElement.breakpoint = value;
-    });
-  }
-  public get breakpoint(): AppLauncherComponentCustomElement['breakpoint'] {
-    return this.nativeElement.breakpoint;
-  }
-
   /** ARIA label for the app launcher trigger button */
   @Input()
   public set launcherAriaLabel(value: AppLauncherComponentCustomElement['launcherAriaLabel']) {
@@ -115,17 +103,6 @@ export class AppLauncherComponent {
   }
   public get loading(): AppLauncherComponentCustomElement['loading'] {
     return this.nativeElement.loading;
-  }
-
-  /** Number of skeleton items to show in the loading state. */
-  @Input({ transform: numberAttribute })
-  public set numberOfSkeletons(value: AppLauncherComponentCustomElement['numberOfSkeletons']) {
-    this.zone.runOutsideAngular(() => {
-      this.nativeElement.numberOfSkeletons = value;
-    });
-  }
-  public get numberOfSkeletons(): AppLauncherComponentCustomElement['numberOfSkeletons'] {
-    return this.nativeElement.numberOfSkeletons;
   }
 
   constructor() {

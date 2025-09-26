@@ -1,7 +1,8 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html, nextFrame } from '@open-wc/testing';
-import { AppLauncherComponent, AppLauncherOption, AppLauncherCustomLink } from './app-launcher';
+import { AppLauncherComponent, AppLauncherOption } from './app-launcher';
 import { PopoverComponent, DialogComponent } from '@tylertech/forge';
+import { AppLauncherLink } from './app-launcher-link';
 import sinon from 'sinon';
 
 import './app-launcher';
@@ -1246,7 +1247,7 @@ class AppLauncherHarness {
 interface AppLauncherFixtureConfig {
   open?: boolean;
   relatedApps?: AppLauncherOption[];
-  customLinks?: AppLauncherCustomLink[];
+  appLauncherLinks?: AppLauncherLink[];
   allApps?: AppLauncherOption[];
   loading?: boolean;
 }
@@ -1254,7 +1255,7 @@ interface AppLauncherFixtureConfig {
 async function createFixture({
   open = false,
   relatedApps = [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }],
-  customLinks = [],
+  appLauncherLinks = [],
   allApps = [
     { label: 'All App 1', iconName: 'app1', uri: 'http://app1.com' },
     { label: 'All App 2', iconName: 'app2', uri: 'http://app2.com' }
@@ -1265,7 +1266,7 @@ async function createFixture({
     <forge-app-launcher
       .open=${open}
       .relatedApps=${relatedApps}
-      .customLinks=${customLinks}
+      .appLauncherLinks=${appLauncherLinks}
       .allApps=${allApps}
       .loading=${loading}>
     </forge-app-launcher>

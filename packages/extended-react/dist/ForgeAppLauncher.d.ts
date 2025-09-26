@@ -25,9 +25,6 @@ export interface ForgeAppLauncherProps
   /** Indicates whether the app launcher is in a loading state. */
   loading?: boolean;
 
-  /** The breakpoint in pixels for responsive behavior. Below this value, the component will display as a dialog instead of a popover. */
-  breakpoint?: ForgeAppLauncherElement["breakpoint"];
-
   /** ARIA label for the app launcher trigger button */
   launcherAriaLabel?: ForgeAppLauncherElement["launcherAriaLabel"];
 
@@ -36,9 +33,6 @@ export interface ForgeAppLauncherProps
 
   /** ARIA label for the close button */
   closeAriaLabel?: ForgeAppLauncherElement["closeAriaLabel"];
-
-  /** Number of skeleton items to show in the loading state. */
-  numberOfSkeletons?: ForgeAppLauncherElement["numberOfSkeletons"];
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
@@ -77,11 +71,7 @@ export interface ForgeAppLauncherProps
  *  - **related-apps-title** - Title text for the related apps section
  * - **all-apps-title** - Title text for the all apps view
  * - **view-all-apps-button-text** - Text for the button that switches to all apps view
- * - **custom-links-title** - Title text for the custom links section
- * - **custom-link** - Individual custom link items using forge-custom-link
- *
- * ### **CSS Properties:**
- *  - **--forge-app-launcher-width** - Controls the width of the app launcher container. Default is 500px for popover mode, 100% for dialog mode. _(default: undefined)_
- * - **--forge-app-launcher-avatar-size** - Controls the size of the app launcher avatar. Default is 48px. _(default: undefined)_
+ * - **app-launcher-links-title** - Title text for the custom links section
+ * - **app-launcher-link** - Individual custom link items using forge-app-launcher-link
  */
 export const ForgeAppLauncher: React.ForwardRefExoticComponent<ForgeAppLauncherProps>;

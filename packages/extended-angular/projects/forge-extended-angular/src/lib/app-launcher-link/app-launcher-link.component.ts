@@ -9,26 +9,26 @@ import {
   inject
 } from '@angular/core';
 import {
-  CustomLinkComponent as CustomLinkComponentCustomElement,
-  defineCustomLinkComponent
+  AppLauncherLinkComponent as AppLauncherLinkComponentCustomElement,
+  defineAppLauncherLinkComponent
 } from '@tylertech/forge-extended';
 
 /**  */
 @Component({
-  selector: 'forge-custom-link',
+  selector: 'forge-app-launcher-link',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   standalone: false
 })
-export class CustomLinkComponent {
-  protected elementRef = inject<ElementRef<CustomLinkComponentCustomElement>>(ElementRef);
+export class AppLauncherLinkComponent {
+  protected elementRef = inject<ElementRef<AppLauncherLinkComponentCustomElement>>(ElementRef);
   protected zone = inject(NgZone);
 
-  /** The forge-custom-link element. */
+  /** The forge-app-launcher-link element. */
   public readonly nativeElement = this.elementRef.nativeElement;
 
   constructor() {
-    defineCustomLinkComponent();
+    defineAppLauncherLinkComponent();
     const changeDetectorRef = inject(ChangeDetectorRef);
     changeDetectorRef.detach();
   }

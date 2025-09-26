@@ -1,9 +1,9 @@
 import React, { forwardRef } from "react";
-import "@tylertech/forge-extended/app-launcher/custom-link";
+import "@tylertech/forge-extended/app-launcher/app-launcher-link";
 
-export const ForgeCustomLink = forwardRef((props, forwardedRef) => {
+export const ForgeAppLauncherLink = forwardRef((props, forwardedRef) => {
   return React.createElement(
-    "forge-custom-link",
+    "forge-app-launcher-link",
     {
       ...props,
       class: props.className,

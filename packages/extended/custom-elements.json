@@ -33,7 +33,7 @@
             },
             {
               "description": "Title text for the custom links section",
-              "name": "custom-links-title"
+              "name": "app-launcher-links-title"
             },
             {
               "description": "Individual custom link items using forge-app-launcher-link",
@@ -1470,63 +1470,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/app-launcher/app-link/app-link.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "AppLinkComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-app-link'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AppLinkComponent",
-          "slots": [
-            {
-              "description": "The `<a>` element for the link.",
-              "name": ""
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-app-link",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AppLinkComponentTagName",
-          "declaration": {
-            "name": "AppLinkComponentTagName",
-            "module": "src/lib/app-launcher/app-link/app-link.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AppLinkComponent",
-          "declaration": {
-            "name": "AppLinkComponent",
-            "module": "src/lib/app-launcher/app-link/app-link.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "AppLinkComponent",
-            "module": "src/lib/app-launcher/app-link/app-link.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
@@ -1591,19 +1534,15 @@
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 43
-    },
-    "AppLauncherCustomLink": {
-      "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 50
+      "lineNumber": 42
     },
     "AppView": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 55
+      "lineNumber": 49
     },
     "AppLauncherComponent": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 72
+      "lineNumber": 66
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -1673,13 +1612,13 @@
       "path": "src/lib/user-profile/user-profile.ts",
       "lineNumber": 44
     },
+    "AppLauncherLink": {
+      "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
+      "lineNumber": 16
+    },
     "AppLauncherLinkComponent": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
-      "lineNumber": 21
-    },
-    "AppLinkComponent": {
-      "path": "src/lib/app-launcher/app-link/app-link.ts",
-      "lineNumber": 20
+      "lineNumber": 26
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
