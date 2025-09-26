@@ -22,7 +22,6 @@
 
 .outer-container {
   --_forge-app-launcher-avatar-size: 48px;
-  // Width, max-height, and button height are set based on component state
 }
 
 h1 {
@@ -169,6 +168,7 @@ forge-popover {
 // Large screen (popover mode)
 :host(:state(large)) {
   .outer-container {
+    --_forge-app-launcher-avatar-size: 48px;
     --_forge-app-launcher-width: 500px;
     --_forge-app-launcher-max-height: 90dvh;
     --_forge-app-launcher-view-all-apps-button-height: 36px;
@@ -180,6 +180,7 @@ forge-popover {
   --forge-dialog-width: 100%;
 
   .outer-container {
+    --_forge-app-launcher-avatar-size: 56px;
     --_forge-app-launcher-width: 100%;
     --_forge-app-launcher-max-height: 100dvh;
     --_forge-app-launcher-view-all-apps-button-height: 56px;
