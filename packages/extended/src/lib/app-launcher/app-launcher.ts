@@ -63,7 +63,7 @@ export const AppLauncherComponentTagName: keyof HTMLElementTagNameMap = 'forge-a
  * @slot all-apps-title - Title text for the all apps view
  * @slot view-all-apps-button-text - Text for the button that switches to all apps view
  * @slot custom-links-title - Title text for the custom links section
- * @slot custom-link - Individual custom link items using forge-custom-link
+ * @slot app-launcher-link - Individual custom link items using forge-app-launcher-link
  *
  * @state small - The component is displayed in mobile/small screen mode (dialog)
  * @state large - The component is displayed in desktop/large screen mode (popover)
@@ -127,10 +127,6 @@ export class AppLauncherComponent extends LitElement {
   @property({ type: Boolean })
   public loading = false;
 
-  /** Number of skeleton items to show in the loading state. */
-  @property({ type: Number, attribute: 'number-of-skeletons' })
-  public numberOfSkeletons = 5;
-
   /** The current view of the app launcher, either 'related', 'all', or 'loading'. */
   @state()
   private _appView: AppView = 'related';
@@ -151,11 +147,12 @@ export class AppLauncherComponent extends LitElement {
   @query('#app-launcher-popover')
   private _appLauncherPopover!: PopoverComponent;
 
-  @queryAssignedNodes({ slot: 'custom-link', flatten: true })
+  @queryAssignedNodes({ slot: 'app-launcher-link', flatten: true })
   private _slottedCustomLinkNodes!: Node[];
 
   #mediaQuery?: MediaQueryList;
   #breakpoint = 768;
+  #numberOfSkeletons = 5;
 
   constructor() {
     super();
@@ -172,9 +169,11 @@ export class AppLauncherComponent extends LitElement {
     >View all apps</slot
   >`;
 
-  readonly #customLinksTitleSlot = html`<slot name="custom-links-title" id="custom-links-title-slot"></slot>`;
+  readonly #appLauncherLinksTitleSlot = html`<slot
+    name="app-launcher-links-title"
+    id="app-launcher-links-title-slot"></slot>`;
 
-  readonly #customLinkSlot = html`<slot name="custom-link" id="custom-link-slot"></slot>`;
+  readonly #appLauncherLinkSlot = html`<slot name="app-launcher-link" id="app-launcher-link-slot"></slot>`;
 
   readonly #emptyState = html`
     <div class="empty-state">
@@ -322,7 +321,7 @@ export class AppLauncherComponent extends LitElement {
         <div class="loading-state">
           <forge-skeleton class="title-skeleton" aria-hidden="true"></forge-skeleton>
           ${Array.from(
-            { length: this.numberOfSkeletons },
+            { length: this.#numberOfSkeletons },
             () => html`<forge-skeleton aria-hidden="true"></forge-skeleton>`
           )}
           <forge-skeleton class="button-skeleton" aria-hidden="true"></forge-skeleton>
@@ -354,12 +353,12 @@ export class AppLauncherComponent extends LitElement {
       () => html`
         <forge-card class="custom-links-card">
           <div class="custom-links">
-            <h2>${this.#customLinksTitleSlot}</h2>
-            <forge-list>${this.#customLinkSlot}</forge-list>
+            <h2>${this.#appLauncherLinksTitleSlot}</h2>
+            <forge-list>${this.#appLauncherLinkSlot}</forge-list>
           </div>
         </forge-card>
       `,
-      () => this.#customLinkSlot
+      () => this.#appLauncherLinkSlot
     );
   }
 
@@ -537,7 +536,7 @@ export class AppLauncherComponent extends LitElement {
     const slotName = (evt.target as HTMLSlotElement).name;
     if (
       [
-        'custom-link',
+        'app-launcher-link',
         'custom-links-title',
         'related-apps-title',
         'view-all-apps-button-text',

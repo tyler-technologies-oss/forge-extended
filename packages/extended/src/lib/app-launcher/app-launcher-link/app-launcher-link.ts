@@ -2,24 +2,24 @@ import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import { defineListComponent, IconRegistry } from '@tylertech/forge';
 
-import styles from './custom-link.scss?inline';
+import styles from './app-launcher-link.scss?inline';
 import { tylIconOpenInNew } from '@tylertech/tyler-icons';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'forge-custom-link': CustomLinkComponent;
+    'forge-app-launcher-link': AppLauncherLinkComponent;
   }
 }
 
-export const CustomLinkComponentTagName: keyof HTMLElementTagNameMap = 'forge-custom-link';
+export const AppLauncherLinkComponentTagName: keyof HTMLElementTagNameMap = 'forge-app-launcher-link';
 
 /**
- * @tag forge-custom-link
+ * @tag forge-app-launcher-link
  *
  * @slot - The `<a>` element for the link.
  */
-@customElement(CustomLinkComponentTagName)
-export class CustomLinkComponent extends LitElement {
+@customElement(AppLauncherLinkComponentTagName)
+export class AppLauncherLinkComponent extends LitElement {
   static {
     defineListComponent();
 

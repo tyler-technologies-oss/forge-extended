@@ -21,7 +21,6 @@ describe('AppLauncher', () => {
       expect(el.relatedApps).to.deep.equal([]);
       expect(el.allApps).to.deep.equal([]);
       expect(el.loading).to.be.false;
-      expect(el.numberOfSkeletons).to.equal(5);
     });
   });
 
@@ -113,18 +112,7 @@ describe('AppLauncher', () => {
     });
   });
 
-  describe('Number properties', () => {
-    it('should update numberOfSkeletons property', async () => {
-      const harness = await createFixture();
-
-      expect(harness.el.numberOfSkeletons).to.equal(5);
-
-      harness.el.numberOfSkeletons = 8;
-      await nextFrame();
-
-      expect(harness.el.numberOfSkeletons).to.equal(8);
-    });
-  });
+  describe('Number properties', () => {});
 
   describe('Loading functionality', () => {
     it('should show loading view when loading is true', async () => {
@@ -139,7 +127,7 @@ describe('AppLauncher', () => {
 
       // Should show loading state
       expect(harness.loadingState).to.exist;
-      expect(harness.loadingSkeleton.length).to.equal(7); // 1 title + 5 default skeletons + 1 button skeleton
+      expect(harness.loadingSkeleton.length).to.equal(7); // 1 title + 5 content skeletons + 1 button skeleton
     });
 
     it('should hide other views when loading is true', async () => {
@@ -214,34 +202,6 @@ describe('AppLauncher', () => {
       expect(harness.searchField).to.exist;
       expect(harness.backButton).to.exist;
       expect(harness.viewAllAppsButton).to.not.exist;
-    });
-
-    it('should render correct number of skeleton items based on numberOfSkeletons property', async () => {
-      const harness = await createFixture();
-
-      harness.el.numberOfSkeletons = 3;
-      harness.el.loading = true;
-      await nextFrame();
-
-      // Should have title skeleton + 3 content skeletons + button skeleton = 5 total
-      expect(harness.loadingSkeleton.length).to.equal(5);
-    });
-
-    it('should update skeleton count when numberOfSkeletons changes during loading', async () => {
-      const harness = await createFixture();
-
-      harness.el.loading = true;
-      await nextFrame();
-
-      // Initial count: title + 5 default + button = 7
-      expect(harness.loadingSkeleton.length).to.equal(7);
-
-      // Change numberOfSkeletons
-      harness.el.numberOfSkeletons = 8;
-      await nextFrame();
-
-      // New count: title + 8 + button = 10
-      expect(harness.loadingSkeleton.length).to.equal(10);
     });
 
     it('should disable view all apps button when loading', async () => {
@@ -1289,7 +1249,6 @@ interface AppLauncherFixtureConfig {
   customLinks?: AppLauncherCustomLink[];
   allApps?: AppLauncherOption[];
   loading?: boolean;
-  numberOfSkeletons?: number;
 }
 
 async function createFixture({
@@ -1300,8 +1259,7 @@ async function createFixture({
     { label: 'All App 1', iconName: 'app1', uri: 'http://app1.com' },
     { label: 'All App 2', iconName: 'app2', uri: 'http://app2.com' }
   ],
-  loading = false,
-  numberOfSkeletons = 5
+  loading = false
 }: AppLauncherFixtureConfig = {}): Promise<AppLauncherHarness> {
   const el = await fixture<AppLauncherComponent>(html`
     <forge-app-launcher
@@ -1309,8 +1267,7 @@ async function createFixture({
       .relatedApps=${relatedApps}
       .customLinks=${customLinks}
       .allApps=${allApps}
-      .loading=${loading}
-      .numberOfSkeletons=${numberOfSkeletons}>
+      .loading=${loading}>
     </forge-app-launcher>
   `);
 

@@ -159,6 +159,15 @@ forge-popover {
     width: 96px;
     justify-self: start;
   }
+
+  .button-skeleton {
+    width: 100%;
+    height: 36px;
+  }
+
+  .loading-text {
+    @include mixins.sr-only;
+  }
 }
 
 //

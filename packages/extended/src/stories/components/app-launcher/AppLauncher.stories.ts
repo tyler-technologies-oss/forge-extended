@@ -5,7 +5,7 @@ import data from './data.json';
 import { AppLauncherOption } from '$lib/app-launcher';
 
 import '$lib/app-launcher';
-import '$lib/app-launcher/custom-link';
+import '$lib/app-launcher/app-launcher-link';
 import '$lib/app-launcher/app-link';
 import { defineAppBarComponent } from '@tylertech/forge';
 
@@ -69,23 +69,22 @@ const meta = {
           style="--forge-app-launcher-width: ${args.width}px; --forge-app-launcher-avatar-size: ${args.avatarSize}px;"
           .allApps=${allApps}
           .relatedApps=${args.showRelatedApps ? relatedApps : []}
-          .loading=${args.loading}
-          .numberOfSkeletons=${args.numberOfSkeletons}>
+          .loading=${args.loading}>
           <span slot="related-apps-title">${args.relatedAppsTitle}</span>
           <span slot="all-apps-title">${args.allAppsTitle}</span>
           <span slot="view-all-apps-button-text">${args.viewAllAppsButtonText}</span>
-          <span slot="custom-links-title">${args.customLinksTitle}</span>
-          ${args.showCustomLinks
+          <span slot="app-launcher-links-title">${args.appLauncherLinksTitle}</span>
+          ${args.showAppLauncherLinks
             ? html`
-                <forge-custom-link slot="custom-link">
+                <forge-app-launcher-link slot="app-launcher-link">
                   <a href="http://www.google.com" target="_blank">Payments Documentation</a>
-                </forge-custom-link>
-                <forge-custom-link slot="custom-link">
+                </forge-app-launcher-link>
+                <forge-app-launcher-link slot="app-launcher-link">
                   <a href="http://www.google.com" target="_blank">Frequently Asked Questions</a>
-                </forge-custom-link>
-                <forge-custom-link slot="custom-link">
+                </forge-app-launcher-link>
+                <forge-app-launcher-link slot="app-launcher-link">
                   <a href="http://www.google.com" target="_blank">Community Services Directory</a>
-                </forge-custom-link>
+                </forge-app-launcher-link>
               `
             : nothing}
         </forge-app-launcher>
@@ -96,9 +95,8 @@ const meta = {
   component,
   argTypes: {
     showRelatedApps: { control: 'boolean' },
-    showCustomLinks: { control: 'boolean' },
+    showAppLauncherLinks: { control: 'boolean' },
     loading: { control: 'boolean' },
-    numberOfSkeletons: { control: { type: 'number', min: 1, max: 20, step: 1 } },
     relatedAppsTitle: { control: 'text' },
     allAppsTitle: { control: 'text' },
     viewAllAppsButtonText: { control: 'text' },
@@ -107,13 +105,12 @@ const meta = {
   },
   args: {
     showRelatedApps: true,
-    showCustomLinks: true,
+    showAppLauncherLinks: true,
     loading: false,
-    numberOfSkeletons: 5,
     relatedAppsTitle: 'Related apps',
     allAppsTitle: 'All apps',
     viewAllAppsButtonText: 'View all apps',
-    customLinksTitle: 'Custom links',
+    appLauncherLinksTitle: 'Custom Links',
     width: 500,
     avatarSize: 48
   }

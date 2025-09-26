@@ -100,17 +100,17 @@ A skeleton loading state that displays while application data is being fetched:
 
 ## Custom Links
 
-The component supports custom links through the `<forge-custom-link>` utility component, which provides accessible and visually consistent links within the launcher. Custom links appear in a separate section and are ideal for documentation, FAQ pages, or other supplementary resources.
+The component supports custom links through the `<forge-app-launcher-link>` utility component, which provides accessible and visually consistent links within the launcher. Custom links appear in a separate section and are ideal for documentation, FAQ pages, or other supplementary resources.
 
 ```html
 <forge-app-launcher>
   <span slot="custom-links-title">Resources</span>
-  <forge-custom-link slot="custom-link">
+  <forge-app-launcher-link slot="app-launcher-link">
     <a href="/documentation" target="_blank">Documentation</a>
-  </forge-custom-link>
-  <forge-custom-link slot="custom-link">
+  </forge-app-launcher-link>
+  <forge-app-launcher-link slot="app-launcher-link">
     <a href="/support" target="_blank">Support Center</a>
-  </forge-custom-link>
+  </forge-app-launcher-link>
 </forge-app-launcher>
 ```
 

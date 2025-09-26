@@ -18,24 +18,6 @@
           "kind": "class",
           "description": "",
           "name": "AppLauncherComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the width of the app launcher container. Default is 500px for popover mode, 100% for dialog mode.",
-              "name": "--forge-app-launcher-width"
-            },
-            {
-              "description": "Controls the size of the app launcher avatar. Default is 48px.",
-              "name": "--forge-app-launcher-avatar-size"
-            },
-            {
-              "description": "Controls the maximum height of the app launchers inner-container. Default is 90dvh for popover mode. 100dvh for dialog mode.",
-              "name": "--forge-app-launcher-max-height"
-            },
-            {
-              "description": "The height of the button that switches to the all apps view. Default is 36px for popover mode. 56px for dialog mode.",
-              "name": "--forge-app-launcher-view-all-apps-button-height"
-            }
-          ],
           "slots": [
             {
               "description": "Title text for the related apps section",
@@ -54,8 +36,8 @@
               "name": "custom-links-title"
             },
             {
-              "description": "Individual custom link items using forge-custom-link",
-              "name": "custom-link"
+              "description": "Individual custom link items using forge-app-launcher-link",
+              "name": "app-launcher-link"
             }
           ],
           "members": [
@@ -133,17 +115,6 @@
               "default": "false",
               "description": "Indicates whether the app launcher is in a loading state.",
               "attribute": "loading"
-            },
-            {
-              "kind": "field",
-              "name": "numberOfSkeletons",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "5",
-              "description": "Number of skeleton items to show in the loading state.",
-              "attribute": "number-of-skeletons"
             }
           ],
           "attributes": [
@@ -191,15 +162,6 @@
               "default": "false",
               "description": "Indicates whether the app launcher is in a loading state.",
               "fieldName": "loading"
-            },
-            {
-              "name": "number-of-skeletons",
-              "type": {
-                "text": "number"
-              },
-              "default": "5",
-              "description": "Number of skeleton items to show in the loading state.",
-              "fieldName": "numberOfSkeletons"
             }
           ],
           "superclass": {
@@ -210,11 +172,11 @@
           "customElement": true,
           "states": [
             {
-              "name": "small-screen",
+              "name": "small",
               "description": "The component is displayed in mobile/small screen mode (dialog)"
             },
             {
-              "name": "large-screen",
+              "name": "large",
               "description": "The component is displayed in desktop/large screen mode (popover)"
             }
           ]
@@ -1451,20 +1413,20 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/app-launcher/custom-link/custom-link.ts",
+      "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "CustomLinkComponentTagName",
+          "name": "AppLauncherLinkComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-custom-link'"
+          "default": "'forge-app-launcher-link'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "CustomLinkComponent",
+          "name": "AppLauncherLinkComponent",
           "slots": [
             {
               "description": "The `<a>` element for the link.",
@@ -1476,32 +1438,32 @@
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-custom-link",
+          "tagName": "forge-app-launcher-link",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "CustomLinkComponentTagName",
+          "name": "AppLauncherLinkComponentTagName",
           "declaration": {
-            "name": "CustomLinkComponentTagName",
-            "module": "src/lib/app-launcher/custom-link/custom-link.ts"
+            "name": "AppLauncherLinkComponentTagName",
+            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
           }
         },
         {
           "kind": "js",
-          "name": "CustomLinkComponent",
+          "name": "AppLauncherLinkComponent",
           "declaration": {
-            "name": "CustomLinkComponent",
-            "module": "src/lib/app-launcher/custom-link/custom-link.ts"
+            "name": "AppLauncherLinkComponent",
+            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "CustomLinkComponent",
-            "module": "src/lib/app-launcher/custom-link/custom-link.ts"
+            "name": "AppLauncherLinkComponent",
+            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
           }
         }
       ]
@@ -1641,7 +1603,7 @@
     },
     "AppLauncherComponent": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 76
+      "lineNumber": 72
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -1711,8 +1673,8 @@
       "path": "src/lib/user-profile/user-profile.ts",
       "lineNumber": 44
     },
-    "CustomLinkComponent": {
-      "path": "src/lib/app-launcher/custom-link/custom-link.ts",
+    "AppLauncherLinkComponent": {
+      "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "lineNumber": 21
     },
     "AppLinkComponent": {
