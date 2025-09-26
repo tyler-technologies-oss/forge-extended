@@ -1,5 +1,5 @@
 import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property, state, queryAsync, queryAssignedNodes } from 'lit/decorators.js';
+import { customElement, property, state, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { cache } from 'lit/directives/cache.js';
 import { query } from 'lit/decorators/query.js';
@@ -117,17 +117,9 @@ export class AppLauncherComponent extends LitElement {
   @property({ type: String, attribute: 'close-aria-label' })
   public closeAriaLabel = 'Close app launcher';
 
-  /** Indicates whether the app launcher is in a loading state. */
-  @property({ type: Boolean })
-  public loading = false;
-
   /** The current view of the app launcher, either 'related', 'all', or 'loading'. */
   @state()
   private _appView: AppView = 'related';
-
-  /** The previous view before entering loading state. */
-  @state()
-  private _previousView: Exclude<AppView, 'loading'> = 'related';
 
   @state()
   private _filterText = '';
@@ -135,7 +127,7 @@ export class AppLauncherComponent extends LitElement {
   @state()
   private _smallScreen = false;
 
-  @queryAsync('#search-field')
+  @query('#search-field')
   private _searchField!: HTMLInputElement;
 
   @query('#app-launcher-popover')
@@ -178,7 +170,9 @@ export class AppLauncherComponent extends LitElement {
 
   public connectedCallback(): void {
     super.connectedCallback();
-    if (!this.relatedApps?.length) {
+    if (this.#isLoading) {
+      this._appView = 'loading';
+    } else if (!this.relatedApps?.length) {
       this._appView = 'all';
     }
     this.#setupMediaQuery();
@@ -192,26 +186,13 @@ export class AppLauncherComponent extends LitElement {
   }
 
   public override willUpdate(changedProperties: PropertyValues<this>): void {
-    if (changedProperties.has('loading')) {
-      if (this.loading) {
-        // Store current view before switching to loading
-        if (this._appView !== 'loading') {
-          this._previousView = this._appView;
-        }
+    if (changedProperties.has('relatedApps') || changedProperties.has('allApps')) {
+      if (this.#isLoading) {
         this._appView = 'loading';
-      } else {
-        // Restore previous view when loading completes
-        this._appView = this._previousView;
-      }
-    }
-
-    if (changedProperties.has('relatedApps') && !this.loading) {
-      if (!this.relatedApps?.length) {
+      } else if (!this.relatedApps?.length) {
         this._appView = 'all';
-        this._previousView = 'all';
-      } else if (this._appView === 'all' && this.relatedApps?.length) {
+      } else {
         this._appView = 'related';
-        this._previousView = 'related';
       }
     }
   }
@@ -331,7 +312,7 @@ export class AppLauncherComponent extends LitElement {
     return when(
       showAllAppsButton,
       () => html`
-        <forge-button variant="raised" ?disabled=${this.loading} @click=${this.#switchToAllAppsView}>
+        <forge-button variant="raised" ?disabled=${this.#isLoading} @click=${this.#switchToAllAppsView}>
           <span>${this.#viewAllAppsButtonSlot}</span>
           <forge-icon name="chevron_right"></forge-icon>
         </forge-button>
@@ -401,6 +382,10 @@ export class AppLauncherComponent extends LitElement {
 
   get #filteredApps(): AppLauncherOption[] {
     return this.allApps?.filter(app => app.label.toLowerCase().includes(this._filterText));
+  }
+
+  get #isLoading(): boolean {
+    return !this.relatedApps?.length && !this.allApps?.length;
   }
 
   public override render(): TemplateResult {
@@ -489,7 +474,7 @@ export class AppLauncherComponent extends LitElement {
     this._filterText = target.value.toLowerCase();
   }
 
-  async #transitionToView(newView: AppView): Promise<void> {
+  #transitionToView(newView: AppView): void {
     if (this._appView === newView) {
       return;
     }
@@ -500,7 +485,7 @@ export class AppLauncherComponent extends LitElement {
     // Reset filter text when going back to related view
     if (newView === 'related') {
       this._filterText = '';
-      const input = await this._searchField;
+      const input = this._searchField;
       if (input) {
         input.value = '';
       }
@@ -508,15 +493,13 @@ export class AppLauncherComponent extends LitElement {
 
     // Focus search field when switching to all apps view
     if (newView === 'all') {
-      const input = await this._searchField;
+      const input = this._searchField;
       input?.focus();
     }
   }
 
   #resetState(): void {
-    this.loading = false;
-    this._appView = this.relatedApps?.length ? 'related' : 'all';
-    this._previousView = this._appView;
+    this._appView = this.#isLoading ? 'loading' : this.relatedApps?.length ? 'related' : 'all';
     this._filterText = '';
     this.open = false;
     if (this._appLauncherPopover) {
@@ -524,8 +507,8 @@ export class AppLauncherComponent extends LitElement {
     }
   }
 
-  async #switchToAllAppsView(): Promise<void> {
-    await this.#transitionToView('all');
+  #switchToAllAppsView(): void {
+    this.#transitionToView('all');
   }
 
   #handleSlotChange(evt: Event): void {

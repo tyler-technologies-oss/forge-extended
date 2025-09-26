@@ -71,32 +71,11 @@ A comprehensive view displaying all available applications with:
 
 ### Loading View
 
-A skeleton loading state that displays while application data is being fetched:
+A skeleton loading state that displays automatically when no application data is available:
 
-- Configurable number of skeleton placeholders via the `numberOfSkeletons` property
-- Replaces all other content when the `loading` property is set to `true`
-- Provides visual feedback during async operations
-- Automatically returns to the previous view when loading completes
-
-```html
-<forge-app-launcher loading number-of-skeletons="8">
-  <!-- Slots will be hidden during loading state -->
-</forge-app-launcher>
-
-<script>
-  const appLauncher = document.querySelector('forge-app-launcher');
-
-  // Show loading state
-  appLauncher.loading = true;
-  appLauncher.numberOfSkeletons = 6;
-
-  // Simulate data loading
-  setTimeout(() => {
-    appLauncher.loading = false;
-    // Set your app data here
-  }, 2000);
-</script>
-```
+- Shows when both `relatedApps` and `allApps` arrays are empty
+- Displays skeleton placeholders to provide visual feedback during data loading
+- Automatically transitions to the appropriate view when app data is provided
 
 ## Custom Links
 

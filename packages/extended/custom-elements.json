@@ -104,17 +104,6 @@
               "default": "'Close app launcher'",
               "description": "ARIA label for the close button",
               "attribute": "close-aria-label"
-            },
-            {
-              "kind": "field",
-              "name": "loading",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the app launcher is in a loading state.",
-              "attribute": "loading"
             }
           ],
           "attributes": [
@@ -153,15 +142,6 @@
               "default": "'Close app launcher'",
               "description": "ARIA label for the close button",
               "fieldName": "closeAriaLabel"
-            },
-            {
-              "name": "loading",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the app launcher is in a loading state.",
-              "fieldName": "loading"
             }
           ],
           "superclass": {

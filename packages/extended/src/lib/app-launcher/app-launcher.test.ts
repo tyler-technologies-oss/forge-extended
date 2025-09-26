@@ -21,7 +21,6 @@ describe('AppLauncher', () => {
       expect(el.open).to.be.false;
       expect(el.relatedApps).to.deep.equal([]);
       expect(el.allApps).to.deep.equal([]);
-      expect(el.loading).to.be.false;
     });
   });
 
@@ -35,17 +34,6 @@ describe('AppLauncher', () => {
       await nextFrame();
 
       expect(harness.el.open).to.be.true;
-    });
-
-    it('should update loading property', async () => {
-      const harness = await createFixture();
-
-      expect(harness.el.loading).to.be.false;
-
-      harness.el.loading = true;
-      await nextFrame();
-
-      expect(harness.el.loading).to.be.true;
     });
   });
 
@@ -116,22 +104,28 @@ describe('AppLauncher', () => {
   describe('Number properties', () => {});
 
   describe('Loading functionality', () => {
-    it('should show loading view when loading is true', async () => {
-      const harness = await createFixture();
+    it('should show loading view when both arrays are empty', async () => {
+      const harness = await createFixture({
+        relatedApps: [],
+        allApps: []
+      });
 
-      // Initially not loading
-      expect(harness.loadingState).to.not.exist;
-
-      // Set loading to true
-      harness.el.loading = true;
-      await nextFrame();
-
-      // Should show loading state
+      // Should show loading state when no apps provided
       expect(harness.loadingState).to.exist;
       expect(harness.loadingSkeleton.length).to.equal(7); // 1 title + 5 content skeletons + 1 button skeleton
     });
 
-    it('should hide other views when loading is true', async () => {
+    it('should hide loading view when apps are provided', async () => {
+      const harness = await createFixture({
+        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }]
+      });
+
+      // Should not show loading state when apps are provided
+      expect(harness.loadingState).to.not.exist;
+      expect(harness.viewAllAppsButton).to.exist;
+    });
+
+    it('should show loading view when apps are removed', async () => {
       const harness = await createFixture({
         relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }]
       });
@@ -140,133 +134,63 @@ describe('AppLauncher', () => {
       expect(harness.viewAllAppsButton).to.exist;
       expect(harness.loadingState).to.not.exist;
 
-      // Set loading to true
-      harness.el.loading = true;
+      // Remove all apps
+      harness.el.relatedApps = [];
+      harness.el.allApps = [];
       await nextFrame();
 
-      // Should hide other views and show loading
-      expect(harness.viewAllAppsButton).to.not.exist;
+      // Should show loading view
       expect(harness.loadingState).to.exist;
+      expect(harness.viewAllAppsButton).to.not.exist;
     });
 
-    it('should return to previous view when loading becomes false', async () => {
+    it('should transition from loading to appropriate view when apps are added', async () => {
       const harness = await createFixture({
-        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }]
+        relatedApps: [],
+        allApps: []
       });
 
-      // Initially in related view
-      expect(harness.viewAllAppsButton).to.exist;
-
-      // Set loading to true
-      harness.el.loading = true;
-      await nextFrame();
-
-      // Should show loading
+      // Should start in loading view
       expect(harness.loadingState).to.exist;
-      expect(harness.viewAllAppsButton).to.not.exist;
 
-      // Set loading to false
-      harness.el.loading = false;
+      // Add related apps
+      harness.el.relatedApps = [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }];
       await nextFrame();
 
-      // Should return to related view
+      // Should transition to related view
       expect(harness.loadingState).to.not.exist;
       expect(harness.viewAllAppsButton).to.exist;
     });
 
-    it('should remember view state when transitioning to/from loading', async () => {
+    it('should show all view when only allApps are provided', async () => {
       const harness = await createFixture({
-        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }],
+        relatedApps: [],
         allApps: [{ label: 'All App', iconName: 'app', uri: 'http://app.com' }]
       });
 
-      // Start in related view, switch to all view
-      harness.viewAllAppsButton!.click();
-      await nextFrame();
-
-      // Should be in all view
+      // Should show all view when only allApps provided
+      expect(harness.loadingState).to.not.exist;
       expect(harness.searchField).to.exist;
-      expect(harness.backButton).to.exist;
-
-      // Set loading to true
-      harness.el.loading = true;
-      await nextFrame();
-
-      // Should show loading
-      expect(harness.loadingState).to.exist;
-
-      // Set loading to false
-      harness.el.loading = false;
-      await nextFrame();
-
-      // Should return to all view (not related)
-      expect(harness.searchField).to.exist;
-      expect(harness.backButton).to.exist;
       expect(harness.viewAllAppsButton).to.not.exist;
     });
 
-    it('should disable view all apps button when loading', async () => {
+    it('should disable view all apps button when in loading state', async () => {
       const harness = await createFixture({
-        relatedApps: [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }]
+        relatedApps: [],
+        allApps: []
       });
 
-      // Initially button should not be disabled
+      // Should be in loading state, so view all apps button should not be visible
+      expect(harness.loadingState).to.exist;
+      expect(harness.viewAllAppsButton).to.not.exist;
+
+      // Add apps to get out of loading state
+      harness.el.relatedApps = [{ label: 'Test App', iconName: 'test', uri: 'http://test.com' }];
+      await nextFrame();
+
+      // Should show view all apps button and it should not be disabled
+      expect(harness.viewAllAppsButton).to.exist;
       expect(harness.viewAllAppsButton?.hasAttribute('disabled')).to.be.false;
-
-      // Set loading to true
-      harness.el.loading = true;
-      await nextFrame();
-
-      // Loading view should be shown, button should not be visible
-      expect(harness.loadingState).to.exist;
-
-      // Set loading to false to go back to related view
-      harness.el.loading = false;
-      await nextFrame();
-
-      // Button should be enabled again
-      expect(harness.viewAllAppsButton?.hasAttribute('disabled')).to.be.false;
-    });
-
-    it('should handle loading state when no related apps exist', async () => {
-      const harness = await createFixture({
-        relatedApps: [] // No related apps means starts in 'all' view
-      });
-
-      // Initially should be in all view
-      expect(harness.searchField).to.exist;
-
-      // Set loading to true
-      harness.el.loading = true;
-      await nextFrame();
-
-      // Should show loading
-      expect(harness.loadingState).to.exist;
-
-      // Set loading to false
-      harness.el.loading = false;
-      await nextFrame();
-
-      // Should return to all view
-      expect(harness.searchField).to.exist;
-      expect(harness.loadingState).to.not.exist;
-    });
-
-    it('should reset loading state when component is closed', async () => {
-      const harness = await createFixture({ open: true });
-
-      // Set loading
-      harness.el.loading = true;
-      await nextFrame();
-
-      expect(harness.loadingState).to.exist;
-
-      // Close the component
-      harness.closeButton!.click();
-      await nextFrame();
-
-      // Loading should be reset to false
-      expect(harness.el.loading).to.be.false;
     });
   });
 
@@ -412,7 +336,6 @@ describe('AppLauncher', () => {
 
       // Verify resetState behavior
       expect(harness.el.open).to.be.false;
-      expect(harness.el.loading).to.be.false;
     });
 
     it('should reset state to initial values', async () => {
@@ -484,7 +407,6 @@ describe('AppLauncher', () => {
 
       // Verify resetState was called by checking the state changes
       expect(harness.el.open).to.be.false;
-      expect(harness.el.loading).to.be.false;
 
       // Restore original matchMedia
       window.matchMedia = originalMatchMedia;
@@ -607,7 +529,6 @@ describe('AppLauncher', () => {
 
       // Verify resetState was called by checking the state changes
       expect(harness.el.open).to.be.false;
-      expect(harness.el.loading).to.be.false;
 
       // Restore original matchMedia
       window.matchMedia = originalMatchMedia;
@@ -1249,7 +1170,6 @@ interface AppLauncherFixtureConfig {
   relatedApps?: AppLauncherOption[];
   appLauncherLinks?: AppLauncherLink[];
   allApps?: AppLauncherOption[];
-  loading?: boolean;
 }
 
 async function createFixture({
@@ -1259,16 +1179,14 @@ async function createFixture({
   allApps = [
     { label: 'All App 1', iconName: 'app1', uri: 'http://app1.com' },
     { label: 'All App 2', iconName: 'app2', uri: 'http://app2.com' }
-  ],
-  loading = false
+  ]
 }: AppLauncherFixtureConfig = {}): Promise<AppLauncherHarness> {
   const el = await fixture<AppLauncherComponent>(html`
     <forge-app-launcher
       .open=${open}
       .relatedApps=${relatedApps}
       .appLauncherLinks=${appLauncherLinks}
-      .allApps=${allApps}
-      .loading=${loading}>
+      .allApps=${allApps}>
     </forge-app-launcher>
   `);
 

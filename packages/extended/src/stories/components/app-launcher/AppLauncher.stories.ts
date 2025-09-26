@@ -61,14 +61,17 @@ const relatedApps: AppLauncherOption[] = [
 const meta = {
   title: 'Components/App Launcher',
   render: args => {
+    // Simulate loading by providing empty arrays when loading is true
+    const currentAllApps = args.simulateLoading ? [] : allApps;
+    const currentRelatedApps = args.simulateLoading ? [] : args.showRelatedApps ? relatedApps : [];
+
     return html`
       <forge-app-bar theme-mode="scoped" title-text="App Launcher">
         <forge-app-launcher
           slot="end"
           style="--forge-app-launcher-width: ${args.width}px; --forge-app-launcher-avatar-size: ${args.avatarSize}px;"
-          .allApps=${allApps}
-          .relatedApps=${args.showRelatedApps ? relatedApps : []}
-          .loading=${args.loading}>
+          .allApps=${currentAllApps}
+          .relatedApps=${currentRelatedApps}>
           <span slot="related-apps-title">${args.relatedAppsTitle}</span>
           <span slot="all-apps-title">${args.allAppsTitle}</span>
           <span slot="view-all-apps-button-text">${args.viewAllAppsButtonText}</span>
@@ -95,7 +98,10 @@ const meta = {
   argTypes: {
     showRelatedApps: { control: 'boolean' },
     showAppLauncherLinks: { control: 'boolean' },
-    loading: { control: 'boolean' },
+    simulateLoading: {
+      control: 'boolean',
+      description: 'Simulates loading state by removing all app data'
+    },
     relatedAppsTitle: { control: 'text' },
     allAppsTitle: { control: 'text' },
     viewAllAppsButtonText: { control: 'text' },
@@ -105,7 +111,7 @@ const meta = {
   args: {
     showRelatedApps: true,
     showAppLauncherLinks: true,
-    loading: false,
+    simulateLoading: false,
     relatedAppsTitle: 'Related apps',
     allAppsTitle: 'All apps',
     viewAllAppsButtonText: 'View all apps',
