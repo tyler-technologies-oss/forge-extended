@@ -10,6 +10,7 @@
 @use '@tylertech/forge/sass/card' as forge-card;
 @use '@tylertech/forge/sass/skeleton' as forge-skeleton;
 @use '@tylertech/forge/sass/dialog' as forge-dialog;
+@use '@tylertech/forge/sass/core/styles/scrollbar' as forge-scrollbar;
 @use '../utils/mixins';
 
 //
@@ -22,6 +23,7 @@
 
   & * {
     box-sizing: border-box;
+    @include forge-scrollbar.base;
   }
 }
 
