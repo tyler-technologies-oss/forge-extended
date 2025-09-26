@@ -46,11 +46,6 @@ export interface AppLauncherOption {
   target?: string;
 }
 
-export interface AppLauncherCustomLink {
-  label: string;
-  uri: string;
-}
-
 export type AppView = 'related' | 'all' | 'loading';
 
 export const AppLauncherComponentTagName: keyof HTMLElementTagNameMap = 'forge-app-launcher';
@@ -61,7 +56,7 @@ export const AppLauncherComponentTagName: keyof HTMLElementTagNameMap = 'forge-a
  * @slot related-apps-title - Title text for the related apps section
  * @slot all-apps-title - Title text for the all apps view
  * @slot view-all-apps-button-text - Text for the button that switches to all apps view
- * @slot custom-links-title - Title text for the custom links section
+ * @slot app-launcher-links-title - Title text for the custom links section
  * @slot app-launcher-link - Individual custom link items using forge-app-launcher-link
  *
  * @state small - The component is displayed in mobile/small screen mode (dialog)
@@ -538,7 +533,7 @@ export class AppLauncherComponent extends LitElement {
     if (
       [
         'app-launcher-link',
-        'custom-links-title',
+        'app-launcher-links-title',
         'related-apps-title',
         'view-all-apps-button-text',
         'all-apps-title'
