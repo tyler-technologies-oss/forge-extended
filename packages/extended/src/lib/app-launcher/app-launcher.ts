@@ -321,7 +321,7 @@ export class AppLauncherComponent extends LitElement {
     );
   }
 
-  get #AppLauncherLinks(): TemplateResult | typeof nothing {
+  get #appLauncherLinks(): TemplateResult | typeof nothing {
     const showLinks = this._slottedAppLauncherLinkNodes.length > 0;
     return when(
       showLinks,
@@ -375,7 +375,7 @@ export class AppLauncherComponent extends LitElement {
     return html`
       <div class="outer-container">
         ${this.#header}
-        <div class="${innerContainerClass}">${this.#mainCard} ${this.#AppLauncherLinks}</div>
+        <div class="${innerContainerClass}">${this.#mainCard} ${this.#appLauncherLinks}</div>
       </div>
     `;
   }

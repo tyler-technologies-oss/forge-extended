@@ -1,6 +1,15 @@
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/sass/typography' as forge-typography;
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/list/list-item' as forge-list-item;
+@use '@tylertech/forge/sass/avatar' as forge-avatar;
+@use '@tylertech/forge/sass/icon' as forge-icon;
+@use '@tylertech/forge/sass/button' as forge-button;
+@use '@tylertech/forge/sass/popover' as forge-popover;
+@use '@tylertech/forge/sass/toolbar' as forge-toolbar;
+@use '@tylertech/forge/sass/card' as forge-card;
+@use '@tylertech/forge/sass/skeleton' as forge-skeleton;
+@use '@tylertech/forge/sass/dialog' as forge-dialog;
 @use '../utils/mixins';
 
 //
@@ -37,7 +46,11 @@ h2 {
 }
 
 forge-popover {
-  --forge-popover-background: #{forge-theme.variable(surface-dim)};
+  @include forge-popover.provide-theme(
+    (
+      background: #{forge-theme.variable(surface-dim)}
+    )
+  );
 }
 
 .v-stack {
@@ -45,7 +58,11 @@ forge-popover {
 }
 
 .header {
-  --forge-toolbar-background: none;
+  @include forge-toolbar.provide-theme(
+    (
+      background: none
+    )
+  );
 }
 
 .outer-container {
@@ -69,20 +86,32 @@ forge-popover {
 }
 
 .app-list-item {
-  --forge-list-item-padding: #{forge-spacing.variable(medium)};
-  --forge-list-item-height: calc(var(--_forge-app-launcher-avatar-size) + #{forge-spacing.variable(medium)});
-  --forge-list-item-gap: #{forge-spacing.variable(medium)};
-  --forge-list-item-shape: #{forge-spacing.variable(xsmall)};
+  @include forge-list-item.provide-theme(
+    (
+      padding: #{forge-spacing.variable(medium)},
+      height: calc(var(--_forge-app-launcher-avatar-size) + #{forge-spacing.variable(medium)}),
+      gap: #{forge-spacing.variable(medium)},
+      shape: #{forge-spacing.variable(xsmall)}
+    )
+  );
 }
 
 .app-avatar {
-  --forge-avatar-size: var(--_forge-app-launcher-avatar-size);
-  --forge-avatar-background: #{forge-theme.variable(tertiary-container-low)};
-  --forge-avatar-color: #{forge-theme.variable(on-tertiary-container-low)};
+  @include forge-avatar.provide-theme(
+    (
+      size: var(--_forge-app-launcher-avatar-size),
+      background: #{forge-theme.variable(tertiary-container-low)},
+      color: #{forge-theme.variable(on-tertiary-container-low)}
+    )
+  );
 
   forge-icon {
-    font-size: calc(var(--_forge-app-launcher-avatar-size) * 0.75);
-    color: #{forge-theme.variable(on-tertiary-container-low)};
+    @include forge-icon.provide-theme(
+      (
+        font-size: calc(var(--_forge-app-launcher-avatar-size) * 0.75),
+        color: #{forge-theme.variable(on-tertiary-container-low)}
+      )
+    );
   }
 }
 
@@ -98,7 +127,12 @@ forge-popover {
   }
 
   forge-card {
-    --forge-card-overflow: hidden;
+    @include forge-card.provide-theme(
+      (
+        overflow: hidden
+      )
+    );
+
     min-height: 0;
 
     &::part(root) {
@@ -121,7 +155,11 @@ forge-popover {
   margin-block-end: #{forge-spacing.variable(medium)};
 
   forge-button {
-    --forge-button-height: var(--_forge-app-launcher-view-all-apps-button-height);
+    @include forge-button.provide-theme(
+      (
+        height: var(--_forge-app-launcher-view-all-apps-button-height)
+      )
+    );
     flex: 1;
   }
 }
@@ -137,8 +175,13 @@ forge-popover {
   gap: #{forge-spacing.variable(xsmall)};
   overflow-y: auto;
   height: 100%;
-  --forge-list-item-padding: 24px;
-  --forge-list-item-shape: #{forge-spacing.variable(xsmall)};
+
+  @include forge-list-item.provide-theme(
+    (
+      padding: #{forge-spacing.variable(large)},
+      shape: #{forge-spacing.variable(xsmall)}
+    )
+  );
 }
 
 .empty-state {
@@ -168,8 +211,13 @@ forge-popover {
   forge-skeleton {
     height: calc(var(--_forge-app-launcher-avatar-size) + #{forge-spacing.variable(xsmall)});
     width: 100%;
-    --forge-skeleton-margin: 0;
     cursor: progress;
+
+    @include forge-skeleton.provide-theme(
+      (
+        margin: 0
+      )
+    );
   }
 
   .title-skeleton {
@@ -204,7 +252,12 @@ forge-popover {
 
 // Small screen (dialog mode)
 :host(:state(small)) {
-  --forge-dialog-width: 100%;
+  @include forge-dialog.provide-theme(
+    (
+      width: 100%,
+      height: 100%
+    )
+  );
 
   .outer-container {
     --_forge-app-launcher-avatar-size: 56px;
