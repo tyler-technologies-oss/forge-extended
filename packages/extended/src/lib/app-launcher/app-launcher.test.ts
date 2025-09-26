@@ -1223,7 +1223,7 @@ class AppLauncherHarness {
   }
 
   public get appLinks(): HTMLElement[] {
-    return Array.from(this.el.shadowRoot!.querySelectorAll('forge-app-link')) as HTMLElement[];
+    return Array.from(this.el.shadowRoot!.querySelectorAll('.app-list-item')) as HTMLElement[];
   }
 
   public get loadingState(): HTMLElement | null {

@@ -6,7 +6,6 @@ import { AppLauncherOption } from '$lib/app-launcher';
 
 import '$lib/app-launcher';
 import '$lib/app-launcher/app-launcher-link';
-import '$lib/app-launcher/app-link';
 import { defineAppBarComponent } from '@tylertech/forge';
 
 const component = 'forge-app-launcher';
@@ -77,7 +76,7 @@ const meta = {
           ${args.showAppLauncherLinks
             ? html`
                 <forge-app-launcher-link slot="app-launcher-link">
-                  <a href="http://www.google.com" target="_blank">Payments Documentation</a>
+                  <a href="http://www.google.com" target="_blank">Design Documentation</a>
                 </forge-app-launcher-link>
                 <forge-app-launcher-link slot="app-launcher-link">
                   <a href="http://www.google.com" target="_blank">Frequently Asked Questions</a>
@@ -110,7 +109,7 @@ const meta = {
     relatedAppsTitle: 'Related apps',
     allAppsTitle: 'All apps',
     viewAllAppsButtonText: 'View all apps',
-    appLauncherLinksTitle: 'Custom Links',
+    appLauncherLinksTitle: 'Custom links',
     width: 500,
     avatarSize: 48
   }

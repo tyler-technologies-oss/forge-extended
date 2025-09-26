@@ -57,15 +57,33 @@ forge-popover {
   min-height: 0;
 }
 
+.search-container {
+  padding-inline: #{forge-spacing.variable(medium)};
+  padding-block-start: #{forge-spacing.variable(medium)};
+}
+
 .app-list-container {
   height: 100%;
   min-height: 0;
   padding: #{forge-spacing.variable(medium)};
 }
 
-.search-container {
-  padding-inline: #{forge-spacing.variable(medium)};
-  padding-block-start: #{forge-spacing.variable(medium)};
+.app-list-item {
+  --forge-list-item-padding: #{forge-spacing.variable(medium)};
+  --forge-list-item-height: calc(var(--_forge-app-launcher-avatar-size) + #{forge-spacing.variable(medium)});
+  --forge-list-item-gap: #{forge-spacing.variable(medium)};
+  --forge-list-item-shape: #{forge-spacing.variable(xsmall)};
+}
+
+.app-avatar {
+  --forge-avatar-size: var(--_forge-app-launcher-avatar-size);
+  --forge-avatar-background: #{forge-theme.variable(tertiary-container-low)};
+  --forge-avatar-color: #{forge-theme.variable(on-tertiary-container-low)};
+
+  forge-icon {
+    font-size: calc(var(--_forge-app-launcher-avatar-size) * 0.75);
+    color: #{forge-theme.variable(on-tertiary-container-low)};
+  }
 }
 
 .inner-container {

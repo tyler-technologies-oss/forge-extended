@@ -32,7 +32,6 @@ import {
 } from '@tylertech/tyler-icons';
 
 import styles from './app-launcher.scss?inline';
-import './app-link/app-link';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -453,10 +452,12 @@ export class AppLauncherComponent extends LitElement {
 
   #appListItem(app: AppLauncherOption): TemplateResult | typeof nothing {
     return html`
-      <forge-app-link>
-        <forge-icon name=${app.iconName} external slot="icon"></forge-icon>
+      <forge-list-item class="app-list-item">
+        <forge-avatar class="app-avatar" slot="start">
+          <forge-icon name=${app.iconName} external></forge-icon>
+        </forge-avatar>
         <a href="${app.uri}" target="${app.target || '_blank'}">${app.label}</a>
-      </forge-app-link>
+      </forge-list-item>
     `;
   }
 
