@@ -69,7 +69,6 @@ const meta = {
           style="--forge-app-launcher-width: ${args.width}px; --forge-app-launcher-avatar-size: ${args.avatarSize}px;"
           .allApps=${allApps}
           .relatedApps=${args.showRelatedApps ? relatedApps : []}
-          .breakpoint=${args.breakpoint}
           .loading=${args.loading}
           .numberOfSkeletons=${args.numberOfSkeletons}>
           <span slot="related-apps-title">${args.relatedAppsTitle}</span>
@@ -103,7 +102,6 @@ const meta = {
     relatedAppsTitle: { control: 'text' },
     allAppsTitle: { control: 'text' },
     viewAllAppsButtonText: { control: 'text' },
-    breakpoint: { control: { type: 'number', min: 320, max: 1920, step: 10 } },
     width: { control: { type: 'number', min: 300, max: 800, step: 10 } },
     avatarSize: { control: { type: 'number', min: 24, max: 96, step: 4 } }
   },
@@ -116,7 +114,6 @@ const meta = {
     allAppsTitle: 'All apps',
     viewAllAppsButtonText: 'View all apps',
     customLinksTitle: 'Custom links',
-    breakpoint: 768,
     width: 500,
     avatarSize: 48
   }

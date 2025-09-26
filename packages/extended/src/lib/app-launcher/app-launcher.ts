@@ -19,7 +19,8 @@ import {
   defineToolbarComponent,
   IconRegistry,
   IPopoverToggleEventData,
-  PopoverComponent
+  PopoverComponent,
+  toggleState
 } from '@tylertech/forge';
 import {
   tylIconApps,
@@ -64,6 +65,9 @@ export const AppLauncherComponentTagName: keyof HTMLElementTagNameMap = 'forge-a
  * @slot custom-links-title - Title text for the custom links section
  * @slot custom-link - Individual custom link items using forge-custom-link
  *
+ * @state small - The component is displayed in mobile/small screen mode (dialog)
+ * @state large - The component is displayed in desktop/large screen mode (popover)
+ *
  * @cssproperty --forge-app-launcher-width - Controls the width of the app launcher container. Default is 500px for popover mode, 100% for dialog mode.
  * @cssproperty --forge-app-launcher-avatar-size - Controls the size of the app launcher avatar. Default is 48px.
  * @cssproperty --forge-app-launcher-max-height - Controls the maximum height of the app launchers inner-container. Default is 90dvh for popover mode. 100dvh for dialog mode.
@@ -95,6 +99,8 @@ export class AppLauncherComponent extends LitElement {
     ]);
   }
 
+  readonly #internals: ElementInternals;
+
   public static override styles = unsafeCSS(styles);
 
   /** Indicates whether the dialog or popover is open. */
@@ -108,10 +114,6 @@ export class AppLauncherComponent extends LitElement {
   /** An array of all available apps for the all apps view. */
   @property({ type: Array, attribute: false })
   public allApps: AppLauncherOption[] = [];
-
-  /** The breakpoint in pixels for responsive behavior. Below this value, the component will display as a dialog instead of a popover. */
-  @property({ type: Number })
-  public breakpoint = 768;
 
   /** ARIA label for the app launcher trigger button */
   @property({ type: String, attribute: 'launcher-aria-label' })
@@ -157,6 +159,12 @@ export class AppLauncherComponent extends LitElement {
   private _slottedCustomLinkNodes!: Node[];
 
   #mediaQuery?: MediaQueryList;
+  #breakpoint = 768;
+
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+  }
 
   readonly #relatedAppsTitleSlot = html`<h2>
     <slot name="related-apps-title" id="related-apps-title-slot">Related apps</slot>
@@ -216,10 +224,6 @@ export class AppLauncherComponent extends LitElement {
         this._appView = 'related';
         this._previousView = 'related';
       }
-    }
-
-    if (changedProperties.has('breakpoint')) {
-      this.#setupMediaQuery();
     }
   }
 
@@ -465,7 +469,7 @@ export class AppLauncherComponent extends LitElement {
     if (this.#mediaQuery) {
       this.#mediaQuery.removeEventListener('change', this.#handleMediaChange);
     }
-    this.#mediaQuery = window.matchMedia(`(max-width: ${this.breakpoint}px)`);
+    this.#mediaQuery = window.matchMedia(`(max-width: ${this.#breakpoint}px)`);
     this.#mediaQuery.addEventListener('change', this.#handleMediaChange);
     this.#handleMediaChange(this.#mediaQuery, true);
   }
@@ -475,6 +479,11 @@ export class AppLauncherComponent extends LitElement {
     isInitial?: boolean
   ) => {
     this._smallScreen = e.matches;
+
+    // Update component state using ElementInternals
+    toggleState(this.#internals, 'small', this._smallScreen);
+    toggleState(this.#internals, 'large', !this._smallScreen);
+
     if (!isInitial && this.isConnected) {
       requestAnimationFrame(() => {
         if (this._appLauncherPopover && this.open) {

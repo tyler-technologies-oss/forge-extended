@@ -20,7 +20,6 @@ describe('AppLauncher', () => {
       expect(el.open).to.be.false;
       expect(el.relatedApps).to.deep.equal([]);
       expect(el.allApps).to.deep.equal([]);
-      expect(el.breakpoint).to.equal(768);
       expect(el.loading).to.be.false;
       expect(el.numberOfSkeletons).to.equal(5);
     });
@@ -115,26 +114,6 @@ describe('AppLauncher', () => {
   });
 
   describe('Number properties', () => {
-    it('should update breakpoint property', async () => {
-      const harness = await createFixture();
-
-      expect(harness.el.breakpoint).to.equal(768);
-
-      harness.el.breakpoint = 1024;
-      await nextFrame();
-
-      expect(harness.el.breakpoint).to.equal(1024);
-    });
-
-    it('should update media query when breakpoint changes', async () => {
-      const harness = await createFixture();
-
-      harness.el.breakpoint = 500;
-      await nextFrame();
-
-      expect(harness.el.breakpoint).to.equal(500);
-    });
-
     it('should update numberOfSkeletons property', async () => {
       const harness = await createFixture();
 
@@ -692,6 +671,51 @@ describe('AppLauncher', () => {
 
       expect(harness.dialog).to.exist;
       expect(harness.popover).to.not.exist;
+
+      // Restore original matchMedia
+      window.matchMedia = originalMatchMedia;
+    });
+
+    it('should set ElementInternals states based on screen size', async () => {
+      const originalMatchMedia = window.matchMedia;
+
+      // Test large screen state
+      window.matchMedia = (query: string) =>
+        ({
+          matches: false, // Large screen - media query doesn't match
+          media: query,
+          onchange: null,
+          addListener: () => {},
+          removeListener: () => {},
+          addEventListener: () => {},
+          removeEventListener: () => {},
+          dispatchEvent: () => true
+        }) as MediaQueryList;
+
+      const harness = await createFixture();
+
+      // Verify large screen state is set
+      expect(harness.el.matches(':state(large)')).to.be.true;
+      expect(harness.el.matches(':state(small)')).to.be.false;
+
+      // Test small screen state
+      window.matchMedia = (query: string) =>
+        ({
+          matches: true, // Small screen - media query matches
+          media: query,
+          onchange: null,
+          addListener: () => {},
+          removeListener: () => {},
+          addEventListener: () => {},
+          removeEventListener: () => {},
+          dispatchEvent: () => true
+        }) as MediaQueryList;
+
+      const smallScreenHarness = await createFixture();
+
+      // Verify small screen state is set
+      expect(smallScreenHarness.el.matches(':state(small)')).to.be.true;
+      expect(smallScreenHarness.el.matches(':state(large)')).to.be.false;
 
       // Restore original matchMedia
       window.matchMedia = originalMatchMedia;
@@ -1264,7 +1288,6 @@ interface AppLauncherFixtureConfig {
   relatedApps?: AppLauncherOption[];
   customLinks?: AppLauncherCustomLink[];
   allApps?: AppLauncherOption[];
-  breakpoint?: number;
   loading?: boolean;
   numberOfSkeletons?: number;
 }
@@ -1277,7 +1300,6 @@ async function createFixture({
     { label: 'All App 1', iconName: 'app1', uri: 'http://app1.com' },
     { label: 'All App 2', iconName: 'app2', uri: 'http://app2.com' }
   ],
-  breakpoint = 768,
   loading = false,
   numberOfSkeletons = 5
 }: AppLauncherFixtureConfig = {}): Promise<AppLauncherHarness> {
@@ -1287,7 +1309,6 @@ async function createFixture({
       .relatedApps=${relatedApps}
       .customLinks=${customLinks}
       .allApps=${allApps}
-      .breakpoint=${breakpoint}
       .loading=${loading}
       .numberOfSkeletons=${numberOfSkeletons}>
     </forge-app-launcher>

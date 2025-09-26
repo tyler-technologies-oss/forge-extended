@@ -116,26 +116,10 @@ The component supports custom links through the `<forge-custom-link>` utility co
 
 ## Responsive Behavior
 
-The component automatically adapts to screen size using a configurable media query breakpoint:
+The component automatically adapts to screen size using an internal media query breakpoint at 768px:
 
-- **Desktop (>breakpoint)**: Displays as a popover anchored to the launcher button
-- **Mobile (≤breakpoint)**: Displays as a full-screen persistent dialog for optimal touch interaction
-
-The default breakpoint is 768px, but can be customized using the `breakpoint` property:
-
-```html
-<!-- Custom breakpoint of 1024px -->
-<forge-app-bar theme-mode="scoped">
-  <forge-app-launcher slot="end" id="app-launcher">
-    <!-- Content slots -->
-  </forge-app-launcher>
-</forge-app-bar>
-
-<script>
-  const appLauncher = document.querySelector('#app-launcher');
-  appLauncher.breakpoint = 1024;
-</script>
-```
+- **Desktop (>768px)**: Displays as a popover anchored to the launcher button
+- **Mobile (≤768px)**: Displays as a full-screen persistent dialog for optimal touch interaction
 
 ## API
 
