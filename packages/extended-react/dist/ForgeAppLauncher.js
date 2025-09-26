@@ -6,7 +6,6 @@ export const ForgeAppLauncher = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
   const {
     open,
-    loading,
     launcherAriaLabel,
     backAriaLabel,
     closeAriaLabel,
@@ -41,7 +40,6 @@ export const ForgeAppLauncher = forwardRef((props, forwardedRef) => {
       part: props.part,
       tabindex: props.tabIndex,
       open: props.open ? "" : undefined,
-      loading: props.loading ? "" : undefined,
       style: { ...props.style },
     },
     props.children,

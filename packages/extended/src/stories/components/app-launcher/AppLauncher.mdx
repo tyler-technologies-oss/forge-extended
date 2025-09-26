@@ -16,37 +16,73 @@ The component adapts responsively to screen size, presenting as a popover on des
 
 The `<forge-app-launcher>` component is designed to be used within a `<forge-app-bar>`, typically placed in the `end` slot alongside other user-related actions like the user profile component. This ensures consistent navigation structure throughout Tyler Cloud applications.
 
-### App Bar Integration
+When using the app launcher, you can provide two primary data sources:
 
-When using the app launcher within an app bar, you should set the `theme-mode="scoped"` attribute on the `<forge-app-bar>` to ensure proper theming inheritance and prevent the app bar's theme tokens from cascading into the launcher's popover content.
+- `relatedApps`: An array of applications relevant to the current user's context, displayed in the default view.
+- `allApps`: An array of all available applications within the Tyler Cloud ecosystem, accessible via the "View all apps" button.
+
+To do so, this requires the use of JavaScript to set the properties on the component instance.
 
 ```html
 <forge-app-bar theme-mode="scoped">
-  <forge-app-launcher slot="end" id="app-launcher">
-    <!-- Content slots -->
-  </forge-app-launcher>
+  <forge-app-launcher slot="end" id="app-launcher"></forge-app-launcher>
 </forge-app-bar>
 
 <script>
   const appLauncher = document.querySelector('#app-launcher');
 
+  const relatedApps = [
+    {
+      label: 'Project Management',
+      iconName: 'assignment',
+      uri: 'https://project-management.example.com',
+      target: '_blank'
+    },
+    {
+      label: 'Time Tracking',
+      iconName: 'access_time',
+      uri: ''
+      target: '_blank'
+    }
+  ];
+
   const allApps = [
     {
       label: 'Payments Administration',
       iconName: 'payment',
-      uri: 'http://www.google.com',
+      uri: 'https://payments-admin.example.com',
       target: '_blank'
     },
     {
       label: 'PEP Administration',
       iconName: 'admin_panel_settings',
-      uri: 'http://www.google.com',
+      uri: 'https://pep-admin.example.com',
+      target: '_blank'
+    },
+    {
+      label: 'User Management',
+      iconName: 'people',
+      uri: 'https://user-management.example.com',
       target: '_blank'
     }
   ];
 
+  appLauncher.relatedApps = relatedApps;
   appLauncher.allApps = allApps;
 </script>
+```
+
+### App Bar Integration
+
+When using the app launcher within an app bar, you should set the `theme-mode="scoped"` attribute on the `<forge-app-bar>` to ensure proper theming inheritance and prevent the app bar's theme tokens from cascading into the launcher's popover content.
+
+```html
+<!-- Correct theming with theme-mode="scoped" -->
+<forge-app-bar theme-mode="scoped">
+  <forge-app-launcher slot="end" id="app-launcher">
+    <!-- Content slots -->
+  </forge-app-launcher>
+</forge-app-bar>
 ```
 
 ## Views

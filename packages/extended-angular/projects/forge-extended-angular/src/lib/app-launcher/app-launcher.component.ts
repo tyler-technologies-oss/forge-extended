@@ -94,17 +94,6 @@ export class AppLauncherComponent {
     return this.nativeElement.closeAriaLabel;
   }
 
-  /** Indicates whether the app launcher is in a loading state. */
-  @Input({ transform: booleanAttribute })
-  public set loading(value: AppLauncherComponentCustomElement['loading']) {
-    this.zone.runOutsideAngular(() => {
-      this.nativeElement.loading = value;
-    });
-  }
-  public get loading(): AppLauncherComponentCustomElement['loading'] {
-    return this.nativeElement.loading;
-  }
-
   constructor() {
     defineAppLauncherComponent();
     const changeDetectorRef = inject(ChangeDetectorRef);

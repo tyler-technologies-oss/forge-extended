@@ -22,9 +22,6 @@ export interface ForgeAppLauncherProps
   /** Indicates whether the dialog or popover is open. */
   open?: boolean;
 
-  /** Indicates whether the app launcher is in a loading state. */
-  loading?: boolean;
-
   /** ARIA label for the app launcher trigger button */
   launcherAriaLabel?: ForgeAppLauncherElement["launcherAriaLabel"];
 
