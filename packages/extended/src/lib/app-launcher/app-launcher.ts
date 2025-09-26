@@ -215,7 +215,7 @@ export class AppLauncherComponent extends LitElement {
         <forge-icon-button
           aria-label=${this.backAriaLabel}
           slot="before-start"
-          @click=${() => this.#transitionToView('related')}>
+          @click=${async () => await this.#transitionToView('related')}>
           <forge-icon name="arrow_back"></forge-icon>
         </forge-icon-button>
       `,
@@ -474,13 +474,16 @@ export class AppLauncherComponent extends LitElement {
     this._filterText = target.value.toLowerCase();
   }
 
-  #transitionToView(newView: AppView): void {
+  async #transitionToView(newView: AppView): Promise<void> {
     if (this._appView === newView) {
       return;
     }
 
     // Change the view
     this._appView = newView;
+
+    // Wait for the component to re-render before focusing
+    await this.updateComplete;
 
     // Reset filter text when going back to related view
     if (newView === 'related') {
@@ -507,8 +510,8 @@ export class AppLauncherComponent extends LitElement {
     }
   }
 
-  #switchToAllAppsView(): void {
-    this.#transitionToView('all');
+  async #switchToAllAppsView(): Promise<void> {
+    await this.#transitionToView('all');
   }
 
   #handleSlotChange(evt: Event): void {
