@@ -180,9 +180,7 @@ export class AppLauncherComponent extends LitElement {
 
   public disconnectedCallback(): void {
     super.disconnectedCallback();
-    if (this.#mediaQuery) {
-      this.#mediaQuery.removeEventListener('change', this.#handleMediaChange);
-    }
+    this.#mediaQuery?.removeEventListener('change', this.#handleMediaChange);
   }
 
   public override willUpdate(changedProperties: PropertyValues<this>): void {
@@ -442,9 +440,7 @@ export class AppLauncherComponent extends LitElement {
   }
 
   #setupMediaQuery(): void {
-    if (this.#mediaQuery) {
-      this.#mediaQuery.removeEventListener('change', this.#handleMediaChange);
-    }
+    this.#mediaQuery?.removeEventListener('change', this.#handleMediaChange);
     this.#mediaQuery = window.matchMedia(`(max-width: ${this.#breakpoint}px)`);
     this.#mediaQuery.addEventListener('change', this.#handleMediaChange);
     this.#handleMediaChange(this.#mediaQuery, true);
