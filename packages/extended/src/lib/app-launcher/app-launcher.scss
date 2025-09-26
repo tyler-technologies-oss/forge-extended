@@ -126,12 +126,12 @@ forge-popover {
   }
 }
 
-.custom-links-card {
+.app-launcher-links-card {
   margin-block-start: #{forge-spacing.variable(medium)};
   max-height: 204px;
 }
 
-.custom-links {
+.app-launcher-links {
   display: flex;
   flex-direction: column;
   gap: #{forge-spacing.variable(xsmall)};

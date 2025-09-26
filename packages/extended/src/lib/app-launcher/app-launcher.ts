@@ -345,8 +345,8 @@ export class AppLauncherComponent extends LitElement {
     return when(
       showLinks,
       () => html`
-        <forge-card class="custom-links-card">
-          <div class="custom-links">
+        <forge-card class="app-launcher-links-card">
+          <div class="app-launcher-links">
             <h2>${this.#appLauncherLinksTitleSlot}</h2>
             <forge-list>${this.#appLauncherLinkSlot}</forge-list>
           </div>
