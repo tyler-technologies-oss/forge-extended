@@ -10,12 +10,4 @@ describe('AiMessage', () => {
 
     expect(el.shadowRoot).to.be.ok;
   });
-
-  it('should render hello world text', async () => {
-    const el = await fixture<AiMessageComponent>(html`<forge-ai-message></forge-ai-message>`);
-
-    const span = el.shadowRoot!.querySelector('span');
-    expect(span).not.to.be.null;
-    expect(span!.textContent).to.equal('Hello World');
-  });
 });

@@ -1,6 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
-import { action } from 'storybook/actions';
 
 import '$lib/ai-chat-widget/ai-icon';
 
