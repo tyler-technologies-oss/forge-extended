@@ -45,6 +45,12 @@
   align-items: center;
   gap: #{forge-spacing.variable(medium)};
 
+  &:hover,
+  &:focus-within {
+    opacity: 1;
+    visibility: visible;
+  }
+
   svg {
     fill: var(--forge-theme-text-medium);
   }
