@@ -18,19 +18,9 @@ const meta = {
     `;
   },
   argTypes: {
-    variant: {
-      control: 'select',
-      options: ['raised', 'outlined', 'tonal', 'text'],
-      description: 'The visual style variant of the button'
-    },
     disabled: {
       control: 'boolean',
       description: 'Whether the button is disabled'
-    },
-    type: {
-      control: 'select',
-      options: ['button', 'submit', 'reset'],
-      description: 'The button type for form interactions'
     },
     content: {
       control: 'text',
