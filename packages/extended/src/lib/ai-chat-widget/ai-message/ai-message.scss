@@ -8,7 +8,8 @@
 
 .grid-container {
   display: grid;
-  grid-template-rows: 1fr 56px;
+  grid-template-rows: 1fr auto;
+  gap: #{forge-spacing.variable(xxsmall)};
 }
 
 .ai-message-container {
