@@ -8,7 +8,7 @@
 }
 
 :host(:hover) {
-  background-color: var(--forge-theme-tertiary-container-minimum);
+  background-color: var(--forge-theme-primary-container-minimum);
 }
 
 :host([disabled]) {
@@ -19,7 +19,7 @@
   --forge-button-padding-inline: #{forge-spacing.variable(xsmall)};
   --forge-button-border-radius: #{forge-spacing.variable(xsmall)};
   --forge-button-outlined-border-width: 0;
-  --forge-button-outlined-color: var(--forge-theme-primary);
+  --forge-button-outlined-color: var(--forge-theme-on-primary-container-minimum);
   --forge-button-outlined-background: transparent;
 
   position: relative;
