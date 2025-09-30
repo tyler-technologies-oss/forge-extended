@@ -1,0 +1,4 @@
+import{j as e,M as i,C as a}from"./blocks-BL8QrCQ8.js";import{useMDXComponents as t}from"./index-DNFFXgUn.js";import{A as r,D as m}from"./AiMessage.stories-DKzZmNDA.js";import"./iframe-CHd0jOzw.js";import"./index-CWk7euD-.js";import"./_commonjsHelpers-CqkleIqs.js";import"./custom-element-BhZVzxrc.js";import"./property-CA1xXL9e.js";function o(n){const s={h1:"h1",p:"p",...t(),...n.components};return e.jsxs(e.Fragment,{children:[e.jsx(i,{of:r}),`
+`,e.jsx(s.h1,{id:"ai-message",children:"AI Message"}),`
+`,e.jsx(s.p,{children:"The AI Message is a component designed for displaying messages in AI chat interfaces. This is a foundational component ready for customization."}),`
+`,e.jsx(a,{of:m})]})}function M(n={}){const{wrapper:s}={...t(),...n.components};return s?e.jsx(s,{...n,children:e.jsx(o,{...n})}):o(n)}export{M as default};
