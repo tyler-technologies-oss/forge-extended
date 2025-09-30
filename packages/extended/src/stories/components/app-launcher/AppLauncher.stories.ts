@@ -67,11 +67,7 @@ const meta = {
 
     return html`
       <forge-app-bar theme-mode="scoped" title-text="App Launcher">
-        <forge-app-launcher
-          slot="end"
-          style="--forge-app-launcher-width: ${args.width}px; --forge-app-launcher-avatar-size: ${args.avatarSize}px;"
-          .allApps=${currentAllApps}
-          .relatedApps=${currentRelatedApps}>
+        <forge-app-launcher slot="end" .allApps=${currentAllApps} .relatedApps=${currentRelatedApps}>
           <span slot="related-apps-title">${args.relatedAppsTitle}</span>
           <span slot="all-apps-title">${args.allAppsTitle}</span>
           <span slot="view-all-apps-button-text">${args.viewAllAppsButtonText}</span>
@@ -104,9 +100,7 @@ const meta = {
     },
     relatedAppsTitle: { control: 'text' },
     allAppsTitle: { control: 'text' },
-    viewAllAppsButtonText: { control: 'text' },
-    width: { control: { type: 'number', min: 300, max: 800, step: 10 } },
-    avatarSize: { control: { type: 'number', min: 24, max: 96, step: 4 } }
+    viewAllAppsButtonText: { control: 'text' }
   },
   args: {
     showRelatedApps: true,
@@ -115,9 +109,7 @@ const meta = {
     relatedAppsTitle: 'Related apps',
     allAppsTitle: 'All apps',
     viewAllAppsButtonText: 'View all apps',
-    appLauncherLinksTitle: 'Custom links',
-    width: 500,
-    avatarSize: 48
+    appLauncherLinksTitle: 'Custom links'
   }
 } satisfies Meta;
 
