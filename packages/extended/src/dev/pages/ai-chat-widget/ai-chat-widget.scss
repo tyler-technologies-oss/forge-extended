@@ -1,0 +1,50 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+
+.demo-section {
+  margin-block-end: #{forge-spacing.variable(xxlarge)};
+
+  h2 {
+    margin-block-end: #{forge-spacing.variable(medium)};
+    color: #{forge-theme.variable(text-high)};
+  }
+
+  p {
+    margin-block-end: #{forge-spacing.variable(large)};
+    color: #{forge-theme.variable(text-medium)};
+  }
+
+  ul {
+    margin-block-end: #{forge-spacing.variable(large)};
+    color: #{forge-theme.variable(text-medium)};
+
+    li {
+      margin-block-end: #{forge-spacing.variable(small)};
+    }
+  }
+
+  forge-ai-chat-widget {
+    margin-block-end: #{forge-spacing.variable(medium)};
+  }
+}
+
+.widget-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: #{forge-spacing.variable(large)};
+  margin-block-end: #{forge-spacing.variable(medium)};
+}
+
+.custom-styled-widget {
+  --forge-theme-surface: #f0f8ff;
+  --forge-theme-on-surface: #1e3a8a;
+  --forge-theme-text-medium: #3730a3;
+  --forge-theme-outline-low: #6366f1;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .widget-grid {
+    grid-template-columns: 1fr;
+  }
+}

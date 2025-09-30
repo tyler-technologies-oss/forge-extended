@@ -1,0 +1,53 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+
+@mixin ai-gradient-border($border-radius: 4px, $border-width: 2px, $disabled: false) {
+  position: relative;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: $border-width;
+    @if $disabled {
+      background: var(--forge-theme-outline);
+    } @else {
+      background: linear-gradient(
+        to top,
+        var(--forge-theme-tertiary) 0%,
+        var(--forge-theme-surface-container-medium) 100%
+      );
+    }
+    border-radius: $border-radius;
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: xor;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    pointer-events: none;
+  }
+}
+
+@mixin mobile-dialog {
+  .dialog::part(surface) {
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none !important;
+    max-height: none !important;
+  }
+}
+
+@mixin mobile-dialog {
+  .dialog::part(surface) {
+    inset: #{forge-spacing.variable(large)};
+    width: 100%;
+    height: 100%;
+  }
+}

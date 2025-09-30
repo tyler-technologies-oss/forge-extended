@@ -1,0 +1,34 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/dist/floating-action-button/forge-floating-action-button';
+@use '../mixins' as mixins;
+
+:host {
+  display: inline-block;
+  @include mixins.ai-gradient-border(100%, 2px, false);
+}
+
+:host([extended]) {
+  @include mixins.ai-gradient-border(#{forge-spacing.variable(xxxlarge)}, 2px, false);
+  --forge-fab-shape: #{forge-spacing.variable(xxxlarge)};
+  --forge-fab-color: var(--forge-theme-primary);
+}
+
+:host([disabled]) {
+  @include mixins.ai-gradient-border(100%, 2px, true);
+}
+
+:host([extended][disabled]) {
+  @include mixins.ai-gradient-border(#{forge-spacing.variable(xxxlarge)}, 2px, true);
+}
+
+.ai-fab-button {
+  --forge-fab-border-width: 0;
+  --forge-fab-background: transparent;
+
+  position: relative;
+  z-index: 1;
+
+  forge-icon {
+    color: var(--forge-theme-primary);
+  }
+}

@@ -1,0 +1,18 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '../mixins' as mixins;
+
+:host {
+  --_forge-ai-icon-size: 36px;
+  @include mixins.ai-gradient-border(100%, 2px, false);
+
+  display: grid;
+  place-items: center;
+  height: var(--_forge-ai-icon-size);
+  width: var(--_forge-ai-icon-size);
+}
+
+svg {
+  fill: var(--forge-theme-tertiary);
+  height: calc(var(--_forge-ai-icon-size) / 2);
+  width: calc(var(--_forge-ai-icon-size) / 2);
+}
