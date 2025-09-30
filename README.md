@@ -1,6 +1,6 @@
 # Tyler Forge™ Extended
 
-A library of prebuilt components implementing Tyler Forge™ design patterns and recipes.
+A library of prebuilt components implementing Tyler Forge™ design patterns and blocks.
 
 These UI components are typically composed of multiple atomic components from the core `@tylertech/forge`
 library, and are intended to encapsulate a larger pattern and/or design to help developers create user
@@ -30,6 +30,18 @@ import '@tylertech/forge-extended/quantity-field';
 
 > This is a side-effect import, so you don't need to assign it to a variable. It will register the component with the
 > custom element registry and make it available for use in your HTML.
+
+Or you can import the definition functions and call them like so:
+
+```javascript
+import { defineQuantityFieldComponent } from '@tylertech/forge-extended';
+
+defineQuantityFieldComponent();
+```
+
+> **Important:** You should only call the definition functions once in your application, typically in your main entry
+> point file, or if you're in a class-based environment within a static initializer block or the constructor. This
+> ensures that if any tree-shaking is done by a bundler, the components are not removed from the bundle.
 
 You can also reference types from components modules like so:
 
@@ -61,34 +73,57 @@ import '@tylertech/forge-extended';
 
 ## Local Development
 
+This project uses [pnpm](https://pnpm.io/) for package management and is a monorepo using pnpm workspaces.
+
+Additionally, this project uses [Turoborepo](https://turbo.build/repo/docs) for managing the monorepo and orchestrating tasks.
+
 ### Install
 
 ```bash
-npm install
+pnpm install
+```
+
+### Recommended VSCode Extensions
+
+It is recommended that you install the following extensions in Visual Studio Code for the best development experience:
+
+- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
+- [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
+- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
+- [Monorepo Workspace](https://marketplace.visualstudio.com/items?itemName=folke.vscode-monorepo-workspace)
+- [lit-plugin](https://marketplace.visualstudio.com/items?itemName=runem.lit-plugin)
+- [MDX](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx)
+
+### Run Storybook
+
+The following command will run Storybook, which is used for both local development and documentation.
+
+```bash
+pnpm storybook:extended
 ```
 
 ### Run dev site
 
-This will open the Storybook site that is used for local development.
+The following command will run all dev sites for each package in the monorepo:
 
 ```bash
-npm start
+pnpm dev
 ```
 
-### Vite Dev
-
-You can also run a basic HTML dev site using Vite for simple/quick testing.
+If you'd prefer to run a specific dev site for a workspace/package, you can do so like this:
 
 ```bash
-npm run dev
+pnpm dev:extended
 ```
+
+> See the `scripts` section of the `package.json` for more dev site commands.
 
 ### Build
 
-This runs a local production build of the library.
+This runs a local production build of all packages.
 
 ```bash
-npm run build
+pnpm build
 ```
 
 ### Run tests
@@ -96,5 +131,5 @@ npm run build
 Executes the unit test suite.
 
 ```bash
-npm test
+pnpm test
 ```

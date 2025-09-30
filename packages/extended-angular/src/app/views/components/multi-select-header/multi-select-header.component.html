@@ -1,0 +1,29 @@
+<app-demo-card headerText="Multi Select Header">
+  <forge-stack>
+    <!-- Configuration Controls -->
+    <forge-stack direction="row" wrap>
+      <forge-checkbox [(ngModel)]="noBorder">No border</forge-checkbox>
+      <forge-checkbox [(ngModel)]="showSelectAllButton">Show select all button</forge-checkbox>
+      <forge-checkbox [(ngModel)]="showActions">Show action buttons</forge-checkbox>
+    </forge-stack>
+
+    <!-- Demo Component -->
+    <forge-multi-select-header
+      [text]="selectionText"
+      [noBorder]="noBorder()"
+      (forge-multi-select-header-select-all)="onSelectAll()">
+      <!-- Select All Button Text (conditionally rendered) -->
+      <span slot="select-all-button-text" *ngIf="showSelectAllButton()">Select all</span>
+
+      <!-- Action Buttons (conditionally rendered) -->
+      <div slot="actions" *ngIf="showActions()">
+        <forge-icon-button (click)="onExport()">
+          <forge-icon name="download"></forge-icon>
+        </forge-icon-button>
+        <forge-icon-button (click)="onDelete()" [disabled]="selectedCount() === 0">
+          <forge-icon name="delete"></forge-icon>
+        </forge-icon-button>
+      </div>
+    </forge-multi-select-header>
+  </forge-stack>
+</app-demo-card>

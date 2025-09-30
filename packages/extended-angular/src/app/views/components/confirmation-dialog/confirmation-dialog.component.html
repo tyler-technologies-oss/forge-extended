@@ -1,0 +1,25 @@
+<app-demo-card headerText="Confirmation Dialog">
+  <forge-stack>
+    <forge-checkbox [(ngModel)]="simulateAsync">Simulate async on confirm</forge-checkbox>
+
+    <forge-stack inline>
+      <forge-button variant="raised" (click)="openDialog()">Open Confirmation Dialog (Inline)</forge-button>
+      <forge-confirmation-dialog
+        [open]="open()"
+        [isBusy]="isBusy()"
+        (forge-confirmation-dialog-action)="onActionInline($event)"
+        (forge-dialog-close)="closeDialog()">
+        <span slot="title">This is the title</span>
+        <span slot="message"
+          >Lorem ipsum dolor sit, amet consectetur adipisicing elit. Laborum id corrupti repellendus rem, laboriosam
+          necessitatibus autem itaque iure quod, nemo facere fugiat consequuntur numquam minus dolore illo, velit optio
+          placeat!</span
+        >
+        <span slot="secondary-button-text">Cancel</span>
+        <span slot="primary-button-text">Confirm</span>
+      </forge-confirmation-dialog>
+
+      <forge-button variant="raised" (click)="openDialogWithService()">Open Confirmation Dialog (Service)</forge-button>
+    </forge-stack>
+  </forge-stack>
+</app-demo-card>

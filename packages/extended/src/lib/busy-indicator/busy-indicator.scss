@@ -1,0 +1,85 @@
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/dialog' as forge-dialog;
+
+//
+// Host
+//
+
+:host {
+  display: contents;
+  border-radius: inherit;
+}
+
+//
+// Base
+//
+
+.surface {
+  padding: #{forge-spacing.variable(large)};
+  display: grid;
+  gap: #{forge-spacing.variable(large)};
+}
+
+.layout-container {
+  display: flex;
+  align-items: center;
+  gap: #{forge-spacing.variable(large)};
+
+  .content {
+    display: flex;
+    align-items: center;
+    gap: #{forge-spacing.variable(medium)};
+    width: 100%;
+  }
+}
+
+.message {
+  @include forge-typography.style(body2);
+
+  flex: 1 auto;
+  margin-block: 0;
+  color: #{forge-theme.variable(text-medium)};
+}
+
+.title {
+  @include forge-typography.style(heading4);
+
+  margin: 0;
+}
+
+.progress-container {
+  min-width: 244px;
+}
+
+//
+// Inline Mode
+//
+
+forge-dialog.inline {
+  border-radius: inherit;
+
+  &::part(root) {
+    position: absolute;
+    overflow: clip;
+  }
+
+  &::part(root),
+  &::part(backdrop) {
+    border-radius: inherit;
+  }
+}
+
+//
+// Transparent
+//
+
+.transparent {
+  @include forge-dialog.provide-theme(
+    (
+      background: transparent,
+      elevation: none
+    )
+  );
+}

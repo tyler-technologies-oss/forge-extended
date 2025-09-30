@@ -1,0 +1,8 @@
+[
+  { "label": "Busy Indicator", "path": "/pages/busy-indicator/busy-indicator.html", "tags": ["dialog", "loading"] },
+  { "label": "Confirmation Dialog", "path": "/pages/confirmation-dialog/confirmation-dialog.html" },
+  { "label": "Quantity Field", "path": "/pages/quantity-field/quantity-field.html", "tags": ["input"] },
+  { "label": "Theme Toggle", "path": "/pages/theme-toggle/theme-toggle.html" },
+  { "label": "User Profile", "path": "/pages/user-profile/user-profile.html" },
+  { "label": "Multi Select Header", "path": "/pages/multi-select-header/multi-select-header.html" }
+]

@@ -1,0 +1,14 @@
+<forge-app-bar
+  theme-mode="scoped"
+  title-text="Tyler Forge™ Extended - Angular Adapter"
+  href="/"
+  (forge-app-bar-search-input)="onSearch($event)">
+  @if (showDrawerToggle) {
+    <forge-app-bar-menu-button slot="start" (click)="onMenuClicked()"></forge-app-bar-menu-button>
+  }
+  <forge-icon slot="logo" name="tyler_talking_t_logo"></forge-icon>
+  <div slot="end">
+    <forge-user-profile button-label="Label" full-name="Forge Design" email="forge.design@tylertech.com" theme-toggle>
+    </forge-user-profile>
+  </div>
+</forge-app-bar>

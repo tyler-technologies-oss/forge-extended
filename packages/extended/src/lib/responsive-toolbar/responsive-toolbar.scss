@@ -1,0 +1,43 @@
+@use '@tylertech/forge/sass/toolbar' as forge-toolbar;
+@use '@tylertech/forge/sass/core/styles/tokens/toolbar/tokens' as forge-toolbar-tokens;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+
+//
+// Host
+//
+
+:host {
+  display: block;
+  position: relative;
+}
+
+//
+// Base
+//
+
+forge-toolbar[auto-height] {
+  @include forge-toolbar.provide-theme(
+    (
+      min-height: #{forge-toolbar-tokens.get('height')}
+    )
+  );
+}
+
+#end-small,
+#end-large {
+  margin-inline-start: #{forge-spacing.variable(medium)};
+}
+
+[slot='start'] {
+  padding-block: #{forge-spacing.variable(xxxsmall)};
+}
+
+//
+// State
+//
+
+:host(:state(small)) #end-large,
+:host(:state(large)) #end-small {
+  visibility: hidden;
+  position: absolute;
+}

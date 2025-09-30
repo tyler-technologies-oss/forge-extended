@@ -1,0 +1,21 @@
+@use '@tylertech/forge/sass/theme/theme-dark' as forge-theme-dark;
+@use './styles/content';
+@use './styles/flex';
+@use './styles/grid';
+
+html[data-forge-theme='dark'] {
+  @include forge-theme-dark.theme-properties;
+}
+
+body.ready {
+  opacity: 1;
+  transition: 300ms opacity 200ms;
+}
+
+:not(:defined) {
+  visibility: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}

@@ -1,0 +1,63 @@
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+
+//
+// Host
+//
+
+:host {
+  display: contents;
+}
+
+//
+// Base
+//
+
+.outer-container {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: #{forge-spacing.variable(medium)};
+  gap: #{forge-spacing.variable(medium)};
+  max-width: 480px;
+}
+
+.title-container {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: #{forge-spacing.variable(medium)};
+}
+
+.close-button-container {
+  height: 24px;
+  margin-block-start: -10px;
+  margin-inline-end: -10px;
+}
+
+.title {
+  @include forge-typography.style(heading4);
+
+  text-wrap: balance;
+  word-break: break-all;
+}
+
+h1 {
+  margin: 0;
+}
+
+.message-container {
+  @include forge-typography.style(body2);
+
+  color: inherit;
+}
+
+.actions-container {
+  display: flex;
+  gap: #{forge-spacing.variable(medium)};
+  align-items: center;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: end;
+}

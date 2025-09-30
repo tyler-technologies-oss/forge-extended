@@ -1,0 +1,87 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Frameworks/Angular" />
+
+# Angular
+
+Angular has [great support](https://custom-elements-everywhere.com/#angular) for custom elements and can be used directly.
+
+With that being said, while Angular _can_ be used with Forge Extended, there are some caveats to be aware of:
+
+- The Angular compiler is not (currently) designed to work with custom elements, so you will need to use the `CUSTOM_ELEMENTS_SCHEMA` to disable the compiler from throwing errors when it comes across any elements it does not recognize.
+- Using `ngModel`, `formControl` or `formControlName` does not work out of the box. You would need to implement `ControlValueAccessor` directives for custom elements to integrate with Angular forms.
+- Angular's change detection does not run in response to changes outside of the Angular context, so you might need to use `NgZone` to manually trigger change detection where necessary.
+
+## Forge Extended + Angular Adapter
+
+To make using Forge Extended with Angular more seamless, we have created an adapter library that helps with the issues mentioned above.
+
+This adapter provides the following:
+
+- Wrapper Angular components for all Forge Extended components.
+  - This allows you to use Forge Extended components as if they were native Angular components.
+  - Provides type safety for all custom element properties and events.
+  - Auto-defines the custom element with the browser's custom elements registry.
+- Automatically provides any `ControlValueAccessor` directives for native Angular integration with Forge Extended's form-associated elements.
+- Exposes Angular providers for creating dynamic components such as confirmation dialogs and busy indicators.
+  - Ensures that the dynamic components are created within the Angular context (zone), and are properly destroyed when no longer needed.
+
+While the adapter is not _required_ to use Forge Extended with Angular, it is **highly** recommended to make the integration easier.
+
+> You can view source code for the Forge Extended Angular adapter on [GitHub](https://github.com/tyler-technologies-oss/forge-extended/tree/main/packages/extended-angular).
+
+## Installation
+
+To use Forge Extended in your Angular application, install the following packages from npm:
+
+```bash
+npm install @tylertech/forge-extended @tylertech/forge-extended-angular
+```
+
+## Importing Components
+
+To use Forge Extended components in your Angular application, you will need to import component modules from the `@tylertech/forge-extended-angular` package for each component you want to use.
+
+With Angular modules:
+
+```typescript
+import { ForgeResponsiveToolbarModule } from '@tylertech/forge-extended-angular';
+
+@NgModule({
+  imports: [ForgeResponsiveToolbarModule]
+})
+export class MyModule {}
+```
+
+With standalone Angular components:
+
+```typescript
+import { ForgeButtonModule } from '@tylertech/forge-extended-angular';
+
+@Component({
+  selector: 'app-my-component',
+  template: '<forge-responsive-toolbar></forge-responsive-toolbar>',
+  imports: [ForgeResponsiveToolbarModule]
+})
+export class MyComponent {}
+```
+
+## CUSTOM_ELEMENTS_SCHEMA
+
+While not recommended, if you prefer not to use the adapter, you can easily disable the Angular compiler from throwing errors by adding the
+`CUSTOM_ELEMENTS_SCHEMA` to your component or module's `schemas` array:
+
+```typescript
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+})
+export class AppModule {}
+```
+
+This is a quicker and easier way to get started with Forge Extended components in your Angular application, but keep in mind that you will lose some of the
+type safety and integration benefits that the adapter provides.
+
+> If you're interested in pushing the Angular team along to help improve the support for custom elements, please consider up voting or chiming in on
+> this [Angular issue](https://github.com/angular/angular/issues/12045) and/or this [Angular issue](https://github.com/angular/angular/issues/58483).

@@ -1,0 +1,48 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Getting Started/Installation" />
+
+# Installation
+
+To get started, install both the core Tyler Forge library and the extended library (if the core library is already installed,
+see version compatibility table below):
+
+```bash
+npm install @tylertech/forge @tylertech/forge-extended
+```
+
+> The `@tylertech/forge` library is a peer dependency of the extended library, and they are very tightly coupled and intended
+> to always be used alongside each other.
+>
+> See the [Forge documentation](https://forge.tylerdev.io/) for more information on the core library.
+
+## Framework Adapters
+
+If you're using a framework, you should jump to the framework-specific guide:
+
+- [Angular](?path=/docs/frameworks-angular--docs)
+- [React](?path=/docs/frameworks-react--docs)
+- [Vue](?path=/docs/frameworks-vue--docs)
+- [Svelte](?path=/docs/frameworks-svelte--docs)
+
+## Importing Components
+
+You will then need to import each of the components you are using within your application.
+
+```javascript
+import '@tylertech/forge-extended/busy-indicator';
+import '@tylertech/forge-extended/quantity-field';
+```
+
+> The above imports are known as "side effect" imports and will automatically register the components with the browser.
+
+If you prefer, you can also define the components manually via the definition functions:
+
+```javascript
+import { defineBusyIndicatorComponent } from '@tylertech/forge-extended';
+
+defineBusyIndicatorComponent();
+```
+
+**Note:** make sure to import the components or definition functions as early as possible in your application bootstrapping
+process to ensure they are defined with the browser before your application is rendered to avoid FOUC (Flash of Unstyled Content).

@@ -1,0 +1,8 @@
+<%-
+include('./partials/page.ejs', {
+  page: {
+    title: '{{titleCase (sentenceCase name)}}',
+    includePath: './pages/{{dashCase name}}/{{dashCase name}}.ejs',
+  }
+})
+%>
