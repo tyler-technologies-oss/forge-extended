@@ -12,9 +12,7 @@ const meta = {
   component,
   render: args => {
     return html`
-      <forge-ai-button .variant=${args.variant} .disabled=${args.disabled} .type=${args.type} @click=${clickAction}>
-        ${args.content}
-      </forge-ai-button>
+      <forge-ai-button .disabled=${args.disabled} @click=${clickAction}> ${args.content} </forge-ai-button>
     `;
   },
   argTypes: {
@@ -28,9 +26,7 @@ const meta = {
     }
   },
   args: {
-    variant: 'raised',
     disabled: false,
-    type: 'button',
     content: 'AI Assistant'
   }
 } satisfies Meta;
