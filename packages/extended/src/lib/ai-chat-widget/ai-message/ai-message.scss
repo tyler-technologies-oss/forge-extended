@@ -1,13 +1,30 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/dist/icon-button/forge-icon-button';
 
 :host {
   display: inline-block;
 }
 
+.grid-container {
+  display: grid;
+  grid-template-rows: 1fr 56px;
+}
+
 .ai-message-container {
   padding-block: #{forge-spacing.variable(xsmall)};
   padding-inline: #{forge-spacing.variable(medium)};
+
+  &:hover,
+  &:focus-within {
+    cursor: pointer;
+  }
+
+  &:hover + .actions-toolbar,
+  &:focus-within + .actions-toolbar {
+    opacity: 1;
+    visibility: visible;
+  }
 }
 
 .response {
@@ -15,6 +32,22 @@
   border: 1px solid var(--forge-theme-outline);
   border-radius: var(--forge-shape-large);
   border-start-end-radius: 0;
+}
+
+.actions-toolbar {
+  opacity: 0;
+  visibility: hidden;
+  transition:
+    opacity 0.2s ease-in-out,
+    visibility 0.2s ease-in-out;
+
+  display: flex;
+  align-items: center;
+  gap: #{forge-spacing.variable(medium)};
+
+  svg {
+    fill: var(--forge-theme-text-medium);
+  }
 }
 
 span {
