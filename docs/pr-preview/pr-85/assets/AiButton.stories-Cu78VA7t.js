@@ -1,5 +1,0 @@
-import{x as o}from"./iframe-B2N8ML55.js";import"./ai-button-wVz3B26j.js";const{action:n}=__STORYBOOK_MODULE_ACTIONS__,r="forge-ai-button",i=n("click"),s={title:"AI/AI Button",component:r,render:e=>o`
-      <forge-ai-button .variant=${e.variant} .disabled=${e.disabled} .type=${e.type} @click=${i}>
-        ${e.content}
-      </forge-ai-button>
-    `,argTypes:{variant:{control:"select",options:["raised","outlined","tonal","text"],description:"The visual style variant of the button"},disabled:{control:"boolean",description:"Whether the button is disabled"},type:{control:"select",options:["button","submit","reset"],description:"The button type for form interactions"},content:{control:"text",description:"The text content of the button"}},args:{variant:"raised",disabled:!1,type:"button",content:"AI Assistant"}},t={};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:"{}",...t.parameters?.docs?.source}}};const a=["Demo"],d=Object.freeze(Object.defineProperty({__proto__:null,Demo:t,__namedExportsOrder:a,default:s},Symbol.toStringTag,{value:"Module"}));export{d as A,t as D};
