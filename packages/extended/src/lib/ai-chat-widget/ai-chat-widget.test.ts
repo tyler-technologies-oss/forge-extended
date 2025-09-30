@@ -1,30 +1,34 @@
-import { expect } from '@open-wc/testing';
-import { html } from 'lit';
+import { expect } from '@esm-bundle/chai';
+import { fixture, html } from '@open-wc/testing';
 import { AiChatWidgetComponent } from './ai-chat-widget';
-import { fixture } from '../test-utils/fixture';
 
-describe('AiChatWidgetComponent', () => {
-  let component: AiChatWidgetComponent;
+import './ai-chat-widget';
 
-  beforeEach(async () => {
-    component = await fixture<AiChatWidgetComponent>(html`<forge-ai-chat-widget></forge-ai-chat-widget>`);
+describe('AiChatWidget', () => {
+  it('should contain shadow root', async () => {
+    const el = await fixture<AiChatWidgetComponent>(html`<forge-ai-chat-widget></forge-ai-chat-widget>`);
+
+    expect(el.shadowRoot).to.be.ok;
   });
 
-  it('should render', () => {
-    expect(component).to.be.instanceOf(AiChatWidgetComponent);
-    expect(component.shadowRoot).not.to.be.null;
+  it('should have default property values', async () => {
+    const el = await fixture<AiChatWidgetComponent>(html`<forge-ai-chat-widget></forge-ai-chat-widget>`);
+
+    expect(el.open).to.be.false;
+    expect(el.fullsize).to.be.false;
   });
 
-  it('should render hello world content', async () => {
-    await component.updateComplete;
+  it('should reflect open attribute', async () => {
+    const el = await fixture<AiChatWidgetComponent>(html`<forge-ai-chat-widget open></forge-ai-chat-widget>`);
 
-    const widget = component.shadowRoot!.querySelector('.ai-chat-widget');
-    expect(widget).not.to.be.null;
+    expect(el.open).to.be.true;
+    expect(el.hasAttribute('open')).to.be.true;
+  });
 
-    const heading = widget!.querySelector('h1');
-    expect(heading?.textContent).to.equal('Hello World');
+  it('should reflect fullsize attribute', async () => {
+    const el = await fixture<AiChatWidgetComponent>(html`<forge-ai-chat-widget fullsize></forge-ai-chat-widget>`);
 
-    const paragraph = widget!.querySelector('p');
-    expect(paragraph?.textContent).to.equal('This is a blank AI Chat Widget ready for customization!');
+    expect(el.fullsize).to.be.true;
+    expect(el.hasAttribute('fullsize')).to.be.true;
   });
 });

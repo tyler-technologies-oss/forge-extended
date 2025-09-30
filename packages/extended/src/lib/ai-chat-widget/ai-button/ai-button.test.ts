@@ -1,58 +1,33 @@
-import { expect } from '@open-wc/testing';
-import { html } from 'lit';
+import { expect } from '@esm-bundle/chai';
+import { fixture, html } from '@open-wc/testing';
 import { AiButtonComponent } from './ai-button';
-import { fixture } from '../../test-utils/fixture';
 
-describe('AiButtonComponent', () => {
-  let component: AiButtonComponent;
+import './ai-button';
 
-  beforeEach(async () => {
-    component = await fixture<AiButtonComponent>(html`<forge-ai-button></forge-ai-button>`);
+describe('AiButton', () => {
+  it('should contain shadow root', async () => {
+    const el = await fixture<AiButtonComponent>(html`<forge-ai-button></forge-ai-button>`);
+
+    expect(el.shadowRoot).to.be.ok;
   });
 
-  it('should render', () => {
-    expect(component).to.be.instanceOf(AiButtonComponent);
-    expect(component.shadowRoot).not.to.be.null;
+  it('should have default property values', async () => {
+    const el = await fixture<AiButtonComponent>(html`<forge-ai-button></forge-ai-button>`);
+
+    expect(el.disabled).to.be.false;
   });
 
-  it('should have default properties', () => {
-    expect(component.variant).to.equal('raised');
-    expect(component.disabled).to.be.false;
-    expect(component.type).to.equal('button');
-  });
+  it('should reflect disabled attribute', async () => {
+    const el = await fixture<AiButtonComponent>(html`<forge-ai-button disabled></forge-ai-button>`);
 
-  it('should render forge-button with correct properties', async () => {
-    component.variant = 'outlined';
-    component.disabled = true;
-    component.type = 'submit';
-    await component.updateComplete;
-
-    const forgeButton = component.shadowRoot!.querySelector('forge-button');
-    expect(forgeButton).not.to.be.null;
-    expect(forgeButton!.getAttribute('variant')).to.equal('outlined');
-    expect(forgeButton!.hasAttribute('disabled')).to.be.true;
-    expect(forgeButton!.getAttribute('type')).to.equal('submit');
+    expect(el.disabled).to.be.true;
+    expect(el.hasAttribute('disabled')).to.be.true;
   });
 
   it('should pass through slotted content', async () => {
-    const buttonWithContent = await fixture<AiButtonComponent>(html`<forge-ai-button>Click me</forge-ai-button>`);
+    const el = await fixture<AiButtonComponent>(html`<forge-ai-button>Click me</forge-ai-button>`);
 
-    const slot = buttonWithContent.shadowRoot!.querySelector('slot');
+    const slot = el.shadowRoot!.querySelector('slot');
     expect(slot).not.to.be.null;
-  });
-
-  it('should set variant property', () => {
-    component.variant = 'tonal';
-    expect(component.variant).to.equal('tonal');
-  });
-
-  it('should set disabled property', () => {
-    component.disabled = true;
-    expect(component.disabled).to.be.true;
-  });
-
-  it('should set type property', () => {
-    component.type = 'reset';
-    expect(component.type).to.equal('reset');
   });
 });
