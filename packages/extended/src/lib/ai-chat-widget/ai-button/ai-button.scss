@@ -7,7 +7,7 @@
   @include mixins.ai-gradient-border(4px, 2px, false);
 }
 
-:host(:hover) {
+:host(:hover:not([disabled])) {
   background-color: var(--forge-theme-primary-container-minimum);
 }
 
@@ -21,7 +21,4 @@
   --forge-button-outlined-border-width: 0;
   --forge-button-outlined-color: var(--forge-theme-on-primary-container-minimum);
   --forge-button-outlined-background: transparent;
-
-  position: relative;
-  z-index: 1;
 }
