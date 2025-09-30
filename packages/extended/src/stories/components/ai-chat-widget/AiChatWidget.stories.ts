@@ -8,6 +8,7 @@ const component = 'forge-ai-chat-widget';
 const meta = {
   title: 'AI/AI Chat Widget',
   component,
+  tags: ['hidden'],
   render: () => {
     return html` <forge-ai-chat-widget></forge-ai-chat-widget> `;
   },
