@@ -9,4 +9,5 @@ export * from './multi-select-header';
 export * from './ai-chat-widget';
 export * from './ai-chat-widget/ai-fab-button';
 export * from './ai-chat-widget/ai-icon';
+export * from './ai-chat-widget/ai-message';
 // -- EXPORTS PLACEHOLDER (DO NOT REMOVE) --

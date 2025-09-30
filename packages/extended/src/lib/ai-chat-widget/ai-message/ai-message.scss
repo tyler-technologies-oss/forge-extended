@@ -1,0 +1,23 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/typography' as forge-typography;
+
+:host {
+  display: inline-block;
+}
+
+.ai-message-container {
+  padding-block: #{forge-spacing.variable(xsmall)};
+  padding-inline: #{forge-spacing.variable(medium)};
+}
+
+.response {
+  background-color: var(--forge-theme-surface);
+  border: 1px solid var(--forge-theme-outline);
+  border-radius: var(--forge-shape-large);
+  border-start-end-radius: 0;
+}
+
+span {
+  @include forge-typography.style(body1);
+  color: var(--forge-theme-on-surface);
+}
