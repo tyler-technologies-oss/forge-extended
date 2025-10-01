@@ -1,0 +1,4 @@
+import{j as n,M as s,C as r}from"./blocks-lCAfV4o2.js";import{useMDXComponents as i}from"./index-DNFFXgUn.js";import{A as c,D as a}from"./AiIcon.stories-Uc0rLk3y.js";import"./iframe-DKJ7Ur46.js";import"./index-CWk7euD-.js";import"./_commonjsHelpers-CqkleIqs.js";import"./ai-icon-DA581iir.js";import"./custom-element-BhZVzxrc.js";function e(t){const o={h1:"h1",p:"p",...i(),...t.components};return n.jsxs(n.Fragment,{children:[n.jsx(s,{of:c}),`
+`,n.jsx(o.h1,{id:"ai-icon",children:"AI Icon"}),`
+`,n.jsx(o.p,{children:"The AI Icon is a specialized icon component built on top of Tyler Forge's icon component, designed specifically for AI-themed interfaces. It provides enhanced styling with a signature gradient border and consistent integration with AI chat widgets."}),`
+`,n.jsx(r,{of:a})]})}function j(t={}){const{wrapper:o}={...i(),...t.components};return o?n.jsx(o,{...t,children:n.jsx(e,{...t})}):e(t)}export{j as default};
