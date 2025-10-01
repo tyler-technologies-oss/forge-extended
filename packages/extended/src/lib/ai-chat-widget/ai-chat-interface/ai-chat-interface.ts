@@ -54,8 +54,8 @@ export class AiChatInterfaceComponent extends LitElement {
         <div class="input-container">
           <div class="forge-card">
             <div class="forge-field">
-              <label for="my-css-only-input" class="forge-typography--label2">Ask a question...</label>
-              <input type="text" id="my-css-only-input" value />
+              <!-- <label for="my-css-only-input" class="forge-typography--label2">Ask a question...</label> -->
+              <input type="text" id="my-css-only-input" placeholder="Ask a question..." />
             </div>
             <hr class="forge-divider" />
             <div class="actions">
