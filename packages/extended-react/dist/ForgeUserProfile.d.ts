@@ -31,6 +31,9 @@ export interface ForgeUserProfileProps
   /** The email address of the user */
   email?: ForgeUserProfileElement["email"];
 
+  /** The image URL for the user avatar */
+  imageUrl?: ForgeUserProfileElement["imageUrl"];
+
   /** ARIA label for the user profile avatar button */
   buttonLabel?: ForgeUserProfileElement["buttonLabel"];
 
