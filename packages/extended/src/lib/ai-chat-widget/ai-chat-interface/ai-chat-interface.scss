@@ -17,6 +17,10 @@
   min-width: var(--_forge-chat-interface-width);
 }
 
+.ai-icon-button > svg {
+  fill: var(--forge-theme-text-medium);
+}
+
 .header {
   display: flex;
   align-items: center;
