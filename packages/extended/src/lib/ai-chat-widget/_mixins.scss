@@ -20,12 +20,12 @@
     }
     border-radius: $border-radius;
     mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
+      linear-gradient(var(--forge-theme-surface) 0 0) content-box,
+      linear-gradient(var(--forge-theme-surface) 0 0);
     mask-composite: xor;
     -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
+      linear-gradient(var(--forge-theme-surface) 0 0) content-box,
+      linear-gradient(var(--forge-theme-surface) 0 0);
     -webkit-mask-composite: xor;
     pointer-events: none;
   }
