@@ -20,8 +20,6 @@
 }
 
 :host([fullsize]) {
-  @include mixins.mobile-dialog;
-
   .container {
     width: 100%;
   }
@@ -85,8 +83,6 @@
 
 /* When the browser is at least 600px and below */
 @media screen and (max-width: 600px) {
-  @include mixins.mobile-dialog;
-
   .container {
     width: 100%;
   }
