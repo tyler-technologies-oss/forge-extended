@@ -7,9 +7,11 @@ declare global {
   interface HTMLElementTagNameMap {
     'forge-ai-response-message': AiResponseMessageComponent;
   }
-}
 
-export const AiResponseMessageComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-response-message';
+  interface HTMLElementEventMap {
+    'forge-ai-response-message-action': CustomEvent<AiResponseMessageActionEventData>;
+  }
+}
 
 export type AiResponseMessageActionType = 'refresh' | 'copy' | 'thumbs-up' | 'thumbs-down';
 
@@ -17,8 +19,12 @@ export interface AiResponseMessageActionEventData {
   action: AiResponseMessageActionType;
 }
 
+export const AiResponseMessageComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-response-message';
+
 /**
  * @tag forge-ai-response-message
+ *
+ * @event {CustomEvent<AiResponseMessageActionEventData>} forge-ai-response-message-action - Fired when an action button is clicked.
  */
 @customElement(AiResponseMessageComponentTagName)
 export class AiResponseMessageComponent extends LitElement {

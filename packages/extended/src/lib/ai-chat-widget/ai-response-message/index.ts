@@ -1,1 +1,1 @@
-export { AiResponseMessageComponent, AiResponseMessageComponentTagName } from './ai-response-message.js';
+export * from './ai-response-message.js';

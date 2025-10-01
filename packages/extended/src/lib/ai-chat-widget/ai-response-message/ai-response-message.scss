@@ -14,13 +14,7 @@
 }
 
 .ai-message-container {
-  padding-block: #{forge-spacing.variable(xsmall)};
-  padding-inline: #{forge-spacing.variable(medium)};
-  background-color: var(--forge-theme-surface);
-  border: 1px solid var(--forge-theme-outline);
-  border-radius: var(--forge-shape-large);
-  border-start-end-radius: 0;
-  margin-inline-start: #{forge-spacing.variable(xxlarge)};
+  margin-inline-end: #{forge-spacing.variable(xxlarge)};
 
   &:hover,
   &:focus-within {
@@ -44,7 +38,7 @@
   display: flex;
   align-items: center;
   gap: #{forge-spacing.variable(medium)};
-  justify-self: end;
+  justify-self: start;
 
   &:hover,
   &:focus-within {
