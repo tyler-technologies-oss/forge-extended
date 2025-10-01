@@ -4,6 +4,7 @@
 
 :host {
   display: inline-block;
+  box-sizing: border-box;
 }
 
 .grid-container {
@@ -15,6 +16,11 @@
 .ai-message-container {
   padding-block: #{forge-spacing.variable(xsmall)};
   padding-inline: #{forge-spacing.variable(medium)};
+  background-color: var(--forge-theme-surface);
+  border: 1px solid var(--forge-theme-outline);
+  border-radius: var(--forge-shape-large);
+  border-start-end-radius: 0;
+  margin-inline-start: #{forge-spacing.variable(xxlarge)};
 
   &:hover,
   &:focus-within {
@@ -28,13 +34,6 @@
   }
 }
 
-.response {
-  background-color: var(--forge-theme-surface);
-  border: 1px solid var(--forge-theme-outline);
-  border-radius: var(--forge-shape-large);
-  border-start-end-radius: 0;
-}
-
 .actions-toolbar {
   opacity: 0;
   visibility: hidden;
@@ -45,6 +44,7 @@
   display: flex;
   align-items: center;
   gap: #{forge-spacing.variable(medium)};
+  justify-self: end;
 
   &:hover,
   &:focus-within {
@@ -60,4 +60,5 @@
 span {
   @include forge-typography.style(body1);
   color: var(--forge-theme-on-surface);
+  overflow-wrap: break-word;
 }
