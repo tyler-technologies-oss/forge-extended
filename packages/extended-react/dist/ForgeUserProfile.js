@@ -4,7 +4,14 @@ import { useEventListener } from "./react-utils.js";
 
 export const ForgeUserProfile = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
-  const { themeToggle, fullName, email, buttonLabel, imageUrl, ...filteredProps } = props;
+  const {
+    themeToggle,
+    fullName,
+    email,
+    imageUrl,
+    buttonLabel,
+    ...filteredProps
+  } = props;
 
   /** Event listeners - run once */
   useEventListener(
@@ -26,8 +33,8 @@ export const ForgeUserProfile = forwardRef((props, forwardedRef) => {
       },
       ...filteredProps,
       "full-name": props.fullName || props["full-name"],
-      "image-url": props.imageUrl || props["image-url"],
       email: props.email,
+      "image-url": props.imageUrl || props["image-url"],
       "button-label": props.buttonLabel || props["button-label"],
       class: props.className,
       exportparts: props.exportparts,
