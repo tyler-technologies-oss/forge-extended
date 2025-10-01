@@ -222,6 +222,7 @@ src/lib/[component-name]/
 - Import location for ifDefined is import { ifDefined } from 'lit/directives/if-defined.js';
 - No need to add a import './' line to the test files
 - Always update the MDX storybook docs when new features are added to a component, things like events, slots, properties, etc
+- For Storybook actions, always use `import { action } from 'storybook/actions';` not `@storybook/addon-actions`
 
 ### Conditional Content Pattern
 

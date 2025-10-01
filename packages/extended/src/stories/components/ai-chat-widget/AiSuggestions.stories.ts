@@ -1,5 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
+import { action } from 'storybook/actions';
 
 import '$lib/ai-chat-widget/ai-suggestions';
 import { Suggestion } from '$lib/ai-chat-widget/ai-suggestions';
@@ -23,9 +24,13 @@ const meta = {
       { text: 'Ask a question', value: 'question' }
     ] as Suggestion[];
 
+    const onSuggestionSelect = action('forge-ai-suggestions-select');
+
     return html`
       <div style="width: 420px;">
-        <forge-ai-suggestions .suggestions=${suggestions}></forge-ai-suggestions>
+        <forge-ai-suggestions
+          .suggestions=${suggestions}
+          @forge-ai-suggestions-select=${onSuggestionSelect}></forge-ai-suggestions>
       </div>
     `;
   }
