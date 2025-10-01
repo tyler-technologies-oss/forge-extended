@@ -44,6 +44,7 @@
   height: 720px;
   overflow-y: auto;
   background: linear-gradient(to top, var(--forge-theme-primary-container-minimum), var(--forge-theme-surface));
+  border-block-end: 1px solid var(--forge-theme-outline);
 }
 
 .input-container {
