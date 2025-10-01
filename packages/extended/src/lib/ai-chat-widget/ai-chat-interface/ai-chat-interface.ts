@@ -1,5 +1,6 @@
-import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { LitElement, TemplateResult, html, unsafeCSS, nothing } from 'lit';
+import { customElement, queryAssignedNodes } from 'lit/decorators.js';
+import { when } from 'lit/directives/when.js';
 import '../ai-icon/ai-icon';
 
 import styles from './ai-chat-interface.scss?inline';
@@ -14,10 +15,16 @@ export const AiChatInterfaceComponentTagName: keyof HTMLElementTagNameMap = 'for
 
 /**
  * @tag forge-ai-chat-interface
+ *
+ * @slot - Default slot for messages
+ * @slot suggestions - Slot for AI suggestions component
  */
 @customElement(AiChatInterfaceComponentTagName)
 export class AiChatInterfaceComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
+
+  @queryAssignedNodes({ slot: 'suggestions', flatten: true })
+  private _slottedSuggestionsNodes!: Node[];
 
   readonly #headerStart = html`
     <div class="start">
@@ -52,6 +59,17 @@ export class AiChatInterfaceComponent extends LitElement {
   readonly #header = html`
     <div class="header forge-toolbar forge-toolbar--no-divider">${this.#headerStart} ${this.#headerEnd}</div>
   `;
+
+  readonly #suggestionsSlot = html`<slot name="suggestions" @slotchange=${this.#handleSlotChange}></slot>`;
+
+  get #suggestions(): TemplateResult | typeof nothing {
+    const hasSuggestions = this._slottedSuggestionsNodes.length > 0;
+    return when(
+      hasSuggestions,
+      () => html`<div class="suggestions-container">${this.#suggestionsSlot}</div>`,
+      () => this.#suggestionsSlot
+    );
+  }
 
   readonly #messagesContainer = html`
     <div class="messages-container">
@@ -95,9 +113,18 @@ export class AiChatInterfaceComponent extends LitElement {
     </div>
   `;
 
+  #handleSlotChange(evt: Event): void {
+    const slotName = (evt.target as HTMLSlotElement).name;
+    if (slotName === 'suggestions') {
+      this.requestUpdate();
+    }
+  }
+
   public override render(): TemplateResult {
     return html`
-      <div class="ai-chat-interface">${this.#header} ${this.#messagesContainer} ${this.#inputContainer}</div>
+      <div class="ai-chat-interface">
+        ${this.#header} ${this.#messagesContainer} ${this.#suggestions} ${this.#inputContainer}
+      </div>
     `;
   }
 }

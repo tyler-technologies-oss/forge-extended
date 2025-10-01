@@ -53,6 +53,11 @@
   flex-direction: column;
 }
 
+.suggestions-container {
+  padding-inline: #{forge-spacing.variable(medium)};
+  padding-block-start: #{forge-spacing.variable(medium)};
+}
+
 .input-container {
   padding: #{forge-spacing.variable(medium)};
 
