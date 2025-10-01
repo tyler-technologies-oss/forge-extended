@@ -1,0 +1,5 @@
+import{x as t}from"./iframe-Dr7RqJW5.js";import"./ai-suggestions-Du_Yq0Hv.js";import"./custom-element-BhZVzxrc.js";import"./property-DOkKGiCd.js";import"./index-DLPELvbJ.js";import"./with-default-aria-D8mLoEix.js";import"./icon-registry-CsTjpPCH.js";import"./base-button-adapter-DpVx93rC.js";const a="forge-ai-suggestions",g={title:"AI/AI Suggestions",component:a,render:()=>t`
+      <div style="width: 420px;">
+        <forge-ai-suggestions .suggestions=${[{text:"Help me write an email",value:"email"},{text:"Create a presentation",value:"presentation"},{text:"Write some code",value:"code"},{text:"Plan a meeting",value:"meeting"},{text:"Summarize a document",value:"summarize"},{text:"Translate text",value:"translate"},{text:"Generate ideas",value:"brainstorm"},{text:"Review my work",value:"review"},{text:"Explain a concept",value:"explain"},{text:"Ask a question",value:"question"}]}></forge-ai-suggestions>
+      </div>
+    `},e={};e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:"{}",...e.parameters?.docs?.source}}};const c=["Demo"];export{e as Demo,c as __namedExportsOrder,g as default};
