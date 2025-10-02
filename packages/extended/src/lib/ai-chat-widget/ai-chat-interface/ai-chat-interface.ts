@@ -1,8 +1,9 @@
 import { LitElement, TemplateResult, html, unsafeCSS, nothing } from 'lit';
-import { customElement, queryAssignedNodes } from 'lit/decorators.js';
+import { customElement, queryAssignedNodes, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import '../ai-icon/ai-icon';
 import '../ai-prompt/ai-prompt';
+import '../ai-empty-state/ai-empty-state';
 
 import styles from './ai-chat-interface.scss?inline';
 
@@ -30,6 +31,12 @@ export class AiChatInterfaceComponent extends LitElement {
 
   @queryAssignedNodes({ slot: 'prompt', flatten: true })
   private _slottedPromptNodes!: Node[];
+
+  @queryAssignedNodes({ flatten: true })
+  private _slottedMessageNodes!: Node[];
+
+  @state()
+  private _hasMessages = false;
 
   readonly #headerStart = html`
     <div class="start">
@@ -87,15 +94,27 @@ export class AiChatInterfaceComponent extends LitElement {
     );
   }
 
-  readonly #messagesContainer = html`
-    <div class="messages-container">
-      <slot></slot>
-    </div>
-  `;
+  readonly #messagesSlot = html`<slot @slotchange=${this.#handleSlotChange}></slot>`;
+
+  get #messagesContainer(): TemplateResult {
+    return html`
+      <div class="messages-container">
+        ${this.#messagesSlot} ${!this._hasMessages ? html`<forge-ai-empty-state></forge-ai-empty-state>` : nothing}
+      </div>
+    `;
+  }
 
   #handleSlotChange(evt: Event): void {
-    const slotName = (evt.target as HTMLSlotElement).name;
-    if (['suggestions', 'prompt'].includes(slotName)) {
+    const slotName = (evt.target as HTMLSlotElement).name || 'default';
+
+    if (slotName === 'default') {
+      // Check if there are any assigned elements (messages)
+      const slot = evt.target as HTMLSlotElement;
+      const assignedElements = slot.assignedElements();
+      this._hasMessages = assignedElements.length > 0;
+    }
+
+    if (['suggestions', 'prompt', 'default'].includes(slotName)) {
       this.requestUpdate();
     }
   }
