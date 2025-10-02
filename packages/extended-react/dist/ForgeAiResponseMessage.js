@@ -1,27 +1,19 @@
 import React, { forwardRef, useRef, useEffect } from "react";
-import "@tylertech/forge-extended/user-profile";
+import "@tylertech/forge-extended/ai-chat-widget/ai-response-message";
 import { useEventListener } from "./react-utils.js";
 
-export const ForgeUserProfile = forwardRef((props, forwardedRef) => {
+export const ForgeAiResponseMessage = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
-  const {
-    themeToggle,
-    fullName,
-    email,
-    imageUrl,
-    buttonLabel,
-    ...filteredProps
-  } = props;
 
   /** Event listeners - run once */
   useEventListener(
     ref,
-    "forge-user-profile-sign-out",
-    props.onForgeUserProfileSignOut,
+    "forge-ai-response-message-action",
+    props.onForgeAiResponseMessageAction,
   );
 
   return React.createElement(
-    "forge-user-profile",
+    "forge-ai-response-message",
     {
       ref: (node) => {
         ref.current = node;
@@ -31,17 +23,12 @@ export const ForgeUserProfile = forwardRef((props, forwardedRef) => {
           forwardedRef.current = node;
         }
       },
-      ...filteredProps,
-      "full-name": props.fullName || props["full-name"],
-      email: props.email,
-      "image-url": props.imageUrl || props["image-url"],
-      "button-label": props.buttonLabel || props["button-label"],
+      ...props,
       class: props.className,
       exportparts: props.exportparts,
       for: props.htmlFor,
       part: props.part,
       tabindex: props.tabIndex,
-      "theme-toggle": props.themeToggle ? "" : undefined,
       style: { ...props.style },
     },
     props.children,
