@@ -50,7 +50,7 @@ export class AiPromptComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
   /** Placeholder text for the input field */
-  @property({ attribute: 'placeholder' })
+  @property()
   public placeholder = 'Ask a question...';
 
   /** Current value of the input field */
@@ -58,7 +58,7 @@ export class AiPromptComponent extends LitElement {
   public value = '';
 
   /** Layout variant for the prompt component */
-  @property({ attribute: 'variant' })
+  @property({ type: String, attribute: 'variant' })
   public variant: AiPromptVariant = 'stacked';
 
   readonly #internals: ElementInternals;

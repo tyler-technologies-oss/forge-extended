@@ -100,183 +100,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-confirmation-dialog'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ConfirmationDialogComponent",
-          "slots": [
-            {
-              "description": "The title of the dialog",
-              "name": "title"
-            },
-            {
-              "description": "The dialog message",
-              "name": "message"
-            },
-            {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
-            },
-            {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "isBusy",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
-            },
-            {
-              "kind": "field",
-              "name": "busyLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
-              },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "fieldName": "open"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog",
-              "fieldName": "description"
-            },
-            {
-              "name": "is-busy",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
-            },
-            {
-              "name": "busy-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-confirmation-dialog",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
-          "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponent",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "declarations": [
         {
@@ -606,174 +429,177 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/quantity-field/quantity-field.ts",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "QuantityFieldComponentTagName",
+          "name": "ConfirmationDialogComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-quantity-field'"
+          "default": "'forge-confirmation-dialog'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "QuantityFieldComponent",
+          "name": "ConfirmationDialogComponent",
           "slots": [
             {
-              "description": "Reserved for the `<input>` element.",
-              "name": ""
+              "description": "The title of the dialog",
+              "name": "title"
             },
             {
-              "description": "The label for the field.",
-              "name": "label"
+              "description": "The dialog message",
+              "name": "message"
             },
             {
-              "description": "The decrement button.",
-              "name": "decrement-button"
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
             },
             {
-              "description": "The icon for the decrement button.",
-              "name": "decrement-icon"
-            },
-            {
-              "description": "The increment button.",
-              "name": "increment-button"
-            },
-            {
-              "description": "The icon for the increment button.",
-              "name": "increment-icon"
-            },
-            {
-              "description": "The support text for the field.",
-              "name": "support-text"
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
             }
           ],
           "members": [
             {
               "kind": "field",
-              "name": "invalid",
+              "name": "open",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
               "default": "false",
-              "description": "Indicates whether the field is invalid.",
-              "attribute": "invalid"
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
             },
             {
               "kind": "field",
-              "name": "required",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
               "default": "false",
-              "description": "Indicates whether the field is required.",
-              "attribute": "required"
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
             },
             {
               "kind": "field",
-              "name": "decrementLabel",
+              "name": "busyLabel",
               "type": {
                 "text": "string"
               },
               "privacy": "public",
-              "default": "'Decrement'",
-              "description": "The accessible label for the decrement button.",
-              "attribute": "decrement-label"
-            },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
             {
-              "kind": "field",
-              "name": "incrementLabel",
               "type": {
-                "text": "string"
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
               },
-              "privacy": "public",
-              "default": "'Increment'",
-              "description": "The accessible label for the increment button.",
-              "attribute": "increment-label"
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
             }
           ],
           "attributes": [
             {
-              "name": "invalid",
+              "name": "open",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Indicates whether the field is invalid.",
-              "fieldName": "invalid"
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
             },
             {
-              "name": "required",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Indicates whether the field is required.",
-              "fieldName": "required"
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
             },
             {
-              "name": "decrement-label",
+              "name": "busy-label",
               "type": {
                 "text": "string"
               },
-              "default": "'Decrement'",
-              "description": "The accessible label for the decrement button.",
-              "fieldName": "decrementLabel"
-            },
-            {
-              "name": "increment-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Increment'",
-              "description": "The accessible label for the increment button.",
-              "fieldName": "incrementLabel"
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-quantity-field",
-          "customElement": true,
-          "states": [
-            {
-              "name": "required",
-              "description": "Indicates whether the field is in its required state."
-            },
-            {
-              "name": "invalid",
-              "description": "Indicates whether the field is in its invalid state."
-            }
-          ]
+          "tagName": "forge-confirmation-dialog",
+          "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "QuantityFieldComponentTagName",
+          "name": "ConfirmationDialogComponentTagName",
           "declaration": {
-            "name": "QuantityFieldComponentTagName",
-            "module": "src/lib/quantity-field/quantity-field.ts"
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         },
         {
           "kind": "js",
-          "name": "QuantityFieldComponent",
+          "name": "ConfirmationDialogComponent",
           "declaration": {
-            "name": "QuantityFieldComponent",
-            "module": "src/lib/quantity-field/quantity-field.ts"
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "QuantityFieldComponent",
-            "module": "src/lib/quantity-field/quantity-field.ts"
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         }
       ]
@@ -1039,6 +865,180 @@
           "declaration": {
             "name": "MultiSelectHeaderComponent",
             "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/quantity-field/quantity-field.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "QuantityFieldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-quantity-field'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "QuantityFieldComponent",
+          "slots": [
+            {
+              "description": "Reserved for the `<input>` element.",
+              "name": ""
+            },
+            {
+              "description": "The label for the field.",
+              "name": "label"
+            },
+            {
+              "description": "The decrement button.",
+              "name": "decrement-button"
+            },
+            {
+              "description": "The icon for the decrement button.",
+              "name": "decrement-icon"
+            },
+            {
+              "description": "The increment button.",
+              "name": "increment-button"
+            },
+            {
+              "description": "The icon for the increment button.",
+              "name": "increment-icon"
+            },
+            {
+              "description": "The support text for the field.",
+              "name": "support-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the field is invalid.",
+              "attribute": "invalid"
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the field is required.",
+              "attribute": "required"
+            },
+            {
+              "kind": "field",
+              "name": "decrementLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Decrement'",
+              "description": "The accessible label for the decrement button.",
+              "attribute": "decrement-label"
+            },
+            {
+              "kind": "field",
+              "name": "incrementLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Increment'",
+              "description": "The accessible label for the increment button.",
+              "attribute": "increment-label"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the field is invalid.",
+              "fieldName": "invalid"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the field is required.",
+              "fieldName": "required"
+            },
+            {
+              "name": "decrement-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Decrement'",
+              "description": "The accessible label for the decrement button.",
+              "fieldName": "decrementLabel"
+            },
+            {
+              "name": "increment-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Increment'",
+              "description": "The accessible label for the increment button.",
+              "fieldName": "incrementLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-quantity-field",
+          "customElement": true,
+          "states": [
+            {
+              "name": "required",
+              "description": "Indicates whether the field is in its required state."
+            },
+            {
+              "name": "invalid",
+              "description": "Indicates whether the field is in its invalid state."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "QuantityFieldComponentTagName",
+          "declaration": {
+            "name": "QuantityFieldComponentTagName",
+            "module": "src/lib/quantity-field/quantity-field.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "QuantityFieldComponent",
+          "declaration": {
+            "name": "QuantityFieldComponent",
+            "module": "src/lib/quantity-field/quantity-field.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "QuantityFieldComponent",
+            "module": "src/lib/quantity-field/quantity-field.ts"
           }
         }
       ]
@@ -1400,6 +1400,10 @@
             {
               "description": "Slot for AI suggestions component",
               "name": "suggestions"
+            },
+            {
+              "description": "Slot for custom AI prompt component. If not provided, a default forge-ai-prompt will be used.",
+              "name": "prompt"
             }
           ],
           "members": [],
@@ -1987,22 +1991,6 @@
       "path": "src/lib/ai-chat-widget/ai-chat-widget.ts",
       "lineNumber": 38
     },
-    "ConfirmationDialogActionEventReason": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 28
-    },
-    "ConfirmationDialogActionEventData": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 30
-    },
-    "ConfirmationDialogProperties": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 35
-    },
-    "ConfirmationDialogComponent": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 55
-    },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 25
@@ -2019,9 +2007,21 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 39
     },
-    "QuantityFieldComponent": {
-      "path": "src/lib/quantity-field/quantity-field.ts",
+    "ConfirmationDialogActionEventReason": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 28
+    },
+    "ConfirmationDialogActionEventData": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 30
+    },
+    "ConfirmationDialogProperties": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 35
+    },
+    "ConfirmationDialogComponent": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 55
     },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
@@ -2038,6 +2038,10 @@
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
       "lineNumber": 28
+    },
+    "QuantityFieldComponent": {
+      "path": "src/lib/quantity-field/quantity-field.ts",
+      "lineNumber": 35
     },
     "ThemeToggleTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
@@ -2061,7 +2065,7 @@
     },
     "AiChatInterfaceComponent": {
       "path": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts",
-      "lineNumber": 23
+      "lineNumber": 24
     },
     "AiFabButtonComponent": {
       "path": "src/lib/ai-chat-widget/ai-fab-button/ai-fab-button.ts",

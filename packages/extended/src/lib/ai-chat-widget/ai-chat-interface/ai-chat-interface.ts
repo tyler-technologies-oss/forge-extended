@@ -19,6 +19,7 @@ export const AiChatInterfaceComponentTagName: keyof HTMLElementTagNameMap = 'for
  *
  * @slot - Default slot for messages
  * @slot suggestions - Slot for AI suggestions component
+ * @slot prompt - Slot for custom AI prompt component. If not provided, a default forge-ai-prompt will be used.
  */
 @customElement(AiChatInterfaceComponentTagName)
 export class AiChatInterfaceComponent extends LitElement {
@@ -26,6 +27,9 @@ export class AiChatInterfaceComponent extends LitElement {
 
   @queryAssignedNodes({ slot: 'suggestions', flatten: true })
   private _slottedSuggestionsNodes!: Node[];
+
+  @queryAssignedNodes({ slot: 'prompt', flatten: true })
+  private _slottedPromptNodes!: Node[];
 
   readonly #headerStart = html`
     <div class="start">
@@ -72,17 +76,26 @@ export class AiChatInterfaceComponent extends LitElement {
     );
   }
 
+  readonly #promptSlot = html`<slot name="prompt" @slotchange=${this.#handleSlotChange}></slot>`;
+
+  get #inputContainer(): TemplateResult | typeof nothing {
+    const hasCustomPrompt = this._slottedPromptNodes.length > 0;
+    return when(
+      hasCustomPrompt,
+      () => this.#promptSlot,
+      () => html`<forge-ai-prompt></forge-ai-prompt>`
+    );
+  }
+
   readonly #messagesContainer = html`
     <div class="messages-container">
       <slot></slot>
     </div>
   `;
 
-  readonly #inputContainer = html`<forge-ai-prompt></forge-ai-prompt>`;
-
   #handleSlotChange(evt: Event): void {
     const slotName = (evt.target as HTMLSlotElement).name;
-    if (slotName === 'suggestions') {
+    if (['suggestions', 'prompt'].includes(slotName)) {
       this.requestUpdate();
     }
   }
