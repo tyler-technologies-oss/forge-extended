@@ -1,0 +1,19 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/dist/drawer/forge-drawer';
+@use '@tylertech/forge/dist/list/forge-list';
+@use '@tylertech/forge/dist/field/forge-field';
+@use '@tylertech/forge/dist/icon/forge-icon';
+
+:host {
+  display: block;
+}
+
+.threads-container {
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.threads {
+  padding: #{forge-spacing.variable(medium)};
+}
