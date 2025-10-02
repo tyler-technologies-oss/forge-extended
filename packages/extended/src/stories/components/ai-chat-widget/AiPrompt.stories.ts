@@ -19,16 +19,27 @@ const meta = {
     placeholder: {
       control: 'text',
       description: 'Placeholder text for the input field'
+    },
+    showAdditionalAction: {
+      control: 'boolean',
+      description: 'Show additional action button (only visible in stacked variant)'
     }
   },
   args: {
     variant: 'stacked',
-    placeholder: 'Ask a question...'
+    placeholder: 'Ask a question...',
+    showAdditionalAction: false
   },
   render: (args: any) => {
     const onSend = action('forge-ai-prompt-send');
     return html`
       <forge-ai-prompt variant=${args.variant} placeholder=${args.placeholder} @forge-ai-prompt-send=${onSend}>
+        ${args.showAdditionalAction
+          ? html`
+              <forge-button slot="additional-action" type="button"> Optional Button 1 </forge-button>
+              <forge-button slot="additional-action" type="button"> Optional Button 2 </forge-button>
+            `
+          : ''}
       </forge-ai-prompt>
     `;
   }

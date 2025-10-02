@@ -1,5 +1,5 @@
 import { LitElement, PropertyValues, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
 import {
   defineButtonComponent,
   defineCardComponent,
@@ -32,6 +32,8 @@ export const AiPromptComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-p
 /**
  * @tag forge-ai-prompt
  *
+ * @slot additional-action - Optional slot for additional action buttons. Only displayed when variant is 'stacked'.
+ *
  * @state inline - The prompt is in inline layout mode with actions displayed inline with the input.
  * @state stacked - The prompt is in stacked layout mode with actions displayed below the input.
  *
@@ -61,6 +63,9 @@ export class AiPromptComponent extends LitElement {
   @property({ type: String, attribute: 'variant' })
   public variant: AiPromptVariant = 'stacked';
 
+  @queryAssignedNodes({ slot: 'additional-action', flatten: true })
+  private _slottedAdditionalActionNodes!: Node[]; // Used by slot detection for future enhancements
+
   readonly #internals: ElementInternals;
 
   constructor() {
@@ -80,6 +85,12 @@ export class AiPromptComponent extends LitElement {
     toggleState(this.#internals, 'stacked', this.variant === 'stacked');
   }
 
+  readonly #additionalActionSlot = html`<slot name="additional-action" @slotchange=${this.#handleSlotChange}></slot>`;
+
+  get #additionalAction(): TemplateResult {
+    return this.#additionalActionSlot;
+  }
+
   readonly #inputActions = html`
     <hr class="forge-divider" />
     <div class="actions">
@@ -95,6 +106,7 @@ export class AiPromptComponent extends LitElement {
             d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3 3 3 0 0 1-3-3V5a3 3 0 0 1 3-3m7 9c0 3.53-2.61 6.44-6 6.93V21h-2v-3.07c-3.39-.49-6-3.4-6-6.93h2a5 5 0 0 0 5 5 5 5 0 0 0 5-5z" />
         </svg>
       </button>
+      ${this.#additionalAction}
     </div>
   `;
 
@@ -119,6 +131,13 @@ export class AiPromptComponent extends LitElement {
     if (event.key === 'Enter') {
       event.preventDefault();
       this._handleSend();
+    }
+  }
+
+  #handleSlotChange(evt: Event): void {
+    const slotName = (evt.target as HTMLSlotElement).name;
+    if (slotName === 'additional-action') {
+      this.requestUpdate();
     }
   }
 

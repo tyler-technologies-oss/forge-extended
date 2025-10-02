@@ -32,6 +32,20 @@
   fill: var(--forge-theme-text-medium);
 }
 
+::slotted(forge-button[slot='additional-action']) {
+  --forge-button-color: var(--forge-theme-text-medium);
+}
+
+::slotted(forge-button[slot='additional-action']:not(:last-child)) {
+  margin-inline-end: #{forge-spacing.variable(medium)};
+}
+
+:host(:state(inline)) {
+  ::slotted([slot='additional-action']) {
+    display: none;
+  }
+}
+
 :host(:state(inline)) {
   .forge-field {
     --forge-field-padding-inline: 0 #{forge-spacing.variable(medium)};
