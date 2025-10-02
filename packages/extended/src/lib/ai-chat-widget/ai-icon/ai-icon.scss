@@ -3,12 +3,15 @@
 
 :host {
   --_forge-ai-icon-size: 36px;
-  @include mixins.ai-gradient-border(100%, 2px, false);
 
   display: grid;
   place-items: center;
   height: var(--_forge-ai-icon-size);
   width: var(--_forge-ai-icon-size);
+}
+
+:host(:state(border)) {
+  @include mixins.ai-gradient-border(100%, 2px, false);
 }
 
 svg {

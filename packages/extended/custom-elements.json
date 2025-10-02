@@ -1573,13 +1573,46 @@
           "kind": "class",
           "description": "",
           "name": "AiIconComponent",
-          "members": [],
+          "members": [
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "AiIconVariant"
+              },
+              "privacy": "public",
+              "default": "'no-border'",
+              "description": "Variant for the icon display style",
+              "attribute": "variant"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "variant",
+              "type": {
+                "text": "AiIconVariant"
+              },
+              "default": "'no-border'",
+              "description": "Variant for the icon display style",
+              "fieldName": "variant"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
           "tagName": "forge-ai-icon",
-          "customElement": true
+          "customElement": true,
+          "states": [
+            {
+              "name": "no-border",
+              "description": "The icon is displayed without a border (default)."
+            },
+            {
+              "name": "border",
+              "description": "The icon is displayed with a border."
+            }
+          ]
         }
       ],
       "exports": [
@@ -2097,9 +2130,13 @@
       "path": "src/lib/ai-chat-widget/ai-fab-button/ai-fab-button.ts",
       "lineNumber": 19
     },
+    "AiIconVariant": {
+      "path": "src/lib/ai-chat-widget/ai-icon/ai-icon.ts",
+      "lineNumber": 13
+    },
     "AiIconComponent": {
       "path": "src/lib/ai-chat-widget/ai-icon/ai-icon.ts",
-      "lineNumber": 17
+      "lineNumber": 23
     },
     "AiPromptSendEventData": {
       "path": "src/lib/ai-chat-widget/ai-prompt/ai-prompt.ts",
