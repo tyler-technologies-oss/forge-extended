@@ -54,3 +54,7 @@
   padding-inline: #{forge-spacing.variable(medium)};
   padding-block-start: #{forge-spacing.variable(medium)};
 }
+
+.prompt-container {
+  padding: #{forge-spacing.variable(medium)};
+}

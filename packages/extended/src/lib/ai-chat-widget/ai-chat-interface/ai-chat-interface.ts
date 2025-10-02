@@ -78,7 +78,7 @@ export class AiChatInterfaceComponent extends LitElement {
 
   readonly #promptSlot = html`<slot name="prompt" @slotchange=${this.#handleSlotChange}></slot>`;
 
-  get #inputContainer(): TemplateResult | typeof nothing {
+  get #prompt(): TemplateResult | typeof nothing {
     const hasCustomPrompt = this._slottedPromptNodes.length > 0;
     return when(
       hasCustomPrompt,
@@ -103,7 +103,8 @@ export class AiChatInterfaceComponent extends LitElement {
   public override render(): TemplateResult {
     return html`
       <div class="ai-chat-interface">
-        ${this.#header} ${this.#messagesContainer} ${this.#suggestions} ${this.#inputContainer}
+        ${this.#header} ${this.#messagesContainer} ${this.#suggestions}
+        <div class="prompt-container">${this.#prompt}</div>
       </div>
     `;
   }
