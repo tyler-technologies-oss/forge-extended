@@ -21,33 +21,25 @@
     cursor: pointer;
   }
 
-  &:hover + .actions-toolbar,
-  &:focus-within + .actions-toolbar {
+  &:hover + forge-ai-actions-toolbar,
+  &:focus-within + forge-ai-actions-toolbar {
     opacity: 1;
     visibility: visible;
   }
 }
 
-.actions-toolbar {
+forge-ai-actions-toolbar {
   opacity: 0;
   visibility: hidden;
   transition:
     opacity 0.2s ease-in-out,
     visibility 0.2s ease-in-out;
-
-  display: flex;
-  align-items: center;
-  gap: #{forge-spacing.variable(medium)};
   justify-self: start;
 
   &:hover,
   &:focus-within {
     opacity: 1;
     visibility: visible;
-  }
-
-  svg {
-    fill: var(--forge-theme-text-medium);
   }
 }
 
