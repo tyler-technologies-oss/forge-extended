@@ -1,4 +1,0 @@
-import{x as r}from"./iframe-B-BqzGpL.js";import"./ai-prompt-Cg6NRmWS.js";const{action:a}=__STORYBOOK_MODULE_ACTIONS__,n="forge-ai-prompt",p={title:"AI/AI Prompt",component:n,argTypes:{variant:{control:"select",options:["stacked","inline"],description:"Layout variant for the prompt component"},placeholder:{control:"text",description:"Placeholder text for the input field"}},args:{variant:"stacked",placeholder:"Ask a question..."},render:o=>{const t=a("forge-ai-prompt-send");return r`
-      <forge-ai-prompt variant=${o.variant} placeholder=${o.placeholder} @forge-ai-prompt-send=${t}>
-      </forge-ai-prompt>
-    `}},e={};e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:"{}",...e.parameters?.docs?.source}}};const s=["Demo"],l=Object.freeze(Object.defineProperty({__proto__:null,Demo:e,__namedExportsOrder:s,default:p},Symbol.toStringTag,{value:"Module"}));export{l as A,e as D};
