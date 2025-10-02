@@ -1,0 +1,15 @@
+@use '@tylertech/forge/dist/page-state/forge-page-state';
+@use '@tylertech/forge/sass/typography' as forge-typography;
+
+:host {
+  display: block;
+}
+
+.message {
+  @include forge-typography.style(body2);
+}
+
+.graphic {
+  height: 250px;
+  width: 250px;
+}

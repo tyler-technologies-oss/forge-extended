@@ -15,4 +15,5 @@ export * from './ai-chat-widget/ai-user-message';
 export * from './ai-chat-widget/ai-actions-toolbar';
 export * from './ai-chat-widget/ai-threads';
 export * from './ai-chat-widget/ai-dialog';
+export * from './ai-chat-widget/ai-empty-state';
 // -- EXPORTS PLACEHOLDER (DO NOT REMOVE) --
