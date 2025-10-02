@@ -1,11 +1,12 @@
-import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
+import { LitElement, PropertyValues, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import {
   defineButtonComponent,
   defineCardComponent,
   defineDividerComponent,
   defineFieldComponent,
-  defineIconButtonComponent
+  defineIconButtonComponent,
+  toggleState
 } from '@tylertech/forge';
 
 import styles from './ai-prompt.scss?inline';
@@ -24,10 +25,15 @@ export interface AiPromptSendEventData {
   value: string;
 }
 
+export type AiPromptVariant = 'stacked' | 'inline';
+
 export const AiPromptComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-prompt';
 
 /**
  * @tag forge-ai-prompt
+ *
+ * @state inline - The prompt is in inline layout mode with actions displayed inline with the input.
+ * @state stacked - The prompt is in stacked layout mode with actions displayed below the input.
  *
  * @event {CustomEvent<AiPromptSendEventData>} forge-ai-prompt-send - Fired when the send button is clicked or Enter is pressed.
  */
@@ -51,7 +57,31 @@ export class AiPromptComponent extends LitElement {
   @property()
   public value = '';
 
+  /** Layout variant for the prompt component */
+  @property({ attribute: 'variant' })
+  public variant: AiPromptVariant = 'stacked';
+
+  readonly #internals: ElementInternals;
+
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+    this.#setCssState();
+  }
+
+  public override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('variant')) {
+      this.#setCssState();
+    }
+  }
+
+  #setCssState(): void {
+    toggleState(this.#internals, 'inline', this.variant === 'inline');
+    toggleState(this.#internals, 'stacked', this.variant === 'stacked');
+  }
+
   readonly #inputActions = html`
+    <hr class="forge-divider" />
     <div class="actions">
       <button aria-label="Add file" class="forge-icon-button forge-icon-button--large ai-icon-button">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -97,6 +127,7 @@ export class AiPromptComponent extends LitElement {
       <div class="input-container">
         <div class="forge-card">
           <div class="forge-field">
+            ${this.variant === 'inline' ? this.#inputActions : ''}
             <input
               type="text"
               id="chat-input"
@@ -113,8 +144,7 @@ export class AiPromptComponent extends LitElement {
               </svg>
             </button>
           </div>
-          <hr class="forge-divider" />
-          ${this.#inputActions}
+          ${this.variant === 'stacked' ? this.#inputActions : ''}
         </div>
       </div>
     `;

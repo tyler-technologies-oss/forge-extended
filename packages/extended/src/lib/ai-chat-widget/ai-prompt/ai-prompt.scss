@@ -33,3 +33,20 @@
 .ai-icon-button > svg {
   fill: var(--forge-theme-text-medium);
 }
+
+:host(:state(inline)) {
+  .forge-field {
+    --forge-field-padding-inline: 0 #{forge-spacing.variable(medium)};
+    --forge-field-height: 52px;
+  }
+
+  .forge-divider {
+    display: none;
+  }
+
+  .input-container {
+    .actions {
+      padding: 0;
+    }
+  }
+}

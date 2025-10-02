@@ -780,119 +780,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "MultiSelectHeaderComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-multi-select-header'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MultiSelectHeaderComponent",
-          "slots": [
-            {
-              "description": "Text content for the select-all button",
-              "name": "select-all-button-text"
-            },
-            {
-              "description": "Action buttons (maps to the toolbar end slot)",
-              "name": "actions"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "attribute": "text"
-            },
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "true",
-              "description": "Hides the bottom border",
-              "attribute": "no-border"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Fired when the select-all button is clicked",
-              "name": "forge-multi-select-header-select-all"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "fieldName": "text"
-            },
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Hides the bottom border",
-              "fieldName": "noBorder"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-multi-select-header",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponentTagName",
-          "declaration": {
-            "name": "MultiSelectHeaderComponentTagName",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponent",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "declarations": [
         {
@@ -1039,6 +926,119 @@
           "declaration": {
             "name": "ResponsiveToolbarComponent",
             "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "MultiSelectHeaderComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-multi-select-header'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MultiSelectHeaderComponent",
+          "slots": [
+            {
+              "description": "Text content for the select-all button",
+              "name": "select-all-button-text"
+            },
+            {
+              "description": "Action buttons (maps to the toolbar end slot)",
+              "name": "actions"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "attribute": "text"
+            },
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Hides the bottom border",
+              "attribute": "no-border"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the select-all button is clicked",
+              "name": "forge-multi-select-header-select-all"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "fieldName": "text"
+            },
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Hides the bottom border",
+              "fieldName": "noBorder"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-multi-select-header",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MultiSelectHeaderComponentTagName",
+          "declaration": {
+            "name": "MultiSelectHeaderComponentTagName",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "MultiSelectHeaderComponent",
+          "declaration": {
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         }
       ]
@@ -1378,6 +1378,67 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiChatInterfaceComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-chat-interface'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiChatInterfaceComponent",
+          "slots": [
+            {
+              "description": "Default slot for messages",
+              "name": ""
+            },
+            {
+              "description": "Slot for AI suggestions component",
+              "name": "suggestions"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-chat-interface",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiChatInterfaceComponentTagName",
+          "declaration": {
+            "name": "AiChatInterfaceComponentTagName",
+            "module": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiChatInterfaceComponent",
+          "declaration": {
+            "name": "AiChatInterfaceComponent",
+            "module": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiChatInterfaceComponent",
+            "module": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/ai-chat-widget/ai-fab-button/ai-fab-button.ts",
       "declarations": [
         {
@@ -1525,74 +1586,327 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/ai-chat-widget/ai-message/ai-message.ts",
+      "path": "src/lib/ai-chat-widget/ai-prompt/ai-prompt.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "AiMessageComponentTagName",
+          "name": "AiPromptComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-ai-message'"
+          "default": "'forge-ai-prompt'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "AiMessageComponent",
+          "name": "AiPromptComponent",
           "members": [
             {
               "kind": "field",
-              "name": "messageType",
+              "name": "placeholder",
               "type": {
-                "text": "MessageType"
+                "text": "string"
               },
               "privacy": "public",
-              "default": "'response'",
-              "description": "The type of message: response or user",
-              "attribute": "messageType"
+              "default": "'Ask a question...'",
+              "description": "Placeholder text for the input field",
+              "attribute": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "Current value of the input field",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "AiPromptVariant"
+              },
+              "privacy": "public",
+              "default": "'stacked'",
+              "description": "Layout variant for the prompt component",
+              "attribute": "variant"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<AiPromptSendEventData>"
+              },
+              "description": "Fired when the send button is clicked or Enter is pressed.",
+              "name": "forge-ai-prompt-send"
             }
           ],
           "attributes": [
             {
-              "name": "messageType",
+              "name": "placeholder",
               "type": {
-                "text": "MessageType"
+                "text": "string"
               },
-              "default": "'response'",
-              "description": "The type of message: response or user",
-              "fieldName": "messageType"
+              "default": "'Ask a question...'",
+              "description": "Placeholder text for the input field",
+              "fieldName": "placeholder"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "Current value of the input field",
+              "fieldName": "value"
+            },
+            {
+              "name": "variant",
+              "type": {
+                "text": "AiPromptVariant"
+              },
+              "default": "'stacked'",
+              "description": "Layout variant for the prompt component",
+              "fieldName": "variant"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-ai-message",
+          "tagName": "forge-ai-prompt",
+          "customElement": true,
+          "states": [
+            {
+              "name": "inline",
+              "description": "The prompt is in inline layout mode with actions displayed inline with the input."
+            },
+            {
+              "name": "stacked",
+              "description": "The prompt is in stacked layout mode with actions displayed below the input."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiPromptComponentTagName",
+          "declaration": {
+            "name": "AiPromptComponentTagName",
+            "module": "src/lib/ai-chat-widget/ai-prompt/ai-prompt.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiPromptComponent",
+          "declaration": {
+            "name": "AiPromptComponent",
+            "module": "src/lib/ai-chat-widget/ai-prompt/ai-prompt.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiPromptComponent",
+            "module": "src/lib/ai-chat-widget/ai-prompt/ai-prompt.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai-chat-widget/ai-response-message/ai-response-message.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiResponseMessageComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-response-message'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiResponseMessageComponent",
+          "members": [],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<AiResponseMessageActionEventData>"
+              },
+              "description": "Fired when an action button is clicked.",
+              "name": "forge-ai-response-message-action"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-response-message",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "AiMessageComponentTagName",
+          "name": "AiResponseMessageComponentTagName",
           "declaration": {
-            "name": "AiMessageComponentTagName",
-            "module": "src/lib/ai-chat-widget/ai-message/ai-message.ts"
+            "name": "AiResponseMessageComponentTagName",
+            "module": "src/lib/ai-chat-widget/ai-response-message/ai-response-message.ts"
           }
         },
         {
           "kind": "js",
-          "name": "AiMessageComponent",
+          "name": "AiResponseMessageComponent",
           "declaration": {
-            "name": "AiMessageComponent",
-            "module": "src/lib/ai-chat-widget/ai-message/ai-message.ts"
+            "name": "AiResponseMessageComponent",
+            "module": "src/lib/ai-chat-widget/ai-response-message/ai-response-message.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "AiMessageComponent",
-            "module": "src/lib/ai-chat-widget/ai-message/ai-message.ts"
+            "name": "AiResponseMessageComponent",
+            "module": "src/lib/ai-chat-widget/ai-response-message/ai-response-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiSuggestionsComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-suggestions'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiSuggestionsComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "suggestions",
+              "type": {
+                "text": "Suggestion[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "description": "Array of suggestion objects to display",
+              "attribute": "suggestions"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<AiSuggestionsEventData>"
+              },
+              "description": "Fired when a suggestion is selected.",
+              "name": "forge-ai-suggestions-select"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "suggestions",
+              "type": {
+                "text": "Suggestion[]"
+              },
+              "default": "[]",
+              "description": "Array of suggestion objects to display",
+              "fieldName": "suggestions"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-suggestions",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiSuggestionsComponentTagName",
+          "declaration": {
+            "name": "AiSuggestionsComponentTagName",
+            "module": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiSuggestionsComponent",
+          "declaration": {
+            "name": "AiSuggestionsComponent",
+            "module": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiSuggestionsComponent",
+            "module": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiUserMessageComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-user-message'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiUserMessageComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-user-message",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiUserMessageComponentTagName",
+          "declaration": {
+            "name": "AiUserMessageComponentTagName",
+            "module": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiUserMessageComponent",
+          "declaration": {
+            "name": "AiUserMessageComponent",
+            "module": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiUserMessageComponent",
+            "module": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts"
           }
         }
       ]
@@ -1709,10 +2023,6 @@
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
     },
-    "MultiSelectHeaderComponent": {
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "lineNumber": 28
-    },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 20
@@ -1724,6 +2034,10 @@
     "ResponsiveToolbarComponent": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 48
+    },
+    "MultiSelectHeaderComponent": {
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "lineNumber": 28
     },
     "ThemeToggleTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
@@ -1745,6 +2059,10 @@
       "path": "src/lib/ai-chat-widget/ai-button/ai-button.ts",
       "lineNumber": 19
     },
+    "AiChatInterfaceComponent": {
+      "path": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts",
+      "lineNumber": 23
+    },
     "AiFabButtonComponent": {
       "path": "src/lib/ai-chat-widget/ai-fab-button/ai-fab-button.ts",
       "lineNumber": 19
@@ -1753,13 +2071,45 @@
       "path": "src/lib/ai-chat-widget/ai-icon/ai-icon.ts",
       "lineNumber": 17
     },
-    "MessageType": {
-      "path": "src/lib/ai-chat-widget/ai-message/ai-message.ts",
-      "lineNumber": 14
+    "AiPromptSendEventData": {
+      "path": "src/lib/ai-chat-widget/ai-prompt/ai-prompt.ts",
+      "lineNumber": 24
     },
-    "AiMessageComponent": {
-      "path": "src/lib/ai-chat-widget/ai-message/ai-message.ts",
-      "lineNumber": 19
+    "AiPromptVariant": {
+      "path": "src/lib/ai-chat-widget/ai-prompt/ai-prompt.ts",
+      "lineNumber": 28
+    },
+    "AiPromptComponent": {
+      "path": "src/lib/ai-chat-widget/ai-prompt/ai-prompt.ts",
+      "lineNumber": 40
+    },
+    "AiResponseMessageActionType": {
+      "path": "src/lib/ai-chat-widget/ai-response-message/ai-response-message.ts",
+      "lineNumber": 16
+    },
+    "AiResponseMessageActionEventData": {
+      "path": "src/lib/ai-chat-widget/ai-response-message/ai-response-message.ts",
+      "lineNumber": 18
+    },
+    "AiResponseMessageComponent": {
+      "path": "src/lib/ai-chat-widget/ai-response-message/ai-response-message.ts",
+      "lineNumber": 29
+    },
+    "Suggestion": {
+      "path": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts",
+      "lineNumber": 18
+    },
+    "AiSuggestionsEventData": {
+      "path": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts",
+      "lineNumber": 23
+    },
+    "AiSuggestionsComponent": {
+      "path": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts",
+      "lineNumber": 35
+    },
+    "AiUserMessageComponent": {
+      "path": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts",
+      "lineNumber": 17
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
