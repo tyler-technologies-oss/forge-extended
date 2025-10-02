@@ -1,0 +1,122 @@
+import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
+import {
+  defineButtonComponent,
+  defineCardComponent,
+  defineDividerComponent,
+  defineFieldComponent,
+  defineIconButtonComponent
+} from '@tylertech/forge';
+
+import styles from './ai-prompt.scss?inline';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'forge-ai-prompt': AiPromptComponent;
+  }
+
+  interface HTMLElementEventMap {
+    'forge-ai-prompt-send': CustomEvent<AiPromptSendEventData>;
+  }
+}
+
+export interface AiPromptSendEventData {
+  value: string;
+}
+
+export const AiPromptComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-prompt';
+
+/**
+ * @tag forge-ai-prompt
+ *
+ * @event {CustomEvent<AiPromptSendEventData>} forge-ai-prompt-send - Fired when the send button is clicked or Enter is pressed.
+ */
+@customElement(AiPromptComponentTagName)
+export class AiPromptComponent extends LitElement {
+  static {
+    defineButtonComponent();
+    defineCardComponent();
+    defineDividerComponent();
+    defineFieldComponent();
+    defineIconButtonComponent();
+  }
+
+  public static override styles = unsafeCSS(styles);
+
+  /** Placeholder text for the input field */
+  @property({ attribute: 'placeholder' })
+  public placeholder = 'Ask a question...';
+
+  /** Current value of the input field */
+  @property()
+  public value = '';
+
+  readonly #inputActions = html`
+    <div class="actions">
+      <button aria-label="Add file" class="forge-icon-button forge-icon-button--large ai-icon-button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path fill="none" d="M0 0h24v24H0z" />
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
+        </svg>
+      </button>
+      <button aria-label="Record audio" class="forge-icon-button forge-icon-button--large ai-icon-button">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <path
+            d="M12 2a3 3 0 0 1 3 3v6a3 3 0 0 1-3 3 3 3 0 0 1-3-3V5a3 3 0 0 1 3-3m7 9c0 3.53-2.61 6.44-6 6.93V21h-2v-3.07c-3.39-.49-6-3.4-6-6.93h2a5 5 0 0 0 5 5 5 5 0 0 0 5-5z" />
+        </svg>
+      </button>
+    </div>
+  `;
+
+  private _handleSend(): void {
+    if (this.value.trim()) {
+      const event = new CustomEvent<AiPromptSendEventData>('forge-ai-prompt-send', {
+        detail: { value: this.value },
+        bubbles: true,
+        composed: true,
+        cancelable: true
+      });
+      this.dispatchEvent(event);
+      this.value = ''; // Clear input after sending
+    }
+  }
+
+  private _handleInput(event: InputEvent): void {
+    this.value = (event.target as HTMLInputElement).value;
+  }
+
+  private _handleKeyPress(event: KeyboardEvent): void {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      this._handleSend();
+    }
+  }
+
+  public override render(): TemplateResult {
+    return html`
+      <div class="input-container">
+        <div class="forge-card">
+          <div class="forge-field">
+            <input
+              type="text"
+              id="chat-input"
+              .value=${this.value}
+              placeholder=${this.placeholder}
+              @input=${this._handleInput}
+              @keypress=${this._handleKeyPress} />
+            <button
+              aria-label="Send message"
+              class="forge-icon-button forge-icon-button--large ai-icon-button"
+              @click=${this._handleSend}>
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                <path d="m2 21 21-9L2 3v7l15 2-15 2z" />
+              </svg>
+            </button>
+          </div>
+          <hr class="forge-divider" />
+          ${this.#inputActions}
+        </div>
+      </div>
+    `;
+  }
+}

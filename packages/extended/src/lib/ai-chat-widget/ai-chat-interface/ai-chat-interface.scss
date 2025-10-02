@@ -2,9 +2,6 @@
 @use '@tylertech/forge/sass/typography' as forge-typography;
 @use '@tylertech/forge/dist/toolbar/forge-toolbar';
 @use '@tylertech/forge/dist/icon-button/forge-icon-button';
-@use '@tylertech/forge/dist/card/forge-card';
-@use '@tylertech/forge/dist/field/forge-field';
-@use '@tylertech/forge/dist/divider/forge-divider';
 
 :host {
   display: block;
@@ -56,25 +53,4 @@
 .suggestions-container {
   padding-inline: #{forge-spacing.variable(medium)};
   padding-block-start: #{forge-spacing.variable(medium)};
-}
-
-.input-container {
-  padding: #{forge-spacing.variable(medium)};
-
-  .forge-card {
-    --forge-card-padding: 0;
-  }
-
-  .forge-field {
-    --forge-theme-outline-low: transparent;
-    --forge-field-height: 52px;
-  }
-
-  .actions {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    padding: #{forge-spacing.variable(xxsmall)};
-    height: 52px;
-  }
 }
