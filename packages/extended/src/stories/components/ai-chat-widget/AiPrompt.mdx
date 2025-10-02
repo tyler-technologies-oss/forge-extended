@@ -1,0 +1,10 @@
+import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
+import * as AiPromptStories from './AiPrompt.stories';
+
+<Meta of={AiPromptStories} />
+
+# AI Prompt
+
+The AI Prompt component provides an input interface for users to interact with AI assistants. It features a flexible layout system with two variants: **stacked** (default) where action buttons appear below the input field, and **inline** where actions are positioned alongside the input. The component includes built-in functionality for file attachments, audio recording, and message sending, with proper accessibility support and customizable placeholder text. It automatically clears the input after sending and emits events for integration with chat interfaces.
+
+<Canvas of={AiPromptStories.Demo} />

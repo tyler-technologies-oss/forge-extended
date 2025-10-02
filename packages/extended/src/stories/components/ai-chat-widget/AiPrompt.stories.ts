@@ -39,9 +39,3 @@ export default meta;
 type Story = StoryObj;
 
 export const Demo: Story = {};
-
-export const Inline: Story = {
-  args: {
-    variant: 'inline'
-  }
-};
