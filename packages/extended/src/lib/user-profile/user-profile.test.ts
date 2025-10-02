@@ -101,6 +101,14 @@ describe('UserProfile', () => {
 
     expect(harness.popover.open).to.be.false;
   });
+
+  it('should set imageUrl on both avatar components when image-url attribute is provided', async () => {
+    const testImageUrl = 'https://example.com/avatar.jpg';
+    const harness = await createFixture({ imageUrl: testImageUrl });
+
+    expect(harness.buttonAvatar.imageUrl).to.equal(testImageUrl);
+    expect(harness.popoverAvatar.imageUrl).to.equal(testImageUrl);
+  });
 });
 
 class UserProfileHarness {
@@ -112,6 +120,14 @@ class UserProfileHarness {
 
   public get avatarButton(): AvatarComponent {
     return this.el.shadowRoot!.querySelector('#popover-trigger') as AvatarComponent;
+  }
+
+  public get buttonAvatar(): AvatarComponent {
+    return this.el.shadowRoot!.querySelector('#button-avatar') as AvatarComponent;
+  }
+
+  public get popoverAvatar(): AvatarComponent {
+    return this.el.shadowRoot!.querySelector('#popover-avatar') as AvatarComponent;
   }
 
   public get popover(): PopoverComponent {
@@ -170,6 +186,7 @@ interface UserProfileFixtureConfig {
   themeToggle?: boolean;
   fullName?: string;
   email?: string;
+  imageUrl?: string;
   profileLinkTitle?: string;
   profileLinkIcon?: string;
   signOutButtonText?: string;
@@ -180,12 +197,18 @@ async function createFixture({
   themeToggle = false,
   fullName = 'Harley Andrews',
   email = 'harley.andrews@doggos.com',
+  imageUrl,
   profileLinkTitle = 'Profile Link',
   profileLinkIcon = 'settings',
   signOutButtonText
 }: UserProfileFixtureConfig = {}): Promise<UserProfileHarness> {
   const el = await fixture<UserProfileComponent>(html`
-    <forge-user-profile .buttonLabel=${buttonLabel} .themeToggle=${themeToggle} .fullName=${fullName} .email=${email}>
+    <forge-user-profile
+      .buttonLabel=${buttonLabel}
+      .themeToggle=${themeToggle}
+      .fullName=${fullName}
+      .email=${email}
+      .imageUrl=${imageUrl || ''}>
       ${profileLinkTitle
         ? html`<forge-profile-link slot="link">
             <forge-icon slot="icon" name=${profileLinkIcon} external></forge-icon>

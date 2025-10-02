@@ -606,158 +606,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ResponsiveToolbarComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-responsive-toolbar'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ResponsiveToolbarComponent",
-          "slots": [
-            {
-              "description": "Maps to the toolbar before-start slot",
-              "name": "before-start"
-            },
-            {
-              "description": "Maps to the toolbar start slot",
-              "name": "start"
-            },
-            {
-              "description": "The content you want to render at larger sizes in the toolbar end slot",
-              "name": "end-large"
-            },
-            {
-              "description": "The content you want to render at smaller sizes in the toolbar end slot",
-              "name": "end-small"
-            },
-            {
-              "description": "Maps to the toolbar after-end slot",
-              "name": "after-end"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Hides the divider",
-              "attribute": "no-border"
-            },
-            {
-              "kind": "field",
-              "name": "inverted",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
-              "attribute": "inverted"
-            },
-            {
-              "kind": "field",
-              "name": "resizeDelay",
-              "privacy": "public",
-              "default": "100",
-              "description": "Controls the delay in milliseconds to throttle resize events",
-              "attribute": "resize-delay",
-              "type": {
-                "text": "number"
-              }
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ResponsiveToolbarUpdateEventData>"
-              },
-              "description": "Dispatched when the overflow state changes.",
-              "name": "forge-responsive-toolbar-update"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Hides the divider",
-              "fieldName": "noBorder"
-            },
-            {
-              "name": "inverted",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
-              "fieldName": "inverted"
-            },
-            {
-              "name": "resize-delay",
-              "default": "RESIZE_DELAY",
-              "description": "Controls the delay in milliseconds to throttle resize events",
-              "fieldName": "resizeDelay"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-responsive-toolbar",
-          "customElement": true,
-          "states": [
-            {
-              "name": "small",
-              "description": "The title is overlapping the actions, the large end slot is hidden."
-            },
-            {
-              "name": "large",
-              "description": "The title is not overlapping the actions, the small end slot is hidden."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ResponsiveToolbarComponentTagName",
-          "declaration": {
-            "name": "ResponsiveToolbarComponentTagName",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ResponsiveToolbarComponent",
-          "declaration": {
-            "name": "ResponsiveToolbarComponent",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ResponsiveToolbarComponent",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/multi-select-header/multi-select-header.ts",
       "declarations": [
         {
@@ -1045,6 +893,350 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ResponsiveToolbarComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-responsive-toolbar'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ResponsiveToolbarComponent",
+          "slots": [
+            {
+              "description": "Maps to the toolbar before-start slot",
+              "name": "before-start"
+            },
+            {
+              "description": "Maps to the toolbar start slot",
+              "name": "start"
+            },
+            {
+              "description": "The content you want to render at larger sizes in the toolbar end slot",
+              "name": "end-large"
+            },
+            {
+              "description": "The content you want to render at smaller sizes in the toolbar end slot",
+              "name": "end-small"
+            },
+            {
+              "description": "Maps to the toolbar after-end slot",
+              "name": "after-end"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Hides the divider",
+              "attribute": "no-border"
+            },
+            {
+              "kind": "field",
+              "name": "inverted",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
+              "attribute": "inverted"
+            },
+            {
+              "kind": "field",
+              "name": "resizeDelay",
+              "privacy": "public",
+              "default": "100",
+              "description": "Controls the delay in milliseconds to throttle resize events",
+              "attribute": "resize-delay",
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ResponsiveToolbarUpdateEventData>"
+              },
+              "description": "Dispatched when the overflow state changes.",
+              "name": "forge-responsive-toolbar-update"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Hides the divider",
+              "fieldName": "noBorder"
+            },
+            {
+              "name": "inverted",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
+              "fieldName": "inverted"
+            },
+            {
+              "name": "resize-delay",
+              "default": "RESIZE_DELAY",
+              "description": "Controls the delay in milliseconds to throttle resize events",
+              "fieldName": "resizeDelay"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-responsive-toolbar",
+          "customElement": true,
+          "states": [
+            {
+              "name": "small",
+              "description": "The title is overlapping the actions, the large end slot is hidden."
+            },
+            {
+              "name": "large",
+              "description": "The title is not overlapping the actions, the small end slot is hidden."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ResponsiveToolbarComponentTagName",
+          "declaration": {
+            "name": "ResponsiveToolbarComponentTagName",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ResponsiveToolbarComponent",
+          "declaration": {
+            "name": "ResponsiveToolbarComponent",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ResponsiveToolbarComponent",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/user-profile/user-profile.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "UserProfileComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-user-profile'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "UserProfileComponent",
+          "slots": [
+            {
+              "description": "Slot for additional profile navigation links",
+              "name": "link"
+            },
+            {
+              "description": "Slot for the sign out button text",
+              "name": "sign-out-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "fullName",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The full name of the user",
+              "attribute": "full-name"
+            },
+            {
+              "kind": "field",
+              "name": "email",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The email address of the user",
+              "attribute": "email"
+            },
+            {
+              "kind": "field",
+              "name": "imageUrl",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The image URL for the user avatar",
+              "attribute": "image-url"
+            },
+            {
+              "kind": "field",
+              "name": "buttonLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Open user profile'",
+              "description": "ARIA label for the user profile avatar button",
+              "attribute": "button-label"
+            },
+            {
+              "kind": "field",
+              "name": "themeToggle",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the theme toggle is visible",
+              "attribute": "theme-toggle"
+            },
+            {
+              "kind": "method",
+              "name": "setTheme",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "ThemeToggleTheme"
+                  }
+                }
+              ],
+              "description": "Sets the theme for the theme toggle."
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "Event"
+              },
+              "description": "Fired when the sign out button is clicked.",
+              "name": "forge-user-profile-sign-out"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "full-name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The full name of the user",
+              "fieldName": "fullName"
+            },
+            {
+              "name": "email",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The email address of the user",
+              "fieldName": "email"
+            },
+            {
+              "name": "image-url",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The image URL for the user avatar",
+              "fieldName": "imageUrl"
+            },
+            {
+              "name": "button-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Open user profile'",
+              "description": "ARIA label for the user profile avatar button",
+              "fieldName": "buttonLabel"
+            },
+            {
+              "name": "theme-toggle",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the theme toggle is visible",
+              "fieldName": "themeToggle"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-user-profile",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "UserProfileComponentTagName",
+          "declaration": {
+            "name": "UserProfileComponentTagName",
+            "module": "src/lib/user-profile/user-profile.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "UserProfileComponent",
+          "declaration": {
+            "name": "UserProfileComponent",
+            "module": "src/lib/user-profile/user-profile.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "UserProfileComponent",
+            "module": "src/lib/user-profile/user-profile.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "declarations": [
         {
@@ -1125,178 +1317,6 @@
           "declaration": {
             "name": "ThemeToggleComponent",
             "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/user-profile/user-profile.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "UserProfileComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-user-profile'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "UserProfileComponent",
-          "slots": [
-            {
-              "description": "Slot for additional profile navigation links",
-              "name": "link"
-            },
-            {
-              "description": "Slot for the sign out button text",
-              "name": "sign-out-button-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "fullName",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The full name of the user",
-              "attribute": "full-name"
-            },
-            {
-              "kind": "field",
-              "name": "email",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The email address of the user",
-              "attribute": "email"
-            },
-            {
-              "kind": "field",
-              "name": "buttonLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Open user profile'",
-              "description": "ARIA label for the user profile avatar button",
-              "attribute": "button-label"
-            },
-            {
-              "kind": "field",
-              "name": "themeToggle",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the theme toggle is visible",
-              "attribute": "theme-toggle"
-            },
-            {
-              "kind": "method",
-              "name": "setTheme",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "ThemeToggleTheme"
-                  }
-                }
-              ],
-              "description": "Sets the theme for the theme toggle."
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "Event"
-              },
-              "description": "Fired when the sign out button is clicked.",
-              "name": "forge-user-profile-sign-out"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "full-name",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The full name of the user",
-              "fieldName": "fullName"
-            },
-            {
-              "name": "email",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The email address of the user",
-              "fieldName": "email"
-            },
-            {
-              "name": "button-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Open user profile'",
-              "description": "ARIA label for the user profile avatar button",
-              "fieldName": "buttonLabel"
-            },
-            {
-              "name": "theme-toggle",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the theme toggle is visible",
-              "fieldName": "themeToggle"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-user-profile",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "UserProfileComponentTagName",
-          "declaration": {
-            "name": "UserProfileComponentTagName",
-            "module": "src/lib/user-profile/user-profile.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "UserProfileComponent",
-          "declaration": {
-            "name": "UserProfileComponent",
-            "module": "src/lib/user-profile/user-profile.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "UserProfileComponent",
-            "module": "src/lib/user-profile/user-profile.ts"
           }
         }
       ]
@@ -1783,6 +1803,57 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiUserMessageComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-user-message'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiUserMessageComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-user-message",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiUserMessageComponentTagName",
+          "declaration": {
+            "name": "AiUserMessageComponentTagName",
+            "module": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiUserMessageComponent",
+          "declaration": {
+            "name": "AiUserMessageComponent",
+            "module": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiUserMessageComponent",
+            "module": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts",
       "declarations": [
         {
@@ -1860,57 +1931,6 @@
           "declaration": {
             "name": "AiSuggestionsComponent",
             "module": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "AiUserMessageComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-ai-user-message'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AiUserMessageComponent",
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-ai-user-message",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AiUserMessageComponentTagName",
-          "declaration": {
-            "name": "AiUserMessageComponentTagName",
-            "module": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AiUserMessageComponent",
-          "declaration": {
-            "name": "AiUserMessageComponent",
-            "module": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "AiUserMessageComponent",
-            "module": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts"
           }
         }
       ]
@@ -2023,6 +2043,14 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
+    "MultiSelectHeaderComponent": {
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "lineNumber": 28
+    },
+    "QuantityFieldComponent": {
+      "path": "src/lib/quantity-field/quantity-field.ts",
+      "lineNumber": 35
+    },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 20
@@ -2035,13 +2063,9 @@
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 48
     },
-    "MultiSelectHeaderComponent": {
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "lineNumber": 28
-    },
-    "QuantityFieldComponent": {
-      "path": "src/lib/quantity-field/quantity-field.ts",
-      "lineNumber": 35
+    "UserProfileComponent": {
+      "path": "src/lib/user-profile/user-profile.ts",
+      "lineNumber": 44
     },
     "ThemeToggleTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
@@ -2054,10 +2078,6 @@
     "ThemeToggleComponent": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 41
-    },
-    "UserProfileComponent": {
-      "path": "src/lib/user-profile/user-profile.ts",
-      "lineNumber": 44
     },
     "AiButtonComponent": {
       "path": "src/lib/ai-chat-widget/ai-button/ai-button.ts",
@@ -2099,6 +2119,10 @@
       "path": "src/lib/ai-chat-widget/ai-response-message/ai-response-message.ts",
       "lineNumber": 29
     },
+    "AiUserMessageComponent": {
+      "path": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts",
+      "lineNumber": 17
+    },
     "Suggestion": {
       "path": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts",
       "lineNumber": 18
@@ -2110,10 +2134,6 @@
     "AiSuggestionsComponent": {
       "path": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts",
       "lineNumber": 35
-    },
-    "AiUserMessageComponent": {
-      "path": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts",
-      "lineNumber": 17
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",

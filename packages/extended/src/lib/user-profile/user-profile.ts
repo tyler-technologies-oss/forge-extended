@@ -65,6 +65,10 @@ export class UserProfileComponent extends LitElement {
   @property()
   public email = '';
 
+  /** The image URL for the user avatar */
+  @property({ attribute: 'image-url' })
+  public imageUrl = '';
+
   /** ARIA label for the user profile avatar button */
   @property({ attribute: 'button-label' })
   public buttonLabel = 'Open user profile';
@@ -120,7 +124,7 @@ export class UserProfileComponent extends LitElement {
     // prettier-ignore
     return html`
       <forge-icon-button theme="app-bar" aria-label="${this.buttonLabel}" id="popover-trigger">
-        <forge-avatar .text=${this.fullName} id="button-avatar"></forge-avatar>
+        <forge-avatar .text=${this.fullName} .imageUrl=${this.imageUrl} id="button-avatar"></forge-avatar>
       </forge-icon-button>
       <forge-popover
         id="user-profile-popover"
@@ -133,6 +137,7 @@ export class UserProfileComponent extends LitElement {
           <forge-avatar
             .text=${this.fullName}
             class="popover-avatar"
+            .imageUrl=${this.imageUrl}
             id="popover-avatar"></forge-avatar>
           <div class="user-info">
             <div class="full-name">${this.fullName}</div>

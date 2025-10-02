@@ -67,6 +67,7 @@ const meta = {
         slot="end"
         button-label="${args.buttonAriaLabel}"
         ?theme-toggle=${args.showThemeToggle}
+        image-url="${args.imageUrl}"
         full-name="First Last"
         email="first.last@tylertech.com">
         ${args.showSlottedLinks ? html`<forge-profile-link slot="link">
@@ -89,12 +90,14 @@ const meta = {
   argTypes: {
     signOutButtonText: { control: 'text' },
     buttonAriaLabel: { control: 'text' },
+    imageUrl: { control: 'text' },
     showSlottedLinks: { control: 'boolean' },
     showThemeToggle: { control: 'boolean' }
   },
   args: {
     signOutButtonText: 'Sign Out',
     buttonAriaLabel: 'Open the incredibly awesome profile menu',
+    imageUrl: '',
     showSlottedLinks: true,
     showThemeToggle: true
   }
