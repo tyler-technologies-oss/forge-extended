@@ -10,23 +10,21 @@ declare global {
   }
 }
 
-export type AiIconVariant = 'no-border' | 'border';
-
 export const AiIconComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-icon';
 
 /**
  * @tag forge-ai-icon
  *
- * @state no-border - The icon is displayed without a border (default).
+ * @state no-border - The icon is displayed without a border.
  * @state border - The icon is displayed with a border.
  */
 @customElement(AiIconComponentTagName)
 export class AiIconComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
-  /** Variant for the icon display style */
-  @property({ type: String, attribute: 'variant' })
-  public variant: AiIconVariant = 'no-border';
+  /** Whether to display the icon without a border */
+  @property({ type: Boolean, attribute: 'no-border' })
+  public noBorder = false;
 
   readonly #internals: ElementInternals;
 
@@ -37,14 +35,14 @@ export class AiIconComponent extends LitElement {
   }
 
   public override willUpdate(changedProperties: PropertyValues<this>): void {
-    if (changedProperties.has('variant')) {
+    if (changedProperties.has('noBorder')) {
       this.#setCssState();
     }
   }
 
   #setCssState(): void {
-    toggleState(this.#internals, 'no-border', this.variant === 'no-border');
-    toggleState(this.#internals, 'border', this.variant === 'border');
+    toggleState(this.#internals, 'no-border', this.noBorder);
+    toggleState(this.#internals, 'border', !this.noBorder);
   }
 
   public override render(): TemplateResult {

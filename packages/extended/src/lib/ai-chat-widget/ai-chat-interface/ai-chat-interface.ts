@@ -33,7 +33,7 @@ export class AiChatInterfaceComponent extends LitElement {
 
   readonly #headerStart = html`
     <div class="start">
-      <forge-ai-icon></forge-ai-icon>
+      <forge-ai-icon no-border></forge-ai-icon>
       <h1>AI Assistant</h1>
     </div>
   `;
