@@ -1,9 +1,10 @@
 import { IconRegistry } from '@tylertech/forge';
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { tylIconSparkles } from '@tylertech/tyler-icons';
+import '../ai-icon';
 
 import styles from './ai-fab-button.scss?inline';
-import { tylIconSparkles } from '@tylertech/tyler-icons';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -38,7 +39,7 @@ export class AiFabButtonComponent extends LitElement {
         aria-label="Floating Action Button Demo"
         class="forge-fab ai-fab-button ${this.extended ? 'forge-fab--extended' : ''}"
         .disabled=${this.disabled}>
-        <forge-icon name="sparkles"></forge-icon>
+        <forge-ai-icon></forge-ai-icon>
         ${this.extended ? html`<slot></slot>` : ''}
       </button>
     `;

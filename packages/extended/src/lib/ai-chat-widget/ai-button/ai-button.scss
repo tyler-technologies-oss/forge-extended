@@ -1,4 +1,5 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/dist/button/forge-button';
 @use '../mixins' as mixins;
 
@@ -8,7 +9,7 @@
 }
 
 :host(:hover:not([disabled])) {
-  background-color: var(--forge-theme-primary-container-minimum);
+  background-color: #{forge-theme.variable(primary-container-minimum)};
 }
 
 :host([disabled]) {
@@ -19,6 +20,10 @@
   --forge-button-padding-inline: #{forge-spacing.variable(xsmall)};
   --forge-button-border-radius: #{forge-spacing.variable(xsmall)};
   --forge-button-outlined-border-width: 0;
-  --forge-button-outlined-color: var(--forge-theme-on-primary-container-minimum);
+  --forge-button-outlined-color: #{forge-theme.variable(primary)};
   --forge-button-outlined-background: transparent;
+}
+
+forge-ai-icon {
+  color: inherit;
 }

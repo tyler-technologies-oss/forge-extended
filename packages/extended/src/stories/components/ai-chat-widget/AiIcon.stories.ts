@@ -9,16 +9,16 @@ const meta = {
   title: 'AI/AI Icon',
   component,
   argTypes: {
-    noBorder: {
+    outline: {
       control: 'boolean',
-      description: 'Whether to display the icon without a border'
+      description: 'Whether to display the icon with an outline'
     }
   },
   args: {
-    noBorder: false
+    outline: false
   },
   render: (args: any) => {
-    return html`<forge-ai-icon ?no-border=${args.noBorder}></forge-ai-icon>`;
+    return html`<forge-ai-icon ?outline=${args.outline}></forge-ai-icon>`;
   }
 } satisfies Meta;
 

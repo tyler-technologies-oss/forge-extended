@@ -1,17 +1,20 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/scrollbar' as forge-scrollbar;
 @use '@tylertech/forge/dist/toolbar/forge-toolbar';
 @use '@tylertech/forge/dist/icon-button/forge-icon-button';
 
 :host {
   display: block;
-  --_forge-chat-interface-width: 420px;
+  height: 100%;
 }
 
 .ai-chat-interface {
   @include forge-typography.style(body1);
   color: var(--forge-theme-on-surface);
-  min-width: var(--_forge-chat-interface-width);
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
 
 .ai-icon-button > svg {
@@ -41,13 +44,15 @@
 }
 
 .messages-container {
+  @include forge-scrollbar.base;
+
   padding: #{forge-spacing.variable(medium)};
-  height: 720px;
   overflow-y: auto;
   background: linear-gradient(to top, var(--forge-theme-primary-container-minimum), var(--forge-theme-surface));
   border-block-end: 1px solid var(--forge-theme-outline);
   display: flex;
   flex-direction: column;
+  flex-grow: 1;
 }
 
 .suggestions-container {

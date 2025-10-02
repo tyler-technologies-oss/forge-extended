@@ -1,9 +1,9 @@
 import React from "react";
-import { ForgeAiPrompt as ForgeAiPromptElement } from "@tylertech/forge-extended/ai-chat-widget/ai-prompt";
+import { ForgeAiActionsToolbar as ForgeAiActionsToolbarElement } from "@tylertech/forge-extended/ai-chat-widget/ai-actions-toolbar";
 
-export type { ForgeAiPromptElement };
+export type { ForgeAiActionsToolbarElement };
 
-export interface ForgeAiPromptProps
+export interface ForgeAiActionsToolbarProps
   extends Pick<
     React.AllHTMLAttributes<HTMLElement>,
     | "children"
@@ -19,15 +19,6 @@ export interface ForgeAiPromptProps
     | "onFocus"
     | "onBlur"
   > {
-  /** Placeholder text for the input field */
-  placeholder?: ForgeAiPromptElement["placeholder"];
-
-  /** Current value of the input field */
-  value?: ForgeAiPromptElement["value"];
-
-  /** Layout variant for the prompt component */
-  variant?: ForgeAiPromptElement["variant"];
-
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
 
@@ -49,9 +40,9 @@ export interface ForgeAiPromptProps
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
 
-  /** Fired when the send button is clicked or Enter is pressed. */
-  onForgeAiPromptSend?: (
-    event: CustomEvent<CustomEvent<AiPromptSendEventData>>,
+  /** Fired when an action button is clicked. */
+  onForgeAiActionsToolbarAction?: (
+    event: CustomEvent<CustomEvent<AiActionsToolbarActionEventData>>,
   ) => void;
 }
 
@@ -61,9 +52,6 @@ export interface ForgeAiPromptProps
  *
  *
  * ### **Events:**
- *  - **forge-ai-prompt-send** - Fired when the send button is clicked or Enter is pressed.
- *
- * ### **Slots:**
- *  - **additional-action** - Optional slot for additional action buttons. Only displayed when variant is 'stacked'.
+ *  - **forge-ai-actions-toolbar-action** - Fired when an action button is clicked.
  */
-export const ForgeAiPrompt: React.ForwardRefExoticComponent<ForgeAiPromptProps>;
+export const ForgeAiActionsToolbar: React.ForwardRefExoticComponent<ForgeAiActionsToolbarProps>;

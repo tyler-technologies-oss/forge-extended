@@ -1,9 +1,10 @@
 import { IconRegistry } from '@tylertech/forge';
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { tylIconSparkles } from '@tylertech/tyler-icons';
+import '../ai-icon';
 
 import styles from './ai-button.scss?inline';
-import { tylIconSparkles } from '@tylertech/tyler-icons';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -31,7 +32,7 @@ export class AiButtonComponent extends LitElement {
   public override render(): TemplateResult {
     return html`
       <button class="forge-button forge-button--outlined ai-button" .disabled=${this.disabled} variant="outlined">
-        <forge-icon name="sparkles"></forge-icon>
+        <forge-ai-icon></forge-ai-icon>
         <slot></slot>
       </button>
     `;

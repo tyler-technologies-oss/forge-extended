@@ -1,11 +1,11 @@
 import React, { forwardRef } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-icon";
+import "@tylertech/forge-extended/ai-chat-widget/ai-dialog";
 
-export const ForgeAiIcon = forwardRef((props, forwardedRef) => {
-  const { outline, ...filteredProps } = props;
+export const ForgeAiDialog = forwardRef((props, forwardedRef) => {
+  const { open, expanded, ...filteredProps } = props;
 
   return React.createElement(
-    "forge-ai-icon",
+    "forge-ai-dialog",
     {
       ...filteredProps,
       class: props.className,
@@ -13,7 +13,8 @@ export const ForgeAiIcon = forwardRef((props, forwardedRef) => {
       for: props.htmlFor,
       part: props.part,
       tabindex: props.tabIndex,
-      outline: props.outline ? "" : undefined,
+      open: props.open ? "" : undefined,
+      expanded: props.expanded ? "" : undefined,
       style: { ...props.style },
     },
     props.children,

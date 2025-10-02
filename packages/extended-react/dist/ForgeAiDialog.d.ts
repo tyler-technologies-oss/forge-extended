@@ -1,9 +1,9 @@
 import React from "react";
-import { ForgeAiPrompt as ForgeAiPromptElement } from "@tylertech/forge-extended/ai-chat-widget/ai-prompt";
+import { ForgeAiDialog as ForgeAiDialogElement } from "@tylertech/forge-extended/ai-chat-widget/ai-dialog";
 
-export type { ForgeAiPromptElement };
+export type { ForgeAiDialogElement };
 
-export interface ForgeAiPromptProps
+export interface ForgeAiDialogProps
   extends Pick<
     React.AllHTMLAttributes<HTMLElement>,
     | "children"
@@ -19,14 +19,13 @@ export interface ForgeAiPromptProps
     | "onFocus"
     | "onBlur"
   > {
-  /** Placeholder text for the input field */
-  placeholder?: ForgeAiPromptElement["placeholder"];
+  /** Indicates whether the dialog is open. */
+  open?: boolean;
 
-  /** Current value of the input field */
-  value?: ForgeAiPromptElement["value"];
-
-  /** Layout variant for the prompt component */
-  variant?: ForgeAiPromptElement["variant"];
+  /** Controls the dialog's positioning and size behavior.
+When true, the dialog will have an expanded width and be centered on the screen.
+When false, the dialog will be positioned at the bottom-right corner with a fixed width. */
+  expanded?: boolean;
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
@@ -48,11 +47,6 @@ export interface ForgeAiPromptProps
 
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
-
-  /** Fired when the send button is clicked or Enter is pressed. */
-  onForgeAiPromptSend?: (
-    event: CustomEvent<CustomEvent<AiPromptSendEventData>>,
-  ) => void;
 }
 
 /**
@@ -60,10 +54,12 @@ export interface ForgeAiPromptProps
  * ---
  *
  *
- * ### **Events:**
- *  - **forge-ai-prompt-send** - Fired when the send button is clicked or Enter is pressed.
+ * ### **Methods:**
+ *  - **show(): _void_** - Opens the dialog.
+ * - **close(): _void_** - Closes the dialog.
+ * - **toggle(): _void_** - Toggles the dialog open state.
  *
  * ### **Slots:**
- *  - **additional-action** - Optional slot for additional action buttons. Only displayed when variant is 'stacked'.
+ *  - _default_ - Default slot for dialog content
  */
-export const ForgeAiPrompt: React.ForwardRefExoticComponent<ForgeAiPromptProps>;
+export const ForgeAiDialog: React.ForwardRefExoticComponent<ForgeAiDialogProps>;

@@ -1,0 +1,52 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
+@use '@tylertech/forge/sass/core/styles/elevation' as forge-elevation;
+@use '@tylertech/forge/dist/dialog/forge-dialog';
+
+:host {
+  display: contents;
+}
+
+.ai-dialog-popover {
+  position: relative;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  background: #{forge-theme.variable(surface-bright)};
+
+  border-radius: #{forge-shape.variable(large)};
+  box-shadow: #{forge-elevation.value(4)};
+  border: none;
+
+  width: 420px;
+  height: calc(100vh - 72px);
+
+  padding: 0;
+  inset: auto;
+  bottom: #{forge-spacing.variable(medium)};
+  right: #{forge-spacing.variable(medium)};
+
+  animation-duration: 150ms;
+  animation-timing-function: cubic-bezier(0, 0, 0, 1);
+  animation-name: fadein, zoomin;
+  transform-origin: right bottom;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes zoomin {
+  from {
+    transform: scale(0.8);
+  }
+  to {
+    transform: scale(1);
+  }
+}

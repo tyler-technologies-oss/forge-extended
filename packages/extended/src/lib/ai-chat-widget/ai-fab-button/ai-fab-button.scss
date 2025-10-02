@@ -1,4 +1,5 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/dist/floating-action-button/forge-floating-action-button';
 @use '../mixins' as mixins;
 
@@ -23,12 +24,14 @@
 
 .ai-fab-button {
   --forge-fab-border-width: 0;
-  --forge-fab-background: transparent;
+  --forge-fab-background: #{forge-theme.variable(primary)};
 
+  background: transparent;
   position: relative;
   z-index: 1;
 
-  forge-icon {
-    color: var(--forge-theme-primary);
+  forge-ai-icon {
+    color: #{forge-theme.variable(primary)};
+    font-size: 36px;
   }
 }

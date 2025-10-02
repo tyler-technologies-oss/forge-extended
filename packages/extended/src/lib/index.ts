@@ -13,4 +13,5 @@ export * from './ai-chat-widget/ai-chat-interface';
 export * from './ai-chat-widget/ai-response-message';
 export * from './ai-chat-widget/ai-user-message';
 export * from './ai-chat-widget/ai-actions-toolbar';
+export * from './ai-chat-widget/ai-dialog';
 // -- EXPORTS PLACEHOLDER (DO NOT REMOVE) --
