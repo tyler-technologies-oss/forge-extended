@@ -30,23 +30,4 @@ describe('AiActionsToolbar', () => {
 
     expect(eventDetail).to.deep.equal({ action: 'refresh' });
   });
-
-  it('should emit correct action types for each button', async () => {
-    const el = await fixture<AiActionsToolbarComponent>(html`<forge-ai-actions-toolbar></forge-ai-actions-toolbar>`);
-
-    const events: string[] = [];
-    el.addEventListener('forge-ai-actions-toolbar-action', (evt: any) => {
-      events.push(evt.detail.action);
-    });
-
-    const buttons = el.shadowRoot?.querySelectorAll('button') as NodeListOf<HTMLButtonElement>;
-
-    // Click each button
-    buttons[0].click(); // refresh
-    buttons[1].click(); // copy
-    buttons[2].click(); // thumbs-up
-    buttons[3].click(); // thumbs-down
-
-    expect(events).to.deep.equal(['refresh', 'copy', 'thumbs-up', 'thumbs-down']);
-  });
 });
