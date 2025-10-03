@@ -26,35 +26,23 @@ type Story = StoryObj;
 
 export const Demo: Story = {};
 
-export const InCard: Story = {
-  render: () => {
-    return html`
-      <forge-card no-padding raised>
-        <forge-ai-chat-interface></forge-ai-chat-interface>
-      </forge-card>
-    `;
-  }
-};
-
 export const WithMessages: Story = {
   render: () => {
     return html`
-      <forge-card no-padding raised>
-        <forge-ai-chat-interface>
-          <forge-ai-user-message>
-            Hello! Can you help me understand how to use TypeScript generics?
-          </forge-ai-user-message>
-          <forge-ai-response-message>
-            I'd be happy to help you understand TypeScript generics! Generics allow you to create reusable components
-            that can work with different types while maintaining type safety.
-          </forge-ai-response-message>
-          <forge-ai-user-message> Can you give me a practical example? </forge-ai-user-message>
-          <forge-ai-response-message>
-            Sure! Here's a simple example of a generic function: This function works with any type T, providing type
-            safety while being reusable.
-          </forge-ai-response-message>
-        </forge-ai-chat-interface>
-      </forge-card>
+      <forge-ai-chat-interface>
+        <forge-ai-user-message>
+          Hello! Can you help me understand how to use TypeScript generics?
+        </forge-ai-user-message>
+        <forge-ai-response-message>
+          I'd be happy to help you understand TypeScript generics! Generics allow you to create reusable components that
+          can work with different types while maintaining type safety.
+        </forge-ai-response-message>
+        <forge-ai-user-message> Can you give me a practical example? </forge-ai-user-message>
+        <forge-ai-response-message>
+          Sure! Here's a simple example of a generic function: This function works with any type T, providing type
+          safety while being reusable.
+        </forge-ai-response-message>
+      </forge-ai-chat-interface>
     `;
   }
 };
@@ -70,23 +58,21 @@ export const WithSuggestions: Story = {
     ] as Suggestion[];
 
     return html`
-      <forge-card no-padding raised>
-        <forge-ai-chat-interface>
-          <forge-ai-user-message>
-            Hello! Can you help me understand how to use TypeScript generics?
-          </forge-ai-user-message>
-          <forge-ai-response-message>
-            I'd be happy to help you understand TypeScript generics! Generics allow you to create reusable components
-            that can work with different types while maintaining type safety.
-          </forge-ai-response-message>
-          <forge-ai-user-message> Can you give me a practical example? </forge-ai-user-message>
-          <forge-ai-response-message>
-            Sure! Here's a simple example of a generic function: This function works with any type T, providing type
-            safety while being reusable.
-          </forge-ai-response-message>
-          <forge-ai-suggestions slot="suggestions" .suggestions=${suggestions}></forge-ai-suggestions>
-        </forge-ai-chat-interface>
-      </forge-card>
+      <forge-ai-chat-interface>
+        <forge-ai-user-message>
+          Hello! Can you help me understand how to use TypeScript generics?
+        </forge-ai-user-message>
+        <forge-ai-response-message>
+          I'd be happy to help you understand TypeScript generics! Generics allow you to create reusable components that
+          can work with different types while maintaining type safety.
+        </forge-ai-response-message>
+        <forge-ai-user-message> Can you give me a practical example? </forge-ai-user-message>
+        <forge-ai-response-message>
+          Sure! Here's a simple example of a generic function: This function works with any type T, providing type
+          safety while being reusable.
+        </forge-ai-response-message>
+        <forge-ai-suggestions slot="suggestions" .suggestions=${suggestions}></forge-ai-suggestions>
+      </forge-ai-chat-interface>
     `;
   }
 };

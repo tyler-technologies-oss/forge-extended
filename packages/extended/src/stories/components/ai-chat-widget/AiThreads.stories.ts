@@ -32,7 +32,7 @@ const meta = {
   },
   render: (args: any) => {
     const onThreadSelect = action('forge-ai-threads-select');
-    return html` <forge-card no-padding raised>
+    return html` <forge-card no-padding>
       <forge-ai-threads .threads=${args.threads} @forge-ai-threads-select=${onThreadSelect}></forge-ai-threads>
     </forge-card>`;
   }

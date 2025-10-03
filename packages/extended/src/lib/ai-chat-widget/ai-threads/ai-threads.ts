@@ -43,6 +43,10 @@ export class AiThreadsComponent extends LitElement {
   @state()
   private _filterValue = '';
 
+  /** Currently selected thread ID */
+  @state()
+  private _selectedThreadId: string | null = null;
+
   get #filteredThreads(): Thread[] {
     if (!this._filterValue.trim()) {
       return this.threads;
@@ -55,6 +59,9 @@ export class AiThreadsComponent extends LitElement {
   }
 
   private _handleThreadSelect(thread: Thread): void {
+    // Update selected thread ID to trigger re-render with new selection
+    this._selectedThreadId = thread.id;
+
     const event = new CustomEvent<AiThreadsSelectEventData>('forge-ai-threads-select', {
       detail: { id: thread.id, title: thread.title },
       bubbles: true,
@@ -64,38 +71,81 @@ export class AiThreadsComponent extends LitElement {
     this.dispatchEvent(event);
   }
 
+  readonly #searchField = html`
+    <div class="forge-field">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="forge-icon">
+        <path fill="none" d="M0 0h24v24H0z" />
+        <path
+          d="M15.5 14h-.79l-.28-.27A6.47 6.47 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14" />
+      </svg>
+      <input
+        type="text"
+        id="search-threads"
+        placeholder="Search threads..."
+        .value=${this._filterValue}
+        @input=${this._handleFilterInput} />
+    </div>
+  `;
+
+  get #threadList(): TemplateResult {
+    return html`
+      <ul class="forge-list forge-list--navlist">
+        ${this.#filteredThreads.map(thread => {
+          const isSelected = this._selectedThreadId === thread.id;
+          return html`
+            <li class="forge-list-item ${isSelected ? 'forge-list-item--selected' : ''}">
+              <button @click=${() => this._handleThreadSelect(thread)}>
+                <span>${thread.title}</span>
+                <span class="list-item-second-line">Test line two</span>
+              </button>
+            </li>
+          `;
+        })}
+      </ul>
+    `;
+  }
+
+  readonly #threadActions = html`
+    <button class="forge-button">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="forge-icon">
+        <path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z" />
+      </svg>
+      Clear history
+    </button>
+  `;
+
+  get #threadListContainer(): TemplateResult {
+    return html` <div class="thread-list-container">${this.#threadList} ${this.#threadActions}</div> `;
+  }
+
+  readonly #newChatButton = html`
+    <button class="forge-button forge-button--tonal">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="forge-icon">
+        <path fill="none" d="M0 0h24v24H0z" />
+        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
+      </svg>
+      New chat
+    </button>
+  `;
+
+  get #drawer(): TemplateResult {
+    return html`
+      <aside class="forge-drawer">
+        ${this.#searchField} ${this.#threadListContainer}
+        <hr class="forge-divider" />
+        ${this.#newChatButton}
+      </aside>
+    `;
+  }
+
+  readonly #chatInterface = html` <forge-ai-chat-interface></forge-ai-chat-interface> `;
+
   public override render(): TemplateResult {
-    return html`<div class="threads-container">
-      <div class="left">
-        <aside class="forge-drawer threads">
-          <div class="forge-field">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="forge-icon">
-              <path fill="none" d="M0 0h24v24H0z" />
-              <path d="M10 18h4v-2h-4zM3 6v2h18V6zm3 7h12v-2H6z" />
-            </svg>
-            <input
-              type="text"
-              id="my-css-only-input"
-              placeholder="Filter threads"
-              .value=${this._filterValue}
-              @input=${this._handleFilterInput} />
-          </div>
-          <ul class="forge-list forge-list--navlist">
-            ${this.#filteredThreads.map(
-              thread => html`
-                <li class="forge-list-item">
-                  <button data-thread-id="${thread.id}" @click=${() => this._handleThreadSelect(thread)}>
-                    ${thread.title}
-                  </button>
-                </li>
-              `
-            )}
-          </ul>
-        </aside>
+    return html`
+      <div class="threads-container">
+        <div class="left">${this.#drawer}</div>
+        <div class="right">${this.#chatInterface}</div>
       </div>
-      <div class="right">
-        <forge-ai-chat-interface></forge-ai-chat-interface>
-      </div>
-    </div>`;
+    `;
   }
 }
