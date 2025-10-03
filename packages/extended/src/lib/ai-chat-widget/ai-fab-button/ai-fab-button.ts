@@ -1,5 +1,5 @@
-import { IconRegistry } from '@tylertech/forge';
-import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
+import { IconRegistry, toggleState } from '@tylertech/forge';
+import { LitElement, TemplateResult, html, unsafeCSS, PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { tylIconSparkles } from '@tylertech/tyler-icons';
 import '../ai-icon';
@@ -17,6 +17,9 @@ export const AiFabButtonComponentTagName: keyof HTMLElementTagNameMap = 'forge-a
 
 /**
  * @tag forge-ai-fab-button
+ *
+ * @state disabled - The button is disabled.
+ * @state extended - The button is extended.
  */
 @customElement(AiFabButtonComponentTagName)
 export class AiFabButtonComponent extends LitElement {
@@ -34,9 +37,28 @@ export class AiFabButtonComponent extends LitElement {
   @property({ type: Boolean, reflect: true })
   public extended = false;
 
+  readonly #internals: ElementInternals;
+
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+    this.#setCssState();
+  }
+
+  public override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('disabled') || changedProperties.has('extended')) {
+      this.#setCssState();
+    }
+  }
+
+  #setCssState(): void {
+    toggleState(this.#internals, 'disabled', this.disabled);
+    toggleState(this.#internals, 'extended', this.extended);
+  }
+
   public override render(): TemplateResult {
     return html`
-      <forge-ai-gradient-container variant="high" rounded>
+      <forge-ai-gradient-container variant=${this.disabled ? 'disabled' : 'high'}>
         <button
           aria-label="Floating Action Button Demo"
           class="forge-fab ai-fab-button ${this.extended ? 'forge-fab--extended' : ''}"
