@@ -6,6 +6,7 @@ import '$lib/ai-chat-widget/ai-user-message';
 import '$lib/ai-chat-widget/ai-response-message';
 import '$lib/ai-chat-widget/ai-suggestions';
 import '$lib/ai-chat-widget/ai-gradient-container';
+import '$lib/ai-chat-widget/ai-empty-state';
 import { Suggestion } from '$lib/ai-chat-widget/ai-suggestions';
 import { defineCardComponent } from '@tylertech/forge';
 
@@ -26,6 +27,28 @@ export default meta;
 type Story = StoryObj;
 
 export const Demo: Story = {};
+
+export const WithEmptyState: Story = {
+  render: () => {
+    const suggestions = [
+      { text: 'Help me write an email', value: 'email' },
+      { text: 'Create a presentation', value: 'presentation' },
+      { text: 'Write some code', value: 'code' },
+      { text: 'Plan a meeting', value: 'meeting' },
+      { text: 'Summarize a document', value: 'summarize' }
+    ] as Suggestion[];
+
+    return html`
+      <forge-ai-gradient-container>
+        <forge-ai-chat-interface>
+          <forge-ai-empty-state>
+            <forge-ai-suggestions slot="actions" variant="block" .suggestions=${suggestions}> </forge-ai-suggestions>
+          </forge-ai-empty-state>
+        </forge-ai-chat-interface>
+      </forge-ai-gradient-container>
+    `;
+  }
+};
 
 export const WithMessages: Story = {
   render: () => {

@@ -3,14 +3,24 @@ import { html } from 'lit';
 import { action } from 'storybook/actions';
 
 import '$lib/ai-chat-widget/ai-suggestions';
-import { Suggestion } from '$lib/ai-chat-widget/ai-suggestions';
+import { Suggestion, AiSuggestionsVariant } from '$lib/ai-chat-widget/ai-suggestions';
 
 const component = 'forge-ai-suggestions';
 
 const meta = {
   title: 'AI/AI Suggestions',
   component,
-  render: () => {
+  argTypes: {
+    variant: {
+      control: 'select',
+      options: ['inline', 'block'] as AiSuggestionsVariant[],
+      description: 'Display variant for suggestions layout'
+    }
+  },
+  args: {
+    variant: 'inline'
+  },
+  render: (args: any) => {
     const suggestions = [
       { text: 'Help me write an email', value: 'email' },
       { text: 'Create a presentation', value: 'presentation' },
@@ -30,6 +40,7 @@ const meta = {
       <div style="width: 420px;">
         <forge-ai-suggestions
           .suggestions=${suggestions}
+          variant=${args.variant}
           @forge-ai-suggestions-select=${onSuggestionSelect}></forge-ai-suggestions>
       </div>
     `;
