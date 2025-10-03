@@ -1,25 +1,30 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '../mixins' as mixins;
 
 :host {
+  box-sizing: border-box;
   display: grid;
   place-items: center;
-  height: 1em;
-  width: 1em;
-  font-size: 24px;
+  height: 36px;
+  width: 36px;
+}
+
+forge-ai-gradient-container {
+  display: grid;
+  place-items: center;
+  height: 36px;
+  width: 36px;
 }
 
 svg {
   fill: #{forge-theme.variable(tertiary)};
-  height: 1em;
-  width: 1em;
+  height: 24px;
+  width: 24px;
 }
 
 :host(:state(outline)) {
-  font-size: 36px;
-
-  svg {
-    height: calc(1em / 2);
-    width: calc(1em / 2);
+  forge-ai-gradient-container {
+    --forge-gradient-container-radius: 100%;
   }
 }

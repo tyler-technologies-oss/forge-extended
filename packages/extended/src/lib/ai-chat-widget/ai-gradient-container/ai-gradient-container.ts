@@ -50,8 +50,6 @@ export class AiGradientContainerComponent extends LitElement {
   }
 
   public override render(): TemplateResult {
-    return html`<div class="gradient-container">
-      <slot></slot>
-    </div>`;
+    return html` <slot></slot> `;
   }
 }
