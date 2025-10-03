@@ -11,7 +11,6 @@
   --forge-button-padding-inline: #{forge-spacing.variable(xsmall)};
   --forge-button-border-radius: #{forge-spacing.variable(xsmall)};
   --forge-button-outlined-border-width: 0;
-  --forge-button-outlined-color: #{forge-theme.variable(primary)};
   --forge-button-outlined-background: transparent;
 }
 
@@ -21,6 +20,6 @@ forge-ai-icon {
 
 :host(:state(disabled)) {
   forge-ai-icon {
-    --forge-ai-icon-fill-color: var(--forge-theme-text-low);
+    --forge-ai-icon-fill-color: #{forge-theme.variable(text-low)};
   }
 }

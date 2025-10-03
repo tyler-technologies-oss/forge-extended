@@ -1,4 +1,5 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '../mixins' as mixins;
 
 :host {
@@ -16,32 +17,32 @@
 
 :host(:state(low)) {
   @include mixins.ai-gradient-container-border(
-    var(--forge-theme-surface),
-    var(--forge-theme-tertiary-container-low),
-    var(--forge-theme-outline)
+    #{forge-theme.variable(surface)},
+    #{forge-theme.variable(tertiary-container-low)},
+    #{forge-theme.variable(outline)}
   );
 }
 
 :host(:state(medium)) {
   @include mixins.ai-gradient-container-border(
-    var(--forge-theme-surface),
+    #{forge-theme.variable(surface)},
     var(--forge-theme-tertiary-container),
-    var(--forge-theme-outline)
+    #{forge-theme.variable(outline)}
   );
 }
 
 :host(:state(high)) {
   @include mixins.ai-gradient-container-border(
-    var(--forge-theme-surface),
-    var(--forge-theme-tertiary),
-    var(--forge-theme-outline)
+    #{forge-theme.variable(surface)},
+    #{forge-theme.variable(tertiary)},
+    #{forge-theme.variable(outline)}
   );
 }
 
 :host(:state(disabled)) {
   @include mixins.ai-gradient-container-border(
-    var(--forge-theme-surface),
-    var(--forge-theme-text-low),
-    var(--forge-theme-text-low)
+    #{forge-theme.variable(surface)},
+    #{forge-theme.variable(text-low)},
+    #{forge-theme.variable(text-low)}
   );
 }
