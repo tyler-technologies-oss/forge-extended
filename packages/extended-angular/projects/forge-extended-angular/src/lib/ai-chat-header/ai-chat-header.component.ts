@@ -10,59 +10,59 @@ import {
   inject
 } from '@angular/core';
 import {
-  AiChatInterfaceComponent as AiChatInterfaceComponentCustomElement,
-  defineAiChatInterfaceComponent
+  AiChatHeaderComponent as AiChatHeaderComponentCustomElement,
+  defineAiChatHeaderComponent
 } from '@tylertech/forge-extended';
 
 /**  */
 @Component({
-  selector: 'forge-ai-chat-interface',
+  selector: 'forge-ai-chat-header',
   changeDetection: ChangeDetectionStrategy.OnPush,
   template: '<ng-content></ng-content>',
   standalone: false
 })
-export class AiChatInterfaceComponent {
-  protected elementRef = inject<ElementRef<AiChatInterfaceComponentCustomElement>>(ElementRef);
+export class AiChatHeaderComponent {
+  protected elementRef = inject<ElementRef<AiChatHeaderComponentCustomElement>>(ElementRef);
   protected zone = inject(NgZone);
 
-  /** The forge-ai-chat-interface element. */
+  /** The forge-ai-chat-header element. */
   public readonly nativeElement = this.elementRef.nativeElement;
 
-  /** Controls whether the expand button is visible in the header */
+  /** Controls whether the expand button is visible */
   @Input({ transform: booleanAttribute })
-  public set showExpandButton(value: AiChatInterfaceComponentCustomElement['showExpandButton']) {
+  public set showExpandButton(value: AiChatHeaderComponentCustomElement['showExpandButton']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.showExpandButton = value;
     });
   }
-  public get showExpandButton(): AiChatInterfaceComponentCustomElement['showExpandButton'] {
+  public get showExpandButton(): AiChatHeaderComponentCustomElement['showExpandButton'] {
     return this.nativeElement.showExpandButton;
   }
 
-  /** Controls whether the minimize button is visible in the header */
+  /** Controls whether the minimize button is visible */
   @Input({ transform: booleanAttribute })
-  public set showMinimizeButton(value: AiChatInterfaceComponentCustomElement['showMinimizeButton']) {
+  public set showMinimizeButton(value: AiChatHeaderComponentCustomElement['showMinimizeButton']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.showMinimizeButton = value;
     });
   }
-  public get showMinimizeButton(): AiChatInterfaceComponentCustomElement['showMinimizeButton'] {
+  public get showMinimizeButton(): AiChatHeaderComponentCustomElement['showMinimizeButton'] {
     return this.nativeElement.showMinimizeButton;
   }
 
   /** Indicates the current expanded state for displaying the appropriate expand/collapse icon */
   @Input({ transform: booleanAttribute })
-  public set expanded(value: AiChatInterfaceComponentCustomElement['expanded']) {
+  public set expanded(value: AiChatHeaderComponentCustomElement['expanded']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.expanded = value;
     });
   }
-  public get expanded(): AiChatInterfaceComponentCustomElement['expanded'] {
+  public get expanded(): AiChatHeaderComponentCustomElement['expanded'] {
     return this.nativeElement.expanded;
   }
 
   constructor() {
-    defineAiChatInterfaceComponent();
+    defineAiChatHeaderComponent();
     const changeDetectorRef = inject(ChangeDetectorRef);
     changeDetectorRef.detach();
   }

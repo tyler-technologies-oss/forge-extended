@@ -1,9 +1,9 @@
 import React from "react";
-import { ForgeAiDialog as ForgeAiDialogElement } from "@tylertech/forge-extended/ai-chat-widget/ai-dialog";
+import { ForgeAiChatHeader as ForgeAiChatHeaderElement } from "@tylertech/forge-extended/ai-chat-widget/ai-chat-header";
 
-export type { ForgeAiDialogElement };
+export type { ForgeAiChatHeaderElement };
 
-export interface ForgeAiDialogProps
+export interface ForgeAiChatHeaderProps
   extends Pick<
     React.AllHTMLAttributes<HTMLElement>,
     | "children"
@@ -19,12 +19,13 @@ export interface ForgeAiDialogProps
     | "onFocus"
     | "onBlur"
   > {
-  /** Indicates whether the dialog is open. */
-  open?: boolean;
+  /** Controls whether the expand button is visible */
+  showExpandButton?: boolean;
 
-  /** Controls the dialog's positioning and size behavior.
-When true, the dialog will have an expanded width and be centered on the screen.
-When false, the dialog will be positioned at the bottom-right corner with a fixed width. */
+  /** Controls whether the minimize button is visible */
+  showMinimizeButton?: boolean;
+
+  /** Indicates the current expanded state for displaying the appropriate expand/collapse icon */
   expanded?: boolean;
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
@@ -48,11 +49,11 @@ When false, the dialog will be positioned at the bottom-right corner with a fixe
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
 
-  /** Gets the current fullscreen state (readonly) */
-  isFullscreen?: ForgeAiDialogElement["isFullscreen"];
+  /** Fired when the expand button is clicked */
+  onForgeAiChatHeaderExpand?: (event: CustomEvent) => void;
 
-  /** Fired when the fullscreen state changes due to viewport size */
-  onForgeAiDialogFullscreenChange?: (event: CustomEvent) => void;
+  /** Fired when the minimize button is clicked */
+  onForgeAiChatHeaderMinimize?: (event: CustomEvent) => void;
 }
 
 /**
@@ -61,14 +62,10 @@ When false, the dialog will be positioned at the bottom-right corner with a fixe
  *
  *
  * ### **Events:**
- *  - **forge-ai-dialog-fullscreen-change** - Fired when the fullscreen state changes due to viewport size
- *
- * ### **Methods:**
- *  - **show(): _void_** - Opens the dialog.
- * - **close(): _void_** - Closes the dialog.
- * - **toggle(): _void_** - Toggles the dialog open state.
+ *  - **forge-ai-chat-header-expand** - Fired when the expand button is clicked
+ * - **forge-ai-chat-header-minimize** - Fired when the minimize button is clicked
  *
  * ### **Slots:**
- *  - _default_ - Default slot for dialog content (typically ai-chat-interface)
+ *  - **title** - Slot for custom title text (default: "AI Assistant")
  */
-export const ForgeAiDialog: React.ForwardRefExoticComponent<ForgeAiDialogProps>;
+export const ForgeAiChatHeader: React.ForwardRefExoticComponent<ForgeAiChatHeaderProps>;

@@ -2,13 +2,21 @@
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
 @use '@tylertech/forge/sass/core/styles/elevation' as forge-elevation;
-@use '@tylertech/forge/dist/dialog/forge-dialog';
+@use '@tylertech/forge/dist/icon-button/forge-icon-button';
+
+.ai-icon-button > svg {
+  fill: #{forge-theme.variable(text-medium)};
+}
 
 :host {
   display: contents;
 }
 
-.ai-dialog-popover {
+forge-ai-chat-interface {
+  flex-grow: 1;
+}
+
+.ai-dialog {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;

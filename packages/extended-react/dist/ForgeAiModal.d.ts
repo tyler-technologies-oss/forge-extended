@@ -1,9 +1,12 @@
 import React from "react";
-import { ForgeAiDialog as ForgeAiDialogElement } from "@tylertech/forge-extended/ai-chat-widget/ai-dialog";
+import {
+  ForgeAiModal as ForgeAiModalElement,
+  CustomEvent,
+} from "@tylertech/forge-extended/ai-chat-widget/ai-modal";
 
-export type { ForgeAiDialogElement };
+export type { ForgeAiModalElement, CustomEvent };
 
-export interface ForgeAiDialogProps
+export interface ForgeAiModalProps
   extends Pick<
     React.AllHTMLAttributes<HTMLElement>,
     | "children"
@@ -19,13 +22,11 @@ export interface ForgeAiDialogProps
     | "onFocus"
     | "onBlur"
   > {
-  /** Indicates whether the dialog is open. */
+  /** Controls whether the modal is open or closed. */
   open?: boolean;
 
-  /** Controls the dialog's positioning and size behavior.
-When true, the dialog will have an expanded width and be centered on the screen.
-When false, the dialog will be positioned at the bottom-right corner with a fixed width. */
-  expanded?: boolean;
+  /** Controls whether the modal is displayed in fullscreen mode. */
+  fullscreen?: boolean;
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
@@ -48,11 +49,11 @@ When false, the dialog will be positioned at the bottom-right corner with a fixe
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
 
-  /** Gets the current fullscreen state (readonly) */
-  isFullscreen?: ForgeAiDialogElement["isFullscreen"];
+  /** undefined */
+  onForgeAiModalOpen?: (event: CustomEvent) => void;
 
-  /** Fired when the fullscreen state changes due to viewport size */
-  onForgeAiDialogFullscreenChange?: (event: CustomEvent) => void;
+  /** undefined */
+  onForgeAiModalClose?: (event: CustomEvent) => void;
 }
 
 /**
@@ -61,14 +62,11 @@ When false, the dialog will be positioned at the bottom-right corner with a fixe
  *
  *
  * ### **Events:**
- *  - **forge-ai-dialog-fullscreen-change** - Fired when the fullscreen state changes due to viewport size
+ *  - **forge-ai-modal-open**
+ * - **forge-ai-modal-close**
  *
  * ### **Methods:**
- *  - **show(): _void_** - Opens the dialog.
- * - **close(): _void_** - Closes the dialog.
- * - **toggle(): _void_** - Toggles the dialog open state.
- *
- * ### **Slots:**
- *  - _default_ - Default slot for dialog content (typically ai-chat-interface)
+ *  - **show(): _void_** - Shows the modal dialog.
+ * - **close(): _void_** - Closes the modal dialog.
  */
-export const ForgeAiDialog: React.ForwardRefExoticComponent<ForgeAiDialogProps>;
+export const ForgeAiModal: React.ForwardRefExoticComponent<ForgeAiModalProps>;

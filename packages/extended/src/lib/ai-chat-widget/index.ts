@@ -6,6 +6,7 @@ export * from './ai-button';
 export * from './ai-chat-interface';
 export * from './ai-response-message';
 export * from './ai-user-message';
+export * from './ai-floating-chat';
 
 export function defineAiChatWidgetComponent(): void {
   tryDefine(AiChatWidgetComponentTagName, AiChatWidgetComponent);

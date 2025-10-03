@@ -17,4 +17,6 @@ export * from './ai-chat-widget/ai-threads';
 export * from './ai-chat-widget/ai-dialog';
 export * from './ai-chat-widget/ai-empty-state';
 export * from './ai-chat-widget/ai-gradient-container';
+export * from './ai-chat-widget/ai-chat-header';
+export * from './ai-chat-widget/ai-floating-chat';
 // -- EXPORTS PLACEHOLDER (DO NOT REMOVE) --

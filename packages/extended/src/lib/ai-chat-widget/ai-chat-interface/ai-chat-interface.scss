@@ -1,8 +1,6 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/typography' as forge-typography;
 @use '@tylertech/forge/sass/core/styles/scrollbar' as forge-scrollbar;
-@use '@tylertech/forge/dist/toolbar/forge-toolbar';
-@use '@tylertech/forge/dist/icon-button/forge-icon-button';
 
 :host {
   display: block;
@@ -15,32 +13,6 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-}
-
-.ai-icon-button > svg {
-  fill: var(--forge-theme-text-medium);
-}
-
-.header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-inline: #{forge-spacing.variable(medium)};
-}
-
-.start {
-  display: flex;
-  align-items: center;
-  gap: #{forge-spacing.variable(medium)};
-
-  h1 {
-    @include forge-typography.style(heading3);
-  }
-}
-
-.end {
-  display: flex;
-  align-items: center;
 }
 
 .messages-container {

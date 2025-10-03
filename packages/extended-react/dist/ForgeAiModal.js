@@ -1,23 +1,17 @@
 import React, { forwardRef, useRef, useEffect } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-dialog";
-import { useEventListener, useProperties } from "./react-utils.js";
+import "@tylertech/forge-extended/ai-chat-widget/ai-modal";
+import { useEventListener } from "./react-utils.js";
 
-export const ForgeAiDialog = forwardRef((props, forwardedRef) => {
+export const ForgeAiModal = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
-  const { open, expanded, isFullscreen, ...filteredProps } = props;
+  const { open, fullscreen, ...filteredProps } = props;
 
   /** Event listeners - run once */
-  useEventListener(
-    ref,
-    "forge-ai-dialog-fullscreen-change",
-    props.onForgeAiDialogFullscreenChange,
-  );
-
-  /** Properties - run whenever a property has changed */
-  useProperties(ref, "isFullscreen", props.isFullscreen);
+  useEventListener(ref, "forge-ai-modal-open", props.onForgeAiModalOpen);
+  useEventListener(ref, "forge-ai-modal-close", props.onForgeAiModalClose);
 
   return React.createElement(
-    "forge-ai-dialog",
+    "forge-ai-modal",
     {
       ref: (node) => {
         ref.current = node;
@@ -34,7 +28,7 @@ export const ForgeAiDialog = forwardRef((props, forwardedRef) => {
       part: props.part,
       tabindex: props.tabIndex,
       open: props.open ? "" : undefined,
-      expanded: props.expanded ? "" : undefined,
+      fullscreen: props.fullscreen ? "" : undefined,
       style: { ...props.style },
     },
     props.children,

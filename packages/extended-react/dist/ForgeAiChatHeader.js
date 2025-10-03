@@ -1,23 +1,26 @@
 import React, { forwardRef, useRef, useEffect } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-dialog";
-import { useEventListener, useProperties } from "./react-utils.js";
+import "@tylertech/forge-extended/ai-chat-widget/ai-chat-header";
+import { useEventListener } from "./react-utils.js";
 
-export const ForgeAiDialog = forwardRef((props, forwardedRef) => {
+export const ForgeAiChatHeader = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
-  const { open, expanded, isFullscreen, ...filteredProps } = props;
+  const { showExpandButton, showMinimizeButton, expanded, ...filteredProps } =
+    props;
 
   /** Event listeners - run once */
   useEventListener(
     ref,
-    "forge-ai-dialog-fullscreen-change",
-    props.onForgeAiDialogFullscreenChange,
+    "forge-ai-chat-header-expand",
+    props.onForgeAiChatHeaderExpand,
+  );
+  useEventListener(
+    ref,
+    "forge-ai-chat-header-minimize",
+    props.onForgeAiChatHeaderMinimize,
   );
 
-  /** Properties - run whenever a property has changed */
-  useProperties(ref, "isFullscreen", props.isFullscreen);
-
   return React.createElement(
-    "forge-ai-dialog",
+    "forge-ai-chat-header",
     {
       ref: (node) => {
         ref.current = node;
@@ -33,7 +36,8 @@ export const ForgeAiDialog = forwardRef((props, forwardedRef) => {
       for: props.htmlFor,
       part: props.part,
       tabindex: props.tabIndex,
-      open: props.open ? "" : undefined,
+      "show-expand-button": props.showExpandButton ? "" : undefined,
+      "show-minimize-button": props.showMinimizeButton ? "" : undefined,
       expanded: props.expanded ? "" : undefined,
       style: { ...props.style },
     },

@@ -2,12 +2,18 @@ import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { Ref, createRef, ref } from 'lit/directives/ref.js';
+import type { AiModalComponent } from '../ai-modal';
+import '../ai-modal';
 
 import styles from './ai-dialog.scss?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
     'forge-ai-dialog': AiDialogComponent;
+  }
+
+  interface HTMLElementEventMap {
+    'forge-ai-dialog-fullscreen-change': CustomEvent<{ isFullscreen: boolean }>;
   }
 }
 
@@ -18,7 +24,9 @@ export const AiDialogComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-d
 /**
  * @tag forge-ai-dialog
  *
- * @slot - Default slot for dialog content
+ * @slot - Default slot for dialog content (typically ai-chat-interface)
+ *
+ * @fires forge-ai-dialog-fullscreen-change - Fired when the fullscreen state changes due to viewport size
  */
 @customElement(AiDialogComponentTagName)
 export class AiDialogComponent extends LitElement {
@@ -39,11 +47,18 @@ export class AiDialogComponent extends LitElement {
   public expanded = false;
 
   @state()
-  private _smallViewport = window.innerWidth <= VIEWPORT_WIDTH_THRESHOLD;
+  private _isFullscreen = window.innerWidth <= VIEWPORT_WIDTH_THRESHOLD;
+
+  /**
+   * Gets the current fullscreen state (readonly)
+   */
+  public get isFullscreen(): boolean {
+    return this._isFullscreen;
+  }
 
   #mediaQuery?: MediaQueryList;
   #popoverElementRef: Ref<HTMLDivElement> = createRef();
-  #dialogElementRef: Ref<HTMLDialogElement> = createRef();
+  #aiModalElementRef: Ref<AiModalComponent> = createRef();
   #escapeKeyAbortController?: AbortController;
 
   public override connectedCallback(): void {
@@ -60,40 +75,44 @@ export class AiDialogComponent extends LitElement {
   public override updated(changedProperties: Map<string | number | symbol, unknown>): void {
     super.updated(changedProperties);
 
-    if (changedProperties.has('open') || changedProperties.has('expanded') || changedProperties.has('_smallViewport')) {
+    if (changedProperties.has('open') || changedProperties.has('expanded') || changedProperties.has('_isFullscreen')) {
       this.#handleOpenStateChange();
     }
   }
 
-  readonly #popoverTemplate = html`
-    <div
-      ${ref(this.#popoverElementRef)}
-      role="dialog"
-      aria-modal="false"
-      aria-labelledby="dialog-title"
-      popover="manual"
-      class="ai-dialog-popover"
-      @toggle=${this.#handlePopoverToggle}>
-      <slot></slot>
-    </div>
-  `;
+  readonly #content = html`<slot></slot>`;
 
-  readonly #modalDialogTemplate = html`
-    <dialog
-      ${ref(this.#dialogElementRef)}
-      aria-labelledby="dialog-title"
-      class="forge-dialog"
-      @close=${this.#handleDialogClose}>
-      <slot></slot>
-    </dialog>
-  `;
+  get #popoverTemplate(): TemplateResult {
+    return html`
+      <dialog
+        ${ref(this.#popoverElementRef)}
+        aria-modal="false"
+        aria-labelledby="dialog-title"
+        popover="manual"
+        class="ai-dialog"
+        @toggle=${this.#handlePopoverToggle}>
+        ${this.#content}
+      </dialog>
+    `;
+  }
+
+  get #modalTemplate(): TemplateResult {
+    return html`
+      <forge-ai-modal
+        ${ref(this.#aiModalElementRef)}
+        ?fullscreen=${this._isFullscreen}
+        @forge-ai-modal-close=${this.#handleDialogClose}>
+        ${this.#content}
+      </forge-ai-modal>
+    `;
+  }
 
   public override render(): TemplateResult {
-    // Use dialog for small viewports OR when expanded, otherwise use popover
-    const useDialog = this._smallViewport || this.expanded;
+    // Use modal for small viewports OR when expanded, otherwise use popover
+    const useModal = this._isFullscreen || this.expanded;
     return when(
-      useDialog,
-      () => this.#modalDialogTemplate,
+      useModal,
+      () => this.#modalTemplate,
       () => this.#popoverTemplate
     );
   }
@@ -109,6 +128,9 @@ export class AiDialogComponent extends LitElement {
    * Closes the dialog.
    */
   public close(): void {
+    if (this.expanded) {
+      this.expanded = false;
+    }
     this.open = false;
   }
 
@@ -116,7 +138,11 @@ export class AiDialogComponent extends LitElement {
    * Toggles the dialog open state.
    */
   public toggle(): void {
-    this.open = !this.open;
+    if (this.open) {
+      this.close();
+    } else {
+      this.show();
+    }
   }
 
   #setupMediaQuery(): void {
@@ -130,12 +156,22 @@ export class AiDialogComponent extends LitElement {
   }
 
   #handleMediaChange = (e: MediaQueryList | MediaQueryListEvent): void => {
-    const previousViewport = this._smallViewport;
-    this._smallViewport = e.matches;
+    const previousFullscreen = this._isFullscreen;
+    this._isFullscreen = e.matches;
+
+    // Dispatch fullscreen change event
+    if (previousFullscreen !== this._isFullscreen) {
+      const event = new CustomEvent('forge-ai-dialog-fullscreen-change', {
+        bubbles: true,
+        composed: true,
+        detail: { isFullscreen: this._isFullscreen }
+      });
+      this.dispatchEvent(event);
+    }
 
     // If the viewport changed and we're open, we need to ensure proper template switching
-    const previousUseDialog = previousViewport || this.expanded;
-    const currentUseDialog = this._smallViewport || this.expanded;
+    const previousUseDialog = previousFullscreen || this.expanded;
+    const currentUseDialog = this._isFullscreen || this.expanded;
 
     if (previousUseDialog !== currentUseDialog && this.open) {
       // Just trigger a re-render and let the updated() method handle the state change
@@ -144,16 +180,16 @@ export class AiDialogComponent extends LitElement {
   };
 
   #handleOpenStateChange(): void {
-    const useDialog = this._smallViewport || this.expanded;
+    const useDialog = this._isFullscreen || this.expanded;
 
     if (useDialog) {
       // Use dialog element for small viewport OR expanded state
       this.#removeEscapeKeyListener();
-      const dialogElement = this.#dialogElementRef.value;
+      const dialogElement = this.#aiModalElementRef.value;
       if (dialogElement) {
         if (this.open) {
           if (!dialogElement.open) {
-            dialogElement.showModal();
+            dialogElement.show();
           }
         } else {
           if (dialogElement.open) {
@@ -191,7 +227,7 @@ export class AiDialogComponent extends LitElement {
 
   #handleDialogClose(): void {
     // Sync internal open state when dialog is closed externally
-    this.open = false;
+    this.close();
   }
 
   #addEscapeKeyListener(): void {

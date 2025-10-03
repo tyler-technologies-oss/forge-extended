@@ -1,9 +1,9 @@
 import React from "react";
-import { ForgeAiChatInterface as ForgeAiChatInterfaceElement } from "@tylertech/forge-extended/ai-chat-widget/ai-chat-interface";
+import { ForgeAiFloatingChat as ForgeAiFloatingChatElement } from "@tylertech/forge-extended/ai-chat-widget/ai-floating-chat";
 
-export type { ForgeAiChatInterfaceElement };
+export type { ForgeAiFloatingChatElement };
 
-export interface ForgeAiChatInterfaceProps
+export interface ForgeAiFloatingChatProps
   extends Pick<
     React.AllHTMLAttributes<HTMLElement>,
     | "children"
@@ -19,13 +19,12 @@ export interface ForgeAiChatInterfaceProps
     | "onFocus"
     | "onBlur"
   > {
-  /** Controls whether the expand button is visible in the header */
-  showExpandButton?: boolean;
+  /** Indicates whether the chat is open. */
+  open?: boolean;
 
-  /** Controls whether the minimize button is visible in the header */
-  showMinimizeButton?: boolean;
-
-  /** Indicates the current expanded state for displaying the appropriate expand/collapse icon */
+  /** Controls the chat's positioning and size behavior.
+When true, the chat will have an expanded width and be centered on the screen.
+When false, the chat will be positioned at the bottom-right corner with a fixed width. */
   expanded?: boolean;
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
@@ -48,6 +47,18 @@ export interface ForgeAiChatInterfaceProps
 
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
+
+  /** Fired when the chat is opened */
+  onForgeAiFloatingChatOpen?: (event: CustomEvent) => void;
+
+  /** Fired when the chat is closed */
+  onForgeAiFloatingChatClose?: (event: CustomEvent) => void;
+
+  /** Fired when the chat is expanded */
+  onForgeAiFloatingChatExpand?: (event: CustomEvent) => void;
+
+  /** Fired when the chat is collapsed */
+  onForgeAiFloatingChatCollapse?: (event: CustomEvent) => void;
 }
 
 /**
@@ -55,9 +66,22 @@ export interface ForgeAiChatInterfaceProps
  * ---
  *
  *
+ * ### **Events:**
+ *  - **forge-ai-floating-chat-open** - Fired when the chat is opened
+ * - **forge-ai-floating-chat-close** - Fired when the chat is closed
+ * - **forge-ai-floating-chat-expand** - Fired when the chat is expanded
+ * - **forge-ai-floating-chat-collapse** - Fired when the chat is collapsed
+ *
+ * ### **Methods:**
+ *  - **show(): _void_** - Opens the chat.
+ * - **close(): _void_** - Closes the chat.
+ * - **toggle(): _void_** - Toggles the chat open state.
+ * - **expand(): _void_** - Expands the chat to full width.
+ * - **collapse(): _void_** - Collapses the chat to normal width.
+ *
  * ### **Slots:**
- *  - _default_ - Default slot for messages
+ *  - _default_ - Default slot for messages (ai-user-message, ai-response-message components)
  * - **suggestions** - Slot for AI suggestions component
  * - **prompt** - Slot for custom AI prompt component. If not provided, a default forge-ai-prompt will be used.
  */
-export const ForgeAiChatInterface: React.ForwardRefExoticComponent<ForgeAiChatInterfaceProps>;
+export const ForgeAiFloatingChat: React.ForwardRefExoticComponent<ForgeAiFloatingChatProps>;

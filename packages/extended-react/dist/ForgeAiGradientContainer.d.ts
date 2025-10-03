@@ -1,9 +1,9 @@
 import React from "react";
-import { ForgeAiDialog as ForgeAiDialogElement } from "@tylertech/forge-extended/ai-chat-widget/ai-dialog";
+import { ForgeAiGradientContainer as ForgeAiGradientContainerElement } from "@tylertech/forge-extended/ai-chat-widget/ai-gradient-container";
 
-export type { ForgeAiDialogElement };
+export type { ForgeAiGradientContainerElement };
 
-export interface ForgeAiDialogProps
+export interface ForgeAiGradientContainerProps
   extends Pick<
     React.AllHTMLAttributes<HTMLElement>,
     | "children"
@@ -19,13 +19,8 @@ export interface ForgeAiDialogProps
     | "onFocus"
     | "onBlur"
   > {
-  /** Indicates whether the dialog is open. */
-  open?: boolean;
-
-  /** Controls the dialog's positioning and size behavior.
-When true, the dialog will have an expanded width and be centered on the screen.
-When false, the dialog will be positioned at the bottom-right corner with a fixed width. */
-  expanded?: boolean;
+  /** Gradient intensity variant */
+  variant?: ForgeAiGradientContainerElement["variant"];
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
@@ -47,28 +42,11 @@ When false, the dialog will be positioned at the bottom-right corner with a fixe
 
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
-
-  /** Gets the current fullscreen state (readonly) */
-  isFullscreen?: ForgeAiDialogElement["isFullscreen"];
-
-  /** Fired when the fullscreen state changes due to viewport size */
-  onForgeAiDialogFullscreenChange?: (event: CustomEvent) => void;
 }
 
 /**
  *
  * ---
  *
- *
- * ### **Events:**
- *  - **forge-ai-dialog-fullscreen-change** - Fired when the fullscreen state changes due to viewport size
- *
- * ### **Methods:**
- *  - **show(): _void_** - Opens the dialog.
- * - **close(): _void_** - Closes the dialog.
- * - **toggle(): _void_** - Toggles the dialog open state.
- *
- * ### **Slots:**
- *  - _default_ - Default slot for dialog content (typically ai-chat-interface)
  */
-export const ForgeAiDialog: React.ForwardRefExoticComponent<ForgeAiDialogProps>;
+export const ForgeAiGradientContainer: React.ForwardRefExoticComponent<ForgeAiGradientContainerProps>;

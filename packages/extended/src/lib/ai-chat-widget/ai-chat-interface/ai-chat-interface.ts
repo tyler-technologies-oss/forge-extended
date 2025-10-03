@@ -1,7 +1,7 @@
 import { LitElement, TemplateResult, html, unsafeCSS, nothing } from 'lit';
-import { customElement, queryAssignedNodes, state } from 'lit/decorators.js';
+import { customElement, property, queryAssignedNodes, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
-import '../ai-icon/ai-icon';
+import '../ai-chat-header/ai-chat-header';
 import '../ai-prompt/ai-prompt';
 import '../ai-empty-state/ai-empty-state';
 import '../ai-gradient-container/ai-gradient-container';
@@ -27,6 +27,24 @@ export const AiChatInterfaceComponentTagName: keyof HTMLElementTagNameMap = 'for
 export class AiChatInterfaceComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
+  /**
+   * Controls whether the expand button is visible in the header
+   */
+  @property({ type: Boolean, attribute: 'show-expand-button' })
+  public showExpandButton = false;
+
+  /**
+   * Controls whether the minimize button is visible in the header
+   */
+  @property({ type: Boolean, attribute: 'show-minimize-button' })
+  public showMinimizeButton = false;
+
+  /**
+   * Indicates the current expanded state for displaying the appropriate expand/collapse icon
+   */
+  @property({ type: Boolean })
+  public expanded = false;
+
   @queryAssignedNodes({ slot: 'suggestions', flatten: true })
   private _slottedSuggestionsNodes!: Node[];
 
@@ -39,39 +57,15 @@ export class AiChatInterfaceComponent extends LitElement {
   @state()
   private _hasMessages = false;
 
-  readonly #headerStart = html`
-    <div class="start">
-      <forge-ai-icon no-border></forge-ai-icon>
-      <h1>AI Assistant</h1>
-    </div>
-  `;
-
-  readonly #headerEnd = html`
-    <div class="end">
-      <button aria-label="More info" class="forge-icon-button forge-icon-button--large ai-icon-button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path fill="none" d="M0 0h24v24H0z" />
-          <path
-            d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8" />
-        </svg>
-      </button>
-      <button aria-label="Switch to full screen" class="forge-icon-button forge-icon-button--large ai-icon-button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path d="M5 5h5v2H7v3H5zm9 0h5v5h-2V7h-3zm3 9h2v5h-5v-2h3zm-7 3v2H5v-5h2v3z" />
-        </svg>
-      </button>
-      <button aria-label="Minimize chat window" class="forge-icon-button forge-icon-button--large ai-icon-button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path fill="none" d="M0 0h24v24H0z" />
-          <path d="M6 19h12v2H6z" />
-        </svg>
-      </button>
-    </div>
-  `;
-
-  readonly #header = html`
-    <div class="header forge-toolbar forge-toolbar--no-divider">${this.#headerStart} ${this.#headerEnd}</div>
-  `;
+  get #header(): TemplateResult {
+    return html`
+      <forge-ai-chat-header
+        ?show-expand-button=${this.showExpandButton}
+        ?show-minimize-button=${this.showMinimizeButton}
+        ?expanded=${this.expanded}>
+      </forge-ai-chat-header>
+    `;
+  }
 
   readonly #suggestionsSlot = html`<slot name="suggestions" @slotchange=${this.#handleSlotChange}></slot>`;
 

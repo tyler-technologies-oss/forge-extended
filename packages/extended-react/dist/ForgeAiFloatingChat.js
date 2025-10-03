@@ -1,23 +1,35 @@
 import React, { forwardRef, useRef, useEffect } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-dialog";
-import { useEventListener, useProperties } from "./react-utils.js";
+import "@tylertech/forge-extended/ai-chat-widget/ai-floating-chat";
+import { useEventListener } from "./react-utils.js";
 
-export const ForgeAiDialog = forwardRef((props, forwardedRef) => {
+export const ForgeAiFloatingChat = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
-  const { open, expanded, isFullscreen, ...filteredProps } = props;
+  const { open, expanded, ...filteredProps } = props;
 
   /** Event listeners - run once */
   useEventListener(
     ref,
-    "forge-ai-dialog-fullscreen-change",
-    props.onForgeAiDialogFullscreenChange,
+    "forge-ai-floating-chat-open",
+    props.onForgeAiFloatingChatOpen,
+  );
+  useEventListener(
+    ref,
+    "forge-ai-floating-chat-close",
+    props.onForgeAiFloatingChatClose,
+  );
+  useEventListener(
+    ref,
+    "forge-ai-floating-chat-expand",
+    props.onForgeAiFloatingChatExpand,
+  );
+  useEventListener(
+    ref,
+    "forge-ai-floating-chat-collapse",
+    props.onForgeAiFloatingChatCollapse,
   );
 
-  /** Properties - run whenever a property has changed */
-  useProperties(ref, "isFullscreen", props.isFullscreen);
-
   return React.createElement(
-    "forge-ai-dialog",
+    "forge-ai-floating-chat",
     {
       ref: (node) => {
         ref.current = node;

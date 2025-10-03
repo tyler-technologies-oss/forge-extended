@@ -54,6 +54,11 @@ export class AiDialogComponent {
     return this.nativeElement.expanded;
   }
 
+  /** Gets the current fullscreen state (readonly) */
+  public get isFullscreen(): AiDialogComponentCustomElement['isFullscreen'] {
+    return this.nativeElement.isFullscreen;
+  }
+
   /** Opens the dialog. */
   public show(
     ...args: Parameters<AiDialogComponentCustomElement['show']>

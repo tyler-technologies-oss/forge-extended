@@ -27,9 +27,26 @@ const meta = {
     expanded: false
   },
   render: args => {
+    const handleExpandClick = () => {
+      const dialogEl = document.querySelector('forge-ai-dialog') as any;
+      if (dialogEl) {
+        dialogEl.expanded = !dialogEl.expanded;
+      }
+    };
+
+    const handleMinimizeClick = () => {
+      const dialogEl = document.querySelector('forge-ai-dialog') as any;
+      dialogEl?.close();
+    };
+
     const dialog = html`
       <forge-ai-dialog ?open=${args.open} ?expanded=${args.expanded}>
-        <forge-ai-chat-interface>
+        <forge-ai-chat-interface
+          ?show-expand-button=${window.innerWidth > 768}
+          show-minimize-button
+          ?expanded=${args.expanded}
+          @forge-ai-chat-header-expand=${handleExpandClick}
+          @forge-ai-chat-header-minimize=${handleMinimizeClick}>
           <forge-ai-user-message>
             Hello! Can you help me understand how to use TypeScript generics?
           </forge-ai-user-message>
@@ -54,8 +71,9 @@ const meta = {
     return html`
       <div style="min-height: 300px;">
         <div>
-          <h2>AI Dialog Demo</h2>
+          <h2>AI Dialog Demo (Atomic Composition)</h2>
           <p>Click the FAB in the bottom right corner to open the AI dialog.</p>
+          <p>This demo shows manual composition of ai-dialog + ai-chat-interface components.</p>
         </div>
         ${fabButton} ${dialog}
       </div>
