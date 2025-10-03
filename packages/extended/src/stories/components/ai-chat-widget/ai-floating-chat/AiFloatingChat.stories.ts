@@ -5,6 +5,8 @@ import '$lib/ai-chat-widget/ai-floating-chat';
 import '$lib/ai-chat-widget/ai-user-message';
 import '$lib/ai-chat-widget/ai-response-message';
 import '$lib/ai-chat-widget/ai-fab-button';
+import '$lib/ai-chat-widget/ai-suggestions';
+import { Suggestion } from '$lib/ai-chat-widget/ai-suggestions';
 
 const component = 'forge-ai-floating-chat';
 
@@ -69,6 +71,13 @@ export const Demo: Story = {};
 
 export const WithSuggestions: Story = {
   render: args => {
+    const suggestions = [
+      { text: 'Can you show me an example?', value: 'example' },
+      { text: 'How do I use generics with interfaces?', value: 'interfaces' },
+      { text: 'What are the benefits of generics?', value: 'benefits' },
+      { text: 'How do I constrain generic types?', value: 'constraints' }
+    ] as Suggestion[];
+
     const chat = html`
       <forge-ai-floating-chat ?open=${args.open} ?expanded=${args.expanded}>
         <forge-ai-user-message>
@@ -79,15 +88,13 @@ export const WithSuggestions: Story = {
           can work with different types while maintaining type safety.
         </forge-ai-response-message>
 
-        <!-- Example of slotting suggestions - this would be an actual ai-suggestions component -->
-        <div slot="suggestions" style="padding: 16px; background: #f5f5f5; border-radius: 8px; margin: 8px;">
-          <strong>Suggested follow-ups:</strong>
-          <ul>
-            <li>Can you show me an example?</li>
-            <li>How do I use generics with interfaces?</li>
-            <li>What are the benefits of generics?</li>
-          </ul>
-        </div>
+        <forge-ai-suggestions
+          slot="suggestions"
+          .suggestions=${suggestions}
+          @forge-ai-suggestions-select=${(event: CustomEvent) => {
+            console.log('Selected suggestion:', event.detail);
+          }}>
+        </forge-ai-suggestions>
       </forge-ai-floating-chat>
     `;
 
