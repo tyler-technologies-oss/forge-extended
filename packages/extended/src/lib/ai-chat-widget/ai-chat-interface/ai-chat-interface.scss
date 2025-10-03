@@ -15,23 +15,14 @@
   display: flex;
   flex-direction: column;
   height: 100%;
-  // border: 2px solid transparent;
-  // border-radius: var(--forge-shape-large);
-  // border-image: linear-gradient(to top, var(--forge-theme-tertiary-container-high) 0%, var(--forge-theme-outline) 100%)
-  //   1;
 
-  border: 2px solid transparent;
+  border: var(--forge-shape-small) solid transparent;
   border-radius: var(--forge-shape-large);
   background-image:
     linear-gradient(var(--forge-theme-surface), var(--forge-theme-surface)),
-    /* Inner background */
-      linear-gradient(to top, var(--forge-theme-tertiary-container-high), var(--forge-theme-outline));
+    linear-gradient(to top, var(--forge-theme-tertiary-container-high), var(--forge-theme-outline));
   background-origin: border-box;
   background-clip: padding-box, border-box;
-
-  // TODO - Eric wants this this style, but it doesn't place ncie when this is embedded into a card
-  // border: 2px solid var(--forge-theme-outline);
-  // border-radius: var(--forge-shape-large);
 }
 
 .ai-icon-button > svg {
