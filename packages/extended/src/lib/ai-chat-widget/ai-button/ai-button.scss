@@ -5,15 +5,6 @@
 
 :host {
   display: inline-block;
-  @include mixins.ai-gradient-border(4px, 2px, false);
-}
-
-:host(:hover:not([disabled])) {
-  background-color: #{forge-theme.variable(primary-container-minimum)};
-}
-
-:host([disabled]) {
-  @include mixins.ai-gradient-border(4px, 2px, true);
 }
 
 .ai-button {

@@ -1,0 +1,50 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '../mixins' as mixins;
+
+:host {
+  display: block;
+  --forge-gradient-container-radius: var(--forge-shape-large);
+}
+
+.gradient-container {
+  // fixes border clipping issues in the threads view
+  --forge-drawer-background: transparent;
+
+  border: var(--forge-shape-small) solid transparent;
+  border-radius: var(--forge-gradient-container-radius);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+}
+
+:host(:state(low)) {
+  .gradient-container {
+    @include mixins.ai-gradient-container-border(
+      var(--forge-theme-surface),
+      var(--forge-theme-tertiary-container-low),
+      var(--forge-theme-outline),
+      false
+    );
+  }
+}
+
+:host(:state(medium)) {
+  .gradient-container {
+    @include mixins.ai-gradient-container-border(
+      var(--forge-theme-surface),
+      var(--forge-theme-tertiary-container),
+      var(--forge-theme-outline),
+      false
+    );
+  }
+}
+
+:host(:state(high)) {
+  .gradient-container {
+    @include mixins.ai-gradient-container-border(
+      var(--forge-theme-surface),
+      var(--forge-theme-tertiary),
+      var(--forge-theme-outline),
+      false
+    );
+  }
+}

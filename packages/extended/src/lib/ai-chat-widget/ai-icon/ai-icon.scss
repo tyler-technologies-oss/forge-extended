@@ -1,6 +1,5 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
-@use '../mixins' as mixins;
 
 :host {
   display: grid;
@@ -8,10 +7,6 @@
   height: 1em;
   width: 1em;
   font-size: 24px;
-}
-
-:host(:state(border)) {
-  @include mixins.ai-gradient-border(100%, 2px, false);
 }
 
 svg {
@@ -22,8 +17,6 @@ svg {
 
 :host(:state(outline)) {
   font-size: 36px;
-
-  @include mixins.ai-gradient-border(100%, 2px, false);
 
   svg {
     height: calc(1em / 2);

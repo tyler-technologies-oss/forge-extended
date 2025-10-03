@@ -3,6 +3,7 @@ import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { tylIconSparkles } from '@tylertech/tyler-icons';
 import '../ai-icon';
+import '../ai-gradient-container/ai-gradient-container';
 
 import styles from './ai-button.scss?inline';
 
@@ -31,10 +32,12 @@ export class AiButtonComponent extends LitElement {
 
   public override render(): TemplateResult {
     return html`
-      <button class="forge-button forge-button--outlined ai-button" .disabled=${this.disabled} variant="outlined">
-        <forge-ai-icon></forge-ai-icon>
-        <slot></slot>
-      </button>
+      <forge-ai-gradient-container variant="high">
+        <button class="forge-button forge-button--outlined ai-button" .disabled=${this.disabled} variant="outlined">
+          <forge-ai-icon></forge-ai-icon>
+          <slot></slot>
+        </button>
+      </forge-ai-gradient-container>
     `;
   }
 }

@@ -38,6 +38,16 @@ const meta = {
   }
 } satisfies Meta;
 
+export const WithGradientContainer: Story = {
+  render: () => {
+    return html`
+      <forge-ai-gradient-container>
+        <forge-ai-threads .threads=${sampleThreads}></forge-ai-threads>
+      </forge-ai-gradient-container>
+    `;
+  }
+};
+
 export default meta;
 
 type Story = StoryObj;

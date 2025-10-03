@@ -4,6 +4,7 @@ import { when } from 'lit/directives/when.js';
 import '../ai-icon/ai-icon';
 import '../ai-prompt/ai-prompt';
 import '../ai-empty-state/ai-empty-state';
+import '../ai-gradient-container/ai-gradient-container';
 
 import styles from './ai-chat-interface.scss?inline';
 
