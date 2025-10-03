@@ -1,4 +1,5 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/dist/button/forge-button';
 @use '@tylertech/forge/dist/card/forge-card';
 @use '@tylertech/forge/dist/field/forge-field';
@@ -29,11 +30,11 @@
 }
 
 .ai-icon-button > svg {
-  fill: var(--forge-theme-text-medium);
+  fill: #{forge-theme.variable(text-medium)};
 }
 
 ::slotted(forge-button[slot='additional-action']) {
-  --forge-button-color: var(--forge-theme-text-medium);
+  --forge-button-color: #{forge-theme.variable(text-medium)};
 }
 
 ::slotted(forge-button[slot='additional-action']:not(:last-child)) {

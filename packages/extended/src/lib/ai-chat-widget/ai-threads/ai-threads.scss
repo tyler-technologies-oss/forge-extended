@@ -24,17 +24,19 @@
 .forge-drawer {
   display: grid;
   grid-template-rows: auto 1fr;
-  --forge-drawer-width: max-content;
+  --forge-drawer-width: 304px;
   padding: #{forge-spacing.variable(medium)};
 }
 
 .thread-list-container {
   display: grid;
   grid-template-rows: 1fr auto;
+  margin-block-start: #{forge-spacing.variable(small)};
 }
 
 .forge-list-item {
   --forge-list-item-height: 56px;
+  --forge-list-item-margin: 0;
 
   button {
     @include forge-typography.style(body2);
@@ -46,11 +48,19 @@
   .list-item-second-line {
     @include forge-typography.style(body1);
     color: #{forge-theme.variable(text-medium)};
+
+    display: flex;
+    align-items: center;
+    gap: #{forge-spacing.variable(medium)};
   }
 }
 
+.forge-list--navlist {
+  margin-block: 0;
+}
+
 .forge-list-item--selected {
-  background-color: var(--forge-theme-tertiary-container-minimum);
+  background-color: #{forge-theme.variable(tertiary-container-minimum)};
   color: #{forge-theme.variable(text-high)};
 }
 

@@ -1,5 +1,6 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 
 :host {
   display: inline-block;
@@ -14,16 +15,16 @@
 .ai-message-container {
   padding-block: #{forge-spacing.variable(xsmall)};
   padding-inline: #{forge-spacing.variable(medium)};
-  background-color: var(--forge-theme-surface);
-  border: 1px solid var(--forge-theme-outline);
-  border-radius: var(--forge-shape-large);
+  background-color: #{forge-theme.variable(surface)};
+  border: 1px solid #{forge-theme.variable(outline)};
+  border-radius: #{forge-spacing.variable(xsmall)};
   border-start-end-radius: 0;
   margin-inline-start: #{forge-spacing.variable(xxlarge)};
-  margin-block-end: 24px;
+  margin-block-end: #{forge-spacing.variable(large)};
 }
 
 span {
   @include forge-typography.style(body1);
-  color: var(--forge-theme-on-surface);
+  color: #{forge-theme.variable(on-surface)};
   overflow-wrap: break-word;
 }

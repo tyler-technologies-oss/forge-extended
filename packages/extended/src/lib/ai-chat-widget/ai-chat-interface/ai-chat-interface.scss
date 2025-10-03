@@ -1,5 +1,6 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/sass/core/styles/scrollbar' as forge-scrollbar;
 
 :host {
@@ -9,7 +10,7 @@
 
 .ai-chat-interface {
   @include forge-typography.style(body1);
-  color: var(--forge-theme-on-surface);
+  color: #{forge-theme.variable(on-surface)};
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -20,8 +21,12 @@
 
   padding: #{forge-spacing.variable(medium)};
   overflow-y: auto;
-  background: linear-gradient(to top, var(--forge-theme-primary-container-minimum), var(--forge-theme-surface));
-  border-block-end: 1px solid var(--forge-theme-outline);
+  background: linear-gradient(
+    to top,
+    #{forge-theme.variable(primary-container-minimum)},
+    #{forge-theme.variable(surface)}
+  );
+  border-block-end: 1px solid #{forge-theme.variable(outline)};
   display: flex;
   flex-direction: column;
   flex-grow: 1;

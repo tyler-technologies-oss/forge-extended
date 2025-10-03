@@ -1,4 +1,5 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/dist/button/forge-button';
 
 :host {
@@ -29,7 +30,7 @@
 
 .suggestion {
   --forge-button-shape: 24px;
-  --forge-button-tonal-background: var(--forge-theme-tertiary-container);
-  --forge-button-tonal-color: --forge-theme-on-tertiary-container;
+  --forge-button-tonal-background: #{forge-theme.variable(tertiary-container)};
+  --forge-button-tonal-color: #{forge-theme.variable(on-tertiary-container)};
   --forge-button-height: 32px;
 }

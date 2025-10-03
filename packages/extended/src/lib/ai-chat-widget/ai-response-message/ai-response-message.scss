@@ -1,4 +1,5 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/sass/typography' as forge-typography;
 @use '@tylertech/forge/dist/icon-button/forge-icon-button';
 
@@ -45,6 +46,6 @@ forge-ai-actions-toolbar {
 
 span {
   @include forge-typography.style(body1);
-  color: var(--forge-theme-on-surface);
+  color: #{forge-theme.variable(on-surface)};
   overflow-wrap: break-word;
 }

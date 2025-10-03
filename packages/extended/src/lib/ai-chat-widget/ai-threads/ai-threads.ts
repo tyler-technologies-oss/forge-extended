@@ -17,6 +17,8 @@ declare global {
 export interface Thread {
   id: string;
   title: string;
+  time: string;
+  date: Date;
 }
 
 export interface AiThreadsSelectEventData {
@@ -96,7 +98,10 @@ export class AiThreadsComponent extends LitElement {
             <li class="forge-list-item ${isSelected ? 'forge-list-item--selected' : ''}">
               <button @click=${() => this._handleThreadSelect(thread)}>
                 <span>${thread.title}</span>
-                <span class="list-item-second-line">Test line two</span>
+                <div class="list-item-second-line">
+                  <span>${thread.date.toLocaleDateString()}</span>
+                  <span>${thread.time}</span>
+                </div>
               </button>
             </li>
           `;
