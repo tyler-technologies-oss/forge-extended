@@ -1,6 +1,5 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
-@use '../mixins' as mixins;
 
 :host {
   box-sizing: border-box;
