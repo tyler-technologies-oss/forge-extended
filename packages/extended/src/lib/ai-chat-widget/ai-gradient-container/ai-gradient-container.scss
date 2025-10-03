@@ -14,15 +14,11 @@
   background-clip: padding-box, border-box;
 }
 
-.gradient-container {
-}
-
 :host(:state(low)) {
   @include mixins.ai-gradient-container-border(
     var(--forge-theme-surface),
     var(--forge-theme-tertiary-container-low),
-    var(--forge-theme-outline),
-    false
+    var(--forge-theme-outline)
   );
 }
 
@@ -30,8 +26,7 @@
   @include mixins.ai-gradient-container-border(
     var(--forge-theme-surface),
     var(--forge-theme-tertiary-container),
-    var(--forge-theme-outline),
-    false
+    var(--forge-theme-outline)
   );
 }
 
@@ -39,7 +34,14 @@
   @include mixins.ai-gradient-container-border(
     var(--forge-theme-surface),
     var(--forge-theme-tertiary),
-    var(--forge-theme-outline),
-    false
+    var(--forge-theme-outline)
+  );
+}
+
+:host(:state(disabled)) {
+  @include mixins.ai-gradient-container-border(
+    var(--forge-theme-surface),
+    var(--forge-theme-text-low),
+    var(--forge-theme-text-low)
   );
 }

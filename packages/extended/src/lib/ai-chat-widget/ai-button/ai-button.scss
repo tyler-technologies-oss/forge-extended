@@ -18,3 +18,9 @@
 forge-ai-icon {
   color: inherit;
 }
+
+:host(:state(disabled)) {
+  forge-ai-icon {
+    --forge-ai-icon-fill-color: var(--forge-theme-text-low);
+  }
+}

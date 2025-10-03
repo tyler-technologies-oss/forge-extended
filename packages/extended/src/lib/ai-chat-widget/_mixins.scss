@@ -4,8 +4,7 @@
 @mixin ai-gradient-container-border(
   $surface-color: var(--forge-theme-surface),
   $bottom-color: var(--forge-theme-tertiary-container-high),
-  $top-color: var(--forge-theme-outline),
-  $disabled: false
+  $top-color: var(--forge-theme-outline)
 ) {
   background-image: linear-gradient($surface-color, $surface-color), linear-gradient(to top, $bottom-color, $top-color);
 }

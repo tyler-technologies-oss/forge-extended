@@ -10,7 +10,7 @@ declare global {
   }
 }
 
-export type AiGradientContainerVariant = 'low' | 'medium' | 'high';
+export type AiGradientContainerVariant = 'low' | 'medium' | 'high' | 'disabled';
 
 export const AiGradientContainerComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-gradient-container';
 
@@ -47,6 +47,7 @@ export class AiGradientContainerComponent extends LitElement {
     toggleState(this.#internals, 'low', this.variant === 'low');
     toggleState(this.#internals, 'medium', this.variant === 'medium');
     toggleState(this.#internals, 'high', this.variant === 'high');
+    toggleState(this.#internals, 'disabled', this.variant === 'disabled');
   }
 
   public override render(): TemplateResult {

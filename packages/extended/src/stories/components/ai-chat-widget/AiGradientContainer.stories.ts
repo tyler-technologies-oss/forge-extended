@@ -12,7 +12,7 @@ const meta = {
   argTypes: {
     variant: {
       control: 'select',
-      options: ['low', 'medium', 'high'] as AiGradientContainerVariant[],
+      options: ['low', 'medium', 'high', 'disabled'] as AiGradientContainerVariant[],
       description: 'Gradient intensity variant'
     }
   },
