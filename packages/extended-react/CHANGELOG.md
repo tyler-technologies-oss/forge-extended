@@ -1,5 +1,20 @@
 # @tylertech/forge-extended-react
 
+## 1.2.0
+
+### Minor Changes
+
+- edd5101: Updated user profile component to allow passing of image url to avatars
+- cf198b7: Built the newly designed App Launcher component
+
+### Patch Changes
+
+- Updated dependencies [17d6833]
+- Updated dependencies [edd5101]
+- Updated dependencies [b1ba977]
+- Updated dependencies [cf198b7]
+  - @tylertech/forge-extended@1.2.0
+
 ## 1.1.0
 
 ### Minor Changes

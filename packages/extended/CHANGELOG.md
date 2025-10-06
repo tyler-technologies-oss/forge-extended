@@ -1,5 +1,14 @@
 # @tylertech/forge-extended
 
+## 1.2.0
+
+### Minor Changes
+
+- 17d6833: Add new multi-select-header component with customizable selection display and action buttons
+- edd5101: Updated user profile component to allow passing of image url to avatars
+- b1ba977: added open state to user-profile
+- cf198b7: Built the newly designed App Launcher component
+
 ## 1.1.0
 
 ### Minor Changes
