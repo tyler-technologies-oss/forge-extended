@@ -1,6 +1,5 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
-@use '@tylertech/forge/dist/button/forge-button';
 @use '@tylertech/forge/dist/card/forge-card';
 @use '@tylertech/forge/dist/field/forge-field';
 @use '@tylertech/forge/dist/divider/forge-divider';
@@ -29,16 +28,8 @@
   }
 }
 
-.ai-icon-button > svg {
-  fill: #{forge-theme.variable(text-medium)};
-}
-
-::slotted(forge-button[slot='additional-action']) {
-  --forge-button-color: #{forge-theme.variable(text-medium)};
-}
-
-::slotted(forge-button[slot='additional-action']:not(:last-child)) {
-  margin-inline-end: #{forge-spacing.variable(medium)};
+::slotted([slot='additional-action']:not(:last-child)) {
+  margin-inline-end: #{forge-spacing.variable(small)};
 }
 
 :host(:state(inline)) {

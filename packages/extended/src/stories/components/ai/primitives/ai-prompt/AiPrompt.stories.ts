@@ -3,7 +3,14 @@ import { html } from 'lit';
 import { action } from 'storybook/actions';
 
 import '$lib/ai/ai-prompt';
+import '$lib/ai/ai-prompt/prompt-button';
 import { AiPromptVariant } from '$lib/ai/ai-prompt';
+import { defineIconComponent, IconRegistry } from '@tylertech/forge';
+import { tylIconChevronDown, tylIconWebAlt } from '@tylertech/tyler-icons';
+
+defineIconComponent();
+
+IconRegistry.define([tylIconChevronDown, tylIconWebAlt]);
 
 const component = 'forge-ai-prompt';
 
@@ -36,8 +43,14 @@ const meta = {
       <forge-ai-prompt variant=${args.variant} placeholder=${args.placeholder} @forge-ai-prompt-send=${onSend}>
         ${args.showAdditionalAction
           ? html`
-              <forge-button slot="additional-action" type="button"> Optional Button 1 </forge-button>
-              <forge-button slot="additional-action" type="button"> Optional Button 2 </forge-button>
+              <forge-prompt-button slot="additional-action">
+                <forge-icon name="web_alt" slot="leading"></forge-icon>
+                Web search
+              </forge-prompt-button>
+              <forge-prompt-button slot="additional-action">
+                GPT-4
+                <forge-icon name="chevron_down" slot="trailing"></forge-icon>
+              </forge-prompt-button>
             `
           : ''}
       </forge-ai-prompt>
