@@ -4,6 +4,192 @@
   "modules": [
     {
       "kind": "javascript-module",
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AppLauncherComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-app-launcher'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AppLauncherComponent",
+          "slots": [
+            {
+              "description": "Title text for the related apps section",
+              "name": "related-apps-title"
+            },
+            {
+              "description": "Title text for the all apps view",
+              "name": "all-apps-title"
+            },
+            {
+              "description": "Text for the button that switches to all apps view",
+              "name": "view-all-apps-button-text"
+            },
+            {
+              "description": "Title text for the custom links section",
+              "name": "app-launcher-links-title"
+            },
+            {
+              "description": "Individual custom link items using forge-app-launcher-link",
+              "name": "app-launcher-link"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the dialog or popover is open.",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "relatedApps",
+              "type": {
+                "text": "AppLauncherOption[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "description": "An array of related apps for the related apps view."
+            },
+            {
+              "kind": "field",
+              "name": "allApps",
+              "type": {
+                "text": "AppLauncherOption[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "description": "An array of all available apps for the all apps view."
+            },
+            {
+              "kind": "field",
+              "name": "launcherAriaLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Open app launcher'",
+              "description": "ARIA label for the app launcher trigger button",
+              "attribute": "launcher-aria-label"
+            },
+            {
+              "kind": "field",
+              "name": "backAriaLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Go back'",
+              "description": "ARIA label for the back button",
+              "attribute": "back-aria-label"
+            },
+            {
+              "kind": "field",
+              "name": "closeAriaLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Close app launcher'",
+              "description": "ARIA label for the close button",
+              "attribute": "close-aria-label"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the dialog or popover is open.",
+              "fieldName": "open"
+            },
+            {
+              "name": "launcher-aria-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Open app launcher'",
+              "description": "ARIA label for the app launcher trigger button",
+              "fieldName": "launcherAriaLabel"
+            },
+            {
+              "name": "back-aria-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Go back'",
+              "description": "ARIA label for the back button",
+              "fieldName": "backAriaLabel"
+            },
+            {
+              "name": "close-aria-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Close app launcher'",
+              "description": "ARIA label for the close button",
+              "fieldName": "closeAriaLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-app-launcher",
+          "customElement": true,
+          "states": [
+            {
+              "name": "small",
+              "description": "The component is displayed in mobile/small screen mode (dialog)"
+            },
+            {
+              "name": "large",
+              "description": "The component is displayed in desktop/large screen mode (popover)"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLauncherComponentTagName",
+          "declaration": {
+            "name": "AppLauncherComponentTagName",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLauncherComponent",
+          "declaration": {
+            "name": "AppLauncherComponent",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLauncherComponent",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "declarations": [
         {
@@ -302,7 +488,7 @@
               },
               "privacy": "public",
               "default": "'spinner'",
-              "description": "The variant of the busy indicator.\r\n- `spinner` (default): displays a spinner.\r\n- `progress`: displays a progress bar.\r\n- `message-only`: No progress indicator is displayed.",
+              "description": "The variant of the busy indicator.\n- `spinner` (default): displays a spinner.\n- `progress`: displays a progress bar.\n- `message-only`: No progress indicator is displayed.",
               "attribute": "variant"
             },
             {
@@ -434,7 +620,7 @@
                 "text": "BusyIndicatorVariant"
               },
               "default": "'spinner'",
-              "description": "The variant of the busy indicator.\r\n- `spinner` (default): displays a spinner.\r\n- `progress`: displays a progress bar.\r\n- `message-only`: No progress indicator is displayed.",
+              "description": "The variant of the busy indicator.\n- `spinner` (default): displays a spinner.\n- `progress`: displays a progress bar.\n- `message-only`: No progress indicator is displayed.",
               "fieldName": "variant"
             },
             {
@@ -504,6 +690,119 @@
           "declaration": {
             "name": "BusyIndicatorComponent",
             "module": "src/lib/busy-indicator/busy-indicator.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "MultiSelectHeaderComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-multi-select-header'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MultiSelectHeaderComponent",
+          "slots": [
+            {
+              "description": "Text content for the select-all button",
+              "name": "select-all-button-text"
+            },
+            {
+              "description": "Action buttons (maps to the toolbar end slot)",
+              "name": "actions"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "attribute": "text"
+            },
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Hides the bottom border",
+              "attribute": "no-border"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the select-all button is clicked",
+              "name": "forge-multi-select-header-select-all"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "fieldName": "text"
+            },
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Hides the bottom border",
+              "fieldName": "noBorder"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-multi-select-header",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MultiSelectHeaderComponentTagName",
+          "declaration": {
+            "name": "MultiSelectHeaderComponentTagName",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "MultiSelectHeaderComponent",
+          "declaration": {
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         }
       ]
@@ -836,119 +1135,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "MultiSelectHeaderComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-multi-select-header'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MultiSelectHeaderComponent",
-          "slots": [
-            {
-              "description": "Text content for the select-all button",
-              "name": "select-all-button-text"
-            },
-            {
-              "description": "Action buttons (maps to the toolbar end slot)",
-              "name": "actions"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "attribute": "text"
-            },
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "true",
-              "description": "Hides the bottom border",
-              "attribute": "no-border"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Fired when the select-all button is clicked",
-              "name": "forge-multi-select-header-select-all"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "fieldName": "text"
-            },
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Hides the bottom border",
-              "fieldName": "noBorder"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-multi-select-header",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponentTagName",
-          "declaration": {
-            "name": "MultiSelectHeaderComponentTagName",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponent",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/user-profile/user-profile.ts",
       "declarations": [
         {
@@ -1247,6 +1433,63 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AppLauncherLinkComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-app-launcher-link'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AppLauncherLinkComponent",
+          "slots": [
+            {
+              "description": "The `<a>` element for the link.",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-app-launcher-link",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLauncherLinkComponentTagName",
+          "declaration": {
+            "name": "AppLauncherLinkComponentTagName",
+            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLauncherLinkComponent",
+          "declaration": {
+            "name": "AppLauncherLinkComponent",
+            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLauncherLinkComponent",
+            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
@@ -1307,8 +1550,20 @@
       ]
     }
   ],
-  "branchName": "ECSS-10379",
+  "branchName": "app-launcher-rewrite",
   "forgeTypes": {
+    "AppLauncherOption": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 42
+    },
+    "AppView": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 49
+    },
+    "AppLauncherComponent": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 66
+    },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 28
@@ -1341,6 +1596,10 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 39
     },
+    "MultiSelectHeaderComponent": {
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "lineNumber": 28
+    },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
@@ -1357,10 +1616,6 @@
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 48
     },
-    "MultiSelectHeaderComponent": {
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "lineNumber": 28
-    },
     "UserProfileComponent": {
       "path": "src/lib/user-profile/user-profile.ts",
       "lineNumber": 46
@@ -1376,6 +1631,14 @@
     "ThemeToggleComponent": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 41
+    },
+    "AppLauncherLink": {
+      "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
+      "lineNumber": 16
+    },
+    "AppLauncherLinkComponent": {
+      "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
+      "lineNumber": 26
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",

@@ -140,8 +140,9 @@ IconRegistry.define([tylIconName1, tylIconName2]);
 ```
 
 This pattern must be followed in:
+
 - Core web components
-- Angular demo components 
+- Angular demo components
 - React demo components
 - Any component using Forge icons
 
@@ -222,6 +223,11 @@ src/lib/[component-name]/
 - Import location for ifDefined is import { ifDefined } from 'lit/directives/if-defined.js';
 - No need to add a import './' line to the test files
 - Always update the MDX storybook docs when new features are added to a component, things like events, slots, properties, etc
+- To run component tests, the command is pnpm run test:extended
+- Never use npm in this repo, ALWAYS use pnpm
+- When using ANY forge web component in a Lit component, always make sure it has it's define function imported and called. For example: definePopoverComponent();
+- When using the @property decorator in lit for complex properties like arrays, always make sure to pass attribute: false into the options object it to make sure the React wrappers generate correctly
+- In SCSS files, never modify a Forge CSS custom property directly, instead, import the components SCSS and use the provide-theme mixin to modify those variables. There's lots of examples of this in the app-launcher.scssd file
 
 ### Conditional Content Pattern
 
