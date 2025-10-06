@@ -1,4 +1,4 @@
-import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, TemplateResult, html, nothing, unsafeCSS, PropertyValues } from 'lit';
 import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { tylIconLogout } from '@tylertech/tyler-icons';
@@ -94,10 +94,9 @@ export class UserProfileComponent extends LitElement {
   constructor() {
     super();
     this.#internals = this.attachInternals();
-    toggleState(this.#internals, 'open', this.open);
   }
 
-  public override updated(changedProperties: Map<string, any>): void {
+  public override updated(changedProperties: PropertyValues<this>): void {
     super.updated(changedProperties);
 
     if (changedProperties.has('open')) {
