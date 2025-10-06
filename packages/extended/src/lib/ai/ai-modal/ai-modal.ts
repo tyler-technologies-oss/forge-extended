@@ -1,11 +1,29 @@
 import { html, LitElement, PropertyValues, TemplateResult, unsafeCSS } from 'lit';
-import { customElement, property, query } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 
 import styles from './ai-modal.scss?inline';
 
+const FULLSCREEN_WIDTH_THRESHOLD = 768;
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'forge-ai-modal': AiModalComponent;
+  }
+
+  interface HTMLElementEventMap {
+    'forge-ai-modal-open': CustomEvent<void>;
+    'forge-ai-modal-close': CustomEvent<void>;
+    'forge-ai-modal-fullscreen-change': CustomEvent<{ isFullscreen: boolean }>;
+  }
+}
+
 /**
  * @tag forge-ai-modal
+ *
+ * @fires forge-ai-modal-open - Fired when the modal is opened
+ * @fires forge-ai-modal-close - Fired when the modal is closed
+ * @fires forge-ai-modal-fullscreen-change - Fired when the fullscreen state changes
  */
 @customElement('forge-ai-modal')
 export class AiModalComponent extends LitElement {
@@ -17,19 +35,26 @@ export class AiModalComponent extends LitElement {
   /**
    * Controls whether the modal is open or closed.
    */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public open = false;
 
   /**
    * Controls whether the modal is displayed in fullscreen mode.
+   * When not explicitly set, this will be automatically determined based on viewport size.
    */
-  @property({ type: Boolean, reflect: true })
-  public fullscreen = false;
+  @property({ type: Boolean })
+  public fullscreen?: boolean;
+
+  @state()
+  private _autoFullscreen = window.innerWidth <= FULLSCREEN_WIDTH_THRESHOLD;
+
+  #mediaQuery?: MediaQueryList;
 
   public render(): TemplateResult {
+    const isFullscreen = this.fullscreen ?? this._autoFullscreen;
     const classes = {
       'forge-dialog': true,
-      'forge-dialog--fullscreen': this.fullscreen
+      'forge-dialog--fullscreen': isFullscreen
     };
     return html`
       <dialog
@@ -42,6 +67,16 @@ export class AiModalComponent extends LitElement {
     `;
   }
 
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.#setupMediaQuery();
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.#cleanupMediaQuery();
+  }
+
   public override updated(changedProperties: PropertyValues<this>): void {
     if (changedProperties.has('open')) {
       if (this.open) {
@@ -49,7 +84,9 @@ export class AiModalComponent extends LitElement {
         this.dispatchEvent(new CustomEvent('forge-ai-modal-open', { bubbles: true, composed: true }));
       } else {
         this._dialog?.close();
-        this.dispatchEvent(new CustomEvent('forge-ai-modal-close', { bubbles: true, composed: true }));
+        window.setTimeout(() => {
+          this.dispatchEvent(new CustomEvent('forge-ai-modal-close', { bubbles: true, composed: true }));
+        }, 100); // Delay to allow dialog close animation to complete
       }
     }
   }
@@ -78,4 +115,29 @@ export class AiModalComponent extends LitElement {
   public close(): void {
     this.open = false;
   }
+
+  #setupMediaQuery(): void {
+    this.#mediaQuery = window.matchMedia(`(max-width: ${FULLSCREEN_WIDTH_THRESHOLD}px)`);
+    this.#mediaQuery.addEventListener('change', this.#handleMediaChange);
+    this.#handleMediaChange(this.#mediaQuery);
+  }
+
+  #cleanupMediaQuery(): void {
+    this.#mediaQuery?.removeEventListener('change', this.#handleMediaChange);
+  }
+
+  #handleMediaChange = (e: MediaQueryList | MediaQueryListEvent): void => {
+    const previousFullscreen = this._autoFullscreen;
+    this._autoFullscreen = e.matches;
+
+    // Only dispatch event if the effective fullscreen state changed and we don't have an explicit override
+    if (this.fullscreen === undefined && previousFullscreen !== this._autoFullscreen) {
+      const event = new CustomEvent('forge-ai-modal-fullscreen-change', {
+        bubbles: true,
+        composed: true,
+        detail: { isFullscreen: this._autoFullscreen }
+      });
+      this.dispatchEvent(event);
+    }
+  };
 }

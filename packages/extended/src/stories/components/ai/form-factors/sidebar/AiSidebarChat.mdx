@@ -28,65 +28,6 @@ Use the AI Sidebar Chat component when you want:
 
 For more complex compositions or custom containers, consider using the atomic `ai-sidebar` and `ai-chat-interface` components directly.
 
-## Basic Usage
-
-<Canvas>
-  <div style={{ position: 'relative', height: '400px', overflow: 'hidden' }}>
-    <forge-ai-sidebar-chat>
-      <forge-ai-user-message>Hello! Can you help me understand how to use TypeScript generics?</forge-ai-user-message>
-      <forge-ai-response-message>
-        I'd be happy to help you understand TypeScript generics! Generics allow you to create reusable components that
-        can work with different types while maintaining type safety.
-      </forge-ai-response-message>
-    </forge-ai-sidebar-chat>
-  </div>
-</Canvas>
-
 ## API
 
-### Properties
-
 <CustomArgTypes />
-
-### Methods
-
-- `show()`: Opens the sidebar chat
-- `close()`: Closes the sidebar chat
-- `toggle()`: Toggles the sidebar chat open/closed state
-
-### Events
-
-- `forge-ai-sidebar-chat-open`: Fired when the sidebar chat is opened
-- `forge-ai-sidebar-chat-close`: Fired when the sidebar chat is closed
-
-### Slots
-
-- **Default slot**: For messages (ai-user-message, ai-response-message components)
-- **`suggestions`**: For AI suggestions component
-- **`prompt`**: For custom AI prompt component (defaults to forge-ai-prompt if not provided)
-
-## Positioning
-
-The sidebar chat supports two positions:
-
-- **`right`** (default): Sidebar slides in from the right edge
-- **`left`**: Sidebar slides in from the left edge
-
-## Built-in Features
-
-### Minimize Button
-
-The component automatically includes a minimize button in the chat header that closes the sidebar when clicked.
-
-### Event Synchronization
-
-The component automatically synchronizes events between the underlying sidebar container and the parent component, ensuring consistent state management.
-
-## Comparison with Atomic Components
-
-| Approach                           | Best For            | Pros                                       | Cons                                 |
-| ---------------------------------- | ------------------- | ------------------------------------------ | ------------------------------------ |
-| **ai-sidebar-chat**                | Simple sidebar chat | Easy to use, built-in wiring, "just works" | Less flexible, opinionated structure |
-| **ai-sidebar + ai-chat-interface** | Custom compositions | Maximum flexibility, reusable parts        | More setup, manual event wiring      |
-
-Both approaches are valid - choose based on your specific needs and complexity requirements.

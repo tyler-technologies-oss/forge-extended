@@ -100,10 +100,7 @@ export class AiDialogComponent extends LitElement {
 
   get #modalTemplate(): TemplateResult {
     return html`
-      <forge-ai-modal
-        ${ref(this.#aiModalElementRef)}
-        ?fullscreen=${this._isFullscreen}
-        @forge-ai-modal-close=${this.#handleDialogClose}>
+      <forge-ai-modal ${ref(this.#aiModalElementRef)} @forge-ai-modal-close=${this.#handleDialogClose}>
         ${this.#content}
       </forge-ai-modal>
     `;

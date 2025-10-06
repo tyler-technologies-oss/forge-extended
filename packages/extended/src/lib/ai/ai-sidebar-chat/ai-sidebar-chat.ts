@@ -65,8 +65,8 @@ export class AiSidebarChatComponent extends LitElement {
   get #chatInterface(): TemplateResult {
     return html`
       <forge-ai-chat-interface
-        ?show-expand-button=${!this.expanded}
-        show-minimize-button
+        show-expand-button
+        ?show-minimize-button=${!this.expanded}
         minimize-icon=${this.expanded ? 'default' : 'panel'}
         ?expanded=${this.expanded}
         @forge-ai-chat-header-expand=${this.#handleHeaderExpand}
@@ -86,7 +86,6 @@ export class AiSidebarChatComponent extends LitElement {
           <forge-ai-modal
             ${ref(this.#modalRef)}
             ?open=${this.open && this.expanded}
-            fullscreen
             @forge-ai-modal-close=${this.#handleModalClose}>
             ${this.#chatInterface}
           </forge-ai-modal>
@@ -179,8 +178,11 @@ export class AiSidebarChatComponent extends LitElement {
   }
 
   #handleModalClose(): void {
-    // When modal closes, only collapse the expanded state, don't close the entire chat
-    this.collapse();
+    // When modal closes externally (Escape key, backdrop click, etc.),
+    // collapse the expanded state and return to sidebar mode
+    if (this.expanded) {
+      this.collapse();
+    }
   }
 
   #dispatchEvent(type: keyof HTMLElementEventMap): void {
