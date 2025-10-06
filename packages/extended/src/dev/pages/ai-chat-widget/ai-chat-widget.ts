@@ -1,5 +1,5 @@
 import '$dev/shared';
-import '$lib/ai-chat-widget';
+import '$lib/ai/ai-chat-widget';
 import './ai-chat-widget.scss';
 
 // Simple demo functionality

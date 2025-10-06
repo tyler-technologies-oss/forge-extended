@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeAiChatHeader as ForgeAiChatHeaderElement } from "@tylertech/forge-extended/ai-chat-widget/ai-chat-header";
+import { ForgeAiChatHeader as ForgeAiChatHeaderElement } from "@tylertech/forge-extended/ai/ai-chat-header";
 
 export type { ForgeAiChatHeaderElement };
 
@@ -27,6 +27,9 @@ export interface ForgeAiChatHeaderProps
 
   /** Indicates the current expanded state for displaying the appropriate expand/collapse icon */
   expanded?: boolean;
+
+  /** Controls which minimize icon to display */
+  minimizeIcon?: ForgeAiChatHeaderElement["minimizeIcon"];
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;

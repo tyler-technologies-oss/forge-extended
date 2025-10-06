@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeAiActionsToolbar as ForgeAiActionsToolbarElement } from "@tylertech/forge-extended/ai-chat-widget/ai-actions-toolbar";
+import { ForgeAiActionsToolbar as ForgeAiActionsToolbarElement } from "@tylertech/forge-extended/ai/ai-actions-toolbar";
 
 export type { ForgeAiActionsToolbarElement };
 

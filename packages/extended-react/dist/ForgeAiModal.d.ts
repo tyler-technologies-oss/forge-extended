@@ -2,7 +2,7 @@ import React from "react";
 import {
   ForgeAiModal as ForgeAiModalElement,
   CustomEvent,
-} from "@tylertech/forge-extended/ai-chat-widget/ai-modal";
+} from "@tylertech/forge-extended/ai/ai-modal";
 
 export type { ForgeAiModalElement, CustomEvent };
 

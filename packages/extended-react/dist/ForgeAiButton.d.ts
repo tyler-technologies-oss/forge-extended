@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeAiButton as ForgeAiButtonElement } from "@tylertech/forge-extended/ai-chat-widget/ai-button";
+import { ForgeAiButton as ForgeAiButtonElement } from "@tylertech/forge-extended/ai/ai-button";
 
 export type { ForgeAiButtonElement };
 

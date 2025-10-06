@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeAiThreads as ForgeAiThreadsElement } from "@tylertech/forge-extended/ai-chat-widget/ai-threads";
+import { ForgeAiThreads as ForgeAiThreadsElement } from "@tylertech/forge-extended/ai/ai-threads";
 
 export type { ForgeAiThreadsElement };
 

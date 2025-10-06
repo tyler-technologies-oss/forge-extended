@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-user-message";
+import "@tylertech/forge-extended/ai/ai-user-message";
 
 export const ForgeAiUserMessage = forwardRef((props, forwardedRef) => {
   return React.createElement(

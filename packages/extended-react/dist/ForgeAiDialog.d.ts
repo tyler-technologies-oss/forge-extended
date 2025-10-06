@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeAiDialog as ForgeAiDialogElement } from "@tylertech/forge-extended/ai-chat-widget/ai-dialog";
+import { ForgeAiDialog as ForgeAiDialogElement } from "@tylertech/forge-extended/ai/ai-dialog";
 
 export type { ForgeAiDialogElement };
 

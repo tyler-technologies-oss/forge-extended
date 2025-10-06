@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-icon";
+import "@tylertech/forge-extended/ai/ai-icon";
 
 export const ForgeAiIcon = forwardRef((props, forwardedRef) => {
   const { outline, ...filteredProps } = props;

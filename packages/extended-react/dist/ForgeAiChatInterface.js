@@ -1,14 +1,20 @@
 import React, { forwardRef } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-chat-interface";
+import "@tylertech/forge-extended/ai/ai-chat-interface";
 
 export const ForgeAiChatInterface = forwardRef((props, forwardedRef) => {
-  const { showExpandButton, showMinimizeButton, expanded, ...filteredProps } =
-    props;
+  const {
+    showExpandButton,
+    showMinimizeButton,
+    expanded,
+    minimizeIcon,
+    ...filteredProps
+  } = props;
 
   return React.createElement(
     "forge-ai-chat-interface",
     {
       ...filteredProps,
+      "minimize-icon": props.minimizeIcon || props["minimize-icon"],
       class: props.className,
       exportparts: props.exportparts,
       for: props.htmlFor,

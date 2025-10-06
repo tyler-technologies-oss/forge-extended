@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeAiSuggestions as ForgeAiSuggestionsElement } from "@tylertech/forge-extended/ai-chat-widget/ai-suggestions";
+import { ForgeAiSuggestions as ForgeAiSuggestionsElement } from "@tylertech/forge-extended/ai/ai-suggestions";
 
 export type { ForgeAiSuggestionsElement };
 
@@ -21,6 +21,9 @@ export interface ForgeAiSuggestionsProps
   > {
   /** Array of suggestion objects to display */
   suggestions?: ForgeAiSuggestionsElement["suggestions"];
+
+  /** Display variant for suggestions layout */
+  variant?: ForgeAiSuggestionsElement["variant"];
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;

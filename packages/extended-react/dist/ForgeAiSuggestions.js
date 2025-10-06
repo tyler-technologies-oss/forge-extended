@@ -1,10 +1,10 @@
 import React, { forwardRef, useRef, useEffect } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-suggestions";
+import "@tylertech/forge-extended/ai/ai-suggestions";
 import { useEventListener } from "./react-utils.js";
 
 export const ForgeAiSuggestions = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
-  const { suggestions, ...filteredProps } = props;
+  const { suggestions, variant, ...filteredProps } = props;
 
   /** Event listeners - run once */
   useEventListener(
@@ -26,6 +26,7 @@ export const ForgeAiSuggestions = forwardRef((props, forwardedRef) => {
       },
       ...filteredProps,
       suggestions: props.suggestions,
+      variant: props.variant,
       class: props.className,
       exportparts: props.exportparts,
       for: props.htmlFor,

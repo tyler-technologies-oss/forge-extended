@@ -61,6 +61,17 @@ export class AiChatHeaderComponent {
     return this.nativeElement.expanded;
   }
 
+  /** Controls which minimize icon to display */
+  @Input()
+  public set minimizeIcon(value: AiChatHeaderComponentCustomElement['minimizeIcon']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.minimizeIcon = value;
+    });
+  }
+  public get minimizeIcon(): AiChatHeaderComponentCustomElement['minimizeIcon'] {
+    return this.nativeElement.minimizeIcon;
+  }
+
   constructor() {
     defineAiChatHeaderComponent();
     const changeDetectorRef = inject(ChangeDetectorRef);

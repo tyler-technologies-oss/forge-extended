@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-empty-state";
+import "@tylertech/forge-extended/ai/ai-empty-state";
 
 export const ForgeAiEmptyState = forwardRef((props, forwardedRef) => {
   return React.createElement(

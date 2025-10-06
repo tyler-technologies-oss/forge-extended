@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeAiResponseMessage as ForgeAiResponseMessageElement } from "@tylertech/forge-extended/ai-chat-widget/ai-response-message";
+import { ForgeAiResponseMessage as ForgeAiResponseMessageElement } from "@tylertech/forge-extended/ai/ai-response-message";
 
 export type { ForgeAiResponseMessageElement };
 

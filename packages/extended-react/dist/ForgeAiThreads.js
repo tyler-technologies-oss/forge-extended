@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useEffect } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-threads";
+import "@tylertech/forge-extended/ai/ai-threads";
 import { useEventListener } from "./react-utils.js";
 
 export const ForgeAiThreads = forwardRef((props, forwardedRef) => {

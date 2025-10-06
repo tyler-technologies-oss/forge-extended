@@ -1,0 +1,63 @@
+import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
+import CustomArgTypes from '../../../../blocks/CustomArgTypes';
+import * as AiThreadsStories from './AiThreads.stories';
+
+<Meta of={AiThreadsStories} />
+
+<Title />
+
+**_Still in the design phase_**. This component is just getting the basic functionality stubbed out. The AI Threads component provides a sidebar interface for managing conversation threads in AI chat applications. It features a drawer-style navigation with a list of thread items and a main content area.
+
+## Features
+
+- **Sidebar Navigation**: Drawer-style sidebar for thread management
+- **Thread List**: Navigation list displaying individual conversation threads
+- **Responsive Layout**: Grid-based layout with left sidebar and main content area
+- **Forge Integration**: Uses Forge drawer and list components for consistent styling
+
+## Basic Usage
+
+<Canvas of={AiThreadsStories.Demo} />
+
+## Structure
+
+The component consists of two main sections:
+
+### Left Sidebar
+
+- Contains a Forge drawer component
+- Displays a navigation list of thread items
+- Each thread item is represented as a clickable button
+
+### Right Content Area
+
+- Main content area for displaying thread-specific content
+- Currently shows placeholder text "Right side"
+- Designed to be populated with actual thread content
+
+## Styling
+
+The component uses:
+
+- **Grid Layout**: Two-column grid with auto-sizing left column and flexible right column
+- **Forge Components**: Integrates `forge-drawer` and `forge-list` components
+- **Spacing**: Consistent spacing using Forge spacing tokens
+- **Typography**: Forge typography styles for text content
+
+## Future Enhancements
+
+This component is currently a basic implementation and can be extended with:
+
+- Dynamic thread data loading
+- Thread selection handling
+- Thread creation and deletion
+- Search and filtering capabilities
+- Thread metadata display (date, message count, etc.)
+- Drag and drop reordering
+
+## Accessibility
+
+- Uses semantic HTML structure with proper navigation elements
+- Integrates with Forge components that include built-in accessibility features
+- Keyboard navigation supported through standard list and button interactions
+- Screen reader compatible with proper ARIA attributes from Forge components

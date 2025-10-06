@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-button";
+import "@tylertech/forge-extended/ai/ai-button";
 
 export const ForgeAiButton = forwardRef((props, forwardedRef) => {
   const { disabled, ...filteredProps } = props;

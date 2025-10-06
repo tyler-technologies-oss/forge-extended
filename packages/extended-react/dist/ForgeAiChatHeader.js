@@ -1,11 +1,16 @@
 import React, { forwardRef, useRef, useEffect } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-chat-header";
+import "@tylertech/forge-extended/ai/ai-chat-header";
 import { useEventListener } from "./react-utils.js";
 
 export const ForgeAiChatHeader = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
-  const { showExpandButton, showMinimizeButton, expanded, ...filteredProps } =
-    props;
+  const {
+    showExpandButton,
+    showMinimizeButton,
+    expanded,
+    minimizeIcon,
+    ...filteredProps
+  } = props;
 
   /** Event listeners - run once */
   useEventListener(
@@ -31,6 +36,7 @@ export const ForgeAiChatHeader = forwardRef((props, forwardedRef) => {
         }
       },
       ...filteredProps,
+      "minimize-icon": props.minimizeIcon || props["minimize-icon"],
       class: props.className,
       exportparts: props.exportparts,
       for: props.htmlFor,

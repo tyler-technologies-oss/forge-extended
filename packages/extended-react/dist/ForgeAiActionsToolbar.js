@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useEffect } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-actions-toolbar";
+import "@tylertech/forge-extended/ai/ai-actions-toolbar";
 import { useEventListener } from "./react-utils.js";
 
 export const ForgeAiActionsToolbar = forwardRef((props, forwardedRef) => {

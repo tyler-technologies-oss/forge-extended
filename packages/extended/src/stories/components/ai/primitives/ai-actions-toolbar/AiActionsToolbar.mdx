@@ -1,0 +1,80 @@
+import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
+import CustomArgTypes from '../../../../blocks/CustomArgTypes';
+import * as AiActionsToolbarStories from './AiActionsToolbar.stories';
+
+<Meta of={AiActionsToolbarStories} />
+
+# AI Actions Toolbar
+
+The AI Actions Toolbar component provides a set of action buttons commonly used in AI chat interfaces for interacting with AI-generated content.
+
+## Features
+
+- **Refresh**: Regenerate or refresh AI content
+- **Copy**: Copy content to clipboard (automatically detects copyable parent content)
+- **Thumbs Up/Down**: Provide feedback on AI responses
+- **Consistent Styling**: Uses Forge design tokens and icon button patterns
+- **Event-Driven**: Emits structured events for all actions
+
+## Basic Usage
+
+<Canvas of={AiActionsToolbarStories.Demo} />
+
+## In Message Context
+
+This example shows how the toolbar appears when used within an AI response message context, with copyable content:
+
+<Canvas of={AiActionsToolbarStories.InMessageContext} />
+
+## Events
+
+The component emits a single event type for all actions:
+
+### `forge-ai-actions-toolbar-action`
+
+Fired when any action button is clicked.
+
+**Event Detail:**
+
+```typescript
+{
+  action: 'refresh' | 'copy' | 'thumbs-up' | 'thumbs-down';
+}
+```
+
+**Example Usage:**
+
+```typescript
+toolbar.addEventListener('forge-ai-actions-toolbar-action', event => {
+  const { action } = event.detail;
+
+  switch (action) {
+    case 'refresh':
+      // Handle refresh request
+      break;
+    case 'copy':
+      // Handle copy completion (content already copied to clipboard)
+      break;
+    case 'thumbs-up':
+    case 'thumbs-down':
+      // Handle feedback
+      break;
+  }
+});
+```
+
+## Copy Functionality
+
+The copy button automatically:
+
+1. Searches for a parent element with `data-copyable` attribute
+2. Falls back to the immediate parent element
+3. Extracts and copies the text content to the clipboard
+4. Emits the 'copy' action event after successful copy
+
+## Accessibility
+
+- All buttons have proper `aria-label` attributes
+- Keyboard navigation supported through standard button focus behavior
+- High contrast icons for better visibility
+- Semantic button elements for screen reader compatibility

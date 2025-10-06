@@ -38,6 +38,17 @@ export class AiSuggestionsComponent {
     return this.nativeElement.suggestions;
   }
 
+  /** Display variant for suggestions layout */
+  @Input()
+  public set variant(value: AiSuggestionsComponentCustomElement['variant']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.variant = value;
+    });
+  }
+  public get variant(): AiSuggestionsComponentCustomElement['variant'] {
+    return this.nativeElement.variant;
+  }
+
   constructor() {
     defineAiSuggestionsComponent();
     const changeDetectorRef = inject(ChangeDetectorRef);

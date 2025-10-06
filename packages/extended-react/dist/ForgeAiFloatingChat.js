@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useEffect } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-floating-chat";
+import "@tylertech/forge-extended/ai/ai-floating-chat";
 import { useEventListener } from "./react-utils.js";
 
 export const ForgeAiFloatingChat = forwardRef((props, forwardedRef) => {

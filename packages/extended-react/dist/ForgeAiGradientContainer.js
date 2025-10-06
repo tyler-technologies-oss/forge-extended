@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import "@tylertech/forge-extended/ai-chat-widget/ai-gradient-container";
+import "@tylertech/forge-extended/ai/ai-gradient-container";
 
 export const ForgeAiGradientContainer = forwardRef((props, forwardedRef) => {
   const { variant, ...filteredProps } = props;

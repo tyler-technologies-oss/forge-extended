@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeAiPrompt as ForgeAiPromptElement } from "@tylertech/forge-extended/ai-chat-widget/ai-prompt";
+import { ForgeAiPrompt as ForgeAiPromptElement } from "@tylertech/forge-extended/ai/ai-prompt";
 
 export type { ForgeAiPromptElement };
 

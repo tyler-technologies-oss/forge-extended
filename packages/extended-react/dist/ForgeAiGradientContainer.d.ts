@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeAiGradientContainer as ForgeAiGradientContainerElement } from "@tylertech/forge-extended/ai-chat-widget/ai-gradient-container";
+import { ForgeAiGradientContainer as ForgeAiGradientContainerElement } from "@tylertech/forge-extended/ai/ai-gradient-container";
 
 export type { ForgeAiGradientContainerElement };
 

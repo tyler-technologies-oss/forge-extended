@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeAiEmptyState as ForgeAiEmptyStateElement } from "@tylertech/forge-extended/ai-chat-widget/ai-empty-state";
+import { ForgeAiEmptyState as ForgeAiEmptyStateElement } from "@tylertech/forge-extended/ai/ai-empty-state";
 
 export type { ForgeAiEmptyStateElement };
 
@@ -45,5 +45,9 @@ export interface ForgeAiEmptyStateProps
  *
  * ---
  *
+ *
+ * ### **Slots:**
+ *  - _default_ - The custom welcome message content.
+ * - **actions** - The actions or suggestions to display below the message.
  */
 export const ForgeAiEmptyState: React.ForwardRefExoticComponent<ForgeAiEmptyStateProps>;

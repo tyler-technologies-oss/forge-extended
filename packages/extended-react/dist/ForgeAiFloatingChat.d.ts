@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeAiFloatingChat as ForgeAiFloatingChatElement } from "@tylertech/forge-extended/ai-chat-widget/ai-floating-chat";
+import { ForgeAiFloatingChat as ForgeAiFloatingChatElement } from "@tylertech/forge-extended/ai/ai-floating-chat";
 
 export type { ForgeAiFloatingChatElement };
 

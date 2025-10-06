@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeAiIcon as ForgeAiIconElement } from "@tylertech/forge-extended/ai-chat-widget/ai-icon";
+import { ForgeAiIcon as ForgeAiIconElement } from "@tylertech/forge-extended/ai/ai-icon";
 
 export type { ForgeAiIconElement };
 
