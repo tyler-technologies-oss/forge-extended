@@ -73,7 +73,8 @@ export class AiFloatingChatComponent extends LitElement {
         ${ref(this.#dialogRef)}
         ?open=${this.open}
         ?expanded=${this.expanded}
-        @forge-ai-dialog-fullscreen-change=${this.#handleFullscreenChange}>
+        @forge-ai-dialog-fullscreen-change=${this.#handleFullscreenChange}
+        @forge-ai-dialog-close=${this.#handleDialogClose}>
         <forge-ai-chat-interface
           ?show-expand-button=${!this._isFullscreen}
           show-minimize-button
@@ -155,6 +156,13 @@ export class AiFloatingChatComponent extends LitElement {
 
   #handleHeaderMinimize(): void {
     this.close();
+  }
+
+  #handleDialogClose(): void {
+    // Sync state when dialog is closed externally (Escape key, backdrop click, etc.)
+    if (this.open) {
+      this.close();
+    }
   }
 
   #dispatchEvent(type: keyof HTMLElementEventMap): void {

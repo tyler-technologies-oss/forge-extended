@@ -14,6 +14,7 @@ declare global {
 
   interface HTMLElementEventMap {
     'forge-ai-dialog-fullscreen-change': CustomEvent<{ isFullscreen: boolean }>;
+    'forge-ai-dialog-close': CustomEvent<void>;
   }
 }
 
@@ -27,6 +28,7 @@ export const AiDialogComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-d
  * @slot - Default slot for dialog content (typically ai-chat-interface)
  *
  * @fires forge-ai-dialog-fullscreen-change - Fired when the fullscreen state changes due to viewport size
+ * @fires forge-ai-dialog-close - Fired when the dialog is closed
  */
 @customElement(AiDialogComponentTagName)
 export class AiDialogComponent extends LitElement {
@@ -132,6 +134,13 @@ export class AiDialogComponent extends LitElement {
       this.expanded = false;
     }
     this.open = false;
+
+    // Emit close event for parent components to listen to
+    const event = new CustomEvent('forge-ai-dialog-close', {
+      bubbles: true,
+      composed: true
+    });
+    this.dispatchEvent(event);
   }
 
   /**
