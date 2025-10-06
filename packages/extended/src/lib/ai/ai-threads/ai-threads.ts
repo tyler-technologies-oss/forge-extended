@@ -11,6 +11,7 @@ declare global {
 
   interface HTMLElementEventMap {
     'forge-ai-threads-select': CustomEvent<AiThreadsSelectEventData>;
+    'forge-ai-threads-new-chat': CustomEvent;
   }
 }
 
@@ -32,6 +33,7 @@ export const AiThreadsComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-
  * @tag forge-ai-threads
  *
  * @event {CustomEvent<AiThreadsSelectEventData>} forge-ai-threads-select - Fired when a thread is selected.
+ * @event {CustomEvent} forge-ai-threads-new-chat - Fired when the new chat button is clicked.
  */
 @customElement(AiThreadsComponentTagName)
 export class AiThreadsComponent extends LitElement {
@@ -71,6 +73,34 @@ export class AiThreadsComponent extends LitElement {
       cancelable: true
     });
     this.dispatchEvent(event);
+  }
+
+  private _handleNewChatClick(): void {
+    const event = new CustomEvent('forge-ai-threads-new-chat', {
+      bubbles: true,
+      composed: true,
+      cancelable: true
+    });
+    this.dispatchEvent(event);
+
+    // Focus the input in the chat interface after a brief delay to ensure rendering is complete
+    requestAnimationFrame(() => {
+      this._focusChatInput();
+    });
+  }
+
+  private _focusChatInput(): void {
+    // Query for the input element in the ai-chat-interface component
+    const chatInterface = this.shadowRoot?.querySelector('forge-ai-chat-interface');
+    if (chatInterface) {
+      // Look for the input within the ai-prompt component
+      const input = chatInterface.shadowRoot
+        ?.querySelector('forge-ai-prompt')
+        ?.shadowRoot?.querySelector('#chat-input') as HTMLInputElement;
+      if (input) {
+        input.focus();
+      }
+    }
   }
 
   readonly #searchField = html`
@@ -123,15 +153,17 @@ export class AiThreadsComponent extends LitElement {
     return html` <div class="thread-list-container">${this.#threadList} ${this.#threadActions}</div> `;
   }
 
-  readonly #newChatButton = html`
-    <button class="forge-button forge-button--tonal">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="forge-icon">
-        <path fill="none" d="M0 0h24v24H0z" />
-        <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
-      </svg>
-      New chat
-    </button>
-  `;
+  get #newChatButton(): TemplateResult {
+    return html`
+      <button class="forge-button forge-button--tonal" @click=${this._handleNewChatClick}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="forge-icon">
+          <path fill="none" d="M0 0h24v24H0z" />
+          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
+        </svg>
+        New chat
+      </button>
+    `;
+  }
 
   get #drawer(): TemplateResult {
     return html`
