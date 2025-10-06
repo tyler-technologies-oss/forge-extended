@@ -190,183 +190,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-confirmation-dialog'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ConfirmationDialogComponent",
-          "slots": [
-            {
-              "description": "The title of the dialog",
-              "name": "title"
-            },
-            {
-              "description": "The dialog message",
-              "name": "message"
-            },
-            {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
-            },
-            {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "isBusy",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
-            },
-            {
-              "kind": "field",
-              "name": "busyLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
-              },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "fieldName": "open"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog",
-              "fieldName": "description"
-            },
-            {
-              "name": "is-busy",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
-            },
-            {
-              "name": "busy-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-confirmation-dialog",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
-          "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponent",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "declarations": [
         {
@@ -690,6 +513,183 @@
           "declaration": {
             "name": "BusyIndicatorComponent",
             "module": "src/lib/busy-indicator/busy-indicator.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ConfirmationDialogComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-confirmation-dialog'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ConfirmationDialogComponent",
+          "slots": [
+            {
+              "description": "The title of the dialog",
+              "name": "title"
+            },
+            {
+              "description": "The dialog message",
+              "name": "message"
+            },
+            {
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
+            },
+            {
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
+            },
+            {
+              "kind": "field",
+              "name": "busyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+              },
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
+            },
+            {
+              "name": "busy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-confirmation-dialog",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponentTagName",
+          "declaration": {
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponent",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         }
       ]
@@ -1184,6 +1184,17 @@
             },
             {
               "kind": "field",
+              "name": "imageUrl",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The image URL for the user avatar",
+              "attribute": "image-url"
+            },
+            {
+              "kind": "field",
               "name": "buttonLabel",
               "type": {
                 "text": "string"
@@ -1251,6 +1262,15 @@
               "default": "''",
               "description": "The email address of the user",
               "fieldName": "email"
+            },
+            {
+              "name": "image-url",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The image URL for the user avatar",
+              "fieldName": "imageUrl"
             },
             {
               "name": "button-label",
@@ -1524,22 +1544,6 @@
       "path": "src/lib/app-launcher/app-launcher.ts",
       "lineNumber": 66
     },
-    "ConfirmationDialogActionEventReason": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 28
-    },
-    "ConfirmationDialogActionEventData": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 30
-    },
-    "ConfirmationDialogProperties": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 35
-    },
-    "ConfirmationDialogComponent": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 55
-    },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 25
@@ -1555,6 +1559,22 @@
     "BusyIndicatorComponent": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 39
+    },
+    "ConfirmationDialogActionEventReason": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 28
+    },
+    "ConfirmationDialogActionEventData": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 30
+    },
+    "ConfirmationDialogProperties": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 35
+    },
+    "ConfirmationDialogComponent": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 55
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
