@@ -184,7 +184,6 @@ export class UserProfileComponent extends LitElement {
 
   #handlePopoverToggle(evt: CustomEvent<IPopoverToggleEventData>): void {
     this.open = evt.detail.newState === 'open';
-    this.requestUpdate();
   }
 
   #handleSignOut(): void {
