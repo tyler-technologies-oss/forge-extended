@@ -12,7 +12,7 @@ import {
   defineToolbarComponent,
   IconRegistry,
   IPopoverToggleEventData,
-  PopoverComponent
+  toggleState
 } from '@tylertech/forge';
 import { ThemeToggleComponent, ThemeToggleTheme } from '../theme-toggle/theme-toggle';
 import { createRef, ref } from 'lit/directives/ref.js';
@@ -80,16 +80,30 @@ export class UserProfileComponent extends LitElement {
   public themeToggle = false;
 
   /** Controls whether the user profile popover is open */
-  @property({ type: Boolean, reflect: true })
+  @property({ type: Boolean })
   public open = false;
 
   @queryAssignedNodes({ slot: 'link', flatten: true })
   private _slottedLinkNodes!: Node[];
 
+  readonly #internals: ElementInternals;
   readonly #linkSlot = html`<slot name="link" id="link-slot"></slot>`;
   readonly #signOutButtonSlot = html`<slot name="sign-out-button-text" id="sign-out-button-slot">Sign Out</slot>`;
   readonly #themeToggleRef = createRef<ThemeToggleComponent>();
-  readonly #popoverRef = createRef<PopoverComponent>();
+
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+    toggleState(this.#internals, 'open', this.open);
+  }
+
+  public override updated(changedProperties: Map<string, any>): void {
+    super.updated(changedProperties);
+
+    if (changedProperties.has('open')) {
+      toggleState(this.#internals, 'open', this.open);
+    }
+  }
 
   get #links(): TemplateResult | typeof nothing {
     const showLinks = this._slottedLinkNodes.length > 0;
@@ -134,7 +148,6 @@ export class UserProfileComponent extends LitElement {
         <forge-avatar .text=${this.fullName} .imageUrl=${this.imageUrl} id="button-avatar"></forge-avatar>
       </forge-icon-button>
       <forge-popover
-        ${ref(this.#popoverRef)}
         id="user-profile-popover"
         anchor="popover-trigger"
         placement="bottom-end"
@@ -160,21 +173,6 @@ export class UserProfileComponent extends LitElement {
         ${this.#signOutButton}
       </forge-popover>
     `;
-  }
-
-  /** Opens the user profile popover */
-  public openProfile(): void {
-    this.open = true;
-  }
-
-  /** Closes the user profile popover */
-  public closeProfile(): void {
-    this.open = false;
-  }
-
-  /** Toggles the user profile popover open/closed state */
-  public toggleProfile(): void {
-    this.open = !this.open;
   }
 
   /** Sets the theme for the theme toggle. */

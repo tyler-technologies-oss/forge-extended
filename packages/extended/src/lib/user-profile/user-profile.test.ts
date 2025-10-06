@@ -139,20 +139,6 @@ describe('UserProfile', () => {
     expect(harness.popover.open).to.be.true;
   });
 
-  it('should set open attribute when open property is true', async () => {
-    const harness = await createFixture();
-
-    harness.el.open = true;
-    await nextFrame();
-
-    expect(harness.el.hasAttribute('open')).to.be.true;
-
-    harness.el.open = false;
-    await nextFrame();
-
-    expect(harness.el.hasAttribute('open')).to.be.false;
-  });
-
   it('should handle forge-popover-toggle event for synchronization', async () => {
     const harness = await createFixture();
 
@@ -242,27 +228,6 @@ describe('UserProfile', () => {
     expect(harness.el.open).to.be.false;
   });
 
-  it('should toggle popover multiple times correctly', async () => {
-    const harness = await createFixture();
-
-    // Test multiple toggles
-    for (let i = 0; i < 3; i++) {
-      harness.el.toggleProfile();
-      await nextFrame();
-      await harness.exitAnimation();
-
-      expect(harness.el.open).to.be.true;
-      expect(harness.popover.open).to.be.true;
-
-      harness.el.toggleProfile();
-      await nextFrame();
-      await harness.exitAnimation();
-
-      expect(harness.el.open).to.be.false;
-      expect(harness.popover.open).to.be.false;
-    }
-  });
-
   it('should handle rapid open/close operations', async () => {
     const harness = await createFixture();
 
@@ -276,60 +241,6 @@ describe('UserProfile', () => {
 
     expect(harness.el.open).to.be.true;
     expect(harness.popover.open).to.be.true;
-  });
-
-  it('should have openProfile method that opens the popover', async () => {
-    const harness = await createFixture();
-
-    expect(typeof harness.el.openProfile).to.equal('function');
-    expect(harness.el.open).to.be.false;
-    expect(harness.popover.open).to.be.false;
-
-    harness.el.openProfile();
-    await nextFrame();
-    await harness.exitAnimation();
-
-    expect(harness.el.open).to.be.true;
-    expect(harness.popover.open).to.be.true;
-  });
-
-  it('should have closeProfile method that closes the popover', async () => {
-    const harness = await createFixture({ open: true });
-    await nextFrame();
-    await harness.exitAnimation();
-
-    expect(typeof harness.el.closeProfile).to.equal('function');
-    expect(harness.el.open).to.be.true;
-    expect(harness.popover.open).to.be.true;
-
-    harness.el.closeProfile();
-    await nextFrame();
-    await harness.exitAnimation();
-
-    expect(harness.el.open).to.be.false;
-    expect(harness.popover.open).to.be.false;
-  });
-
-  it('should have toggleProfile method that toggles popover state', async () => {
-    const harness = await createFixture();
-
-    expect(typeof harness.el.toggleProfile).to.equal('function');
-
-    // Test toggle from closed to open
-    harness.el.toggleProfile();
-    await nextFrame();
-    await harness.exitAnimation();
-
-    expect(harness.el.open).to.be.true;
-    expect(harness.popover.open).to.be.true;
-
-    // Test toggle from open to closed
-    harness.el.toggleProfile();
-    await nextFrame();
-    await harness.exitAnimation();
-
-    expect(harness.el.open).to.be.false;
-    expect(harness.popover.open).to.be.false;
   });
 
   it('should have setTheme method that sets theme toggle theme', async () => {
@@ -366,62 +277,6 @@ describe('UserProfile', () => {
     expect(() => harness.el.setTheme('light')).to.not.throw();
     expect(() => harness.el.setTheme('dark')).to.not.throw();
     expect(() => harness.el.setTheme('system')).to.not.throw();
-  });
-
-  it('should call openProfile and closeProfile methods multiple times without issues', async () => {
-    const harness = await createFixture();
-
-    // Call openProfile multiple times
-    harness.el.openProfile();
-    harness.el.openProfile();
-    harness.el.openProfile();
-    await nextFrame();
-    await harness.exitAnimation();
-
-    expect(harness.el.open).to.be.true;
-    expect(harness.popover.open).to.be.true;
-
-    // Call closeProfile multiple times
-    harness.el.closeProfile();
-    harness.el.closeProfile();
-    harness.el.closeProfile();
-    await nextFrame();
-    await harness.exitAnimation();
-
-    expect(harness.el.open).to.be.false;
-    expect(harness.popover.open).to.be.false;
-  });
-
-  it('should open profile and then close it using different methods', async () => {
-    const harness = await createFixture();
-
-    // Open with openProfile
-    harness.el.openProfile();
-    await nextFrame();
-    await harness.exitAnimation();
-
-    expect(harness.el.open).to.be.true;
-
-    // Close with property
-    harness.el.open = false;
-    await nextFrame();
-    await harness.exitAnimation();
-
-    expect(harness.el.open).to.be.false;
-
-    // Open with property
-    harness.el.open = true;
-    await nextFrame();
-    await harness.exitAnimation();
-
-    expect(harness.el.open).to.be.true;
-
-    // Close with closeProfile
-    harness.el.closeProfile();
-    await nextFrame();
-    await harness.exitAnimation();
-
-    expect(harness.el.open).to.be.false;
   });
 });
 
