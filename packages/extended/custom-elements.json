@@ -893,158 +893,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ResponsiveToolbarComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-responsive-toolbar'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ResponsiveToolbarComponent",
-          "slots": [
-            {
-              "description": "Maps to the toolbar before-start slot",
-              "name": "before-start"
-            },
-            {
-              "description": "Maps to the toolbar start slot",
-              "name": "start"
-            },
-            {
-              "description": "The content you want to render at larger sizes in the toolbar end slot",
-              "name": "end-large"
-            },
-            {
-              "description": "The content you want to render at smaller sizes in the toolbar end slot",
-              "name": "end-small"
-            },
-            {
-              "description": "Maps to the toolbar after-end slot",
-              "name": "after-end"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Hides the divider",
-              "attribute": "no-border"
-            },
-            {
-              "kind": "field",
-              "name": "inverted",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
-              "attribute": "inverted"
-            },
-            {
-              "kind": "field",
-              "name": "resizeDelay",
-              "privacy": "public",
-              "default": "100",
-              "description": "Controls the delay in milliseconds to throttle resize events",
-              "attribute": "resize-delay",
-              "type": {
-                "text": "number"
-              }
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ResponsiveToolbarUpdateEventData>"
-              },
-              "description": "Dispatched when the overflow state changes.",
-              "name": "forge-responsive-toolbar-update"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Hides the divider",
-              "fieldName": "noBorder"
-            },
-            {
-              "name": "inverted",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
-              "fieldName": "inverted"
-            },
-            {
-              "name": "resize-delay",
-              "default": "RESIZE_DELAY",
-              "description": "Controls the delay in milliseconds to throttle resize events",
-              "fieldName": "resizeDelay"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-responsive-toolbar",
-          "customElement": true,
-          "states": [
-            {
-              "name": "small",
-              "description": "The title is overlapping the actions, the large end slot is hidden."
-            },
-            {
-              "name": "large",
-              "description": "The title is not overlapping the actions, the small end slot is hidden."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ResponsiveToolbarComponentTagName",
-          "declaration": {
-            "name": "ResponsiveToolbarComponentTagName",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ResponsiveToolbarComponent",
-          "declaration": {
-            "name": "ResponsiveToolbarComponent",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ResponsiveToolbarComponent",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "declarations": [
         {
@@ -1323,75 +1171,152 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/ai-chat-widget/ai-button/ai-button.ts",
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "AiButtonComponentTagName",
+          "name": "ResponsiveToolbarComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-ai-button'"
+          "default": "'forge-responsive-toolbar'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "AiButtonComponent",
+          "name": "ResponsiveToolbarComponent",
+          "slots": [
+            {
+              "description": "Maps to the toolbar before-start slot",
+              "name": "before-start"
+            },
+            {
+              "description": "Maps to the toolbar start slot",
+              "name": "start"
+            },
+            {
+              "description": "The content you want to render at larger sizes in the toolbar end slot",
+              "name": "end-large"
+            },
+            {
+              "description": "The content you want to render at smaller sizes in the toolbar end slot",
+              "name": "end-small"
+            },
+            {
+              "description": "Maps to the toolbar after-end slot",
+              "name": "after-end"
+            }
+          ],
           "members": [
             {
               "kind": "field",
-              "name": "disabled",
+              "name": "noBorder",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
               "default": "false",
-              "description": "Whether the button is disabled",
-              "attribute": "disabled",
-              "reflects": true
+              "description": "Hides the divider",
+              "attribute": "no-border"
+            },
+            {
+              "kind": "field",
+              "name": "inverted",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
+              "attribute": "inverted"
+            },
+            {
+              "kind": "field",
+              "name": "resizeDelay",
+              "privacy": "public",
+              "default": "100",
+              "description": "Controls the delay in milliseconds to throttle resize events",
+              "attribute": "resize-delay",
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ResponsiveToolbarUpdateEventData>"
+              },
+              "description": "Dispatched when the overflow state changes.",
+              "name": "forge-responsive-toolbar-update"
             }
           ],
           "attributes": [
             {
-              "name": "disabled",
+              "name": "no-border",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Whether the button is disabled",
-              "fieldName": "disabled"
+              "description": "Hides the divider",
+              "fieldName": "noBorder"
+            },
+            {
+              "name": "inverted",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
+              "fieldName": "inverted"
+            },
+            {
+              "name": "resize-delay",
+              "default": "RESIZE_DELAY",
+              "description": "Controls the delay in milliseconds to throttle resize events",
+              "fieldName": "resizeDelay"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-ai-button",
-          "customElement": true
+          "tagName": "forge-responsive-toolbar",
+          "customElement": true,
+          "states": [
+            {
+              "name": "small",
+              "description": "The title is overlapping the actions, the large end slot is hidden."
+            },
+            {
+              "name": "large",
+              "description": "The title is not overlapping the actions, the small end slot is hidden."
+            }
+          ]
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "AiButtonComponentTagName",
+          "name": "ResponsiveToolbarComponentTagName",
           "declaration": {
-            "name": "AiButtonComponentTagName",
-            "module": "src/lib/ai-chat-widget/ai-button/ai-button.ts"
+            "name": "ResponsiveToolbarComponentTagName",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
           }
         },
         {
           "kind": "js",
-          "name": "AiButtonComponent",
+          "name": "ResponsiveToolbarComponent",
           "declaration": {
-            "name": "AiButtonComponent",
-            "module": "src/lib/ai-chat-widget/ai-button/ai-button.ts"
+            "name": "ResponsiveToolbarComponent",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "AiButtonComponent",
-            "module": "src/lib/ai-chat-widget/ai-button/ai-button.ts"
+            "name": "ResponsiveToolbarComponent",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
           }
         }
       ]
@@ -1458,128 +1383,81 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts",
+      "path": "src/lib/ai-chat-widget/ai-button/ai-button.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "AiChatInterfaceComponentTagName",
+          "name": "AiButtonComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-ai-chat-interface'"
+          "default": "'forge-ai-button'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "AiChatInterfaceComponent",
-          "slots": [
-            {
-              "description": "Default slot for messages",
-              "name": ""
-            },
-            {
-              "description": "Slot for AI suggestions component",
-              "name": "suggestions"
-            },
-            {
-              "description": "Slot for custom AI prompt component. If not provided, a default forge-ai-prompt will be used.",
-              "name": "prompt"
-            }
-          ],
+          "name": "AiButtonComponent",
           "members": [
             {
               "kind": "field",
-              "name": "showExpandButton",
+              "name": "disabled",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
               "default": "false",
-              "description": "Controls whether the expand button is visible in the header",
-              "attribute": "show-expand-button"
-            },
-            {
-              "kind": "field",
-              "name": "showMinimizeButton",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Controls whether the minimize button is visible in the header",
-              "attribute": "show-minimize-button"
-            },
-            {
-              "kind": "field",
-              "name": "expanded",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates the current expanded state for displaying the appropriate expand/collapse icon",
-              "attribute": "expanded"
+              "description": "Whether the button is disabled",
+              "attribute": "disabled",
+              "reflects": true
             }
           ],
           "attributes": [
             {
-              "name": "show-expand-button",
+              "name": "disabled",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Controls whether the expand button is visible in the header",
-              "fieldName": "showExpandButton"
-            },
-            {
-              "name": "show-minimize-button",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Controls whether the minimize button is visible in the header",
-              "fieldName": "showMinimizeButton"
-            },
-            {
-              "name": "expanded",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates the current expanded state for displaying the appropriate expand/collapse icon",
-              "fieldName": "expanded"
+              "description": "Whether the button is disabled",
+              "fieldName": "disabled"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-ai-chat-interface",
-          "customElement": true
+          "tagName": "forge-ai-button",
+          "customElement": true,
+          "states": [
+            {
+              "name": "disabled",
+              "description": "The button is disabled."
+            }
+          ]
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "AiChatInterfaceComponentTagName",
+          "name": "AiButtonComponentTagName",
           "declaration": {
-            "name": "AiChatInterfaceComponentTagName",
-            "module": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts"
+            "name": "AiButtonComponentTagName",
+            "module": "src/lib/ai-chat-widget/ai-button/ai-button.ts"
           }
         },
         {
           "kind": "js",
-          "name": "AiChatInterfaceComponent",
+          "name": "AiButtonComponent",
           "declaration": {
-            "name": "AiChatInterfaceComponent",
-            "module": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts"
+            "name": "AiButtonComponent",
+            "module": "src/lib/ai-chat-widget/ai-button/ai-button.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "AiChatInterfaceComponent",
-            "module": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts"
+            "name": "AiButtonComponent",
+            "module": "src/lib/ai-chat-widget/ai-button/ai-button.ts"
           }
         }
       ]
@@ -1710,6 +1588,134 @@
           "declaration": {
             "name": "AiChatHeaderComponent",
             "module": "src/lib/ai-chat-widget/ai-chat-header/ai-chat-header.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiChatInterfaceComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-chat-interface'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiChatInterfaceComponent",
+          "slots": [
+            {
+              "description": "Default slot for messages",
+              "name": ""
+            },
+            {
+              "description": "Slot for AI suggestions component",
+              "name": "suggestions"
+            },
+            {
+              "description": "Slot for custom AI prompt component. If not provided, a default forge-ai-prompt will be used.",
+              "name": "prompt"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "showExpandButton",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether the expand button is visible in the header",
+              "attribute": "show-expand-button"
+            },
+            {
+              "kind": "field",
+              "name": "showMinimizeButton",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether the minimize button is visible in the header",
+              "attribute": "show-minimize-button"
+            },
+            {
+              "kind": "field",
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates the current expanded state for displaying the appropriate expand/collapse icon",
+              "attribute": "expanded"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "show-expand-button",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether the expand button is visible in the header",
+              "fieldName": "showExpandButton"
+            },
+            {
+              "name": "show-minimize-button",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether the minimize button is visible in the header",
+              "fieldName": "showMinimizeButton"
+            },
+            {
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates the current expanded state for displaying the appropriate expand/collapse icon",
+              "fieldName": "expanded"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-chat-interface",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiChatInterfaceComponentTagName",
+          "declaration": {
+            "name": "AiChatInterfaceComponentTagName",
+            "module": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiChatInterfaceComponent",
+          "declaration": {
+            "name": "AiChatInterfaceComponent",
+            "module": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiChatInterfaceComponent",
+            "module": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts"
           }
         }
       ]
@@ -1879,6 +1885,16 @@
           "kind": "class",
           "description": "",
           "name": "AiEmptyStateComponent",
+          "slots": [
+            {
+              "description": "The custom welcome message content.",
+              "name": ""
+            },
+            {
+              "description": "The actions or suggestions to display below the message.",
+              "name": "actions"
+            }
+          ],
           "members": [],
           "superclass": {
             "name": "LitElement",
@@ -1981,7 +1997,17 @@
             "package": "lit"
           },
           "tagName": "forge-ai-fab-button",
-          "customElement": true
+          "customElement": true,
+          "states": [
+            {
+              "name": "disabled",
+              "description": "The button is disabled."
+            },
+            {
+              "name": "extended",
+              "description": "The button is extended."
+            }
+          ]
         }
       ],
       "exports": [
@@ -2706,6 +2732,17 @@
               "default": "[]",
               "description": "Array of suggestion objects to display",
               "attribute": "suggestions"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "AiSuggestionsVariant"
+              },
+              "privacy": "public",
+              "default": "'inline'",
+              "description": "Display variant for suggestions layout",
+              "attribute": "variant"
             }
           ],
           "events": [
@@ -2726,6 +2763,15 @@
               "default": "[]",
               "description": "Array of suggestion objects to display",
               "fieldName": "suggestions"
+            },
+            {
+              "name": "variant",
+              "type": {
+                "text": "AiSuggestionsVariant"
+              },
+              "default": "'inline'",
+              "description": "Display variant for suggestions layout",
+              "fieldName": "variant"
             }
           ],
           "superclass": {
@@ -2733,7 +2779,17 @@
             "package": "lit"
           },
           "tagName": "forge-ai-suggestions",
-          "customElement": true
+          "customElement": true,
+          "states": [
+            {
+              "name": "inline",
+              "description": "The suggestions are displayed inline."
+            },
+            {
+              "name": "block",
+              "description": "The suggestions are displayed as blocks."
+            }
+          ]
         }
       ],
       "exports": [
@@ -3012,18 +3068,6 @@
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
     },
-    "ResponsiveToolbarState": {
-      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 20
-    },
-    "ResponsiveToolbarUpdateEventData": {
-      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 22
-    },
-    "ResponsiveToolbarComponent": {
-      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
-      "lineNumber": 48
-    },
     "ThemeToggleTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 28
@@ -3040,9 +3084,17 @@
       "path": "src/lib/user-profile/user-profile.ts",
       "lineNumber": 44
     },
-    "AiButtonComponent": {
-      "path": "src/lib/ai-chat-widget/ai-button/ai-button.ts",
-      "lineNumber": 21
+    "ResponsiveToolbarState": {
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "lineNumber": 20
+    },
+    "ResponsiveToolbarUpdateEventData": {
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "lineNumber": 22
+    },
+    "ResponsiveToolbarComponent": {
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "lineNumber": 48
     },
     "AiActionsToolbarActionEventData": {
       "path": "src/lib/ai-chat-widget/ai-actions-toolbar/ai-actions-toolbar.ts",
@@ -3056,13 +3108,17 @@
       "path": "src/lib/ai-chat-widget/ai-actions-toolbar/ai-actions-toolbar.ts",
       "lineNumber": 30
     },
-    "AiChatInterfaceComponent": {
-      "path": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts",
-      "lineNumber": 26
+    "AiButtonComponent": {
+      "path": "src/lib/ai-chat-widget/ai-button/ai-button.ts",
+      "lineNumber": 23
     },
     "AiChatHeaderComponent": {
       "path": "src/lib/ai-chat-widget/ai-chat-header/ai-chat-header.ts",
       "lineNumber": 31
+    },
+    "AiChatInterfaceComponent": {
+      "path": "src/lib/ai-chat-widget/ai-chat-interface/ai-chat-interface.ts",
+      "lineNumber": 26
     },
     "AiDialogComponent": {
       "path": "src/lib/ai-chat-widget/ai-dialog/ai-dialog.ts",
@@ -3070,15 +3126,15 @@
     },
     "AiEmptyStateComponent": {
       "path": "src/lib/ai-chat-widget/ai-empty-state/ai-empty-state.ts",
-      "lineNumber": 17
+      "lineNumber": 21
     },
     "AiFabButtonComponent": {
       "path": "src/lib/ai-chat-widget/ai-fab-button/ai-fab-button.ts",
-      "lineNumber": 21
+      "lineNumber": 24
     },
     "AiFloatingChatComponent": {
       "path": "src/lib/ai-chat-widget/ai-floating-chat/ai-floating-chat.ts",
-      "lineNumber": 33
+      "lineNumber": 40
     },
     "AiGradientContainerVariant": {
       "path": "src/lib/ai-chat-widget/ai-gradient-container/ai-gradient-container.ts",
@@ -3090,7 +3146,7 @@
     },
     "AiIconComponent": {
       "path": "src/lib/ai-chat-widget/ai-icon/ai-icon.ts",
-      "lineNumber": 21
+      "lineNumber": 23
     },
     "AiModalComponent": {
       "path": "src/lib/ai-chat-widget/ai-modal/ai-modal.ts",
@@ -3122,15 +3178,19 @@
     },
     "Suggestion": {
       "path": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts",
-      "lineNumber": 18
+      "lineNumber": 17
     },
     "AiSuggestionsEventData": {
       "path": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts",
-      "lineNumber": 23
+      "lineNumber": 22
+    },
+    "AiSuggestionsVariant": {
+      "path": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts",
+      "lineNumber": 27
     },
     "AiSuggestionsComponent": {
       "path": "src/lib/ai-chat-widget/ai-suggestions/ai-suggestions.ts",
-      "lineNumber": 35
+      "lineNumber": 39
     },
     "Thread": {
       "path": "src/lib/ai-chat-widget/ai-threads/ai-threads.ts",
@@ -3138,11 +3198,11 @@
     },
     "AiThreadsSelectEventData": {
       "path": "src/lib/ai-chat-widget/ai-threads/ai-threads.ts",
-      "lineNumber": 22
+      "lineNumber": 24
     },
     "AiThreadsComponent": {
       "path": "src/lib/ai-chat-widget/ai-threads/ai-threads.ts",
-      "lineNumber": 34
+      "lineNumber": 36
     },
     "AiUserMessageComponent": {
       "path": "src/lib/ai-chat-widget/ai-user-message/ai-user-message.ts",

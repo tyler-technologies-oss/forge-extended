@@ -118,8 +118,8 @@ export class AiEmptyStateComponent extends LitElement {
           <rect class="cls-6" x="60.49" y="47.79" width="10.63" height="4.51" />
         </svg>
         <div class="forge-page-state__message message">${this.#messageContent}</div>
+        <slot name="actions"></slot>
       </div>
-      <slot name="actions"></slot>
     </div>`;
   }
 }
