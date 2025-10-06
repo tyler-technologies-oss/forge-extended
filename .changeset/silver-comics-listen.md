@@ -1,7 +1,7 @@
 ---
-'@tylertech/forge-extended-angular': major
-'@tylertech/forge-extended-react': major
-'@tylertech/forge-extended': major
+'@tylertech/forge-extended-angular': minor
+'@tylertech/forge-extended-react': minor
+'@tylertech/forge-extended': minor
 ---
 
 Built the newly designed App Launcher component
