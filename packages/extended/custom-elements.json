@@ -623,92 +623,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ThemeToggleComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-theme-toggle'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ThemeToggleComponent",
-          "slots": [
-            {
-              "description": "The title shown above the toggle buttons",
-              "name": "title"
-            }
-          ],
-          "members": [
-            {
-              "kind": "method",
-              "name": "setTheme",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "ThemeToggleTheme"
-                  }
-                }
-              ],
-              "description": "Sets the current theme."
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ThemeToggleThemeEventData>"
-              },
-              "description": "Fired when the theme is changed",
-              "name": "forge-theme-toggle-update"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-theme-toggle",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ThemeToggleComponentTagName",
-          "declaration": {
-            "name": "ThemeToggleComponentTagName",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ThemeToggleComponent",
-          "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/quantity-field/quantity-field.ts",
       "declarations": [
         {
@@ -883,152 +797,86 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "ResponsiveToolbarComponentTagName",
+          "name": "ThemeToggleComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-responsive-toolbar'"
+          "default": "'forge-theme-toggle'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "ResponsiveToolbarComponent",
+          "name": "ThemeToggleComponent",
           "slots": [
             {
-              "description": "Maps to the toolbar before-start slot",
-              "name": "before-start"
-            },
-            {
-              "description": "Maps to the toolbar start slot",
-              "name": "start"
-            },
-            {
-              "description": "The content you want to render at larger sizes in the toolbar end slot",
-              "name": "end-large"
-            },
-            {
-              "description": "The content you want to render at smaller sizes in the toolbar end slot",
-              "name": "end-small"
-            },
-            {
-              "description": "Maps to the toolbar after-end slot",
-              "name": "after-end"
+              "description": "The title shown above the toggle buttons",
+              "name": "title"
             }
           ],
           "members": [
             {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
+              "kind": "method",
+              "name": "setTheme",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
               },
-              "privacy": "public",
-              "default": "false",
-              "description": "Hides the divider",
-              "attribute": "no-border"
-            },
-            {
-              "kind": "field",
-              "name": "inverted",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
-              "attribute": "inverted"
-            },
-            {
-              "kind": "field",
-              "name": "resizeDelay",
-              "privacy": "public",
-              "default": "100",
-              "description": "Controls the delay in milliseconds to throttle resize events",
-              "attribute": "resize-delay",
-              "type": {
-                "text": "number"
-              }
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "ThemeToggleTheme"
+                  }
+                }
+              ],
+              "description": "Sets the current theme."
             }
           ],
           "events": [
             {
               "type": {
-                "text": "CustomEvent<ResponsiveToolbarUpdateEventData>"
+                "text": "CustomEvent<ThemeToggleThemeEventData>"
               },
-              "description": "Dispatched when the overflow state changes.",
-              "name": "forge-responsive-toolbar-update"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Hides the divider",
-              "fieldName": "noBorder"
-            },
-            {
-              "name": "inverted",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
-              "fieldName": "inverted"
-            },
-            {
-              "name": "resize-delay",
-              "default": "RESIZE_DELAY",
-              "description": "Controls the delay in milliseconds to throttle resize events",
-              "fieldName": "resizeDelay"
+              "description": "Fired when the theme is changed",
+              "name": "forge-theme-toggle-update"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-responsive-toolbar",
-          "customElement": true,
-          "states": [
-            {
-              "name": "small",
-              "description": "The title is overlapping the actions, the large end slot is hidden."
-            },
-            {
-              "name": "large",
-              "description": "The title is not overlapping the actions, the small end slot is hidden."
-            }
-          ]
+          "tagName": "forge-theme-toggle",
+          "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ResponsiveToolbarComponentTagName",
+          "name": "ThemeToggleComponentTagName",
           "declaration": {
-            "name": "ResponsiveToolbarComponentTagName",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+            "name": "ThemeToggleComponentTagName",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
           }
         },
         {
           "kind": "js",
-          "name": "ResponsiveToolbarComponent",
+          "name": "ThemeToggleComponent",
           "declaration": {
-            "name": "ResponsiveToolbarComponent",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+            "name": "ThemeToggleComponent",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "ResponsiveToolbarComponent",
-            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+            "name": "ThemeToggleComponent",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
           }
         }
       ]
@@ -1221,6 +1069,158 @@
           "declaration": {
             "name": "UserProfileComponent",
             "module": "src/lib/user-profile/user-profile.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ResponsiveToolbarComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-responsive-toolbar'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ResponsiveToolbarComponent",
+          "slots": [
+            {
+              "description": "Maps to the toolbar before-start slot",
+              "name": "before-start"
+            },
+            {
+              "description": "Maps to the toolbar start slot",
+              "name": "start"
+            },
+            {
+              "description": "The content you want to render at larger sizes in the toolbar end slot",
+              "name": "end-large"
+            },
+            {
+              "description": "The content you want to render at smaller sizes in the toolbar end slot",
+              "name": "end-small"
+            },
+            {
+              "description": "Maps to the toolbar after-end slot",
+              "name": "after-end"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Hides the divider",
+              "attribute": "no-border"
+            },
+            {
+              "kind": "field",
+              "name": "inverted",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
+              "attribute": "inverted"
+            },
+            {
+              "kind": "field",
+              "name": "resizeDelay",
+              "privacy": "public",
+              "default": "100",
+              "description": "Controls the delay in milliseconds to throttle resize events",
+              "attribute": "resize-delay",
+              "type": {
+                "text": "number"
+              }
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ResponsiveToolbarUpdateEventData>"
+              },
+              "description": "Dispatched when the overflow state changes.",
+              "name": "forge-responsive-toolbar-update"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Hides the divider",
+              "fieldName": "noBorder"
+            },
+            {
+              "name": "inverted",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether a bottom divider (default) or top divider (true) is used.",
+              "fieldName": "inverted"
+            },
+            {
+              "name": "resize-delay",
+              "default": "RESIZE_DELAY",
+              "description": "Controls the delay in milliseconds to throttle resize events",
+              "fieldName": "resizeDelay"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-responsive-toolbar",
+          "customElement": true,
+          "states": [
+            {
+              "name": "small",
+              "description": "The title is overlapping the actions, the large end slot is hidden."
+            },
+            {
+              "name": "large",
+              "description": "The title is not overlapping the actions, the small end slot is hidden."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ResponsiveToolbarComponentTagName",
+          "declaration": {
+            "name": "ResponsiveToolbarComponentTagName",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ResponsiveToolbarComponent",
+          "declaration": {
+            "name": "ResponsiveToolbarComponent",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ResponsiveToolbarComponent",
+            "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
           }
         }
       ]
@@ -1757,6 +1757,10 @@
             {
               "description": "Fired when the fullscreen state changes due to viewport size",
               "name": "forge-ai-dialog-fullscreen-change"
+            },
+            {
+              "description": "Fired when the dialog is closed",
+              "name": "forge-ai-dialog-close"
             }
           ],
           "attributes": [
@@ -1809,6 +1813,146 @@
           "declaration": {
             "name": "AiDialogComponent",
             "module": "src/lib/ai/ai-dialog/ai-dialog.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/ai-embedded-chat/ai-embedded-chat.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiEmbeddedChatComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-embedded-chat'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiEmbeddedChatComponent",
+          "slots": [
+            {
+              "description": "Default slot for messages (ai-user-message, ai-response-message components)",
+              "name": ""
+            },
+            {
+              "description": "Slot for AI suggestions component",
+              "name": "suggestions"
+            },
+            {
+              "description": "Slot for custom AI prompt component. If not provided, a default forge-ai-prompt will be used.",
+              "name": "prompt"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether the modal view is open when expanded.",
+              "attribute": "expanded"
+            },
+            {
+              "kind": "field",
+              "name": "gradientVariant",
+              "type": {
+                "text": "'low' | 'medium' | 'high'"
+              },
+              "privacy": "public",
+              "default": "'medium'",
+              "description": "Controls the gradient variant applied to the container.",
+              "attribute": "gradient-variant"
+            },
+            {
+              "kind": "method",
+              "name": "expand",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Expands the chat to modal view."
+            },
+            {
+              "kind": "method",
+              "name": "collapse",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Collapses the chat from modal view back to embedded view."
+            }
+          ],
+          "events": [
+            {
+              "description": "Fired when the chat is expanded to modal view",
+              "name": "forge-ai-embedded-chat-expand"
+            },
+            {
+              "description": "Fired when the chat is collapsed from modal view",
+              "name": "forge-ai-embedded-chat-collapse"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether the modal view is open when expanded.",
+              "fieldName": "expanded"
+            },
+            {
+              "name": "gradient-variant",
+              "type": {
+                "text": "'low' | 'medium' | 'high'"
+              },
+              "default": "'medium'",
+              "description": "Controls the gradient variant applied to the container.",
+              "fieldName": "gradientVariant"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-embedded-chat",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiEmbeddedChatComponentTagName",
+          "declaration": {
+            "name": "AiEmbeddedChatComponentTagName",
+            "module": "src/lib/ai/ai-embedded-chat/ai-embedded-chat.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiEmbeddedChatComponent",
+          "declaration": {
+            "name": "AiEmbeddedChatComponent",
+            "module": "src/lib/ai/ai-embedded-chat/ai-embedded-chat.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiEmbeddedChatComponent",
+            "module": "src/lib/ai/ai-embedded-chat/ai-embedded-chat.ts"
           }
         }
       ]
@@ -2163,90 +2307,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/ai/ai-icon/ai-icon.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "AiIconComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-ai-icon'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AiIconComponent",
-          "members": [
-            {
-              "kind": "field",
-              "name": "outline",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Whether to display the icon with an outline",
-              "attribute": "outline"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "outline",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Whether to display the icon with an outline",
-              "fieldName": "outline"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-ai-icon",
-          "customElement": true,
-          "states": [
-            {
-              "name": "no-border",
-              "description": "The icon is displayed without a border."
-            },
-            {
-              "name": "border",
-              "description": "The icon is displayed with a border."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AiIconComponentTagName",
-          "declaration": {
-            "name": "AiIconComponentTagName",
-            "module": "src/lib/ai/ai-icon/ai-icon.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AiIconComponent",
-          "declaration": {
-            "name": "AiIconComponent",
-            "module": "src/lib/ai/ai-icon/ai-icon.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "AiIconComponent",
-            "module": "src/lib/ai/ai-icon/ai-icon.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/ai/ai-gradient-container/ai-gradient-container.ts",
       "declarations": [
         {
@@ -2335,6 +2395,90 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/ai/ai-icon/ai-icon.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiIconComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-icon'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiIconComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "outline",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to display the icon with an outline",
+              "attribute": "outline"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "outline",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to display the icon with an outline",
+              "fieldName": "outline"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-icon",
+          "customElement": true,
+          "states": [
+            {
+              "name": "no-border",
+              "description": "The icon is displayed without a border."
+            },
+            {
+              "name": "border",
+              "description": "The icon is displayed with a border."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiIconComponentTagName",
+          "declaration": {
+            "name": "AiIconComponentTagName",
+            "module": "src/lib/ai/ai-icon/ai-icon.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiIconComponent",
+          "declaration": {
+            "name": "AiIconComponent",
+            "module": "src/lib/ai/ai-icon/ai-icon.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiIconComponent",
+            "module": "src/lib/ai/ai-icon/ai-icon.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/ai/ai-modal/ai-modal.ts",
       "declarations": [
         {
@@ -2351,20 +2495,17 @@
               "privacy": "public",
               "default": "false",
               "description": "Controls whether the modal is open or closed.",
-              "attribute": "open",
-              "reflects": true
+              "attribute": "open"
             },
             {
               "kind": "field",
               "name": "fullscreen",
               "type": {
-                "text": "boolean"
+                "text": "boolean | undefined"
               },
               "privacy": "public",
-              "default": "false",
-              "description": "Controls whether the modal is displayed in fullscreen mode.",
-              "attribute": "fullscreen",
-              "reflects": true
+              "description": "Controls whether the modal is displayed in fullscreen mode.\nWhen not explicitly set, this will be automatically determined based on viewport size.",
+              "attribute": "fullscreen"
             },
             {
               "kind": "method",
@@ -2394,13 +2535,19 @@
               "name": "forge-ai-modal-open",
               "type": {
                 "text": "CustomEvent"
-              }
+              },
+              "description": "Fired when the modal is opened"
             },
             {
               "name": "forge-ai-modal-close",
               "type": {
                 "text": "CustomEvent"
-              }
+              },
+              "description": "Fired when the modal is closed"
+            },
+            {
+              "description": "Fired when the fullscreen state changes",
+              "name": "forge-ai-modal-fullscreen-change"
             }
           ],
           "attributes": [
@@ -2416,10 +2563,9 @@
             {
               "name": "fullscreen",
               "type": {
-                "text": "boolean"
+                "text": "boolean | undefined"
               },
-              "default": "false",
-              "description": "Controls whether the modal is displayed in fullscreen mode.",
+              "description": "Controls whether the modal is displayed in fullscreen mode.\nWhen not explicitly set, this will be automatically determined based on viewport size.",
               "fieldName": "fullscreen"
             }
           ],
@@ -2955,89 +3101,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/ai/ai-threads/ai-threads.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "AiThreadsComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-ai-threads'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AiThreadsComponent",
-          "members": [
-            {
-              "kind": "field",
-              "name": "threads",
-              "type": {
-                "text": "Thread[]"
-              },
-              "privacy": "public",
-              "default": "[]",
-              "description": "Array of threads to display in the navigation list",
-              "attribute": "threads"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<AiThreadsSelectEventData>"
-              },
-              "description": "Fired when a thread is selected.",
-              "name": "forge-ai-threads-select"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "threads",
-              "type": {
-                "text": "Thread[]"
-              },
-              "default": "[]",
-              "description": "Array of threads to display in the navigation list",
-              "fieldName": "threads"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-ai-threads",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AiThreadsComponentTagName",
-          "declaration": {
-            "name": "AiThreadsComponentTagName",
-            "module": "src/lib/ai/ai-threads/ai-threads.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AiThreadsComponent",
-          "declaration": {
-            "name": "AiThreadsComponent",
-            "module": "src/lib/ai/ai-threads/ai-threads.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "AiThreadsComponent",
-            "module": "src/lib/ai/ai-threads/ai-threads.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/ai/ai-suggestions/ai-suggestions.ts",
       "declarations": [
         {
@@ -3145,6 +3208,89 @@
           "declaration": {
             "name": "AiSuggestionsComponent",
             "module": "src/lib/ai/ai-suggestions/ai-suggestions.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/ai-threads/ai-threads.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiThreadsComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-threads'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiThreadsComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "threads",
+              "type": {
+                "text": "Thread[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "description": "Array of threads to display in the navigation list",
+              "attribute": "threads"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<AiThreadsSelectEventData>"
+              },
+              "description": "Fired when a thread is selected.",
+              "name": "forge-ai-threads-select"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "threads",
+              "type": {
+                "text": "Thread[]"
+              },
+              "default": "[]",
+              "description": "Array of threads to display in the navigation list",
+              "fieldName": "threads"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-threads",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiThreadsComponentTagName",
+          "declaration": {
+            "name": "AiThreadsComponentTagName",
+            "module": "src/lib/ai/ai-threads/ai-threads.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiThreadsComponent",
+          "declaration": {
+            "name": "AiThreadsComponent",
+            "module": "src/lib/ai/ai-threads/ai-threads.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiThreadsComponent",
+            "module": "src/lib/ai/ai-threads/ai-threads.ts"
           }
         }
       ]
@@ -3260,6 +3406,81 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/ai-prompt/prompt-button/prompt-button.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "PromptButtonComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-prompt-button'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "PromptButtonComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the button is disabled",
+              "attribute": "disabled",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the button is disabled",
+              "fieldName": "disabled"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-prompt-button",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PromptButtonComponentTagName",
+          "declaration": {
+            "name": "PromptButtonComponentTagName",
+            "module": "src/lib/ai/ai-prompt/prompt-button/prompt-button.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "PromptButtonComponent",
+          "declaration": {
+            "name": "PromptButtonComponent",
+            "module": "src/lib/ai/ai-prompt/prompt-button/prompt-button.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "PromptButtonComponent",
+            "module": "src/lib/ai/ai-prompt/prompt-button/prompt-button.ts"
+          }
+        }
+      ]
     }
   ],
   "branchName": "ai-chat-widgets",
@@ -3300,6 +3521,10 @@
       "path": "src/lib/multi-select-header/multi-select-header.ts",
       "lineNumber": 28
     },
+    "QuantityFieldComponent": {
+      "path": "src/lib/quantity-field/quantity-field.ts",
+      "lineNumber": 35
+    },
     "ThemeToggleTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 28
@@ -3312,9 +3537,9 @@
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 41
     },
-    "QuantityFieldComponent": {
-      "path": "src/lib/quantity-field/quantity-field.ts",
-      "lineNumber": 35
+    "UserProfileComponent": {
+      "path": "src/lib/user-profile/user-profile.ts",
+      "lineNumber": 44
     },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
@@ -3327,10 +3552,6 @@
     "ResponsiveToolbarComponent": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 48
-    },
-    "UserProfileComponent": {
-      "path": "src/lib/user-profile/user-profile.ts",
-      "lineNumber": 44
     },
     "AiButtonComponent": {
       "path": "src/lib/ai/ai-button/ai-button.ts",
@@ -3362,7 +3583,11 @@
     },
     "AiDialogComponent": {
       "path": "src/lib/ai/ai-dialog/ai-dialog.ts",
-      "lineNumber": 31
+      "lineNumber": 33
+    },
+    "AiEmbeddedChatComponent": {
+      "path": "src/lib/ai/ai-embedded-chat/ai-embedded-chat.ts",
+      "lineNumber": 38
     },
     "AiEmptyStateComponent": {
       "path": "src/lib/ai/ai-empty-state/ai-empty-state.ts",
@@ -3376,10 +3601,6 @@
       "path": "src/lib/ai/ai-floating-chat/ai-floating-chat.ts",
       "lineNumber": 40
     },
-    "AiIconComponent": {
-      "path": "src/lib/ai/ai-icon/ai-icon.ts",
-      "lineNumber": 23
-    },
     "AiGradientContainerVariant": {
       "path": "src/lib/ai/ai-gradient-container/ai-gradient-container.ts",
       "lineNumber": 13
@@ -3388,9 +3609,13 @@
       "path": "src/lib/ai/ai-gradient-container/ai-gradient-container.ts",
       "lineNumber": 24
     },
+    "AiIconComponent": {
+      "path": "src/lib/ai/ai-icon/ai-icon.ts",
+      "lineNumber": 23
+    },
     "AiModalComponent": {
       "path": "src/lib/ai/ai-modal/ai-modal.ts",
-      "lineNumber": 10
+      "lineNumber": 28
     },
     "AiPromptSendEventData": {
       "path": "src/lib/ai/ai-prompt/ai-prompt.ts",
@@ -3424,18 +3649,6 @@
       "path": "src/lib/ai/ai-sidebar-chat/ai-sidebar-chat.ts",
       "lineNumber": 44
     },
-    "Thread": {
-      "path": "src/lib/ai/ai-threads/ai-threads.ts",
-      "lineNumber": 17
-    },
-    "AiThreadsSelectEventData": {
-      "path": "src/lib/ai/ai-threads/ai-threads.ts",
-      "lineNumber": 24
-    },
-    "AiThreadsComponent": {
-      "path": "src/lib/ai/ai-threads/ai-threads.ts",
-      "lineNumber": 36
-    },
     "Suggestion": {
       "path": "src/lib/ai/ai-suggestions/ai-suggestions.ts",
       "lineNumber": 17
@@ -3452,6 +3665,18 @@
       "path": "src/lib/ai/ai-suggestions/ai-suggestions.ts",
       "lineNumber": 39
     },
+    "Thread": {
+      "path": "src/lib/ai/ai-threads/ai-threads.ts",
+      "lineNumber": 17
+    },
+    "AiThreadsSelectEventData": {
+      "path": "src/lib/ai/ai-threads/ai-threads.ts",
+      "lineNumber": 24
+    },
+    "AiThreadsComponent": {
+      "path": "src/lib/ai/ai-threads/ai-threads.ts",
+      "lineNumber": 36
+    },
     "AiUserMessageComponent": {
       "path": "src/lib/ai/ai-user-message/ai-user-message.ts",
       "lineNumber": 17
@@ -3459,6 +3684,10 @@
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "lineNumber": 21
+    },
+    "PromptButtonComponent": {
+      "path": "src/lib/ai/ai-prompt/prompt-button/prompt-button.ts",
+      "lineNumber": 17
     }
   }
 }

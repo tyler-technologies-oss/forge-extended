@@ -9,6 +9,11 @@ export const ForgeAiModal = forwardRef((props, forwardedRef) => {
   /** Event listeners - run once */
   useEventListener(ref, "forge-ai-modal-open", props.onForgeAiModalOpen);
   useEventListener(ref, "forge-ai-modal-close", props.onForgeAiModalClose);
+  useEventListener(
+    ref,
+    "forge-ai-modal-fullscreen-change",
+    props.onForgeAiModalFullscreenChange,
+  );
 
   return React.createElement(
     "forge-ai-modal",

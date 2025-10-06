@@ -1,24 +1,25 @@
 import React, { forwardRef, useRef, useEffect } from "react";
-import "@tylertech/forge-extended/ai/ai-dialog";
-import { useEventListener, useProperties } from "./react-utils.js";
+import "@tylertech/forge-extended/ai/ai-embedded-chat";
+import { useEventListener } from "./react-utils.js";
 
-export const ForgeAiDialog = forwardRef((props, forwardedRef) => {
+export const ForgeAiEmbeddedChat = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
-  const { open, expanded, isFullscreen, ...filteredProps } = props;
+  const { expanded, gradientVariant, ...filteredProps } = props;
 
   /** Event listeners - run once */
   useEventListener(
     ref,
-    "forge-ai-dialog-fullscreen-change",
-    props.onForgeAiDialogFullscreenChange,
+    "forge-ai-embedded-chat-expand",
+    props.onForgeAiEmbeddedChatExpand,
   );
-  useEventListener(ref, "forge-ai-dialog-close", props.onForgeAiDialogClose);
-
-  /** Properties - run whenever a property has changed */
-  useProperties(ref, "isFullscreen", props.isFullscreen);
+  useEventListener(
+    ref,
+    "forge-ai-embedded-chat-collapse",
+    props.onForgeAiEmbeddedChatCollapse,
+  );
 
   return React.createElement(
-    "forge-ai-dialog",
+    "forge-ai-embedded-chat",
     {
       ref: (node) => {
         ref.current = node;
@@ -29,12 +30,12 @@ export const ForgeAiDialog = forwardRef((props, forwardedRef) => {
         }
       },
       ...filteredProps,
+      "gradient-variant": props.gradientVariant || props["gradient-variant"],
       class: props.className,
       exportparts: props.exportparts,
       for: props.htmlFor,
       part: props.part,
       tabindex: props.tabIndex,
-      open: props.open ? "" : undefined,
       expanded: props.expanded ? "" : undefined,
       style: { ...props.style },
     },

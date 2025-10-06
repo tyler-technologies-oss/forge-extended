@@ -36,8 +36,11 @@ export class AiModalComponent {
     return this.nativeElement.open;
   }
 
-  /** Controls whether the modal is displayed in fullscreen mode. */
-  @Input({ transform: booleanAttribute })
+  /**
+   * Controls whether the modal is displayed in fullscreen mode.
+   * When not explicitly set, this will be automatically determined based on viewport size.
+   */
+  @Input()
   public set fullscreen(value: AiModalComponentCustomElement['fullscreen']) {
     this.zone.runOutsideAngular(() => {
       this.nativeElement.fullscreen = value;

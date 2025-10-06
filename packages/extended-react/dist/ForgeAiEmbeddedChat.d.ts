@@ -1,12 +1,9 @@
 import React from "react";
-import {
-  ForgeAiModal as ForgeAiModalElement,
-  CustomEvent,
-} from "@tylertech/forge-extended/ai/ai-modal";
+import { ForgeAiEmbeddedChat as ForgeAiEmbeddedChatElement } from "@tylertech/forge-extended/ai/ai-embedded-chat";
 
-export type { ForgeAiModalElement, CustomEvent };
+export type { ForgeAiEmbeddedChatElement };
 
-export interface ForgeAiModalProps
+export interface ForgeAiEmbeddedChatProps
   extends Pick<
     React.AllHTMLAttributes<HTMLElement>,
     | "children"
@@ -22,12 +19,11 @@ export interface ForgeAiModalProps
     | "onFocus"
     | "onBlur"
   > {
-  /** Controls whether the modal is open or closed. */
-  open?: boolean;
+  /** Controls whether the modal view is open when expanded. */
+  expanded?: boolean;
 
-  /** Controls whether the modal is displayed in fullscreen mode.
-When not explicitly set, this will be automatically determined based on viewport size. */
-  fullscreen?: boolean | undefined;
+  /** Controls the gradient variant applied to the container. */
+  gradientVariant?: ForgeAiEmbeddedChatElement["gradientVariant"];
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
@@ -50,14 +46,11 @@ When not explicitly set, this will be automatically determined based on viewport
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
 
-  /** Fired when the modal is opened */
-  onForgeAiModalOpen?: (event: CustomEvent) => void;
+  /** Fired when the chat is expanded to modal view */
+  onForgeAiEmbeddedChatExpand?: (event: CustomEvent) => void;
 
-  /** Fired when the modal is closed */
-  onForgeAiModalClose?: (event: CustomEvent) => void;
-
-  /** Fired when the fullscreen state changes */
-  onForgeAiModalFullscreenChange?: (event: CustomEvent) => void;
+  /** Fired when the chat is collapsed from modal view */
+  onForgeAiEmbeddedChatCollapse?: (event: CustomEvent) => void;
 }
 
 /**
@@ -66,12 +59,16 @@ When not explicitly set, this will be automatically determined based on viewport
  *
  *
  * ### **Events:**
- *  - **forge-ai-modal-open** - Fired when the modal is opened
- * - **forge-ai-modal-close** - Fired when the modal is closed
- * - **forge-ai-modal-fullscreen-change** - Fired when the fullscreen state changes
+ *  - **forge-ai-embedded-chat-expand** - Fired when the chat is expanded to modal view
+ * - **forge-ai-embedded-chat-collapse** - Fired when the chat is collapsed from modal view
  *
  * ### **Methods:**
- *  - **show(): _void_** - Shows the modal dialog.
- * - **close(): _void_** - Closes the modal dialog.
+ *  - **expand(): _void_** - Expands the chat to modal view.
+ * - **collapse(): _void_** - Collapses the chat from modal view back to embedded view.
+ *
+ * ### **Slots:**
+ *  - _default_ - Default slot for messages (ai-user-message, ai-response-message components)
+ * - **suggestions** - Slot for AI suggestions component
+ * - **prompt** - Slot for custom AI prompt component. If not provided, a default forge-ai-prompt will be used.
  */
-export const ForgeAiModal: React.ForwardRefExoticComponent<ForgeAiModalProps>;
+export const ForgeAiEmbeddedChat: React.ForwardRefExoticComponent<ForgeAiEmbeddedChatProps>;
