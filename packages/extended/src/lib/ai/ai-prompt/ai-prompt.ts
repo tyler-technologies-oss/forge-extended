@@ -23,6 +23,8 @@ declare global {
 
 export interface AiPromptSendEventData {
   value: string;
+  time: string;
+  date: Date;
 }
 
 export type AiPromptVariant = 'stacked' | 'inline';
@@ -112,8 +114,13 @@ export class AiPromptComponent extends LitElement {
 
   private _handleSend(): void {
     if (this.value.trim()) {
+      const now = new Date();
       const event = new CustomEvent<AiPromptSendEventData>('forge-ai-prompt-send', {
-        detail: { value: this.value },
+        detail: {
+          value: this.value,
+          time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          date: now
+        },
         bubbles: true,
         composed: true,
         cancelable: true

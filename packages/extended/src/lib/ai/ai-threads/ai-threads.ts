@@ -12,6 +12,7 @@ declare global {
   interface HTMLElementEventMap {
     'forge-ai-threads-select': CustomEvent<AiThreadsSelectEventData>;
     'forge-ai-threads-new-chat': CustomEvent;
+    'forge-ai-threads-clear-history': CustomEvent;
   }
 }
 
@@ -34,6 +35,7 @@ export const AiThreadsComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-
  *
  * @event {CustomEvent<AiThreadsSelectEventData>} forge-ai-threads-select - Fired when a thread is selected.
  * @event {CustomEvent} forge-ai-threads-new-chat - Fired when the new chat button is clicked.
+ * @event {CustomEvent} forge-ai-threads-clear-history - Fired when the clear history button is clicked.
  */
 @customElement(AiThreadsComponentTagName)
 export class AiThreadsComponent extends LitElement {
@@ -103,6 +105,55 @@ export class AiThreadsComponent extends LitElement {
     }
   }
 
+  private _handlePromptSend(event: CustomEvent): void {
+    // Create a new thread from the prompt data
+    const newThread: Thread = {
+      id: this._generateThreadId(),
+      title: this._generateThreadTitle(event.detail.value),
+      time: event.detail.time,
+      date: event.detail.date
+    };
+
+    // Add the new thread to the beginning of the threads array
+    this.threads = [newThread, ...this.threads];
+
+    // Select the newly created thread
+    this._selectedThreadId = newThread.id;
+  }
+
+  private _generateThreadId(): string {
+    return `thread-${Date.now()}-${Math.random().toString(36).substring(2, 11)}`;
+  }
+
+  private _generateThreadTitle(message: string): string {
+    // Use the first 50 characters of the message as the thread title
+    const maxLength = 50;
+    const trimmed = message.trim();
+
+    if (trimmed.length <= maxLength) {
+      return trimmed;
+    }
+
+    // Find the last complete word within the limit
+    const truncated = trimmed.substring(0, maxLength);
+    const lastSpaceIndex = truncated.lastIndexOf(' ');
+
+    if (lastSpaceIndex > 0) {
+      return truncated.substring(0, lastSpaceIndex) + '...';
+    }
+
+    return truncated + '...';
+  }
+
+  private _handleClearHistoryClick(): void {
+    const event = new CustomEvent('forge-ai-threads-clear-history', {
+      bubbles: true,
+      composed: true,
+      cancelable: true
+    });
+    this.dispatchEvent(event);
+  }
+
   readonly #searchField = html`
     <div class="forge-field">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="forge-icon">
@@ -140,14 +191,16 @@ export class AiThreadsComponent extends LitElement {
     `;
   }
 
-  readonly #threadActions = html`
-    <button class="forge-button">
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="forge-icon">
-        <path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z" />
-      </svg>
-      Clear history
-    </button>
-  `;
+  get #threadActions(): TemplateResult {
+    return html`
+      <button class="forge-button" @click=${this._handleClearHistoryClick}>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="forge-icon">
+          <path d="M19 4h-3.5l-1-1h-5l-1 1H5v2h14M6 19a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V7H6z" />
+        </svg>
+        Clear history
+      </button>
+    `;
+  }
 
   get #threadListContainer(): TemplateResult {
     return html` <div class="thread-list-container">${this.#threadList} ${this.#threadActions}</div> `;
@@ -175,7 +228,9 @@ export class AiThreadsComponent extends LitElement {
     `;
   }
 
-  readonly #chatInterface = html` <forge-ai-chat-interface></forge-ai-chat-interface> `;
+  readonly #chatInterface = html`
+    <forge-ai-chat-interface @forge-ai-prompt-send=${this._handlePromptSend}></forge-ai-chat-interface>
+  `;
 
   public override render(): TemplateResult {
     return html`

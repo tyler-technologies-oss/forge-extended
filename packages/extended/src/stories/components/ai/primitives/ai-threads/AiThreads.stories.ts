@@ -4,7 +4,7 @@ import { action } from 'storybook/actions';
 
 import '$lib/ai/ai-threads';
 import { defineCardComponent } from '@tylertech/forge';
-import { Thread } from '$lib/ai/ai-threads';
+import { AiThreadsComponent, Thread } from '$lib/ai/ai-threads';
 
 defineCardComponent();
 
@@ -32,9 +32,28 @@ const meta = {
   },
   render: (args: any) => {
     const onThreadSelect = action('forge-ai-threads-select');
-    return html`<forge-ai-threads
-      .threads=${args.threads}
-      @forge-ai-threads-select=${onThreadSelect}></forge-ai-threads>`;
+    const onNewChat = action('forge-ai-threads-new-chat');
+    const onClearHistory = action('forge-ai-threads-clear-history');
+
+    let threadsComponentRef: AiThreadsComponent;
+
+    const handleClearHistory = (event: CustomEvent) => {
+      onClearHistory(event);
+      // Clear the threads array
+      const threadsComponent = event.target as AiThreadsComponent;
+      if (threadsComponent) {
+        threadsComponent.threads = [];
+        threadsComponentRef = threadsComponent;
+      }
+    };
+
+    return html`
+      <forge-ai-threads
+        .threads=${args.threads}
+        @forge-ai-threads-select=${onThreadSelect}
+        @forge-ai-threads-new-chat=${onNewChat}
+        @forge-ai-threads-clear-history=${handleClearHistory}></forge-ai-threads>
+    `;
   }
 } satisfies Meta;
 
