@@ -1,4 +1,4 @@
-import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, TemplateResult, html, nothing, unsafeCSS, PropertyValues } from 'lit';
 import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { tylIconLogout } from '@tylertech/tyler-icons';
@@ -10,7 +10,9 @@ import {
   defineIconComponent,
   definePopoverComponent,
   defineToolbarComponent,
-  IconRegistry
+  IconRegistry,
+  IPopoverToggleEventData,
+  toggleState
 } from '@tylertech/forge';
 import { ThemeToggleComponent, ThemeToggleTheme } from '../theme-toggle/theme-toggle';
 import { createRef, ref } from 'lit/directives/ref.js';
@@ -77,12 +79,30 @@ export class UserProfileComponent extends LitElement {
   @property({ type: Boolean, attribute: 'theme-toggle' })
   public themeToggle = false;
 
+  /** Controls whether the user profile popover is open */
+  @property({ type: Boolean })
+  public open = false;
+
   @queryAssignedNodes({ slot: 'link', flatten: true })
   private _slottedLinkNodes!: Node[];
 
+  readonly #internals: ElementInternals;
   readonly #linkSlot = html`<slot name="link" id="link-slot"></slot>`;
   readonly #signOutButtonSlot = html`<slot name="sign-out-button-text" id="sign-out-button-slot">Sign Out</slot>`;
   readonly #themeToggleRef = createRef<ThemeToggleComponent>();
+
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+  }
+
+  public override updated(changedProperties: PropertyValues<this>): void {
+    super.updated(changedProperties);
+
+    if (changedProperties.has('open')) {
+      toggleState(this.#internals, 'open', this.open);
+    }
+  }
 
   get #links(): TemplateResult | typeof nothing {
     const showLinks = this._slottedLinkNodes.length > 0;
@@ -132,6 +152,8 @@ export class UserProfileComponent extends LitElement {
         placement="bottom-end"
         arrow
         position-strategy="fixed"
+        .open=${this.open}
+        @forge-popover-toggle=${this.#handlePopoverToggle}
         @slotchange=${this.#handleSlotChange}>
         <div class="user-info-container">
           <forge-avatar
@@ -157,6 +179,10 @@ export class UserProfileComponent extends LitElement {
     if (this.#themeToggleRef.value) {
       this.#themeToggleRef.value.setTheme(value);
     }
+  }
+
+  #handlePopoverToggle(evt: CustomEvent<IPopoverToggleEventData>): void {
+    this.open = evt.detail.newState === 'open';
   }
 
   #handleSignOut(): void {

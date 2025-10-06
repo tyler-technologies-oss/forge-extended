@@ -6,6 +6,7 @@ export const ForgeUserProfile = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
   const {
     themeToggle,
+    open,
     fullName,
     email,
     imageUrl,
@@ -42,6 +43,7 @@ export const ForgeUserProfile = forwardRef((props, forwardedRef) => {
       part: props.part,
       tabindex: props.tabIndex,
       "theme-toggle": props.themeToggle ? "" : undefined,
+      open: props.open ? "" : undefined,
       style: { ...props.style },
     },
     props.children,
