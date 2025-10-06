@@ -109,6 +109,320 @@ describe('UserProfile', () => {
     expect(harness.buttonAvatar.imageUrl).to.equal(testImageUrl);
     expect(harness.popoverAvatar.imageUrl).to.equal(testImageUrl);
   });
+
+  it('should control popover state via open property', async () => {
+    const harness = await createFixture();
+
+    // Test opening via property
+    harness.el.open = true;
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.true;
+    expect(harness.popover.open).to.be.true;
+
+    // Test closing via property
+    harness.el.open = false;
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.false;
+    expect(harness.popover.open).to.be.false;
+  });
+
+  it('should support initial open state via fixture config', async () => {
+    const harness = await createFixture({ open: true });
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.true;
+    expect(harness.popover.open).to.be.true;
+  });
+
+  it('should set open attribute when open property is true', async () => {
+    const harness = await createFixture();
+
+    harness.el.open = true;
+    await nextFrame();
+
+    expect(harness.el.hasAttribute('open')).to.be.true;
+
+    harness.el.open = false;
+    await nextFrame();
+
+    expect(harness.el.hasAttribute('open')).to.be.false;
+  });
+
+  it('should handle forge-popover-toggle event for synchronization', async () => {
+    const harness = await createFixture();
+
+    // Manually dispatch the toggle event to test our handler
+    const openEvent = new CustomEvent('forge-popover-toggle', {
+      detail: { newState: 'open' },
+      bubbles: true
+    });
+
+    harness.popover.dispatchEvent(openEvent);
+    await nextFrame();
+
+    expect(harness.el.open).to.be.true;
+
+    // Test closing via event
+    const closeEvent = new CustomEvent('forge-popover-toggle', {
+      detail: { newState: 'closed' },
+      bubbles: true
+    });
+
+    harness.popover.dispatchEvent(closeEvent);
+    await nextFrame();
+
+    expect(harness.el.open).to.be.false;
+  });
+
+  it('should synchronize when popover is opened via click', async () => {
+    const harness = await createFixture();
+
+    // Click the avatar button
+    await harness.clickAvatarButton();
+    await nextFrame();
+    await harness.exitAnimation();
+
+    // The popover should be open
+    expect(harness.popover.open).to.be.true;
+
+    // Wait for the toggle event to sync our component state
+    await nextFrame();
+
+    // Our component should be synchronized
+    expect(harness.el.open).to.be.true;
+  });
+
+  it('should synchronize when popover is closed via escape key', async () => {
+    const harness = await createFixture();
+
+    // Open the popover first
+    harness.el.open = true;
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.true;
+    expect(harness.popover.open).to.be.true;
+
+    // Press escape key
+    await harness.pressEscapeKey();
+    await nextFrame();
+    await harness.exitAnimation();
+
+    // Both should be closed and synchronized
+    expect(harness.popover.open).to.be.false;
+    expect(harness.el.open).to.be.false;
+  });
+
+  it('should synchronize when popover is closed via light dismiss', async () => {
+    const harness = await createFixture();
+
+    // Open the popover
+    harness.el.open = true;
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.true;
+    expect(harness.popover.open).to.be.true;
+
+    // Simulate light dismiss by manually firing the event
+    // (since we can't easily simulate clicking outside in tests)
+    const dismissEvent = new CustomEvent('forge-popover-toggle', {
+      detail: { newState: 'closed' },
+      bubbles: true
+    });
+
+    harness.popover.dispatchEvent(dismissEvent);
+    await nextFrame();
+
+    expect(harness.el.open).to.be.false;
+  });
+
+  it('should toggle popover multiple times correctly', async () => {
+    const harness = await createFixture();
+
+    // Test multiple toggles
+    for (let i = 0; i < 3; i++) {
+      harness.el.toggleProfile();
+      await nextFrame();
+      await harness.exitAnimation();
+
+      expect(harness.el.open).to.be.true;
+      expect(harness.popover.open).to.be.true;
+
+      harness.el.toggleProfile();
+      await nextFrame();
+      await harness.exitAnimation();
+
+      expect(harness.el.open).to.be.false;
+      expect(harness.popover.open).to.be.false;
+    }
+  });
+
+  it('should handle rapid open/close operations', async () => {
+    const harness = await createFixture();
+
+    // Rapidly open and close
+    harness.el.open = true;
+    harness.el.open = false;
+    harness.el.open = true;
+
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.true;
+    expect(harness.popover.open).to.be.true;
+  });
+
+  it('should have openProfile method that opens the popover', async () => {
+    const harness = await createFixture();
+
+    expect(typeof harness.el.openProfile).to.equal('function');
+    expect(harness.el.open).to.be.false;
+    expect(harness.popover.open).to.be.false;
+
+    harness.el.openProfile();
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.true;
+    expect(harness.popover.open).to.be.true;
+  });
+
+  it('should have closeProfile method that closes the popover', async () => {
+    const harness = await createFixture({ open: true });
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(typeof harness.el.closeProfile).to.equal('function');
+    expect(harness.el.open).to.be.true;
+    expect(harness.popover.open).to.be.true;
+
+    harness.el.closeProfile();
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.false;
+    expect(harness.popover.open).to.be.false;
+  });
+
+  it('should have toggleProfile method that toggles popover state', async () => {
+    const harness = await createFixture();
+
+    expect(typeof harness.el.toggleProfile).to.equal('function');
+
+    // Test toggle from closed to open
+    harness.el.toggleProfile();
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.true;
+    expect(harness.popover.open).to.be.true;
+
+    // Test toggle from open to closed
+    harness.el.toggleProfile();
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.false;
+    expect(harness.popover.open).to.be.false;
+  });
+
+  it('should have setTheme method that sets theme toggle theme', async () => {
+    const harness = await createFixture({ themeToggle: true });
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(typeof harness.el.setTheme).to.equal('function');
+
+    // Verify theme toggle container is present when themeToggle is true
+    expect(harness.themeToggleContainerEl).to.exist;
+
+    // Test that setTheme method can be called without throwing errors
+    expect(() => harness.el.setTheme('light')).to.not.throw();
+    expect(() => harness.el.setTheme('dark')).to.not.throw();
+    expect(() => harness.el.setTheme('system')).to.not.throw();
+
+    // If we can access the theme toggle component directly, test that setTheme was called
+    if (harness.themeToggle && typeof harness.themeToggle.setTheme === 'function') {
+      const setThemeSpy = sinon.spy(harness.themeToggle, 'setTheme');
+
+      harness.el.setTheme('light');
+      expect(setThemeSpy).to.have.been.calledWith('light');
+
+      setThemeSpy.restore();
+    }
+  });
+
+  it('should handle setTheme gracefully when theme toggle is not present', async () => {
+    const harness = await createFixture({ themeToggle: false });
+    await nextFrame();
+
+    // Should not throw error when theme toggle is not present
+    expect(() => harness.el.setTheme('light')).to.not.throw();
+    expect(() => harness.el.setTheme('dark')).to.not.throw();
+    expect(() => harness.el.setTheme('system')).to.not.throw();
+  });
+
+  it('should call openProfile and closeProfile methods multiple times without issues', async () => {
+    const harness = await createFixture();
+
+    // Call openProfile multiple times
+    harness.el.openProfile();
+    harness.el.openProfile();
+    harness.el.openProfile();
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.true;
+    expect(harness.popover.open).to.be.true;
+
+    // Call closeProfile multiple times
+    harness.el.closeProfile();
+    harness.el.closeProfile();
+    harness.el.closeProfile();
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.false;
+    expect(harness.popover.open).to.be.false;
+  });
+
+  it('should open profile and then close it using different methods', async () => {
+    const harness = await createFixture();
+
+    // Open with openProfile
+    harness.el.openProfile();
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.true;
+
+    // Close with property
+    harness.el.open = false;
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.false;
+
+    // Open with property
+    harness.el.open = true;
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.true;
+
+    // Close with closeProfile
+    harness.el.closeProfile();
+    await nextFrame();
+    await harness.exitAnimation();
+
+    expect(harness.el.open).to.be.false;
+  });
 });
 
 class UserProfileHarness {
@@ -154,6 +468,10 @@ class UserProfileHarness {
     return this.el.shadowRoot!.querySelector('#sign-out-button') as ButtonComponent;
   }
 
+  public get themeToggle(): any {
+    return this.el.shadowRoot!.querySelector('forge-theme-toggle');
+  }
+
   public async pressEscapeKey(): Promise<void> {
     await sendKeys({ press: 'Escape' });
   }
@@ -190,6 +508,7 @@ interface UserProfileFixtureConfig {
   profileLinkTitle?: string;
   profileLinkIcon?: string;
   signOutButtonText?: string;
+  open?: boolean;
 }
 
 async function createFixture({
@@ -200,7 +519,8 @@ async function createFixture({
   imageUrl,
   profileLinkTitle = 'Profile Link',
   profileLinkIcon = 'settings',
-  signOutButtonText
+  signOutButtonText,
+  open = false
 }: UserProfileFixtureConfig = {}): Promise<UserProfileHarness> {
   const el = await fixture<UserProfileComponent>(html`
     <forge-user-profile
@@ -208,7 +528,8 @@ async function createFixture({
       .themeToggle=${themeToggle}
       .fullName=${fullName}
       .email=${email}
-      .imageUrl=${imageUrl || ''}>
+      .imageUrl=${imageUrl || ''}
+      .open=${open}>
       ${profileLinkTitle
         ? html`<forge-profile-link slot="link">
             <forge-icon slot="icon" name=${profileLinkIcon} external></forge-icon>
