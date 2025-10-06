@@ -83,6 +83,17 @@ export class UserProfileComponent {
     return this.nativeElement.themeToggle;
   }
 
+  /** Controls whether the user profile popover is open */
+  @Input({ transform: booleanAttribute })
+  public set open(value: UserProfileComponentCustomElement['open']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.open = value;
+    });
+  }
+  public get open(): UserProfileComponentCustomElement['open'] {
+    return this.nativeElement.open;
+  }
+
   /** Sets the theme for the theme toggle. */
   public setTheme(
     ...args: Parameters<UserProfileComponentCustomElement['setTheme']>
