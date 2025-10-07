@@ -8,3 +8,9 @@
 ) {
   background-image: linear-gradient($surface-color, $surface-color), linear-gradient(to top, $bottom-color, $top-color);
 }
+
+@mixin ai-chain-of-thought-grid() {
+  display: grid;
+  grid-template-columns: 56px 1fr auto;
+  align-items: center;
+}
