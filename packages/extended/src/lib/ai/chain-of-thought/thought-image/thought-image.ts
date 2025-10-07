@@ -1,5 +1,7 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
+import '../thought-base/thought-base';
 
 import styles from './thought-image.scss?inline';
 
@@ -24,21 +26,16 @@ export class ThoughtImageComponent extends LitElement {
 
   public override render(): TemplateResult {
     return html`
-      <div class="thought-image-container">
-        <div class="title-container">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon forge-icon">
-            <path
-              d="M19 19H5V5h14m0-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-5.04 9.29-2.75 3.54-1.96-2.36L6.5 17h11z" />
-          </svg>
-          <span class="title"><slot name="title"></slot></span>
+      <forge-ai-thought-base step=${ifDefined(this.step)}>
+        <svg slot="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="forge-icon">
+          <path
+            d="M19 19H5V5h14m0-2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V5a2 2 0 0 0-2-2m-5.04 9.29-2.75 3.54-1.96-2.36L6.5 17h11z" />
+        </svg>
+        <slot slot="title" name="title"></slot>
+        <div class="image-container">
+          <slot name="image"></slot>
         </div>
-        <div class="content-container">
-          <div class="vertical-line"></div>
-          <div class="image-container">
-            <slot name="image"></slot>
-          </div>
-        </div>
-      </div>
+      </forge-ai-thought-base>
     `;
   }
 }
