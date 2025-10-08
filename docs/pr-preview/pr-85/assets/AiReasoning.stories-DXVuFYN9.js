@@ -1,0 +1,31 @@
+import{r as h,i as c,x as d}from"./iframe-BSSn60lo.js";import{t as m}from"./custom-element-BhZVzxrc.js";import{n as u}from"./property-Dphg065k.js";import{r as x}from"./state-1OwxES6Q.js";import"./ai-reasoning-header-BpZXlm4Y.js";import"./ai-gradient-container-BVABLN8q.js";import"./ai-chat-interface-O3HtUQSx.js";import"./utils-DDUGSWJu.js";import"./query-assigned-nodes-cwDSNLIu.js";import"./base-CShCMygk.js";import"./when-3fO0zp9C.js";import"./ai-chat-header-Bj6TrKNm.js";import"./ai-icon-D-68gaxJ.js";import"./ai-prompt-Bw8Lq2C0.js";import"./index-BFK0vbhe.js";import"./base-adapter-BcfXthUc.js";import"./base-button-adapter-X48OU3BA.js";import"./icon-registry-Cnqmm39J.js";import"./with-default-aria-CyPWr3-8.js";import"./index-xk1I0I2o.js";import"./base-lit-element-CTgRKhwp.js";import"./index-Cx7N7bc6.js";import"./field-CqFQ4mbc.js";import"./index-Cb5c61DV.js";import"./ai-empty-state-CmqgSXxA.js";const _=`/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */:host{display:block}.reasoning{overflow:hidden;max-height:0;transition:max-height .3s ease-out}.reasoning.expanded{max-height:500px}.content{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-body1-font-family, var(--forge-typography-font-family, "Roboto", sans-serif));font-size:var(--forge-typography-body1-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-body-font-size-scale, .875)));font-weight:var(--forge-typography-body1-font-weight, 400);line-height:var(--forge-typography-body1-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-body-line-height-scale, 1.125)));letter-spacing:var(--forge-typography-body1-letter-spacing, .0357142857em);text-transform:var(--forge-typography-body1-text-transform, inherit);text-decoration:var(--forge-typography-body1-text-decoration, inherit);padding:var(--forge-spacing-medium, 16px)}`;var v=Object.defineProperty,T=Object.getOwnPropertyDescriptor,f=(e,n,i,o)=>{for(var t=o>1?void 0:o?T(n,i):n,r=e.length-1,a;r>=0;r--)(a=e[r])&&(t=(o?a(n,i,t):a(t))||t);return o&&t&&v(n,i,t),t};const b="forge-ai-reasoning";let p=class extends c{constructor(){super(...arguments),this.expanded=!1}render(){return d`
+      <slot name="header" @toggle=${this._handleHeaderToggle}></slot>
+      <div class="reasoning ${this.expanded?"expanded":""}">
+        <div class="content">
+          <slot></slot>
+        </div>
+      </div>
+    `}_handleHeaderToggle(e){this.expanded=e.detail.expanded}};p.styles=h(_);f([u({type:Boolean,reflect:!0})],p.prototype,"expanded",2);p=f([m(b)],p);const A=":host{display:block}.reasoning-content{padding:.5rem 0}";var C=Object.defineProperty,$=Object.getOwnPropertyDescriptor,y=(e,n,i,o)=>{for(var t=o>1?void 0:o?$(n,i):n,r=e.length-1,a;r>=0;r--)(a=e[r])&&(t=(o?a(n,i,t):a(t))||t);return o&&t&&C(n,i,t),t};const w="forge-ai-reasoning-content";let l=class extends c{constructor(){super(...arguments),this._displayedText="",this._fullText="",this._animationId=null,this._hasStarted=!1}firstUpdated(){setTimeout(()=>{this._extractTextAndAnimate()},100)}_handleSlotChange(){this._hasStarted||this._extractTextAndAnimate()}_extractTextAndAnimate(){if(this._hasStarted)return;const e=this.shadowRoot?.querySelector("slot");if(e){const n=e.assignedNodes({flatten:!0});this._fullText=n.map(i=>i.textContent||"").join("").trim(),this._fullText&&(this._hasStarted=!0,this._startTypingAnimation())}}_startTypingAnimation(){this._animationId&&clearTimeout(this._animationId),this._displayedText="";let e=0;const n=10,i=()=>{e<this._fullText.length?(this._displayedText=this._fullText.substring(0,e+1),e++,this._animationId=setTimeout(i,n)):this._animationId=null};i()}render(){return this._hasStarted?d`
+        <div class="reasoning-content">
+          <span class="animated-text">${this._displayedText}</span>
+        </div>
+      `:d`
+      <div class="reasoning-content">
+        <slot @slotchange=${this._handleSlotChange}></slot>
+      </div>
+    `}};l.styles=h(A);y([x()],l.prototype,"_displayedText",2);l=y([m(w)],l);const I="forge-ai-reasoning",k={title:"AI/Primitives/Reasoning",component:I,argTypes:{expanded:{control:"boolean",description:"Whether the reasoning is expanded"},reasoning:{control:"boolean",description:"Whether this is a reasoning component"},title:{control:"text",description:"Title for the reasoning section"}},args:{expanded:!0,title:"AI Reasoning Process",reasoningTitle:"Thinking..."},render:e=>{const n=["Based on the provided information, I can reason through this step by step:","Observation: The user is asking about a complex technical problem.","Analysis: Multiple factors need to be considered including performance, scalability, and maintainability.","Evaluation: The proposed solution addresses the core requirements while maintaining code quality.","Conclusion: This approach provides the best balance of functionality and maintainability. Therefore, I recommend proceeding with the suggested implementation."],i=d`
+      <forge-ai-gradient-container style="height: 800px; width: 100%;">
+        <forge-ai-chat-interface>
+          <forge-ai-reasoning .expanded=${e.expanded} id="reasoning-container">
+            <forge-ai-reasoning-header slot="header" .expanded=${e.expanded} .reasoning=${e.reasoning}>
+              <span slot="reasoning-title">${e.reasoningTitle}</span>
+              <span slot="title">${e.title}</span>
+            </forge-ai-reasoning-header>
+          </forge-ai-reasoning>
+        </forge-ai-chat-interface>
+      </forge-ai-gradient-container>
+    `;return setTimeout(()=>{const o=document.getElementById("reasoning-container"),t=o?.querySelector("forge-ai-reasoning-header");o&&t&&!o.hasAttribute("data-content-loaded")&&(o.setAttribute("data-content-loaded","true"),n.forEach((r,a)=>{setTimeout(()=>{a===0&&(t.reasoning=!0);const g=document.createElement("forge-ai-reasoning-content");g.textContent=r,o.appendChild(g),a===n.length-1&&setTimeout(()=>{t.reasoning=!1},r.length*10+500)},a*2e3)}))},100),i}},s={};s.parameters={...s.parameters,docs:{...s.parameters?.docs,source:{originalSource:"{}",...s.parameters?.docs?.source}}};const ee=["Demo"];export{s as Demo,ee as __namedExportsOrder,k as default};

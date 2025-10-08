@@ -1,0 +1,6 @@
+import{x as o}from"./iframe-BSSn60lo.js";import"./ai-reasoning-header-BpZXlm4Y.js";import"./custom-element-BhZVzxrc.js";import"./property-Dphg065k.js";const{action:n}=__STORYBOOK_MODULE_ACTIONS__,r="forge-ai-reasoning-header",p={title:"AI/Primitives/Reasoning Header",component:r,argTypes:{expanded:{control:"boolean",description:"Whether the header is expanded"},reasoning:{control:"boolean",description:"Whether this is a reasoning header"},titleText:{control:"text",description:"Title text for the header (slotted content)"},reasoningText:{control:"text",description:"Reasoning text for the header (slotted content when reasoning=true)"}},args:{expanded:!0,reasoning:!1,titleText:"Reasoning Process",reasoningText:"AI is analyzing the problem..."},render:e=>o`
+      <forge-ai-reasoning-header .expanded=${e.expanded} .reasoning=${e.reasoning} @toggle=${n("toggle")}>
+        <span slot="reasoning-title">${e.reasoningText}</span>
+        <span slot="title">${e.titleText}</span>
+      </forge-ai-reasoning-header>
+    `},t={};t.parameters={...t.parameters,docs:{...t.parameters?.docs,source:{originalSource:"{}",...t.parameters?.docs?.source}}};const c=["Demo"];export{t as Demo,c as __namedExportsOrder,p as default};
