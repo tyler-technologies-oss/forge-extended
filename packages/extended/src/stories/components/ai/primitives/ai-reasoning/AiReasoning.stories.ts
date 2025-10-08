@@ -12,6 +12,7 @@ const component = 'forge-ai-reasoning';
 const meta = {
   title: 'AI/Primitives/Reasoning',
   component,
+  tags: ['autodocs'],
   argTypes: {
     expanded: {
       control: 'boolean',
