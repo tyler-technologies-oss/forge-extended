@@ -18,7 +18,7 @@ const meta = {
     return html`
       <forge-ai-artifact>
         <span slot="start">Artifact</span>
-        <forge-stack inline slot="end" gap="0" alignment="center">
+        <forge-stack inline slot="actions" gap="0" alignment="center">
           <forge-icon-button aria-label="Copy to clipboard">
             <forge-icon name="content_copy"></forge-icon>
           </forge-icon-button>

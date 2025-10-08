@@ -26,7 +26,7 @@ export class AiArtifactComponent extends LitElement {
             <slot name="start"></slot>
           </div>
           <div class="forge-toolbar__end">
-            <slot name="end"></slot>
+            <slot name="actions"></slot>
           </div>
         </div>
         <div class="content">
