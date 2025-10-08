@@ -30,7 +30,7 @@ export class AiChainOfThoughtComponent extends LitElement {
   public override render(): TemplateResult {
     return html`
       <forge-ai-reasoning-header .expanded=${this.expanded} @toggle=${this._handleHeaderToggle}>
-        <slot name="title">${this.title}</slot>
+        <span slot="title">${this.title}</span>
       </forge-ai-reasoning-header>
       <div
         class="forge-expansion-panel thought-content-container ${this.expanded ? 'forge-expansion-panel--open' : ''}">

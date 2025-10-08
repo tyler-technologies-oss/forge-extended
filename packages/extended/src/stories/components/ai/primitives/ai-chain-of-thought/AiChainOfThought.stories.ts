@@ -20,9 +20,23 @@ const snowboardingSources = [
 const meta = {
   title: 'AI/Primitives/Chain of Thought',
   component,
-  render: () => {
+  argTypes: {
+    expanded: {
+      control: 'boolean',
+      description: 'Whether the chain of thought is expanded'
+    },
+    title: {
+      control: 'text',
+      description: 'Title for the chain of thought section'
+    }
+  },
+  args: {
+    expanded: false,
+    title: 'Chain of Thought'
+  },
+  render: (args: any) => {
     return html`
-      <forge-ai-chain-of-thought>
+      <forge-ai-chain-of-thought .expanded=${args.expanded} .title=${args.title}>
         <forge-ai-thought-search-result .sources=${snowboardingSources}>
           <span slot="title">Searching for snowboarding information</span>
           Found 2 relevant articles about advanced snowboarding techniques and safety tips for experienced riders.
@@ -64,7 +78,7 @@ export const InChatInterface: Story = {
           <forge-ai-response-message>
             <p>I'll analyze the snowboarding image for you. Let me break down my thought process:</p>
 
-            <forge-ai-chain-of-thought>
+            <forge-ai-chain-of-thought title="Analyzing Snowboarding Technique">
               <forge-ai-thought-search-result .sources=${snowboardingSources}>
                 <span slot="title">Searching for snowboarding information</span>
                 Found 2 relevant articles about advanced snowboarding techniques and safety tips for experienced riders.

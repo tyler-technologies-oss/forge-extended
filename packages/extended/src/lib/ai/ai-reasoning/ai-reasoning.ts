@@ -1,5 +1,5 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 
 import styles from './ai-reasoning.scss?inline';
 
@@ -18,9 +18,14 @@ export const AiReasoningComponentTagName: keyof HTMLElementTagNameMap = 'forge-a
 export class AiReasoningComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
+  /** Whether the reasoning is expanded */
+  @property({ type: Boolean, reflect: true })
+  public expanded = false;
+
   public override render(): TemplateResult {
     return html`
-      <div class="reasoning">
+      <slot name="header"></slot>
+      <div class="reasoning ${this.expanded ? 'expanded' : ''}">
         <div class="content">
           <slot></slot>
         </div>
