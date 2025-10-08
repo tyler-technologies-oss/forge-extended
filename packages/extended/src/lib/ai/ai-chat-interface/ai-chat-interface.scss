@@ -20,7 +20,7 @@
 .messages-container {
   @include forge-scrollbar.base;
 
-  padding: #{forge-spacing.variable(medium)};
+  scrollbar-gutter: stable both-edges;
   overflow-y: auto;
   background: linear-gradient(
     to top,

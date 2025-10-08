@@ -18,10 +18,19 @@
 
 .source {
   @include forge-typography.style(button);
+
+  display: flex;
+  align-items: center;
+  gap: 16px;
   border-radius: #{forge-shape.variable(medium)};
   background-color: #{forge-theme.variable(surface-container)};
   padding-inline: #{forge-spacing.variable(medium)};
   padding-block: #{forge-spacing.variable(xxsmall)};
   color: #{forge-theme.variable(text-high)};
   cursor: pointer;
+
+  svg {
+    height: 16px;
+    width: 16px;
+  }
 }

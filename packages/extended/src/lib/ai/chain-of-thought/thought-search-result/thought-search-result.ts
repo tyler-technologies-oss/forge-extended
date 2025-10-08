@@ -46,7 +46,13 @@ export class ThoughtSearchResultComponent extends LitElement {
         <div class="sources-container">
           ${this.sources.map(
             source => html`
-              <a href="${source.href}" class="source" target="_blank" rel="noopener noreferrer"> ${source.title} </a>
+              <a href="${source.href}" class="source" target="_blank" rel="noopener noreferrer">
+                <span>${source.title}</span>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="forge-icon">
+                  <path
+                    d="M14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3m-2 16H5V5h7V3H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7h-2z" />
+                </svg>
+              </a>
             `
           )}
         </div>
