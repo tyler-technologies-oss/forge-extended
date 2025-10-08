@@ -14,6 +14,8 @@ export * from './ai-gradient-container';
 export * from './ai-icon';
 export * from './ai-modal';
 export * from './ai-prompt';
+export * from './ai-reasoning';
+export * from './ai-reasoning-header';
 export * from './ai-response-message';
 export * from './ai-sidebar';
 export * from './ai-sidebar-chat';

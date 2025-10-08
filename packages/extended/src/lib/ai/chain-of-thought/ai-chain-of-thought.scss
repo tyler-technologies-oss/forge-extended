@@ -14,26 +14,6 @@
   @include mixins.ai-chain-of-thought-grid;
 }
 
-.button-header {
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  background: none;
-  border: none;
-  cursor: pointer;
-  text-align: start;
-
-  svg {
-    fill: var(--forge-theme-text-medium);
-  }
-}
-
-.button-header-text {
-  @include forge-typography.style(body2);
-  color: #{forge-theme.variable(text-medium)};
-  grid-column: 1/2;
-}
-
 .thought-content-container {
   margin-block-start: #{forge-spacing.variable(medium)};
 }

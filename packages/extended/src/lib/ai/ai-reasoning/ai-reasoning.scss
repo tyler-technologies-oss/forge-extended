@@ -1,0 +1,9 @@
+@use '@tylertech/forge/sass/typography' as forge-typography;
+
+:host {
+  display: block;
+}
+
+.content {
+  @include forge-typography.style(body1);
+}
