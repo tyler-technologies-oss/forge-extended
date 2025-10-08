@@ -16,13 +16,11 @@
 
 .button-header {
   width: 100%;
-  align-items: center;
-  justify-items: start;
-  padding-inline: #{forge-spacing.variable(medium)};
+  display: flex;
+  justify-content: space-between;
   background: none;
   border: none;
   cursor: pointer;
-  padding-inline: 0;
   text-align: start;
 
   svg {
@@ -33,6 +31,7 @@
 .button-header-text {
   @include forge-typography.style(body2);
   color: #{forge-theme.variable(text-medium)};
+  grid-column: 1/2;
 }
 
 .thought-content-container {
