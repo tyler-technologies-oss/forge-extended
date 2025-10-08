@@ -1,3 +1,4 @@
+export * from './ai-artifact';
 export * from './ai-suggestions';
 export * from './ai-actions-toolbar';
 export * from './ai-button';

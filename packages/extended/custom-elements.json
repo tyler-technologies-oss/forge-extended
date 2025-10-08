@@ -1287,6 +1287,57 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/ai/ai-artifact/ai-artifact.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiArtifactComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-artifact'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiArtifactComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-artifact",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiArtifactComponentTagName",
+          "declaration": {
+            "name": "AiArtifactComponentTagName",
+            "module": "src/lib/ai/ai-artifact/ai-artifact.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiArtifactComponent",
+          "declaration": {
+            "name": "AiArtifactComponent",
+            "module": "src/lib/ai/ai-artifact/ai-artifact.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiArtifactComponent",
+            "module": "src/lib/ai/ai-artifact/ai-artifact.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/ai/ai-button/ai-button.ts",
       "declarations": [
         {
@@ -3593,20 +3644,34 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/ai/chain-of-thought/thought-detail/thought-detail.ts",
+      "path": "src/lib/ai/chain-of-thought/thought-base/thought-base.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "ThoughtDetailComponentTagName",
+          "name": "ThoughtBaseComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-thought-detail'"
+          "default": "'forge-ai-thought-base'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "ThoughtDetailComponent",
+          "name": "ThoughtBaseComponent",
+          "slots": [
+            {
+              "description": "Icon to display in the header",
+              "name": "icon"
+            },
+            {
+              "description": "Title content for the header",
+              "name": "title"
+            },
+            {
+              "description": "Main content area",
+              "name": ""
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -3615,19 +3680,8 @@
                 "text": "number | undefined"
               },
               "privacy": "public",
-              "description": "The step number for this thought detail",
+              "description": "The step number for this thought",
               "attribute": "step"
-            },
-            {
-              "kind": "field",
-              "name": "title",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The title or description of this thought step",
-              "attribute": "title"
             }
           ],
           "attributes": [
@@ -3636,24 +3690,66 @@
               "type": {
                 "text": "number | undefined"
               },
-              "description": "The step number for this thought detail",
+              "description": "The step number for this thought",
               "fieldName": "step"
-            },
-            {
-              "name": "title",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The title or description of this thought step",
-              "fieldName": "title"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-thought-detail",
+          "tagName": "forge-ai-thought-base",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ThoughtBaseComponentTagName",
+          "declaration": {
+            "name": "ThoughtBaseComponentTagName",
+            "module": "src/lib/ai/chain-of-thought/thought-base/thought-base.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ThoughtBaseComponent",
+          "declaration": {
+            "name": "ThoughtBaseComponent",
+            "module": "src/lib/ai/chain-of-thought/thought-base/thought-base.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ThoughtBaseComponent",
+            "module": "src/lib/ai/chain-of-thought/thought-base/thought-base.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/chain-of-thought/thought-detail/thought-detail.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ThoughtDetailComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-thought-detail'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ThoughtDetailComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-thought-detail",
           "customElement": true
         }
       ],
@@ -3693,7 +3789,7 @@
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-thought-image'"
+          "default": "'forge-ai-thought-image'"
         },
         {
           "kind": "class",
@@ -3709,17 +3805,6 @@
               "privacy": "public",
               "description": "The step number for this thought image",
               "attribute": "step"
-            },
-            {
-              "kind": "field",
-              "name": "title",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The title or description of this thought step",
-              "attribute": "title"
             }
           ],
           "attributes": [
@@ -3730,22 +3815,13 @@
               },
               "description": "The step number for this thought image",
               "fieldName": "step"
-            },
-            {
-              "name": "title",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The title or description of this thought step",
-              "fieldName": "title"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-thought-image",
+          "tagName": "forge-ai-thought-image",
           "customElement": true
         }
       ],
@@ -3785,7 +3861,7 @@
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-thought-search-result'"
+          "default": "'forge-ai-thought-search-result'"
         },
         {
           "kind": "class",
@@ -3804,14 +3880,14 @@
             },
             {
               "kind": "field",
-              "name": "title",
+              "name": "sources",
               "type": {
-                "text": "string"
+                "text": "Source[]"
               },
               "privacy": "public",
-              "default": "''",
-              "description": "The title or description of this thought step",
-              "attribute": "title"
+              "default": "[]",
+              "description": "Array of sources for the search result",
+              "attribute": "sources"
             }
           ],
           "attributes": [
@@ -3824,20 +3900,20 @@
               "fieldName": "step"
             },
             {
-              "name": "title",
+              "name": "sources",
               "type": {
-                "text": "string"
+                "text": "Source[]"
               },
-              "default": "''",
-              "description": "The title or description of this thought step",
-              "fieldName": "title"
+              "default": "[]",
+              "description": "Array of sources for the search result",
+              "fieldName": "sources"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-thought-search-result",
+          "tagName": "forge-ai-thought-search-result",
           "customElement": true
         }
       ],
@@ -3949,6 +4025,10 @@
     "AiActionsToolbarComponent": {
       "path": "src/lib/ai/ai-actions-toolbar/ai-actions-toolbar.ts",
       "lineNumber": 30
+    },
+    "AiArtifactComponent": {
+      "path": "src/lib/ai/ai-artifact/ai-artifact.ts",
+      "lineNumber": 17
     },
     "AiButtonComponent": {
       "path": "src/lib/ai/ai-button/ai-button.ts",
@@ -4068,7 +4148,7 @@
     },
     "AiChainOfThoughtComponent": {
       "path": "src/lib/ai/chain-of-thought/ai-chain-of-thought.ts",
-      "lineNumber": 18
+      "lineNumber": 17
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
@@ -4078,17 +4158,25 @@
       "path": "src/lib/ai/ai-prompt/prompt-button/prompt-button.ts",
       "lineNumber": 17
     },
+    "ThoughtBaseComponent": {
+      "path": "src/lib/ai/chain-of-thought/thought-base/thought-base.ts",
+      "lineNumber": 21
+    },
     "ThoughtDetailComponent": {
       "path": "src/lib/ai/chain-of-thought/thought-detail/thought-detail.ts",
-      "lineNumber": 17
+      "lineNumber": 18
     },
     "ThoughtImageComponent": {
       "path": "src/lib/ai/chain-of-thought/thought-image/thought-image.ts",
-      "lineNumber": 17
+      "lineNumber": 19
+    },
+    "Source": {
+      "path": "src/lib/ai/chain-of-thought/thought-search-result/thought-search-result.ts",
+      "lineNumber": 14
     },
     "ThoughtSearchResultComponent": {
       "path": "src/lib/ai/chain-of-thought/thought-search-result/thought-search-result.ts",
-      "lineNumber": 18
+      "lineNumber": 24
     }
   }
 }
