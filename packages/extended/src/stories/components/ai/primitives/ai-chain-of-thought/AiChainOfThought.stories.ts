@@ -20,6 +20,7 @@ const snowboardingSources = [
 const meta = {
   title: 'AI/Primitives/Chain of Thought',
   component,
+  tags: ['autodocs'],
   argTypes: {
     expanded: {
       control: 'boolean',
