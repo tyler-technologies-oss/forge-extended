@@ -21,7 +21,7 @@
 
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: #{forge-spacing.variable(xsmall)};
   border-radius: #{forge-shape.variable(medium)};
   background-color: #{forge-theme.variable(surface-container)};
   padding-inline: #{forge-spacing.variable(medium)};
