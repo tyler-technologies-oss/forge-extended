@@ -53,12 +53,14 @@ const meta = {
       </forge-ai-gradient-container>
     `;
 
-    // Add the reasoning steps dynamically with delays
+    // Add the reasoning steps dynamically with delays (only once)
     setTimeout(() => {
       const container = document.getElementById('reasoning-container');
       const header = container?.querySelector('forge-ai-reasoning-header');
 
-      if (container && header) {
+      if (container && header && !container.hasAttribute('data-content-loaded')) {
+        container.setAttribute('data-content-loaded', 'true');
+
         reasoningSteps.forEach((stepText, index) => {
           setTimeout(() => {
             // Set reasoning to true when first item starts processing
