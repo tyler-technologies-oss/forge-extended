@@ -4,6 +4,8 @@ import { html } from 'lit';
 import '$lib/ai/ai-reasoning';
 import '$lib/ai/ai-reasoning/reasoning-content';
 import '$lib/ai/ai-reasoning-header';
+import '$lib/ai/ai-gradient-container';
+import '$lib/ai/ai-chat-interface';
 
 const component = 'forge-ai-reasoning';
 
@@ -39,12 +41,16 @@ const meta = {
     ];
 
     const template = html`
-      <forge-ai-reasoning .expanded=${args.expanded} id="reasoning-container">
-        <forge-ai-reasoning-header slot="header" .expanded=${args.expanded} .reasoning=${args.reasoning}>
-          <span slot="reasoning-title">${args.reasoningTitle}</span>
-          <span slot="title">${args.title}</span>
-        </forge-ai-reasoning-header>
-      </forge-ai-reasoning>
+      <forge-ai-gradient-container style="height: 800px; width: 100%;">
+        <forge-ai-chat-interface>
+          <forge-ai-reasoning .expanded=${args.expanded} id="reasoning-container">
+            <forge-ai-reasoning-header slot="header" .expanded=${args.expanded} .reasoning=${args.reasoning}>
+              <span slot="reasoning-title">${args.reasoningTitle}</span>
+              <span slot="title">${args.title}</span>
+            </forge-ai-reasoning-header>
+          </forge-ai-reasoning>
+        </forge-ai-chat-interface>
+      </forge-ai-gradient-container>
     `;
 
     // Add the reasoning steps dynamically with delays

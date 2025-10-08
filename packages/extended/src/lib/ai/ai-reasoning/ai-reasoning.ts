@@ -24,12 +24,16 @@ export class AiReasoningComponent extends LitElement {
 
   public override render(): TemplateResult {
     return html`
-      <slot name="header"></slot>
+      <slot name="header" @toggle=${this._handleHeaderToggle}></slot>
       <div class="reasoning ${this.expanded ? 'expanded' : ''}">
         <div class="content">
           <slot></slot>
         </div>
       </div>
     `;
+  }
+
+  private _handleHeaderToggle(event: CustomEvent): void {
+    this.expanded = event.detail.expanded;
   }
 }
