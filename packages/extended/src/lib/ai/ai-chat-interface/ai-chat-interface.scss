@@ -21,6 +21,12 @@
   @include forge-scrollbar.base;
 
   scrollbar-gutter: stable both-edges;
+
+  // Fallback for Safari/Firefox - add consistent padding to simulate gutter
+  @supports not (scrollbar-gutter: stable both-edges) {
+    padding-inline-end: #{forge-spacing.variable(medium)};
+    box-sizing: border-box;
+  }
   overflow-y: auto;
   background: linear-gradient(
     to top,
