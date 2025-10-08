@@ -20,14 +20,17 @@
 .messages-container {
   @include forge-scrollbar.base;
 
-  scrollbar-gutter: stable both-edges;
+  padding-inline-start: #{forge-spacing.variable(medium)};
+  scrollbar-gutter: stable;
 
-  // Fallback for Safari/Firefox - add consistent padding to simulate gutter
-  @supports not (scrollbar-gutter: stable both-edges) {
-    padding-inline-end: #{forge-spacing.variable(medium)};
-    box-sizing: border-box;
-  }
   overflow-y: auto;
+
+  // Safari-specific: force scrollbar to always show
+  @media not all and (min-resolution: 0.001dpcm) {
+    @supports (-webkit-appearance: none) {
+      overflow-y: scroll;
+    }
+  }
   background: linear-gradient(
     to top,
     #{forge-theme.variable(primary-container-minimum)},
