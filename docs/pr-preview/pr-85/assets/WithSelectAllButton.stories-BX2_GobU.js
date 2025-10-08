@@ -1,0 +1,5 @@
+import{x as r}from"./iframe-lqpmXWRw.js";import"./multi-select-header-BkunenEY.js";import"./custom-element-BhZVzxrc.js";import"./property-CnHJax5j.js";import"./query-assigned-nodes-cwDSNLIu.js";import"./base-CShCMygk.js";import"./when-3fO0zp9C.js";import"./index-qVf9fRlO.js";import"./base-adapter-Bt1wv7OR.js";import"./icon-registry-B3BS71cJ.js";import"./index-9Zb2gqMU.js";import"./base-button-adapter-ChNm_0Wa.js";import"./with-default-aria-D1zlN38M.js";import"./utils-DDUGSWJu.js";const{action:o}=__STORYBOOK_MODULE_ACTIONS__,l="forge-multi-select-header",O={tags:["hidden"],title:"Components/Multi Select Header/With Select All Button",render:()=>{const t=o("forge-multi-select-header-select-all");return r`
+      <forge-multi-select-header text="3 items selected" @forge-multi-select-header-select-all=${t}>
+        <span slot="select-all-button-text">Select All Items</span>
+      </forge-multi-select-header>
+    `},component:l},e={};e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:"{}",...e.parameters?.docs?.source}}};const x=["Demo"];export{e as Demo,x as __namedExportsOrder,O as default};
