@@ -145,11 +145,8 @@ export const WithGroups: Story = {
 };
 
 export const WithNestedMenus: Story = {
-  args: {
-    selectionMode: 'none',
-    text: 'File'
-  },
   parameters: {
+    controls: { disable: true },
     docs: {
       description: {
         story:
@@ -161,11 +158,8 @@ export const WithNestedMenus: Story = {
     return html`
       <forge-ai-dropdown-menu
         .open=${args.open}
-        variant=${args.variant}
-        selection-mode=${args.selectionMode}
-        ?disabled=${args.disabled}
         @forge-ai-dropdown-menu-change=${(evt: CustomEvent) => changeAction(evt.detail)}>
-        <span slot="trigger-content">${args.text}</span>
+        <span slot="trigger-content">File</span>
         <forge-icon name="arrow_drop_down" slot="end"></forge-icon>
 
         <forge-ai-dropdown-menu-item value="new">
