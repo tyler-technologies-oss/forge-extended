@@ -5,7 +5,7 @@ export * from './ai-button';
 export * from './ai-chat-header';
 export * from './ai-chat-interface';
 export * from './ai-dropdown-menu';
-export * from './chain-of-thought';
+export * from './ai-chain-of-thought';
 export * from './ai-dialog';
 export * from './ai-embedded-chat';
 export * from './ai-empty-state';

@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeAiChainOfThought as ForgeAiChainOfThoughtElement } from "@tylertech/forge-extended/ai/chain-of-thought";
+import { ForgeAiChainOfThought as ForgeAiChainOfThoughtElement } from "@tylertech/forge-extended/ai/ai-chain-of-thought";
 
 export type { ForgeAiChainOfThoughtElement };
 

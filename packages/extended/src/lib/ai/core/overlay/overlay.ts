@@ -18,7 +18,7 @@ declare global {
   }
 
   interface HTMLElementEventMap {
-    'ai-overlay-toggle': CustomEvent<{
+    'forge-ai-overlay-toggle': CustomEvent<{
       open: boolean;
       newState: string;
       oldState: string;

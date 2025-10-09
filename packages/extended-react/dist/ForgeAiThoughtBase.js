@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import "@tylertech/forge-extended/ai/chain-of-thought/thought-base";
+import "@tylertech/forge-extended/ai/ai-chain-of-thought/thought-base";
 
 export const ForgeAiThoughtBase = forwardRef((props, forwardedRef) => {
   const { step, ...filteredProps } = props;

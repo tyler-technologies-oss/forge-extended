@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import "@tylertech/forge-extended/ai/chain-of-thought/thought-detail";
+import "@tylertech/forge-extended/ai/ai-chain-of-thought/thought-detail";
 
 export const ForgeAiThoughtDetail = forwardRef((props, forwardedRef) => {
   return React.createElement(

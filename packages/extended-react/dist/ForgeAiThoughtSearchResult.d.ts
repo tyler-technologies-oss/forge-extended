@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeAiThoughtSearchResult as ForgeAiThoughtSearchResultElement } from "@tylertech/forge-extended/ai/chain-of-thought/thought-search-result";
+import { ForgeAiThoughtSearchResult as ForgeAiThoughtSearchResultElement } from "@tylertech/forge-extended/ai/ai-chain-of-thought/thought-search-result";
 
 export type { ForgeAiThoughtSearchResultElement };
 
