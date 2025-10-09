@@ -1,10 +1,10 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 
-import '$lib/ai/ai/chain-of-thought';
-import '$lib/ai/ai/chain-of-thought/thought-search-result/thought-search-result';
-import '$lib/ai/ai/chain-of-thought/thought-image/thought-image';
-import '$lib/ai/ai/chain-of-thought/thought-detail/thought-detail';
+import '$lib/ai/ai-chain-of-thought';
+import '$lib/ai/ai-chain-of-thought/thought-search-result/thought-search-result';
+import '$lib/ai/ai-chain-of-thought/thought-image/thought-image';
+import '$lib/ai/ai-chain-of-thought/thought-detail/thought-detail';
 import '$lib/ai/ai-chat-interface';
 import '$lib/ai/ai-gradient-container';
 import '$lib/ai/ai-user-message';
