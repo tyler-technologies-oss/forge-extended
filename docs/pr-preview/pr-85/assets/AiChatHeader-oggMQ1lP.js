@@ -1,6 +1,0 @@
-import{j as t,M as e,T as m,C as s}from"./blocks-DwLpLEJp.js";import{useMDXComponents as n}from"./index-DNFFXgUn.js";import{C as p}from"./CustomArgTypes-C28TXITO.js";import{A as a,D as c}from"./AiChatHeader.stories-B-ui4KtH.js";import"./iframe-C3PjIt-Y.js";import"./index-CWk7euD-.js";import"./_commonjsHelpers-CqkleIqs.js";import"./utils-DqfLm9cK.js";import"./ai-chat-header-DfUX2liB.js";import"./custom-element-BhZVzxrc.js";import"./property-CjQXZvJo.js";import"./when-3fO0zp9C.js";import"./ai-icon-CzG6sLAM.js";import"./ai-gradient-container-Do_21SqV.js";import"./utils-DDUGSWJu.js";import"./index-BmgMONyl.js";import"./base-adapter-mVoHbkl6.js";import"./base-lit-element-DkFIwhcH.js";import"./index-CLK2uHLb.js";import"./base-button-adapter-BT_0lweJ.js";import"./icon-registry-C_AUa6-9.js";import"./with-default-aria-DyOWljmd.js";function i(o){const r={h2:"h2",p:"p",...n(),...o.components};return t.jsxs(t.Fragment,{children:[t.jsx(e,{of:a}),`
-`,t.jsx(m,{}),`
-`,t.jsx(r.p,{children:"The AI Chat Header provides a consistent header interface for AI chat applications, featuring expand and minimize controls with customizable title content."}),`
-`,t.jsx(s,{of:c}),`
-`,t.jsx(r.h2,{id:"api",children:"API"}),`
-`,t.jsx(p,{})]})}function E(o={}){const{wrapper:r}={...n(),...o.components};return r?t.jsx(r,{...o,children:t.jsx(i,{...o})}):i(o)}export{E as default};
