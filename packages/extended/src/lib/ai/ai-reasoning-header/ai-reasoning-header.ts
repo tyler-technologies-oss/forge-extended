@@ -13,6 +13,11 @@ export const AiReasoningHeaderComponentTagName: keyof HTMLElementTagNameMap = 'f
 
 /**
  * @tag forge-ai-reasoning-header
+ *
+ * @slot title - Content for the header when in regular (non-reasoning) state
+ * @slot reasoning-title - Content for the header when in reasoning state
+ *
+ * @event {CustomEvent<{ expanded: boolean }>} toggle - Fired when the header is clicked and the expanded state changes
  */
 @customElement(AiReasoningHeaderComponentTagName)
 export class AiReasoningHeaderComponent extends LitElement {

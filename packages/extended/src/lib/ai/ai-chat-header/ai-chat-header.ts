@@ -27,8 +27,8 @@ export type MinimizeIconType = 'default' | 'panel';
  *
  * @slot title - Slot for custom title text (default: "AI Assistant")
  *
- * @fires forge-ai-chat-header-expand - Fired when the expand button is clicked
- * @fires forge-ai-chat-header-minimize - Fired when the minimize button is clicked
+ * @event forge-ai-chat-header-expand - Fired when the expand button is clicked
+ * @event forge-ai-chat-header-minimize - Fired when the minimize button is clicked
  */
 @customElement(AiChatHeaderComponentTagName)
 export class AiChatHeaderComponent extends LitElement {

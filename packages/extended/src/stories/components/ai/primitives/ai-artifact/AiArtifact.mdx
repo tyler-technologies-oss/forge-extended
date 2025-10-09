@@ -1,8 +1,15 @@
 import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
+import CustomArgTypes from '../../../../blocks/CustomArgTypes';
 import * as AiArtifactStories from './AiArtifact.stories';
 
 <Meta of={AiArtifactStories} />
 
-# AI Artifact
+<Title />
 
 The `forge-ai-artifact` component is a simple demonstration component that displays content.
+
+<Canvas of={AiArtifactStories.Demo} />
+
+## API
+
+<CustomArgTypes />

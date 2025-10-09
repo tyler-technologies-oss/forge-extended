@@ -13,6 +13,12 @@ export const AiArtifactComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai
 
 /**
  * @tag forge-ai-artifact
+ *
+ * @slot start - Content for the start (left) side of the toolbar, typically used for titles or headings
+ * @slot actions - Action buttons for the end (right) side of the toolbar
+ * @slot - Main content area below the toolbar
+ *
+ * @cssproperty --forge-theme-surface - Surface color override for the toolbar (defaults to transparent)
  */
 @customElement(AiArtifactComponentTagName)
 export class AiArtifactComponent extends LitElement {

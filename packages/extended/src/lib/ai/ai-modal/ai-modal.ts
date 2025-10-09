@@ -21,9 +21,11 @@ declare global {
 /**
  * @tag forge-ai-modal
  *
- * @fires forge-ai-modal-open - Fired when the modal is opened
- * @fires forge-ai-modal-close - Fired when the modal is closed
- * @fires forge-ai-modal-fullscreen-change - Fired when the fullscreen state changes
+ * @slot - Default slot for modal content
+ *
+ * @event {CustomEvent<void>} forge-ai-modal-open - Fired when the modal is opened
+ * @event {CustomEvent<void>} forge-ai-modal-close - Fired when the modal is closed
+ * @event {CustomEvent<{ isFullscreen: boolean }>} forge-ai-modal-fullscreen-change - Fired when the fullscreen state changes
  */
 @customElement('forge-ai-modal')
 export class AiModalComponent extends LitElement {

@@ -27,8 +27,8 @@ export const AiDialogComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-d
  *
  * @slot - Default slot for dialog content (typically ai-chat-interface)
  *
- * @fires forge-ai-dialog-fullscreen-change - Fired when the fullscreen state changes due to viewport size
- * @fires forge-ai-dialog-close - Fired when the dialog is closed
+ * @event {CustomEvent<{ isFullscreen: boolean }>} forge-ai-dialog-fullscreen-change - Fired when the fullscreen state changes due to viewport size
+ * @event {CustomEvent<void>} forge-ai-dialog-close - Fired when the dialog is closed
  */
 @customElement(AiDialogComponentTagName)
 export class AiDialogComponent extends LitElement {

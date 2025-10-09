@@ -25,7 +25,7 @@ export const AiActionsToolbarComponentTagName: keyof HTMLElementTagNameMap = 'fo
 /**
  * @tag forge-ai-actions-toolbar
  *
- * @event {CustomEvent<AiActionsToolbarActionEventData>} forge-ai-actions-toolbar-action - Fired when an action button is clicked.
+ * @event {CustomEvent<AiActionsToolbarActionEventData>} forge-ai-actions-toolbar-action - Fired when an action button is clicked. The detail contains the action type.
  */
 @customElement(AiActionsToolbarComponentTagName)
 export class AiActionsToolbarComponent extends LitElement {
@@ -35,6 +35,7 @@ export class AiActionsToolbarComponent extends LitElement {
 
   public static override styles = unsafeCSS(styles);
 
+  /** Emits the action event with the specified action type */
   private _emitActionEvent(action: AiActionsToolbarAction): void {
     const event = new CustomEvent<AiActionsToolbarActionEventData>('forge-ai-actions-toolbar-action', {
       detail: { action },
@@ -43,20 +44,6 @@ export class AiActionsToolbarComponent extends LitElement {
       cancelable: true
     });
     this.dispatchEvent(event);
-  }
-
-  private async _copyContent(): Promise<void> {
-    // Find the parent message container and copy its content
-    const messageContainer = this.closest('[data-copyable]') || this.parentElement;
-    if (messageContainer) {
-      const textContent = messageContainer.textContent?.trim() || '';
-      try {
-        await navigator.clipboard.writeText(textContent);
-        this._emitActionEvent('copy');
-      } catch (error) {
-        console.error('Failed to copy content:', error);
-      }
-    }
   }
 
   public override render(): TemplateResult {
@@ -74,7 +61,7 @@ export class AiActionsToolbarComponent extends LitElement {
         <button
           aria-label="Copy content"
           class="forge-icon-button forge-icon-button--small"
-          @click=${this._copyContent}>
+          @click=${() => this._emitActionEvent('copy')}>
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
             <path
               d="M19 21H8V7h11m0-2H8a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h11a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2m-3-4H4a2 2 0 0 0-2 2v14h2V3h12z" />

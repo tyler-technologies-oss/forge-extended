@@ -18,8 +18,7 @@ export const AiFabComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-fab'
 /**
  * @tag forge-ai-fab
  *
- * @state disabled - The button is disabled.
- * @state extended - The button is extended.
+ * @slot - Default slot for button content
  */
 @customElement(AiFabComponentTagName)
 export class AiFabComponent extends LitElement {

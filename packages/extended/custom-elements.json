@@ -4,6 +4,183 @@
   "modules": [
     {
       "kind": "javascript-module",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ConfirmationDialogComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-confirmation-dialog'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ConfirmationDialogComponent",
+          "slots": [
+            {
+              "description": "The title of the dialog",
+              "name": "title"
+            },
+            {
+              "description": "The dialog message",
+              "name": "message"
+            },
+            {
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
+            },
+            {
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
+            },
+            {
+              "kind": "field",
+              "name": "busyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+              },
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
+            },
+            {
+              "name": "busy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-confirmation-dialog",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponentTagName",
+          "declaration": {
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponent",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "declarations": [
         {
@@ -440,183 +617,6 @@
           "declaration": {
             "name": "MultiSelectHeaderComponent",
             "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-confirmation-dialog'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ConfirmationDialogComponent",
-          "slots": [
-            {
-              "description": "The title of the dialog",
-              "name": "title"
-            },
-            {
-              "description": "The dialog message",
-              "name": "message"
-            },
-            {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
-            },
-            {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "isBusy",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
-            },
-            {
-              "kind": "field",
-              "name": "busyLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
-              },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "fieldName": "open"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog",
-              "fieldName": "description"
-            },
-            {
-              "name": "is-busy",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
-            },
-            {
-              "name": "busy-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-confirmation-dialog",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
-          "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponent",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         }
       ]
@@ -1247,7 +1247,7 @@
               "type": {
                 "text": "CustomEvent<AiActionsToolbarActionEventData>"
               },
-              "description": "Fired when an action button is clicked.",
+              "description": "Fired when an action button is clicked. The detail contains the action type.",
               "name": "forge-ai-actions-toolbar-action"
             }
           ],
@@ -1301,6 +1301,26 @@
           "kind": "class",
           "description": "",
           "name": "AiArtifactComponent",
+          "cssProperties": [
+            {
+              "description": "Surface color override for the toolbar (defaults to transparent)",
+              "name": "--forge-theme-surface"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Content for the start (left) side of the toolbar, typically used for titles or headings",
+              "name": "start"
+            },
+            {
+              "description": "Action buttons for the end (right) side of the toolbar",
+              "name": "actions"
+            },
+            {
+              "description": "Main content area below the toolbar",
+              "name": ""
+            }
+          ],
           "members": [],
           "superclass": {
             "name": "LitElement",
@@ -1352,6 +1372,12 @@
           "kind": "class",
           "description": "",
           "name": "AiButtonComponent",
+          "slots": [
+            {
+              "description": "Default slot for button content",
+              "name": ""
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -1382,13 +1408,7 @@
             "package": "lit"
           },
           "tagName": "forge-ai-button",
-          "customElement": true,
-          "states": [
-            {
-              "name": "disabled",
-              "description": "The button is disabled."
-            }
-          ]
+          "customElement": true
         }
       ],
       "exports": [
@@ -1806,10 +1826,16 @@
           ],
           "events": [
             {
+              "type": {
+                "text": "CustomEvent<{ isFullscreen: boolean }>"
+              },
               "description": "Fired when the fullscreen state changes due to viewport size",
               "name": "forge-ai-dialog-fullscreen-change"
             },
             {
+              "type": {
+                "text": "CustomEvent<void>"
+              },
               "description": "Fired when the dialog is closed",
               "name": "forge-ai-dialog-close"
             }
@@ -1946,10 +1972,16 @@
           ],
           "events": [
             {
+              "type": {
+                "text": "CustomEvent<void>"
+              },
               "description": "Fired when the chat is expanded to modal view",
               "name": "forge-ai-embedded-chat-expand"
             },
             {
+              "type": {
+                "text": "CustomEvent<void>"
+              },
               "description": "Fired when the chat is collapsed from modal view",
               "name": "forge-ai-embedded-chat-collapse"
             }
@@ -2010,67 +2042,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/ai/ai-empty-state/ai-empty-state.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "AiEmptyStateComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-ai-empty-state'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AiEmptyStateComponent",
-          "slots": [
-            {
-              "description": "The custom welcome message content.",
-              "name": ""
-            },
-            {
-              "description": "The actions or suggestions to display below the message.",
-              "name": "actions"
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-ai-empty-state",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AiEmptyStateComponentTagName",
-          "declaration": {
-            "name": "AiEmptyStateComponentTagName",
-            "module": "src/lib/ai/ai-empty-state/ai-empty-state.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AiEmptyStateComponent",
-          "declaration": {
-            "name": "AiEmptyStateComponent",
-            "module": "src/lib/ai/ai-empty-state/ai-empty-state.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "AiEmptyStateComponent",
-            "module": "src/lib/ai/ai-empty-state/ai-empty-state.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/ai/ai-fab/ai-fab.ts",
       "declarations": [
         {
@@ -2085,6 +2056,12 @@
           "kind": "class",
           "description": "",
           "name": "AiFabComponent",
+          "slots": [
+            {
+              "description": "Default slot for button content",
+              "name": ""
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -2136,17 +2113,7 @@
             "package": "lit"
           },
           "tagName": "forge-ai-fab",
-          "customElement": true,
-          "states": [
-            {
-              "name": "disabled",
-              "description": "The button is disabled."
-            },
-            {
-              "name": "extended",
-              "description": "The button is extended."
-            }
-          ]
+          "customElement": true
         }
       ],
       "exports": [
@@ -2358,6 +2325,67 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/ai/ai-empty-state/ai-empty-state.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiEmptyStateComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-empty-state'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiEmptyStateComponent",
+          "slots": [
+            {
+              "description": "The custom welcome message content.",
+              "name": ""
+            },
+            {
+              "description": "The actions or suggestions to display below the message.",
+              "name": "actions"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-empty-state",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiEmptyStateComponentTagName",
+          "declaration": {
+            "name": "AiEmptyStateComponentTagName",
+            "module": "src/lib/ai/ai-empty-state/ai-empty-state.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiEmptyStateComponent",
+          "declaration": {
+            "name": "AiEmptyStateComponent",
+            "module": "src/lib/ai/ai-empty-state/ai-empty-state.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiEmptyStateComponent",
+            "module": "src/lib/ai/ai-empty-state/ai-empty-state.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/ai/ai-gradient-container/ai-gradient-container.ts",
       "declarations": [
         {
@@ -2372,6 +2400,12 @@
           "kind": "class",
           "description": "",
           "name": "AiGradientContainerComponent",
+          "slots": [
+            {
+              "description": "Default slot for container content",
+              "name": ""
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -2536,6 +2570,12 @@
           "kind": "class",
           "description": "",
           "name": "AiModalComponent",
+          "slots": [
+            {
+              "description": "Default slot for modal content",
+              "name": ""
+            }
+          ],
           "members": [
             {
               "kind": "field",
@@ -2585,18 +2625,21 @@
             {
               "name": "forge-ai-modal-open",
               "type": {
-                "text": "CustomEvent"
+                "text": "CustomEvent<void>"
               },
               "description": "Fired when the modal is opened"
             },
             {
               "name": "forge-ai-modal-close",
               "type": {
-                "text": "CustomEvent"
+                "text": "CustomEvent<void>"
               },
               "description": "Fired when the modal is closed"
             },
             {
+              "type": {
+                "text": "CustomEvent<{ isFullscreen: boolean }>"
+              },
               "description": "Fired when the fullscreen state changes",
               "name": "forge-ai-modal-fullscreen-change"
             }
@@ -2782,6 +2825,196 @@
           "declaration": {
             "name": "AiPromptComponent",
             "module": "src/lib/ai/ai-prompt/ai-prompt.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/ai-reasoning/ai-reasoning.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiReasoningComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-reasoning'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiReasoningComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the reasoning is expanded",
+              "attribute": "expanded",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the reasoning is expanded",
+              "fieldName": "expanded"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-reasoning",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiReasoningComponentTagName",
+          "declaration": {
+            "name": "AiReasoningComponentTagName",
+            "module": "src/lib/ai/ai-reasoning/ai-reasoning.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiReasoningComponent",
+          "declaration": {
+            "name": "AiReasoningComponent",
+            "module": "src/lib/ai/ai-reasoning/ai-reasoning.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiReasoningComponent",
+            "module": "src/lib/ai/ai-reasoning/ai-reasoning.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/ai-reasoning-header/ai-reasoning-header.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiReasoningHeaderComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-reasoning-header'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiReasoningHeaderComponent",
+          "slots": [
+            {
+              "description": "Content for the header when in regular (non-reasoning) state",
+              "name": "title"
+            },
+            {
+              "description": "Content for the header when in reasoning state",
+              "name": "reasoning-title"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the header is expanded",
+              "attribute": "expanded",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "reasoning",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether this is a reasoning header",
+              "attribute": "reasoning",
+              "reflects": true
+            }
+          ],
+          "events": [
+            {
+              "name": "toggle",
+              "type": {
+                "text": "CustomEvent<{ expanded: boolean }>"
+              },
+              "description": "Fired when the header is clicked and the expanded state changes"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the header is expanded",
+              "fieldName": "expanded"
+            },
+            {
+              "name": "reasoning",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether this is a reasoning header",
+              "fieldName": "reasoning"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-reasoning-header",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiReasoningHeaderComponentTagName",
+          "declaration": {
+            "name": "AiReasoningHeaderComponentTagName",
+            "module": "src/lib/ai/ai-reasoning-header/ai-reasoning-header.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiReasoningHeaderComponent",
+          "declaration": {
+            "name": "AiReasoningHeaderComponent",
+            "module": "src/lib/ai/ai-reasoning-header/ai-reasoning-header.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiReasoningHeaderComponent",
+            "module": "src/lib/ai/ai-reasoning-header/ai-reasoning-header.ts"
           }
         }
       ]
@@ -3413,6 +3646,67 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/user-profile/profile-link/profile-link.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ProfileLinkComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-profile-link'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ProfileLinkComponent",
+          "slots": [
+            {
+              "description": "The icon to display in the profile link.",
+              "name": "icon"
+            },
+            {
+              "description": "The `<a>` element for the link.",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-profile-link",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ProfileLinkComponentTagName",
+          "declaration": {
+            "name": "ProfileLinkComponentTagName",
+            "module": "src/lib/user-profile/profile-link/profile-link.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ProfileLinkComponent",
+          "declaration": {
+            "name": "ProfileLinkComponent",
+            "module": "src/lib/user-profile/profile-link/profile-link.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ProfileLinkComponent",
+            "module": "src/lib/user-profile/profile-link/profile-link.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/ai/chain-of-thought/ai-chain-of-thought.ts",
       "declarations": [
         {
@@ -3508,67 +3802,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/user-profile/profile-link/profile-link.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ProfileLinkComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-profile-link'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ProfileLinkComponent",
-          "slots": [
-            {
-              "description": "The icon to display in the profile link.",
-              "name": "icon"
-            },
-            {
-              "description": "The `<a>` element for the link.",
-              "name": ""
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-profile-link",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ProfileLinkComponentTagName",
-          "declaration": {
-            "name": "ProfileLinkComponentTagName",
-            "module": "src/lib/user-profile/profile-link/profile-link.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ProfileLinkComponent",
-          "declaration": {
-            "name": "ProfileLinkComponent",
-            "module": "src/lib/user-profile/profile-link/profile-link.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ProfileLinkComponent",
-            "module": "src/lib/user-profile/profile-link/profile-link.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/ai/ai-prompt/prompt-button/prompt-button.ts",
       "declarations": [
         {
@@ -3638,6 +3871,57 @@
           "declaration": {
             "name": "PromptButtonComponent",
             "module": "src/lib/ai/ai-prompt/prompt-button/prompt-button.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/ai-reasoning/reasoning-content/reasoning-content.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ReasoningContentComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-reasoning-content'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ReasoningContentComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-reasoning-content",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ReasoningContentComponentTagName",
+          "declaration": {
+            "name": "ReasoningContentComponentTagName",
+            "module": "src/lib/ai/ai-reasoning/reasoning-content/reasoning-content.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ReasoningContentComponent",
+          "declaration": {
+            "name": "ReasoningContentComponent",
+            "module": "src/lib/ai/ai-reasoning/reasoning-content/reasoning-content.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ReasoningContentComponent",
+            "module": "src/lib/ai/ai-reasoning/reasoning-content/reasoning-content.ts"
           }
         }
       ]
@@ -3946,6 +4230,22 @@
   ],
   "branchName": "ai-chat-widgets",
   "forgeTypes": {
+    "ConfirmationDialogActionEventReason": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 28
+    },
+    "ConfirmationDialogActionEventData": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 30
+    },
+    "ConfirmationDialogProperties": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 35
+    },
+    "ConfirmationDialogComponent": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 55
+    },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 25
@@ -3965,22 +4265,6 @@
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
       "lineNumber": 28
-    },
-    "ConfirmationDialogActionEventReason": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 28
-    },
-    "ConfirmationDialogActionEventData": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 30
-    },
-    "ConfirmationDialogProperties": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 35
-    },
-    "ConfirmationDialogComponent": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 55
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
@@ -4028,7 +4312,7 @@
     },
     "AiArtifactComponent": {
       "path": "src/lib/ai/ai-artifact/ai-artifact.ts",
-      "lineNumber": 17
+      "lineNumber": 23
     },
     "AiButtonComponent": {
       "path": "src/lib/ai/ai-button/ai-button.ts",
@@ -4054,17 +4338,17 @@
       "path": "src/lib/ai/ai-embedded-chat/ai-embedded-chat.ts",
       "lineNumber": 38
     },
-    "AiEmptyStateComponent": {
-      "path": "src/lib/ai/ai-empty-state/ai-empty-state.ts",
-      "lineNumber": 21
-    },
     "AiFabComponent": {
       "path": "src/lib/ai/ai-fab/ai-fab.ts",
-      "lineNumber": 24
+      "lineNumber": 23
     },
     "AiFloatingChatComponent": {
       "path": "src/lib/ai/ai-floating-chat/ai-floating-chat.ts",
       "lineNumber": 40
+    },
+    "AiEmptyStateComponent": {
+      "path": "src/lib/ai/ai-empty-state/ai-empty-state.ts",
+      "lineNumber": 21
     },
     "AiGradientContainerVariant": {
       "path": "src/lib/ai/ai-gradient-container/ai-gradient-container.ts",
@@ -4072,7 +4356,7 @@
     },
     "AiGradientContainerComponent": {
       "path": "src/lib/ai/ai-gradient-container/ai-gradient-container.ts",
-      "lineNumber": 24
+      "lineNumber": 26
     },
     "AiIconComponent": {
       "path": "src/lib/ai/ai-icon/ai-icon.ts",
@@ -4080,7 +4364,7 @@
     },
     "AiModalComponent": {
       "path": "src/lib/ai/ai-modal/ai-modal.ts",
-      "lineNumber": 28
+      "lineNumber": 30
     },
     "AiPromptSendEventData": {
       "path": "src/lib/ai/ai-prompt/ai-prompt.ts",
@@ -4093,6 +4377,14 @@
     "AiPromptComponent": {
       "path": "src/lib/ai/ai-prompt/ai-prompt.ts",
       "lineNumber": 44
+    },
+    "AiReasoningComponent": {
+      "path": "src/lib/ai/ai-reasoning/ai-reasoning.ts",
+      "lineNumber": 17
+    },
+    "AiReasoningHeaderComponent": {
+      "path": "src/lib/ai/ai-reasoning-header/ai-reasoning-header.ts",
+      "lineNumber": 22
     },
     "AiResponseMessageActionType": {
       "path": "src/lib/ai/ai-response-message/ai-response-message.ts",
@@ -4146,16 +4438,20 @@
       "path": "src/lib/ai/ai-user-message/ai-user-message.ts",
       "lineNumber": 17
     },
-    "AiChainOfThoughtComponent": {
-      "path": "src/lib/ai/chain-of-thought/ai-chain-of-thought.ts",
-      "lineNumber": 17
-    },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "lineNumber": 21
     },
+    "AiChainOfThoughtComponent": {
+      "path": "src/lib/ai/chain-of-thought/ai-chain-of-thought.ts",
+      "lineNumber": 18
+    },
     "PromptButtonComponent": {
       "path": "src/lib/ai/ai-prompt/prompt-button/prompt-button.ts",
+      "lineNumber": 17
+    },
+    "ReasoningContentComponent": {
+      "path": "src/lib/ai/ai-reasoning/reasoning-content/reasoning-content.ts",
       "lineNumber": 17
     },
     "ThoughtBaseComponent": {

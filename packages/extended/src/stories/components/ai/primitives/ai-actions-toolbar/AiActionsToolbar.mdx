@@ -4,56 +4,38 @@ import * as AiActionsToolbarStories from './AiActionsToolbar.stories';
 
 <Meta of={AiActionsToolbarStories} />
 
-# AI Actions Toolbar
+<Title />
 
-The AI Actions Toolbar component provides a set of action buttons commonly used in AI chat interfaces for interacting with AI-generated content.
+The AI Actions Toolbar provides a set of action buttons commonly used in AI chat interfaces for interacting with AI-generated content. It includes refresh, copy, and feedback actions that emit structured events for easy integration.
 
-## Features
-
-- **Refresh**: Regenerate or refresh AI content
-- **Copy**: Copy content to clipboard (automatically detects copyable parent content)
-- **Thumbs Up/Down**: Provide feedback on AI responses
-- **Consistent Styling**: Uses Forge design tokens and icon button patterns
-- **Event-Driven**: Emits structured events for all actions
-
-## Basic Usage
+The component provides consistent styling using Forge design tokens and icon button patterns, with all functionality handled through event emission.
 
 <Canvas of={AiActionsToolbarStories.Demo} />
 
-## In Message Context
+> **Note:** All actions emit events for the parent application to handle. The component does not perform any functionality directly, allowing for flexible integration.
 
-This example shows how the toolbar appears when used within an AI response message context, with copyable content:
+### Action Types
 
-<Canvas of={AiActionsToolbarStories.InMessageContext} />
+The toolbar provides four main actions:
 
-## Events
+- **Refresh** - Regenerate or refresh AI content
+- **Copy** - Emit copy action event for parent to handle clipboard operations
+- **Thumbs Up/Down** - Provide feedback on AI responses
+
+### Event Handling
 
 The component emits a single event type for all actions:
 
-### `forge-ai-actions-toolbar-action`
-
-Fired when any action button is clicked.
-
-**Event Detail:**
-
-```typescript
-{
-  action: 'refresh' | 'copy' | 'thumbs-up' | 'thumbs-down';
-}
-```
-
-**Example Usage:**
-
 ```typescript
 toolbar.addEventListener('forge-ai-actions-toolbar-action', event => {
-  const { action } = event.detail;
+  const { action } = event.detail; // 'refresh' | 'copy' | 'thumbs-up' | 'thumbs-down'
 
   switch (action) {
     case 'refresh':
       // Handle refresh request
       break;
     case 'copy':
-      // Handle copy completion (content already copied to clipboard)
+      // Handle copy action (implement clipboard logic here)
       break;
     case 'thumbs-up':
     case 'thumbs-down':
@@ -63,18 +45,13 @@ toolbar.addEventListener('forge-ai-actions-toolbar-action', event => {
 });
 ```
 
-## Copy Functionality
+## API
 
-The copy button automatically:
-
-1. Searches for a parent element with `data-copyable` attribute
-2. Falls back to the immediate parent element
-3. Extracts and copies the text content to the clipboard
-4. Emits the 'copy' action event after successful copy
+<CustomArgTypes />
 
 ## Accessibility
 
-- All buttons have proper `aria-label` attributes
+- All buttons have proper `aria-label` attributes for screen reader compatibility
 - Keyboard navigation supported through standard button focus behavior
 - High contrast icons for better visibility
-- Semantic button elements for screen reader compatibility
+- Semantic button elements provide proper role information

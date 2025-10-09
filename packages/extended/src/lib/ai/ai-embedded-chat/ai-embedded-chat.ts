@@ -29,8 +29,8 @@ export const AiEmbeddedChatComponentTagName: keyof HTMLElementTagNameMap = 'forg
  * @slot suggestions - Slot for AI suggestions component
  * @slot prompt - Slot for custom AI prompt component. If not provided, a default forge-ai-prompt will be used.
  *
- * @fires forge-ai-embedded-chat-expand - Fired when the chat is expanded to modal view
- * @fires forge-ai-embedded-chat-collapse - Fired when the chat is collapsed from modal view
+ * @event {CustomEvent<void>} forge-ai-embedded-chat-expand - Fired when the chat is expanded to modal view
+ * @event {CustomEvent<void>} forge-ai-embedded-chat-collapse - Fired when the chat is collapsed from modal view
  *
  * @description A form factor component that embeds ai-chat-interface within ai-gradient-container
  * for inline page usage with optional modal expansion functionality.

@@ -1,9 +1,10 @@
-import { Meta, Canvas, ArgTypes } from '@storybook/addon-docs/blocks';
+import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
+import CustomArgTypes from '../../../../blocks/CustomArgTypes';
 import * as AiReasoningStories from './AiReasoning.stories';
 
 <Meta of={AiReasoningStories} />
 
-# AI Reasoning
+<Title />
 
 A container for displaying AI reasoning processes with streaming content. Designed to be composed with `forge-ai-reasoning-header` and multiple `forge-ai-reasoning-content` components that are added dynamically as reasoning steps stream in.
 
@@ -44,3 +45,7 @@ function addStep(text) {
 ## Demo
 
 <Canvas of={AiReasoningStories.Demo} />
+
+## API
+
+<CustomArgTypes />

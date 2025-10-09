@@ -17,6 +17,8 @@ export const AiGradientContainerComponentTagName: keyof HTMLElementTagNameMap = 
 /**
  * @tag forge-ai-gradient-container
  *
+ * @slot - Default slot for container content
+ *
  * @state low - The container displays a low intensity gradient.
  * @state medium - The container displays a medium intensity gradient.
  * @state high - The container displays a high intensity gradient.

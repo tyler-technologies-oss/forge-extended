@@ -18,7 +18,7 @@ export const AiButtonComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-b
 /**
  * @tag forge-ai-button
  *
- * @state disabled - The button is disabled.
+ * @slot - Default slot for button content
  */
 @customElement(AiButtonComponentTagName)
 export class AiButtonComponent extends LitElement {
