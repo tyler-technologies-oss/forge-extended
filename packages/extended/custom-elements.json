@@ -4,177 +4,33 @@
   "modules": [
     {
       "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "path": "src/lib/ai/utils.ts",
       "declarations": [
         {
-          "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
+          "kind": "function",
+          "name": "generateUniqueId",
+          "return": {
+            "type": {
+              "text": ""
+            }
           },
-          "default": "'forge-confirmation-dialog'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ConfirmationDialogComponent",
-          "slots": [
+          "parameters": [
             {
-              "description": "The title of the dialog",
-              "name": "title"
-            },
-            {
-              "description": "The dialog message",
-              "name": "message"
-            },
-            {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
-            },
-            {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
+              "name": "prefix",
+              "default": "'id'",
+              "description": "Optional prefix for the ID."
             }
           ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "isBusy",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
-            },
-            {
-              "kind": "field",
-              "name": "busyLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
-              },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "fieldName": "open"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog",
-              "fieldName": "description"
-            },
-            {
-              "name": "is-busy",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
-            },
-            {
-              "name": "busy-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-confirmation-dialog",
-          "customElement": true
+          "description": "Generate a unique identifier with an optional prefix."
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
+          "name": "generateUniqueId",
           "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponent",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+            "name": "generateUniqueId",
+            "module": "src/lib/ai/utils.ts"
           }
         }
       ]
@@ -510,6 +366,183 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ConfirmationDialogComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-confirmation-dialog'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ConfirmationDialogComponent",
+          "slots": [
+            {
+              "description": "The title of the dialog",
+              "name": "title"
+            },
+            {
+              "description": "The dialog message",
+              "name": "message"
+            },
+            {
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
+            },
+            {
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
+            },
+            {
+              "kind": "field",
+              "name": "busyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+              },
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
+            },
+            {
+              "name": "busy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-confirmation-dialog",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponentTagName",
+          "declaration": {
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponent",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/multi-select-header/multi-select-header.ts",
       "declarations": [
         {
@@ -797,6 +830,198 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/user-profile/user-profile.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "UserProfileComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-user-profile'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "UserProfileComponent",
+          "slots": [
+            {
+              "description": "Slot for additional profile navigation links",
+              "name": "link"
+            },
+            {
+              "description": "Slot for the sign out button text",
+              "name": "sign-out-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "fullName",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The full name of the user",
+              "attribute": "full-name"
+            },
+            {
+              "kind": "field",
+              "name": "email",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The email address of the user",
+              "attribute": "email"
+            },
+            {
+              "kind": "field",
+              "name": "imageUrl",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The image URL for the user avatar",
+              "attribute": "image-url"
+            },
+            {
+              "kind": "field",
+              "name": "buttonLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Open user profile'",
+              "description": "ARIA label for the user profile avatar button",
+              "attribute": "button-label"
+            },
+            {
+              "kind": "field",
+              "name": "themeToggle",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the theme toggle is visible",
+              "attribute": "theme-toggle"
+            },
+            {
+              "kind": "method",
+              "name": "setTheme",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "ThemeToggleTheme"
+                  }
+                }
+              ],
+              "description": "Sets the theme for the theme toggle."
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "Event"
+              },
+              "description": "Fired when the sign out button is clicked.",
+              "name": "forge-user-profile-sign-out"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "full-name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The full name of the user",
+              "fieldName": "fullName"
+            },
+            {
+              "name": "email",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The email address of the user",
+              "fieldName": "email"
+            },
+            {
+              "name": "image-url",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The image URL for the user avatar",
+              "fieldName": "imageUrl"
+            },
+            {
+              "name": "button-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Open user profile'",
+              "description": "ARIA label for the user profile avatar button",
+              "fieldName": "buttonLabel"
+            },
+            {
+              "name": "theme-toggle",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the theme toggle is visible",
+              "fieldName": "themeToggle"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-user-profile",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "UserProfileComponentTagName",
+          "declaration": {
+            "name": "UserProfileComponentTagName",
+            "module": "src/lib/user-profile/user-profile.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "UserProfileComponent",
+          "declaration": {
+            "name": "UserProfileComponent",
+            "module": "src/lib/user-profile/user-profile.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "UserProfileComponent",
+            "module": "src/lib/user-profile/user-profile.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "declarations": [
         {
@@ -1035,198 +1260,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/user-profile/user-profile.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "UserProfileComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-user-profile'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "UserProfileComponent",
-          "slots": [
-            {
-              "description": "Slot for additional profile navigation links",
-              "name": "link"
-            },
-            {
-              "description": "Slot for the sign out button text",
-              "name": "sign-out-button-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "fullName",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The full name of the user",
-              "attribute": "full-name"
-            },
-            {
-              "kind": "field",
-              "name": "email",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The email address of the user",
-              "attribute": "email"
-            },
-            {
-              "kind": "field",
-              "name": "imageUrl",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The image URL for the user avatar",
-              "attribute": "image-url"
-            },
-            {
-              "kind": "field",
-              "name": "buttonLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Open user profile'",
-              "description": "ARIA label for the user profile avatar button",
-              "attribute": "button-label"
-            },
-            {
-              "kind": "field",
-              "name": "themeToggle",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the theme toggle is visible",
-              "attribute": "theme-toggle"
-            },
-            {
-              "kind": "method",
-              "name": "setTheme",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "ThemeToggleTheme"
-                  }
-                }
-              ],
-              "description": "Sets the theme for the theme toggle."
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "Event"
-              },
-              "description": "Fired when the sign out button is clicked.",
-              "name": "forge-user-profile-sign-out"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "full-name",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The full name of the user",
-              "fieldName": "fullName"
-            },
-            {
-              "name": "email",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The email address of the user",
-              "fieldName": "email"
-            },
-            {
-              "name": "image-url",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The image URL for the user avatar",
-              "fieldName": "imageUrl"
-            },
-            {
-              "name": "button-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Open user profile'",
-              "description": "ARIA label for the user profile avatar button",
-              "fieldName": "buttonLabel"
-            },
-            {
-              "name": "theme-toggle",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the theme toggle is visible",
-              "fieldName": "themeToggle"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-user-profile",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "UserProfileComponentTagName",
-          "declaration": {
-            "name": "UserProfileComponentTagName",
-            "module": "src/lib/user-profile/user-profile.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "UserProfileComponent",
-          "declaration": {
-            "name": "UserProfileComponent",
-            "module": "src/lib/user-profile/user-profile.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "UserProfileComponent",
-            "module": "src/lib/user-profile/user-profile.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/ai/ai-actions-toolbar/ai-actions-toolbar.ts",
       "declarations": [
         {
@@ -1281,6 +1314,157 @@
           "declaration": {
             "name": "AiActionsToolbarComponent",
             "module": "src/lib/ai/ai-actions-toolbar/ai-actions-toolbar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/ai-chat-header/ai-chat-header.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiChatHeaderComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-chat-header'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiChatHeaderComponent",
+          "slots": [
+            {
+              "description": "Slot for custom title text (default: \"AI Assistant\")",
+              "name": "title"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "showExpandButton",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether the expand button is visible",
+              "attribute": "show-expand-button"
+            },
+            {
+              "kind": "field",
+              "name": "showMinimizeButton",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether the minimize button is visible",
+              "attribute": "show-minimize-button"
+            },
+            {
+              "kind": "field",
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates the current expanded state for displaying the appropriate expand/collapse icon",
+              "attribute": "expanded"
+            },
+            {
+              "kind": "field",
+              "name": "minimizeIcon",
+              "type": {
+                "text": "MinimizeIconType"
+              },
+              "privacy": "public",
+              "default": "'default'",
+              "description": "Controls which minimize icon to display",
+              "attribute": "minimize-icon"
+            }
+          ],
+          "events": [
+            {
+              "description": "Fired when the expand button is clicked",
+              "name": "forge-ai-chat-header-expand"
+            },
+            {
+              "description": "Fired when the minimize button is clicked",
+              "name": "forge-ai-chat-header-minimize"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "show-expand-button",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether the expand button is visible",
+              "fieldName": "showExpandButton"
+            },
+            {
+              "name": "show-minimize-button",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether the minimize button is visible",
+              "fieldName": "showMinimizeButton"
+            },
+            {
+              "name": "expanded",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates the current expanded state for displaying the appropriate expand/collapse icon",
+              "fieldName": "expanded"
+            },
+            {
+              "name": "minimize-icon",
+              "type": {
+                "text": "MinimizeIconType"
+              },
+              "default": "'default'",
+              "description": "Controls which minimize icon to display",
+              "fieldName": "minimizeIcon"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-chat-header",
+          "customElement": true,
+          "summary": "AI chat header component with accessible tooltips"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiChatHeaderComponentTagName",
+          "declaration": {
+            "name": "AiChatHeaderComponentTagName",
+            "module": "src/lib/ai/ai-chat-header/ai-chat-header.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiChatHeaderComponent",
+          "declaration": {
+            "name": "AiChatHeaderComponent",
+            "module": "src/lib/ai/ai-chat-header/ai-chat-header.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiChatHeaderComponent",
+            "module": "src/lib/ai/ai-chat-header/ai-chat-header.ts"
           }
         }
       ]
@@ -1433,156 +1617,6 @@
           "declaration": {
             "name": "AiButtonComponent",
             "module": "src/lib/ai/ai-button/ai-button.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/ai/ai-chat-header/ai-chat-header.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "AiChatHeaderComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-ai-chat-header'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AiChatHeaderComponent",
-          "slots": [
-            {
-              "description": "Slot for custom title text (default: \"AI Assistant\")",
-              "name": "title"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "showExpandButton",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Controls whether the expand button is visible",
-              "attribute": "show-expand-button"
-            },
-            {
-              "kind": "field",
-              "name": "showMinimizeButton",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Controls whether the minimize button is visible",
-              "attribute": "show-minimize-button"
-            },
-            {
-              "kind": "field",
-              "name": "expanded",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates the current expanded state for displaying the appropriate expand/collapse icon",
-              "attribute": "expanded"
-            },
-            {
-              "kind": "field",
-              "name": "minimizeIcon",
-              "type": {
-                "text": "MinimizeIconType"
-              },
-              "privacy": "public",
-              "default": "'default'",
-              "description": "Controls which minimize icon to display",
-              "attribute": "minimize-icon"
-            }
-          ],
-          "events": [
-            {
-              "description": "Fired when the expand button is clicked",
-              "name": "forge-ai-chat-header-expand"
-            },
-            {
-              "description": "Fired when the minimize button is clicked",
-              "name": "forge-ai-chat-header-minimize"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "show-expand-button",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Controls whether the expand button is visible",
-              "fieldName": "showExpandButton"
-            },
-            {
-              "name": "show-minimize-button",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Controls whether the minimize button is visible",
-              "fieldName": "showMinimizeButton"
-            },
-            {
-              "name": "expanded",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates the current expanded state for displaying the appropriate expand/collapse icon",
-              "fieldName": "expanded"
-            },
-            {
-              "name": "minimize-icon",
-              "type": {
-                "text": "MinimizeIconType"
-              },
-              "default": "'default'",
-              "description": "Controls which minimize icon to display",
-              "fieldName": "minimizeIcon"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-ai-chat-header",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AiChatHeaderComponentTagName",
-          "declaration": {
-            "name": "AiChatHeaderComponentTagName",
-            "module": "src/lib/ai/ai-chat-header/ai-chat-header.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AiChatHeaderComponent",
-          "declaration": {
-            "name": "AiChatHeaderComponent",
-            "module": "src/lib/ai/ai-chat-header/ai-chat-header.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "AiChatHeaderComponent",
-            "module": "src/lib/ai/ai-chat-header/ai-chat-header.ts"
           }
         }
       ]
@@ -1896,6 +1930,775 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu-item-group.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ForgeAiDropdownMenuItemGroupComponent",
+          "slots": [
+            {
+              "description": "The default slot for dropdown menu items.",
+              "name": ""
+            },
+            {
+              "description": "The label slot for the group heading text.",
+              "name": "label"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "summary": "A group component for organizing items within ai-dropdown-menu.",
+          "tagName": "forge-ai-dropdown-menu-item-group",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ForgeAiDropdownMenuItemGroupComponent",
+          "declaration": {
+            "name": "ForgeAiDropdownMenuItemGroupComponent",
+            "module": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu-item-group.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "forge-ai-dropdown-menu-item-group",
+          "declaration": {
+            "name": "ForgeAiDropdownMenuItemGroupComponent",
+            "module": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu-item-group.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu-item.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ForgeAiDropdownMenuItemComponent",
+          "cssProperties": [
+            {
+              "description": "Delay before opening submenu on hover.",
+              "name": "--ai-dropdown-menu-item-submenu-open-delay"
+            },
+            {
+              "description": "Delay before closing submenu when mouse leaves.",
+              "name": "--ai-dropdown-menu-item-submenu-close-delay"
+            },
+            {
+              "description": "Size of selection and submenu icons.",
+              "name": "--ai-dropdown-menu-item-selection-icon-size"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The default slot for item text content.",
+              "name": ""
+            },
+            {
+              "description": "The description slot for additional item details.",
+              "name": "description"
+            },
+            {
+              "description": "The start icon slot.",
+              "name": "start"
+            },
+            {
+              "description": "The end icon slot.",
+              "name": "end"
+            },
+            {
+              "description": "The slot for nested dropdown menu components.",
+              "name": "submenu"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The value associated with this menu item.",
+              "attribute": "value"
+            },
+            {
+              "kind": "field",
+              "name": "selected",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether this menu item is selected.",
+              "attribute": "selected",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether this menu item is disabled.",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "selectionMode",
+              "type": {
+                "text": "DropdownMenuSelectionMode"
+              },
+              "privacy": "public",
+              "default": "'none'",
+              "description": "The selection mode for this menu item.\nThis is typically set by the parent dropdown menu component.",
+              "attribute": "selection-mode"
+            },
+            {
+              "kind": "field",
+              "name": "submenuTrigger",
+              "type": {
+                "text": "'hover' | 'click' | 'both'"
+              },
+              "privacy": "public",
+              "default": "'hover'",
+              "description": "The trigger behavior for submenu opening.\n- 'hover': Opens on mouse hover (default)\n- 'click': Opens on click\n- 'both': Opens on both hover and click",
+              "attribute": "submenu-trigger"
+            },
+            {
+              "kind": "field",
+              "name": "submenuOpenDelay",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "150",
+              "description": "The delay in milliseconds before opening a submenu on hover.",
+              "attribute": "submenu-open-delay"
+            },
+            {
+              "kind": "field",
+              "name": "submenuCloseDelay",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "300",
+              "description": "The delay in milliseconds before closing a submenu when mouse leaves.",
+              "attribute": "submenu-close-delay"
+            },
+            {
+              "kind": "field",
+              "name": "labelText",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "description": "Gets the text content from the default slot (label text only).",
+              "readonly": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The value associated with this menu item.",
+              "fieldName": "value"
+            },
+            {
+              "name": "selected",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether this menu item is selected.",
+              "fieldName": "selected"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether this menu item is disabled.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "selection-mode",
+              "type": {
+                "text": "DropdownMenuSelectionMode"
+              },
+              "default": "'none'",
+              "description": "The selection mode for this menu item.\nThis is typically set by the parent dropdown menu component.",
+              "fieldName": "selectionMode"
+            },
+            {
+              "name": "submenu-trigger",
+              "type": {
+                "text": "'hover' | 'click' | 'both'"
+              },
+              "default": "'hover'",
+              "description": "The trigger behavior for submenu opening.\n- 'hover': Opens on mouse hover (default)\n- 'click': Opens on click\n- 'both': Opens on both hover and click",
+              "fieldName": "submenuTrigger"
+            },
+            {
+              "name": "submenu-open-delay",
+              "type": {
+                "text": "number"
+              },
+              "default": "150",
+              "description": "The delay in milliseconds before opening a submenu on hover.",
+              "fieldName": "submenuOpenDelay"
+            },
+            {
+              "name": "submenu-close-delay",
+              "type": {
+                "text": "number"
+              },
+              "default": "300",
+              "description": "The delay in milliseconds before closing a submenu when mouse leaves.",
+              "fieldName": "submenuCloseDelay"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "summary": "An item component for use within ai-dropdown-menu with submenu support.",
+          "tagName": "forge-ai-dropdown-menu-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ForgeAiDropdownMenuItemComponent",
+          "declaration": {
+            "name": "ForgeAiDropdownMenuItemComponent",
+            "module": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu-item.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "forge-ai-dropdown-menu-item",
+          "declaration": {
+            "name": "ForgeAiDropdownMenuItemComponent",
+            "module": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu-item.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu-separator.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ForgeAiDropdownMenuSeparatorComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "summary": "A separator component for dividing sections within ai-dropdown-menu.",
+          "tagName": "forge-ai-dropdown-menu-separator",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ForgeAiDropdownMenuSeparatorComponent",
+          "declaration": {
+            "name": "ForgeAiDropdownMenuSeparatorComponent",
+            "module": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu-separator.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "forge-ai-dropdown-menu-separator",
+          "declaration": {
+            "name": "ForgeAiDropdownMenuSeparatorComponent",
+            "module": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu-separator.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ForgeAiDropdownMenuComponent",
+          "cssProperties": [
+            {
+              "description": "Minimum width of the dropdown menu.",
+              "name": "--ai-dropdown-menu-min-width"
+            },
+            {
+              "description": "Maximum width of the dropdown menu.",
+              "name": "--ai-dropdown-menu-max-width"
+            },
+            {
+              "description": "Maximum height of the dropdown menu.",
+              "name": "--ai-dropdown-menu-max-height"
+            },
+            {
+              "description": "Padding inside the dropdown menu.",
+              "name": "--ai-dropdown-menu-padding"
+            },
+            {
+              "description": "The width of the trigger button.",
+              "name": "--ai-dropdown-menu-trigger-width"
+            },
+            {
+              "description": "The height of the trigger button.",
+              "name": "--ai-dropdown-menu-trigger-height"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The default slot for dropdown menu items, item groups, and separators.",
+              "name": ""
+            },
+            {
+              "description": "The header content displayed at the top of the dropdown menu.",
+              "name": "header"
+            },
+            {
+              "description": "The content of the trigger button (text or icon) when no selection is made.",
+              "name": "trigger-content"
+            },
+            {
+              "description": "Custom content for the trigger button when selections are made (overrides default selection text).",
+              "name": "selected-text"
+            },
+            {
+              "description": "The start icon slot for additional trigger button content.",
+              "name": "start"
+            },
+            {
+              "description": "The end icon slot for additional trigger button content.",
+              "name": "end"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "DropdownMenuVariant"
+              },
+              "privacy": "public",
+              "default": "'button'",
+              "description": "The variant of the dropdown menu trigger button.",
+              "attribute": "variant"
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the dropdown is open.",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the dropdown menu is disabled.",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "selectionMode",
+              "type": {
+                "text": "DropdownMenuSelectionMode"
+              },
+              "privacy": "public",
+              "default": "'none'",
+              "description": "The selection mode for the dropdown menu.\n- 'none': No selection state, items act as actions only\n- 'single': Single selection with radio button behavior\n- 'multi': Multiple selection with checkbox behavior",
+              "attribute": "selection-mode"
+            },
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string | string[] | null"
+              },
+              "privacy": "public",
+              "default": "null",
+              "description": "The currently selected value(s).\nFor single selection: string or null\nFor multi selection: string array\nFor none mode: null",
+              "attribute": "value"
+            },
+            {
+              "kind": "method",
+              "name": "focusFirstItem",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "forge-ai-dropdown-menu-change",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "eventName",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "variant",
+              "type": {
+                "text": "DropdownMenuVariant"
+              },
+              "default": "'button'",
+              "description": "The variant of the dropdown menu trigger button.",
+              "fieldName": "variant"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the dropdown is open.",
+              "fieldName": "open"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the dropdown menu is disabled.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "selection-mode",
+              "type": {
+                "text": "DropdownMenuSelectionMode"
+              },
+              "default": "'none'",
+              "description": "The selection mode for the dropdown menu.\n- 'none': No selection state, items act as actions only\n- 'single': Single selection with radio button behavior\n- 'multi': Multiple selection with checkbox behavior",
+              "fieldName": "selectionMode"
+            },
+            {
+              "name": "value",
+              "type": {
+                "text": "string | string[] | null"
+              },
+              "default": "null",
+              "description": "The currently selected value(s).\nFor single selection: string or null\nFor multi selection: string array\nFor none mode: null",
+              "fieldName": "value"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "summary": "An AI dropdown menu component with advanced selection modes and submenu support.",
+          "tagName": "forge-ai-dropdown-menu",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ForgeAiDropdownMenuComponent",
+          "declaration": {
+            "name": "ForgeAiDropdownMenuComponent",
+            "module": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "forge-ai-dropdown-menu",
+          "declaration": {
+            "name": "ForgeAiDropdownMenuComponent",
+            "module": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/ai-dropdown-menu/navigation-controller.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Controller class to handle keyboard navigation for dropdown menus.\n\nThis controller manages all aspects of keyboard navigation within dropdown menus,\nincluding focus management, selection state, and keyboard event delegation.\nIt supports both parent dropdown menus and nested submenus with proper\nnavigation isolation and event bubbling control.",
+          "name": "DropdownNavigationController",
+          "members": [
+            {
+              "kind": "field",
+              "name": "selectedIndex",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "description": "Sets the selected index"
+            },
+            {
+              "kind": "field",
+              "name": "openedViaKeyboard",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "description": "Sets whether the dropdown was opened via keyboard"
+            },
+            {
+              "kind": "method",
+              "name": "handleKeyDown",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "event",
+                  "type": {
+                    "text": "KeyboardEvent"
+                  }
+                },
+                {
+                  "name": "isOpen",
+                  "type": {
+                    "text": "boolean"
+                  }
+                },
+                {
+                  "name": "triggerButton",
+                  "type": {
+                    "text": "HTMLElement"
+                  }
+                }
+              ],
+              "description": "Handles keyboard events for the dropdown menu"
+            },
+            {
+              "kind": "method",
+              "name": "focusFirstItem",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Focuses the first item in the menu"
+            },
+            {
+              "kind": "method",
+              "name": "clearItemFocus",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Clears focus from all menu items"
+            },
+            {
+              "kind": "method",
+              "name": "onOpen",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Resets the navigation state when dropdown opens"
+            },
+            {
+              "kind": "method",
+              "name": "reset",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Resets the navigation state"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DropdownNavigationController",
+          "declaration": {
+            "name": "DropdownNavigationController",
+            "module": "src/lib/ai/ai-dropdown-menu/navigation-controller.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/ai-dropdown-menu/selection-manager.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Manages selection state and behavior for dropdown menus.\n\nThe SelectionManager is responsible for handling all aspects of item selection\nwithin dropdown menus, supporting three distinct modes:\n\n- **none**: Items act as actions only, no persistent selection state\n- **single**: Single selection with radio button behavior\n- **multi**: Multiple selection with checkbox behavior\n\nIt provides type-safe event dispatching with mode-specific event details\nand maintains consistent selection state across all menu items.",
+          "name": "SelectionManager",
+          "members": [
+            {
+              "kind": "field",
+              "name": "value",
+              "type": {
+                "text": "string | string[] | null"
+              },
+              "privacy": "public",
+              "description": "Sets the selection value and updates item states"
+            },
+            {
+              "kind": "field",
+              "name": "selectionMode",
+              "type": {
+                "text": "DropdownMenuSelectionMode"
+              },
+              "privacy": "public",
+              "description": "Updates the selection mode and reconfigures items"
+            },
+            {
+              "kind": "method",
+              "name": "updateConfig",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "config",
+                  "type": {
+                    "text": "Partial<SelectionConfig>"
+                  }
+                }
+              ],
+              "description": "Updates the selection configuration"
+            },
+            {
+              "kind": "method",
+              "name": "selectItem",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "{ shouldClose: boolean }"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "item",
+                  "type": {
+                    "text": "ForgeAiDropdownMenuItemComponent"
+                  }
+                }
+              ],
+              "description": "Handles item selection based on the current mode"
+            },
+            {
+              "kind": "method",
+              "name": "getSelectedItems",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "ForgeAiDropdownMenuItemComponent[]"
+                }
+              },
+              "description": "Gets the currently selected items"
+            },
+            {
+              "kind": "method",
+              "name": "getSelectedText",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              },
+              "description": "Gets text representation of the current selection"
+            },
+            {
+              "kind": "method",
+              "name": "shouldShowSelectedText",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              },
+              "description": "Checks if selection text should be displayed"
+            },
+            {
+              "kind": "method",
+              "name": "reset",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Resets the selection state"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "SelectionManager",
+          "declaration": {
+            "name": "SelectionManager",
+            "module": "src/lib/ai/ai-dropdown-menu/selection-manager.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/ai/ai-embedded-chat/ai-embedded-chat.ts",
       "declarations": [
         {
@@ -2036,6 +2839,67 @@
           "declaration": {
             "name": "AiEmbeddedChatComponent",
             "module": "src/lib/ai/ai-embedded-chat/ai-embedded-chat.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/ai-empty-state/ai-empty-state.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiEmptyStateComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-empty-state'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiEmptyStateComponent",
+          "slots": [
+            {
+              "description": "The custom welcome message content.",
+              "name": ""
+            },
+            {
+              "description": "The actions or suggestions to display below the message.",
+              "name": "actions"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-empty-state",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiEmptyStateComponentTagName",
+          "declaration": {
+            "name": "AiEmptyStateComponentTagName",
+            "module": "src/lib/ai/ai-empty-state/ai-empty-state.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiEmptyStateComponent",
+          "declaration": {
+            "name": "AiEmptyStateComponent",
+            "module": "src/lib/ai/ai-empty-state/ai-empty-state.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiEmptyStateComponent",
+            "module": "src/lib/ai/ai-empty-state/ai-empty-state.ts"
           }
         }
       ]
@@ -2319,67 +3183,6 @@
           "declaration": {
             "name": "AiFloatingChatComponent",
             "module": "src/lib/ai/ai-floating-chat/ai-floating-chat.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/ai/ai-empty-state/ai-empty-state.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "AiEmptyStateComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-ai-empty-state'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AiEmptyStateComponent",
-          "slots": [
-            {
-              "description": "The custom welcome message content.",
-              "name": ""
-            },
-            {
-              "description": "The actions or suggestions to display below the message.",
-              "name": "actions"
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-ai-empty-state",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AiEmptyStateComponentTagName",
-          "declaration": {
-            "name": "AiEmptyStateComponentTagName",
-            "module": "src/lib/ai/ai-empty-state/ai-empty-state.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AiEmptyStateComponent",
-          "declaration": {
-            "name": "AiEmptyStateComponent",
-            "module": "src/lib/ai/ai-empty-state/ai-empty-state.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "AiEmptyStateComponent",
-            "module": "src/lib/ai/ai-empty-state/ai-empty-state.ts"
           }
         }
       ]
@@ -3498,6 +4301,57 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/ai/ai-user-message/ai-user-message.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AiUserMessageComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-user-message'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AiUserMessageComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-user-message",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AiUserMessageComponentTagName",
+          "declaration": {
+            "name": "AiUserMessageComponentTagName",
+            "module": "src/lib/ai/ai-user-message/ai-user-message.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AiUserMessageComponent",
+          "declaration": {
+            "name": "AiUserMessageComponent",
+            "module": "src/lib/ai/ai-user-message/ai-user-message.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AiUserMessageComponent",
+            "module": "src/lib/ai/ai-user-message/ai-user-message.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/ai/ai-threads/ai-threads.ts",
       "declarations": [
         {
@@ -3595,118 +4449,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/ai/ai-user-message/ai-user-message.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "AiUserMessageComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-ai-user-message'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AiUserMessageComponent",
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-ai-user-message",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AiUserMessageComponentTagName",
-          "declaration": {
-            "name": "AiUserMessageComponentTagName",
-            "module": "src/lib/ai/ai-user-message/ai-user-message.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AiUserMessageComponent",
-          "declaration": {
-            "name": "AiUserMessageComponent",
-            "module": "src/lib/ai/ai-user-message/ai-user-message.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "AiUserMessageComponent",
-            "module": "src/lib/ai/ai-user-message/ai-user-message.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/user-profile/profile-link/profile-link.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ProfileLinkComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-profile-link'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ProfileLinkComponent",
-          "slots": [
-            {
-              "description": "The icon to display in the profile link.",
-              "name": "icon"
-            },
-            {
-              "description": "The `<a>` element for the link.",
-              "name": ""
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-profile-link",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ProfileLinkComponentTagName",
-          "declaration": {
-            "name": "ProfileLinkComponentTagName",
-            "module": "src/lib/user-profile/profile-link/profile-link.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ProfileLinkComponent",
-          "declaration": {
-            "name": "ProfileLinkComponent",
-            "module": "src/lib/user-profile/profile-link/profile-link.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ProfileLinkComponent",
-            "module": "src/lib/user-profile/profile-link/profile-link.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/ai/chain-of-thought/ai-chain-of-thought.ts",
       "declarations": [
         {
@@ -3796,6 +4538,67 @@
           "declaration": {
             "name": "AiChainOfThoughtComponent",
             "module": "src/lib/ai/chain-of-thought/ai-chain-of-thought.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/user-profile/profile-link/profile-link.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ProfileLinkComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-profile-link'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ProfileLinkComponent",
+          "slots": [
+            {
+              "description": "The icon to display in the profile link.",
+              "name": "icon"
+            },
+            {
+              "description": "The `<a>` element for the link.",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-profile-link",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ProfileLinkComponentTagName",
+          "declaration": {
+            "name": "ProfileLinkComponentTagName",
+            "module": "src/lib/user-profile/profile-link/profile-link.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ProfileLinkComponent",
+          "declaration": {
+            "name": "ProfileLinkComponent",
+            "module": "src/lib/user-profile/profile-link/profile-link.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ProfileLinkComponent",
+            "module": "src/lib/user-profile/profile-link/profile-link.ts"
           }
         }
       ]
@@ -3928,6 +4731,57 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/ai/chain-of-thought/thought-detail/thought-detail.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ThoughtDetailComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-ai-thought-detail'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ThoughtDetailComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-ai-thought-detail",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ThoughtDetailComponentTagName",
+          "declaration": {
+            "name": "ThoughtDetailComponentTagName",
+            "module": "src/lib/ai/chain-of-thought/thought-detail/thought-detail.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ThoughtDetailComponent",
+          "declaration": {
+            "name": "ThoughtDetailComponent",
+            "module": "src/lib/ai/chain-of-thought/thought-detail/thought-detail.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ThoughtDetailComponent",
+            "module": "src/lib/ai/chain-of-thought/thought-detail/thought-detail.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/ai/chain-of-thought/thought-base/thought-base.ts",
       "declarations": [
         {
@@ -4008,57 +4862,6 @@
           "declaration": {
             "name": "ThoughtBaseComponent",
             "module": "src/lib/ai/chain-of-thought/thought-base/thought-base.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/ai/chain-of-thought/thought-detail/thought-detail.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ThoughtDetailComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-ai-thought-detail'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ThoughtDetailComponent",
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-ai-thought-detail",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ThoughtDetailComponentTagName",
-          "declaration": {
-            "name": "ThoughtDetailComponentTagName",
-            "module": "src/lib/ai/chain-of-thought/thought-detail/thought-detail.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ThoughtDetailComponent",
-          "declaration": {
-            "name": "ThoughtDetailComponent",
-            "module": "src/lib/ai/chain-of-thought/thought-detail/thought-detail.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ThoughtDetailComponent",
-            "module": "src/lib/ai/chain-of-thought/thought-detail/thought-detail.ts"
           }
         }
       ]
@@ -4226,26 +5029,570 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/core/overlay/overlay.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ForgeAiOverlayComponent",
+          "cssProperties": [
+            {
+              "description": "The maximum width of the overlay.",
+              "name": "--ai-overlay-max-width"
+            },
+            {
+              "description": "The maximum height of the overlay.",
+              "name": "--ai-overlay-max-height"
+            },
+            {
+              "description": "The minimum width of the overlay.",
+              "name": "--ai-overlay-min-width"
+            },
+            {
+              "description": "The minimum height of the overlay.",
+              "name": "--ai-overlay-min-height"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The default slot for overlay content.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "anchor",
+              "type": {
+                "text": "Element | null"
+              },
+              "privacy": "public",
+              "default": "null",
+              "description": "The anchor element to position the overlay relative to.",
+              "attribute": "anchor"
+            },
+            {
+              "kind": "field",
+              "name": "placement",
+              "type": {
+                "text": "OverlayPlacement"
+              },
+              "privacy": "public",
+              "default": "'bottom-start'",
+              "description": "The placement of the overlay relative to the anchor.",
+              "attribute": "placement"
+            },
+            {
+              "kind": "field",
+              "name": "flip",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Whether the overlay should flip to the opposite side when there's no space.",
+              "attribute": "flip"
+            },
+            {
+              "kind": "field",
+              "name": "shift",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the overlay should shift to stay in view.",
+              "attribute": "shift"
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the overlay is open.",
+              "attribute": "open",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "anchor",
+              "type": {
+                "text": "Element | null"
+              },
+              "default": "null",
+              "description": "The anchor element to position the overlay relative to.",
+              "fieldName": "anchor"
+            },
+            {
+              "name": "placement",
+              "type": {
+                "text": "OverlayPlacement"
+              },
+              "default": "'bottom-start'",
+              "description": "The placement of the overlay relative to the anchor.",
+              "fieldName": "placement"
+            },
+            {
+              "name": "flip",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Whether the overlay should flip to the opposite side when there's no space.",
+              "fieldName": "flip"
+            },
+            {
+              "name": "shift",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the overlay should shift to stay in view.",
+              "fieldName": "shift"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the overlay is open.",
+              "fieldName": "open"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "summary": "A low-level overlay component for internal use within AI components.",
+          "tagName": "forge-ai-overlay",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ForgeAiOverlayComponent",
+          "declaration": {
+            "name": "ForgeAiOverlayComponent",
+            "module": "src/lib/ai/core/overlay/overlay.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "forge-ai-overlay",
+          "declaration": {
+            "name": "ForgeAiOverlayComponent",
+            "module": "src/lib/ai/core/overlay/overlay.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/core/tooltip/tooltip.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ForgeAiTooltipComponent",
+          "cssProperties": [
+            {
+              "description": "The maximum width of the tooltip.",
+              "name": "--ai-tooltip-max-width"
+            },
+            {
+              "description": "The z-index of the tooltip overlay.",
+              "name": "--ai-tooltip-z-index"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The default slot for tooltip content.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "for",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The ID of the anchor element to attach the tooltip to.",
+              "attribute": "for"
+            },
+            {
+              "kind": "field",
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The text content of the tooltip (alternative to slotted content).",
+              "attribute": "text"
+            },
+            {
+              "kind": "field",
+              "name": "placement",
+              "type": {
+                "text": "TooltipPlacement"
+              },
+              "privacy": "public",
+              "default": "'top'",
+              "description": "The placement of the tooltip relative to the anchor.",
+              "attribute": "placement"
+            },
+            {
+              "kind": "field",
+              "name": "trigger",
+              "type": {
+                "text": "TooltipTrigger"
+              },
+              "privacy": "public",
+              "default": "'hover'",
+              "description": "How the tooltip should be triggered.",
+              "attribute": "trigger"
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the tooltip is open.",
+              "attribute": "open",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "delay",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "500",
+              "description": "Delay in milliseconds before showing the tooltip.",
+              "attribute": "delay"
+            },
+            {
+              "kind": "field",
+              "name": "hideDelay",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "0",
+              "description": "Delay in milliseconds before hiding the tooltip.",
+              "attribute": "hide-delay"
+            },
+            {
+              "kind": "method",
+              "name": "show",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Show the tooltip programmatically."
+            },
+            {
+              "kind": "method",
+              "name": "hide",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Hide the tooltip programmatically."
+            },
+            {
+              "kind": "method",
+              "name": "toggle",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Toggle the tooltip programmatically."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "for",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The ID of the anchor element to attach the tooltip to.",
+              "fieldName": "for"
+            },
+            {
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The text content of the tooltip (alternative to slotted content).",
+              "fieldName": "text"
+            },
+            {
+              "name": "placement",
+              "type": {
+                "text": "TooltipPlacement"
+              },
+              "default": "'top'",
+              "description": "The placement of the tooltip relative to the anchor.",
+              "fieldName": "placement"
+            },
+            {
+              "name": "trigger",
+              "type": {
+                "text": "TooltipTrigger"
+              },
+              "default": "'hover'",
+              "description": "How the tooltip should be triggered.",
+              "fieldName": "trigger"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the tooltip is open.",
+              "fieldName": "open"
+            },
+            {
+              "name": "delay",
+              "type": {
+                "text": "number"
+              },
+              "default": "500",
+              "description": "Delay in milliseconds before showing the tooltip.",
+              "fieldName": "delay"
+            },
+            {
+              "name": "hide-delay",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "Delay in milliseconds before hiding the tooltip.",
+              "fieldName": "hideDelay"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "summary": "A tooltip component with accessibility features and dynamic positioning.",
+          "tagName": "forge-ai-tooltip",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ForgeAiTooltipComponent",
+          "declaration": {
+            "name": "ForgeAiTooltipComponent",
+            "module": "src/lib/ai/core/tooltip/tooltip.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "forge-ai-tooltip",
+          "declaration": {
+            "name": "ForgeAiTooltipComponent",
+            "module": "src/lib/ai/core/tooltip/tooltip.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/ai/core/popover/popover.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ForgeAiPopoverComponent",
+          "cssProperties": [
+            {
+              "description": "The maximum width of the popover.",
+              "name": "--ai-popover-max-width"
+            },
+            {
+              "description": "The maximum height of the popover.",
+              "name": "--ai-popover-max-height"
+            },
+            {
+              "description": "The minimum width of the popover.",
+              "name": "--ai-popover-min-width"
+            },
+            {
+              "description": "The minimum height of the popover.",
+              "name": "--ai-popover-min-height"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The default slot for popover content.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "anchor",
+              "type": {
+                "text": "Element | null"
+              },
+              "privacy": "public",
+              "default": "null",
+              "description": "The anchor element to position the popover relative to.",
+              "attribute": "anchor"
+            },
+            {
+              "kind": "field",
+              "name": "placement",
+              "type": {
+                "text": "PopoverPlacement"
+              },
+              "privacy": "public",
+              "default": "'bottom-start'",
+              "description": "The placement of the popover relative to the anchor.",
+              "attribute": "placement"
+            },
+            {
+              "kind": "field",
+              "name": "flip",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Whether the popover should flip to the opposite side when there's no space.",
+              "attribute": "flip"
+            },
+            {
+              "kind": "field",
+              "name": "shift",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the popover should shift to stay in view.",
+              "attribute": "shift"
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the popover is open.",
+              "attribute": "open",
+              "reflects": true
+            }
+          ],
+          "attributes": [
+            {
+              "name": "anchor",
+              "type": {
+                "text": "Element | null"
+              },
+              "default": "null",
+              "description": "The anchor element to position the popover relative to.",
+              "fieldName": "anchor"
+            },
+            {
+              "name": "placement",
+              "type": {
+                "text": "PopoverPlacement"
+              },
+              "default": "'bottom-start'",
+              "description": "The placement of the popover relative to the anchor.",
+              "fieldName": "placement"
+            },
+            {
+              "name": "flip",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Whether the popover should flip to the opposite side when there's no space.",
+              "fieldName": "flip"
+            },
+            {
+              "name": "shift",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the popover should shift to stay in view.",
+              "fieldName": "shift"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the popover is open.",
+              "fieldName": "open"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "summary": "A popover component that provides styled overlay functionality.",
+          "tagName": "forge-ai-popover",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ForgeAiPopoverComponent",
+          "declaration": {
+            "name": "ForgeAiPopoverComponent",
+            "module": "src/lib/ai/core/popover/popover.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "forge-ai-popover",
+          "declaration": {
+            "name": "ForgeAiPopoverComponent",
+            "module": "src/lib/ai/core/popover/popover.ts"
+          }
+        }
+      ]
     }
   ],
   "branchName": "ai-chat-widgets",
   "forgeTypes": {
-    "ConfirmationDialogActionEventReason": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 28
-    },
-    "ConfirmationDialogActionEventData": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 30
-    },
-    "ConfirmationDialogProperties": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 35
-    },
-    "ConfirmationDialogComponent": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 55
-    },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 25
@@ -4262,6 +5609,22 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 39
     },
+    "ConfirmationDialogActionEventReason": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 28
+    },
+    "ConfirmationDialogActionEventData": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 30
+    },
+    "ConfirmationDialogProperties": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 35
+    },
+    "ConfirmationDialogComponent": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 55
+    },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
       "lineNumber": 28
@@ -4269,6 +5632,10 @@
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
+    },
+    "UserProfileComponent": {
+      "path": "src/lib/user-profile/user-profile.ts",
+      "lineNumber": 44
     },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
@@ -4294,10 +5661,6 @@
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 41
     },
-    "UserProfileComponent": {
-      "path": "src/lib/user-profile/user-profile.ts",
-      "lineNumber": 44
-    },
     "AiActionsToolbarActionEventData": {
       "path": "src/lib/ai/ai-actions-toolbar/ai-actions-toolbar.ts",
       "lineNumber": 17
@@ -4310,6 +5673,14 @@
       "path": "src/lib/ai/ai-actions-toolbar/ai-actions-toolbar.ts",
       "lineNumber": 30
     },
+    "MinimizeIconType": {
+      "path": "src/lib/ai/ai-chat-header/ai-chat-header.ts",
+      "lineNumber": 24
+    },
+    "AiChatHeaderComponent": {
+      "path": "src/lib/ai/ai-chat-header/ai-chat-header.ts",
+      "lineNumber": 41
+    },
     "AiArtifactComponent": {
       "path": "src/lib/ai/ai-artifact/ai-artifact.ts",
       "lineNumber": 23
@@ -4317,14 +5688,6 @@
     "AiButtonComponent": {
       "path": "src/lib/ai/ai-button/ai-button.ts",
       "lineNumber": 23
-    },
-    "MinimizeIconType": {
-      "path": "src/lib/ai/ai-chat-header/ai-chat-header.ts",
-      "lineNumber": 23
-    },
-    "AiChatHeaderComponent": {
-      "path": "src/lib/ai/ai-chat-header/ai-chat-header.ts",
-      "lineNumber": 33
     },
     "AiChatInterfaceComponent": {
       "path": "src/lib/ai/ai-chat-interface/ai-chat-interface.ts",
@@ -4334,9 +5697,73 @@
       "path": "src/lib/ai/ai-dialog/ai-dialog.ts",
       "lineNumber": 33
     },
+    "ForgeAiDropdownMenuItemGroupComponent": {
+      "path": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu-item-group.ts",
+      "lineNumber": 29
+    },
+    "ForgeAiDropdownMenuItemComponent": {
+      "path": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu-item.ts",
+      "lineNumber": 73
+    },
+    "ForgeAiDropdownMenuSeparatorComponent": {
+      "path": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu-separator.ts",
+      "lineNumber": 19
+    },
+    "DropdownMenuEvents": {
+      "path": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu.ts",
+      "lineNumber": 26
+    },
+    "DropdownMenuVariant": {
+      "path": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu.ts",
+      "lineNumber": 40
+    },
+    "ForgeAiDropdownMenuComponent": {
+      "path": "src/lib/ai/ai-dropdown-menu/ai-dropdown-menu.ts",
+      "lineNumber": 101
+    },
+    "DropdownNavigationController": {
+      "path": "src/lib/ai/ai-dropdown-menu/navigation-controller.ts",
+      "lineNumber": 26
+    },
+    "DropdownMenuSelectionMode": {
+      "path": "src/lib/ai/ai-dropdown-menu/selection-manager.ts",
+      "lineNumber": 3
+    },
+    "BaseDropdownChangeEventDetail": {
+      "path": "src/lib/ai/ai-dropdown-menu/selection-manager.ts",
+      "lineNumber": 8
+    },
+    "ActionEventDetail": {
+      "path": "src/lib/ai/ai-dropdown-menu/selection-manager.ts",
+      "lineNumber": 16
+    },
+    "SingleSelectionEventDetail": {
+      "path": "src/lib/ai/ai-dropdown-menu/selection-manager.ts",
+      "lineNumber": 25
+    },
+    "MultiSelectionEventDetail": {
+      "path": "src/lib/ai/ai-dropdown-menu/selection-manager.ts",
+      "lineNumber": 35
+    },
+    "DropdownChangeEventDetail": {
+      "path": "src/lib/ai/ai-dropdown-menu/selection-manager.ts",
+      "lineNumber": 46
+    },
+    "SelectionConfig": {
+      "path": "src/lib/ai/ai-dropdown-menu/selection-manager.ts",
+      "lineNumber": 51
+    },
+    "SelectionManager": {
+      "path": "src/lib/ai/ai-dropdown-menu/selection-manager.ts",
+      "lineNumber": 85
+    },
     "AiEmbeddedChatComponent": {
       "path": "src/lib/ai/ai-embedded-chat/ai-embedded-chat.ts",
       "lineNumber": 38
+    },
+    "AiEmptyStateComponent": {
+      "path": "src/lib/ai/ai-empty-state/ai-empty-state.ts",
+      "lineNumber": 21
     },
     "AiFabComponent": {
       "path": "src/lib/ai/ai-fab/ai-fab.ts",
@@ -4345,10 +5772,6 @@
     "AiFloatingChatComponent": {
       "path": "src/lib/ai/ai-floating-chat/ai-floating-chat.ts",
       "lineNumber": 40
-    },
-    "AiEmptyStateComponent": {
-      "path": "src/lib/ai/ai-empty-state/ai-empty-state.ts",
-      "lineNumber": 21
     },
     "AiGradientContainerVariant": {
       "path": "src/lib/ai/ai-gradient-container/ai-gradient-container.ts",
@@ -4422,6 +5845,10 @@
       "path": "src/lib/ai/ai-suggestions/ai-suggestions.ts",
       "lineNumber": 39
     },
+    "AiUserMessageComponent": {
+      "path": "src/lib/ai/ai-user-message/ai-user-message.ts",
+      "lineNumber": 17
+    },
     "Thread": {
       "path": "src/lib/ai/ai-threads/ai-threads.ts",
       "lineNumber": 19
@@ -4434,17 +5861,13 @@
       "path": "src/lib/ai/ai-threads/ai-threads.ts",
       "lineNumber": 40
     },
-    "AiUserMessageComponent": {
-      "path": "src/lib/ai/ai-user-message/ai-user-message.ts",
-      "lineNumber": 17
+    "AiChainOfThoughtComponent": {
+      "path": "src/lib/ai/chain-of-thought/ai-chain-of-thought.ts",
+      "lineNumber": 18
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "lineNumber": 21
-    },
-    "AiChainOfThoughtComponent": {
-      "path": "src/lib/ai/chain-of-thought/ai-chain-of-thought.ts",
-      "lineNumber": 18
     },
     "PromptButtonComponent": {
       "path": "src/lib/ai/ai-prompt/prompt-button/prompt-button.ts",
@@ -4454,13 +5877,13 @@
       "path": "src/lib/ai/ai-reasoning/reasoning-content/reasoning-content.ts",
       "lineNumber": 17
     },
-    "ThoughtBaseComponent": {
-      "path": "src/lib/ai/chain-of-thought/thought-base/thought-base.ts",
-      "lineNumber": 21
-    },
     "ThoughtDetailComponent": {
       "path": "src/lib/ai/chain-of-thought/thought-detail/thought-detail.ts",
       "lineNumber": 18
+    },
+    "ThoughtBaseComponent": {
+      "path": "src/lib/ai/chain-of-thought/thought-base/thought-base.ts",
+      "lineNumber": 21
     },
     "ThoughtImageComponent": {
       "path": "src/lib/ai/chain-of-thought/thought-image/thought-image.ts",
@@ -4473,6 +5896,34 @@
     "ThoughtSearchResultComponent": {
       "path": "src/lib/ai/chain-of-thought/thought-search-result/thought-search-result.ts",
       "lineNumber": 24
+    },
+    "OverlayPlacement": {
+      "path": "src/lib/ai/core/overlay/overlay.ts",
+      "lineNumber": 29
+    },
+    "ForgeAiOverlayComponent": {
+      "path": "src/lib/ai/core/overlay/overlay.ts",
+      "lineNumber": 41
+    },
+    "TooltipPlacement": {
+      "path": "src/lib/ai/core/tooltip/tooltip.ts",
+      "lineNumber": 24
+    },
+    "TooltipTrigger": {
+      "path": "src/lib/ai/core/tooltip/tooltip.ts",
+      "lineNumber": 25
+    },
+    "ForgeAiTooltipComponent": {
+      "path": "src/lib/ai/core/tooltip/tooltip.ts",
+      "lineNumber": 42
+    },
+    "PopoverPlacement": {
+      "path": "src/lib/ai/core/popover/popover.ts",
+      "lineNumber": 22
+    },
+    "ForgeAiPopoverComponent": {
+      "path": "src/lib/ai/core/popover/popover.ts",
+      "lineNumber": 40
     }
   }
 }

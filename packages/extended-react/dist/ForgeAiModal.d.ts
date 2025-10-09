@@ -1,10 +1,7 @@
 import React from "react";
-import {
-  ForgeAiModal as ForgeAiModalElement,
-  CustomEvent,
-} from "@tylertech/forge-extended/ai/ai-modal";
+import { ForgeAiModal as ForgeAiModalElement } from "@tylertech/forge-extended/ai/ai-modal";
 
-export type { ForgeAiModalElement, CustomEvent };
+export type { ForgeAiModalElement };
 
 export interface ForgeAiModalProps
   extends Pick<
@@ -51,13 +48,15 @@ When not explicitly set, this will be automatically determined based on viewport
   tabIndex?: number;
 
   /** Fired when the modal is opened */
-  onForgeAiModalOpen?: (event: CustomEvent) => void;
+  onForgeAiModalOpen?: (event: CustomEvent<CustomEvent<void>>) => void;
 
   /** Fired when the modal is closed */
-  onForgeAiModalClose?: (event: CustomEvent) => void;
+  onForgeAiModalClose?: (event: CustomEvent<CustomEvent<void>>) => void;
 
   /** Fired when the fullscreen state changes */
-  onForgeAiModalFullscreenChange?: (event: CustomEvent) => void;
+  onForgeAiModalFullscreenChange?: (
+    event: CustomEvent<CustomEvent<{ isFullscreen: boolean }>>,
+  ) => void;
 }
 
 /**
@@ -73,5 +72,8 @@ When not explicitly set, this will be automatically determined based on viewport
  * ### **Methods:**
  *  - **show(): _void_** - Shows the modal dialog.
  * - **close(): _void_** - Closes the modal dialog.
+ *
+ * ### **Slots:**
+ *  - _default_ - Default slot for modal content
  */
 export const ForgeAiModal: React.ForwardRefExoticComponent<ForgeAiModalProps>;

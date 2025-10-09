@@ -48,5 +48,8 @@ export interface ForgeAiGradientContainerProps
  *
  * ---
  *
+ *
+ * ### **Slots:**
+ *  - _default_ - Default slot for container content
  */
 export const ForgeAiGradientContainer: React.ForwardRefExoticComponent<ForgeAiGradientContainerProps>;

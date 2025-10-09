@@ -60,7 +60,7 @@ export interface ForgeAiChatHeaderProps
 }
 
 /**
- *
+ * AI chat header component with accessible tooltips
  * ---
  *
  *

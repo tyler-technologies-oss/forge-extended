@@ -12,6 +12,16 @@ export const ForgeAiThreads = forwardRef((props, forwardedRef) => {
     "forge-ai-threads-select",
     props.onForgeAiThreadsSelect,
   );
+  useEventListener(
+    ref,
+    "forge-ai-threads-new-chat",
+    props.onForgeAiThreadsNewChat,
+  );
+  useEventListener(
+    ref,
+    "forge-ai-threads-clear-history",
+    props.onForgeAiThreadsClearHistory,
+  );
 
   return React.createElement(
     "forge-ai-threads",

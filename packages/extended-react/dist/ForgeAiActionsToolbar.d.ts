@@ -40,7 +40,7 @@ export interface ForgeAiActionsToolbarProps
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
 
-  /** Fired when an action button is clicked. */
+  /** Fired when an action button is clicked. The detail contains the action type. */
   onForgeAiActionsToolbarAction?: (
     event: CustomEvent<CustomEvent<AiActionsToolbarActionEventData>>,
   ) => void;
@@ -52,6 +52,6 @@ export interface ForgeAiActionsToolbarProps
  *
  *
  * ### **Events:**
- *  - **forge-ai-actions-toolbar-action** - Fired when an action button is clicked.
+ *  - **forge-ai-actions-toolbar-action** - Fired when an action button is clicked. The detail contains the action type.
  */
 export const ForgeAiActionsToolbar: React.ForwardRefExoticComponent<ForgeAiActionsToolbarProps>;

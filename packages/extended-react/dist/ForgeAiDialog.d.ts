@@ -52,10 +52,12 @@ When false, the dialog will be positioned at the bottom-right corner with a fixe
   isFullscreen?: ForgeAiDialogElement["isFullscreen"];
 
   /** Fired when the fullscreen state changes due to viewport size */
-  onForgeAiDialogFullscreenChange?: (event: CustomEvent) => void;
+  onForgeAiDialogFullscreenChange?: (
+    event: CustomEvent<CustomEvent<{ isFullscreen: boolean }>>,
+  ) => void;
 
   /** Fired when the dialog is closed */
-  onForgeAiDialogClose?: (event: CustomEvent) => void;
+  onForgeAiDialogClose?: (event: CustomEvent<CustomEvent<void>>) => void;
 }
 
 /**

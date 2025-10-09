@@ -48,5 +48,8 @@ export interface ForgeAiButtonProps
  *
  * ---
  *
+ *
+ * ### **Slots:**
+ *  - _default_ - Default slot for button content
  */
 export const ForgeAiButton: React.ForwardRefExoticComponent<ForgeAiButtonProps>;

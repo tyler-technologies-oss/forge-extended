@@ -2,6 +2,7 @@ import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import '../ai-icon/ai-icon';
+import '../core/tooltip/tooltip.js';
 
 import styles from './ai-chat-header.scss?inline';
 
@@ -23,6 +24,13 @@ declare global {
 export type MinimizeIconType = 'default' | 'panel';
 
 /**
+ * @summary AI chat header component with accessible tooltips
+ *
+ * @description
+ * A header component for AI chat interfaces that includes an AI icon, title,
+ * and action buttons (info, expand/collapse, minimize) with integrated tooltips
+ * for improved accessibility and user experience.
+ *
  * @tag forge-ai-chat-header
  *
  * @slot title - Slot for custom title text (default: "AI Assistant")
@@ -68,19 +76,28 @@ export class AiChatHeaderComponent extends LitElement {
           </slot>
         </div>
         <div class="end">
-          <button aria-label="More info" class="forge-icon-button forge-icon-button--large ai-icon-button">
+          <button
+            id="info-button"
+            aria-label="More info"
+            aria-describedby="info-tooltip"
+            class="forge-icon-button forge-icon-button--large ai-icon-button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path fill="none" d="M0 0h24v24H0z" />
               <path
                 d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8" />
             </svg>
           </button>
+          <forge-ai-tooltip id="info-tooltip" for="info-button" placement="bottom">
+            Get more information about AI assistant
+          </forge-ai-tooltip>
           ${when(
             this.showExpandButton,
             () => html`
               <button
+                id="expand-button"
                 @click=${this.#handleExpandClick}
                 aria-label=${this.expanded ? 'Collapse chat window' : 'Expand chat window'}
+                aria-describedby="expand-tooltip"
                 class="forge-icon-button forge-icon-button--large ai-icon-button">
                 ${when(
                   this.expanded,
@@ -96,14 +113,19 @@ export class AiChatHeaderComponent extends LitElement {
                   `
                 )}
               </button>
+              <forge-ai-tooltip id="expand-tooltip" for="expand-button" placement="bottom">
+                ${this.expanded ? 'Collapse to smaller window' : 'Expand to full window'}
+              </forge-ai-tooltip>
             `
           )}
           ${when(
             this.showMinimizeButton,
             () => html`
               <button
+                id="minimize-button"
                 @click=${this.#handleMinimizeClick}
                 aria-label="Minimize chat window"
+                aria-describedby="minimize-tooltip"
                 class="forge-icon-button forge-icon-button--large ai-icon-button">
                 ${when(
                   this.minimizeIcon === 'default',
@@ -135,6 +157,9 @@ export class AiChatHeaderComponent extends LitElement {
                   `
                 )}
               </button>
+              <forge-ai-tooltip id="minimize-tooltip" for="minimize-button" placement="bottom">
+                Minimize chat to taskbar
+              </forge-ai-tooltip>
             `
           )}
         </div>

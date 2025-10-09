@@ -69,6 +69,7 @@
     "plop": "plop"
   },
   "dependencies": {
+    "@floating-ui/dom": "^1.7.4",
     "@lit-labs/observers": "^2.0.5",
     "@tylertech/forge-core": "catalog:",
     "@tylertech/tyler-icons": "catalog:",

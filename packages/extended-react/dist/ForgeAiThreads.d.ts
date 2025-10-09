@@ -1,7 +1,10 @@
 import React from "react";
-import { ForgeAiThreads as ForgeAiThreadsElement } from "@tylertech/forge-extended/ai/ai-threads";
+import {
+  ForgeAiThreads as ForgeAiThreadsElement,
+  CustomEvent,
+} from "@tylertech/forge-extended/ai/ai-threads";
 
-export type { ForgeAiThreadsElement };
+export type { ForgeAiThreadsElement, CustomEvent };
 
 export interface ForgeAiThreadsProps
   extends Pick<
@@ -47,6 +50,12 @@ export interface ForgeAiThreadsProps
   onForgeAiThreadsSelect?: (
     event: CustomEvent<CustomEvent<AiThreadsSelectEventData>>,
   ) => void;
+
+  /** Fired when the new chat button is clicked. */
+  onForgeAiThreadsNewChat?: (event: CustomEvent) => void;
+
+  /** Fired when the clear history button is clicked. */
+  onForgeAiThreadsClearHistory?: (event: CustomEvent) => void;
 }
 
 /**
@@ -56,5 +65,7 @@ export interface ForgeAiThreadsProps
  *
  * ### **Events:**
  *  - **forge-ai-threads-select** - Fired when a thread is selected.
+ * - **forge-ai-threads-new-chat** - Fired when the new chat button is clicked.
+ * - **forge-ai-threads-clear-history** - Fired when the clear history button is clicked.
  */
 export const ForgeAiThreads: React.ForwardRefExoticComponent<ForgeAiThreadsProps>;

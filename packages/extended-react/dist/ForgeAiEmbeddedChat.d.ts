@@ -47,10 +47,12 @@ export interface ForgeAiEmbeddedChatProps
   tabIndex?: number;
 
   /** Fired when the chat is expanded to modal view */
-  onForgeAiEmbeddedChatExpand?: (event: CustomEvent) => void;
+  onForgeAiEmbeddedChatExpand?: (event: CustomEvent<CustomEvent<void>>) => void;
 
   /** Fired when the chat is collapsed from modal view */
-  onForgeAiEmbeddedChatCollapse?: (event: CustomEvent) => void;
+  onForgeAiEmbeddedChatCollapse?: (
+    event: CustomEvent<CustomEvent<void>>,
+  ) => void;
 }
 
 /**
