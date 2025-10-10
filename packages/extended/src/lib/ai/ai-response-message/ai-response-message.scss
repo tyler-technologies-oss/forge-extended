@@ -9,41 +9,19 @@
 }
 
 .grid-container {
-  display: grid;
-  grid-template-rows: 1fr auto;
-  gap: #{forge-spacing.variable(xxsmall)};
+  display: block;
+  position: relative;
 }
 
 .ai-message-container {
-  margin-inline-end: #{forge-spacing.variable(xxlarge)};
-
-  &:hover,
-  &:focus-within {
-    cursor: pointer;
-  }
-
-  &:hover + forge-ai-actions-toolbar,
-  &:focus-within + forge-ai-actions-toolbar {
-    opacity: 1;
-    visibility: visible;
-  }
+  cursor: pointer;
 }
 
-forge-ai-actions-toolbar {
-  opacity: 0;
-  visibility: hidden;
-  transition:
-    opacity 0.2s ease-in-out,
-    visibility 0.2s ease-in-out;
-  justify-self: start;
-
-  &:hover,
-  &:focus-within {
-    opacity: 1;
-    visibility: visible;
-  }
+.toolbar-container {
+  padding: #{forge-spacing.variable(xsmall)};
 }
 
+// Text content styles
 span {
   @include forge-typography.style(body1);
   color: #{forge-theme.variable(on-surface)};
