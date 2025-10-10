@@ -21,6 +21,7 @@
   @include forge-scrollbar.base;
 
   padding-inline-start: #{forge-spacing.variable(medium)};
+  padding-block-end: #{forge-spacing.variable(medium)};
   scrollbar-gutter: stable;
 
   overflow-y: auto;
@@ -40,6 +41,7 @@
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  gap: #{forge-spacing.variable(medium)};
 }
 
 .suggestions-container {

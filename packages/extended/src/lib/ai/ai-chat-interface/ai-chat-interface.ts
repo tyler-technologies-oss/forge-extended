@@ -58,9 +58,6 @@ export class AiChatInterfaceComponent extends LitElement {
   @queryAssignedNodes({ slot: 'prompt', flatten: true })
   private _slottedPromptNodes!: Node[];
 
-  @queryAssignedNodes({ flatten: true })
-  private _slottedMessageNodes!: Node[];
-
   @state()
   private _hasMessages = false;
 
