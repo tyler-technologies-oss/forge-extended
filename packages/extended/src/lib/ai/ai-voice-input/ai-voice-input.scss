@@ -7,7 +7,23 @@
 
   forge-icon-button {
     &.recording {
+      position: relative;
       animation: pulse 1.5s ease-in-out infinite;
+      --forge-icon-button-background-color: transparent;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: #{forge-theme.variable(error-container-low)};
+        transform: translate(-50%, -50%) scale(0);
+        animation: pulse-ring 1.5s ease-in-out infinite;
+        z-index: -1;
+      }
     }
   }
 }
@@ -16,16 +32,28 @@
   0% {
     transform: scale(1);
     opacity: 1;
-    --forge-icon-button-background-color: transparent;
   }
   50% {
     transform: scale(1.1);
     opacity: 0.7;
-    --forge-icon-button-background-color: #{forge-theme.variable(error-container)};
   }
   100% {
     transform: scale(1);
     opacity: 1;
-    --forge-icon-button-background-color: transparent;
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.3);
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.6);
+    opacity: 0;
   }
 }
