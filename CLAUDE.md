@@ -215,6 +215,7 @@ src/lib/[component-name]/
 - When using a color, make sure to always use color tokens from Forge
 - For anything involving spacing, like gap, padding, etc. Use the spacing tokens from Forge
 - Always check other components for reference to know when to use readonly modifiers, getters, and private variables (prefixed with #)
+- NEVER use readonly for Lit html templates that have dynamic content within them or they won't update. Use getters instead. If the content is static, then use readonly.
 - Everytime a new feature is added to a component, write a test for it
 - When adding margins to an element, always use logical properties, ie: margin-inline-start, margin-block-end, etc.
 - When adding a new property or slot to a component, add an appropriate storybook control for it
@@ -223,11 +224,9 @@ src/lib/[component-name]/
 - Import location for ifDefined is import { ifDefined } from 'lit/directives/if-defined.js';
 - No need to add a import './' line to the test files
 - Always update the MDX storybook docs when new features are added to a component, things like events, slots, properties, etc
-- To run component tests, the command is pnpm run test:extended
-- Never use npm in this repo, ALWAYS use pnpm
-- When using ANY forge web component in a Lit component, always make sure it has it's define function imported and called. For example: definePopoverComponent();
-- When using the @property decorator in lit for complex properties like arrays, always make sure to pass attribute: false into the options object it to make sure the React wrappers generate correctly
-- In SCSS files, never modify a Forge CSS custom property directly, instead, import the components SCSS and use the provide-theme mixin to modify those variables. There's lots of examples of this in the app-launcher.scssd file
+- For Storybook actions, always use `import { action } from 'storybook/actions';` not `@storybook/addon-actions`
+- For Storybook MDX docs, always use `import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';` and `import CustomArgTypes from '../../blocks/CustomArgTypes';` not `@storybook/blocks`
+- For Lit template variables, use `readonly` for static content and `get` for dynamic content that needs to re-render when component state changes
 
 ### Conditional Content Pattern
 
@@ -271,3 +270,44 @@ get #conditionalContent(): TemplateResult | typeof nothing {
 - Anything where the presence of content should determine visibility
 
 **Example:** See `confirmation-dialog.ts` (secondary button) and `multi-select-header.ts` (select-all button)
+
+### Template Reactivity Pattern
+
+When creating template variables in Lit components, choose between `readonly` and `get` based on whether the content needs to re-render when component state changes.
+
+**Use `readonly` for static templates:**
+
+```typescript
+// Static content that never changes
+readonly #header = html`<h1>Static Title</h1>`;
+
+// Content with only bound properties (reactive through property binding)
+readonly #searchField = html`
+  <input .value=${this._searchValue} @input=${this._handleInput} />
+`;
+```
+
+**Use `get` for dynamic templates:**
+
+```typescript
+// Content that depends on component state/properties
+get #threadList(): TemplateResult {
+  return html`
+    <ul>
+      ${this.threads.map(thread => html`<li>${thread.title}</li>`)}
+    </ul>
+  `;
+}
+
+// Templates containing other getters or computed values
+get #container(): TemplateResult {
+  return html`
+    <div>
+      ${this.#threadList}
+      ${this.hasActions ? this.#actions : nothing}
+    </div>
+  `;
+}
+```
+
+**Key Rule:** If template content changes based on component state (arrays, conditionals, computed values), use `get`. If content is static or only uses property bindings, use `readonly`.

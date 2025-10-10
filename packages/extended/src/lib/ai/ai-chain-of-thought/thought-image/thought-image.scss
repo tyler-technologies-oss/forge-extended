@@ -1,0 +1,19 @@
+@use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
+
+:host {
+  display: block;
+}
+
+.image-container {
+  --forge-card-outline-color: transparent;
+  display: grid;
+  place-content: center;
+  place-items: center;
+}
+
+::slotted(img[slot='image']) {
+  height: 150px;
+  width: 150px;
+  object-fit: cover;
+  border-radius: #{forge-shape.variable(medium)};
+}

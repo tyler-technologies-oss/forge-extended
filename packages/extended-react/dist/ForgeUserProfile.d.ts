@@ -25,9 +25,6 @@ export interface ForgeUserProfileProps
   /** Indicates whether the theme toggle is visible */
   themeToggle?: boolean;
 
-  /** Controls whether the user profile popover is open */
-  open?: boolean;
-
   /** The full name of the user */
   fullName?: ForgeUserProfileElement["fullName"];
 

@@ -5,7 +5,6 @@ import { MultiSelectHeaderDemo } from './demos/multi-select-header/MultiSelectHe
 import { QuantityFieldDemo } from './demos/quantity-field/QuantityFieldDemo';
 import { ResponsiveToolbarDemo } from './demos/responsive-toolbar/ResponsiveToolbarDemo';
 import { UserProfileDemo } from './demos/user-profile/UserProfileDemo';
-import { AppLauncherDemo } from './demos/app-launcher/AppLauncherDemo';
 
 export interface IAppRoute extends RouteProps {
   path: string;
@@ -21,7 +20,6 @@ const routes: IAppRoute[] = [
     text: 'Components',
     icon: 'settings_input_component',
     routes: [
-      { path: '/app-launcher', component: AppLauncherDemo, text: 'App Launcher' },
       { path: '/busy-indicator', component: BusyIndicatorDemo, text: 'Busy Indicator' },
       { path: '/multi-select-header', component: MultiSelectHeaderDemo, text: 'Multi Select Header' },
       { path: '/quantity-field', component: QuantityFieldDemo, text: 'Quantity Field' },
