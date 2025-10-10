@@ -1,0 +1,17 @@
+import{r as f,i as m,x as c}from"./iframe-C3fo8bEJ.js";import{t as g}from"./custom-element-BhZVzxrc.js";import{n as r}from"./property-BTglca0W.js";import"./overlay-C-r9CCAA.js";const v=`/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */:host{display:contents;overflow:visible}.ai-popover{background:var(--forge-theme-surface-bright, #ffffff);border-radius:calc(var(--forge-shape-medium, 4px) * var(--forge-shape-factor, 1));box-shadow:var(--forge-theme-surface-bright-shadow, 0px 3px 1px -2px rgba(0, 0, 0, .2), 0px 2px 2px 0px rgba(0, 0, 0, .14), 0px 1px 5px 0px rgba(0, 0, 0, .12));box-sizing:border-box;animation-duration:.15s;animation-timing-function:cubic-bezier(0,0,0,1);animation-name:fadein,scalein;transform-origin:center center}forge-ai-overlay[data-position-placement^=top]:not([data-position-placement*="-"]) .ai-popover{transform-origin:bottom center}forge-ai-overlay[data-position-placement^=top][data-position-placement$=-start] .ai-popover{transform-origin:bottom left}forge-ai-overlay[data-position-placement^=top][data-position-placement$=-end] .ai-popover{transform-origin:bottom right}forge-ai-overlay[data-position-placement^=right]:not([data-position-placement*="-"]) .ai-popover{transform-origin:left center}forge-ai-overlay[data-position-placement^=right][data-position-placement$=-start] .ai-popover{transform-origin:left top}forge-ai-overlay[data-position-placement^=right][data-position-placement$=-end] .ai-popover{transform-origin:left bottom}forge-ai-overlay[data-position-placement^=bottom]:not([data-position-placement*="-"]) .ai-popover{transform-origin:top center}forge-ai-overlay[data-position-placement^=bottom][data-position-placement$=-start] .ai-popover{transform-origin:top left}forge-ai-overlay[data-position-placement^=bottom][data-position-placement$=-end] .ai-popover{transform-origin:top right}forge-ai-overlay[data-position-placement^=left]:not([data-position-placement*="-"]) .ai-popover{transform-origin:right center}forge-ai-overlay[data-position-placement^=left][data-position-placement$=-start] .ai-popover{transform-origin:right top}forge-ai-overlay[data-position-placement^=left][data-position-placement$=-end] .ai-popover{transform-origin:right bottom}@keyframes fadein{0%{opacity:0}to{opacity:1}}@keyframes scalein{0%{transform:scale(.8)}to{transform:scale(1)}}`;var d=Object.defineProperty,h=Object.getOwnPropertyDescriptor,e=(a,i,p,n)=>{for(var t=n>1?void 0:n?h(i,p):i,s=a.length-1,l;s>=0;s--)(l=a[s])&&(t=(n?l(i,p,t):l(t))||t);return n&&t&&d(i,p,t),t};let o=class extends m{constructor(){super(...arguments),this.anchor=null,this.placement="bottom-start",this.flip=!0,this.shift=!1,this.open=!1,this._onOverlayToggle=a=>{this.open=a.detail.open,this.dispatchEvent(new CustomEvent("ai-popover-toggle",{detail:a.detail,bubbles:!0,composed:!0}))}}render(){return c`
+      <forge-ai-overlay
+        .anchor=${this.anchor}
+        .placement=${this.placement}
+        .flip=${this.flip}
+        .shift=${this.shift}
+        .open=${this.open}
+        @ai-overlay-toggle=${this._onOverlayToggle}>
+        <div class="ai-popover">
+          <slot></slot>
+        </div>
+      </forge-ai-overlay>
+    `}};o.styles=f(v);e([r({type:Object})],o.prototype,"anchor",2);e([r()],o.prototype,"placement",2);e([r({type:Boolean})],o.prototype,"flip",2);e([r({type:Boolean})],o.prototype,"shift",2);e([r({type:Boolean,reflect:!0})],o.prototype,"open",2);o=e([g("forge-ai-popover")],o);
