@@ -3,7 +3,6 @@ import { customElement, property, queryAssignedNodes, state } from 'lit/decorato
 import { when } from 'lit/directives/when.js';
 import '../ai-chat-header/ai-chat-header';
 import type { MinimizeIconType } from '../ai-chat-header/ai-chat-header';
-import '../ai-prompt/ai-prompt';
 import '../ai-empty-state/ai-empty-state';
 import '../ai-gradient-container/ai-gradient-container';
 
@@ -22,7 +21,7 @@ export const AiChatInterfaceComponentTagName: keyof HTMLElementTagNameMap = 'for
  *
  * @slot - Default slot for messages
  * @slot suggestions - Slot for AI suggestions component
- * @slot prompt - Slot for custom AI prompt component. If not provided, a default forge-ai-prompt will be used.
+ * @slot prompt - Slot for AI prompt component
  */
 @customElement(AiChatInterfaceComponentTagName)
 export class AiChatInterfaceComponent extends LitElement {
@@ -55,9 +54,6 @@ export class AiChatInterfaceComponent extends LitElement {
   @queryAssignedNodes({ slot: 'suggestions', flatten: true })
   private _slottedSuggestionsNodes!: Node[];
 
-  @queryAssignedNodes({ slot: 'prompt', flatten: true })
-  private _slottedPromptNodes!: Node[];
-
   @state()
   private _hasMessages = false;
 
@@ -85,13 +81,8 @@ export class AiChatInterfaceComponent extends LitElement {
 
   readonly #promptSlot = html`<slot name="prompt" @slotchange=${this.#handleSlotChange}></slot>`;
 
-  get #prompt(): TemplateResult | typeof nothing {
-    const hasCustomPrompt = this._slottedPromptNodes.length > 0;
-    return when(
-      hasCustomPrompt,
-      () => this.#promptSlot,
-      () => html`<forge-ai-prompt></forge-ai-prompt>`
-    );
+  get #prompt(): TemplateResult {
+    return this.#promptSlot;
   }
 
   readonly #messagesSlot = html`<slot @slotchange=${this.#handleSlotChange}></slot>`;

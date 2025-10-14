@@ -6,16 +6,62 @@ import '$lib/ai/ai-chain-of-thought/thought-search-result/thought-search-result'
 import '$lib/ai/ai-chain-of-thought/thought-image/thought-image';
 import '$lib/ai/ai-chain-of-thought/thought-detail/thought-detail';
 import '$lib/ai/ai-chat-interface';
+import '$lib/ai/ai-prompt';
+import '$lib/ai/ai-dropdown-menu';
+import '$lib/ai/ai-dropdown-menu/ai-dropdown-menu-item';
+import '$lib/ai/ai-voice-input';
 import '$lib/ai/ai-gradient-container';
 import '$lib/ai/ai-user-message';
 import '$lib/ai/ai-response-message';
+import type { AiVoiceInputResultEvent } from '$lib/ai/ai-voice-input';
+import { defineCardComponent, defineIconComponent, defineIconButtonComponent, IconRegistry } from '@tylertech/forge';
+import { tylIconAdd, tylIconSparkles } from '@tylertech/tyler-icons';
 
 const component = 'forge-ai-chain-of-thought';
+
+defineCardComponent();
+defineIconComponent();
+defineIconButtonComponent();
+IconRegistry.define([tylIconAdd, tylIconSparkles]);
 
 const snowboardingSources = [
   { title: 'Powder Safety Guide', href: 'https://example.com/safety-guide' },
   { title: 'Equipment Reviews 2024', href: 'https://example.com/equipment-reviews' }
 ];
+
+const createPrompt = () => {
+  const handleVoiceInput = (event: CustomEvent<AiVoiceInputResultEvent>) => {
+    const prompt = document.querySelector('forge-ai-prompt') as any;
+    if (prompt) {
+      prompt.value = event.detail.transcript;
+    }
+  };
+
+  return html`
+    <forge-ai-prompt slot="prompt">
+      <forge-ai-dropdown-menu variant="icon-button" selection-mode="none" slot="actions">
+        <span slot="trigger-content">
+          <forge-icon-button>
+            <forge-icon name="add" external></forge-icon>
+          </forge-icon-button>
+        </span>
+        <forge-ai-dropdown-menu-item value="add-image">
+          <span>Add image</span>
+          <forge-icon name="sparkles" slot="start"></forge-icon>
+        </forge-ai-dropdown-menu-item>
+        <forge-ai-dropdown-menu-item value="add-pdf">
+          <span>Add PDF</span>
+          <forge-icon name="sparkles" slot="start"></forge-icon>
+        </forge-ai-dropdown-menu-item>
+        <forge-ai-dropdown-menu-item value="add-spreadsheet">
+          <span>Add spreadsheet</span>
+          <forge-icon name="sparkles" slot="start"></forge-icon>
+        </forge-ai-dropdown-menu-item>
+      </forge-ai-dropdown-menu>
+      <forge-ai-voice-input slot="actions" @forge-ai-voice-input-result=${handleVoiceInput}></forge-ai-voice-input>
+    </forge-ai-prompt>
+  `;
+};
 
 const meta = {
   title: 'AI/Primitives/Chain of Thought',
@@ -88,7 +134,7 @@ export const InChatInterface: Story = {
               <forge-ai-thought-image>
                 <span slot="title">Analyzing the snowboarder's technique</span>
                 <img
-                  src="https://images.unsplash.com/photo-1495469552678-d0fb77903866?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                  src="https://images.unsplash.com/photo-1495469552678-d0fb77903866?q=80&w=1287&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1web8fHx8MA%3D%3D"
                   slot="image" />
               </forge-ai-thought-image>
 
@@ -105,6 +151,8 @@ export const InChatInterface: Story = {
               controlled descent indicate advanced skill level, making the most of these ideal snow conditions.
             </p>
           </forge-ai-response-message>
+
+          ${createPrompt()}
         </forge-ai-chat-interface>
       </forge-ai-gradient-container>
     `;

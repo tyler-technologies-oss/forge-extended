@@ -1,5 +1,5 @@
 import { LitElement, PropertyValues, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import {
   defineButtonComponent,
   defineCardComponent,
@@ -10,8 +10,6 @@ import {
 } from '@tylertech/forge';
 
 import styles from './ai-prompt.scss?inline';
-import '../ai-voice-input/ai-voice-input';
-import type { AiVoiceInputResultEvent } from '../ai-voice-input/ai-voice-input';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -36,7 +34,7 @@ export const AiPromptComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-p
 /**
  * @tag forge-ai-prompt
  *
- * @slot additional-action - Optional slot for additional action buttons. Only displayed when variant is 'stacked'.
+ * @slot actions - Slot for action components like dropdown menus, voice input, buttons, etc.
  *
  * @state inline - The prompt is in inline layout mode with actions displayed inline with the input.
  * @state stacked - The prompt is in stacked layout mode with actions displayed below the input.
@@ -67,9 +65,6 @@ export class AiPromptComponent extends LitElement {
   @property({ type: String, attribute: 'variant' })
   public variant: AiPromptVariant = 'stacked';
 
-  @queryAssignedNodes({ slot: 'additional-action', flatten: true })
-  private _slottedAdditionalActionNodes!: Node[]; // Used by slot detection for future enhancements
-
   readonly #internals: ElementInternals;
 
   constructor() {
@@ -89,23 +84,10 @@ export class AiPromptComponent extends LitElement {
     toggleState(this.#internals, 'stacked', this.variant === 'stacked');
   }
 
-  readonly #additionalActionSlot = html`<slot name="additional-action" @slotchange=${this.#handleSlotChange}></slot>`;
-
-  get #additionalAction(): TemplateResult {
-    return this.#additionalActionSlot;
-  }
-
   readonly #inputActions = html`
     <hr class="forge-divider" />
     <div class="actions">
-      <button aria-label="Add file" class="forge-icon-button forge-icon-button--large ai-icon-button">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <path fill="none" d="M0 0h24v24H0z" />
-          <path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6z" />
-        </svg>
-      </button>
-      <forge-ai-voice-input @forge-ai-voice-input-result=${this._handleVoiceInput}></forge-ai-voice-input>
-      ${this.#additionalAction}
+      <slot name="actions"></slot>
     </div>
   `;
 
@@ -136,17 +118,6 @@ export class AiPromptComponent extends LitElement {
       event.preventDefault();
       this._handleSend();
     }
-  }
-
-  #handleSlotChange(evt: Event): void {
-    const slotName = (evt.target as HTMLSlotElement).name;
-    if (slotName === 'additional-action') {
-      this.requestUpdate();
-    }
-  }
-
-  private _handleVoiceInput(event: CustomEvent<AiVoiceInputResultEvent>): void {
-    this.value = event.detail.transcript;
   }
 
   public override render(): TemplateResult {

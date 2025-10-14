@@ -2,23 +2,66 @@ import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 
 import '$lib/ai/ai-chat-interface';
+import '$lib/ai/ai-prompt';
+import '$lib/ai/ai-dropdown-menu';
+import '$lib/ai/ai-dropdown-menu/ai-dropdown-menu-item';
+import '$lib/ai/ai-voice-input';
 import '$lib/ai/ai-user-message';
 import '$lib/ai/ai-response-message';
 import '$lib/ai/ai-suggestions';
 import '$lib/ai/ai-gradient-container';
 import '$lib/ai/ai-empty-state';
 import { Suggestion } from '$lib/ai/ai-suggestions';
-import { defineCardComponent } from '@tylertech/forge';
+import type { AiVoiceInputResultEvent } from '$lib/ai/ai-voice-input';
+import { defineCardComponent, defineIconComponent, defineIconButtonComponent, IconRegistry } from '@tylertech/forge';
+import { tylIconAdd, tylIconSparkles } from '@tylertech/tyler-icons';
 
 const component = 'forge-ai-chat-interface';
 
 defineCardComponent();
+defineIconComponent();
+defineIconButtonComponent();
+IconRegistry.define([tylIconAdd, tylIconSparkles]);
+
+const createPrompt = () => {
+  const handleVoiceInput = (event: CustomEvent<AiVoiceInputResultEvent>) => {
+    const prompt = document.querySelector('forge-ai-prompt') as any;
+    if (prompt) {
+      prompt.value = event.detail.transcript;
+    }
+  };
+
+  return html`
+    <forge-ai-prompt slot="prompt">
+      <forge-ai-dropdown-menu variant="icon-button" selection-mode="none" slot="actions">
+        <span slot="trigger-content">
+          <forge-icon-button>
+            <forge-icon name="add" external></forge-icon>
+          </forge-icon-button>
+        </span>
+        <forge-ai-dropdown-menu-item value="add-image">
+          <span>Add image</span>
+          <forge-icon name="sparkles" slot="start"></forge-icon>
+        </forge-ai-dropdown-menu-item>
+        <forge-ai-dropdown-menu-item value="add-pdf">
+          <span>Add PDF</span>
+          <forge-icon name="sparkles" slot="start"></forge-icon>
+        </forge-ai-dropdown-menu-item>
+        <forge-ai-dropdown-menu-item value="add-spreadsheet">
+          <span>Add spreadsheet</span>
+          <forge-icon name="sparkles" slot="start"></forge-icon>
+        </forge-ai-dropdown-menu-item>
+      </forge-ai-dropdown-menu>
+      <forge-ai-voice-input slot="actions" @forge-ai-voice-input-result=${handleVoiceInput}></forge-ai-voice-input>
+    </forge-ai-prompt>
+  `;
+};
 
 const meta = {
   title: 'AI/Primitives/Chat Interface',
   component,
   render: () => {
-    return html`<forge-ai-chat-interface></forge-ai-chat-interface>`;
+    return html` <forge-ai-chat-interface> ${createPrompt()} </forge-ai-chat-interface> `;
   }
 } satisfies Meta;
 
@@ -44,6 +87,7 @@ export const WithEmptyState: Story = {
           <forge-ai-empty-state>
             <forge-ai-suggestions slot="actions" variant="block" .suggestions=${suggestions}> </forge-ai-suggestions>
           </forge-ai-empty-state>
+          ${createPrompt()}
         </forge-ai-chat-interface>
       </forge-ai-gradient-container>
     `;
@@ -66,6 +110,7 @@ export const WithMessages: Story = {
           Sure! Here's a simple example of a generic function: This function works with any type T, providing type
           safety while being reusable.
         </forge-ai-response-message>
+        ${createPrompt()}
       </forge-ai-chat-interface>
     `;
   }
@@ -96,6 +141,7 @@ export const WithSuggestions: Story = {
           safety while being reusable.
         </forge-ai-response-message>
         <forge-ai-suggestions slot="suggestions" .suggestions=${suggestions}></forge-ai-suggestions>
+        ${createPrompt()}
       </forge-ai-chat-interface>
     `;
   }
@@ -127,6 +173,7 @@ export const WithGradientBorderComponent: Story = {
             safety while being reusable.
           </forge-ai-response-message>
           <forge-ai-suggestions slot="suggestions" .suggestions=${suggestions}></forge-ai-suggestions>
+          ${createPrompt()}
         </forge-ai-chat-interface>
       </forge-ai-gradient-container>
     `;
