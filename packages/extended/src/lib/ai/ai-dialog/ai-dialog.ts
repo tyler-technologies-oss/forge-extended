@@ -4,6 +4,7 @@ import { when } from 'lit/directives/when.js';
 import { Ref, createRef, ref } from 'lit/directives/ref.js';
 import type { AiModalComponent } from '../ai-modal';
 import '../ai-modal';
+import { DragController } from '../core/drag-controller.js';
 
 import styles from './ai-dialog.scss?inline';
 
@@ -61,11 +62,14 @@ export class AiDialogComponent extends LitElement {
   #mediaQuery?: MediaQueryList;
   #popoverElementRef: Ref<HTMLDivElement> = createRef();
   #aiModalElementRef: Ref<AiModalComponent> = createRef();
+  #dragHandleRef: Ref<HTMLButtonElement> = createRef();
   #escapeKeyAbortController?: AbortController;
+  #dragController: DragController | undefined;
 
   public override connectedCallback(): void {
     super.connectedCallback();
     this.#setupMediaQuery();
+    this.#setupDragController();
   }
 
   public override disconnectedCallback(): void {
@@ -78,6 +82,18 @@ export class AiDialogComponent extends LitElement {
     super.updated(changedProperties);
 
     if (changedProperties.has('open') || changedProperties.has('expanded') || changedProperties.has('_isFullscreen')) {
+      // Reset drag position when closing or switching to modal mode
+      if (changedProperties.has('open') && !this.open) {
+        // Dialog was closed
+        this.#dragController?.resetPosition();
+      } else if (changedProperties.has('expanded') || changedProperties.has('_isFullscreen')) {
+        // Check if switching from popover to modal mode
+        const useModal = this._isFullscreen || this.expanded;
+        if (useModal) {
+          this.#dragController?.resetPosition();
+        }
+      }
+
       this.#handleOpenStateChange();
     }
   }
@@ -91,8 +107,21 @@ export class AiDialogComponent extends LitElement {
         aria-modal="false"
         aria-labelledby="dialog-title"
         popover="manual"
-        class="ai-dialog"
+        class="ai-dialog ${this.#dragController?.isDragging ? 'dragging' : ''}"
         @toggle=${this.#handlePopoverToggle}>
+        <button
+          ${ref(this.#dragHandleRef)}
+          id="drag-handle"
+          aria-label="Move dialog"
+          class="forge-icon-button forge-icon-button--small ai-icon-button drag-handle"
+          tabindex="0"
+          @pointerdown=${this.#dragController?.handlePointerDown}
+          @keydown=${this.#dragController?.handleKeyDown}>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path fill="none" d="M0 0h24v24H0z" />
+            <path d="M20 9H4v2h16zM4 15h16v-2H4z" />
+          </svg>
+        </button>
         ${this.#content}
       </dialog>
     `;
@@ -132,6 +161,9 @@ export class AiDialogComponent extends LitElement {
     }
     this.open = false;
 
+    // Reset transform when closing
+    this.#dragController?.resetPosition();
+
     // Emit close event for parent components to listen to
     const event = new CustomEvent('forge-ai-dialog-close', {
       bubbles: true,
@@ -155,6 +187,18 @@ export class AiDialogComponent extends LitElement {
     this.#mediaQuery = window.matchMedia(`(max-width: ${VIEWPORT_WIDTH_THRESHOLD}px)`);
     this.#mediaQuery.addEventListener('change', this.#handleMediaChange);
     this.#handleMediaChange(this.#mediaQuery);
+  }
+
+  #setupDragController(): void {
+    this.#dragController = new DragController(this, {
+      targetElementRef: this.#popoverElementRef,
+      dragHandleRef: this.#dragHandleRef,
+      snapToViewport: true,
+      constrainKeyboardNavigation: true,
+      keyboardStep: 10,
+      snapAnimationDuration: 200,
+      allowOutOfBounds: true
+    });
   }
 
   #cleanupMediaQuery(): void {
