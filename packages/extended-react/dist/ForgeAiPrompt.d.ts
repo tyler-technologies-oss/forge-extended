@@ -64,6 +64,6 @@ export interface ForgeAiPromptProps
  *  - **forge-ai-prompt-send** - Fired when the send button is clicked or Enter is pressed.
  *
  * ### **Slots:**
- *  - **additional-action** - Optional slot for additional action buttons. Only displayed when variant is 'stacked'.
+ *  - **actions** - Slot for action components like dropdown menus, voice input, buttons, etc.
  */
 export const ForgeAiPrompt: React.ForwardRefExoticComponent<ForgeAiPromptProps>;

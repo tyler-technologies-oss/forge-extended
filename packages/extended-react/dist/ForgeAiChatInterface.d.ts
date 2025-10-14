@@ -61,6 +61,6 @@ export interface ForgeAiChatInterfaceProps
  * ### **Slots:**
  *  - _default_ - Default slot for messages
  * - **suggestions** - Slot for AI suggestions component
- * - **prompt** - Slot for custom AI prompt component. If not provided, a default forge-ai-prompt will be used.
+ * - **prompt** - Slot for AI prompt component
  */
 export const ForgeAiChatInterface: React.ForwardRefExoticComponent<ForgeAiChatInterfaceProps>;
