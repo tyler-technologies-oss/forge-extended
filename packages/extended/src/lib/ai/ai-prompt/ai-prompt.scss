@@ -45,7 +45,6 @@
 
 :host(:state(inline)) {
   .forge-field {
-    --forge-field-padding-inline: 0 #{forge-spacing.variable(medium)};
     --forge-field-height: 52px;
   }
 

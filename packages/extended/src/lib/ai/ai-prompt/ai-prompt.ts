@@ -36,7 +36,7 @@ export const AiPromptComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-p
  *
  * @slot actions - Slot for action components like dropdown menus, voice input, buttons, etc.
  *
- * @state inline - The prompt is in inline layout mode with actions displayed inline with the input.
+ * @state inline - The prompt is in inline layout mode with actions hidden.
  * @state stacked - The prompt is in stacked layout mode with actions displayed below the input.
  *
  * @event {CustomEvent<AiPromptSendEventData>} forge-ai-prompt-send - Fired when the send button is clicked or Enter is pressed.
@@ -125,7 +125,6 @@ export class AiPromptComponent extends LitElement {
       <div class="input-container">
         <div class="forge-card">
           <div class="forge-field">
-            ${this.variant === 'inline' ? this.#inputActions : ''}
             <input
               type="text"
               id="chat-input"
