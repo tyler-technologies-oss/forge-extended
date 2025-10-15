@@ -1,6 +1,5 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement } from 'lit/decorators.js';
-import { defineIconButtonComponent } from '@tylertech/forge';
 
 import styles from './ai-actions-toolbar.scss?inline';
 
@@ -29,10 +28,6 @@ export const AiActionsToolbarComponentTagName: keyof HTMLElementTagNameMap = 'fo
  */
 @customElement(AiActionsToolbarComponentTagName)
 export class AiActionsToolbarComponent extends LitElement {
-  static {
-    defineIconButtonComponent();
-  }
-
   public static override styles = unsafeCSS(styles);
 
   /** Emits the action event with the specified action type */

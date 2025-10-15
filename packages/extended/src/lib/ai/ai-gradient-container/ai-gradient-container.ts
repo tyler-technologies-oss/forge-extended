@@ -1,6 +1,6 @@
 import { LitElement, TemplateResult, html, unsafeCSS, PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { toggleState } from '@tylertech/forge';
+import { toggleState } from '$lib/utils/utils';
 
 import styles from './ai-gradient-container.scss?inline';
 

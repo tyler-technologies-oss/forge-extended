@@ -5,13 +5,6 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 
 import styles from './ai-file-picker.scss?inline';
 
-// Import Forge dependencies
-import { IconRegistry } from '@tylertech/forge';
-import { tylIconAdd, tylIconUpload } from '@tylertech/tyler-icons';
-
-// Register icons
-IconRegistry.define([tylIconUpload, tylIconAdd]);
-
 declare global {
   interface HTMLElementTagNameMap {
     'forge-ai-file-picker': ForgeAiFilePickerComponent;

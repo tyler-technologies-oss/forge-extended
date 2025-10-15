@@ -1,13 +1,6 @@
 import { LitElement, PropertyValues, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import {
-  defineButtonComponent,
-  defineCardComponent,
-  defineDividerComponent,
-  defineFieldComponent,
-  defineIconButtonComponent,
-  toggleState
-} from '@tylertech/forge';
+import { toggleState } from '$lib/utils/utils';
 
 import styles from './ai-prompt.scss?inline';
 
@@ -43,14 +36,6 @@ export const AiPromptComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-p
  */
 @customElement(AiPromptComponentTagName)
 export class AiPromptComponent extends LitElement {
-  static {
-    defineButtonComponent();
-    defineCardComponent();
-    defineDividerComponent();
-    defineFieldComponent();
-    defineIconButtonComponent();
-  }
-
   public static override styles = unsafeCSS(styles);
 
   /** Placeholder text for the input field */

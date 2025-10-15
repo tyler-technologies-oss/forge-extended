@@ -1,7 +1,6 @@
-import { IconRegistry, toggleState } from '@tylertech/forge';
 import { LitElement, TemplateResult, html, unsafeCSS, PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { tylIconSparkles } from '@tylertech/tyler-icons';
+import { toggleState } from '$lib/utils/utils';
 import '../ai-icon';
 import '../ai-gradient-container/ai-gradient-container';
 
@@ -22,10 +21,6 @@ export const AiButtonComponentTagName: keyof HTMLElementTagNameMap = 'forge-ai-b
  */
 @customElement(AiButtonComponentTagName)
 export class AiButtonComponent extends LitElement {
-  static {
-    IconRegistry.define([tylIconSparkles]);
-  }
-
   public static override styles = unsafeCSS(styles);
 
   /** Whether the button is disabled */
