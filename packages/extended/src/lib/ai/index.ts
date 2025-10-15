@@ -10,6 +10,7 @@ export * from './ai-dialog';
 export * from './ai-embedded-chat';
 export * from './ai-empty-state';
 export * from './ai-fab';
+export * from './ai-file-picker';
 export * from './ai-floating-chat';
 export * from './ai-gradient-container';
 export * from './ai-icon';

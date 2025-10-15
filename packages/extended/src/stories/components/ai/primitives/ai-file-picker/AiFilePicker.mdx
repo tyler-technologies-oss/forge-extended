@@ -1,0 +1,90 @@
+import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
+import CustomArgTypes from '../../../../blocks/CustomArgTypes';
+import * as AiFilePickerStories from './AiFilePicker.stories';
+
+<Meta of={AiFilePickerStories} />
+
+<Title />
+
+The `forge-ai-file-picker` component provides an easy way for users to select and upload files with support for both button and icon-button variants.
+
+<Canvas of={AiFilePickerStories.Demo} />
+
+## Features
+
+- **Button and Icon Button Variants**: Choose between `button` and `icon-button` variants for different UI contexts
+- **Drag & Drop Support**: Visual feedback when files are dragged over the component
+- **File Type Restrictions**: Use the `accept` attribute to limit file types (e.g., `image/*`, `.pdf`, `text/plain`)
+- **Multiple File Selection**: Enable `multiple` attribute to allow selecting multiple files at once
+- **Event Emission**: Emits `forge-ai-file-picker-change` event with file details and timestamp
+- **Accessibility**: Full keyboard support and ARIA labels for screen readers
+
+## Variants
+
+### Button Variant
+
+The default variant displays as a standard button with text content.
+
+<Canvas of={AiFilePickerStories.Demo} />
+
+### Icon Button Variant
+
+The icon-button variant displays as a compact icon button, ideal for toolbars or space-constrained layouts.
+
+<Canvas of={AiFilePickerStories.IconButton} />
+
+## File Type Restrictions
+
+You can restrict the types of files that can be selected using the `accept` attribute:
+
+<Canvas of={AiFilePickerStories.ImageOnly} />
+
+## Multiple File Selection
+
+Enable multiple file selection by setting the `multiple` attribute:
+
+<Canvas of={AiFilePickerStories.Multiple} />
+
+## Disabled State
+
+The component can be disabled to prevent file selection:
+
+<Canvas of={AiFilePickerStories.Disabled} />
+
+## Events
+
+The component emits the following events:
+
+- **`forge-ai-file-picker-change`**: Fired when a file is selected via click or drag & drop
+  - `detail.file`: The selected File object
+  - `detail.timestamp`: Timestamp when the file was selected
+
+## Usage Examples
+
+```html
+<!-- Basic file picker -->
+<forge-ai-file-picker>Choose File</forge-ai-file-picker>
+
+<!-- Icon button variant -->
+<forge-ai-file-picker variant="icon-button">
+  <forge-icon slot="icon" name="upload"></forge-icon>
+</forge-ai-file-picker>
+
+<!-- Image files only -->
+<forge-ai-file-picker accept="image/*">Select Image</forge-ai-file-picker>
+
+<!-- Multiple files -->
+<forge-ai-file-picker multiple>Select Files</forge-ai-file-picker>
+
+<!-- With event handling -->
+<forge-ai-file-picker id="file-picker">Upload Document</forge-ai-file-picker>
+<script>
+  document.getElementById('file-picker').addEventListener('forge-ai-file-picker-change', event => {
+    console.log('File selected:', event.detail.file.name);
+  });
+</script>
+```
+
+## API
+
+<CustomArgTypes />
