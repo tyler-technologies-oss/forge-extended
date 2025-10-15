@@ -7,6 +7,7 @@ import '$lib/ai/ai-prompt/prompt-button';
 import '$lib/ai/ai-dropdown-menu';
 import '$lib/ai/ai-dropdown-menu/ai-dropdown-menu-item';
 import '$lib/ai/ai-voice-input';
+import '$lib/ai/ai-file-picker';
 import { AiPromptVariant } from '$lib/ai/ai-prompt';
 import type { AiVoiceInputResultEvent } from '$lib/ai/ai-voice-input';
 import { defineIconComponent, IconRegistry } from '@tylertech/forge';
@@ -46,23 +47,16 @@ const meta = {
       }
     };
 
+    const handleFileChange = (event: CustomEvent) => {
+      console.log('File selected:', event.detail.file.name);
+      action('forge-ai-file-picker-change')(event.detail);
+    };
+
     return html`
       <forge-ai-prompt variant=${args.variant} placeholder=${args.placeholder} @forge-ai-prompt-send=${onSend}>
-        <forge-ai-dropdown-menu variant="icon-button" selection-mode="none" slot="actions">
-          <forge-icon name="add" slot="trigger-content"></forge-icon>
-
-          <forge-ai-dropdown-menu-item value="gpt-4.1">
-            <span>Add image</span>
-            <!-- <span slot="description">More capable, advanced reasoning</span> -->
-            <forge-icon name="sparkles" slot="start"></forge-icon>
-          </forge-ai-dropdown-menu-item>
-
-          <forge-ai-dropdown-menu-item value="gpt-4">
-            <span>Add video</span>
-            <!-- <span slot="description">Advanced reasoning capabilities</span> -->
-            <forge-icon name="sparkles" slot="start"></forge-icon>
-          </forge-ai-dropdown-menu-item>
-        </forge-ai-dropdown-menu>
+        <forge-ai-file-picker variant="icon-button" slot="actions" @forge-ai-file-picker-change=${handleFileChange}>
+          <forge-icon slot="icon" name="add"></forge-icon>
+        </forge-ai-file-picker>
         <forge-ai-voice-input slot="actions" @forge-ai-voice-input-result=${handleVoiceInput}></forge-ai-voice-input>
         <forge-prompt-button slot="actions">
           <forge-icon name="web_alt" slot="leading"></forge-icon>

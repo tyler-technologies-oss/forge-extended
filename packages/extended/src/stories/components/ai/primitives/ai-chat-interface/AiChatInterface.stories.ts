@@ -6,6 +6,7 @@ import '$lib/ai/ai-prompt';
 import '$lib/ai/ai-prompt/prompt-button';
 import '$lib/ai/ai-dropdown-menu';
 import '$lib/ai/ai-dropdown-menu/ai-dropdown-menu-item';
+import '$lib/ai/ai-file-picker';
 import '$lib/ai/ai-voice-input';
 import '$lib/ai/ai-user-message';
 import '$lib/ai/ai-response-message';
@@ -32,25 +33,16 @@ const createPrompt = () => {
     }
   };
 
+  const handleFileChange = (event: CustomEvent) => {
+    console.log('File selected:', event.detail.file.name);
+    // Handle file attachment logic here
+  };
+
   return html`
     <forge-ai-prompt slot="prompt">
-      <forge-ai-dropdown-menu variant="icon-button" selection-mode="none" slot="actions">
-        <span slot="trigger-content">
-          <forge-icon name="add"></forge-icon>
-        </span>
-        <forge-ai-dropdown-menu-item value="add-image">
-          <span>Add image</span>
-          <forge-icon name="sparkles" slot="start"></forge-icon>
-        </forge-ai-dropdown-menu-item>
-        <forge-ai-dropdown-menu-item value="add-pdf">
-          <span>Add PDF</span>
-          <forge-icon name="sparkles" slot="start"></forge-icon>
-        </forge-ai-dropdown-menu-item>
-        <forge-ai-dropdown-menu-item value="add-spreadsheet">
-          <span>Add spreadsheet</span>
-          <forge-icon name="sparkles" slot="start"></forge-icon>
-        </forge-ai-dropdown-menu-item>
-      </forge-ai-dropdown-menu>
+      <forge-ai-file-picker variant="icon-button" slot="actions" @forge-ai-file-picker-change=${handleFileChange}>
+        <forge-icon slot="icon" name="add"></forge-icon>
+      </forge-ai-file-picker>
       <forge-ai-voice-input slot="actions" @forge-ai-voice-input-result=${handleVoiceInput}></forge-ai-voice-input>
       <forge-prompt-button slot="actions">
         <forge-icon name="web_alt" slot="leading"></forge-icon>
