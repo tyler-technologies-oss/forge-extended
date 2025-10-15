@@ -1,6 +1,6 @@
 import { LitElement, TemplateResult, html, unsafeCSS, PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { defineButtonComponent, toggleState } from '@tylertech/forge';
+import { toggleState } from '../utils';
 
 import styles from './ai-suggestions.scss?inline';
 
@@ -38,10 +38,6 @@ export const AiSuggestionsComponentTagName: keyof HTMLElementTagNameMap = 'forge
  */
 @customElement(AiSuggestionsComponentTagName)
 export class AiSuggestionsComponent extends LitElement {
-  static {
-    defineButtonComponent();
-  }
-
   public static override styles = unsafeCSS(styles);
 
   /** Array of suggestion objects to display */

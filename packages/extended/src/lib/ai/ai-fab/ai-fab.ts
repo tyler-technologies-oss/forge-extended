@@ -1,4 +1,4 @@
-import { toggleState } from '$lib/utils/utils';
+import { toggleState } from '../utils';
 import { LitElement, TemplateResult, html, unsafeCSS, PropertyValues } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import '../ai-icon';

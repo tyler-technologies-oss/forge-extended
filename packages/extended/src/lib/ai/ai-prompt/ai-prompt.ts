@@ -1,6 +1,6 @@
 import { LitElement, PropertyValues, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { toggleState } from '$lib/utils/utils';
+import { toggleState } from '../utils';
 
 import styles from './ai-prompt.scss?inline';
 

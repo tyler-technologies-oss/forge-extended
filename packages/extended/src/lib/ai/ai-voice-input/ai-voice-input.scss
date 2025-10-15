@@ -1,11 +1,12 @@
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/dist/icon-button/forge-icon-button';
 
 .ai-voice-input {
   display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  forge-icon-button {
+  .forge-icon-button {
     &.recording {
       position: relative;
       animation: pulse 1.5s ease-in-out infinite;
