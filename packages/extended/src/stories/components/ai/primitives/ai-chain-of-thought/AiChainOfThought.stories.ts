@@ -41,9 +41,7 @@ const createPrompt = () => {
     <forge-ai-prompt slot="prompt">
       <forge-ai-dropdown-menu variant="icon-button" selection-mode="none" slot="actions">
         <span slot="trigger-content">
-          <forge-icon-button>
-            <forge-icon name="add" external></forge-icon>
-          </forge-icon-button>
+          <forge-icon name="add" external></forge-icon>
         </span>
         <forge-ai-dropdown-menu-item value="add-image">
           <span>Add image</span>

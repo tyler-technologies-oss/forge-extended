@@ -49,11 +49,7 @@ const meta = {
     return html`
       <forge-ai-prompt variant=${args.variant} placeholder=${args.placeholder} @forge-ai-prompt-send=${onSend}>
         <forge-ai-dropdown-menu variant="icon-button" selection-mode="none" slot="actions">
-          <span slot="trigger-content">
-            <forge-icon-button>
-              <forge-icon name="add"></forge-icon>
-            </forge-icon-button>
-          </span>
+          <forge-icon name="add" slot="trigger-content"></forge-icon>
 
           <forge-ai-dropdown-menu-item value="gpt-4.1">
             <span>Add image</span>

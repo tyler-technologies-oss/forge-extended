@@ -29,10 +29,10 @@
   }
 }
 
-.forge-icon-button img,
-.forge-icon-button svg {
-  fill: #{forge-theme.variable(text-medium)};
-}
+// .forge-icon-button img,
+// .forge-icon-button svg {
+//   fill: #{forge-theme.variable(text-medium)};
+// }
 
 ::slotted([slot='additional-action']:not(:last-child)) {
   margin-inline-end: #{forge-spacing.variable(small)};
