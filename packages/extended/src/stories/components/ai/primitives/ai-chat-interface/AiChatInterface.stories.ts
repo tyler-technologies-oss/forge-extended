@@ -3,6 +3,7 @@ import { html } from 'lit';
 
 import '$lib/ai/ai-chat-interface';
 import '$lib/ai/ai-prompt';
+import '$lib/ai/ai-prompt/prompt-button';
 import '$lib/ai/ai-dropdown-menu';
 import '$lib/ai/ai-dropdown-menu/ai-dropdown-menu-item';
 import '$lib/ai/ai-voice-input';
@@ -14,14 +15,14 @@ import '$lib/ai/ai-empty-state';
 import { Suggestion } from '$lib/ai/ai-suggestions';
 import type { AiVoiceInputResultEvent } from '$lib/ai/ai-voice-input';
 import { defineCardComponent, defineIconComponent, defineIconButtonComponent, IconRegistry } from '@tylertech/forge';
-import { tylIconAdd, tylIconSparkles } from '@tylertech/tyler-icons';
+import { tylIconAdd, tylIconArrowDropDown, tylIconSparkles, tylIconWebAlt } from '@tylertech/tyler-icons';
 
 const component = 'forge-ai-chat-interface';
 
 defineCardComponent();
 defineIconComponent();
 defineIconButtonComponent();
-IconRegistry.define([tylIconAdd, tylIconSparkles]);
+IconRegistry.define([tylIconAdd, tylIconArrowDropDown, tylIconSparkles, tylIconWebAlt]);
 
 const createPrompt = () => {
   const handleVoiceInput = (event: CustomEvent<AiVoiceInputResultEvent>) => {
@@ -36,7 +37,7 @@ const createPrompt = () => {
       <forge-ai-dropdown-menu variant="icon-button" selection-mode="none" slot="actions">
         <span slot="trigger-content">
           <forge-icon-button>
-            <forge-icon name="add" external></forge-icon>
+            <forge-icon name="add"></forge-icon>
           </forge-icon-button>
         </span>
         <forge-ai-dropdown-menu-item value="add-image">
@@ -53,6 +54,26 @@ const createPrompt = () => {
         </forge-ai-dropdown-menu-item>
       </forge-ai-dropdown-menu>
       <forge-ai-voice-input slot="actions" @forge-ai-voice-input-result=${handleVoiceInput}></forge-ai-voice-input>
+      <forge-prompt-button slot="actions">
+        <forge-icon name="web_alt" slot="leading"></forge-icon>
+        Web search
+      </forge-prompt-button>
+      <forge-ai-dropdown-menu variant="button" selection-mode="single" slot="actions">
+        <span slot="trigger-content">GPT-4</span>
+        <forge-icon name="arrow_drop_down" slot="end"></forge-icon>
+
+        <forge-ai-dropdown-menu-item value="gpt-4">
+          <span>GPT-4</span>
+        </forge-ai-dropdown-menu-item>
+
+        <forge-ai-dropdown-menu-item value="gpt-3.5">
+          <span>GPT-3.5</span>
+        </forge-ai-dropdown-menu-item>
+
+        <forge-ai-dropdown-menu-item value="claude-3">
+          <span>Claude-3</span>
+        </forge-ai-dropdown-menu-item>
+      </forge-ai-dropdown-menu>
     </forge-ai-prompt>
   `;
 };

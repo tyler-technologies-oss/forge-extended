@@ -25,6 +25,7 @@
     align-items: center;
     padding: #{forge-spacing.variable(xxsmall)};
     height: 52px;
+    overflow-x: auto;
   }
 }
 

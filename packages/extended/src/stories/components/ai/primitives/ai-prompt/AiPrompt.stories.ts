@@ -10,11 +10,11 @@ import '$lib/ai/ai-voice-input';
 import { AiPromptVariant } from '$lib/ai/ai-prompt';
 import type { AiVoiceInputResultEvent } from '$lib/ai/ai-voice-input';
 import { defineIconComponent, IconRegistry } from '@tylertech/forge';
-import { tylIconChevronDown, tylIconWebAlt } from '@tylertech/tyler-icons';
+import { tylIconAdd, tylIconArrowDropDown, tylIconChevronDown, tylIconWebAlt } from '@tylertech/tyler-icons';
 
 defineIconComponent();
 
-IconRegistry.define([tylIconChevronDown, tylIconWebAlt]);
+IconRegistry.define([tylIconChevronDown, tylIconWebAlt, tylIconArrowDropDown, tylIconAdd]);
 
 const component = 'forge-ai-prompt';
 
@@ -51,7 +51,7 @@ const meta = {
         <forge-ai-dropdown-menu variant="icon-button" selection-mode="none" slot="actions">
           <span slot="trigger-content">
             <forge-icon-button>
-              <forge-icon name="add" external></forge-icon>
+              <forge-icon name="add"></forge-icon>
             </forge-icon-button>
           </span>
 
@@ -72,10 +72,22 @@ const meta = {
           <forge-icon name="web_alt" slot="leading"></forge-icon>
           Web search
         </forge-prompt-button>
-        <forge-prompt-button slot="actions">
-          GPT-4
-          <forge-icon name="chevron_down" slot="trailing"></forge-icon>
-        </forge-prompt-button>
+        <forge-ai-dropdown-menu variant="button" selection-mode="single" slot="actions">
+          <span slot="trigger-content">GPT-4</span>
+          <forge-icon name="arrow_drop_down" slot="end"></forge-icon>
+
+          <forge-ai-dropdown-menu-item value="gpt-4">
+            <span>GPT-4</span>
+          </forge-ai-dropdown-menu-item>
+
+          <forge-ai-dropdown-menu-item value="gpt-3.5">
+            <span>GPT-3.5</span>
+          </forge-ai-dropdown-menu-item>
+
+          <forge-ai-dropdown-menu-item value="claude-3">
+            <span>Claude-3</span>
+          </forge-ai-dropdown-menu-item>
+        </forge-ai-dropdown-menu>
       </forge-ai-prompt>
     `;
   }
