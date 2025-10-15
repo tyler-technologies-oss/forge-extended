@@ -1,0 +1,6 @@
+import{j as t,M as r,T as e,C as m}from"./blocks-BKjT9Dw4.js";import{useMDXComponents as i}from"./index-DNFFXgUn.js";import{C as p}from"./CustomArgTypes-C79-tmAU.js";import{A as a,D as c}from"./AiSuggestions.stories-ZJ5QU3jk.js";import"./iframe-BKP6vMqB.js";import"./index-CWk7euD-.js";import"./_commonjsHelpers-CqkleIqs.js";import"./utils-BBvBK-dp.js";import"./ai-suggestions-BreXheYA.js";import"./custom-element-BhZVzxrc.js";import"./property-DMmDRPg7.js";import"./index--1y8LJdS.js";import"./tslib.es6-D5TJvmCu.js";import"./base-adapter-D72Umsh7.js";import"./base-button-adapter-DE1A2g_z.js";import"./icon-registry-FyA6-By-.js";import"./with-default-aria-D0bZRvxi.js";import"./utils-Bn45QkHx.js";import"./icon-CVy8WPiZ.js";function n(o){const s={h2:"h2",p:"p",...i(),...o.components};return t.jsxs(t.Fragment,{children:[t.jsx(r,{of:a}),`
+`,t.jsx(e,{}),`
+`,t.jsx(s.p,{children:"The AI Suggestions component displays interactive suggestion chips that users can select to quickly input common queries or responses."}),`
+`,t.jsx(m,{of:c}),`
+`,t.jsx(s.h2,{id:"api",children:"API"}),`
+`,t.jsx(p,{})]})}function _(o={}){const{wrapper:s}={...i(),...o.components};return s?t.jsx(s,{...o,children:t.jsx(n,{...o})}):n(o)}export{_ as default};
