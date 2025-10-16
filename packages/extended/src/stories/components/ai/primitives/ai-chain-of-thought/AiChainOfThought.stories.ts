@@ -155,3 +155,119 @@ export const InChatInterface: Story = {
     `;
   }
 };
+
+export const SequentialLoading: Story = {
+  render: () => {
+    const thoughtSteps = [
+      {
+        type: 'search',
+        title: 'Searching for Mini Australian Shepherd information',
+        content: 'Found 12 breed-specific articles and veterinary resources about Mini Australian Shepherds.',
+        sources: [
+          { title: 'AKC Breed Standards', href: 'https://example.com/akc-standards' },
+          { title: 'Mini Aussie Health Guide', href: 'https://example.com/health-guide' },
+          { title: 'Herding Dog Training Manual', href: 'https://example.com/training-manual' }
+        ],
+        delay: 1500
+      },
+      {
+        type: 'detail',
+        title: 'Analyzing breed characteristics',
+        content:
+          'Mini Australian Shepherds are highly intelligent, energetic herding dogs that typically weigh 20-40 pounds and stand 13-18 inches tall.',
+        delay: 3500
+      },
+      {
+        type: 'image',
+        title: 'Examining breed appearance',
+        content:
+          'This Mini Aussie shows the typical merle coat pattern and alert expression characteristic of the breed.',
+        imageSrc: 'https://images.unsplash.com/photo-1551717743-49959800b1f6?q=80&w=1287&auto=format&fit=crop',
+        delay: 6000
+      },
+      {
+        type: 'detail',
+        title: 'Cross-referencing temperament data',
+        content:
+          'Research shows Mini Aussies are loyal, protective, and require significant mental and physical stimulation due to their herding instincts.',
+        delay: 8500
+      },
+      {
+        type: 'detail',
+        title: 'Care and training recommendations',
+        content:
+          'Mini Australian Shepherds thrive with consistent training, daily exercise, and early socialization. They excel at agility, herding trials, and make devoted family companions.',
+        delay: 11000
+      }
+    ];
+
+    const startSequentialLoading = (chainContainer: HTMLElement) => {
+      const reasoningHeader = chainContainer.querySelector('forge-ai-reasoning-header') as any;
+
+      // Set reasoning mode to true when starting
+      if (reasoningHeader) {
+        reasoningHeader.reasoning = true;
+      }
+
+      thoughtSteps.forEach((step, stepIndex) => {
+        setTimeout(() => {
+          let thoughtElement: HTMLElement;
+
+          if (step.type === 'search') {
+            thoughtElement = document.createElement('forge-ai-thought-search-result');
+            (thoughtElement as any).sources = step.sources;
+            thoughtElement.innerHTML = `
+              <span slot="title">${step.title}</span>
+              ${step.content}
+            `;
+          } else if (step.type === 'image') {
+            thoughtElement = document.createElement('forge-ai-thought-image');
+            thoughtElement.innerHTML = `
+              <span slot="title">${step.title}</span>
+              <img src="${step.imageSrc}" slot="image" alt="Analysis image" />
+              ${step.content}
+            `;
+          } else {
+            thoughtElement = document.createElement('forge-ai-thought-detail');
+            thoughtElement.innerHTML = `
+              <span slot="title">${step.title}</span>
+              ${step.content}
+            `;
+          }
+
+          chainContainer.appendChild(thoughtElement);
+
+          // If this is the last step, set reasoning to false
+          if (stepIndex === thoughtSteps.length - 1) {
+            setTimeout(() => {
+              if (reasoningHeader) {
+                reasoningHeader.reasoning = false;
+              }
+            }, 300); // Small delay after the last thought appears
+          }
+        }, step.delay);
+      });
+    };
+
+    setTimeout(() => {
+      const chainContainer = document.querySelector('#sequential-chain') as HTMLElement;
+      if (chainContainer) {
+        startSequentialLoading(chainContainer);
+      }
+    }, 500);
+
+    return html`
+      <div style="padding: 1rem;">
+        <p>
+          <strong>Demo:</strong> Watch as thoughts load sequentially with delays to simulate real-time AI reasoning.
+        </p>
+        <forge-ai-chain-of-thought id="sequential-chain" expanded>
+          <forge-ai-reasoning-header slot="heading" expanded>
+            <span slot="title">Mini Australian Shepherd Analysis</span>
+            <span slot="reasoning-title">Thinking...</span>
+          </forge-ai-reasoning-header>
+        </forge-ai-chain-of-thought>
+      </div>
+    `;
+  }
+};
