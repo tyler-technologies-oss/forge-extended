@@ -3,6 +3,8 @@ import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import '../ai-icon/ai-icon';
 import '../core/tooltip/tooltip.js';
+import '../ai-dropdown-menu/ai-dropdown-menu.js';
+import '../ai-dropdown-menu/ai-dropdown-menu-item.js';
 
 import styles from './ai-chat-header.scss?inline';
 
@@ -18,6 +20,8 @@ declare global {
   interface HTMLElementEventMap {
     'forge-ai-chat-header-expand': CustomEvent<void>;
     'forge-ai-chat-header-minimize': CustomEvent<void>;
+    'forge-ai-chat-header-clear': CustomEvent<void>;
+    'forge-ai-chat-header-info': CustomEvent<void>;
   }
 }
 
@@ -37,6 +41,8 @@ export type MinimizeIconType = 'default' | 'panel';
  *
  * @event forge-ai-chat-header-expand - Fired when the expand button is clicked
  * @event forge-ai-chat-header-minimize - Fired when the minimize button is clicked
+ * @event forge-ai-chat-header-clear - Fired when the clear chat option is selected
+ * @event forge-ai-chat-header-info - Fired when the info option is selected
  */
 @customElement(AiChatHeaderComponentTagName)
 export class AiChatHeaderComponent extends LitElement {
@@ -76,20 +82,26 @@ export class AiChatHeaderComponent extends LitElement {
           </slot>
         </div>
         <div class="end">
-          <button
-            id="info-button"
-            aria-label="More info"
-            aria-describedby="info-tooltip"
-            class="forge-icon-button forge-icon-button--large ai-icon-button">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <forge-ai-dropdown-menu
+            variant="icon-button"
+            selection-mode="none"
+            @forge-ai-dropdown-menu-change=${this.#handleDropdownChange}>
+            <svg
+              slot="trigger-content"
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              class="forge-icon ai-icon-button">
               <path fill="none" d="M0 0h24v24H0z" />
               <path
-                d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2m0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8" />
+                d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2m0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2m0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2" />
             </svg>
-          </button>
-          <forge-ai-tooltip id="info-tooltip" for="info-button" placement="bottom">
-            Get more information about AI assistant
-          </forge-ai-tooltip>
+            <forge-ai-dropdown-menu-item value="clear-chat">
+              <span>Clear chat</span>
+            </forge-ai-dropdown-menu-item>
+            <forge-ai-dropdown-menu-item value="info">
+              <span>Info</span>
+            </forge-ai-dropdown-menu-item>
+          </forge-ai-dropdown-menu>
           ${when(
             this.showExpandButton,
             () => html`
@@ -113,9 +125,9 @@ export class AiChatHeaderComponent extends LitElement {
                   `
                 )}
               </button>
-              <forge-ai-tooltip id="expand-tooltip" for="expand-button" placement="bottom">
+              <!-- <forge-ai-tooltip id="expand-tooltip" for="expand-button" placement="bottom">
                 ${this.expanded ? 'Collapse to smaller window' : 'Expand to full window'}
-              </forge-ai-tooltip>
+              </forge-ai-tooltip> -->
             `
           )}
           ${when(
@@ -157,9 +169,9 @@ export class AiChatHeaderComponent extends LitElement {
                   `
                 )}
               </button>
-              <forge-ai-tooltip id="minimize-tooltip" for="minimize-button" placement="bottom">
+              <!-- <forge-ai-tooltip id="minimize-tooltip" for="minimize-button" placement="bottom">
                 Minimize chat to taskbar
-              </forge-ai-tooltip>
+              </forge-ai-tooltip> -->
             `
           )}
         </div>
@@ -181,5 +193,28 @@ export class AiChatHeaderComponent extends LitElement {
       composed: true
     });
     this.dispatchEvent(event);
+  }
+
+  #handleDropdownChange(event: CustomEvent): void {
+    const value = event.detail.value;
+
+    switch (value) {
+      case 'clear-chat':
+        this.dispatchEvent(
+          new CustomEvent('forge-ai-chat-header-clear', {
+            bubbles: true,
+            composed: true
+          })
+        );
+        break;
+      case 'info':
+        this.dispatchEvent(
+          new CustomEvent('forge-ai-chat-header-info', {
+            bubbles: true,
+            composed: true
+          })
+        );
+        break;
+    }
   }
 }
