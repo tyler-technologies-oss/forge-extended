@@ -10,7 +10,12 @@ A structured container for displaying AI reasoning processes with expandable con
 ## Usage
 
 ```html
-<forge-ai-chain-of-thought title="Analyzing Request">
+<forge-ai-chain-of-thought>
+  <forge-ai-reasoning-header slot="heading">
+    <span slot="title">This is the default title</span>
+    <span slot="reasoning-title">Thinking...</span>
+  </forge-ai-reasoning-header>
+
   <forge-ai-thought-search-result .sources="${sources}">
     <span slot="title">Searching for information</span>
     Found 3 relevant articles about the topic.

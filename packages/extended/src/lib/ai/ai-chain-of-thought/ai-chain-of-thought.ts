@@ -1,6 +1,5 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import '../ai-reasoning-header/ai-reasoning-header';
 
 import styles from './ai-chain-of-thought.scss?inline';
 
@@ -23,15 +22,9 @@ export class AiChainOfThoughtComponent extends LitElement {
   @property({ type: Boolean, reflect: true })
   public expanded = false;
 
-  /** Title for the chain of thought section */
-  @property({ type: String })
-  public title = 'Chain of Thought';
-
   public override render(): TemplateResult {
     return html`
-      <forge-ai-reasoning-header .expanded=${this.expanded} @toggle=${this._handleHeaderToggle}>
-        <span slot="title">${this.title}</span>
-      </forge-ai-reasoning-header>
+      <slot name="heading" @toggle=${this._handleHeaderToggle}></slot>
       <div
         class="forge-expansion-panel thought-content-container ${this.expanded ? 'forge-expansion-panel--open' : ''}">
         <div class="forge-expansion-panel__content " id="chain-content" aria-hidden=${!this.expanded}>

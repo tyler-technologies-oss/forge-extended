@@ -12,6 +12,7 @@
 
 .header-container {
   @include mixins.ai-chain-of-thought-grid;
+  padding: 0;
 }
 
 .thought-content-container {
