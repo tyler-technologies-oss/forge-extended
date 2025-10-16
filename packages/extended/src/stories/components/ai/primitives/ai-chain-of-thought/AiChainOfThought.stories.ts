@@ -257,17 +257,28 @@ export const SequentialLoading: Story = {
     }, 500);
 
     return html`
-      <div style="padding: 1rem;">
-        <p>
-          <strong>Demo:</strong> Watch as thoughts load sequentially with delays to simulate real-time AI reasoning.
-        </p>
-        <forge-ai-chain-of-thought id="sequential-chain" expanded>
-          <forge-ai-reasoning-header slot="heading" expanded>
-            <span slot="title">Mini Australian Shepherd Analysis</span>
-            <span slot="reasoning-title">Thinking...</span>
-          </forge-ai-reasoning-header>
-        </forge-ai-chain-of-thought>
-      </div>
+      <forge-ai-gradient-container style="height: 800px; width: 100%;">
+        <forge-ai-chat-interface>
+          <forge-ai-user-message>
+            Can you tell me about Mini Australian Shepherds? I'm thinking about getting one as a family pet.
+          </forge-ai-user-message>
+
+          <forge-ai-response-message>
+            <p>
+              I'd be happy to help you learn about Mini Australian Shepherds! Let me gather some information for you:
+            </p>
+          </forge-ai-response-message>
+
+          <forge-ai-chain-of-thought id="sequential-chain" expanded>
+            <forge-ai-reasoning-header slot="heading" expanded>
+              <span slot="title">Mini Australian Shepherd Analysis</span>
+              <span slot="reasoning-title">Thinking...</span>
+            </forge-ai-reasoning-header>
+          </forge-ai-chain-of-thought>
+
+          ${createPrompt()}
+        </forge-ai-chat-interface>
+      </forge-ai-gradient-container>
     `;
   }
 };
