@@ -25,6 +25,7 @@
   scrollbar-gutter: stable;
 
   overflow-y: auto;
+  scroll-behavior: smooth;
 
   // Safari-specific: force scrollbar to always show
   @media not all and (min-resolution: 0.001dpcm) {
