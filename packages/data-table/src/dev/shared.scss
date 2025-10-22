@@ -1,0 +1,28 @@
+@use '@tylertech/forge/sass/theme/theme-dark' as forge-theme-dark;
+@use './styles/content';
+
+html[data-forge-theme='dark'] {
+  @include forge-theme-dark.theme-properties;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background-color: var(--forge-theme-surface);
+  color: var(--forge-theme-text);
+  font-family: 'Tyler', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  opacity: 0;
+}
+
+body.ready {
+  opacity: 1;
+  transition: 300ms opacity 200ms;
+}
+
+:not(:defined) {
+  visibility: hidden;
+}
+
+* {
+  box-sizing: border-box;
+}

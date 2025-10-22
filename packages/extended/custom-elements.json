@@ -809,180 +809,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/quantity-field/quantity-field.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "QuantityFieldComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-quantity-field'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "QuantityFieldComponent",
-          "slots": [
-            {
-              "description": "Reserved for the `<input>` element.",
-              "name": ""
-            },
-            {
-              "description": "The label for the field.",
-              "name": "label"
-            },
-            {
-              "description": "The decrement button.",
-              "name": "decrement-button"
-            },
-            {
-              "description": "The icon for the decrement button.",
-              "name": "decrement-icon"
-            },
-            {
-              "description": "The increment button.",
-              "name": "increment-button"
-            },
-            {
-              "description": "The icon for the increment button.",
-              "name": "increment-icon"
-            },
-            {
-              "description": "The support text for the field.",
-              "name": "support-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "invalid",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the field is invalid.",
-              "attribute": "invalid"
-            },
-            {
-              "kind": "field",
-              "name": "required",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the field is required.",
-              "attribute": "required"
-            },
-            {
-              "kind": "field",
-              "name": "decrementLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Decrement'",
-              "description": "The accessible label for the decrement button.",
-              "attribute": "decrement-label"
-            },
-            {
-              "kind": "field",
-              "name": "incrementLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Increment'",
-              "description": "The accessible label for the increment button.",
-              "attribute": "increment-label"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "invalid",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the field is invalid.",
-              "fieldName": "invalid"
-            },
-            {
-              "name": "required",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the field is required.",
-              "fieldName": "required"
-            },
-            {
-              "name": "decrement-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Decrement'",
-              "description": "The accessible label for the decrement button.",
-              "fieldName": "decrementLabel"
-            },
-            {
-              "name": "increment-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Increment'",
-              "description": "The accessible label for the increment button.",
-              "fieldName": "incrementLabel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-quantity-field",
-          "customElement": true,
-          "states": [
-            {
-              "name": "required",
-              "description": "Indicates whether the field is in its required state."
-            },
-            {
-              "name": "invalid",
-              "description": "Indicates whether the field is in its invalid state."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "QuantityFieldComponentTagName",
-          "declaration": {
-            "name": "QuantityFieldComponentTagName",
-            "module": "src/lib/quantity-field/quantity-field.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "QuantityFieldComponent",
-          "declaration": {
-            "name": "QuantityFieldComponent",
-            "module": "src/lib/quantity-field/quantity-field.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "QuantityFieldComponent",
-            "module": "src/lib/quantity-field/quantity-field.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "declarations": [
         {
@@ -1129,6 +955,92 @@
           "declaration": {
             "name": "ResponsiveToolbarComponent",
             "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ThemeToggleComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-theme-toggle'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ThemeToggleComponent",
+          "slots": [
+            {
+              "description": "The title shown above the toggle buttons",
+              "name": "title"
+            }
+          ],
+          "members": [
+            {
+              "kind": "method",
+              "name": "setTheme",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "ThemeToggleTheme"
+                  }
+                }
+              ],
+              "description": "Sets the current theme."
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ThemeToggleThemeEventData>"
+              },
+              "description": "Fired when the theme is changed",
+              "name": "forge-theme-toggle-update"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-theme-toggle",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ThemeToggleComponentTagName",
+          "declaration": {
+            "name": "ThemeToggleComponentTagName",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ThemeToggleComponent",
+          "declaration": {
+            "name": "ThemeToggleComponent",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ThemeToggleComponent",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
           }
         }
       ]
@@ -1347,86 +1259,174 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "path": "src/lib/quantity-field/quantity-field.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "ThemeToggleComponentTagName",
+          "name": "QuantityFieldComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-theme-toggle'"
+          "default": "'forge-quantity-field'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "ThemeToggleComponent",
+          "name": "QuantityFieldComponent",
           "slots": [
             {
-              "description": "The title shown above the toggle buttons",
-              "name": "title"
+              "description": "Reserved for the `<input>` element.",
+              "name": ""
+            },
+            {
+              "description": "The label for the field.",
+              "name": "label"
+            },
+            {
+              "description": "The decrement button.",
+              "name": "decrement-button"
+            },
+            {
+              "description": "The icon for the decrement button.",
+              "name": "decrement-icon"
+            },
+            {
+              "description": "The increment button.",
+              "name": "increment-button"
+            },
+            {
+              "description": "The icon for the increment button.",
+              "name": "increment-icon"
+            },
+            {
+              "description": "The support text for the field.",
+              "name": "support-text"
             }
           ],
           "members": [
             {
-              "kind": "method",
-              "name": "setTheme",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
               },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "ThemeToggleTheme"
-                  }
-                }
-              ],
-              "description": "Sets the current theme."
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the field is invalid.",
+              "attribute": "invalid"
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the field is required.",
+              "attribute": "required"
+            },
+            {
+              "kind": "field",
+              "name": "decrementLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Decrement'",
+              "description": "The accessible label for the decrement button.",
+              "attribute": "decrement-label"
+            },
+            {
+              "kind": "field",
+              "name": "incrementLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Increment'",
+              "description": "The accessible label for the increment button.",
+              "attribute": "increment-label"
             }
           ],
-          "events": [
+          "attributes": [
             {
+              "name": "invalid",
               "type": {
-                "text": "CustomEvent<ThemeToggleThemeEventData>"
+                "text": "boolean"
               },
-              "description": "Fired when the theme is changed",
-              "name": "forge-theme-toggle-update"
+              "default": "false",
+              "description": "Indicates whether the field is invalid.",
+              "fieldName": "invalid"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the field is required.",
+              "fieldName": "required"
+            },
+            {
+              "name": "decrement-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Decrement'",
+              "description": "The accessible label for the decrement button.",
+              "fieldName": "decrementLabel"
+            },
+            {
+              "name": "increment-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Increment'",
+              "description": "The accessible label for the increment button.",
+              "fieldName": "incrementLabel"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-theme-toggle",
-          "customElement": true
+          "tagName": "forge-quantity-field",
+          "customElement": true,
+          "states": [
+            {
+              "name": "required",
+              "description": "Indicates whether the field is in its required state."
+            },
+            {
+              "name": "invalid",
+              "description": "Indicates whether the field is in its invalid state."
+            }
+          ]
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ThemeToggleComponentTagName",
+          "name": "QuantityFieldComponentTagName",
           "declaration": {
-            "name": "ThemeToggleComponentTagName",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
+            "name": "QuantityFieldComponentTagName",
+            "module": "src/lib/quantity-field/quantity-field.ts"
           }
         },
         {
           "kind": "js",
-          "name": "ThemeToggleComponent",
+          "name": "QuantityFieldComponent",
           "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
+            "name": "QuantityFieldComponent",
+            "module": "src/lib/quantity-field/quantity-field.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
+            "name": "QuantityFieldComponent",
+            "module": "src/lib/quantity-field/quantity-field.ts"
           }
         }
       ]
@@ -1550,7 +1550,7 @@
       ]
     }
   ],
-  "branchName": "app-launcher-rewrite",
+  "branchName": "feat",
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",
@@ -1600,10 +1600,6 @@
       "path": "src/lib/multi-select-header/multi-select-header.ts",
       "lineNumber": 28
     },
-    "QuantityFieldComponent": {
-      "path": "src/lib/quantity-field/quantity-field.ts",
-      "lineNumber": 35
-    },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 20
@@ -1616,10 +1612,6 @@
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 48
     },
-    "UserProfileComponent": {
-      "path": "src/lib/user-profile/user-profile.ts",
-      "lineNumber": 46
-    },
     "ThemeToggleTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 28
@@ -1631,6 +1623,14 @@
     "ThemeToggleComponent": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 41
+    },
+    "UserProfileComponent": {
+      "path": "src/lib/user-profile/user-profile.ts",
+      "lineNumber": 46
+    },
+    "QuantityFieldComponent": {
+      "path": "src/lib/quantity-field/quantity-field.ts",
+      "lineNumber": 35
     },
     "AppLauncherLink": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",

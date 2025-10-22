@@ -1,0 +1,54 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Home" />
+
+# Forge Data Table
+
+The Forge Data Table is a powerful, flexible, and accessible data table component for the Tyler Forge design system.
+Built on top of TanStack Table, it provides a rich set of features for displaying and interacting with tabular data.
+
+## Features
+
+- Sort columns
+- Filter data
+- Resize columns
+- Reorder columns
+- Select rows
+- Custom cell rendering
+- Fixed headers
+- Expandable rows
+- Virtualized scrolling
+
+## Getting Started
+
+To use the Data Table component, import it into your project:
+
+```typescript
+import '@tylertech/forge-data-table';
+```
+
+## Basic Example
+
+```html
+<forge-data-table id="example-table"></forge-data-table>
+
+<script>
+  const table = document.getElementById('example-table');
+
+  table.columns = [
+    { header: 'Name', property: 'name' },
+    { header: 'Age', property: 'age' },
+    { header: 'City', property: 'city' }
+  ];
+
+  table.data = [
+    { name: 'John Doe', age: 30, city: 'New York' },
+    { name: 'Jane Smith', age: 28, city: 'Boston' },
+    { name: 'Bob Johnson', age: 45, city: 'Chicago' }
+  ];
+</script>
+```
+
+## Documentation
+
+For more detailed documentation and examples, explore the component stories.

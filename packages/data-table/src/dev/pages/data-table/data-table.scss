@@ -1,0 +1,41 @@
+.data-table-demo {
+  display: grid;
+  gap: var(--forge-spacing-medium);
+  grid-template-columns: minmax(240px, 320px) 1fr;
+  min-height: 480px;
+
+  &__options {
+    display: flex;
+    flex-direction: column;
+    gap: var(--forge-spacing-large);
+    padding-right: var(--forge-spacing-medium);
+    border-right: 1px solid var(--forge-theme-outline);
+  }
+
+  &__group {
+    display: flex;
+    flex-direction: column;
+    gap: var(--forge-spacing-x-small);
+  }
+
+  &__table {
+    overflow: auto;
+  }
+
+  select[multiple] {
+    min-height: 112px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .data-table-demo {
+    grid-template-columns: 1fr;
+
+    &__options {
+      border-right: none;
+      border-bottom: 1px solid var(--forge-theme-outline);
+      padding-right: 0;
+      padding-bottom: var(--forge-spacing-medium);
+    }
+  }
+}

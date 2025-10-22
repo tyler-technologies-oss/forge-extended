@@ -1,0 +1,948 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/data-table.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "DataTableElement",
+          "members": [
+            {
+              "kind": "field",
+              "name": "data",
+              "type": {
+                "text": "TData[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "description": "The data to display in the table.",
+              "attribute": "data"
+            },
+            {
+              "kind": "field",
+              "name": "columns",
+              "type": {
+                "text": "ColumnDef<TData>[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "description": "The columns to display in the table.",
+              "attribute": "columns"
+            },
+            {
+              "kind": "field",
+              "name": "columnVisibility",
+              "type": {
+                "text": "VisibilityState"
+              },
+              "privacy": "public",
+              "default": "{}",
+              "description": "The current visibility state of the columns.",
+              "attribute": "columnVisibility"
+            },
+            {
+              "kind": "field",
+              "name": "columnOrder",
+              "type": {
+                "text": "ColumnOrderState"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "description": "The current order of the columns.",
+              "attribute": "columnOrder"
+            },
+            {
+              "kind": "field",
+              "name": "resizable",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the columns in the table can be resized.",
+              "attribute": "resizable"
+            },
+            {
+              "kind": "field",
+              "name": "sortable",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the columns in the table can be sorted.",
+              "attribute": "sortable"
+            },
+            {
+              "kind": "field",
+              "name": "filterable",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the columns in the table can be filtered.",
+              "attribute": "filterable"
+            },
+            {
+              "kind": "field",
+              "name": "manualSort",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether the table is sorted manually or automatically.",
+              "attribute": "manual-sort"
+            },
+            {
+              "kind": "field",
+              "name": "manualFilter",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether the table is filtered manually or automatically.",
+              "attribute": "manual-filter"
+            },
+            {
+              "kind": "field",
+              "name": "striped",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Use alternate row styling.",
+              "attribute": "striped"
+            },
+            {
+              "kind": "field",
+              "name": "hover",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Use hover styling when hovering over rows with the pointer.",
+              "attribute": "hover"
+            },
+            {
+              "kind": "field",
+              "name": "compact",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Use compact row and cell styling.",
+              "attribute": "compact"
+            },
+            {
+              "kind": "field",
+              "name": "bordered",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Use bordered styling around rows and cells.",
+              "attribute": "bordered"
+            },
+            {
+              "kind": "field",
+              "name": "rowSelection",
+              "type": {
+                "text": "RowSelectionType"
+              },
+              "privacy": "public",
+              "default": "'off'",
+              "description": "Allow rows to be selected.",
+              "attribute": "row-selection"
+            },
+            {
+              "kind": "field",
+              "name": "reorderable",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Allow columns to be reordered.",
+              "attribute": "reorderable"
+            },
+            {
+              "kind": "field",
+              "name": "allowRowClick",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Allow rows to be clicked.",
+              "attribute": "allow-row-click"
+            },
+            {
+              "kind": "field",
+              "name": "expandable",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Allow rows to be expanded.",
+              "attribute": "expandable"
+            },
+            {
+              "kind": "field",
+              "name": "virtualized",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Enable virtualization for rows in the table.",
+              "attribute": "virtualized"
+            },
+            {
+              "kind": "field",
+              "name": "fixedHeaders",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Keep headers fixed at the top while scrolling through the table.",
+              "attribute": "fixed-headers"
+            },
+            {
+              "kind": "method",
+              "name": "onColumnOrderChange",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "updaterOrValue",
+                  "type": {
+                    "text": "Updater<ColumnOrderState>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "hideColumn",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "columnId",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "showColumn",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "columnId",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "toggleColumnVisibility",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "columnId",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            }
+          ],
+          "events": [
+            {
+              "name": "forge-data-table-sort",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "forge-data-table-filter",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "forge-data-table-row-select",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "forge-data-table-column-visibility",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "forge-data-table-column-order",
+              "type": {
+                "text": "CustomEvent"
+              }
+            },
+            {
+              "name": "forge-data-table-row-click",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "data",
+              "type": {
+                "text": "TData[]"
+              },
+              "default": "[]",
+              "description": "The data to display in the table.",
+              "fieldName": "data"
+            },
+            {
+              "name": "columns",
+              "type": {
+                "text": "ColumnDef<TData>[]"
+              },
+              "default": "[]",
+              "description": "The columns to display in the table.",
+              "fieldName": "columns"
+            },
+            {
+              "name": "columnVisibility",
+              "type": {
+                "text": "VisibilityState"
+              },
+              "default": "{}",
+              "description": "The current visibility state of the columns.",
+              "fieldName": "columnVisibility"
+            },
+            {
+              "name": "columnOrder",
+              "type": {
+                "text": "ColumnOrderState"
+              },
+              "default": "[]",
+              "description": "The current order of the columns.",
+              "fieldName": "columnOrder"
+            },
+            {
+              "name": "resizable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the columns in the table can be resized.",
+              "fieldName": "resizable"
+            },
+            {
+              "name": "sortable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the columns in the table can be sorted.",
+              "fieldName": "sortable"
+            },
+            {
+              "name": "filterable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the columns in the table can be filtered.",
+              "fieldName": "filterable"
+            },
+            {
+              "name": "manual-sort",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether the table is sorted manually or automatically.",
+              "fieldName": "manualSort"
+            },
+            {
+              "name": "manual-filter",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether the table is filtered manually or automatically.",
+              "fieldName": "manualFilter"
+            },
+            {
+              "name": "striped",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Use alternate row styling.",
+              "fieldName": "striped"
+            },
+            {
+              "name": "hover",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Use hover styling when hovering over rows with the pointer.",
+              "fieldName": "hover"
+            },
+            {
+              "name": "compact",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Use compact row and cell styling.",
+              "fieldName": "compact"
+            },
+            {
+              "name": "bordered",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Use bordered styling around rows and cells.",
+              "fieldName": "bordered"
+            },
+            {
+              "name": "row-selection",
+              "type": {
+                "text": "RowSelectionType"
+              },
+              "default": "'off'",
+              "description": "Allow rows to be selected.",
+              "fieldName": "rowSelection"
+            },
+            {
+              "name": "reorderable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Allow columns to be reordered.",
+              "fieldName": "reorderable"
+            },
+            {
+              "name": "allow-row-click",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Allow rows to be clicked.",
+              "fieldName": "allowRowClick"
+            },
+            {
+              "name": "expandable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Allow rows to be expanded.",
+              "fieldName": "expandable"
+            },
+            {
+              "name": "virtualized",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Enable virtualization for rows in the table.",
+              "fieldName": "virtualized"
+            },
+            {
+              "name": "fixed-headers",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Keep headers fixed at the top while scrolling through the table.",
+              "fieldName": "fixedHeaders"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-data-table",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DataTableElement",
+          "declaration": {
+            "name": "DataTableElement",
+            "module": "src/lib/data-table.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "name": "forge-data-table",
+          "declaration": {
+            "name": "DataTableElement",
+            "module": "src/lib/data-table.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/controllers/column-reorder-controller.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ColumnReorderController",
+          "members": [
+            {
+              "kind": "field",
+              "name": "movingColumn",
+              "type": {
+                "text": "string | null"
+              },
+              "privacy": "public",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "targetColumn",
+              "type": {
+                "text": "string | null"
+              },
+              "privacy": "public",
+              "default": "null"
+            },
+            {
+              "kind": "method",
+              "name": "hostConnected",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostDisconnected",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "onDragStart",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "evt",
+                  "type": {
+                    "text": "DragEvent"
+                  }
+                },
+                {
+                  "name": "column",
+                  "type": {
+                    "text": "Column<TData>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onDragOver",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "evt",
+                  "type": {
+                    "text": "DragEvent"
+                  }
+                },
+                {
+                  "name": "column",
+                  "type": {
+                    "text": "Column<TData>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onDrop",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "_evt",
+                  "type": {
+                    "text": "DragEvent"
+                  }
+                },
+                {
+                  "name": "column",
+                  "type": {
+                    "text": "Column<TData>"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "onDragEnd",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "_evt",
+                  "type": {
+                    "text": "DragEvent"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "ensureSelectColumnOrder",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "newColumnOrder",
+                  "type": {
+                    "text": "string[]"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ColumnReorderController",
+          "declaration": {
+            "name": "ColumnReorderController",
+            "module": "src/lib/controllers/column-reorder-controller.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/controllers/column-visibility-controller.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ColumnVisibilityController",
+          "members": [
+            {
+              "kind": "method",
+              "name": "hostConnected",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hostDisconnected",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "hideColumn",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "columnId",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "showColumn",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "columnId",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "toggleColumnVisibility",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "columnId",
+                  "type": {
+                    "text": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "kind": "method",
+              "name": "deriveVisibilityState",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "VisibilityState | null"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "setVisibilityState",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "nextState",
+                  "type": {
+                    "text": "VisibilityState"
+                  }
+                },
+                {
+                  "name": "options",
+                  "optional": true,
+                  "type": {
+                    "text": "{ notifyHost?: boolean }"
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ColumnVisibilityController",
+          "declaration": {
+            "name": "ColumnVisibilityController",
+            "module": "src/lib/controllers/column-visibility-controller.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/directives/light-dom-render.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "lightDomRender"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "lightDomRender",
+          "declaration": {
+            "name": "lightDomRender",
+            "module": "src/lib/directives/light-dom-render.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/features/filter.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "filterModule",
+          "return": {
+            "type": {
+              "text": "void"
+            }
+          }
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "filterModule",
+          "declaration": {
+            "name": "filterModule",
+            "module": "src/lib/features/filter.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/features/row-select.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/features/sort.ts",
+      "declarations": [],
+      "exports": []
+    }
+  ],
+  "branchName": "feat",
+  "forgeTypes": {
+    "ColumnMeta": {
+      "path": "src/lib/data-table.ts",
+      "lineNumber": 51
+    },
+    "FilterType": {
+      "path": "src/lib/data-table.ts",
+      "lineNumber": 54
+    },
+    "ColumnDefMeta": {
+      "path": "src/lib/data-table.ts",
+      "lineNumber": 56
+    },
+    "Row": {
+      "path": "src/lib/data-table.ts",
+      "lineNumber": 62
+    },
+    "RowSelectionType": {
+      "path": "src/lib/data-table.ts",
+      "lineNumber": 64
+    },
+    "FooterCallback": {
+      "path": "src/lib/data-table.ts",
+      "lineNumber": 66
+    },
+    "ColumnDef": {
+      "path": "src/lib/data-table.ts",
+      "lineNumber": 68
+    },
+    "DataTableElement": {
+      "path": "src/lib/data-table.ts",
+      "lineNumber": 87
+    },
+    "ColumnReorderControllerOptions": {
+      "path": "src/lib/controllers/column-reorder-controller.ts",
+      "lineNumber": 5
+    },
+    "ColumnReorderController": {
+      "path": "src/lib/controllers/column-reorder-controller.ts",
+      "lineNumber": 10
+    },
+    "ColumnVisibilityControllerOptions": {
+      "path": "src/lib/controllers/column-visibility-controller.ts",
+      "lineNumber": 5
+    },
+    "ColumnVisibilityController": {
+      "path": "src/lib/controllers/column-visibility-controller.ts",
+      "lineNumber": 11
+    },
+    "LightDomRenderDirective": {
+      "path": "src/lib/directives/light-dom-render.ts",
+      "lineNumber": 5
+    }
+  }
+}

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head.ejs', { title: page.title }) %>
+  </head>
+  <body>
+    <forge-scaffold>
+      <%- include('./partials/header.ejs', { title: page.title }); %>
+      <main slot="body" class="content">
+        <forge-card class="card card--centered">
+          <forge-toolbar>
+            <h2 slot="start" id="content-title" class="forge-typography--heading4"><%= page.contentTitle ?? page.title %></h2>
+          </forge-toolbar>
+          <div class="container" id="demo-content">
+            <%- include(page.includePath, page.includeData); %>
+          </div>
+        </forge-card>
+      </main>
+    </forge-scaffold>
+    <script type="module" src="./index.ts"></script>
+  </body>
+</html>
