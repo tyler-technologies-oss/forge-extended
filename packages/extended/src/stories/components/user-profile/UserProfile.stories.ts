@@ -68,8 +68,8 @@ const meta = {
         button-label="${args.buttonAriaLabel}"
         ?theme-toggle=${args.showThemeToggle}
         image-url="${args.imageUrl}"
-        full-name="First Last"
-        email="first.last@tylertech.com">
+        full-name="${args.fullName}"
+        email="${args.email}">
         ${args.showSlottedLinks ? html`<forge-profile-link slot="link">
           <forge-icon slot="icon" name="settings"></forge-icon>
           <a href="http://www.google.com" target="_blank">Settings</a>
@@ -88,6 +88,8 @@ const meta = {
     ['Profile Link']: 'forge-profile-link'
   },
   argTypes: {
+    fullName: { control: 'text' },
+    email: { control: 'text' },
     signOutButtonText: { control: 'text' },
     buttonAriaLabel: { control: 'text' },
     imageUrl: { control: 'text' },
@@ -95,6 +97,8 @@ const meta = {
     showThemeToggle: { control: 'boolean' }
   },
   args: {
+    fullName: 'First Last',
+    email: 'first.last@tylertech.com',
     signOutButtonText: 'Sign Out',
     buttonAriaLabel: 'Open the incredibly awesome profile menu',
     imageUrl: '',

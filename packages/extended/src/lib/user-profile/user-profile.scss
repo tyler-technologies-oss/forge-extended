@@ -23,6 +23,23 @@
   align-items: center;
 }
 
+.not-logged-in {
+  grid-column: 1/-1;
+  display: flex;
+  place-self: center;
+  align-items: center;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(medium)};
+  --forge-avatar-size: 96px;
+  --forge-avatar-background: #{forge-theme.variable(tertiary-container-low)};
+  --forge-avatar-color: #{forge-theme.variable(on-tertiary-container-low)};
+  --forge-icon-font-size: 80px;
+
+  p {
+    @include forge-typography.style(body1);
+  }
+}
+
 .popover-avatar {
   --forge-avatar-size: 56px;
   --forge-avatar-shape: #{forge-shape.variable(extra-large)};
