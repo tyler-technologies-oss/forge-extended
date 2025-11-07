@@ -1,0 +1,12 @@
+//
+// Host
+//
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+forge-app-bar {
+  --forge-app-bar-columns: auto 1fr auto;
+}

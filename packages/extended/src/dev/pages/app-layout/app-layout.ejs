@@ -1,0 +1,160 @@
+<forge-app-layout id="app-layout">
+  <forge-app-bar slot="header" title-text="App Layout Demo">
+    <forge-button slot="end" variant="raised">Action</forge-button>
+  </forge-app-bar>
+
+  <forge-list slot="navigation">
+    <forge-list-item>
+      <a href="#dashboard" class="nav-link active">Dashboard</a>
+      <forge-icon name="dashboard" slot="start"></forge-icon>
+    </forge-list-item>
+    <forge-list-item>
+      <a href="#people" class="nav-link">People</a>
+      <forge-icon name="people" slot="start"></forge-icon>
+    </forge-list-item>
+    <forge-list-item>
+      <a href="#analytics" class="nav-link">Analytics</a>
+      <forge-icon name="analytics" slot="start"></forge-icon>
+    </forge-list-item>
+    <forge-list-item>
+      <a href="#settings" class="nav-link">Settings</a>
+      <forge-icon name="settings" slot="start"></forge-icon>
+    </forge-list-item>
+    <forge-list-item>
+      <a href="#assessment" class="nav-link">Assessment</a>
+      <forge-icon name="assessment" slot="start"></forge-icon>
+    </forge-list-item>
+    <forge-list-item>
+      <a href="#history" class="nav-link">History</a>
+      <forge-icon name="history" slot="start"></forge-icon>
+    </forge-list-item>
+  </forge-list>
+
+  <main class="demo-content">
+    <div class="content-header">
+      <h1>Dashboard</h1>
+      <p>Welcome to the app layout demo. This layout adapts to different screen sizes.</p>
+    </div>
+
+    <div class="demo-info">
+      <forge-card>
+        <div class="card-content">
+          <h2>Responsive Navigation</h2>
+          <p>The navigation list automatically adapts based on screen size:</p>
+          <ul>
+            <li><strong>Large screens (≥768px):</strong> Navigation appears in the body-left area</li>
+            <li><strong>Small screens (&lt;768px):</strong> Navigation appears in the left drawer</li>
+          </ul>
+          <p>Resize your browser window to see the responsive behavior in action!</p>
+        </div>
+      </forge-card>
+    </div>
+
+    <div class="demo-grid">
+      <forge-card>
+        <div class="card-content">
+          <h3>Statistics</h3>
+          <div class="stat-grid">
+            <div class="stat-item">
+              <div class="stat-number">1,234</div>
+              <div class="stat-label">Total Users</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">56</div>
+              <div class="stat-label">Active Projects</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">98.5%</div>
+              <div class="stat-label">Uptime</div>
+            </div>
+          </div>
+        </div>
+      </forge-card>
+
+      <forge-card>
+        <div class="card-content">
+          <h3>Recent Activity</h3>
+          <div class="activity-list">
+            <div class="activity-item">
+              <forge-icon name="person_add" external></forge-icon>
+              <div>
+                <div>New user registered</div>
+                <div class="activity-time">2 minutes ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <forge-icon name="update" external></forge-icon>
+              <div>
+                <div>System updated</div>
+                <div class="activity-time">1 hour ago</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <forge-icon name="backup" external></forge-icon>
+              <div>
+                <div>Backup completed</div>
+                <div class="activity-time">3 hours ago</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </forge-card>
+
+      <forge-card>
+        <div class="card-content">
+          <h3>Quick Actions</h3>
+          <div class="action-buttons">
+            <forge-button variant="outlined" class="action-btn">
+              <forge-icon name="add" external slot="start"></forge-icon>
+              Create New
+            </forge-button>
+            <forge-button variant="outlined" class="action-btn">
+              <forge-icon name="upload" external slot="start"></forge-icon>
+              Upload File
+            </forge-button>
+            <forge-button variant="outlined" class="action-btn">
+              <forge-icon name="share" external slot="start"></forge-icon>
+              Share
+            </forge-button>
+          </div>
+        </div>
+      </forge-card>
+
+      <forge-card>
+        <div class="card-content">
+          <h3>Performance</h3>
+          <div class="performance-metrics">
+            <div class="metric">
+              <span class="metric-label">CPU Usage</span>
+              <forge-linear-progress value="0.65" buffer="1"></forge-linear-progress>
+              <span class="metric-value">65%</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Memory</span>
+              <forge-linear-progress value="0.43" buffer="1"></forge-linear-progress>
+              <span class="metric-value">43%</span>
+            </div>
+            <div class="metric">
+              <span class="metric-label">Storage</span>
+              <forge-linear-progress value="0.28" buffer="1"></forge-linear-progress>
+              <span class="metric-value">28%</span>
+            </div>
+          </div>
+        </div>
+      </forge-card>
+    </div>
+  </main>
+
+  <div slot="footer">
+    <div class="demo-footer">
+      <span>© 2024 Tyler Technologies. All rights reserved.</span>
+      <div class="footer-links">
+        <a href="#privacy">Privacy Policy</a>
+        <a href="#terms">Terms of Service</a>
+        <a href="#support">Support</a>
+      </div>
+    </div>
+  </div>
+</forge-app-layout>
+
+<script type="module" src="app-layout.ts"></script>
