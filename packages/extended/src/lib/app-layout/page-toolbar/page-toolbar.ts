@@ -40,7 +40,7 @@ export class PageToolbarComponent extends LitElement {
   public pageTitle = '';
 
   @property({ type: Boolean, attribute: 'show-back-arrow' })
-  public showBackArrow = true;
+  public showBackArrow = false;
 
   @property({ type: Boolean, attribute: 'no-border' })
   public noBorder = false;

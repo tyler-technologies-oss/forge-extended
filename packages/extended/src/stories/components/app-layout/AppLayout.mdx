@@ -145,6 +145,42 @@ The navigation slot accepts any content but works best with structured navigatio
 </forge-app-layout>
 ```
 
+## Right Navigation
+
+The component also supports right-side navigation through the `right-navigation` slot. This works identically to the left navigation but appears on the right side of the layout:
+
+```html
+<forge-app-layout app-title="Dashboard">
+  <!-- Left navigation -->
+  <forge-list slot="navigation" navlist>
+    <forge-list-item>
+      <forge-icon slot="start" name="dashboard"></forge-icon>
+      <a href="/dashboard">Dashboard</a>
+    </forge-list-item>
+  </forge-list>
+
+  <!-- Right navigation for tools/actions -->
+  <forge-list slot="right-navigation" navlist>
+    <forge-list-item>
+      <forge-icon slot="start" name="add"></forge-icon>
+      <button type="button">Create New</button>
+    </forge-list-item>
+    <forge-list-item>
+      <forge-icon slot="start" name="settings"></forge-icon>
+      <button type="button">Quick Settings</button>
+    </forge-list-item>
+  </forge-list>
+
+  <!-- Main content -->
+  <main>Your application content</main>
+</forge-app-layout>
+```
+
+Like the main navigation, the right navigation automatically adapts to screen size:
+
+- **Large screens**: Appears as a persistent drawer on the right side
+- **Small screens**: Appears as a modal drawer triggered by a right-side menu button in the app bar
+
 ## Layout Slots
 
 Beyond the app bar and navigation, the component provides additional layout slots for content placement:
