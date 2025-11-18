@@ -17,10 +17,10 @@
 
 .sign-in-button {
   --forge-button-spacing: #{forge-spacing.variable(xsmall)};
-  --forge-button-pill-padding-inline: 8px;
-  --forge-button-outlined-color: white;
-  --forge-button-outlined-border-color: white;
-  --forge-button-outlined-background: color-mix(in srgb, var(--forge-theme-surface) 16%, transparent);
+  --forge-button-pill-padding-inline: #{forge-spacing.variable(xsmall)};
+  --forge-button-outlined-color: #{forge-theme.variable(on-brand)};
+  --forge-button-outlined-border-color: #{forge-theme.variable(on-brand)};
+  --forge-button-outlined-background: color-mix(in srgb, #{forge-theme.variable(on-brand)} 16%, transparent);
 }
 
 .user-info-container {
