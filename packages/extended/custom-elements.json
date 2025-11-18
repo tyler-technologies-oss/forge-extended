@@ -1641,7 +1641,7 @@
     },
     "UserProfileComponent": {
       "path": "src/lib/user-profile/user-profile.ts",
-      "lineNumber": 50
+      "lineNumber": 49
     },
     "AppLauncherLink": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
