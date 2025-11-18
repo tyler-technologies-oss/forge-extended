@@ -1,0 +1,15 @@
+import{r as x,i as C,x as l}from"./iframe-DqYOlzIE.js";import{i as S}from"./with-default-aria-zNEsyQcs.js";import{n as d}from"./base-button-adapter-Bc7hf7-g.js";import{n as w,a as $}from"./when-DfnyT8j1.js";import{d as A}from"./index-CA3GwYu3.js";import{d as B}from"./index-MJzaxMqd.js";const z=`/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */:host{display:block}:host forge-toolbar{--forge-toolbar-background: var(--forge-theme-primary-container-low, #e8eaf6)}.start-container{display:flex;align-items:center;gap:var(--forge-spacing-medium, 16px)}.selected-text{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-body1-font-family, var(--forge-typography-font-family, "Roboto", sans-serif));font-size:var(--forge-typography-body1-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-body-font-size-scale, .875)));font-weight:var(--forge-typography-body1-font-weight, 400);line-height:var(--forge-typography-body1-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-body-line-height-scale, 1.125)));letter-spacing:var(--forge-typography-body1-letter-spacing, .0357142857em);text-transform:var(--forge-typography-body1-text-transform, inherit);text-decoration:var(--forge-typography-body1-text-decoration, inherit)}`;var M=Object.defineProperty,T=Object.getOwnPropertyDescriptor,y=t=>{throw TypeError(t)},c=(t,e,o,s)=>{for(var r=s>1?void 0:s?T(e,o):e,p=t.length-1,f;p>=0;p--)(f=t[p])&&(r=(s?f(e,o,r):f(r))||r);return s&&r&&M(e,o,r),r},m=(t,e,o)=>e.has(t)||y("Cannot "+o),h=(t,e,o)=>(m(t,e,"read from private field"),o?o.call(t):e.get(t)),g=(t,e,o)=>e.has(t)?y("Cannot add the same private member more than once"):e instanceof WeakSet?e.add(t):e.set(t,o),v=(t,e,o)=>(m(t,e,"access private method"),o),i,n,u,b,_;const k="forge-multi-select-header";let a=class extends C{constructor(){super(...arguments),g(this,n),this.text="",this.noBorder=!0,g(this,i,l`<slot name="select-all-button-text"></slot>`)}render(){return l`
+      <forge-toolbar ?no-border=${this.noBorder} @slotchange=${v(this,n,b)}>
+        <div slot="start" class="start-container">
+          <span class="selected-text">${this.text}</span>
+          ${h(this,n,u)}
+        </div>
+        <slot name="actions" slot="end"></slot>
+      </forge-toolbar>
+    `}};i=new WeakMap;n=new WeakSet;u=function(){const t=this._slottedSelectAllNodes.length>0;return $(t,()=>l` <forge-button id="select-all-button" @click=${v(this,n,_)}>
+          ${h(this,i)}
+        </forge-button>`,()=>l`${h(this,i)}`)};b=function(t){const e=t.target.name;["select-all-button-text","actions"].includes(e)&&this.requestUpdate()};_=function(){const t=new CustomEvent("forge-multi-select-header-select-all",{bubbles:!0,composed:!0});this.dispatchEvent(t)};A();B();a.styles=x(z);c([d({type:String})],a.prototype,"text",2);c([d({type:Boolean,attribute:"no-border"})],a.prototype,"noBorder",2);c([w({slot:"select-all-button-text",flatten:!0})],a.prototype,"_slottedSelectAllNodes",2);a=c([S(k)],a);
