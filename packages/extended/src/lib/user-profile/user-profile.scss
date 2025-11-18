@@ -15,6 +15,14 @@
 // Base
 //
 
+.sign-in-button {
+  --forge-button-spacing: #{forge-spacing.variable(xsmall)};
+  --forge-button-pill-padding-inline: 8px;
+  --forge-button-outlined-color: white;
+  --forge-button-outlined-border-color: white;
+  --forge-button-outlined-background: color-mix(in srgb, var(--forge-theme-surface) 16%, transparent);
+}
+
 .user-info-container {
   display: grid;
   grid-template-columns: 56px 1fr;
