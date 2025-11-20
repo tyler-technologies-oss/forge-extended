@@ -51,7 +51,15 @@
   },
   "pnpm": {
     "overrides": {
-      "reactify-wc>react": ">=17"
+      "reactify-wc>react": ">=17",
+      "koa": ">=2.16.2",
+      "playwright": ">=1.55.1",
+      "tar-fs": ">=3.1.1",
+      "@babel/runtime": ">=7.26.10",
+      "@babel/helpers": ">=7.26.10",
+      "nanoid": ">=3.3.8",
+      "js-yaml": ">=4.1.1",
+      "tmp": ">=0.2.4"
     },
     "onlyBuiltDependencies": [
       "@parcel/watcher",
