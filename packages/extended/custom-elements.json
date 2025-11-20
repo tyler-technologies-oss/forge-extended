@@ -1550,7 +1550,7 @@
       ]
     }
   ],
-  "branchName": "main",
+  "branchName": "chore",
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",

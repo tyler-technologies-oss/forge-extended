@@ -27,10 +27,7 @@ From the monorepo root:
 # Install dependencies
 pnpm install
 
-# Build the core extended package first (peer dependency)
-pnpm build:extended
-
-# Build the Angular adapter
+# Build the Angular adapter (automatically builds dependencies via Turborepo)
 pnpm build:extended-angular
 ```
 

@@ -11,7 +11,7 @@ catalog:
   '@storybook/addon-themes': 9.0.14
   '@storybook/web-components-vite': 9.0.14
   '@tylertech-eslint/eslint-plugin': 3.0.0
-  '@tylertech/forge': 3.9.1
+  '@tylertech/forge': 3.12.1
   '@tylertech/forge-core': 3.2.1
   '@tylertech/stylelint-rules': 5.1.2
   '@tylertech/tyler-icons': 2.0.4
