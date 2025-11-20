@@ -12,7 +12,6 @@
   </forge-drawer>
 }
 
-
 <ng-template #sidenavContent>
   <forge-list navlist>
     <forge-list-item [selected]="homeLink.isActive">
@@ -24,26 +23,26 @@
         [routerLinkActiveOptions]="{ exact: true }"
         ariaCurrentWhenActive="page"
         >Home</a
-        >
+      >
+    </forge-list-item>
+    <forge-expansion-panel #componentExpansionPanel>
+      <forge-list-item slot="header">
+        <forge-icon name="settings_input_component" slot="start"></forge-icon>
+        <button>Components</button>
+        <forge-open-icon slot="end"></forge-open-icon>
       </forge-list-item>
-      <forge-expansion-panel #componentExpansionPanel>
-        <forge-list-item slot="header">
-          <forge-icon name="settings_input_component" slot="start"></forge-icon>
-          <button>Components</button>
-          <forge-open-icon slot="end"></forge-open-icon>
+      @for (item of componentMenuItems; track item) {
+        <forge-list-item indented [selected]="componentMenuLink.isActive">
+          <a
+            [routerLink]="[item.value]"
+            #componentMenuLink="routerLinkActive"
+            routerLinkActive
+            [routerLinkActiveOptions]="{ exact: true }"
+            ariaCurrentWhenActive="page"
+            >{{ item.label }}</a
+          >
         </forge-list-item>
-        @for (item of componentMenuItems; track item) {
-          <forge-list-item indented [selected]="componentMenuLink.isActive">
-            <a
-              [routerLink]="[item.value]"
-              #componentMenuLink="routerLinkActive"
-              routerLinkActive
-              [routerLinkActiveOptions]="{ exact: true }"
-              ariaCurrentWhenActive="page"
-              >{{ item.label }}</a
-              >
-            </forge-list-item>
-          }
-        </forge-expansion-panel>
-      </forge-list>
-    </ng-template>
+      }
+    </forge-expansion-panel>
+  </forge-list>
+</ng-template>
