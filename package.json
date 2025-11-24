@@ -59,7 +59,8 @@
       "@babel/helpers": ">=7.26.10",
       "nanoid": ">=3.3.8",
       "js-yaml": ">=4.1.1",
-      "tmp": ">=0.2.4"
+      "tmp": ">=0.2.4",
+      "@manypkg/get-packages": ">=2.2.0"
     },
     "onlyBuiltDependencies": [
       "@parcel/watcher",
