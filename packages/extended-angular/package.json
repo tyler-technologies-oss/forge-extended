@@ -1,6 +1,6 @@
 {
   "name": "@tylertech/forge-extended-angular",
-  "version": "1.2.0",
+  "version": "2.0.0",
   "description": "Forge components adapter library for Angular",
   "repository": "tyler-technologies-oss/forge-extended",
   "license": "Apache-2.0",
@@ -24,16 +24,16 @@
     "generate-proxies": "ng generate @tylertech/forge-schematics:custom-elements --config generate-proxies.json --interactive=false && prettier --write ./projects/forge-extended-angular/src/lib/**/*.ts"
   },
   "dependencies": {
-    "@angular/animations": "^19.2.14",
-    "@angular/common": "^19.2.14",
-    "@angular/compiler": "^19.2.14",
-    "@angular/core": "^19.2.14",
-    "@angular/forms": "^19.2.14",
-    "@angular/platform-browser": "^19.2.14",
-    "@angular/platform-browser-dynamic": "^19.2.14",
-    "@angular/router": "^19.2.14",
+    "@angular/animations": "^20.3.13",
+    "@angular/common": "^20.3.13",
+    "@angular/compiler": "^20.3.13",
+    "@angular/core": "^20.3.13",
+    "@angular/forms": "^20.3.13",
+    "@angular/platform-browser": "^20.3.13",
+    "@angular/platform-browser-dynamic": "^20.3.13",
+    "@angular/router": "^20.3.13",
     "@tylertech/forge": "catalog:",
-    "@tylertech/forge-angular": "^5.4.0",
+    "@tylertech/forge-angular": "^7.0.0",
     "@tylertech/forge-core": "catalog:",
     "@tylertech/forge-extended": "workspace:^",
     "@tylertech/tyler-icons": "catalog:",
@@ -42,22 +42,22 @@
     "zone.js": "~0.15.1"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "^19.2.14",
-    "@angular/cli": "^19.2.14",
-    "@angular/compiler-cli": "^19.2.14",
+    "@angular/build": "^20.3.11",
+    "@angular/cli": "^20.3.11",
+    "@angular/compiler-cli": "^20.3.13",
     "@repo/prettier-config": "workspace:",
     "@tylertech-eslint/eslint-plugin": "catalog:",
     "@tylertech-eslint/eslint-plugin-angular": "3.0.0",
     "@tylertech/forge-schematics": "^2.0.0",
-    "@types/jasmine": "~5.1.8",
+    "@types/jasmine": "~5.1.13",
     "@types/node": "catalog:",
-    "jasmine-core": "~5.6.0",
+    "jasmine-core": "~5.12.1",
     "karma": "~6.4.4",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.1",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "ng-packagr": "^19.2.2",
-    "typescript": "~5.8.3"
+    "ng-packagr": "^20.3.2",
+    "typescript": "~5.9.3"
   }
 }

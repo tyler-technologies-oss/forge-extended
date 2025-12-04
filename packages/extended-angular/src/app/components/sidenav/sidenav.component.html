@@ -1,18 +1,16 @@
-<ng-container *ngIf="isSmallViewPort; else largeViewPort">
+@if (isSmallViewPort) {
   <forge-dialog aria-label="Navigation menu" preset="left-sheet" (forge-dialog-close)="closeSidenav()" [open]="open">
     <div class="dialog-sidenav">
       <ng-container *ngTemplateOutlet="sidenavContent"></ng-container>
     </div>
   </forge-dialog>
-</ng-container>
-
-<ng-template #largeViewPort>
+} @else {
   <forge-drawer>
     <aside>
       <ng-container *ngTemplateOutlet="sidenavContent"></ng-container>
     </aside>
   </forge-drawer>
-</ng-template>
+}
 
 <ng-template #sidenavContent>
   <forge-list navlist>
@@ -33,16 +31,18 @@
         <button>Components</button>
         <forge-open-icon slot="end"></forge-open-icon>
       </forge-list-item>
-      <forge-list-item indented *ngFor="let item of componentMenuItems" [selected]="componentMenuLink.isActive">
-        <a
-          [routerLink]="[item.value]"
-          #componentMenuLink="routerLinkActive"
-          routerLinkActive
-          [routerLinkActiveOptions]="{ exact: true }"
-          ariaCurrentWhenActive="page"
-          >{{ item.label }}</a
-        >
-      </forge-list-item>
+      @for (item of componentMenuItems; track item) {
+        <forge-list-item indented [selected]="componentMenuLink.isActive">
+          <a
+            [routerLink]="[item.value]"
+            #componentMenuLink="routerLinkActive"
+            routerLinkActive
+            [routerLinkActiveOptions]="{ exact: true }"
+            ariaCurrentWhenActive="page"
+            >{{ item.label }}</a
+          >
+        </forge-list-item>
+      }
     </forge-expansion-panel>
   </forge-list>
 </ng-template>

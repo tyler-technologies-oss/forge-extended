@@ -1,47 +1,99 @@
 # Tyler Forge™ Extended Angular Adapter
 
-An Angular adapter library for the Tyler Forge™ Extended Web Components library.
+This package provides Angular adapter components for the Tyler Forge™ Extended Web Components library.
 
-## Problem
+## For Library Users
 
-Web Components, more specifically custom elements are not compatible with Angular by default. This requires us to use `CUSTOM_ELEMENTS_SCHEMA` within
-our Angular modules to tell Angular not to throw errors when it comes across an HTML element that it doesn't recognize. The problem with this is that
-we lose some type safety and useful error messages with these elements as we're developing.
+If you're looking to use this library in your Angular application, please refer to the [package README](./projects/forge-extended-angular/README.md) which contains:
+- Installation instructions
+- Version compatibility table
+- Usage examples
+- API documentation
 
-### Solution
+## Development
 
-The purpose of this library is to make using Forge Web Components in Angular a seamless experience. It provides `ControlValueAccessor` directives
-to enable usage of constructs like `formControlName`, `formControl`, and `ngModel`, as well as auto-generated proxy (wrapper) components for
-every `<forge-*>` element in the Forge extended component library.
+This is the monorepo workspace for developing the Angular adapter library.
 
-To elaborate on the proxy components, these are Angular components that target the element names for every Forge custom HTML element. This allows Angular
-to provide strict type safety for properties and events as well as intelligent code completion and useful error messages. Each component is exported
-from its own Angular module to allow for opting in to include only specific components that your Angular application is using.
+### Prerequisites
 
-> This enables developers to be able to remove their usage of `CUSTOM_ELEMENTS_SCHEMA` when using Forge.
+- Node.js and pnpm installed
+- Familiarity with the [Tyler Forge Extended](../../extended) component library
 
-## Version Compatibility
+### Setup
 
-| `@tylertech/forge-extended-angular`  | Angular              | `@tylertech/forge`  |
-| ------------------------------------ | ---------------------| ------------------- |
-| `^1.0.0`                             | `>=19.0.0 < 21.0.0`  | `^3.0.0`            |
-
-## Getting started
-
-While this library is not _required_ to use Forge extended with Angular, it is highly recommended. Follow these steps to get started:
-
-Install the latest version of Forge extended components:
+From the monorepo root:
 
 ```bash
-npm install @tylertech/forge-extended
+# Install dependencies
+pnpm install
+
+# Build the Angular adapter (automatically builds dependencies via Turborepo)
+pnpm build:extended-angular
 ```
 
-Install the latest version of this Forge extended Angular adapter library referencing the version compatibility table above:
+### Development Workflow
 
 ```bash
-npm install @tylertech/forge-extended-angular
+# Run the demo application with hot reload
+pnpm dev:extended-angular
+
+# Run tests
+pnpm test:extended-angular
+
+# Build the package
+pnpm build:extended-angular
 ```
 
-To use a Forge component, you will import the Angular module from `@tylertech/forge-extended-angular` for each component you are
-using. Ex. `ForgeQuantityFieldModule`. This tells Angular about each Forge extended component you are using, and allows for strict
-typing that you wouldn't normally get without this library.
+### Project Structure
+
+```
+packages/extended-angular/
+├── projects/
+│   └── forge-extended-angular/    # Library source code
+│       ├── src/
+│       │   ├── lib/              # Generated proxy components
+│       │   └── public-api.ts     # Public API exports
+│       ├── package.json
+│       └── README.md             # Published to npm
+├── src/                           # Demo application
+│   ├── app/                       # Demo components
+│   └── main.ts                    # Demo app entry point
+├── dist/                          # Build output (gitignored)
+├── angular.json                   # Angular CLI configuration
+└── README.md                      # This file (development docs)
+```
+
+### Generating Proxy Components
+
+The Angular components are auto-generated from the Forge extended web components:
+
+```bash
+# From monorepo root
+pnpm generate-proxies
+```
+
+This uses `@tylertech/forge-schematics` to create Angular wrappers based on the custom elements manifest from `@tylertech/forge-extended`.
+
+The generation is configured in `generate-proxies.json` and uses the Angular CLI schematics to create:
+- Proxy component wrappers
+- Angular modules for each component
+- Type definitions
+- `ControlValueAccessor` directives for form controls
+
+### Publishing
+
+The package is published from the `dist/forge-extended-angular` directory, which contains:
+- Compiled library code
+- Type definitions
+- Package metadata
+- README.md (copied from `projects/forge-extended-angular/`)
+
+Publishing is automated through Changesets. See the [main monorepo documentation](../../README.md) for release procedures.
+
+### Contributing
+
+Contributions are welcome! Please ensure:
+- All generated components are properly typed
+- Demo app examples are updated for new components
+- Tests pass before submitting PRs
+- Follow the Angular style guide and existing code patterns
