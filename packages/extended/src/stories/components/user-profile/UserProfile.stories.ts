@@ -15,7 +15,8 @@ import '$lib/user-profile/profile-link';
 const channel = addons.getChannel();
 
 defineAppBarComponent();
-const actionAction = action('forge-user-profile-sign-out');
+const signOutAction = action('forge-user-profile-sign-out');
+const signInAction = action('forge-user-profile-sign-in');
 
 IconRegistry.define([tylIconSettings, tylIconAccount]);
 
@@ -62,13 +63,14 @@ const meta = {
     return html`<forge-app-bar theme-mode="scoped" title-text="Forge Extended">
       <forge-user-profile
         ${ref(userProfileRef)}
-        @forge-user-profile-sign-out=${(evt: Event) => actionAction(evt)}
+        @forge-user-profile-sign-in=${(evt: Event) => signInAction(evt)}
+        @forge-user-profile-sign-out=${(evt: Event) => signOutAction(evt)}
         @forge-theme-toggle-update=${handleThemeChange}
         slot="end"
         button-label="${args.buttonAriaLabel}"
         ?theme-toggle=${args.showThemeToggle}
         image-url="${args.imageUrl}"
-        full-name="First Last"
+        full-name="${args.fullName}"
         email="first.last@tylertech.com">
         ${args.showSlottedLinks ? html`<forge-profile-link slot="link">
           <forge-icon slot="icon" name="settings"></forge-icon>
@@ -79,6 +81,7 @@ const meta = {
           <a href="http://www.google.com" target="_blank">Profile</a>
         </forge-profile-link>
         ` : nothing}
+        ${args.signInButtonText.length ? html`<span slot="sign-in-button-text">${args.signInButtonText}</span>` : ''}
         ${args.signOutButtonText.length ? html`<span slot="sign-out-button-text">${args.signOutButtonText}</span>` : ''}
       </forge-user-profile>
     </forge-app-bar>`;
@@ -88,6 +91,8 @@ const meta = {
     ['Profile Link']: 'forge-profile-link'
   },
   argTypes: {
+    fullName: { control: 'text' },
+    signInButtonText: { control: 'text' },
     signOutButtonText: { control: 'text' },
     buttonAriaLabel: { control: 'text' },
     imageUrl: { control: 'text' },
@@ -95,6 +100,8 @@ const meta = {
     showThemeToggle: { control: 'boolean' }
   },
   args: {
+    fullName: 'First Last',
+    signInButtonText: 'Sign in',
     signOutButtonText: 'Sign Out',
     buttonAriaLabel: 'Open the incredibly awesome profile menu',
     imageUrl: '',
