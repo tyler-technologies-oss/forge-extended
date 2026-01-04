@@ -8,9 +8,10 @@ import * as ThemeToggleStory from './ThemeToggle.stories';
 
 <Title />
 
-The `<forge-user-profile>` component is a versatile solution adhering to the Forge design language for displaying authenticated
-user information within an application. It encapsulates a trigger button and a popover that reveals the signed-in user's
-name, email, and sign out option. It also has support for optional features like a theme toggle and custom link slots.
+The `<forge-user-profile>` component is a versatile solution adhering to the Forge design language for displaying user
+authentication state within an application. When a user is signed in (has a `full-name` value), it displays an avatar
+button that opens a popover containing the user's name, email, and sign out option. When no user is signed in, it displays
+a sign-in button instead. It also has support for optional features like a theme toggle and custom link slots.
 
 <Canvas of={UserProfileStories.Demo} />
 

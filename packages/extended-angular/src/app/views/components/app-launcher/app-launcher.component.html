@@ -1,0 +1,23 @@
+<app-demo-card headerText="App Launcher">
+  <div class="demo-section">
+    <h3>App Launcher with App Bar</h3>
+    <forge-app-bar no-border theme-mode="scoped">
+      <forge-app-launcher [allApps]="allApps" [relatedApps]="relatedApps" slot="end">
+        <span slot="related-apps-title">Related apps</span>
+        <span slot="all-apps-title">All apps</span>
+        <span slot="view-all-apps-button-text">View all apps</span>
+        <span slot="app-launcher-links-title">Custom links</span>
+
+        <forge-app-launcher-link slot="app-launcher-link">
+          <a href="http://www.google.com" target="_blank">Payments Documentation</a>
+        </forge-app-launcher-link>
+        <forge-app-launcher-link slot="app-launcher-link">
+          <a href="http://www.google.com" target="_blank">Frequently Asked Questions</a>
+        </forge-app-launcher-link>
+        <forge-app-launcher-link slot="app-launcher-link">
+          <a href="http://www.google.com" target="_blank">Community Services Directory</a>
+        </forge-app-launcher-link>
+      </forge-app-launcher>
+    </forge-app-bar>
+  </div>
+</app-demo-card>

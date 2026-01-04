@@ -4,9 +4,22 @@ import { useEventListener } from "./react-utils.js";
 
 export const ForgeUserProfile = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
-  const { themeToggle, fullName, email, buttonLabel, ...filteredProps } = props;
+  const {
+    themeToggle,
+    open,
+    fullName,
+    email,
+    imageUrl,
+    buttonLabel,
+    ...filteredProps
+  } = props;
 
   /** Event listeners - run once */
+  useEventListener(
+    ref,
+    "forge-user-profile-sign-in",
+    props.onForgeUserProfileSignIn,
+  );
   useEventListener(
     ref,
     "forge-user-profile-sign-out",
@@ -27,6 +40,7 @@ export const ForgeUserProfile = forwardRef((props, forwardedRef) => {
       ...filteredProps,
       "full-name": props.fullName || props["full-name"],
       email: props.email,
+      "image-url": props.imageUrl || props["image-url"],
       "button-label": props.buttonLabel || props["button-label"],
       class: props.className,
       exportparts: props.exportparts,
@@ -34,6 +48,7 @@ export const ForgeUserProfile = forwardRef((props, forwardedRef) => {
       part: props.part,
       tabindex: props.tabIndex,
       "theme-toggle": props.themeToggle ? "" : undefined,
+      open: props.open ? "" : undefined,
       style: { ...props.style },
     },
     props.children,

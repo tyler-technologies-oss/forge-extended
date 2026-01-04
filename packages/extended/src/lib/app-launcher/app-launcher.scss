@@ -1,0 +1,270 @@
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/list/list-item' as forge-list-item;
+@use '@tylertech/forge/sass/avatar' as forge-avatar;
+@use '@tylertech/forge/sass/icon' as forge-icon;
+@use '@tylertech/forge/sass/button' as forge-button;
+@use '@tylertech/forge/sass/popover' as forge-popover;
+@use '@tylertech/forge/sass/toolbar' as forge-toolbar;
+@use '@tylertech/forge/sass/card' as forge-card;
+@use '@tylertech/forge/sass/skeleton' as forge-skeleton;
+@use '@tylertech/forge/sass/dialog' as forge-dialog;
+@use '@tylertech/forge/sass/core/styles/scrollbar' as forge-scrollbar;
+@use '../utils/mixins';
+
+//
+// Host
+//
+
+:host {
+  display: contents;
+  padding: 0;
+
+  & * {
+    box-sizing: border-box;
+    @include forge-scrollbar.base;
+  }
+}
+
+//
+// Base
+//
+
+.outer-container {
+  --_forge-app-launcher-avatar-size: 48px;
+}
+
+h1 {
+  @include forge-typography.style(heading3);
+
+  margin: 0;
+}
+
+h2 {
+  @include forge-typography.style(heading1);
+
+  margin: 0;
+}
+
+forge-popover {
+  @include forge-popover.provide-theme(
+    (
+      background: #{forge-theme.variable(surface-dim)}
+    )
+  );
+}
+
+.v-stack {
+  @include mixins.stack;
+}
+
+.header {
+  @include forge-toolbar.provide-theme(
+    (
+      background: none
+    )
+  );
+}
+
+.outer-container {
+  max-height: var(--_forge-app-launcher-max-height);
+  width: var(--_forge-app-launcher-width);
+  display: grid;
+  grid-template-rows: auto 1fr;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.search-container {
+  padding-inline: #{forge-spacing.variable(medium)};
+  padding-block-start: #{forge-spacing.variable(medium)};
+}
+
+.app-list-container {
+  height: 100%;
+  min-height: 0;
+  padding: #{forge-spacing.variable(medium)};
+}
+
+.app-list-item {
+  @include forge-list-item.provide-theme(
+    (
+      padding: #{forge-spacing.variable(medium)},
+      height: calc(var(--_forge-app-launcher-avatar-size) + #{forge-spacing.variable(medium)}),
+      gap: #{forge-spacing.variable(medium)},
+      shape: #{forge-spacing.variable(xsmall)}
+    )
+  );
+}
+
+.app-avatar {
+  @include forge-avatar.provide-theme(
+    (
+      size: var(--_forge-app-launcher-avatar-size),
+      background: #{forge-theme.variable(tertiary-container-low)},
+      color: #{forge-theme.variable(on-tertiary-container-low)}
+    )
+  );
+
+  forge-icon {
+    @include forge-icon.provide-theme(
+      (
+        font-size: calc(var(--_forge-app-launcher-avatar-size) * 0.75),
+        color: #{forge-theme.variable(on-tertiary-container-low)}
+      )
+    );
+  }
+}
+
+.inner-container {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  min-height: 0;
+  padding: #{forge-spacing.variable(medium)};
+  padding-block-start: 0;
+
+  &.related-view {
+    grid-template-rows: auto 1fr;
+  }
+
+  forge-card {
+    @include forge-card.provide-theme(
+      (
+        overflow: hidden
+      )
+    );
+
+    min-height: 0;
+
+    &::part(root) {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}
+
+.scroll-container {
+  height: 100%;
+  overflow-y: auto;
+  min-height: 0;
+  scroll-padding-bottom: #{forge-spacing.variable(xxxlarge)};
+}
+
+.view-all-apps-button {
+  display: flex;
+  margin-inline: #{forge-spacing.variable(medium)};
+  margin-block-end: #{forge-spacing.variable(medium)};
+
+  forge-button {
+    @include forge-button.provide-theme(
+      (
+        height: var(--_forge-app-launcher-view-all-apps-button-height)
+      )
+    );
+    flex: 1;
+  }
+}
+
+.app-launcher-links-card {
+  margin-block-start: #{forge-spacing.variable(medium)};
+  max-height: 204px;
+}
+
+.app-launcher-links {
+  display: flex;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(xsmall)};
+  overflow-y: auto;
+  height: 100%;
+
+  @include forge-list-item.provide-theme(
+    (
+      padding: #{forge-spacing.variable(large)},
+      shape: #{forge-spacing.variable(xsmall)}
+    )
+  );
+}
+
+.empty-state {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  height: 100%;
+
+  forge-icon {
+    font-size: 72px;
+    color: #{forge-theme.variable(text-medium)};
+  }
+
+  p {
+    @include forge-typography.style(subheading2);
+    text-align: center;
+  }
+}
+
+.loading-state {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  height: 100%;
+  gap: #{forge-spacing.variable(small)};
+
+  forge-skeleton {
+    height: calc(var(--_forge-app-launcher-avatar-size) + #{forge-spacing.variable(xsmall)});
+    width: 100%;
+    cursor: progress;
+
+    @include forge-skeleton.provide-theme(
+      (
+        margin: 0
+      )
+    );
+  }
+
+  .title-skeleton {
+    height: 16px;
+    width: 96px;
+    justify-self: start;
+  }
+
+  .button-skeleton {
+    width: 100%;
+    height: 36px;
+  }
+
+  .loading-text {
+    @include mixins.sr-only;
+  }
+}
+
+//
+// State
+//
+
+// Large screen (popover mode)
+:host(:state(large)) {
+  .outer-container {
+    --_forge-app-launcher-avatar-size: 48px;
+    --_forge-app-launcher-width: 500px;
+    --_forge-app-launcher-max-height: 90dvh;
+    --_forge-app-launcher-view-all-apps-button-height: 36px;
+  }
+}
+
+// Small screen (dialog mode)
+:host(:state(small)) {
+  @include forge-dialog.provide-theme(
+    (
+      width: 100%,
+      height: 100%
+    )
+  );
+
+  .outer-container {
+    --_forge-app-launcher-avatar-size: 56px;
+    --_forge-app-launcher-width: 100%;
+    --_forge-app-launcher-max-height: 100dvh;
+    --_forge-app-launcher-view-all-apps-button-height: 56px;
+  }
+}

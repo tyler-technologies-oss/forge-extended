@@ -25,11 +25,17 @@ export interface ForgeUserProfileProps
   /** Indicates whether the theme toggle is visible */
   themeToggle?: boolean;
 
+  /** Controls whether the user profile popover is open */
+  open?: boolean;
+
   /** The full name of the user */
   fullName?: ForgeUserProfileElement["fullName"];
 
   /** The email address of the user */
   email?: ForgeUserProfileElement["email"];
+
+  /** The image URL for the user avatar */
+  imageUrl?: ForgeUserProfileElement["imageUrl"];
 
   /** ARIA label for the user profile avatar button */
   buttonLabel?: ForgeUserProfileElement["buttonLabel"];
@@ -55,6 +61,9 @@ export interface ForgeUserProfileProps
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
 
+  /** Fired when the sign in button is clicked. */
+  onForgeUserProfileSignIn?: (event: CustomEvent) => void;
+
   /** Fired when the sign out button is clicked. */
   onForgeUserProfileSignOut?: (event: CustomEvent) => void;
 }
@@ -65,13 +74,15 @@ export interface ForgeUserProfileProps
  *
  *
  * ### **Events:**
- *  - **forge-user-profile-sign-out** - Fired when the sign out button is clicked.
+ *  - **forge-user-profile-sign-in** - Fired when the sign in button is clicked.
+ * - **forge-user-profile-sign-out** - Fired when the sign out button is clicked.
  *
  * ### **Methods:**
  *  - **setTheme(value: _ThemeToggleTheme_): _void_** - Sets the theme for the theme toggle.
  *
  * ### **Slots:**
  *  - **link** - Slot for additional profile navigation links
+ * - **sign-in-button-text** - Slot for the sign in button text
  * - **sign-out-button-text** - Slot for the sign out button text
  */
 export const ForgeUserProfile: React.ForwardRefExoticComponent<ForgeUserProfileProps>;

@@ -50,6 +50,17 @@ export class UserProfileComponent {
     return this.nativeElement.email;
   }
 
+  /** The image URL for the user avatar */
+  @Input()
+  public set imageUrl(value: UserProfileComponentCustomElement['imageUrl']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.imageUrl = value;
+    });
+  }
+  public get imageUrl(): UserProfileComponentCustomElement['imageUrl'] {
+    return this.nativeElement.imageUrl;
+  }
+
   /** ARIA label for the user profile avatar button */
   @Input()
   public set buttonLabel(value: UserProfileComponentCustomElement['buttonLabel']) {
@@ -70,6 +81,17 @@ export class UserProfileComponent {
   }
   public get themeToggle(): UserProfileComponentCustomElement['themeToggle'] {
     return this.nativeElement.themeToggle;
+  }
+
+  /** Controls whether the user profile popover is open */
+  @Input({ transform: booleanAttribute })
+  public set open(value: UserProfileComponentCustomElement['open']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.open = value;
+    });
+  }
+  public get open(): UserProfileComponentCustomElement['open'] {
+    return this.nativeElement.open;
   }
 
   /** Sets the theme for the theme toggle. */

@@ -1,0 +1,21 @@
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+
+:host {
+  display: block;
+
+  forge-toolbar {
+    --forge-toolbar-background: #{forge-theme.variable(primary-container-low)};
+  }
+}
+
+.start-container {
+  display: flex;
+  align-items: center;
+  gap: #{forge-spacing.variable(medium)};
+}
+
+.selected-text {
+  @include forge-typography.style(body1);
+}

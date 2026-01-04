@@ -1,0 +1,11 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/list/list-item' as forge-list-item;
+
+forge-list-item {
+  @include forge-list-item.provide-theme(
+    (
+      padding: #{forge-spacing.variable(xsmall)},
+      shape: #{forge-spacing.variable(xsmall)}
+    )
+  );
+}
