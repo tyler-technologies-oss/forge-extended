@@ -1,5 +1,13 @@
 # @tylertech/forge-extended-angular
 
+## 2.0.1
+
+### Patch Changes
+
+- a2599ea: Applauncher and ApplauncherLink components added to public api export
+- Updated dependencies [d43be5d]
+  - @tylertech/forge-extended@1.3.0
+
 ## 2.0.0
 
 ### Major Changes

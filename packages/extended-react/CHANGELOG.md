@@ -1,5 +1,16 @@
 # @tylertech/forge-extended-react
 
+## 1.3.0
+
+### Minor Changes
+
+- d43be5d: The user profile component now handles the signed out state by rendering a sign in button if no fullName property is set
+
+### Patch Changes
+
+- Updated dependencies [d43be5d]
+  - @tylertech/forge-extended@1.3.0
+
 ## 1.2.0
 
 ### Minor Changes
