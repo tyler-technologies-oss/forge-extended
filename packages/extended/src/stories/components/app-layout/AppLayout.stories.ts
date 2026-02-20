@@ -362,7 +362,6 @@ export const Demo: Story = {
         .navigation-container {
           display: flex;
           flex-direction: column;
-          width: 300px;
           gap: 16px;
           padding: var(--forge-spacing-medium);
         }

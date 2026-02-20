@@ -216,6 +216,7 @@ export class AppLayoutComponent extends LitElement {
                   <div class="drawer-container">
                     <forge-toolbar no-border>
                       <forge-icon-button
+                        autofocus
                         slot="before-start"
                         aria-label="Close navigation drawer"
                         @click=${this._toggleLeftDrawer}>

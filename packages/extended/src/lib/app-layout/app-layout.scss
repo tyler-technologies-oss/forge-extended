@@ -6,13 +6,21 @@
 //
 
 :host {
+  --forge-app-layout-drawer-width: 320px;
   display: block;
   height: 100%;
 }
 
 forge-app-bar {
   --forge-app-bar-columns: auto 1fr auto;
-  --forge-app-bar-row-padding: 0;
+
+  :host(:state(small)) {
+    --forge-app-bar-row-padding: 0;
+  }
+}
+
+.left-sheet-dialog {
+  --forge-dialog-width: var(--forge-app-layout-drawer-width);
 }
 
 .left-sheet-dialog::part(surface) {
