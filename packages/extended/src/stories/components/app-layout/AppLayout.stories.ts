@@ -1,5 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import {
   defineAppBarComponent,
   defineCardComponent,
@@ -7,11 +8,33 @@ import {
   defineDrawerComponent,
   defineListComponent,
   defineIconComponent,
-  IconRegistry
+  defineButtonComponent,
+  defineIconButtonComponent,
+  defineToolbarComponent,
+  defineMenuComponent,
+  defineDividerComponent,
+  IconRegistry,
+  defineStackComponent,
+  IMenuOption,
+  ButtonVariant
 } from '@tylertech/forge';
-import { tylIconDashboard, tylIconHome, tylIconSettings, tylIconReport, tylIconPeople } from '@tylertech/tyler-icons';
+import {
+  tylIconDashboard,
+  tylIconHome,
+  tylIconSettings,
+  tylIconReport,
+  tylIconPeople,
+  tylIconArrowBack,
+  tylIconAdd,
+  tylIconEdit,
+  tylIconDelete,
+  tylIconMoreVert,
+  tylIconFilterList,
+  tylIconDownload
+} from '@tylertech/tyler-icons';
 
 import '$lib/app-layout';
+import '$lib/responsive-toolbar';
 
 defineAppBarComponent();
 defineCardComponent();
@@ -19,8 +42,32 @@ defineScaffoldComponent();
 defineDrawerComponent();
 defineListComponent();
 defineIconComponent();
+defineButtonComponent();
+defineIconButtonComponent();
+defineToolbarComponent();
+defineMenuComponent();
+defineDividerComponent();
+defineStackComponent();
 
-IconRegistry.define([tylIconDashboard, tylIconHome, tylIconSettings, tylIconReport, tylIconPeople]);
+IconRegistry.define([
+  tylIconDashboard,
+  tylIconHome,
+  tylIconSettings,
+  tylIconReport,
+  tylIconPeople,
+  tylIconArrowBack,
+  tylIconAdd,
+  tylIconEdit,
+  tylIconDelete,
+  tylIconMoreVert,
+  tylIconFilterList,
+  tylIconDownload
+]);
+
+interface CustomMenuOption extends IMenuOption {
+  variant?: ButtonVariant;
+  iconName: string;
+}
 
 const component = 'forge-app-layout';
 
@@ -28,6 +75,15 @@ const meta = {
   title: 'Components/App Layout',
   component,
   render: (args: any) => {
+    // Menu options for mobile responsive toolbar
+    const toolbarMenuOptions: CustomMenuOption[] = [
+      { label: 'Download', value: 'download', iconName: 'download', variant: 'text' },
+      { label: 'Add Item', value: 'add', iconName: 'add', variant: 'tonal' }
+    ];
+
+    // Mock cards data
+    const mockCards = Array.from({ length: 6 }, (_, index) => ({ id: index }));
+
     return html`
       <style>
         * {
@@ -44,14 +100,60 @@ const meta = {
           color: var(--forge-theme-text-secondary);
         }
 
-        /* Responsive layout */
+        /* Responsive grid layout */
+        .card-grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+          gap: var(--forge-spacing-medium);
+          padding: var(--forge-spacing-medium);
+        }
+
+        .card-grid forge-card {
+          --forge-card-padding: 0;
+        }
+
+        .card-content {
+          padding: var(--forge-spacing-medium);
+          display: flex;
+          flex-direction: column;
+          gap: var(--forge-spacing-small);
+        }
+
+        .mock-box {
+          background: var(--forge-theme-surface-container-low);
+          border-radius: 4px;
+        }
+
+        .mock-title {
+          height: 24px;
+          width: 60%;
+        }
+
+        .mock-text {
+          height: 16px;
+        }
+
+        .mock-text-short {
+          height: 16px;
+          width: 80%;
+        }
+
+        .mock-stats {
+          display: flex;
+          gap: var(--forge-spacing-medium);
+          margin-block-start: var(--forge-spacing-small);
+        }
+
+        .mock-stat {
+          height: 48px;
+          flex: 1;
+        }
       </style>
       <forge-app-layout
         app-title=${args.appTitle}
         breakpoint=${args.breakpoint}
         page-title=${args.pageTitle}
-        ?show-secondary-back-arrow=${args.showSecondaryBackArrow}
-        ?page-toolbar-no-border=${args.pageToolbarNoBorder}>
+        ?show-secondary-back-arrow=${args.showSecondaryBackArrow}>
         <forge-list navlist slot="navigation">
           <!-- Dashboard Section -->
           <div class="forge-typography--body1 section-header">Dashboard</div>
@@ -116,7 +218,6 @@ const meta = {
         </forge-list>
 
         <div slot="right-navigation">
-          <forge-page-toolbar page-title="Right drawer"> </forge-page-toolbar>
           <forge-list navlist slot="right-navigation">
             <!-- Quick Actions Section -->
             <forge-list-item class="section-item">
@@ -140,7 +241,52 @@ const meta = {
           </forge-list>
         </div>
 
-        <div style="padding: 16px;">Stuff</div>
+        <forge-responsive-toolbar slot="body-header">
+          <!-- Back button - always visible -->
+          <forge-icon-button slot="before-start" aria-label="Go back">
+            <forge-icon name="arrow_back" external></forge-icon>
+          </forge-icon-button>
+
+          <!-- Page title - always visible -->
+          <div slot="before-start" class="forge-typography--heading2">User Management Dashboard</div>
+
+          <!-- Desktop version: Individual action buttons shown when space is available -->
+          <forge-stack slot="end-large" inline>
+            ${toolbarMenuOptions.map(
+              option => html`
+                <forge-button variant=${ifDefined(option.variant)}>
+                  <forge-icon slot="start" name=${option.iconName} external></forge-icon>
+                  ${option.label}
+                </forge-button>
+              `
+            )}
+          </forge-stack>
+
+          <!-- Mobile version: Overflow menu shown when space is constrained -->
+          <div slot="end-small">
+            <forge-menu .options=${toolbarMenuOptions} slot="trigger">
+              <forge-icon-button aria-label="More options">
+                <forge-icon name="more_vert" external></forge-icon>
+              </forge-icon-button>
+            </forge-menu>
+          </div>
+        </forge-responsive-toolbar>
+
+        <div class="card-grid">
+          ${mockCards.map(
+            () => html`
+              <forge-card>
+                <div class="card-content">
+                  <div class="mock-box mock-text"></div>
+                  <div class="mock-box mock-text"></div>
+                  <div class="mock-box mock-text"></div>
+                  <div class="mock-box mock-text"></div>
+                  <div class="mock-box mock-text"></div>
+                </div>
+              </forge-card>
+            `
+          )}
+        </div>
 
         <div slot="footer">
           <div
@@ -201,4 +347,60 @@ export default meta;
 
 type Story = StoryObj;
 
-export const Demo: Story = {};
+export const Demo: Story = {
+  render: args => {
+    return html`
+      <style>
+        * {
+          box-sizing: border-box !important;
+        }
+        body {
+          margin: 0 !important;
+          padding: 0 !important;
+        }
+
+        .navigation-container {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+          padding: var(--forge-spacing-medium);
+        }
+
+        .content-container {
+          padding: var(--forge-spacing-medium);
+        }
+
+        .mock-nav-item {
+          height: 24px;
+          width: 100%;
+          background: var(--forge-theme-surface-container-low);
+          border-radius: 4px;
+          margin-block-end: var(--forge-spacing-small);
+        }
+      </style>
+      <forge-app-layout app-title=${args.appTitle} breakpoint=${args.breakpoint}>
+        <div class="navigation-container" slot="navigation">
+          <div class="mock-nav-item"></div>
+          <div class="mock-nav-item"></div>
+          <div class="mock-nav-item"></div>
+          <div class="mock-nav-item"></div>
+          <div class="mock-nav-item"></div>
+          <div class="mock-nav-item"></div>
+          <div class="mock-nav-item"></div>
+          <div class="mock-nav-item"></div>
+        </div>
+
+        <div class="content-container">
+          <p class="forge-typography--body1">Resize the frame to see the responsive behavior</p>
+          <input
+            type="text"
+            placeholder="Sample input field"
+            style="padding: 8px; width: 100%; max-width: 400px; margin-block-end: 16px;" />
+        </div>
+        <div slot="modal-footer">Footer</div>
+      </forge-app-layout>
+    `;
+  }
+};
+
+export const WithContentGrid: Story = {};

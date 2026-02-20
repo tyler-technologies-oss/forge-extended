@@ -1,3 +1,6 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/typography' as forge-typography;
+
 //
 // Host
 //
@@ -9,4 +12,10 @@
 
 forge-app-bar {
   --forge-app-bar-columns: auto 1fr auto;
+  --forge-app-bar-row-padding: 0;
+}
+
+.drawer-container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
 }

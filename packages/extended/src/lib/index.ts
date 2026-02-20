@@ -9,5 +9,4 @@ export * from './multi-select-header';
 export * from './app-launcher';
 export * from './app-launcher/app-launcher-link';
 export * from './app-layout';
-export * from './app-layout/page-toolbar';
 // -- EXPORTS PLACEHOLDER (DO NOT REMOVE) --

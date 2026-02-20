@@ -575,22 +575,6 @@
               "name": "navigation"
             },
             {
-              "description": "Responsive right navigation content that renders in right slot (small screens) or body-right slot (large screens)",
-              "name": "right-navigation"
-            },
-            {
-              "description": "Places content in the modal right drawer header (small screens only)",
-              "name": "modal-right-header"
-            },
-            {
-              "description": "Places content in the modal right drawer body (small screens only)",
-              "name": "modal-right-body"
-            },
-            {
-              "description": "Places content in the modal right drawer footer (small screens only)",
-              "name": "modal-right-footer"
-            },
-            {
               "description": "Places content in the app bar logo slot",
               "name": "app-bar-logo"
             },
@@ -605,14 +589,6 @@
             {
               "description": "Places content in the app bar end slot",
               "name": "app-bar-end"
-            },
-            {
-              "description": "Places content in the page toolbar center slot (when pageTitle is set)",
-              "name": "page-toolbar-center"
-            },
-            {
-              "description": "Places content in the page toolbar end slot (when pageTitle is set)",
-              "name": "page-toolbar-end"
             }
           ],
           "members": [
@@ -637,39 +613,6 @@
               "default": "768",
               "description": "The screen width breakpoint in pixels for responsive behavior (default: 768)",
               "attribute": "breakpoint"
-            },
-            {
-              "kind": "field",
-              "name": "pageTitle",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The page title to display in the body header toolbar (optional)",
-              "attribute": "page-title"
-            },
-            {
-              "kind": "field",
-              "name": "showSecondaryBackArrow",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "true",
-              "description": "Controls whether the back arrow button is shown in the page toolbar (default: true)",
-              "attribute": "show-secondary-back-arrow"
-            },
-            {
-              "kind": "field",
-              "name": "pageToolbarNoBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Controls whether the page toolbar border is hidden (default: false)",
-              "attribute": "page-toolbar-no-border"
             }
           ],
           "attributes": [
@@ -690,33 +633,6 @@
               "default": "768",
               "description": "The screen width breakpoint in pixels for responsive behavior (default: 768)",
               "fieldName": "breakpoint"
-            },
-            {
-              "name": "page-title",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The page title to display in the body header toolbar (optional)",
-              "fieldName": "pageTitle"
-            },
-            {
-              "name": "show-secondary-back-arrow",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Controls whether the back arrow button is shown in the page toolbar (default: true)",
-              "fieldName": "showSecondaryBackArrow"
-            },
-            {
-              "name": "page-toolbar-no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Controls whether the page toolbar border is hidden (default: false)",
-              "fieldName": "pageToolbarNoBorder"
             }
           ],
           "superclass": {
@@ -1736,130 +1652,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/app-layout/page-toolbar/page-toolbar.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "PageToolbarComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-page-toolbar'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "PageToolbarComponent",
-          "slots": [
-            {
-              "description": "Places content in the toolbar center slot",
-              "name": "center"
-            },
-            {
-              "description": "Places content in the toolbar end slot",
-              "name": "end"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "pageTitle",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The page title to display in the toolbar",
-              "attribute": "page-title"
-            },
-            {
-              "kind": "field",
-              "name": "showBackArrow",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Controls whether the back arrow button is shown (default: true)",
-              "attribute": "show-back-arrow"
-            },
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Controls whether the toolbar border is hidden (default: false)",
-              "attribute": "no-border"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "page-title",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The page title to display in the toolbar",
-              "fieldName": "pageTitle"
-            },
-            {
-              "name": "show-back-arrow",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Controls whether the back arrow button is shown (default: true)",
-              "fieldName": "showBackArrow"
-            },
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Controls whether the toolbar border is hidden (default: false)",
-              "fieldName": "noBorder"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-page-toolbar",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "PageToolbarComponentTagName",
-          "declaration": {
-            "name": "PageToolbarComponentTagName",
-            "module": "src/lib/app-layout/page-toolbar/page-toolbar.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "PageToolbarComponent",
-          "declaration": {
-            "name": "PageToolbarComponent",
-            "module": "src/lib/app-layout/page-toolbar/page-toolbar.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "PageToolbarComponent",
-            "module": "src/lib/app-layout/page-toolbar/page-toolbar.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
@@ -1952,7 +1744,7 @@
     },
     "AppLayoutComponent": {
       "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 56
+      "lineNumber": 50
     },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
@@ -2013,10 +1805,6 @@
     "AppLauncherLinkComponent": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "lineNumber": 26
-    },
-    "PageToolbarComponent": {
-      "path": "src/lib/app-layout/page-toolbar/page-toolbar.ts",
-      "lineNumber": 27
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
