@@ -311,35 +311,11 @@ const meta = {
       table: {
         category: 'Properties'
       }
-    },
-    pageTitle: {
-      control: 'text',
-      description: 'The page title to display in the body header toolbar (optional)',
-      table: {
-        category: 'Properties'
-      }
-    },
-    showSecondaryBackArrow: {
-      control: 'boolean',
-      description: 'Controls whether the back arrow button is shown in the page toolbar',
-      table: {
-        category: 'Properties'
-      }
-    },
-    pageToolbarNoBorder: {
-      control: 'boolean',
-      description: 'Controls whether the page toolbar border is hidden',
-      table: {
-        category: 'Properties'
-      }
     }
   },
   args: {
     appTitle: 'App Layout Demo',
-    breakpoint: 768,
-    pageTitle: 'Dashboard',
-    showSecondaryBackArrow: true,
-    pageToolbarNoBorder: false
+    breakpoint: 768
   }
 } satisfies Meta;
 
@@ -375,7 +351,6 @@ export const Demo: Story = {
           width: 100%;
           background: var(--forge-theme-surface-container-low);
           border-radius: 4px;
-          margin-block-end: var(--forge-spacing-small);
         }
       </style>
       <forge-app-layout app-title=${args.appTitle} breakpoint=${args.breakpoint}>
