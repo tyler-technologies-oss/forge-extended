@@ -15,6 +15,10 @@ forge-app-bar {
   --forge-app-bar-row-padding: 0;
 }
 
+.left-sheet-dialog::part(surface) {
+  display: block;
+}
+
 .drawer-container {
   display: grid;
   grid-template-rows: auto 1fr auto;

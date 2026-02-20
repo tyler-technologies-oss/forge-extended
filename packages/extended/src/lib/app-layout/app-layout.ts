@@ -3,7 +3,7 @@ import { when } from 'lit/directives/when.js';
 import { customElement, property, state, queryAssignedNodes } from 'lit/decorators.js';
 import {
   defineScaffoldComponent,
-  defineModalDrawerComponent,
+  defineDialogComponent,
   defineDrawerComponent,
   defineIconButtonComponent,
   defineIconComponent,
@@ -51,7 +51,7 @@ export const AppLayoutComponentTagName: keyof HTMLElementTagNameMap = 'forge-app
 export class AppLayoutComponent extends LitElement {
   static {
     defineScaffoldComponent();
-    defineModalDrawerComponent();
+    defineDialogComponent();
     defineDrawerComponent();
     defineIconButtonComponent();
     defineIconComponent();
@@ -206,7 +206,10 @@ export class AppLayoutComponent extends LitElement {
         ${!this._isLargeScreen
           ? this._hasNavigationContent
             ? html`
-                <forge-modal-drawer
+                <forge-dialog
+                  class="left-sheet-dialog"
+                  fullscreen-threshold="0"
+                  preset="left-sheet"
                   slot="left"
                   ?open=${this._leftDrawerOpen}
                   @forge-drawer-after-close=${this._handleLeftDrawerAfterClose}>
@@ -221,7 +224,7 @@ export class AppLayoutComponent extends LitElement {
                     </forge-toolbar>
                     <aside>${navigationSlot}</aside>
                   </div>
-                </forge-modal-drawer>
+                </forge-dialog>
               `
             : navigationSlot
           : ''}

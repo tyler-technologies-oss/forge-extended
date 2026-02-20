@@ -362,6 +362,7 @@ export const Demo: Story = {
         .navigation-container {
           display: flex;
           flex-direction: column;
+          width: 300px;
           gap: 16px;
           padding: var(--forge-spacing-medium);
         }
@@ -392,10 +393,6 @@ export const Demo: Story = {
 
         <div class="content-container">
           <p class="forge-typography--body1">Resize the frame to see the responsive behavior</p>
-          <input
-            type="text"
-            placeholder="Sample input field"
-            style="padding: 8px; width: 100%; max-width: 400px; margin-block-end: 16px;" />
         </div>
         <div slot="modal-footer">Footer</div>
       </forge-app-layout>
