@@ -217,30 +217,6 @@ const meta = {
           </forge-list-item>
         </forge-list>
 
-        <div slot="right-navigation">
-          <forge-list navlist slot="right-navigation">
-            <!-- Quick Actions Section -->
-            <forge-list-item class="section-item">
-              <forge-icon slot="start" name="add" external></forge-icon>
-              <button type="button">Create New</button>
-            </forge-list-item>
-            <forge-list-item class="section-item">
-              <forge-icon slot="start" name="upload" external></forge-icon>
-              <button type="button">Upload File</button>
-            </forge-list-item>
-
-            <!-- Tools Section -->
-            <forge-list-item class="section-item">
-              <forge-icon slot="start" name="calculate" external></forge-icon>
-              <button type="button">Calculator</button>
-            </forge-list-item>
-            <forge-list-item class="section-item">
-              <forge-icon slot="start" name="calendar_today" external></forge-icon>
-              <button type="button">Calendar</button>
-            </forge-list-item>
-          </forge-list>
-        </div>
-
         <forge-responsive-toolbar slot="body-header">
           <!-- Back button - always visible -->
           <forge-icon-button slot="before-start" aria-label="Go back">

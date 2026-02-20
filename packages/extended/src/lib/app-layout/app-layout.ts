@@ -190,7 +190,9 @@ export class AppLayoutComponent extends LitElement {
     return html`
       <forge-scaffold viewport>
         <forge-app-bar slot="header" title-text=${this.appTitle} theme-mode="scoped">
-          <slot name="app-bar-logo" slot="logo"></slot>
+          <slot name="app-bar-logo" slot="logo">
+            <forge-icon name="tyler_talking_t_logo" external></forge-icon>
+          </slot>
           <slot name="app-bar-start" slot="start"></slot>
           ${when(
             !this._isLargeScreen,
