@@ -1,0 +1,24 @@
+import { type Meta, type StoryObj } from '@storybook/web-components-vite';
+import { html } from 'lit';
+
+import '$lib/content-card';
+
+const component = 'forge-content-card';
+
+const meta = {
+  title: 'Components/Content Card',
+  component,
+  render: args => {
+    return html`
+      <forge-content-card>
+        <div slot="body">This is the content of the body slot</div>
+      </forge-content-card>
+    `;
+  }
+} satisfies Meta;
+
+export default meta;
+
+type Story = StoryObj;
+
+export const Demo: Story = {};

@@ -1,0 +1,13 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+
+:host {
+  display: block;
+}
+
+.content-card-container {
+  --forge-card-padding: 0;
+}
+
+.content-card-body {
+  padding: #{forge-spacing.variable(medium)};
+}
