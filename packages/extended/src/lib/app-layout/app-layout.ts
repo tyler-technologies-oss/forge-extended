@@ -10,7 +10,7 @@ import {
   IconRegistry,
   toggleState
 } from '@tylertech/forge';
-import { tylIconArrowBack } from '@tylertech/tyler-icons';
+import { tylIconArrowBack, tylIconChevronDoubleLeft, tylIconClose } from '@tylertech/tyler-icons';
 
 import styles from './app-layout.scss?inline';
 
@@ -45,6 +45,8 @@ export const AppLayoutComponentTagName: keyof HTMLElementTagNameMap = 'forge-app
  *
  * @state small - Screen width is below 768px, navigation appears in modal drawer
  * @state large - Screen width is 768px or above, navigation appears in body-left drawer
+ * @state drawer-open - The navigation drawer is currently open
+ * @state drawer-closed - The navigation drawer is currently closed
  */
 
 @customElement(AppLayoutComponentTagName)
@@ -56,7 +58,7 @@ export class AppLayoutComponent extends LitElement {
     defineIconButtonComponent();
     defineIconComponent();
 
-    IconRegistry.define([tylIconArrowBack]);
+    IconRegistry.define([tylIconArrowBack, tylIconChevronDoubleLeft, tylIconClose]);
   }
 
   public static override styles = unsafeCSS(styles);
@@ -75,6 +77,9 @@ export class AppLayoutComponent extends LitElement {
 
   @state()
   private _isLargeScreen = false;
+
+  @state()
+  private _manuallyToggledOnLargeScreen = false;
 
   private _mediaQuery: MediaQueryList | null = null;
   readonly #internals: ElementInternals;
@@ -139,13 +144,24 @@ export class AppLayoutComponent extends LitElement {
 
     // Set drawer defaults based on breakpoint
     if (this._isLargeScreen) {
-      // Large screens: navigation drawer open by default if content is present
-      // Use hasUpdated to check if we're in initial setup or after first render
-      this._leftDrawerOpen = this.hasUpdated ? this._hasNavigationContent : false;
+      // Large screens: navigation drawer open by default if content is present,
+      // unless the user has manually toggled it
+      if (this._manuallyToggledOnLargeScreen) {
+        // Respect the user's manual preference
+      } else {
+        // Use hasUpdated to check if we're in initial setup or after first render
+        this._leftDrawerOpen = this.hasUpdated ? this._hasNavigationContent : false;
+      }
     } else {
       // Small screens: modal drawer closed by default
+      // Reset manual toggle state when switching to small screen
+      this._manuallyToggledOnLargeScreen = false;
       this._leftDrawerOpen = false;
     }
+
+    // Update drawer state
+    toggleState(this.#internals, 'drawer-open', this._leftDrawerOpen);
+    toggleState(this.#internals, 'drawer-closed', !this._leftDrawerOpen);
 
     // Apply drawer states immediately after updating them
     if (this.hasUpdated) {
@@ -155,11 +171,30 @@ export class AppLayoutComponent extends LitElement {
 
   private _toggleLeftDrawer = (): void => {
     this._leftDrawerOpen = !this._leftDrawerOpen;
+
+    // Track manual toggling on large screens
+    if (this._isLargeScreen) {
+      this._manuallyToggledOnLargeScreen = true;
+    }
+
+    // Update drawer states
+    toggleState(this.#internals, 'drawer-open', this._leftDrawerOpen);
+    toggleState(this.#internals, 'drawer-closed', !this._leftDrawerOpen);
+
     this._applyDrawerStates();
   };
 
   private _handleLeftDrawerAfterClose = (): void => {
     this._leftDrawerOpen = false;
+
+    // Track manual closing on large screens
+    if (this._isLargeScreen) {
+      this._manuallyToggledOnLargeScreen = true;
+    }
+
+    // Update drawer states
+    toggleState(this.#internals, 'drawer-open', false);
+    toggleState(this.#internals, 'drawer-closed', true);
   };
 
   private _handleSlotChange = (event: Event): void => {
@@ -195,7 +230,7 @@ export class AppLayoutComponent extends LitElement {
           </slot>
           <slot name="app-bar-start" slot="start"></slot>
           ${when(
-            !this._isLargeScreen,
+            !this._isLargeScreen || !this._leftDrawerOpen,
             () => html`
               <forge-app-bar-menu-button slot="start" @click=${this._toggleLeftDrawer}> </forge-app-bar-menu-button>
             `
@@ -222,7 +257,7 @@ export class AppLayoutComponent extends LitElement {
                         slot="before-start"
                         aria-label="Close navigation drawer"
                         @click=${this._toggleLeftDrawer}>
-                        <forge-icon name="close" external></forge-icon>
+                        <forge-icon name="close"></forge-icon>
                       </forge-icon-button>
                     </forge-toolbar>
                     <aside>${navigationSlot}</aside>
@@ -236,12 +271,24 @@ export class AppLayoutComponent extends LitElement {
         <!-- Large screens: Navigation in body-left slot -->
         ${this._isLargeScreen
           ? this._hasNavigationContent
-            ? html`<forge-drawer
-                slot="body-left"
-                ?open=${this._leftDrawerOpen}
-                @forge-drawer-after-close=${this._handleLeftDrawerAfterClose}
-                >${navigationSlot}</forge-drawer
-              >`
+            ? html`
+                <div class="drawer-container" slot="body-left">
+                  <forge-icon-button
+                    aria-label="Close navigation drawer"
+                    class="drawer-toggle-button"
+                    density="small"
+                    variant="raised"
+                    @click=${this._toggleLeftDrawer}>
+                    <forge-icon name="chevron_double_left"></forge-icon>
+                  </forge-icon-button>
+                  <forge-drawer
+                    class="desktop-drawer"
+                    ?open=${this._leftDrawerOpen}
+                    @forge-drawer-after-close=${this._handleLeftDrawerAfterClose}>
+                    ${navigationSlot}
+                  </forge-drawer>
+                </div>
+              `
             : navigationSlot
           : ''}
 
