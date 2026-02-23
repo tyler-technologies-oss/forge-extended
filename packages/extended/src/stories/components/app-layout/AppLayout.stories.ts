@@ -149,11 +149,7 @@ const meta = {
           flex: 1;
         }
       </style>
-      <forge-app-layout
-        app-title=${args.appTitle}
-        breakpoint=${args.breakpoint}
-        page-title=${args.pageTitle}
-        ?show-secondary-back-arrow=${args.showSecondaryBackArrow}>
+      <forge-app-layout app-title=${args.appTitle} breakpoint=${args.breakpoint}>
         <forge-list navlist slot="navigation">
           <!-- Dashboard Section -->
           <div class="forge-typography--body1 section-header">Dashboard</div>

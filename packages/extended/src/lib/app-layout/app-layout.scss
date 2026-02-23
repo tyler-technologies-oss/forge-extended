@@ -1,5 +1,6 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/core/styles/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/elevation' as forge-elevation;
 
 //
 // Host
@@ -28,16 +29,35 @@ forge-app-bar {
 
 .drawer-toggle-button {
   position: fixed;
-  inset-inline-start: calc(var(--forge-app-layout-drawer-width) - 12px);
-  inset-block-start: calc(56px + 12px);
-  z-index: 999;
-  --forge-icon-button-filled-background-color: white;
-  --forge-icon-button-filled-icon-color: black;
+  @include forge-elevation.z-index(header);
+  inset-block-start: 128px;
+  // inset-block-end: calc(56px + 40px);
+
+  // inset-block-start: 33%;
+  // transform: translateY(-33%);
+  --forge-icon-button-background-color: white;
+  --forge-icon-button-outlined-icon-color: black;
+  --forge-icon-button-outlined-border-color: var(--forge-theme-outline);
 
   opacity: 0;
   visibility: hidden;
 
-  // transition: opacity var(--n-transition-slowly), visibility var(--n-transition-slowly), background-color var(--n-transition-quickly), color var(--n-transition-quickly);
+  // Animate position using the same transition as forge-drawer
+  transition:
+    inset-inline-start var(--forge-drawer-transition-duration, 0.2s) var(--forge-drawer-transition-easing, ease-in-out),
+    opacity var(--forge-drawer-transition-duration, 0.2s) var(--forge-drawer-transition-easing, ease-in-out),
+    visibility var(--forge-drawer-transition-duration, 0.2s) var(--forge-drawer-transition-easing, ease-in-out);
+}
+
+// Position the button based on drawer state
+:host(:state(drawer-open)) .drawer-toggle-button {
+  inset-inline-start: calc(var(--forge-app-layout-drawer-width) - 12px);
+}
+
+:host(:state(drawer-closed)) .drawer-toggle-button {
+  inset-inline-start: -48px; // Move off-screen (button width + some margin)
+  opacity: 0;
+  visibility: hidden;
 }
 
 forge-drawer {
@@ -50,9 +70,4 @@ forge-drawer {
 
 .left-sheet-dialog::part(surface) {
   display: block;
-}
-
-.drawer-container {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
 }

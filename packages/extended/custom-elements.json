@@ -190,6 +190,176 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/app-layout/app-layout.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AppLayoutComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-app-layout'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AppLayoutComponent",
+          "slots": [
+            {
+              "description": "The main content area",
+              "name": "default"
+            },
+            {
+              "description": "Places content in the header",
+              "name": "header"
+            },
+            {
+              "description": "Places content in the footer",
+              "name": "footer"
+            },
+            {
+              "description": "Places content to the left of all content",
+              "name": "left"
+            },
+            {
+              "description": "Places content to the right of all content",
+              "name": "right"
+            },
+            {
+              "description": "Places content in the header of the body",
+              "name": "body-header"
+            },
+            {
+              "description": "Places content in the footer of the body",
+              "name": "body-footer"
+            },
+            {
+              "description": "Places content to the left of the body content",
+              "name": "body-left"
+            },
+            {
+              "description": "Places content to the right of the body content",
+              "name": "body-right"
+            },
+            {
+              "description": "Responsive navigation content that renders in left slot (small screens) or body-left slot (large screens)",
+              "name": "navigation"
+            },
+            {
+              "description": "Places content in the app bar logo slot",
+              "name": "app-bar-logo"
+            },
+            {
+              "description": "Places content in the app bar start slot",
+              "name": "app-bar-start"
+            },
+            {
+              "description": "Places content in the app bar center slot",
+              "name": "app-bar-center"
+            },
+            {
+              "description": "Places content in the app bar end slot",
+              "name": "app-bar-end"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "appTitle",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The title text to display in the app bar",
+              "attribute": "app-title"
+            },
+            {
+              "kind": "field",
+              "name": "breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "768",
+              "description": "The screen width breakpoint in pixels for responsive behavior (default: 768)",
+              "attribute": "breakpoint"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "app-title",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The title text to display in the app bar",
+              "fieldName": "appTitle"
+            },
+            {
+              "name": "breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "default": "768",
+              "description": "The screen width breakpoint in pixels for responsive behavior (default: 768)",
+              "fieldName": "breakpoint"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-app-layout",
+          "customElement": true,
+          "states": [
+            {
+              "name": "small",
+              "description": "Screen width is below 768px, navigation appears in modal drawer"
+            },
+            {
+              "name": "large",
+              "description": "Screen width is 768px or above, navigation appears in body-left drawer"
+            },
+            {
+              "name": "drawer-open",
+              "description": "The navigation drawer is currently open"
+            },
+            {
+              "name": "drawer-closed",
+              "description": "The navigation drawer is currently closed"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLayoutComponentTagName",
+          "declaration": {
+            "name": "AppLayoutComponentTagName",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLayoutComponent",
+          "declaration": {
+            "name": "AppLayoutComponent",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLayoutComponent",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "declarations": [
         {
@@ -513,168 +683,6 @@
           "declaration": {
             "name": "BusyIndicatorComponent",
             "module": "src/lib/busy-indicator/busy-indicator.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/app-layout/app-layout.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "AppLayoutComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-app-layout'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AppLayoutComponent",
-          "slots": [
-            {
-              "description": "The main content area",
-              "name": "default"
-            },
-            {
-              "description": "Places content in the header",
-              "name": "header"
-            },
-            {
-              "description": "Places content in the footer",
-              "name": "footer"
-            },
-            {
-              "description": "Places content to the left of all content",
-              "name": "left"
-            },
-            {
-              "description": "Places content to the right of all content",
-              "name": "right"
-            },
-            {
-              "description": "Places content in the header of the body",
-              "name": "body-header"
-            },
-            {
-              "description": "Places content in the footer of the body",
-              "name": "body-footer"
-            },
-            {
-              "description": "Places content to the left of the body content",
-              "name": "body-left"
-            },
-            {
-              "description": "Places content to the right of the body content",
-              "name": "body-right"
-            },
-            {
-              "description": "Responsive navigation content that renders in left slot (small screens) or body-left slot (large screens)",
-              "name": "navigation"
-            },
-            {
-              "description": "Places content in the app bar logo slot",
-              "name": "app-bar-logo"
-            },
-            {
-              "description": "Places content in the app bar start slot",
-              "name": "app-bar-start"
-            },
-            {
-              "description": "Places content in the app bar center slot",
-              "name": "app-bar-center"
-            },
-            {
-              "description": "Places content in the app bar end slot",
-              "name": "app-bar-end"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "appTitle",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The title text to display in the app bar",
-              "attribute": "app-title"
-            },
-            {
-              "kind": "field",
-              "name": "breakpoint",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "768",
-              "description": "The screen width breakpoint in pixels for responsive behavior (default: 768)",
-              "attribute": "breakpoint"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "app-title",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The title text to display in the app bar",
-              "fieldName": "appTitle"
-            },
-            {
-              "name": "breakpoint",
-              "type": {
-                "text": "number"
-              },
-              "default": "768",
-              "description": "The screen width breakpoint in pixels for responsive behavior (default: 768)",
-              "fieldName": "breakpoint"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-app-layout",
-          "customElement": true,
-          "states": [
-            {
-              "name": "small",
-              "description": "Screen width is below 768px, navigation appears in modal drawer"
-            },
-            {
-              "name": "large",
-              "description": "Screen width is 768px or above, navigation appears in body-left drawer"
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AppLayoutComponentTagName",
-          "declaration": {
-            "name": "AppLayoutComponentTagName",
-            "module": "src/lib/app-layout/app-layout.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AppLayoutComponent",
-          "declaration": {
-            "name": "AppLayoutComponent",
-            "module": "src/lib/app-layout/app-layout.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "AppLayoutComponent",
-            "module": "src/lib/app-layout/app-layout.ts"
           }
         }
       ]
@@ -1726,6 +1734,10 @@
       "path": "src/lib/app-launcher/app-launcher.ts",
       "lineNumber": 66
     },
+    "AppLayoutComponent": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 52
+    },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 25
@@ -1741,10 +1753,6 @@
     "BusyIndicatorComponent": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 39
-    },
-    "AppLayoutComponent": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 50
     },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",

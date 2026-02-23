@@ -277,7 +277,8 @@ export class AppLayoutComponent extends LitElement {
                     aria-label="Close navigation drawer"
                     class="drawer-toggle-button"
                     density="small"
-                    variant="raised"
+                    variant="outlined"
+                    shape="squared"
                     @click=${this._toggleLeftDrawer}>
                     <forge-icon name="chevron_double_left"></forge-icon>
                   </forge-icon-button>
