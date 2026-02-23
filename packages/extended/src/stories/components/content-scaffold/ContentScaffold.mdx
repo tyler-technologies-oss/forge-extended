@@ -1,0 +1,46 @@
+import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
+import CustomArgTypes from '../../blocks/CustomArgTypes';
+import * as ContentScaffoldStories from './ContentScaffold.stories';
+
+<Meta of={ContentScaffoldStories} />
+
+<Title />
+
+The Content Scaffold provides a structured layout for organizing content into distinct header, body, and footer sections. It uses CSS Grid to create a flexible container where the header and footer automatically size to their content, while the body expands to fill all available space.
+
+<Canvas of={ContentScaffoldStories.Demo} />
+
+## Usage
+
+The Content Scaffold is ideal for creating consistent content layouts where you need a fixed header and/or footer with a scrollable body section. The component automatically handles the layout arrangement using CSS Grid, ensuring the body section takes up all remaining vertical space.
+
+## Structure
+
+The component provides three slots for organizing content:
+
+- **header** - Optional header section that auto-sizes to its content
+- **body** - Main content area that expands to fill available space (1fr)
+- **footer** - Optional footer section that auto-sizes to its content
+
+All three slots are optional, allowing you to use only the sections you need for your specific use case.
+
+## Common Use Cases
+
+The Content Scaffold is particularly useful for:
+
+- Detail panels with a title header and action footer
+- Card layouts with header toolbars and footer actions
+- Content areas that need a consistent three-section layout
+- Scrollable content regions with fixed headers and footers
+
+## Layout Behavior
+
+The component uses `display: grid` with `grid-template-rows: auto 1fr auto` to arrange the three sections:
+
+- Header and footer use `auto` sizing, taking only the space their content requires
+- Body uses `1fr`, expanding to fill all remaining vertical space
+- The container is set to `height: 100%`, inheriting height from its parent
+
+> **Note:** For the Content Scaffold to properly fill available space, ensure its parent container has a defined height.
+
+## API
