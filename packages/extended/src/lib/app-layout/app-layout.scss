@@ -64,6 +64,10 @@ forge-drawer {
   --forge-drawer-width: var(--forge-app-layout-drawer-width);
 }
 
+.close-drawer-button {
+  padding-inline-start: #{forge-spacing.variable(xxsmall)};
+}
+
 .left-sheet-dialog {
   --forge-dialog-width: var(--forge-app-layout-drawer-width);
 }
