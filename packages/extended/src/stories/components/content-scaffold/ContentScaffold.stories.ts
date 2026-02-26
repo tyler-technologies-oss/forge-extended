@@ -14,6 +14,11 @@ const meta = {
   component,
   decorators: [
     storyStyles(`
+
+      * {
+        box-sizing: border-box;
+      }
+
       forge-content-scaffold::part(header) {
         background: var(--forge-theme-primary-container-minimum);
         padding: 8px;
@@ -26,13 +31,13 @@ const meta = {
 
       .dash-container {
         background-color: var(--forge-theme-surface-container-lowest);
-        border: 3px dashed var(--forge-theme-primary-container-high);
+        border: 2px dashed var(--forge-theme-primary-container-high);
         padding: var(--forge-spacing-xxxsmall);
+        isolation: isolate;
       }
 
       .body {
         background: var(--forge-theme-primary-container-minimum);
-        padding: 8px;
         height: 400px;
       }
 
@@ -46,6 +51,7 @@ const meta = {
   render: () => {
     return html`
       <forge-content-scaffold>
+        <div class="dash-container" slot="before-header-start">before-header-start</div>
         <div class="dash-container" slot="header-start">header-start</div>
         <div class="dash-container" slot="header-end">header-end</div>
         <div class="body" slot="body">

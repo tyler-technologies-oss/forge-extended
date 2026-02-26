@@ -41,7 +41,10 @@ export class ContentCardComponent extends LitElement {
         <div class="content-card-body" slot="body">
           <slot name="body"></slot>
         </div>
-        <slot name="footer-actions" slot="footer-end"></slot>
+        <div class="footer-actions" slot="footer-end">
+          <slot name="footer-secondary-action"></slot>
+          <slot name="footer-primary-action"></slot>
+        </div>
       </forge-content-scaffold>
     </forge-card>`;
   }

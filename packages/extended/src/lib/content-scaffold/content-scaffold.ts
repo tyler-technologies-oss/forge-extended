@@ -1,5 +1,5 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement } from 'lit/decorators.js';
 import styles from './content-scaffold.scss?inline';
 import { defineToolbarComponent } from '@tylertech/forge';
 
@@ -21,27 +21,30 @@ export class ContentScaffoldComponent extends LitElement {
   }
   public static override styles = unsafeCSS(styles);
 
-  /**
-   * Controls whether to show a divider below the header
-   */
-  @property({ attribute: 'show-header-divider', type: Boolean })
-  public showHeaderDivider = true;
-
   public override render(): TemplateResult {
     return html`<div class="container">
-      <forge-toolbar ?no-border=${!this.showHeaderDivider}>
-        <slot name="before-header-start" slot="before-start"></slot>
-        <slot name="header-start" slot="start"></slot>
-        <slot name="header-end" slot="end"></slot>
-        <slot name="after-header-end" slot="after-end"></slot>
-      </forge-toolbar>
-      <slot name="body"></slot>
-      <forge-toolbar inverted>
-        <slot name="before-footer-start" slot="before-start"></slot>
-        <slot name="footer-start" slot="start"></slot>
-        <slot name="footer-end" slot="end"></slot>
-        <slot name="after-footer-end" slot="after-end"></slot>
-      </forge-toolbar>
+      <div class="header">
+        <div class="before-header-start">
+          <slot name="before-header-start"></slot>
+        </div>
+        <div class="header-start">
+          <slot name="header-start"></slot>
+        </div>
+        <div class="header-end">
+          <slot name="header-end"></slot>
+        </div>
+      </div>
+      <div class="body">
+        <slot name="body"></slot>
+      </div>
+      <div class="footer">
+        <div class="footer-start">
+          <slot name="footer-start"></slot>
+        </div>
+        <div class="footer-end">
+          <slot name="footer-end"></slot>
+        </div>
+      </div>
     </div>`;
   }
 }

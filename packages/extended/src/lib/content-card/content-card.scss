@@ -17,6 +17,16 @@
   padding: #{forge-spacing.variable(medium)};
 }
 
+.footer-actions {
+  display: flex;
+  align-items: center;
+  gap: #{forge-spacing.variable(medium)};
+}
+
 ::slotted([slot='title']) {
   @include forge-typography.style(heading3);
+}
+
+::slotted([slot='footer-secondary-action']) {
+  margin-inline-end: #{forge-spacing.variable(medium)};
 }

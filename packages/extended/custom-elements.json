@@ -710,7 +710,30 @@
           "kind": "class",
           "description": "",
           "name": "ContentCardComponent",
-          "members": [],
+          "members": [
+            {
+              "kind": "field",
+              "name": "headingLevel",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "privacy": "public",
+              "default": "2",
+              "description": "Controls the heading level for the title content",
+              "attribute": "heading-level"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "heading-level",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "default": "2",
+              "description": "Controls the heading level for the title content",
+              "fieldName": "headingLevel"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -747,113 +770,51 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "MultiSelectHeaderComponentTagName",
+          "name": "ContentScaffoldComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-multi-select-header'"
+          "default": "'forge-content-scaffold'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "MultiSelectHeaderComponent",
-          "slots": [
-            {
-              "description": "Text content for the select-all button",
-              "name": "select-all-button-text"
-            },
-            {
-              "description": "Action buttons (maps to the toolbar end slot)",
-              "name": "actions"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "attribute": "text"
-            },
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "true",
-              "description": "Hides the bottom border",
-              "attribute": "no-border"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Fired when the select-all button is clicked",
-              "name": "forge-multi-select-header-select-all"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "fieldName": "text"
-            },
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Hides the bottom border",
-              "fieldName": "noBorder"
-            }
-          ],
+          "name": "ContentScaffoldComponent",
+          "members": [],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-multi-select-header",
+          "tagName": "forge-content-scaffold",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "MultiSelectHeaderComponentTagName",
+          "name": "ContentScaffoldComponentTagName",
           "declaration": {
-            "name": "MultiSelectHeaderComponentTagName",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
+            "name": "ContentScaffoldComponentTagName",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         },
         {
           "kind": "js",
-          "name": "MultiSelectHeaderComponent",
+          "name": "ContentScaffoldComponent",
           "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         }
       ]
@@ -1028,6 +989,119 @@
           "declaration": {
             "name": "QuantityFieldComponent",
             "module": "src/lib/quantity-field/quantity-field.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "MultiSelectHeaderComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-multi-select-header'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MultiSelectHeaderComponent",
+          "slots": [
+            {
+              "description": "Text content for the select-all button",
+              "name": "select-all-button-text"
+            },
+            {
+              "description": "Action buttons (maps to the toolbar end slot)",
+              "name": "actions"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "attribute": "text"
+            },
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Hides the bottom border",
+              "attribute": "no-border"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the select-all button is clicked",
+              "name": "forge-multi-select-header-select-all"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "fieldName": "text"
+            },
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Hides the bottom border",
+              "fieldName": "noBorder"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-multi-select-header",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MultiSelectHeaderComponentTagName",
+          "declaration": {
+            "name": "MultiSelectHeaderComponentTagName",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "MultiSelectHeaderComponent",
+          "declaration": {
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         }
       ]
@@ -1269,6 +1343,12 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/types/types.ts",
+      "declarations": [],
+      "exports": []
     },
     {
       "kind": "javascript-module",
@@ -1612,7 +1692,7 @@
       ]
     }
   ],
-  "branchName": "main",
+  "branchName": "content-scaffold",
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",
@@ -1660,15 +1740,19 @@
     },
     "ContentCardComponent": {
       "path": "src/lib/content-card/content-card.ts",
-      "lineNumber": 16
+      "lineNumber": 19
     },
-    "MultiSelectHeaderComponent": {
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "lineNumber": 28
+    "ContentScaffoldComponent": {
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "lineNumber": 17
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
+    },
+    "MultiSelectHeaderComponent": {
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "lineNumber": 28
     },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
@@ -1693,6 +1777,10 @@
     "ThemeToggleComponent": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 41
+    },
+    "HeadingLevel": {
+      "path": "src/lib/types/types.ts",
+      "lineNumber": 1
     },
     "UserProfileComponent": {
       "path": "src/lib/user-profile/user-profile.ts",

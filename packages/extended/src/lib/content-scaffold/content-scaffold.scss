@@ -2,6 +2,7 @@
 
 :host {
   display: block;
+  --forge-content-scaffold-body-height: auto;
 }
 
 .container {
@@ -12,8 +13,42 @@
 }
 
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
   align-items: center;
-  justify-content: space-between;
-  padding: #{forge-spacing.variable(medium)};
+}
+
+.before-header-start {
+  grid-column: 1;
+  margin-inline-end: #{forge-spacing.variable(medium)};
+}
+
+.header-start {
+  grid-column: 2;
+}
+
+.header-end {
+  grid-column: 4;
+}
+
+.body {
+  padding-inline: #{forge-spacing.variable(medium)};
+  padding-block: #{forge-spacing.variable(xxxsmall)};
+  overflow-y: auto;
+  height: var(--forge-content-scaffold-body-height);
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  padding: #{forge-spacing.variable(small)};
+}
+
+.footer-start {
+  grid-column: 1;
+}
+
+.footer-end {
+  grid-column: 3;
 }
