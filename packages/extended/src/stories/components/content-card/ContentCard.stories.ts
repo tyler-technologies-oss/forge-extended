@@ -11,7 +11,11 @@ const meta = {
   render: args => {
     return html`
       <forge-content-card>
+        <!-- <div slot="before-title">Before header start</div> -->
+        <div slot="title">This is the title</div>
+        <div slot="header-actions">Header actions</div>
         <div slot="body">This is the content of the body slot</div>
+        <div slot="footer-actions">Footer actions</div>
       </forge-content-card>
     `;
   }

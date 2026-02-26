@@ -14,28 +14,45 @@ const meta = {
   component,
   decorators: [
     storyStyles(`
-      .dash-container {
-        background-color: var(--forge-theme-surface-container-lowest);
-        border: 3px dashed var(--forge-theme-outline);
-        padding: var(--forge-spacing-medium);
+      forge-content-scaffold::part(header) {
+        background: var(--forge-theme-primary-container-minimum);
+        padding: 8px;
       }
 
-      .header {
-        border-bottom: none;
+      forge-content-scaffold::part(footer) {
+        background: var(--forge-theme-primary-container-minimum);
+        padding: 8px;
+      }
+
+      .dash-container {
+        background-color: var(--forge-theme-surface-container-lowest);
+        border: 3px dashed var(--forge-theme-primary-container-high);
+        padding: var(--forge-spacing-xxxsmall);
       }
 
       .body {
+        background: var(--forge-theme-primary-container-minimum);
+        padding: 8px;
         height: 400px;
-        border-bottom: none;
+      }
+
+      .body-inner {
+        display: grid;
+        place-content: center;
+        height: 100%;
       }
     `)
   ],
   render: () => {
     return html`
       <forge-content-scaffold>
-        <div class="dash-container header" slot="header">Header slot</div>
-        <div class="dash-container body" slot="body">Body slot</div>
-        <div class="dash-container" slot="footer">Footer slot</div>
+        <div class="dash-container" slot="header-start">header-start</div>
+        <div class="dash-container" slot="header-end">header-end</div>
+        <div class="body" slot="body">
+          <div class="dash-container body-inner">body</div>
+        </div>
+        <div class="dash-container" slot="footer-start">footer-start</div>
+        <div class="dash-container" slot="footer-end">footer-end</div>
       </forge-content-scaffold>
     `;
   }

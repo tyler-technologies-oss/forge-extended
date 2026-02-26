@@ -1,13 +1,22 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/typography' as forge-typography;
 
 :host {
   display: block;
 }
 
-.content-card-container {
+.container {
   --forge-card-padding: 0;
+}
+
+.header {
+  height: 32px;
 }
 
 .content-card-body {
   padding: #{forge-spacing.variable(medium)};
+}
+
+::slotted([slot='title']) {
+  @include forge-typography.style(heading3);
 }

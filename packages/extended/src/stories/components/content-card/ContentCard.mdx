@@ -1,0 +1,94 @@
+import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
+import CustomArgTypes from '../../blocks/CustomArgTypes';
+import * as ContentCardStories from './ContentCard.stories';
+
+<Meta of={ContentCardStories} />
+
+<Title />
+
+The Content Card component provides a pre-structured card layout with designated slots for title, header actions, body content, and footer actions. Built on top of the Content Scaffold component, it standardizes the common card pattern used throughout applications for displaying organized, actionable content.
+
+This component helps maintain visual consistency across your application by providing a reusable card structure that eliminates the need to manually configure layouts for common use cases like detail panels, form containers, and data displays.
+
+<Canvas of={ContentCardStories.Demo} />
+
+## Usage
+
+The Content Card is ideal for creating consistent card layouts where you need a title header with optional actions, a scrollable body section, and footer actions. The component automatically handles the layout arrangement using the Content Scaffold, ensuring proper spacing and structure.
+
+## Structure
+
+The component provides several slots for organizing content:
+
+- **before-title** - Optional slot for content before the title in the header
+- **title** - Title/heading content for the card (automatically styled with heading3 typography)
+- **header-actions** - Optional actions or controls displayed in the header (right side)
+- **body** - Main content area that expands to fill available space
+- **footer-actions** - Optional footer actions displayed at the bottom (right side)
+
+## Common Use Cases
+
+The Content Card is particularly useful for:
+
+- Detail panels with title and action buttons
+- Form containers with a header and submit actions
+- Data displays with filtering controls in the header
+- Dashboard widgets with consistent structure
+- Modal-like content areas with titles and action buttons
+
+## Properties
+
+### heading-level
+
+Controls the semantic heading level for the title content. Defaults to `2` (h2).
+
+```html
+<forge-content-card heading-level="3">
+  <div slot="title">Section Title</div>
+  <div slot="body">Content goes here</div>
+</forge-content-card>
+```
+
+## Layout Behavior
+
+The Content Card uses the Content Scaffold component internally, which means:
+
+- Header and footer auto-size to their content
+- Body expands to fill all remaining vertical space
+- The container inherits height from its parent
+- Built-in padding is applied to the body section
+
+> **Note:** For the Content Card to properly fill available space, ensure its parent container has a defined height.
+
+## Examples
+
+### Basic Card with Title and Body
+
+```html
+<forge-content-card>
+  <div slot="title">User Profile</div>
+  <div slot="body">
+    <p>User information goes here...</p>
+  </div>
+</forge-content-card>
+```
+
+### Card with Header and Footer Actions
+
+```html
+<forge-content-card>
+  <div slot="title">Edit Settings</div>
+  <forge-icon-button slot="header-actions" aria-label="Close">
+    <forge-icon name="close"></forge-icon>
+  </forge-icon-button>
+  <div slot="body">
+    <p>Form content goes here...</p>
+  </div>
+  <div slot="footer-actions">
+    <forge-button variant="text">Cancel</forge-button>
+    <forge-button variant="filled">Save</forge-button>
+  </div>
+</forge-content-card>
+```
+
+## API

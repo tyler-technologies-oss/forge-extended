@@ -8,4 +8,12 @@
   display: grid;
   grid-template-rows: auto 1fr auto;
   height: 100%;
+  box-sizing: border-box;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: #{forge-spacing.variable(medium)};
 }
