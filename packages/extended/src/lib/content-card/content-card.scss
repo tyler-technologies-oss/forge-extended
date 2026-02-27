@@ -9,18 +9,13 @@
   --forge-card-padding: 0;
 }
 
-.header {
-  height: 32px;
-}
-
 .content-card-body {
-  padding: #{forge-spacing.variable(medium)};
+  // padding: #{forge-spacing.variable(medium)};
 }
 
 .footer-actions {
   display: flex;
   align-items: center;
-  gap: #{forge-spacing.variable(medium)};
 }
 
 ::slotted([slot='title']) {

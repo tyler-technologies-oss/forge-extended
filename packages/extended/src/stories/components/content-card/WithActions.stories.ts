@@ -8,7 +8,14 @@ import {
   defineStackComponent,
   IconRegistry
 } from '@tylertech/forge';
-import { tylIconClose, tylIconEdit, tylIconDelete, tylIconShare, tylIconMoreVert } from '@tylertech/tyler-icons';
+import {
+  tylIconClose,
+  tylIconEdit,
+  tylIconDelete,
+  tylIconShare,
+  tylIconMoreVert,
+  tylIconSave
+} from '@tylertech/tyler-icons';
 
 import '$lib/content-card';
 
@@ -16,7 +23,7 @@ defineButtonComponent();
 defineIconButtonComponent();
 defineIconComponent();
 defineStackComponent();
-IconRegistry.define([tylIconClose, tylIconEdit, tylIconDelete, tylIconShare, tylIconMoreVert]);
+IconRegistry.define([tylIconClose, tylIconSave, tylIconDelete, tylIconShare, tylIconMoreVert]);
 
 const component = 'forge-content-card';
 
@@ -26,7 +33,7 @@ const meta = {
   decorators: [
     storyStyles(`
       .actions-card-container {
-        max-width: 400px;
+        max-width: 600px;
       }
 
       p {
@@ -57,11 +64,11 @@ const meta = {
 
           <forge-button variant="text" slot="footer-secondary-action">
             <forge-icon slot="start" name="delete"></forge-icon>
-            Delete
+            Cancel
           </forge-button>
           <forge-button variant="filled" slot="footer-primary-action">
-            <forge-icon slot="start" name="edit"></forge-icon>
-            Edit Project
+            <forge-icon slot="start" name="save"></forge-icon>
+            Save
           </forge-button>
         </forge-content-card>
       </div>

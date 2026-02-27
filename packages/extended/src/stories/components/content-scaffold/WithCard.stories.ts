@@ -57,7 +57,7 @@ const meta = {
       <forge-card style="--forge-card-padding: 0;">
         <forge-content-scaffold>
           <!-- <div slot="before-header-start">before-start-slot</div> -->
-          <div slot="header-start">Project Details</div>
+          <h2 slot="header-start" class="forge-typography--heading4">Project Details</h2>
           <forge-icon-button aria-label="More actions" slot="header-end">
             <forge-icon name="more_vert"></forge-icon>
           </forge-icon-button>
@@ -83,4 +83,4 @@ export default meta;
 
 type Story = StoryObj;
 
-export const WithCard: Story = {};
+export const InACard: Story = {};

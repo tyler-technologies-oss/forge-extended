@@ -24,10 +24,8 @@ export class ContentScaffoldComponent extends LitElement {
   public override render(): TemplateResult {
     return html`<div class="container">
       <div class="header">
-        <div class="before-header-start">
+        <div class="header-start-container">
           <slot name="before-header-start"></slot>
-        </div>
-        <div class="header-start">
           <slot name="header-start"></slot>
         </div>
         <div class="header-end">

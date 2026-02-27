@@ -46,12 +46,16 @@ const meta = {
         place-content: center;
         height: 100%;
       }
+      
+      .no-border-right {
+        border-right: none;
+      }
     `)
   ],
   render: () => {
     return html`
       <forge-content-scaffold>
-        <div class="dash-container" slot="before-header-start">before-header-start</div>
+        <div class="dash-container no-border-right" slot="before-header-start">before-header-start</div>
         <div class="dash-container" slot="header-start">header-start</div>
         <div class="dash-container" slot="header-end">header-end</div>
         <div class="body" slot="body">
