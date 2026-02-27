@@ -21,30 +21,17 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   height: var(--forge-content-scaffold-header-height);
-  padding-inline: #{forge-spacing.variable(medium)};
   min-height: var(--forge-content-scaffold-header-min-height);
 }
 
 .header-start-container {
   display: flex;
   align-items: center;
-}
 
-.before-header-start {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  box-sizing: border-box;
-  grid-column: 1;
-  margin-inline-end: #{forge-spacing.variable(medium)};
-}
-
-.header-start {
-  display: flex;
-  align-items: center;
-  width: 100%;
-  box-sizing: border-box;
-  grid-column: 1;
+  // When before-header-start slot is empty, add margin to header-start content
+  &.no-before-content slot[name='header-start']::slotted(*) {
+    margin-inline-start: #{forge-spacing.variable(medium)};
+  }
 }
 
 .header-end {

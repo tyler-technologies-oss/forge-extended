@@ -53,11 +53,14 @@ export class ContentScaffoldComponent extends LitElement {
       this._slottedHeaderStartNodes.length > 0 ||
       this._slottedHeaderEndNodes.length > 0;
 
+    const hasBeforeHeaderStart = this._slottedBeforeHeaderStartNodes.length > 0;
+    const containerClass = hasBeforeHeaderStart ? 'header-start-container' : 'header-start-container no-before-content';
+
     return when(
       hasHeaderContent,
       () => html`
         <div class="header">
-          <div class="header-start-container">${this.#beforeHeaderStartSlot} ${this.#headerStartSlot}</div>
+          <div class="${containerClass}">${this.#beforeHeaderStartSlot} ${this.#headerStartSlot}</div>
           <div class="header-end">${this.#headerEndSlot}</div>
         </div>
       `,

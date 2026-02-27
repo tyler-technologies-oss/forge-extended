@@ -3,6 +3,11 @@
 
 :host {
   display: block;
+  --forge-content-card-body-height: auto;
+}
+
+forge-content-scaffold {
+  --forge-content-scaffold-body-height: var(--forge-content-card-body-height);
 }
 
 .container {
@@ -16,6 +21,10 @@
 
 ::slotted([slot='title']) {
   @include forge-typography.style(heading3);
+}
+
+::slotted([slot='body']) {
+  height: var(--forge-content-card-body-height);
 }
 
 ::slotted([slot='footer-secondary-action']) {
