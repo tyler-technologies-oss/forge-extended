@@ -2,16 +2,18 @@
 
 :host {
   display: block;
-  --forge-content-scaffold-header-height: 56px;
+  --forge-content-scaffold-header-height: auto;
+  --forge-content-scaffold-header-min-height: 48px;
   --forge-content-scaffold-body-height: auto;
-  --forge-content-scaffold-footer-height: 56px;
+  --forge-content-scaffold-footer-height: auto;
+  --forge-content-scaffold-footer-min-height: 48px;
 }
 
 .container {
+  box-sizing: border-box;
   display: grid;
   grid-template-rows: auto 1fr auto;
   height: 100%;
-  box-sizing: border-box;
 }
 
 .header {
@@ -20,6 +22,7 @@
   align-items: center;
   height: var(--forge-content-scaffold-header-height);
   padding-inline: #{forge-spacing.variable(medium)};
+  min-height: var(--forge-content-scaffold-header-min-height);
 }
 
 .header-start-container {
@@ -56,7 +59,11 @@
 .body {
   overflow-y: auto;
   height: var(--forge-content-scaffold-body-height);
-  padding-inline: #{forge-spacing.variable(medium)};
+}
+
+.body-inner {
+  padding: #{forge-spacing.variable(medium)};
+  padding-block-start: 0;
 }
 
 .footer {
@@ -65,7 +72,9 @@
   grid-auto-rows: auto;
   align-items: center;
   height: var(--forge-content-scaffold-footer-height);
+  min-height: var(--forge-content-scaffold-footer-min-height);
   padding-inline: #{forge-spacing.variable(medium)};
+  padding-block-end: #{forge-spacing.variable(xxsmall)};
 }
 
 .footer-start {

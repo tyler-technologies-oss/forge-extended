@@ -21,10 +21,11 @@ The Content Card is ideal for creating consistent card layouts where you need a 
 The component provides several slots for organizing content:
 
 - **before-title** - Optional slot for content before the title in the header
-- **title** - Title/heading content for the card (automatically styled with heading3 typography)
+- **title** - Title/heading content for the card
 - **header-actions** - Optional actions or controls displayed in the header (right side)
 - **body** - Main content area that expands to fill available space
-- **footer-actions** - Optional footer actions displayed at the bottom (right side)
+- **footer-secondary-action** - Optional secondary action displayed in the footer (typically a cancel or back button)
+- **footer-primary-action** - Optional primary action displayed in the footer (typically a submit or save button)
 
 ## Common Use Cases
 
@@ -84,10 +85,8 @@ The Content Card uses the Content Scaffold component internally, which means:
   <div slot="body">
     <p>Form content goes here...</p>
   </div>
-  <div slot="footer-actions">
-    <forge-button variant="text">Cancel</forge-button>
-    <forge-button variant="filled">Save</forge-button>
-  </div>
+  <forge-button slot="footer-secondary-action" variant="outlined">Cancel</forge-button>
+  <forge-button slot="footer-primary-action" variant="raised">Save</forge-button>
 </forge-content-card>
 ```
 

@@ -70,7 +70,12 @@ export class ContentScaffoldComponent extends LitElement {
 
     return when(
       hasBodyContent,
-      () => html` <div class="body">${this.#bodySlot}</div> `,
+      () => html`
+        <div class="body">
+          <div class="body-inner">${this.#bodySlot}</div>
+        </div>
+      `,
+
       () => html`${this.#bodySlot}`
     );
   }

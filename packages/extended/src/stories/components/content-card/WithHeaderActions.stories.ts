@@ -10,11 +10,12 @@ import {
 } from '@tylertech/forge';
 import {
   tylIconClose,
-  tylIconEdit,
   tylIconDelete,
   tylIconShare,
   tylIconMoreVert,
-  tylIconSave
+  tylIconSave,
+  tylIconDownload,
+  tylIconEdit
 } from '@tylertech/tyler-icons';
 
 import '$lib/content-card';
@@ -23,7 +24,15 @@ defineButtonComponent();
 defineIconButtonComponent();
 defineIconComponent();
 defineStackComponent();
-IconRegistry.define([tylIconClose, tylIconSave, tylIconDelete, tylIconShare, tylIconMoreVert]);
+IconRegistry.define([
+  tylIconClose,
+  tylIconSave,
+  tylIconDelete,
+  tylIconShare,
+  tylIconMoreVert,
+  tylIconDownload,
+  tylIconEdit
+]);
 
 const component = 'forge-content-card';
 
@@ -47,6 +56,12 @@ const meta = {
       <div class="actions-card-container">
         <forge-content-card heading-level="2">
           <div slot="title">Project Details</div>
+          <forge-icon-button aria-label="Edit" slot="header-actions">
+            <forge-icon name="edit"></forge-icon>
+          </forge-icon-button>
+          <forge-icon-button aria-label="Download" slot="header-actions">
+            <forge-icon name="download"></forge-icon>
+          </forge-icon-button>
           <forge-icon-button aria-label="More actions" slot="header-actions">
             <forge-icon name="more_vert"></forge-icon>
           </forge-icon-button>
@@ -80,4 +95,4 @@ export default meta;
 
 type Story = StoryObj;
 
-export const WithActions: Story = {};
+export const WithHeaderActions: Story = {};
