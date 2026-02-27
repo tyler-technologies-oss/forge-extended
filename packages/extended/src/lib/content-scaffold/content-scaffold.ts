@@ -1,5 +1,6 @@
-import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { LitElement, TemplateResult, html, unsafeCSS, nothing } from 'lit';
+import { customElement, queryAssignedNodes } from 'lit/decorators.js';
+import { when } from 'lit/directives/when.js';
 import styles from './content-scaffold.scss?inline';
 import { defineToolbarComponent } from '@tylertech/forge';
 
@@ -21,28 +22,86 @@ export class ContentScaffoldComponent extends LitElement {
   }
   public static override styles = unsafeCSS(styles);
 
+  @queryAssignedNodes({ slot: 'before-header-start', flatten: true })
+  private _slottedBeforeHeaderStartNodes!: Node[];
+
+  @queryAssignedNodes({ slot: 'header-start', flatten: true })
+  private _slottedHeaderStartNodes!: Node[];
+
+  @queryAssignedNodes({ slot: 'header-end', flatten: true })
+  private _slottedHeaderEndNodes!: Node[];
+
+  @queryAssignedNodes({ slot: 'body', flatten: true })
+  private _slottedBodyNodes!: Node[];
+
+  @queryAssignedNodes({ slot: 'footer-start', flatten: true })
+  private _slottedFooterStartNodes!: Node[];
+
+  @queryAssignedNodes({ slot: 'footer-end', flatten: true })
+  private _slottedFooterEndNodes!: Node[];
+
+  readonly #beforeHeaderStartSlot = html`<slot name="before-header-start"></slot>`;
+  readonly #headerStartSlot = html`<slot name="header-start"></slot>`;
+  readonly #headerEndSlot = html`<slot name="header-end"></slot>`;
+  readonly #bodySlot = html`<slot name="body"></slot>`;
+  readonly #footerStartSlot = html`<slot name="footer-start"></slot>`;
+  readonly #footerEndSlot = html`<slot name="footer-end"></slot>`;
+
+  get #header(): TemplateResult | typeof nothing {
+    const hasHeaderContent =
+      this._slottedBeforeHeaderStartNodes.length > 0 ||
+      this._slottedHeaderStartNodes.length > 0 ||
+      this._slottedHeaderEndNodes.length > 0;
+
+    return when(
+      hasHeaderContent,
+      () => html`
+        <div class="header">
+          <div class="header-start-container">${this.#beforeHeaderStartSlot} ${this.#headerStartSlot}</div>
+          <div class="header-end">${this.#headerEndSlot}</div>
+        </div>
+      `,
+      () => html`${this.#beforeHeaderStartSlot}${this.#headerStartSlot}${this.#headerEndSlot}`
+    );
+  }
+
+  get #body(): TemplateResult | typeof nothing {
+    const hasBodyContent = this._slottedBodyNodes.length > 0;
+
+    return when(
+      hasBodyContent,
+      () => html` <div class="body">${this.#bodySlot}</div> `,
+      () => html`${this.#bodySlot}`
+    );
+  }
+
+  get #footer(): TemplateResult | typeof nothing {
+    const hasFooterContent = this._slottedFooterStartNodes.length > 0 || this._slottedFooterEndNodes.length > 0;
+
+    return when(
+      hasFooterContent,
+      () => html`
+        <div class="footer">
+          <div class="footer-start">${this.#footerStartSlot}</div>
+          <div class="footer-end">${this.#footerEndSlot}</div>
+        </div>
+      `,
+      () => html`${this.#footerStartSlot}${this.#footerEndSlot}`
+    );
+  }
+
   public override render(): TemplateResult {
-    return html`<div class="container">
-      <div class="header">
-        <div class="header-start-container">
-          <slot name="before-header-start"></slot>
-          <slot name="header-start"></slot>
-        </div>
-        <div class="header-end">
-          <slot name="header-end"></slot>
-        </div>
-      </div>
-      <div class="body">
-        <slot name="body"></slot>
-      </div>
-      <div class="footer">
-        <div class="footer-start">
-          <slot name="footer-start"></slot>
-        </div>
-        <div class="footer-end">
-          <slot name="footer-end"></slot>
-        </div>
-      </div>
+    return html`<div class="container" @slotchange=${this.#handleSlotChange}>
+      ${this.#header} ${this.#body} ${this.#footer}
     </div>`;
+  }
+
+  #handleSlotChange(evt: Event): void {
+    const slotName = (evt.target as HTMLSlotElement).name;
+    if (
+      ['before-header-start', 'header-start', 'header-end', 'body', 'footer-start', 'footer-end'].includes(slotName)
+    ) {
+      this.requestUpdate();
+    }
   }
 }
