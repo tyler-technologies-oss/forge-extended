@@ -2,14 +2,8 @@ import React, { forwardRef } from "react";
 import "@tylertech/forge-extended/app-layout";
 
 export const ForgeAppLayout = forwardRef((props, forwardedRef) => {
-  const {
-    useMiniDrawer,
-    miniHover,
-    viewport,
-    appTitle,
-    breakpoint,
-    ...filteredProps
-  } = props;
+  const { useMiniDrawer, miniHover, appTitle, breakpoint, ...filteredProps } =
+    props;
 
   return React.createElement(
     "forge-app-layout",
@@ -24,7 +18,6 @@ export const ForgeAppLayout = forwardRef((props, forwardedRef) => {
       tabindex: props.tabIndex,
       "use-mini-drawer": props.useMiniDrawer ? "" : undefined,
       "mini-hover": props.miniHover ? "" : undefined,
-      viewport: props.viewport ? "" : undefined,
       style: { ...props.style },
     },
     props.children,

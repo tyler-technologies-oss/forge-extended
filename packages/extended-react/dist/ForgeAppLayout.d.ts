@@ -25,9 +25,6 @@ export interface ForgeAppLayoutProps
   /** Whether the mini drawer should expand on hover (default: false) */
   miniHover?: boolean;
 
-  /** Whether the scaffold should fill the viewport (default: true) */
-  viewport?: boolean;
-
   /** The title text to display in the app bar */
   appTitle?: ForgeAppLayoutElement["appTitle"];
 

@@ -73,17 +73,6 @@ export class AppLayoutComponent {
     return this.nativeElement.miniHover;
   }
 
-  /** Whether the scaffold should fill the viewport (default: true) */
-  @Input({ transform: booleanAttribute })
-  public set viewport(value: AppLayoutComponentCustomElement['viewport']) {
-    this.zone.runOutsideAngular(() => {
-      this.nativeElement.viewport = value;
-    });
-  }
-  public get viewport(): AppLayoutComponentCustomElement['viewport'] {
-    return this.nativeElement.viewport;
-  }
-
   constructor() {
     defineAppLayoutComponent();
     const changeDetectorRef = inject(ChangeDetectorRef);
