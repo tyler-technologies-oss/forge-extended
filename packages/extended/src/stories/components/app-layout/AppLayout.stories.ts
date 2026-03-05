@@ -1,14 +1,17 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
-import { defineAppBarComponent, defineScaffoldComponent, defineDrawerComponent } from '@tylertech/forge';
+import { defineAppBarComponent, defineScaffoldComponent, defineDrawerComponent, IconRegistry } from '@tylertech/forge';
 
 import '$lib/app-layout';
+import { tylIconHome, tylIconInbox, tylIconSettings, tylIconStar } from '@tylertech/tyler-icons';
 
 defineAppBarComponent();
 defineScaffoldComponent();
 defineDrawerComponent();
 
 const component = 'forge-app-layout';
+
+IconRegistry.define([tylIconHome, tylIconInbox, tylIconSettings, tylIconStar]);
 
 const meta = {
   title: 'Components/App Layout',
@@ -31,7 +34,7 @@ const meta = {
   },
   args: {
     appTitle: 'App Layout Demo',
-    breakpoint: 768
+    breakpoint: 960
   }
 } satisfies Meta;
 
@@ -57,29 +60,26 @@ export const Demo: Story = {
           gap: 16px;
           padding: var(--forge-spacing-medium);
         }
-
-        .content-container {
-          padding: var(--forge-spacing-medium);
-        }
-
-        .mock-nav-item {
-          height: 24px;
-          width: 100%;
-          background: var(--forge-theme-surface-container-low);
-          border-radius: 4px;
-        }
       </style>
       <forge-app-layout app-title=${args.appTitle} breakpoint=${args.breakpoint}>
-        <div class="navigation-container" slot="navigation">
-          <div class="mock-nav-item"></div>
-          <div class="mock-nav-item"></div>
-          <div class="mock-nav-item"></div>
-          <div class="mock-nav-item"></div>
-          <div class="mock-nav-item"></div>
-          <div class="mock-nav-item"></div>
-          <div class="mock-nav-item"></div>
-          <div class="mock-nav-item"></div>
-        </div>
+        <forge-list navlist slot="navigation">
+          <forge-list-item>
+            <forge-icon slot="start" name="home"></forge-icon>
+            <a href="javascript: void(0);">Home</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="inbox"></forge-icon>
+            <a href="javascript: void(0);">Inbox</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="star"></forge-icon>
+            <a href="javascript: void(0);">Starred</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="settings"></forge-icon>
+            <a href="javascript: void(0);">Settings</a>
+          </forge-list-item>
+        </forge-list>
 
         <div class="content-container">
           <p class="forge-typography--body1">Resize the frame to see the responsive behavior</p>

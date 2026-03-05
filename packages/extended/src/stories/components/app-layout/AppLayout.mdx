@@ -85,13 +85,15 @@ The app bar provides dedicated slots for different types of content:
 
 ## Responsive Behavior
 
-The component automatically adapts to screen size using a configurable breakpoint (default: 768px):
+The component automatically adapts to screen size using a configurable breakpoint (default: 960px):
 
 ### Large Screens (>= breakpoint)
 
 - Navigation appears as a persistent drawer in the body-left area
+- Can use standard drawer (default) or mini drawer mode via the `use-mini-drawer` attribute
 - Menu button is hidden since navigation is always visible
 - Full scaffold layout with dedicated navigation space
+- Toggle button available to collapse/expand the drawer
 
 ### Small Screens (< breakpoint)
 
@@ -99,20 +101,21 @@ The component automatically adapts to screen size using a configurable breakpoin
 - Menu button becomes visible in the app bar start slot
 - Drawer overlays content and can be toggled open/closed
 - Drawer automatically closes when screen size increases
+- Always uses a modal dialog drawer regardless of `use-mini-drawer` setting
 
 ### Custom Breakpoint
 
 You can customize the responsive breakpoint by setting the `breakpoint` property:
 
 ```html
-<!-- Use a 1024px breakpoint instead of the default 768px -->
+<!-- Use a 1024px breakpoint instead of the default 960px -->
 <forge-app-layout app-title="Desktop App" breakpoint="1024">
   <!-- Navigation will switch to drawer mode at 1024px -->
 </forge-app-layout>
 
-<!-- Use a smaller 600px breakpoint for mobile-first design -->
-<forge-app-layout app-title="Mobile App" breakpoint="600">
-  <!-- Navigation switches to drawer mode at 600px -->
+<!-- Use a smaller 768px breakpoint for tablets -->
+<forge-app-layout app-title="Tablet App" breakpoint="768">
+  <!-- Navigation switches to drawer mode at 768px -->
 </forge-app-layout>
 ```
 
@@ -144,6 +147,55 @@ The navigation slot accepts any content but works best with structured navigatio
   </forge-list>
 </forge-app-layout>
 ```
+
+## Mini Drawer Mode
+
+The app-layout component supports using a mini drawer for navigation on large screens. The mini drawer provides a collapsed view that shows only icons, allowing for more content space while maintaining quick access to navigation.
+
+### Using Mini Drawer
+
+Enable mini drawer mode by setting the `use-mini-drawer` attribute:
+
+```html
+<forge-app-layout app-title="My Application" use-mini-drawer>
+  <forge-list slot="navigation" navlist>
+    <forge-list-item>
+      <forge-icon slot="start" name="dashboard"></forge-icon>
+      <button type="button">Dashboard</button>
+    </forge-list-item>
+    <forge-list-item>
+      <forge-icon slot="start" name="people"></forge-icon>
+      <button type="button">Users</button>
+    </forge-list-item>
+  </forge-list>
+
+  <!-- Main content -->
+  <main>Your content here</main>
+</forge-app-layout>
+```
+
+When enabled, the navigation drawer on large screens will use the `<forge-mini-drawer>` component instead of the standard `<forge-drawer>`, providing a more compact navigation experience.
+
+### Hover Expansion
+
+Enable hover expansion to allow the mini drawer to temporarily expand when the user hovers over it:
+
+```html
+<forge-app-layout app-title="My Application" use-mini-drawer mini-hover>
+  <forge-list slot="navigation" navlist>
+    <!-- Navigation items -->
+  </forge-list>
+</forge-app-layout>
+```
+
+When `mini-hover` is enabled:
+
+- The drawer remains collapsed by default, showing only icons
+- Hovering over the drawer temporarily expands it to show full labels
+- The drawer collapses again when the mouse leaves the drawer area
+- This provides a space-efficient navigation option while maintaining easy access to full labels
+
+> **Note:** The mini drawer mode only affects the navigation drawer on large screens (above the breakpoint). On small screens, the navigation will always use a modal drawer regardless of the `use-mini-drawer` setting.
 
 ## Layout Slots
 

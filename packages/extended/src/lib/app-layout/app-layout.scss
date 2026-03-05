@@ -20,44 +20,9 @@ forge-app-bar {
   }
 }
 
-.drawer-container:hover {
-  .drawer-toggle-button {
-    opacity: 1;
-    visibility: visible;
-  }
-}
-
-.drawer-toggle-button {
-  position: fixed;
-  @include forge-elevation.z-index(header);
-  inset-block-start: 128px;
-  // inset-block-end: calc(56px + 40px);
-
-  // inset-block-start: 33%;
-  // transform: translateY(-33%);
-  --forge-icon-button-background-color: white;
-  --forge-icon-button-outlined-icon-color: black;
-  --forge-icon-button-outlined-border-color: var(--forge-theme-outline);
-
-  opacity: 0;
-  visibility: hidden;
-
-  // Animate position using the same transition as forge-drawer
-  transition:
-    inset-inline-start var(--forge-drawer-transition-duration, 0.2s) var(--forge-drawer-transition-easing, ease-in-out),
-    opacity var(--forge-drawer-transition-duration, 0.2s) var(--forge-drawer-transition-easing, ease-in-out),
-    visibility var(--forge-drawer-transition-duration, 0.2s) var(--forge-drawer-transition-easing, ease-in-out);
-}
-
-// Position the button based on drawer state
-:host(:state(drawer-open)) .drawer-toggle-button {
-  inset-inline-start: calc(var(--forge-app-layout-drawer-width) - 12px);
-}
-
-:host(:state(drawer-closed)) .drawer-toggle-button {
-  inset-inline-start: -48px; // Move off-screen (button width + some margin)
-  opacity: 0;
-  visibility: hidden;
+.drawer-container.mini-hover {
+  z-index: 3;
+  overflow: visible;
 }
 
 forge-drawer {

@@ -1,6 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import {
   defineAppBarComponent,
   defineCardComponent,
@@ -11,30 +10,15 @@ import {
   defineButtonComponent,
   defineIconButtonComponent,
   defineToolbarComponent,
-  defineMenuComponent,
   defineDividerComponent,
   IconRegistry,
   defineStackComponent,
-  IMenuOption,
-  ButtonVariant
+  defineMiniDrawerComponent,
+  defineTooltipComponent
 } from '@tylertech/forge';
-import {
-  tylIconDashboard,
-  tylIconHome,
-  tylIconSettings,
-  tylIconReport,
-  tylIconPeople,
-  tylIconArrowBack,
-  tylIconAdd,
-  tylIconEdit,
-  tylIconDelete,
-  tylIconMoreVert,
-  tylIconFilterList,
-  tylIconDownload
-} from '@tylertech/tyler-icons';
+import { tylIconArrowBack, tylIconMoreVert, tylIconFilterList, tylIconDownload } from '@tylertech/tyler-icons';
 
 import '$lib/app-layout';
-import '$lib/responsive-toolbar';
 
 defineAppBarComponent();
 defineCardComponent();
@@ -45,24 +29,12 @@ defineIconComponent();
 defineButtonComponent();
 defineIconButtonComponent();
 defineToolbarComponent();
-defineMenuComponent();
 defineDividerComponent();
 defineStackComponent();
+defineMiniDrawerComponent();
+defineTooltipComponent();
 
-IconRegistry.define([
-  tylIconDashboard,
-  tylIconHome,
-  tylIconSettings,
-  tylIconReport,
-  tylIconPeople,
-  tylIconArrowBack,
-  tylIconAdd,
-  tylIconEdit,
-  tylIconDelete,
-  tylIconMoreVert,
-  tylIconFilterList,
-  tylIconDownload
-]);
+IconRegistry.define([tylIconArrowBack, tylIconMoreVert, tylIconFilterList, tylIconDownload]);
 
 const component = 'forge-app-layout';
 
@@ -113,10 +85,6 @@ const meta = {
           --forge-toolbar-background: transparent;
         }
 
-        .section-header {
-          margin: var(--forge-spacing-xsmall);
-        }
-
         .body {
           height: 100%;
           background-color: var(--forge-theme-surface-dim);
@@ -158,67 +126,41 @@ const meta = {
           --forge-button-tonal-background: #e5e8f7;
         }
       </style>
-      <forge-app-layout app-title=${args.appTitle} breakpoint=${args.breakpoint}>
+      <forge-app-layout
+        app-title=${args.appTitle}
+        breakpoint=${args.breakpoint}
+        use-mini-drawer
+        ?mini-hover=${args.miniHover}>
         <forge-list navlist slot="navigation">
-          <!-- Dashboard Section -->
-          <div class="forge-typography--body1 section-header">Dashboard</div>
-          <forge-list-item class="section-item">
-            <forge-icon slot="start" name="visibility" external></forge-icon>
-            <button type="button">Overview</button>
+          <forge-list-item selected id="tooltip-host-dashboard">
+            <forge-tooltip anchor="tooltip-host-dashboard">Dashboard</forge-tooltip>
+            <forge-icon slot="leading" name="visibility" external></forge-icon>
+            <button type="button">Dashboard</button>
           </forge-list-item>
-          <forge-list-item class="section-item">
-            <forge-icon slot="start" name="analytics" external></forge-icon>
+          <forge-list-item id="tooltip-host-analytics">
+            <forge-tooltip anchor="tooltip-host-analytics">Analytics</forge-tooltip>
+            <forge-icon slot="leading" name="analytics" external></forge-icon>
             <button type="button">Analytics</button>
           </forge-list-item>
-          <forge-list-item class="section-item">
-            <forge-icon slot="start" name="assessment" external></forge-icon>
+          <forge-list-item id="tooltip-host-reports">
+            <forge-tooltip anchor="tooltip-host-reports">Reports</forge-tooltip>
+            <forge-icon slot="leading" name="assessment" external></forge-icon>
             <button type="button">Reports</button>
           </forge-list-item>
-
-          <forge-divider></forge-divider>
-
-          <!-- Users Section -->
-          <div class="forge-typography--body1 section-header">Users</div>
-          <forge-list-item class="section-item">
-            <forge-icon slot="start" name="people" external></forge-icon>
-            <button type="button">All Users</button>
+          <forge-list-item id="tooltip-host-users">
+            <forge-tooltip anchor="tooltip-host-users">Users</forge-tooltip>
+            <forge-icon slot="leading" name="people" external></forge-icon>
+            <button type="button">Users</button>
           </forge-list-item>
-          <forge-list-item class="section-item">
-            <forge-icon slot="start" name="admin_panel_settings" external></forge-icon>
-            <button type="button">Roles & Permissions</button>
-          </forge-list-item>
-          <forge-list-item class="section-item">
-            <forge-icon slot="start" name="groups" external></forge-icon>
-            <button type="button">User Groups</button>
-          </forge-list-item>
-
-          <forge-divider></forge-divider>
-
-          <!-- Documents Section -->
-          <div class="forge-typography--body1 section-header">Documents</div>
-          <forge-list-item class="section-item">
-            <forge-icon slot="start" name="history" external></forge-icon>
-            <button type="button">Recent Files</button>
-          </forge-list-item>
-          <forge-list-item class="section-item">
-            <forge-icon slot="start" name="share" external></forge-icon>
-            <button type="button">Shared</button>
-          </forge-list-item>
-          <forge-list-item class="section-item">
-            <forge-icon slot="start" name="archive" external></forge-icon>
-            <button type="button">Archive</button>
-          </forge-list-item>
-
-          <forge-divider></forge-divider>
-
-          <!-- Standalone Items -->
-          <forge-list-item>
-            <forge-icon slot="start" name="settings" external></forge-icon>
+          <forge-list-item id="tooltip-host-settings">
+            <forge-tooltip anchor="tooltip-host-settings">Settings</forge-tooltip>
+            <forge-icon slot="leading" name="settings" external></forge-icon>
             <button type="button">Settings</button>
           </forge-list-item>
-          <forge-list-item>
-            <forge-icon slot="start" name="help" external></forge-icon>
-            <button type="button">Help & Support</button>
+          <forge-list-item id="tooltip-host-help">
+            <forge-tooltip anchor="tooltip-host-help">Help</forge-tooltip>
+            <forge-icon slot="leading" name="help" external></forge-icon>
+            <button type="button">Help</button>
           </forge-list-item>
         </forge-list>
 
@@ -428,11 +370,19 @@ const meta = {
       table: {
         category: 'Properties'
       }
+    },
+    miniHover: {
+      control: 'boolean',
+      description: 'Whether the mini drawer should expand on hover',
+      table: {
+        category: 'Properties'
+      }
     }
   },
   args: {
-    appTitle: 'App Layout Demo',
-    breakpoint: 960
+    appTitle: 'App Layout Mini Drawer',
+    breakpoint: 768,
+    miniHover: false
   }
 } satisfies Meta;
 
@@ -440,4 +390,4 @@ export default meta;
 
 type Story = StoryObj;
 
-export const MockedApplication: Story = {};
+export const MiniDrawer: Story = {};
