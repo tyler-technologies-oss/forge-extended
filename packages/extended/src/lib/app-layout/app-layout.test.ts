@@ -44,7 +44,6 @@ describe('AppLayout', () => {
     expect(harness.el.breakpoint).to.equal(960);
     expect(harness.el.useMiniDrawer).to.be.false;
     expect(harness.el.miniHover).to.be.false;
-    expect(harness.el.viewport).to.be.true;
   });
 
   it('should initialize drawer as closed in constructor', async () => {
@@ -90,21 +89,6 @@ describe('AppLayout', () => {
     const harness = await createFixture({ useMiniDrawer: true });
 
     expect(harness.el.useMiniDrawer).to.be.true;
-  });
-
-  it('should set viewport', async () => {
-    const harness = await createFixture({ viewport: true });
-
-    expect(harness.el.viewport).to.be.true;
-  });
-
-  it('should set use viewport via attribute', async () => {
-    const harness = await createFixture();
-
-    harness.el.setAttribute('use-viewport', '');
-    await harness.el.updateComplete;
-
-    expect(harness.el.viewport).to.be.true;
   });
 
   it('should set use mini drawer via attribute', async () => {
@@ -298,7 +282,6 @@ interface AppLayoutFixtureConfig {
   breakpoint?: number;
   useMiniDrawer?: boolean;
   miniHover?: boolean;
-  viewport?: boolean;
   hasNavigation?: boolean;
   hasBodyContent?: boolean;
   hasLogo?: boolean;
@@ -312,7 +295,6 @@ async function createFixture({
   breakpoint = 960,
   useMiniDrawer = false,
   miniHover = false,
-  viewport = true,
   hasNavigation = false,
   hasBodyContent = false,
   hasLogo = false,
@@ -325,8 +307,7 @@ async function createFixture({
       app-title=${appTitle}
       breakpoint=${breakpoint}
       ?use-mini-drawer=${useMiniDrawer}
-      ?mini-hover=${miniHover}
-      ?viewport=${viewport}>
+      ?mini-hover=${miniHover}>
       ${hasNavigation ? html`<nav slot="navigation">Navigation Content</nav>` : ''}
       ${hasBodyContent ? html`<div slot="body">Body Content</div>` : ''}
       ${hasLogo ? html`<div slot="app-bar-logo">Logo</div>` : ''}

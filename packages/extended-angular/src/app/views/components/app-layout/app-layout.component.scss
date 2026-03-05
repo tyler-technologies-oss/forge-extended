@@ -1,0 +1,16 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+
+.demo-section {
+  display: flex;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(medium)};
+}
+
+.nav-menu {
+  display: flex;
+  flex-direction: column;
+}
+
+.content {
+  padding: #{forge-spacing.variable(medium)};
+}

@@ -1,0 +1,40 @@
+<app-demo-card headerText="App Layout">
+  <div class="demo-section">
+    <forge-app-layout
+      [appTitle]="appTitle"
+      [breakpoint]="breakpoint"
+      [useMiniDrawer]="useMiniDrawer"
+      [miniHover]="miniHover"
+      [viewport]="viewport">
+      <nav slot="navigation" class="nav-menu">
+        <forge-list>
+          <forge-list-item>
+            <forge-icon slot="start" name="home"></forge-icon>
+            <span>Home</span>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="dashboard"></forge-icon>
+            <span>Dashboard</span>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="person"></forge-icon>
+            <span>Profile</span>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="settings"></forge-icon>
+            <span>Settings</span>
+          </forge-list-item>
+        </forge-list>
+      </nav>
+
+      <forge-icon-button aria-label="Notifications" slot="app-bar-end">
+        <forge-icon name="notifications"></forge-icon>
+      </forge-icon-button>
+
+      <div slot="body" class="content">
+        <h2>Main Content Area</h2>
+        <p>This is the main content area of the application.</p>
+      </div>
+    </forge-app-layout>
+  </div>
+</app-demo-card>

@@ -30,7 +30,6 @@ export const AppLayoutComponentTagName: keyof HTMLElementTagNameMap = 'forge-app
  * @property {number} breakpoint - The screen width breakpoint in pixels for responsive behavior (default: 960)
  * @property {boolean} useMiniDrawer - Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: true)
  * @property {boolean} miniHover - Whether the mini drawer should expand on hover (default: false)
- * @property {boolean} viewport - Whether the scaffold should fill the viewport (default: true)
  *
  * @slot default - The main content area
  * @slot header - Places content in the header
@@ -82,9 +81,6 @@ export class AppLayoutComponent extends LitElement {
 
   @property({ type: Boolean, attribute: 'mini-hover' })
   public miniHover = false;
-
-  @property({ type: Boolean, attribute: 'viewport' })
-  public viewport = true;
 
   @state()
   private _leftDrawerOpen = false;
@@ -220,7 +216,7 @@ export class AppLayoutComponent extends LitElement {
     const navigationSlot = html`<slot name="navigation" @slotchange=${this._handleSlotChange}></slot>`;
 
     return html`
-      <forge-scaffold ?viewport=${this.viewport}>
+      <forge-scaffold>
         <forge-app-bar slot="header" title-text=${this.appTitle} theme-mode="scoped">
           <slot name="app-bar-logo" slot="logo">
             <forge-icon name="tyler_talking_t_logo" external></forge-icon>

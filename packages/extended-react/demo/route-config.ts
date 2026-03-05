@@ -1,5 +1,6 @@
 import { RouteProps } from 'react-router';
 import { Home } from './core/home/Home';
+import { AppLayoutDemo } from './demos/app-layout/AppLayoutDemo';
 import { BusyIndicatorDemo } from './demos/busy-indicator/BusyIndicatorDemo';
 import { MultiSelectHeaderDemo } from './demos/multi-select-header/MultiSelectHeaderDemo';
 import { QuantityFieldDemo } from './demos/quantity-field/QuantityFieldDemo';
@@ -22,6 +23,7 @@ const routes: IAppRoute[] = [
     icon: 'settings_input_component',
     routes: [
       { path: '/app-launcher', component: AppLauncherDemo, text: 'App Launcher' },
+      { path: '/app-layout', component: AppLayoutDemo, text: 'App Layout' },
       { path: '/busy-indicator', component: BusyIndicatorDemo, text: 'Busy Indicator' },
       { path: '/multi-select-header', component: MultiSelectHeaderDemo, text: 'Multi Select Header' },
       { path: '/quantity-field', component: QuantityFieldDemo, text: 'Quantity Field' },
