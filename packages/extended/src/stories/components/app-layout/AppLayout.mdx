@@ -197,6 +197,33 @@ When `mini-hover` is enabled:
 
 > **Note:** The mini drawer mode only affects the navigation drawer on large screens (above the breakpoint). On small screens, the navigation will always use a modal drawer regardless of the `use-mini-drawer` setting.
 
+## Viewport Mode
+
+By default, the app-layout component is configured to fill the entire viewport using the `viewport` attribute on the underlying `<forge-scaffold>` component. This ensures the layout stretches to fill the full browser window height.
+
+### Disabling Viewport Mode
+
+In some cases, you may want the layout to behave as a normal block-level element rather than filling the viewport. You can disable viewport mode by setting `viewport="false"`:
+
+```html
+<forge-app-layout app-title="My Application" viewport="false">
+  <!-- Navigation -->
+  <nav slot="navigation">...</nav>
+
+  <!-- Main content -->
+  <main>Your content here</main>
+</forge-app-layout>
+```
+
+When `viewport` is set to `false`:
+
+- The layout will not stretch to fill the viewport height
+- The layout will grow based on its content
+- Useful when embedding the app-layout within another layout structure
+- Provides more flexibility for non-full-page applications
+
+> **Note:** In most Tyler Cloud applications, the default `viewport="true"` behavior is recommended for a consistent full-page application experience.
+
 ## Layout Slots
 
 Beyond the app bar and navigation, the component provides additional layout slots for content placement:
