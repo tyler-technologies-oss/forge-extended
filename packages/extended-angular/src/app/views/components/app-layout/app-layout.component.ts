@@ -21,5 +21,4 @@ export class AppLayoutDemoComponent {
   public breakpoint = 960;
   public useMiniDrawer = false;
   public miniHover = false;
-  public viewport = false;
 }
