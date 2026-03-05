@@ -152,8 +152,7 @@ export class AppLayoutComponent extends LitElement {
     // Set drawer defaults based on breakpoint
     if (this._isLargeScreen) {
       // Large screens: navigation drawer always open if content is present
-      // Use hasUpdated to check if we're in initial setup or after first render
-      this._leftDrawerOpen = this.hasUpdated ? this._hasNavigationContent : false;
+      this._leftDrawerOpen = true;
     } else {
       // Small screens: modal drawer closed by default
       this._leftDrawerOpen = false;
