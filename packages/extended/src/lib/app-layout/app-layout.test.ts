@@ -2,7 +2,14 @@ import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
 import { AppLayoutComponent } from './app-layout';
 import sinon from 'sinon';
-import type { IDialogComponent, IDrawerComponent, IMiniDrawerComponent } from '@tylertech/forge';
+import type {
+  IAppBarComponent,
+  IDialogComponent,
+  IDrawerComponent,
+  IMenuComponent,
+  IMiniDrawerComponent,
+  IScaffoldComponent
+} from '@tylertech/forge';
 
 import './app-layout';
 
@@ -37,6 +44,7 @@ describe('AppLayout', () => {
     expect(harness.el.breakpoint).to.equal(960);
     expect(harness.el.useMiniDrawer).to.be.false;
     expect(harness.el.miniHover).to.be.false;
+    expect(harness.el.viewport).to.be.true;
   });
 
   it('should initialize drawer as closed in constructor', async () => {
@@ -82,6 +90,21 @@ describe('AppLayout', () => {
     const harness = await createFixture({ useMiniDrawer: true });
 
     expect(harness.el.useMiniDrawer).to.be.true;
+  });
+
+  it('should set viewport', async () => {
+    const harness = await createFixture({ viewport: true });
+
+    expect(harness.el.viewport).to.be.true;
+  });
+
+  it('should set use viewport via attribute', async () => {
+    const harness = await createFixture();
+
+    harness.el.setAttribute('use-viewport', '');
+    await harness.el.updateComplete;
+
+    expect(harness.el.viewport).to.be.true;
   });
 
   it('should set use mini drawer via attribute', async () => {
@@ -221,12 +244,12 @@ describe('AppLayout', () => {
 class AppLayoutHarness {
   constructor(public el: AppLayoutComponent) {}
 
-  public get scaffoldElement(): HTMLElement | null {
-    return this.el.shadowRoot?.querySelector('forge-scaffold') as HTMLElement | null;
+  public get scaffoldElement(): IScaffoldComponent | null {
+    return this.el.shadowRoot?.querySelector('forge-scaffold') as IScaffoldComponent | null;
   }
 
-  public get appBarElement(): (HTMLElement & { titleText: string }) | null {
-    return this.el.shadowRoot?.querySelector('forge-app-bar') as (HTMLElement & { titleText: string }) | null;
+  public get appBarElement(): (IAppBarComponent & { titleText: string }) | null {
+    return this.el.shadowRoot?.querySelector('forge-app-bar') as (IAppBarComponent & { titleText: string }) | null;
   }
 
   public get dialogElement(): IDialogComponent | null {
@@ -241,8 +264,8 @@ class AppLayoutHarness {
     return this.el.shadowRoot?.querySelector('forge-mini-drawer') as IMiniDrawerComponent | null;
   }
 
-  public get menuButton(): HTMLElement | null {
-    return this.el.shadowRoot?.querySelector('forge-app-bar-menu-button') as HTMLElement | null;
+  public get menuButton(): IMenuComponent | null {
+    return this.el.shadowRoot?.querySelector('forge-app-bar-menu-button') as IMenuComponent | null;
   }
 
   public get navigationSlot(): HTMLSlotElement {
@@ -275,6 +298,7 @@ interface AppLayoutFixtureConfig {
   breakpoint?: number;
   useMiniDrawer?: boolean;
   miniHover?: boolean;
+  viewport?: boolean;
   hasNavigation?: boolean;
   hasBodyContent?: boolean;
   hasLogo?: boolean;
@@ -288,6 +312,7 @@ async function createFixture({
   breakpoint = 960,
   useMiniDrawer = false,
   miniHover = false,
+  viewport = true,
   hasNavigation = false,
   hasBodyContent = false,
   hasLogo = false,
@@ -300,7 +325,8 @@ async function createFixture({
       app-title=${appTitle}
       breakpoint=${breakpoint}
       ?use-mini-drawer=${useMiniDrawer}
-      ?mini-hover=${miniHover}>
+      ?mini-hover=${miniHover}
+      ?viewport=${viewport}>
       ${hasNavigation ? html`<nav slot="navigation">Navigation Content</nav>` : ''}
       ${hasBodyContent ? html`<div slot="body">Body Content</div>` : ''}
       ${hasLogo ? html`<div slot="app-bar-logo">Logo</div>` : ''}

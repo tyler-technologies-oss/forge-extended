@@ -4,6 +4,7 @@ import { defineAppBarComponent, defineScaffoldComponent, defineDrawerComponent, 
 
 import '$lib/app-layout';
 import { tylIconHome, tylIconInbox, tylIconSettings, tylIconStar } from '@tylertech/tyler-icons';
+import { storyStyles } from 'src/stories/decorators';
 
 defineAppBarComponent();
 defineScaffoldComponent();
@@ -45,23 +46,7 @@ type Story = StoryObj;
 export const Demo: Story = {
   render: args => {
     return html`
-      <style>
-        * {
-          box-sizing: border-box !important;
-        }
-        body {
-          margin: 0 !important;
-          padding: 0 !important;
-        }
-
-        .navigation-container {
-          display: flex;
-          flex-direction: column;
-          gap: 16px;
-          padding: var(--forge-spacing-medium);
-        }
-      </style>
-      <forge-app-layout app-title=${args.appTitle} breakpoint=${args.breakpoint}>
+      <forge-app-layout app-title=${args.appTitle} breakpoint=${args.breakpoint} style="height: min-content;">
         <forge-list navlist slot="navigation">
           <forge-list-item>
             <forge-icon slot="start" name="home"></forge-icon>
