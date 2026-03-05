@@ -46,7 +46,7 @@ type Story = StoryObj;
 export const Demo: Story = {
   render: args => {
     return html`
-      <forge-app-layout app-title=${args.appTitle} breakpoint=${args.breakpoint} style="height: min-content;">
+      <forge-app-layout app-title=${args.appTitle} breakpoint=${args.breakpoint}>
         <forge-list navlist slot="navigation">
           <forge-list-item>
             <forge-icon slot="start" name="home"></forge-icon>
