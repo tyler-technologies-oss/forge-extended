@@ -28,7 +28,7 @@ export const AppLayoutComponentTagName: keyof HTMLElementTagNameMap = 'forge-app
  *
  * @property {string} appTitle - The title text to display in the app bar
  * @property {number} breakpoint - The screen width breakpoint in pixels for responsive behavior (default: 960)
- * @property {boolean} useMiniDrawer - Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: true)
+ * @property {boolean} useMiniDrawer - Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)
  * @property {boolean} miniHover - Whether the mini drawer should expand on hover (default: false)
  *
  * @slot default - The main content area
