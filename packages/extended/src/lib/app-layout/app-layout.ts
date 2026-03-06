@@ -46,6 +46,8 @@ export const AppLayoutComponentTagName: keyof HTMLElementTagNameMap = 'forge-app
  * @slot app-bar-center - Places content in the app bar center slot
  * @slot app-bar-end - Places content in the app bar end slot
  *
+ * @cssproperty --forge-app-layout-drawer-width - Controls the width of the navigation drawer (default: 320px)
+ *
  * @state small - Screen width is below 960px, navigation appears in modal drawer
  * @state large - Screen width is 960px or above, navigation appears in body-left drawer
  * @state drawer-open - The navigation drawer is currently open
