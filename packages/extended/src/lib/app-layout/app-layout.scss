@@ -7,7 +7,7 @@
 //
 
 :host {
-  --forge-app-layout-drawer-width: 320px;
+  --_forge-app-layout-drawer-width: 320px;
   display: block;
   height: 100%;
 }
@@ -26,7 +26,7 @@ forge-app-bar {
 }
 
 forge-drawer {
-  --forge-drawer-width: var(--forge-app-layout-drawer-width);
+  --forge-drawer-width: var(--_forge-app-layout-drawer-width, --forge-app-layout-drawer-width);
 }
 
 .close-drawer-button {

@@ -1,6 +1,5 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import {
   defineAppBarComponent,
   defineCardComponent,
@@ -14,9 +13,7 @@ import {
   defineMenuComponent,
   defineDividerComponent,
   IconRegistry,
-  defineStackComponent,
-  IMenuOption,
-  ButtonVariant
+  defineStackComponent
 } from '@tylertech/forge';
 import {
   tylIconDashboard,
@@ -104,9 +101,17 @@ const meta = {
           }
         }
 
-        body {
+        body,
+        #storybook-root,
+        #root-inner {
           margin: 0 !important;
           padding: 0 !important;
+          overflow: hidden;
+          height: 100%;
+        }
+
+        body {
+          height: 100dvh;
         }
 
         .secondary-header {
@@ -117,8 +122,7 @@ const meta = {
           margin: var(--forge-spacing-xsmall);
         }
 
-        .body {
-          height: 100%;
+        [slot='body'] {
           background-color: var(--forge-theme-surface-dim);
           padding-inline: var(--forge-spacing-medium);
         }
@@ -222,7 +226,7 @@ const meta = {
           </forge-list-item>
         </forge-list>
 
-        <main slot="body" class="body">
+        <main slot="body">
           <forge-toolbar class="secondary-header" no-border>
             <!-- Back button - always visible -->
             <forge-stack inline alignment="center" gap="32" slot="before-start">
@@ -336,7 +340,6 @@ const meta = {
                     shape="default"
                     density="default"
                     value="1"
-                    placeholder
                     support-text-inset
                     select-all-label="Select all">
                     <forge-option value="1">Interview</forge-option>
