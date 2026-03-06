@@ -5,3 +5,32 @@
 .forge-storybook-dark {
   @include theme-dark.theme-properties;
 }
+
+// Component specific story styles
+
+// forge-content-scaffold
+
+forge-content-scaffold[id='storybook-demo'] {
+  [slot] {
+    background-color: var(--forge-theme-surface-container-lowest);
+    border: 4px dashed var(--forge-theme-tertiary-container-high);
+    padding-block: var(--forge-spacing-xxxsmall);
+    padding-inline: var(--forge-spacing-small);
+    isolation: isolate;
+  }
+
+  .body {
+    background: var(--forge-theme-primary-container-minimum);
+    height: 400px;
+  }
+
+  .body-inner {
+    display: grid;
+    place-content: center;
+    height: 100%;
+  }
+
+  [slot='before-header-start'] {
+    border-right: none;
+  }
+}
