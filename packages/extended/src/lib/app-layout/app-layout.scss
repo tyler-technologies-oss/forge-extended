@@ -8,6 +8,7 @@
 
 :host {
   --_forge-app-layout-drawer-width: var(--forge-app-layout-drawer-width, 320px);
+  --_forge-app-layout-dialog-width: var(--forge-app-layout-dialog-width, 320px);
   display: block;
   height: 100%;
 }
@@ -34,7 +35,7 @@ forge-drawer {
 }
 
 .left-sheet-dialog {
-  --forge-dialog-width: var(--forge-app-layout-drawer-width);
+  --forge-dialog-width: var(--_forge-app-layout-dialog-width);
 }
 
 .left-sheet-dialog::part(surface) {
