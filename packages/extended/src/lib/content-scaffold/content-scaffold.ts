@@ -14,6 +14,22 @@ export const ContentScaffoldComponentTagName: keyof HTMLElementTagNameMap = 'for
 
 /**
  * @tag forge-content-scaffold
+ *
+ * @slot before-header-start - Content displayed before the header start slot. Conditionally rendered when header content is present.
+ * @slot header-start - Content displayed at the start of the header section. Conditionally rendered when header content is present.
+ * @slot header-end - Content displayed at the end of the header section. Conditionally rendered when header content is present.
+ * @slot body - The main body content that expands to fill available space.
+ * @slot footer-start - Content displayed at the start of the footer section. Conditionally rendered when footer content is present.
+ * @slot footer-end - Content displayed at the end of the footer section. Conditionally rendered when footer content is present.
+ *
+ * @cssprop --forge-content-scaffold-header-height - Controls the height of the header section. Defaults to `auto`.
+ * @cssprop --forge-content-scaffold-header-background - Controls the background color of the header section. Defaults to `transparent`.
+ * @cssprop --forge-content-scaffold-header-min-height - Controls the minimum height of the header section. Defaults to `48px`.
+ * @cssprop --forge-content-scaffold-body-height - Controls the height of the body section. Defaults to `auto`.
+ * @cssprop --forge-content-scaffold-body-padding - Controls the padding applied to the body section. Defaults to Forge's medium spacing token.
+ * @cssprop --forge-content-scaffold-footer-height - Controls the height of the footer section. Defaults to `auto`.
+ * @cssprop --forge-content-scaffold-footer-background - Controls the background color of the footer section. Defaults to `transparent`.
+ * @cssprop --forge-content-scaffold-footer-min-height - Controls the minimum height of the footer section. Defaults to `48px`.
  */
 @customElement(ContentScaffoldComponentTagName)
 export class ContentScaffoldComponent extends LitElement {

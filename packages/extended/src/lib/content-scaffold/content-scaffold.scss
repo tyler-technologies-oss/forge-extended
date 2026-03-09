@@ -6,13 +6,14 @@
 :host {
   display: block;
   height: 100%;
-  --forge-content-scaffold-header-height: auto;
-  --forge-content-scaffold-header-min-height: 48px;
-  --forge-content-scaffold-body-height: auto;
-  --forge-content-scaffold-footer-height: auto;
-  --forge-content-scaffold-footer-min-height: 48px;
-
+  --_forge-content-scaffold-header-height: var(--forge-content-scaffold-header-height, auto);
+  --_forge-content-scaffold-header-background: var(--forge-content-scaffold-header-background, transparent);
+  --_forge-content-scaffold-header-min-height: var(--forge-content-scaffold-header-min-height, 48px);
+  --_forge-content-scaffold-body-height: var(--forge-content-scaffold-body-height, auto);
   --_forge-content-scaffold-body-padding: var(--forge-content-scaffold-body-padding, #{forge-spacing.variable(medium)});
+  --_forge-content-scaffold-footer-height: var(--forge-content-scaffold-footer-height, auto);
+  --_forge-content-scaffold-footer-background: var(--forge-content-scaffold-footer-background, transparent);
+  --_forge-content-scaffold-footer-min-height: var(--forge-content-scaffold-footer-min-height, 48px);
 }
 
 .container {
@@ -24,9 +25,9 @@
 
 .header {
   @include mixins.toolbar-layout;
-  background-color: #{forge-theme.variable(surface)};
-  height: var(--forge-content-scaffold-header-height);
-  min-height: var(--forge-content-scaffold-header-min-height);
+  background-color: var(--_forge-content-scaffold-header-background);
+  height: var(--_forge-content-scaffold-header-height);
+  min-height: var(--_forge-content-scaffold-header-min-height);
   border-start-start-radius: 12px;
   border-start-end-radius: 12px;
   border-bottom: 1px solid var(--forge-theme-outline);
@@ -53,7 +54,7 @@
 
 .body {
   overflow-y: auto;
-  height: var(--forge-content-scaffold-body-height);
+  height: var(--_forge-content-scaffold-body-height);
 }
 
 .body-inner {
@@ -63,10 +64,10 @@
 
 .footer {
   @include mixins.toolbar-layout;
-  background-color: #{forge-theme.variable(surface)};
+  background-color: var(--_forge-content-scaffold-footer-background);
 
-  height: var(--forge-content-scaffold-footer-height);
-  min-height: var(--forge-content-scaffold-footer-min-height);
+  height: var(--_forge-content-scaffold-footer-height);
+  min-height: var(--_forge-content-scaffold-footer-min-height);
   padding-inline: #{forge-spacing.variable(medium)};
   padding-block-end: #{forge-spacing.variable(xxsmall)};
 

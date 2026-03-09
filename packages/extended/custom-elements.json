@@ -820,51 +820,113 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "ContentScaffoldComponentTagName",
+          "name": "MultiSelectHeaderComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-content-scaffold'"
+          "default": "'forge-multi-select-header'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "ContentScaffoldComponent",
-          "members": [],
+          "name": "MultiSelectHeaderComponent",
+          "slots": [
+            {
+              "description": "Text content for the select-all button",
+              "name": "select-all-button-text"
+            },
+            {
+              "description": "Action buttons (maps to the toolbar end slot)",
+              "name": "actions"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "attribute": "text"
+            },
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Hides the bottom border",
+              "attribute": "no-border"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the select-all button is clicked",
+              "name": "forge-multi-select-header-select-all"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "fieldName": "text"
+            },
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Hides the bottom border",
+              "fieldName": "noBorder"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-content-scaffold",
+          "tagName": "forge-multi-select-header",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ContentScaffoldComponentTagName",
+          "name": "MultiSelectHeaderComponentTagName",
           "declaration": {
-            "name": "ContentScaffoldComponentTagName",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
+            "name": "MultiSelectHeaderComponentTagName",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         },
         {
           "kind": "js",
-          "name": "ContentScaffoldComponent",
+          "name": "MultiSelectHeaderComponent",
           "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         }
       ]
@@ -1045,113 +1107,111 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "MultiSelectHeaderComponentTagName",
+          "name": "ContentScaffoldComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-multi-select-header'"
+          "default": "'forge-content-scaffold'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "MultiSelectHeaderComponent",
+          "name": "ContentScaffoldComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the header section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-header-height"
+            },
+            {
+              "description": "Controls the background color of the header section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-header-background"
+            },
+            {
+              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-header-min-height"
+            },
+            {
+              "description": "Controls the height of the body section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-body-height"
+            },
+            {
+              "description": "Controls the padding applied to the body section. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-body-padding"
+            },
+            {
+              "description": "Controls the height of the footer section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-footer-height"
+            },
+            {
+              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-footer-background"
+            },
+            {
+              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-footer-min-height"
+            }
+          ],
           "slots": [
             {
-              "description": "Text content for the select-all button",
-              "name": "select-all-button-text"
+              "description": "Content displayed before the header start slot. Conditionally rendered when header content is present.",
+              "name": "before-header-start"
             },
             {
-              "description": "Action buttons (maps to the toolbar end slot)",
-              "name": "actions"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "attribute": "text"
+              "description": "Content displayed at the start of the header section. Conditionally rendered when header content is present.",
+              "name": "header-start"
             },
             {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "true",
-              "description": "Hides the bottom border",
-              "attribute": "no-border"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Fired when the select-all button is clicked",
-              "name": "forge-multi-select-header-select-all"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "fieldName": "text"
+              "description": "Content displayed at the end of the header section. Conditionally rendered when header content is present.",
+              "name": "header-end"
             },
             {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Hides the bottom border",
-              "fieldName": "noBorder"
+              "description": "The main body content that expands to fill available space.",
+              "name": "body"
+            },
+            {
+              "description": "Content displayed at the start of the footer section. Conditionally rendered when footer content is present.",
+              "name": "footer-start"
+            },
+            {
+              "description": "Content displayed at the end of the footer section. Conditionally rendered when footer content is present.",
+              "name": "footer-end"
             }
           ],
+          "members": [],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-multi-select-header",
+          "tagName": "forge-content-scaffold",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "MultiSelectHeaderComponentTagName",
+          "name": "ContentScaffoldComponentTagName",
           "declaration": {
-            "name": "MultiSelectHeaderComponentTagName",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
+            "name": "ContentScaffoldComponentTagName",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         },
         {
           "kind": "js",
-          "name": "MultiSelectHeaderComponent",
+          "name": "ContentScaffoldComponent",
           "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         }
       ]
@@ -1393,6 +1453,12 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/types/types.ts",
+      "declarations": [],
+      "exports": []
     },
     {
       "kind": "javascript-module",
@@ -1676,12 +1742,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/types/types.ts",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
@@ -1792,17 +1852,17 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
-    "ContentScaffoldComponent": {
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "lineNumber": 18
+    "MultiSelectHeaderComponent": {
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "lineNumber": 28
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
     },
-    "MultiSelectHeaderComponent": {
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "lineNumber": 28
+    "ContentScaffoldComponent": {
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "lineNumber": 34
     },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
@@ -1828,6 +1888,10 @@
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 41
     },
+    "HeadingLevel": {
+      "path": "src/lib/types/types.ts",
+      "lineNumber": 1
+    },
     "UserProfileComponent": {
       "path": "src/lib/user-profile/user-profile.ts",
       "lineNumber": 49
@@ -1839,10 +1903,6 @@
     "AppLauncherLinkComponent": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "lineNumber": 26
-    },
-    "HeadingLevel": {
-      "path": "src/lib/types/types.ts",
-      "lineNumber": 1
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
