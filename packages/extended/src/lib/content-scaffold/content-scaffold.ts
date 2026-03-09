@@ -28,11 +28,12 @@ export const ContentScaffoldComponentTagName: keyof HTMLElementTagNameMap = 'for
  * @slot footer-start - Content displayed at the start of the footer section. Only used when `fullWidthFooter` is false.
  * @slot footer-end - Content displayed at the end of the footer section. Only used when `fullWidthFooter` is false.
  *
+ * @cssprop --forge-content-scaffold-gap - Controls the gap between header, body, and footer sections. Defaults to Forge's medium spacing token.
  * @cssprop --forge-content-scaffold-header-height - Controls the height of the header section. Defaults to `auto`.
  * @cssprop --forge-content-scaffold-header-background - Controls the background color of the header section. Defaults to `transparent`.
  * @cssprop --forge-content-scaffold-header-min-height - Controls the minimum height of the header section. Defaults to `48px`.
  * @cssprop --forge-content-scaffold-body-height - Controls the height of the body section. Defaults to `auto`.
- * @cssprop --forge-content-scaffold-body-padding - Controls the padding applied to the body section. Defaults to Forge's medium spacing token.
+ * @cssprop --forge-content-scaffold-body-padding-inline - Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.
  * @cssprop --forge-content-scaffold-footer-height - Controls the height of the footer section. Defaults to `auto`.
  * @cssprop --forge-content-scaffold-footer-background - Controls the background color of the footer section. Defaults to `transparent`.
  * @cssprop --forge-content-scaffold-footer-min-height - Controls the minimum height of the footer section. Defaults to `48px`.

@@ -39,7 +39,13 @@ The component provides several slots for organizing content:
 
 ### Data Table with Pagination
 
-Use the `with-table` attribute when the body contains a table to remove default padding. Combine with header actions and footer pagination for complete data management UIs:
+Use the `with-table` attribute when the body contains a table. This attribute:
+
+- Removes the default body padding to allow tables to extend edge-to-edge
+- Sets the gap between sections to `0` for a seamless table integration
+- Removes the footer's bottom padding for consistent spacing
+
+This ensures tables fit naturally within the card while maintaining proper alignment with the header and footer elements.
 
 <Canvas of={WithTableStories.WithTable} />
 
@@ -54,6 +60,19 @@ Use the `before-title` slot for back buttons or icons that appear before the tit
 Control the body height using the CSS custom property for scrollable content areas:
 
 <Canvas of={ScrollableBodyContentStories.ScrollableBodyContent} />
+
+## Layout Details
+
+The Structured Card automatically handles spacing and layout:
+
+- The header includes a bottom border to visually separate it from the body content
+- When the `before-title` slot is empty, the title automatically receives left margin for proper spacing
+- The footer provides separate areas for secondary and primary actions with appropriate spacing
+- All spacing uses Forge design tokens to ensure consistency across the application
+
+## CSS Custom Properties
+
+- `--forge-structured-card-body-height` - Controls the height of the body content. Defaults to `auto`. Set this to a fixed value to enable scrollable content.
 
 ## API
 
