@@ -2,7 +2,7 @@ import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { styleMap } from 'lit/directives/style-map.js';
-import { defineCardComponent, defineToolbarComponent } from '@tylertech/forge';
+import { defineCardComponent } from '@tylertech/forge';
 import { defineContentScaffoldComponent } from '../content-scaffold';
 import styles from './structured-card.scss?inline';
 import { HeadingLevel } from '$lib/types/types';
@@ -32,7 +32,6 @@ export const StructuredCardComponentTagName: keyof HTMLElementTagNameMap = 'forg
 export class StructuredCardComponent extends LitElement {
   static {
     defineCardComponent();
-    defineToolbarComponent();
     defineContentScaffoldComponent();
   }
 
