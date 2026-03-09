@@ -19,10 +19,16 @@
 
 forge-content-scaffold {
   --forge-content-scaffold-body-height: var(--_forge-structured-card-body-height);
+
+  &.with-table {
+    --forge-content-scaffold-body-padding: 0;
+    --forge-content-scaffold-gap: 0;
+  }
 }
 
 .container {
   --forge-card-padding: 0;
+  --forge-card-gap: 0;
   // We don't have a token to handle 12px so this is hardcoded for now
   --forge-card-shape: 12px;
 }
@@ -30,6 +36,10 @@ forge-content-scaffold {
 .title-container {
   @include mixins.stack($gap: 0, $isInline: true);
   grid-area: start;
+}
+
+.title-with-margin {
+  margin-inline-start: #{forge-spacing.variable(medium)};
 }
 
 .actions-container {
@@ -45,8 +55,12 @@ forge-content-scaffold {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   grid-template-areas: 'start . end';
-  padding-inline: #{forge-spacing.variable(medium)};
-  min-height: 56px;
+  padding-inline: #{forge-spacing.variable(small)};
+  padding-block-end: #{forge-spacing.variable(small)};
+
+  &.with-table {
+    padding-block-end: 0;
+  }
 }
 
 .footer-start-container {

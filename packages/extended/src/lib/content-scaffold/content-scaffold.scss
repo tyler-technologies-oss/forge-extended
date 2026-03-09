@@ -6,11 +6,12 @@
 :host {
   display: block;
   height: 100%;
+  --_forge-content-scaffold-gap: var(--forge-content-scaffold-gap, #{forge-spacing.variable(medium)});
   --_forge-content-scaffold-header-height: var(--forge-content-scaffold-header-height, auto);
   --_forge-content-scaffold-header-background: var(--forge-content-scaffold-header-background, transparent);
   --_forge-content-scaffold-header-min-height: var(--forge-content-scaffold-header-min-height, 48px);
   --_forge-content-scaffold-body-height: var(--forge-content-scaffold-body-height, auto);
-  --_forge-content-scaffold-body-padding: var(--forge-content-scaffold-body-padding, #{forge-spacing.variable(medium)});
+  --_forge-content-scaffold-body-padding: var(--forge-content-scaffold-body-padding, #{forge-spacing.variable(small)});
   --_forge-content-scaffold-footer-height: var(--forge-content-scaffold-footer-height, auto);
   --_forge-content-scaffold-footer-background: var(--forge-content-scaffold-footer-background, transparent);
   --_forge-content-scaffold-footer-min-height: var(--forge-content-scaffold-footer-min-height, 48px);
@@ -20,6 +21,7 @@
   box-sizing: border-box;
   display: grid;
   grid-template-rows: auto 1fr auto;
+  gap: var(--_forge-content-scaffold-gap);
   height: 100%;
 }
 
@@ -61,8 +63,7 @@
 }
 
 .body-inner {
-  padding: var(--_forge-content-scaffold-body-padding);
-  padding-block-end: 0;
+  padding-inline: var(--_forge-content-scaffold-body-padding);
 }
 
 .footer {
