@@ -5,8 +5,10 @@ import {
   defineButtonComponent,
   defineIconButtonComponent,
   defineIconComponent,
+  defineMenuComponent,
   defineStackComponent,
-  IconRegistry
+  IconRegistry,
+  type IMenuOption
 } from '@tylertech/forge';
 import {
   tylIconClose,
@@ -15,15 +17,15 @@ import {
   tylIconMoreVert,
   tylIconSave,
   tylIconDownload,
-  tylIconEdit,
-  tylIconArrowBack
+  tylIconEdit
 } from '@tylertech/tyler-icons';
 
-import '$lib/content-card';
+import '$lib/structured-card';
 
 defineButtonComponent();
 defineIconButtonComponent();
 defineIconComponent();
+defineMenuComponent();
 defineStackComponent();
 IconRegistry.define([
   tylIconClose,
@@ -32,14 +34,13 @@ IconRegistry.define([
   tylIconShare,
   tylIconMoreVert,
   tylIconDownload,
-  tylIconEdit,
-  tylIconArrowBack
+  tylIconEdit
 ]);
 
-const component = 'forge-content-card';
+const component = 'forge-structured-card';
 
 const meta = {
-  title: 'Components/Content Card',
+  title: 'Components/Structured Card',
   component,
   decorators: [
     storyStyles(`
@@ -54,13 +55,27 @@ const meta = {
     `)
   ],
   render: () => {
+    const handleMenuSelect = (event: CustomEvent) => {
+      console.log('Menu option selected:', event.detail);
+    };
+
+    const menuOptions: IMenuOption[] = [
+      { label: 'Edit', value: 'edit', leadingIcon: 'edit', leadingIconType: 'component' },
+      { label: 'Share', value: 'share', leadingIcon: 'share', leadingIconType: 'component' },
+      { label: 'Download', value: 'download', leadingIcon: 'download', leadingIconType: 'component' },
+      { label: 'Delete', value: 'delete', leadingIcon: 'delete', leadingIconType: 'component' }
+    ];
+
     return html`
       <div class="actions-card-container">
-        <forge-content-card heading-level="2">
-          <forge-icon-button aria-label="Back" slot="before-title">
-            <forge-icon name="arrow_back"></forge-icon>
-          </forge-icon-button>
-          <span slot="title">Project Details</span>
+        <forge-structured-card heading-level="2">
+          <div slot="title">Project Details</div>
+          <forge-menu slot="header-actions" .options=${menuOptions} @forge-menu-select=${handleMenuSelect}>
+            <forge-icon-button aria-label="More actions">
+              <forge-icon name="more_vert"></forge-icon>
+            </forge-icon-button>
+          </forge-menu>
+
           <div slot="body" class="card-content">
             <p>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
@@ -80,7 +95,7 @@ const meta = {
             <forge-icon slot="start" name="save"></forge-icon>
             Save
           </forge-button>
-        </forge-content-card>
+        </forge-structured-card>
       </div>
     `;
   }
@@ -90,4 +105,4 @@ export default meta;
 
 type Story = StoryObj;
 
-export const WithBeforeTitleSlot: Story = {};
+export const WithHeaderActions: Story = {};

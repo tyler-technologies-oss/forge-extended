@@ -9,7 +9,7 @@ import {
 } from '@tylertech/forge';
 import { tylIconFilter, tylIconRefresh, tylIconDownload } from '@tylertech/tyler-icons';
 
-import '$lib/content-card';
+import '$lib/structured-card';
 
 defineTableComponent();
 defineIconButtonComponent();
@@ -17,10 +17,10 @@ defineIconComponent();
 definePaginatorComponent();
 IconRegistry.define([tylIconFilter, tylIconRefresh, tylIconDownload]);
 
-const component = 'forge-content-card';
+const component = 'forge-structured-card';
 
 const meta = {
-  title: 'Components/Content Card',
+  title: 'Components/Structured Card',
   component,
 
   render: () => {
@@ -47,7 +47,7 @@ const meta = {
     }, 0);
 
     return html`
-      <forge-content-card heading-level="2" with-table>
+      <forge-structured-card heading-level="2" with-table>
         <div slot="title">User Management</div>
         <forge-icon-button aria-label="Refresh data" slot="header-actions">
           <forge-icon name="refresh"></forge-icon>
@@ -57,7 +57,7 @@ const meta = {
         </forge-icon-button>
         <forge-table slot="body"></forge-table>
         <forge-paginator slot="footer-primary-action" page-size="5" total="25" page-index="0"></forge-paginator>
-      </forge-content-card>
+      </forge-structured-card>
     `;
   }
 } satisfies Meta;

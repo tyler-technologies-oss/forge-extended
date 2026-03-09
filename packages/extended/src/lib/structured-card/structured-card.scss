@@ -3,11 +3,11 @@
 
 :host {
   display: block;
-  --forge-content-card-body-height: auto;
+  --_forge-structured-card-body-height: var(--forge-structured-card-body-height, auto);
 }
 
 forge-content-scaffold {
-  --forge-content-scaffold-body-height: var(--forge-content-card-body-height);
+  --forge-content-scaffold-body-height: var(--_forge-structured-card-body-height);
 }
 
 .container {
@@ -25,7 +25,7 @@ forge-content-scaffold {
 }
 
 ::slotted([slot='body']) {
-  height: var(--forge-content-card-body-height);
+  height: var(--forge-structured-card-body-height);
 }
 
 ::slotted([slot='footer-secondary-action']) {

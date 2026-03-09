@@ -4,17 +4,17 @@ import { storyStyles } from '../../decorators';
 import { defineButtonComponent, defineIconButtonComponent, defineIconComponent, IconRegistry } from '@tylertech/forge';
 import { tylIconMoreVert, tylIconSave } from '@tylertech/tyler-icons';
 
-import '$lib/content-card';
+import '$lib/structured-card';
 
 defineButtonComponent();
 defineIconButtonComponent();
 defineIconComponent();
 IconRegistry.define([tylIconMoreVert, tylIconSave]);
 
-const component = 'forge-content-card';
+const component = 'forge-structured-card';
 
 const meta = {
-  title: 'Components/Content Card',
+  title: 'Components/Structured Card',
   component,
   decorators: [
     storyStyles(`
@@ -35,7 +35,7 @@ const meta = {
   render: () => {
     return html`
       <div class="card-container">
-        <forge-content-card style="--forge-content-card-body-height: 200px;">
+        <forge-structured-card style="--forge-structured-card-body-height: 200px;">
           <div slot="title" class="forge-typography--heading4">Project Details</div>
           <forge-icon-button aria-label="More actions" slot="header-actions">
             <forge-icon name="more_vert"></forge-icon>
@@ -59,7 +59,7 @@ const meta = {
             <forge-icon slot="start" name="save"></forge-icon>
             Save
           </forge-button>
-        </forge-content-card>
+        </forge-structured-card>
       </div>
     `;
   }

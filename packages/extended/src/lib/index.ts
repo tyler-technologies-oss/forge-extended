@@ -8,6 +8,6 @@ export * from './user-profile/profile-link';
 export * from './multi-select-header';
 export * from './app-launcher';
 export * from './app-launcher/app-launcher-link';
-export * from './content-card';
+export * from './structured-card';
 export * from './content-scaffold';
 // -- EXPORTS PLACEHOLDER (DO NOT REMOVE) --

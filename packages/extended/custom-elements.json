@@ -519,130 +519,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/content-card/content-card.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ContentCardComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-content-card'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ContentCardComponent",
-          "slots": [
-            {
-              "description": "Content displayed before the title in the header",
-              "name": "before-title"
-            },
-            {
-              "description": "The title content displayed in the header",
-              "name": "title"
-            },
-            {
-              "description": "Action buttons or controls displayed at the end of the header",
-              "name": "header-actions"
-            },
-            {
-              "description": "The main body content of the card",
-              "name": "body"
-            },
-            {
-              "description": "Content displayed at the start of the footer (e.g., pagination controls)",
-              "name": "footer"
-            },
-            {
-              "description": "Secondary action button displayed at the end of the footer",
-              "name": "footer-secondary-action"
-            },
-            {
-              "description": "Primary action button displayed at the end of the footer",
-              "name": "footer-primary-action"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "headingLevel",
-              "type": {
-                "text": "HeadingLevel"
-              },
-              "privacy": "public",
-              "default": "2",
-              "description": "Controls the heading level for the title content",
-              "attribute": "heading-level"
-            },
-            {
-              "kind": "field",
-              "name": "withTable",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Controls whether the card includes table styling",
-              "attribute": "with-table"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "heading-level",
-              "type": {
-                "text": "HeadingLevel"
-              },
-              "default": "2",
-              "description": "Controls the heading level for the title content",
-              "fieldName": "headingLevel"
-            },
-            {
-              "name": "with-table",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Controls whether the card includes table styling",
-              "fieldName": "withTable"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-content-card",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ContentCardComponentTagName",
-          "declaration": {
-            "name": "ContentCardComponentTagName",
-            "module": "src/lib/content-card/content-card.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ContentCardComponent",
-          "declaration": {
-            "name": "ContentCardComponent",
-            "module": "src/lib/content-card/content-card.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ContentCardComponent",
-            "module": "src/lib/content-card/content-card.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "declarations": [
         {
@@ -814,6 +690,117 @@
           "declaration": {
             "name": "ConfirmationDialogComponent",
             "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ContentScaffoldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-content-scaffold'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ContentScaffoldComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the header section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-header-height"
+            },
+            {
+              "description": "Controls the background color of the header section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-header-background"
+            },
+            {
+              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-header-min-height"
+            },
+            {
+              "description": "Controls the height of the body section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-body-height"
+            },
+            {
+              "description": "Controls the padding applied to the body section. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-body-padding"
+            },
+            {
+              "description": "Controls the height of the footer section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-footer-height"
+            },
+            {
+              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-footer-background"
+            },
+            {
+              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-footer-min-height"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Content displayed before the header start slot. Conditionally rendered when header content is present.",
+              "name": "before-header-start"
+            },
+            {
+              "description": "Content displayed at the start of the header section. Conditionally rendered when header content is present.",
+              "name": "header-start"
+            },
+            {
+              "description": "Content displayed at the end of the header section. Conditionally rendered when header content is present.",
+              "name": "header-end"
+            },
+            {
+              "description": "The main body content that expands to fill available space.",
+              "name": "body"
+            },
+            {
+              "description": "Content displayed at the start of the footer section. Conditionally rendered when footer content is present.",
+              "name": "footer-start"
+            },
+            {
+              "description": "Content displayed at the end of the footer section. Conditionally rendered when footer content is present.",
+              "name": "footer-end"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-content-scaffold",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponentTagName",
+          "declaration": {
+            "name": "ContentScaffoldComponentTagName",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponent",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         }
       ]
@@ -1107,117 +1094,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ContentScaffoldComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-content-scaffold'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ContentScaffoldComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the height of the header section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-header-height"
-            },
-            {
-              "description": "Controls the background color of the header section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-header-background"
-            },
-            {
-              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-header-min-height"
-            },
-            {
-              "description": "Controls the height of the body section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-body-height"
-            },
-            {
-              "description": "Controls the padding applied to the body section. Defaults to Forge's medium spacing token.",
-              "name": "--forge-content-scaffold-body-padding"
-            },
-            {
-              "description": "Controls the height of the footer section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-footer-height"
-            },
-            {
-              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-footer-background"
-            },
-            {
-              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-footer-min-height"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Content displayed before the header start slot. Conditionally rendered when header content is present.",
-              "name": "before-header-start"
-            },
-            {
-              "description": "Content displayed at the start of the header section. Conditionally rendered when header content is present.",
-              "name": "header-start"
-            },
-            {
-              "description": "Content displayed at the end of the header section. Conditionally rendered when header content is present.",
-              "name": "header-end"
-            },
-            {
-              "description": "The main body content that expands to fill available space.",
-              "name": "body"
-            },
-            {
-              "description": "Content displayed at the start of the footer section. Conditionally rendered when footer content is present.",
-              "name": "footer-start"
-            },
-            {
-              "description": "Content displayed at the end of the footer section. Conditionally rendered when footer content is present.",
-              "name": "footer-end"
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-content-scaffold",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponentTagName",
-          "declaration": {
-            "name": "ContentScaffoldComponentTagName",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponent",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "declarations": [
         {
@@ -1370,6 +1246,136 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/structured-card/structured-card.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "StructuredCardComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-structured-card'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "StructuredCardComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the body content. Defaults to `auto`.",
+              "name": "--forge-structured-card-body-height"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Content displayed before the title in the header",
+              "name": "before-title"
+            },
+            {
+              "description": "The title content displayed in the header",
+              "name": "title"
+            },
+            {
+              "description": "Action buttons or controls displayed at the end of the header",
+              "name": "header-actions"
+            },
+            {
+              "description": "The main body content of the card",
+              "name": "body"
+            },
+            {
+              "description": "Content displayed at the start of the footer (e.g., pagination controls)",
+              "name": "footer"
+            },
+            {
+              "description": "Secondary action button displayed at the end of the footer",
+              "name": "footer-secondary-action"
+            },
+            {
+              "description": "Primary action button displayed at the end of the footer",
+              "name": "footer-primary-action"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "headingLevel",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "privacy": "public",
+              "default": "2",
+              "description": "Controls the heading level for the title content",
+              "attribute": "heading-level"
+            },
+            {
+              "kind": "field",
+              "name": "withTable",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether the card includes table styling",
+              "attribute": "with-table"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "heading-level",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "default": "2",
+              "description": "Controls the heading level for the title content",
+              "fieldName": "headingLevel"
+            },
+            {
+              "name": "with-table",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether the card includes table styling",
+              "fieldName": "withTable"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-structured-card",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "StructuredCardComponentTagName",
+          "declaration": {
+            "name": "StructuredCardComponentTagName",
+            "module": "src/lib/structured-card/structured-card.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "StructuredCardComponent",
+          "declaration": {
+            "name": "StructuredCardComponent",
+            "module": "src/lib/structured-card/structured-card.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "StructuredCardComponent",
+            "module": "src/lib/structured-card/structured-card.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "declarations": [
         {
@@ -1453,12 +1459,6 @@
           }
         }
       ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/types/types.ts",
-      "declarations": [],
-      "exports": []
     },
     {
       "kind": "javascript-module",
@@ -1742,6 +1742,12 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/types/types.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
@@ -1832,10 +1838,6 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 39
     },
-    "ContentCardComponent": {
-      "path": "src/lib/content-card/content-card.ts",
-      "lineNumber": 29
-    },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 28
@@ -1852,6 +1854,10 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
+    "ContentScaffoldComponent": {
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "lineNumber": 34
+    },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
       "lineNumber": 28
@@ -1859,10 +1865,6 @@
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
-    },
-    "ContentScaffoldComponent": {
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "lineNumber": 34
     },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
@@ -1876,6 +1878,10 @@
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 48
     },
+    "StructuredCardComponent": {
+      "path": "src/lib/structured-card/structured-card.ts",
+      "lineNumber": 31
+    },
     "ThemeToggleTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 28
@@ -1888,10 +1894,6 @@
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 41
     },
-    "HeadingLevel": {
-      "path": "src/lib/types/types.ts",
-      "lineNumber": 1
-    },
     "UserProfileComponent": {
       "path": "src/lib/user-profile/user-profile.ts",
       "lineNumber": 49
@@ -1903,6 +1905,10 @@
     "AppLauncherLinkComponent": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "lineNumber": 26
+    },
+    "HeadingLevel": {
+      "path": "src/lib/types/types.ts",
+      "lineNumber": 1
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",

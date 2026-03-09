@@ -13,7 +13,7 @@ import {
 } from '@tylertech/forge';
 import { tylIconClose, tylIconSave } from '@tylertech/tyler-icons';
 
-import '$lib/content-card';
+import '$lib/structured-card';
 
 defineButtonComponent();
 defineIconButtonComponent();
@@ -24,10 +24,10 @@ defineTextFieldComponent();
 defineStackComponent();
 IconRegistry.define([tylIconClose, tylIconSave]);
 
-const component = 'forge-content-card';
+const component = 'forge-structured-card';
 
 const meta = {
-  title: 'Components/Content Card',
+  title: 'Components/Structured Card',
   component,
   decorators: [
     storyStyles(`
@@ -40,7 +40,7 @@ const meta = {
   render: () => {
     return html`
       <div class="workflow-card-container">
-        <forge-content-card heading-level="2">
+        <forge-structured-card heading-level="2">
           <div slot="title">Workflow Status</div>
 
           <div slot="body">
@@ -63,7 +63,7 @@ const meta = {
               </forge-stack>
             </forge-stack>
           </div>
-        </forge-content-card>
+        </forge-structured-card>
       </div>
     `;
   }

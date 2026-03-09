@@ -4,19 +4,19 @@ import { when } from 'lit/directives/when.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { defineCardComponent, defineToolbarComponent } from '@tylertech/forge';
 import { defineContentScaffoldComponent } from '../content-scaffold';
-import styles from './content-card.scss?inline';
+import styles from './structured-card.scss?inline';
 import { HeadingLevel } from '$lib/types/types';
 
 declare global {
   interface HTMLElementTagNameMap {
-    'forge-content-card': ContentCardComponent;
+    'forge-structured-card': StructuredCardComponent;
   }
 }
 
-export const ContentCardComponentTagName: keyof HTMLElementTagNameMap = 'forge-content-card';
+export const StructuredCardComponentTagName: keyof HTMLElementTagNameMap = 'forge-structured-card';
 
 /**
- * @tag forge-content-card
+ * @tag forge-structured-card
  *
  * @slot before-title - Content displayed before the title in the header
  * @slot title - The title content displayed in the header
@@ -25,9 +25,11 @@ export const ContentCardComponentTagName: keyof HTMLElementTagNameMap = 'forge-c
  * @slot footer - Content displayed at the start of the footer (e.g., pagination controls)
  * @slot footer-secondary-action - Secondary action button displayed at the end of the footer
  * @slot footer-primary-action - Primary action button displayed at the end of the footer
+ *
+ * @cssprop --forge-structured-card-body-height - Controls the height of the body content. Defaults to `auto`.
  */
-@customElement(ContentCardComponentTagName)
-export class ContentCardComponent extends LitElement {
+@customElement(StructuredCardComponentTagName)
+export class StructuredCardComponent extends LitElement {
   static {
     defineCardComponent();
     defineToolbarComponent();

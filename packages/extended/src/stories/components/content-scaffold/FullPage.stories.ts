@@ -11,7 +11,7 @@ import {
 import { tylIconSave, tylIconMoreVert, tylIconArrowBack } from '@tylertech/tyler-icons';
 
 import '$lib/content-scaffold';
-import '$lib/content-card';
+import '$lib/structured-card';
 
 defineToolbarComponent();
 defineButtonComponent();

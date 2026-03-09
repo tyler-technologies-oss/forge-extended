@@ -3,16 +3,16 @@ import { html } from 'lit';
 import { defineButtonComponent, defineIconButtonComponent, IconRegistry } from '@tylertech/forge';
 import { tylIconClose } from '@tylertech/tyler-icons';
 
-import '$lib/content-card';
+import '$lib/structured-card';
 
 defineButtonComponent();
 defineIconButtonComponent();
 IconRegistry.define([tylIconClose]);
 
-const component = 'forge-content-card';
+const component = 'forge-structured-card';
 
 const meta = {
-  title: 'Components/Content Card',
+  title: 'Components/Structured Card',
   component,
   render: args => {
     return html`
@@ -44,7 +44,7 @@ const meta = {
           min-height: 120px;
         }
       </style>
-      <forge-content-card>
+      <forge-structured-card>
         <div slot="before-title" class="slot-demo slot-demo--info forge-typography--label2">before-title slot</div>
         <div slot="title" class="slot-demo slot-demo--primary forge-typography--label2">title slot</div>
         <div slot="header-actions" class="slot-demo slot-demo--primary forge-typography--label2">
@@ -60,7 +60,7 @@ const meta = {
         <div slot="footer-primary-action" class="slot-demo slot-demo--tertiary forge-typography--label2">
           footer-primary-action slot
         </div>
-      </forge-content-card>
+      </forge-structured-card>
     `;
   }
 } satisfies Meta;
