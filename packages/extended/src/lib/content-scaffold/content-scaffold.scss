@@ -1,8 +1,11 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
 @use '../utils/mixins' as mixins;
 
 :host {
   display: block;
+  height: 100%;
   --forge-content-scaffold-header-height: auto;
   --forge-content-scaffold-header-min-height: 48px;
   --forge-content-scaffold-body-height: auto;
@@ -21,8 +24,11 @@
 
 .header {
   @include mixins.toolbar-layout;
+  background-color: #{forge-theme.variable(surface)};
   height: var(--forge-content-scaffold-header-height);
   min-height: var(--forge-content-scaffold-header-min-height);
+  border-start-start-radius: 12px;
+  border-start-end-radius: 12px;
   border-bottom: 1px solid var(--forge-theme-outline);
 }
 
@@ -57,10 +63,15 @@
 
 .footer {
   @include mixins.toolbar-layout;
+  background-color: #{forge-theme.variable(surface)};
+
   height: var(--forge-content-scaffold-footer-height);
   min-height: var(--forge-content-scaffold-footer-min-height);
   padding-inline: #{forge-spacing.variable(medium)};
   padding-block-end: #{forge-spacing.variable(xxsmall)};
+
+  border-end-start-radius: 12px;
+  border-end-end-radius: 12px;
 }
 
 .footer-start {

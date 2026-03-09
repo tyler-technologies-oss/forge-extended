@@ -60,17 +60,7 @@ const meta = {
           <forge-icon-button aria-label="Back" slot="before-title">
             <forge-icon name="arrow_back"></forge-icon>
           </forge-icon-button>
-          <div slot="title">Project Details</div>
-          <forge-icon-button aria-label="Edit" slot="header-actions">
-            <forge-icon name="edit"></forge-icon>
-          </forge-icon-button>
-          <forge-icon-button aria-label="Download" slot="header-actions">
-            <forge-icon name="download"></forge-icon>
-          </forge-icon-button>
-          <forge-icon-button aria-label="More actions" slot="header-actions">
-            <forge-icon name="more_vert"></forge-icon>
-          </forge-icon-button>
-
+          <span slot="title">Project Details</span>
           <div slot="body" class="card-content">
             <p>
               Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the

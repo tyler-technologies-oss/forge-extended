@@ -5,8 +5,10 @@ import {
   defineButtonComponent,
   defineIconButtonComponent,
   defineIconComponent,
+  defineMenuComponent,
   defineStackComponent,
-  IconRegistry
+  IconRegistry,
+  type IMenuOption
 } from '@tylertech/forge';
 import {
   tylIconClose,
@@ -23,6 +25,7 @@ import '$lib/content-card';
 defineButtonComponent();
 defineIconButtonComponent();
 defineIconComponent();
+defineMenuComponent();
 defineStackComponent();
 IconRegistry.define([
   tylIconClose,
@@ -52,19 +55,26 @@ const meta = {
     `)
   ],
   render: () => {
+    const handleMenuSelect = (event: CustomEvent) => {
+      console.log('Menu option selected:', event.detail);
+    };
+
+    const menuOptions: IMenuOption[] = [
+      { label: 'Edit', value: 'edit', leadingIcon: 'edit', leadingIconType: 'component' },
+      { label: 'Share', value: 'share', leadingIcon: 'share', leadingIconType: 'component' },
+      { label: 'Download', value: 'download', leadingIcon: 'download', leadingIconType: 'component' },
+      { label: 'Delete', value: 'delete', leadingIcon: 'delete', leadingIconType: 'component' }
+    ];
+
     return html`
       <div class="actions-card-container">
         <forge-content-card heading-level="2">
           <div slot="title">Project Details</div>
-          <forge-icon-button aria-label="Edit" slot="header-actions">
-            <forge-icon name="edit"></forge-icon>
-          </forge-icon-button>
-          <forge-icon-button aria-label="Download" slot="header-actions">
-            <forge-icon name="download"></forge-icon>
-          </forge-icon-button>
-          <forge-icon-button aria-label="More actions" slot="header-actions">
-            <forge-icon name="more_vert"></forge-icon>
-          </forge-icon-button>
+          <forge-menu slot="header-actions" .options=${menuOptions} @forge-menu-select=${handleMenuSelect}>
+            <forge-icon-button aria-label="More actions">
+              <forge-icon name="more_vert"></forge-icon>
+            </forge-icon-button>
+          </forge-menu>
 
           <div slot="body" class="card-content">
             <p>

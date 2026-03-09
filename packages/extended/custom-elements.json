@@ -519,6 +519,130 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/content-card/content-card.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ContentCardComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-content-card'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ContentCardComponent",
+          "slots": [
+            {
+              "description": "Content displayed before the title in the header",
+              "name": "before-title"
+            },
+            {
+              "description": "The title content displayed in the header",
+              "name": "title"
+            },
+            {
+              "description": "Action buttons or controls displayed at the end of the header",
+              "name": "header-actions"
+            },
+            {
+              "description": "The main body content of the card",
+              "name": "body"
+            },
+            {
+              "description": "Content displayed at the start of the footer (e.g., pagination controls)",
+              "name": "footer"
+            },
+            {
+              "description": "Secondary action button displayed at the end of the footer",
+              "name": "footer-secondary-action"
+            },
+            {
+              "description": "Primary action button displayed at the end of the footer",
+              "name": "footer-primary-action"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "headingLevel",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "privacy": "public",
+              "default": "2",
+              "description": "Controls the heading level for the title content",
+              "attribute": "heading-level"
+            },
+            {
+              "kind": "field",
+              "name": "withTable",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether the card includes table styling",
+              "attribute": "with-table"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "heading-level",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "default": "2",
+              "description": "Controls the heading level for the title content",
+              "fieldName": "headingLevel"
+            },
+            {
+              "name": "with-table",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether the card includes table styling",
+              "fieldName": "withTable"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-content-card",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContentCardComponentTagName",
+          "declaration": {
+            "name": "ContentCardComponentTagName",
+            "module": "src/lib/content-card/content-card.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ContentCardComponent",
+          "declaration": {
+            "name": "ContentCardComponent",
+            "module": "src/lib/content-card/content-card.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ContentCardComponent",
+            "module": "src/lib/content-card/content-card.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "declarations": [
         {
@@ -690,80 +814,6 @@
           "declaration": {
             "name": "ConfirmationDialogComponent",
             "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/content-card/content-card.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ContentCardComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-content-card'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ContentCardComponent",
-          "members": [
-            {
-              "kind": "field",
-              "name": "headingLevel",
-              "type": {
-                "text": "HeadingLevel"
-              },
-              "privacy": "public",
-              "default": "2",
-              "description": "Controls the heading level for the title content",
-              "attribute": "heading-level"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "heading-level",
-              "type": {
-                "text": "HeadingLevel"
-              },
-              "default": "2",
-              "description": "Controls the heading level for the title content",
-              "fieldName": "headingLevel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-content-card",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ContentCardComponentTagName",
-          "declaration": {
-            "name": "ContentCardComponentTagName",
-            "module": "src/lib/content-card/content-card.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ContentCardComponent",
-          "declaration": {
-            "name": "ContentCardComponent",
-            "module": "src/lib/content-card/content-card.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ContentCardComponent",
-            "module": "src/lib/content-card/content-card.ts"
           }
         }
       ]
@@ -1346,12 +1396,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/types/types.ts",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/user-profile/user-profile.ts",
       "declarations": [
         {
@@ -1632,6 +1676,12 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/types/types.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
@@ -1722,6 +1772,10 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 39
     },
+    "ContentCardComponent": {
+      "path": "src/lib/content-card/content-card.ts",
+      "lineNumber": 29
+    },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 28
@@ -1738,13 +1792,9 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
-    "ContentCardComponent": {
-      "path": "src/lib/content-card/content-card.ts",
-      "lineNumber": 19
-    },
     "ContentScaffoldComponent": {
       "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "lineNumber": 17
+      "lineNumber": 18
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
@@ -1778,10 +1828,6 @@
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 41
     },
-    "HeadingLevel": {
-      "path": "src/lib/types/types.ts",
-      "lineNumber": 1
-    },
     "UserProfileComponent": {
       "path": "src/lib/user-profile/user-profile.ts",
       "lineNumber": 49
@@ -1793,6 +1839,10 @@
     "AppLauncherLinkComponent": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "lineNumber": 26
+    },
+    "HeadingLevel": {
+      "path": "src/lib/types/types.ts",
+      "lineNumber": 1
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
