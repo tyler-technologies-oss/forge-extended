@@ -17,8 +17,24 @@ class StructuredCardHarness {
     return this.el.shadowRoot!.querySelector('#title') as HTMLElement;
   }
 
+  public get headerContainerElement(): HTMLElement | null {
+    return this.el.shadowRoot!.querySelector('.header-container');
+  }
+
+  public get actionsContainerElement(): HTMLElement | null {
+    return this.el.shadowRoot!.querySelector('.actions-container');
+  }
+
+  public get footerContainerElement(): HTMLElement | null {
+    return this.el.shadowRoot!.querySelector('.footer-container');
+  }
+
   public get footerActionsElement(): HTMLElement | null {
     return this.el.shadowRoot!.querySelector('.footer-actions');
+  }
+
+  public isElementHidden(element: HTMLElement | null): boolean {
+    return element?.style.display === 'none';
   }
 
   public get beforeTitleSlot(): HTMLSlotElement {
@@ -130,24 +146,40 @@ describe('StructuredCardComponent', () => {
       expect(harness.el.withTable).to.be.true;
     });
 
-    it('should apply zero padding to content scaffold body when withTable is true', async () => {
+    it('should apply with-table class to content scaffold when withTable is true', async () => {
       const harness = await createFixture();
 
       harness.el.withTable = true;
       await harness.el.updateComplete;
 
-      const style = harness.contentScaffoldElement.getAttribute('style');
-      expect(style).to.include('--forge-content-scaffold-body-padding: 0');
+      expect(harness.contentScaffoldElement.classList.contains('with-table')).to.be.true;
     });
 
-    it('should not apply padding override when withTable is false', async () => {
+    it('should not apply with-table class to content scaffold when withTable is false', async () => {
       const harness = await createFixture();
 
       harness.el.withTable = false;
       await harness.el.updateComplete;
 
-      const style = harness.contentScaffoldElement.getAttribute('style');
-      expect(style).to.not.include('--forge-content-scaffold-body-padding');
+      expect(harness.contentScaffoldElement.classList.contains('with-table')).to.be.false;
+    });
+
+    it('should apply with-table class to footer container when withTable is true', async () => {
+      const harness = await createFixture();
+
+      harness.el.withTable = true;
+      await harness.el.updateComplete;
+
+      expect(harness.footerContainerElement?.classList.contains('with-table')).to.be.true;
+    });
+
+    it('should not apply with-table class to footer container when withTable is false', async () => {
+      const harness = await createFixture();
+
+      harness.el.withTable = false;
+      await harness.el.updateComplete;
+
+      expect(harness.footerContainerElement?.classList.contains('with-table')).to.be.false;
     });
   });
 
@@ -231,13 +263,14 @@ describe('StructuredCardComponent', () => {
   });
 
   describe('footer actions conditional rendering', () => {
-    it('should not render footer-actions wrapper when footer action slots are empty', async () => {
+    it('should hide footer-actions wrapper when footer action slots are empty', async () => {
       const harness = await createFixture();
 
-      expect(harness.footerActionsElement).to.be.null;
+      expect(harness.footerActionsElement).to.be.ok;
+      expect(harness.isElementHidden(harness.footerActionsElement)).to.be.true;
     });
 
-    it('should render footer-actions wrapper when footer-secondary-action slot has content', async () => {
+    it('should show footer-actions wrapper when footer-secondary-action slot has content', async () => {
       const el = await fixture<StructuredCardComponent>(html`
         <forge-structured-card>
           <button slot="footer-secondary-action">Cancel</button>
@@ -247,9 +280,10 @@ describe('StructuredCardComponent', () => {
       await el.updateComplete;
 
       expect(harness.footerActionsElement).to.be.ok;
+      expect(harness.isElementHidden(harness.footerActionsElement)).to.be.false;
     });
 
-    it('should render footer-actions wrapper when footer-primary-action slot has content', async () => {
+    it('should show footer-actions wrapper when footer-primary-action slot has content', async () => {
       const el = await fixture<StructuredCardComponent>(html`
         <forge-structured-card>
           <button slot="footer-primary-action">Save</button>
@@ -259,9 +293,10 @@ describe('StructuredCardComponent', () => {
       await el.updateComplete;
 
       expect(harness.footerActionsElement).to.be.ok;
+      expect(harness.isElementHidden(harness.footerActionsElement)).to.be.false;
     });
 
-    it('should render footer-actions wrapper when both footer action slots have content', async () => {
+    it('should show footer-actions wrapper when both footer action slots have content', async () => {
       const el = await fixture<StructuredCardComponent>(html`
         <forge-structured-card>
           <button slot="footer-secondary-action">Cancel</button>
@@ -272,13 +307,15 @@ describe('StructuredCardComponent', () => {
       await el.updateComplete;
 
       expect(harness.footerActionsElement).to.be.ok;
+      expect(harness.isElementHidden(harness.footerActionsElement)).to.be.false;
     });
 
     it('should show footer-actions wrapper when content is dynamically added to footer-secondary-action', async () => {
       const harness = await createFixture();
       await harness.el.updateComplete;
 
-      expect(harness.footerActionsElement).to.be.null;
+      expect(harness.footerActionsElement).to.be.ok;
+      expect(harness.isElementHidden(harness.footerActionsElement)).to.be.true;
 
       const button = document.createElement('button');
       button.slot = 'footer-secondary-action';
@@ -290,13 +327,15 @@ describe('StructuredCardComponent', () => {
       await harness.el.updateComplete;
 
       expect(harness.footerActionsElement).to.be.ok;
+      expect(harness.isElementHidden(harness.footerActionsElement)).to.be.false;
     });
 
     it('should show footer-actions wrapper when content is dynamically added to footer-primary-action', async () => {
       const harness = await createFixture();
       await harness.el.updateComplete;
 
-      expect(harness.footerActionsElement).to.be.null;
+      expect(harness.footerActionsElement).to.be.ok;
+      expect(harness.isElementHidden(harness.footerActionsElement)).to.be.true;
 
       const button = document.createElement('button');
       button.slot = 'footer-primary-action';
@@ -308,6 +347,7 @@ describe('StructuredCardComponent', () => {
       await harness.el.updateComplete;
 
       expect(harness.footerActionsElement).to.be.ok;
+      expect(harness.isElementHidden(harness.footerActionsElement)).to.be.false;
     });
 
     it('should hide footer-actions wrapper when content is dynamically removed from footer-secondary-action', async () => {
@@ -320,6 +360,7 @@ describe('StructuredCardComponent', () => {
       await el.updateComplete;
 
       expect(harness.footerActionsElement).to.be.ok;
+      expect(harness.isElementHidden(harness.footerActionsElement)).to.be.false;
 
       const button = el.querySelector('#cancel-btn');
       button?.remove();
@@ -328,7 +369,8 @@ describe('StructuredCardComponent', () => {
       await new Promise(resolve => setTimeout(resolve, 0));
       await el.updateComplete;
 
-      expect(harness.footerActionsElement).to.be.null;
+      expect(harness.footerActionsElement).to.be.ok;
+      expect(harness.isElementHidden(harness.footerActionsElement)).to.be.true;
     });
 
     it('should hide footer-actions wrapper when content is dynamically removed from footer-primary-action', async () => {
@@ -341,6 +383,7 @@ describe('StructuredCardComponent', () => {
       await el.updateComplete;
 
       expect(harness.footerActionsElement).to.be.ok;
+      expect(harness.isElementHidden(harness.footerActionsElement)).to.be.false;
 
       const button = el.querySelector('#save-btn');
       button?.remove();
@@ -349,10 +392,11 @@ describe('StructuredCardComponent', () => {
       await new Promise(resolve => setTimeout(resolve, 0));
       await el.updateComplete;
 
-      expect(harness.footerActionsElement).to.be.null;
+      expect(harness.footerActionsElement).to.be.ok;
+      expect(harness.isElementHidden(harness.footerActionsElement)).to.be.true;
     });
 
-    it('should keep footer-actions wrapper when one action is removed but another remains', async () => {
+    it('should keep footer-actions wrapper visible when one action is removed but another remains', async () => {
       const el = await fixture<StructuredCardComponent>(html`
         <forge-structured-card>
           <button slot="footer-secondary-action" id="cancel-btn">Cancel</button>
@@ -363,6 +407,7 @@ describe('StructuredCardComponent', () => {
       await el.updateComplete;
 
       expect(harness.footerActionsElement).to.be.ok;
+      expect(harness.isElementHidden(harness.footerActionsElement)).to.be.false;
 
       const button = el.querySelector('#cancel-btn');
       button?.remove();
@@ -372,6 +417,67 @@ describe('StructuredCardComponent', () => {
       await el.updateComplete;
 
       expect(harness.footerActionsElement).to.be.ok;
+      expect(harness.isElementHidden(harness.footerActionsElement)).to.be.false;
+    });
+  });
+
+  describe('conditional title margin', () => {
+    it('should apply margin to title when before-title slot is empty', async () => {
+      const harness = await createFixture();
+      await harness.el.updateComplete;
+
+      expect(harness.titleElement.classList.contains('title-with-margin')).to.be.true;
+    });
+
+    it('should not apply margin to title when before-title slot has content', async () => {
+      const el = await fixture<StructuredCardComponent>(html`
+        <forge-structured-card>
+          <button slot="before-title">Back</button>
+        </forge-structured-card>
+      `);
+      const harness = new StructuredCardHarness(el);
+      await el.updateComplete;
+
+      expect(harness.titleElement.classList.contains('title-with-margin')).to.be.false;
+    });
+
+    it('should add margin when before-title content is dynamically removed', async () => {
+      const el = await fixture<StructuredCardComponent>(html`
+        <forge-structured-card>
+          <button slot="before-title" id="back-btn">Back</button>
+        </forge-structured-card>
+      `);
+      const harness = new StructuredCardHarness(el);
+      await el.updateComplete;
+
+      expect(harness.titleElement.classList.contains('title-with-margin')).to.be.false;
+
+      const button = el.querySelector('#back-btn');
+      button?.remove();
+
+      // Wait for slotchange event to fire and component to update
+      await new Promise(resolve => setTimeout(resolve, 0));
+      await el.updateComplete;
+
+      expect(harness.titleElement.classList.contains('title-with-margin')).to.be.true;
+    });
+
+    it('should remove margin when before-title content is dynamically added', async () => {
+      const harness = await createFixture();
+      await harness.el.updateComplete;
+
+      expect(harness.titleElement.classList.contains('title-with-margin')).to.be.true;
+
+      const button = document.createElement('button');
+      button.slot = 'before-title';
+      button.textContent = 'Back';
+      harness.el.appendChild(button);
+
+      // Wait for slotchange event to fire and component to update
+      await new Promise(resolve => setTimeout(resolve, 0));
+      await harness.el.updateComplete;
+
+      expect(harness.titleElement.classList.contains('title-with-margin')).to.be.false;
     });
   });
 
