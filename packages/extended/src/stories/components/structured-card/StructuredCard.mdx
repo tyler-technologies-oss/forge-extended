@@ -4,6 +4,9 @@ import * as StructuredCardStories from './StructuredCard.stories';
 import * as WithTableStories from './WithTable.stories';
 import * as WithBeforeTitleSlotStories from './WithBeforeTitleSlot.stories';
 import * as ScrollableBodyContentStories from './ScrollableBodyContent.stories';
+import * as WithHeaderActionsStories from './WithHeaderActions.stories';
+import * as CardWithNoHeaderStories from './CardWithNoHeader.stories';
+import * as CardWithNoFooterStories from './CardWithNoFooter.stories';
 
 <Meta of={StructuredCardStories} />
 
@@ -37,7 +40,19 @@ The component provides several slots for organizing content:
 
 ## Examples
 
-### Data Table with Pagination
+#### With Header Actions
+
+Use the `header-actions` slot to add menus, buttons, or other controls to the card header:
+
+<Canvas of={WithHeaderActionsStories.WithHeaderActions} />
+
+#### Detail Panel with Back Navigation
+
+Use the `before-title` slot for back buttons or icons that appear before the title:
+
+<Canvas of={WithBeforeTitleSlotStories.WithBeforeTitleSlot} />
+
+#### Data Table with Pagination
 
 Use the `with-table` attribute when the body contains a table. This attribute:
 
@@ -49,13 +64,7 @@ This ensures tables fit naturally within the card while maintaining proper align
 
 <Canvas of={WithTableStories.WithTable} />
 
-### Detail Panel with Back Navigation
-
-Use the `before-title` slot for back buttons or icons that appear before the title:
-
-<Canvas of={WithBeforeTitleSlotStories.WithBeforeTitleSlot} />
-
-### Scrollable Content with Fixed Height
+#### Scrollable Content with Fixed Height
 
 Control the body height using the CSS custom property for scrollable content areas:
 
