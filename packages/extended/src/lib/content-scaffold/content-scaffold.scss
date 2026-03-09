@@ -62,7 +62,7 @@
 
 .body-inner {
   padding: var(--_forge-content-scaffold-body-padding);
-  // padding-block-start: 0;
+  padding-block-end: 0;
 }
 
 .footer {
@@ -84,4 +84,8 @@
 
 .footer-end {
   grid-area: end;
+}
+
+.footer-full-content {
+  display: block;
 }

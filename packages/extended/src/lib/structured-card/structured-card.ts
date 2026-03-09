@@ -56,25 +56,30 @@ export class StructuredCardComponent extends LitElement {
       <forge-card class="container">
         <forge-content-scaffold
           full-width-header
+          full-width-footer
           style=${styleMap({ '--forge-content-scaffold-body-padding': this.withTable ? '0' : undefined })}>
-          <div slot="header" class="header-container">
+          <div slot="header" class="header-container" ${hideWhenEmpty()}>
             <div class="title-container">
               <slot name="before-title" slot="before-header-start"></slot>
-              <div role="heading" aria-level=${this.headingLevel} id="title" slot="header-start" ${hideWhenEmpty()}>
+              <div role="heading" aria-level=${this.headingLevel} id="title" slot="header-start">
                 <slot name="title"></slot>
               </div>
             </div>
 
-            <div class="actions-container">
+            <div class="actions-container" ${hideWhenEmpty()}>
               <slot name="header-actions" slot="header-end"></slot>
             </div>
           </div>
 
           <slot name="body" slot="body"></slot>
-          <slot name="footer-start" slot="footer-start"></slot>
-          <div class="footer-actions" slot="footer-end" ${hideWhenEmpty()}>
-            <slot name="footer-secondary-action"></slot>
-            <slot name="footer-primary-action"></slot>
+          <div class="footer-container" slot="footer" ${hideWhenEmpty()}>
+            <div class="footer-start-container">
+              <slot name="footer-start"></slot>
+            </div>
+            <div class="footer-actions" ${hideWhenEmpty()}>
+              <slot name="footer-secondary-action"></slot>
+              <slot name="footer-primary-action"></slot>
+            </div>
           </div>
         </forge-content-scaffold>
       </forge-card>

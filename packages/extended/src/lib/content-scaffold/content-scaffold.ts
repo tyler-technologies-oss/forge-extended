@@ -17,14 +17,16 @@ export const ContentScaffoldComponentTagName: keyof HTMLElementTagNameMap = 'for
  * @tag forge-content-scaffold
  *
  * @property {boolean} fullWidthHeader - When true, enables the full-width header mode using the `header` slot instead of the multi-slot layout.
+ * @property {boolean} fullWidthFooter - When true, enables the full-width footer mode using the `footer` slot instead of the multi-slot layout.
  *
  * @slot header - Full-width header content. Only used when `fullWidthHeader` is true.
  * @slot before-header-start - Content displayed before the header start slot. Only used when `fullWidthHeader` is false.
  * @slot header-start - Content displayed at the start of the header section. Only used when `fullWidthHeader` is false.
  * @slot header-end - Content displayed at the end of the header section. Only used when `fullWidthHeader` is false.
  * @slot body - The main body content that expands to fill available space.
- * @slot footer-start - Content displayed at the start of the footer section. Conditionally rendered when footer content is present.
- * @slot footer-end - Content displayed at the end of the footer section. Conditionally rendered when footer content is present.
+ * @slot footer - Full-width footer content. Only used when `fullWidthFooter` is true.
+ * @slot footer-start - Content displayed at the start of the footer section. Only used when `fullWidthFooter` is false.
+ * @slot footer-end - Content displayed at the end of the footer section. Only used when `fullWidthFooter` is false.
  *
  * @cssprop --forge-content-scaffold-header-height - Controls the height of the header section. Defaults to `auto`.
  * @cssprop --forge-content-scaffold-header-background - Controls the background color of the header section. Defaults to `transparent`.
@@ -44,6 +46,9 @@ export class ContentScaffoldComponent extends LitElement {
 
   @property({ type: Boolean, attribute: 'full-width-header' })
   public fullWidthHeader = false;
+
+  @property({ type: Boolean, attribute: 'full-width-footer' })
+  public fullWidthFooter = false;
 
   public override render(): TemplateResult {
     return html`
@@ -74,14 +79,24 @@ export class ContentScaffoldComponent extends LitElement {
             <slot name="body"></slot>
           </div>
         </div>
-        <div class="footer" ${hideWhenEmpty()}>
-          <div class="footer-start" ${hideWhenEmpty()}>
-            <slot name="footer-start"></slot>
-          </div>
-          <div class="footer-end" ${hideWhenEmpty()}>
-            <slot name="footer-end"></slot>
-          </div>
-        </div>
+        ${when(
+          this.fullWidthFooter,
+          () => html`
+            <div class="footer-full-content">
+              <slot name="footer"></slot>
+            </div>
+          `,
+          () => html`
+            <div class="footer" ${hideWhenEmpty()}>
+              <div class="footer-start" ${hideWhenEmpty()}>
+                <slot name="footer-start"></slot>
+              </div>
+              <div class="footer-end" ${hideWhenEmpty()}>
+                <slot name="footer-end"></slot>
+              </div>
+            </div>
+          `
+        )}
       </div>
     `;
   }
