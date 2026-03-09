@@ -37,6 +37,10 @@ class StructuredCardHarness {
     return element?.style.display === 'none';
   }
 
+  public hasState(state: string): boolean {
+    return (this.el as any).matches(`:state(${state})`);
+  }
+
   public get beforeTitleSlot(): HTMLSlotElement {
     return this.el.shadowRoot!.querySelector('slot[name="before-title"]') as HTMLSlotElement;
   }
@@ -146,40 +150,47 @@ describe('StructuredCardComponent', () => {
       expect(harness.el.withTable).to.be.true;
     });
 
-    it('should apply with-table class to content scaffold when withTable is true', async () => {
+    it('should apply with-table state when withTable is true', async () => {
       const harness = await createFixture();
 
       harness.el.withTable = true;
       await harness.el.updateComplete;
 
-      expect(harness.contentScaffoldElement.classList.contains('with-table')).to.be.true;
+      expect(harness.hasState('with-table')).to.be.true;
     });
 
-    it('should not apply with-table class to content scaffold when withTable is false', async () => {
+    it('should not apply with-table state when withTable is false', async () => {
       const harness = await createFixture();
 
       harness.el.withTable = false;
       await harness.el.updateComplete;
 
-      expect(harness.contentScaffoldElement.classList.contains('with-table')).to.be.false;
+      expect(harness.hasState('with-table')).to.be.false;
     });
 
-    it('should apply with-table class to footer container when withTable is true', async () => {
+    it('should add with-table state when toggling withTable from false to true', async () => {
+      const harness = await createFixture();
+
+      expect(harness.hasState('with-table')).to.be.false;
+
+      harness.el.withTable = true;
+      await harness.el.updateComplete;
+
+      expect(harness.hasState('with-table')).to.be.true;
+    });
+
+    it('should remove with-table state when toggling withTable from true to false', async () => {
       const harness = await createFixture();
 
       harness.el.withTable = true;
       await harness.el.updateComplete;
 
-      expect(harness.footerContainerElement?.classList.contains('with-table')).to.be.true;
-    });
-
-    it('should not apply with-table class to footer container when withTable is false', async () => {
-      const harness = await createFixture();
+      expect(harness.hasState('with-table')).to.be.true;
 
       harness.el.withTable = false;
       await harness.el.updateComplete;
 
-      expect(harness.footerContainerElement?.classList.contains('with-table')).to.be.false;
+      expect(harness.hasState('with-table')).to.be.false;
     });
   });
 

@@ -27,6 +27,8 @@ export const StructuredCardComponentTagName: keyof HTMLElementTagNameMap = 'forg
  * @slot footer-primary-action - Primary action button displayed at the end of the footer
  *
  * @cssprop --forge-structured-card-body-height - Controls the height of the body content. Defaults to `auto`.
+ *
+ * @state with-table - Applied when the `withTable` property is true. Used to style the component for table content.
  */
 @customElement(StructuredCardComponentTagName)
 export class StructuredCardComponent extends LitElement {
@@ -36,6 +38,13 @@ export class StructuredCardComponent extends LitElement {
   }
 
   public static override styles = unsafeCSS(styles);
+
+  #internals: ElementInternals;
+
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+  }
 
   /**
    * Controls the semantic heading level for the title content. Defaults to `2` (h2).
@@ -54,6 +63,16 @@ export class StructuredCardComponent extends LitElement {
   @queryAssignedNodes({ slot: 'before-title', flatten: true })
   private _beforeTitleNodes!: Node[];
 
+  public override willUpdate(changedProperties: Map<string, unknown>): void {
+    if (changedProperties.has('withTable')) {
+      if (this.withTable) {
+        this.#internals.states.add('with-table');
+      } else {
+        this.#internals.states.delete('with-table');
+      }
+    }
+  }
+
   #handleSlotChange(evt: Event): void {
     const slotName = (evt.target as HTMLSlotElement).name;
     if (slotName === 'before-title') {
@@ -64,11 +83,7 @@ export class StructuredCardComponent extends LitElement {
   public override render(): TemplateResult {
     return html`
       <forge-card class="container">
-        <forge-content-scaffold
-          @slotchange=${this.#handleSlotChange}
-          full-width-header
-          full-width-footer
-          class=${classMap({ 'with-table': this.withTable })}>
+        <forge-content-scaffold @slotchange=${this.#handleSlotChange} full-width-header full-width-footer>
           <div slot="header" class="header-container" ${hideWhenEmpty()}>
             <div class="title-container">
               <slot name="before-title" slot="before-header-start"></slot>
@@ -90,10 +105,7 @@ export class StructuredCardComponent extends LitElement {
           </div>
 
           <slot name="body" slot="body"></slot>
-          <div
-            class=${classMap({ 'footer-container': true, 'with-table': this.withTable })}
-            slot="footer"
-            ${hideWhenEmpty()}>
+          <div class="footer-container" slot="footer" ${hideWhenEmpty()}>
             <div class="footer-start-container">
               <slot name="footer-start"></slot>
             </div>

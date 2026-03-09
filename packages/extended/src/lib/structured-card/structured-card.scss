@@ -8,6 +8,17 @@
   --_forge-structured-card-body-height: var(--forge-structured-card-body-height, auto);
 }
 
+:host(:state(with-table)) {
+  forge-content-scaffold {
+    --forge-content-scaffold-body-padding-inline: 0;
+    --forge-content-scaffold-gap: 0;
+  }
+
+  .footer-container {
+    padding-block-end: 0;
+  }
+}
+
 .header-container {
   display: grid;
   grid-template-columns: auto 1fr auto;
@@ -19,11 +30,6 @@
 
 forge-content-scaffold {
   --forge-content-scaffold-body-height: var(--_forge-structured-card-body-height);
-
-  &.with-table {
-    --forge-content-scaffold-body-padding-inline: 0;
-    --forge-content-scaffold-gap: 0;
-  }
 }
 
 .container {
@@ -57,10 +63,6 @@ forge-content-scaffold {
   grid-template-areas: 'start . end';
   padding-inline: #{forge-spacing.variable(small)};
   padding-block-end: #{forge-spacing.variable(small)};
-
-  &.with-table {
-    padding-block-end: 0;
-  }
 }
 
 .footer-start-container {
