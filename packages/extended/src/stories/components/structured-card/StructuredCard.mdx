@@ -14,74 +14,69 @@ import * as CardWithNoFooterStories from './CardWithNoFooter.stories';
 
 🚧 **Experimental** 🚧
 
-The Structured Card component provides a pre-configured card layout optimized for the most common card patterns in Tyler Cloud applications. Built on top of the Content Scaffold component, it combines a card shell with a structured header, body, and footer layout—providing designated slots for titles, actions, content, and buttons.
-
-This component is the recommended approach for building card-based UIs throughout Tyler Cloud applications. It ensures visual consistency and eliminates the repetitive work of manually configuring the same card structure for common patterns like data tables, detail panels, workflow cards, and form containers.
+A pre-configured card layout optimized for common patterns in Tyler Cloud applications. Using a slot-based architecture, it provides designated areas for titles, actions, body content, and footer buttons—helping developers build consistent card UIs without manually configuring the same layout structure repeatedly. Ideal for table containers and self-contained content sections that require their own actions.
 
 <Canvas of={StructuredCardStories.Demo} />
 
-## Usage
+## Slots
 
-The Structured Card is the recommended way to build consistent card-based UIs throughout Tyler Cloud applications. It provides a standardized layout pattern that ensures visual consistency while eliminating the need to manually configure the same card structure repeatedly.
+- **before-title** - Content before the title (e.g., back button, icon)
+- **title** - Card title/heading
+- **header-actions** - Actions in the header (e.g., menus, buttons)
+- **body** - Main content area (expands to fill space)
+- **footer-start** - Footer start content (e.g., pagination)
+- **footer-secondary-action** - Secondary action button
+- **footer-primary-action** - Primary action button
 
-## Structure
-
-The component provides several slots for organizing content:
-
-- **before-title** - Optional slot for content before the title in the header (e.g., back button, icon)
-- **title** - Title/heading content for the card
-- **header-actions** - Optional actions or controls displayed in the header (e.g., menus, icon buttons)
-- **body** - Main content area that expands to fill available space
-- **footer-start** - Optional content at the start of the footer (e.g., pagination controls)
-- **footer-secondary-action** - Optional secondary action button (typically cancel or back)
-- **footer-primary-action** - Optional primary action button (typically save or submit)
-
-> **Note:** For the Structured Card to properly fill available space, ensure its parent container has a defined height.
+> **Note:** Parent container must have a defined height for the card to fill available space.
 
 ## Examples
 
 #### With Header Actions
 
-Use the `header-actions` slot to add menus, buttons, or other controls to the card header:
+Add menus, buttons, or controls to the header using the `header-actions` slot.
 
 <Canvas of={WithHeaderActionsStories.WithHeaderActions} />
 
 #### Detail Panel with Back Navigation
 
-Use the `before-title` slot for back buttons or icons that appear before the title:
+Use the `before-title` slot for back buttons or navigation icons.
 
 <Canvas of={WithBeforeTitleSlotStories.WithBeforeTitleSlot} />
 
 #### Data Table with Pagination
 
-Use the `with-table` attribute when the body contains a table. This attribute:
-
-- Removes the default body padding to allow tables to extend edge-to-edge
-- Sets the gap between sections to `0` for a seamless table integration
-- Removes the footer's bottom padding for consistent spacing
-
-This ensures tables fit naturally within the card while maintaining proper alignment with the header and footer elements.
+Set `with-table` when the body contains a table. This removes body padding, sets gap to `0`, and removes footer bottom padding for edge-to-edge table layouts.
 
 <Canvas of={WithTableStories.WithTable} />
 
-#### Scrollable Content with Fixed Height
+#### Scrollable Content
 
-Control the body height using the CSS custom property for scrollable content areas:
+Set `--forge-structured-card-body-height` to a fixed value to enable scrollable body content.
 
 <Canvas of={ScrollableBodyContentStories.ScrollableBodyContent} />
 
-## Layout Details
+#### Card Without Header
 
-The Structured Card automatically handles spacing and layout:
+Simple cards that don't need a header section.
 
-- The header includes a bottom border to visually separate it from the body content
-- When the `before-title` slot is empty, the title automatically receives left margin for proper spacing
-- The footer provides separate areas for secondary and primary actions with appropriate spacing
-- All spacing uses Forge design tokens to ensure consistency across the application
+<Canvas of={CardWithNoHeaderStories.CardWithNoHeader} />
+
+#### Card Without Footer
+
+Cards that don't require footer actions.
+
+<Canvas of={CardWithNoFooterStories.CardWithNoFooter} />
+
+## Behavior
+
+- Header includes a bottom border separator
+- Title receives automatic left margin when `before-title` slot is empty
+- All spacing uses Forge design tokens
 
 ## CSS Custom Properties
 
-- `--forge-structured-card-body-height` - Controls the height of the body content. Defaults to `auto`. Set this to a fixed value to enable scrollable content.
+- `--forge-structured-card-body-height` - Body height. Defaults to `auto`. Set a fixed value to enable scrolling.
 
 ## API
 
