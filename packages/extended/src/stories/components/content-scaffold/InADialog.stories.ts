@@ -23,7 +23,7 @@ const component = 'forge-content-scaffold';
 const meta = {
   title: 'Components/Content Scaffold',
   component,
-  tags: [''],
+  tags: ['hidden'],
   decorators: [
     storyStyles(`
       * {
@@ -53,7 +53,7 @@ const meta = {
       <forge-button variant="filled" @click=${handleOpenDialog}>Open Dialog</forge-button>
       <forge-dialog>
         <forge-content-scaffold>
-          <h1 slot="header-start" class="forge-typography--heading4">Edit Settings</h1>
+          <span slot="header-start">Edit Settings</span>
           <forge-icon-button aria-label="Close dialog" slot="header-end" @click=${handleCloseDialog}>
             <forge-icon name="close"></forge-icon>
           </forge-icon-button>

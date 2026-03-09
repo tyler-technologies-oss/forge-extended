@@ -25,7 +25,7 @@ const component = 'forge-content-scaffold';
 const meta = {
   title: 'Components/Content Scaffold',
   component,
-  tags: [''],
+  tags: ['hidden'],
   args: {
     fullWidthHeader: true
   },

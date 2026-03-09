@@ -24,7 +24,7 @@ const component = 'forge-content-scaffold';
 const meta = {
   title: 'Components/Content Scaffold',
   component,
-  tags: [''],
+  tags: ['hidden'],
   decorators: [
     storyStyles(`
       * {
@@ -48,7 +48,6 @@ const meta = {
       <div class="card-container">
         <forge-card style="--forge-card-padding: 0;">
           <forge-content-scaffold style="--forge-content-scaffold-body-height: 200px;">
-            <!-- <div slot="before-header-start">before-start-slot</div> -->
             <div slot="header-start">Project Details</div>
             <forge-icon-button aria-label="More actions" slot="header-end">
               <forge-icon name="more_vert"></forge-icon>
