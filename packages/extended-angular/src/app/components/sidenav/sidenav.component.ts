@@ -63,6 +63,7 @@ export class SidenavComponent implements OnInit, AfterViewInit {
     { label: 'Multi Select Header', value: '/component/multi-select-header' },
     { label: 'Quantity Field', value: '/component/quantity-field' },
     { label: 'Responsive Toolbar', value: '/component/responsive-toolbar' },
+    { label: 'Structured Card', value: '/component/structured-card' },
     { label: 'User Profile', value: '/component/user-profile' }
   ];
 

@@ -41,6 +41,11 @@ const routes: Routes = [
   {
     path: 'app-launcher',
     loadChildren: () => import('../../views/components/app-launcher/app-launcher.module').then(m => m.AppLauncherModule)
+  },
+  {
+    path: 'structured-card',
+    loadChildren: () =>
+      import('../../views/components/structured-card/structured-card.module').then(m => m.StructuredCardModule)
   }
 ];
 

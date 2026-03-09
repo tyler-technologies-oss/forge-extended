@@ -712,6 +712,10 @@
           "name": "ContentScaffoldComponent",
           "cssProperties": [
             {
+              "description": "Controls the gap between header, body, and footer sections. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-gap"
+            },
+            {
               "description": "Controls the height of the header section. Defaults to `auto`.",
               "name": "--forge-content-scaffold-header-height"
             },
@@ -728,8 +732,8 @@
               "name": "--forge-content-scaffold-body-height"
             },
             {
-              "description": "Controls the padding applied to the body section. Defaults to Forge's medium spacing token.",
-              "name": "--forge-content-scaffold-body-padding"
+              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-body-padding-inline"
             },
             {
               "description": "Controls the height of the footer section. Defaults to `auto`.",
@@ -766,11 +770,15 @@
               "name": "body"
             },
             {
-              "description": "Content displayed at the start of the footer section. Conditionally rendered when footer content is present.",
+              "description": "Full-width footer content. Only used when `fullWidthFooter` is true.",
+              "name": "footer"
+            },
+            {
+              "description": "Content displayed at the start of the footer section. Only used when `fullWidthFooter` is false.",
               "name": "footer-start"
             },
             {
-              "description": "Content displayed at the end of the footer section. Conditionally rendered when footer content is present.",
+              "description": "Content displayed at the end of the footer section. Only used when `fullWidthFooter` is false.",
               "name": "footer-end"
             }
           ],
@@ -785,6 +793,17 @@
               "default": "false",
               "description": "When true, enables the full-width header mode using the `header` slot instead of the multi-slot layout.",
               "attribute": "full-width-header"
+            },
+            {
+              "kind": "field",
+              "name": "fullWidthFooter",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "When true, enables the full-width footer mode using the `footer` slot instead of the multi-slot layout.",
+              "attribute": "full-width-footer"
             }
           ],
           "attributes": [
@@ -796,6 +815,15 @@
               "default": "false",
               "description": "When true, enables the full-width header mode using the `header` slot instead of the multi-slot layout.",
               "fieldName": "fullWidthHeader"
+            },
+            {
+              "name": "full-width-footer",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When true, enables the full-width footer mode using the `footer` slot instead of the multi-slot layout.",
+              "fieldName": "fullWidthFooter"
             }
           ],
           "superclass": {
@@ -1372,7 +1400,13 @@
             "package": "lit"
           },
           "tagName": "forge-structured-card",
-          "customElement": true
+          "customElement": true,
+          "states": [
+            {
+              "name": "with-table",
+              "description": "Applied when the `withTable` property is true. Used to style the component for table content."
+            }
+          ]
         }
       ],
       "exports": [
@@ -1486,6 +1520,12 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/types/types.ts",
+      "declarations": [],
+      "exports": []
     },
     {
       "kind": "javascript-module",
@@ -1712,12 +1752,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/types/types.ts",
-      "declarations": [],
-      "exports": []
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "declarations": [
         {
@@ -1883,7 +1917,7 @@
     },
     "ContentScaffoldComponent": {
       "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "lineNumber": 38
+      "lineNumber": 40
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
@@ -1907,7 +1941,7 @@
     },
     "StructuredCardComponent": {
       "path": "src/lib/structured-card/structured-card.ts",
-      "lineNumber": 31
+      "lineNumber": 33
     },
     "ThemeToggleTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
@@ -1921,13 +1955,13 @@
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 41
     },
-    "UserProfileComponent": {
-      "path": "src/lib/user-profile/user-profile.ts",
-      "lineNumber": 49
-    },
     "HeadingLevel": {
       "path": "src/lib/types/types.ts",
       "lineNumber": 1
+    },
+    "UserProfileComponent": {
+      "path": "src/lib/user-profile/user-profile.ts",
+      "lineNumber": 49
     },
     "AppLauncherLink": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
