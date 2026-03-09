@@ -1,5 +1,6 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/typography' as forge-typography;
+@use '../utils/mixins';
 
 :host {
   display: block;
@@ -17,8 +18,7 @@ forge-content-scaffold {
 }
 
 .footer-actions {
-  display: flex;
-  align-items: center;
+  @include mixins.stack($gap: 0, $isInline: true);
 }
 
 ::slotted([slot='title']) {
