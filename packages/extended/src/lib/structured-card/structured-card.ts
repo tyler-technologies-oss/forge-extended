@@ -39,13 +39,15 @@ export class StructuredCardComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
   /**
-   * Controls the heading level for the title content
+   * Controls the semantic heading level for the title content. Defaults to `2` (h2).
+   * Use this to maintain proper heading hierarchy in your document structure.
    */
   @property({ attribute: 'heading-level', type: Number })
   public headingLevel: HeadingLevel = 2;
 
   /**
-   * Controls whether the card includes table styling
+   * When set to `true`, removes the default padding from the body section to accommodate
+   * tables and other full-width content. This ensures tables extend edge-to-edge within the card body.
    */
   @property({ attribute: 'with-table', type: Boolean })
   public withTable = false;

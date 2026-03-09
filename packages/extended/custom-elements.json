@@ -1305,7 +1305,7 @@
               },
               "privacy": "public",
               "default": "2",
-              "description": "Controls the heading level for the title content",
+              "description": "Controls the semantic heading level for the title content. Defaults to `2` (h2).\nUse this to maintain proper heading hierarchy in your document structure.",
               "attribute": "heading-level"
             },
             {
@@ -1316,7 +1316,7 @@
               },
               "privacy": "public",
               "default": "false",
-              "description": "Controls whether the card includes table styling",
+              "description": "When set to `true`, removes the default padding from the body section to accommodate\ntables and other full-width content. This ensures tables extend edge-to-edge within the card body.",
               "attribute": "with-table"
             }
           ],
@@ -1327,7 +1327,7 @@
                 "text": "HeadingLevel"
               },
               "default": "2",
-              "description": "Controls the heading level for the title content",
+              "description": "Controls the semantic heading level for the title content. Defaults to `2` (h2).\nUse this to maintain proper heading hierarchy in your document structure.",
               "fieldName": "headingLevel"
             },
             {
@@ -1336,7 +1336,7 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Controls whether the card includes table styling",
+              "description": "When set to `true`, removes the default padding from the body section to accommodate\ntables and other full-width content. This ensures tables extend edge-to-edge within the card body.",
               "fieldName": "withTable"
             }
           ],

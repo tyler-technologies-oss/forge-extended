@@ -1,93 +1,67 @@
 import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
 import CustomArgTypes from '../../blocks/CustomArgTypes';
 import * as StructuredCardStories from './StructuredCard.stories';
+import * as WithTableStories from './WithTable.stories';
+import * as WithBeforeTitleSlotStories from './WithBeforeTitleSlot.stories';
+import * as WorkflowStatusCardStories from './WorkflowStatusCard.stories';
+import * as ScrollableBodyContentStories from './ScrollableBodyContent.stories';
 
 <Meta of={StructuredCardStories} />
 
 <Title />
 
-The Structured Card component provides a pre-structured card layout with designated slots for title, header actions, body content, and footer actions. Built on top of the Content Scaffold component, it standardizes the common card pattern used throughout applications for displaying organized, actionable content.
+🚧 **Experimental** 🚧
 
-This component helps maintain visual consistency across your application by providing a reusable card structure that eliminates the need to manually configure layouts for common use cases like detail panels, form containers, and data displays.
+The Structured Card component provides a pre-configured card layout optimized for the most common card patterns in Tyler Cloud applications. Built on top of the Content Scaffold component, it combines a card shell with a structured header, body, and footer layout—providing designated slots for titles, actions, content, and buttons.
+
+This component is the recommended approach for building card-based UIs throughout Tyler Cloud applications. It ensures visual consistency and eliminates the repetitive work of manually configuring the same card structure for common patterns like data tables, detail panels, workflow cards, and form containers.
 
 <Canvas of={StructuredCardStories.Demo} />
 
 ## Usage
 
-The Structured Card is ideal for creating consistent card layouts where you need a title header with optional actions, a scrollable body section, and footer actions. The component automatically handles the layout arrangement using the Content Scaffold, ensuring proper spacing and structure.
+The Structured Card is the recommended way to build consistent card-based UIs throughout Tyler Cloud applications. It provides a standardized layout pattern that ensures visual consistency while eliminating the need to manually configure the same card structure repeatedly.
 
 ## Structure
 
 The component provides several slots for organizing content:
 
-- **before-title** - Optional slot for content before the title in the header
+- **before-title** - Optional slot for content before the title in the header (e.g., back button, icon)
 - **title** - Title/heading content for the card
-- **header-actions** - Optional actions or controls displayed in the header (right side)
+- **header-actions** - Optional actions or controls displayed in the header (e.g., menus, icon buttons)
 - **body** - Main content area that expands to fill available space
-- **footer-secondary-action** - Optional secondary action displayed in the footer (typically a cancel or back button)
-- **footer-primary-action** - Optional primary action displayed in the footer (typically a submit or save button)
-
-## Common Use Cases
-
-The Structured Card is particularly useful for:
-
-- Detail panels with title and action buttons
-- Form containers with a header and submit actions
-- Data displays with filtering controls in the header
-- Dashboard widgets with consistent structure
-- Modal-like content areas with titles and action buttons
-
-## Properties
-
-### heading-level
-
-Controls the semantic heading level for the title content. Defaults to `2` (h2).
-
-```html
-<forge-structured-card heading-level="3">
-  <div slot="title">Section Title</div>
-  <div slot="body">Content goes here</div>
-</forge-structured-card>
-```
-
-## Layout Behavior
-
-The Structured Card uses the Content Scaffold component internally, which means:
-
-- Header and footer auto-size to their content
-- Body expands to fill all remaining vertical space
-- The container inherits height from its parent
-- Built-in padding is applied to the body section
+- **footer-start** - Optional content at the start of the footer (e.g., pagination controls)
+- **footer-secondary-action** - Optional secondary action button (typically cancel or back)
+- **footer-primary-action** - Optional primary action button (typically save or submit)
 
 > **Note:** For the Structured Card to properly fill available space, ensure its parent container has a defined height.
 
 ## Examples
 
-### Basic Card with Title and Body
+### Data Table with Pagination
 
-```html
-<forge-structured-card>
-  <div slot="title">User Profile</div>
-  <div slot="body">
-    <p>User information goes here...</p>
-  </div>
-</forge-structured-card>
-```
+Use the `with-table` attribute when the body contains a table to remove default padding. Combine with header actions and footer pagination for complete data management UIs:
 
-### Card with Header and Footer Actions
+<Canvas of={WithTableStories.WithTable} />
 
-```html
-<forge-structured-card>
-  <div slot="title">Edit Settings</div>
-  <forge-icon-button slot="header-actions" aria-label="Close">
-    <forge-icon name="close"></forge-icon>
-  </forge-icon-button>
-  <div slot="body">
-    <p>Form content goes here...</p>
-  </div>
-  <forge-button slot="footer-secondary-action" variant="outlined">Cancel</forge-button>
-  <forge-button slot="footer-primary-action" variant="raised">Save</forge-button>
-</forge-structured-card>
-```
+### Detail Panel with Back Navigation
+
+Use the `before-title` slot for back buttons or icons that appear before the title:
+
+<Canvas of={WithBeforeTitleSlotStories.WithBeforeTitleSlot} />
+
+### Workflow Card with Actions
+
+Compact cards for workflow management and status updates:
+
+<Canvas of={WorkflowStatusCardStories.WorkflowStatusCard} />
+
+### Scrollable Content with Fixed Height
+
+Control the body height using the CSS custom property for scrollable content areas:
+
+<Canvas of={ScrollableBodyContentStories.ScrollableBodyContent} />
 
 ## API
+
+<CustomArgTypes />
