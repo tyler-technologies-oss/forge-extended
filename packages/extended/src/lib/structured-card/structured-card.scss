@@ -18,7 +18,7 @@ forge-content-scaffold {
 }
 
 .footer-actions {
-  @include mixins.stack($gap: 0, $isInline: true);
+  @include mixins.stack($gap: 16px, $isInline: true);
 }
 
 ::slotted([slot='title']) {
@@ -27,8 +27,4 @@ forge-content-scaffold {
 
 ::slotted([slot='body']) {
   height: var(--_forge-structured-card-body-height);
-}
-
-::slotted([slot='footer-secondary-action']) {
-  margin-inline-end: #{forge-spacing.variable(medium)};
 }
