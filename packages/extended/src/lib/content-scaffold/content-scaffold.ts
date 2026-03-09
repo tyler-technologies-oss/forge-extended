@@ -1,6 +1,7 @@
 import { LitElement, TemplateResult, html, unsafeCSS, nothing } from 'lit';
 import { customElement, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
+import { classMap } from 'lit/directives/class-map.js';
 import styles from './content-scaffold.scss?inline';
 import { defineToolbarComponent } from '@tylertech/forge';
 
@@ -63,7 +64,7 @@ export class ContentScaffoldComponent extends LitElement {
   readonly #footerStartSlot = html`<slot name="footer-start"></slot>`;
   readonly #footerEndSlot = html`<slot name="footer-end"></slot>`;
 
-  get #header(): TemplateResult | typeof nothing {
+  get #header(): TemplateResult {
     const hasHeaderContent =
       this._slottedBeforeHeaderStartNodes.length > 0 ||
       this._slottedHeaderStartNodes.length > 0 ||
@@ -72,16 +73,17 @@ export class ContentScaffoldComponent extends LitElement {
     const hasBeforeHeaderStart = this._slottedBeforeHeaderStartNodes.length > 0;
     const containerClass = hasBeforeHeaderStart ? 'header-start-container' : 'header-start-container no-before-content';
 
-    return when(
-      hasHeaderContent,
-      () => html`
-        <div class="header">
-          <div class="${containerClass}">${this.#beforeHeaderStartSlot} ${this.#headerStartSlot}</div>
-          <div class="header-end">${this.#headerEndSlot}</div>
-        </div>
-      `,
-      () => html`${this.#beforeHeaderStartSlot}${this.#headerStartSlot}${this.#headerEndSlot}`
-    );
+    const headerClasses = {
+      header: true,
+      'display-none': !hasHeaderContent
+    };
+
+    return html`
+      <div class=${classMap(headerClasses)}>
+        <div class="${containerClass}">${this.#beforeHeaderStartSlot} ${this.#headerStartSlot}</div>
+        <div class="header-end">${this.#headerEndSlot}</div>
+      </div>
+    `;
   }
 
   get #body(): TemplateResult | typeof nothing {

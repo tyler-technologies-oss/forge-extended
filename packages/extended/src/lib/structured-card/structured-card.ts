@@ -51,18 +51,36 @@ export class StructuredCardComponent extends LitElement {
   @property({ attribute: 'with-table', type: Boolean })
   public withTable = false;
 
+  @queryAssignedNodes({ slot: 'title', flatten: true })
+  private _titleNodes!: Node[];
+
   @queryAssignedNodes({ slot: 'footer-secondary-action', flatten: true })
   private _footerSecondaryActionNodes!: Node[];
 
   @queryAssignedNodes({ slot: 'footer-primary-action', flatten: true })
   private _footerPrimaryActionNodes!: Node[];
 
+  readonly #titleSlot = html`<slot name="title" @slotchange=${this.#handleSlotChange}></slot>`;
   readonly #footerSecondaryActionSlot = html`<slot
     name="footer-secondary-action"
     @slotchange=${this.#handleSlotChange}></slot>`;
   readonly #footerPrimaryActionSlot = html`<slot
     name="footer-primary-action"
     @slotchange=${this.#handleSlotChange}></slot>`;
+
+  get #title(): TemplateResult | typeof nothing {
+    const hasTitle = this._titleNodes.length > 0;
+
+    return when(
+      hasTitle,
+      () => html`
+        <div role="heading" aria-level=${this.headingLevel} id="title" class="title" slot="header-start">
+          ${this.#titleSlot}
+        </div>
+      `,
+      () => html`${this.#titleSlot}`
+    );
+  }
 
   get #footerActions(): TemplateResult | typeof nothing {
     const hasSecondaryAction = this._footerSecondaryActionNodes.length > 0;
@@ -82,7 +100,7 @@ export class StructuredCardComponent extends LitElement {
 
   #handleSlotChange(evt: Event): void {
     const slotName = (evt.target as HTMLSlotElement).name;
-    if (['footer-secondary-action', 'footer-primary-action'].includes(slotName)) {
+    if (['title', 'footer-secondary-action', 'footer-primary-action'].includes(slotName)) {
       this.requestUpdate();
     }
   }
@@ -92,9 +110,7 @@ export class StructuredCardComponent extends LitElement {
       <forge-content-scaffold
         style=${styleMap({ '--forge-content-scaffold-body-padding': this.withTable ? '0' : undefined })}>
         <slot name="before-title" slot="before-header-start"></slot>
-        <div role="heading" aria-level=${this.headingLevel} id="title" class="title" slot="header-start">
-          <slot name="title"></slot>
-        </div>
+        ${this.#title}
         <slot name="header-actions" slot="header-end"></slot>
         <slot name="body" slot="body"></slot>
         <slot name="footer-start" slot="footer-start"></slot>
