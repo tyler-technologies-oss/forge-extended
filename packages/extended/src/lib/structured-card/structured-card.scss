@@ -21,7 +21,7 @@ forge-content-scaffold {
   --forge-content-scaffold-body-height: var(--_forge-structured-card-body-height);
 
   &.with-table {
-    --forge-content-scaffold-body-padding: 0;
+    --forge-content-scaffold-body-padding-inline: 0;
     --forge-content-scaffold-gap: 0;
   }
 }
