@@ -2,7 +2,6 @@ import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import styles from './content-scaffold.scss?inline';
-import { defineToolbarComponent } from '@tylertech/forge';
 import { hideWhenEmpty } from '../utils/lit-utils.js';
 
 declare global {
@@ -40,9 +39,6 @@ export const ContentScaffoldComponentTagName: keyof HTMLElementTagNameMap = 'for
  */
 @customElement(ContentScaffoldComponentTagName)
 export class ContentScaffoldComponent extends LitElement {
-  static {
-    defineToolbarComponent();
-  }
   public static override styles = unsafeCSS(styles);
 
   @property({ type: Boolean, attribute: 'full-width-header' })
