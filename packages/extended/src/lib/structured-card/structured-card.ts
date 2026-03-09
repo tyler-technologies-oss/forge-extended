@@ -96,7 +96,7 @@ export class StructuredCardComponent extends LitElement {
         </div>
         <slot name="header-actions" slot="header-end"></slot>
         <slot name="body" slot="body"></slot>
-        <slot name="footer" slot="footer-start"></slot>
+        <slot name="footer-start" slot="footer-start"></slot>
         ${this.#footerActions}
       </forge-content-scaffold>
     </forge-card>`;

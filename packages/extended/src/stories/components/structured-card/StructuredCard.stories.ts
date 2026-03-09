@@ -14,52 +14,16 @@ const component = 'forge-structured-card';
 const meta = {
   title: 'Components/Structured Card',
   component,
-  render: args => {
+  render: () => {
     return html`
-      <style>
-        .slot-demo {
-          padding: var(--forge-spacing-xxsmall);
-          border: 2px dashed;
-          border-radius: 4px;
-        }
-        .slot-demo--info {
-          background: var(--forge-theme-info-container-low);
-          border-color: var(--forge-theme-info);
-        }
-        .slot-demo--primary {
-          background: var(--forge-theme-primary-container-low);
-          border-color: var(--forge-theme-primary);
-        }
-
-        .slot-demo--success {
-          background: var(--forge-theme-success-container-low);
-          border-color: var(--forge-theme-success);
-        }
-        .slot-demo--tertiary {
-          background: var(--forge-theme-tertiary-container-low);
-          border-color: var(--forge-theme-tertiary);
-        }
-
-        .slot-demo--body {
-          min-height: 120px;
-        }
-      </style>
-      <forge-structured-card>
-        <div slot="before-title" class="slot-demo slot-demo--info forge-typography--label2">before-title slot</div>
-        <div slot="title" class="slot-demo slot-demo--primary forge-typography--label2">title slot</div>
-        <div slot="header-actions" class="slot-demo slot-demo--primary forge-typography--label2">
-          header-actions slot
-        </div>
-        <div slot="body" class="slot-demo slot-demo--success slot-demo--body forge-typography--body2">
-          body slot - Main content area
-        </div>
-        <div slot="footer-secondary-action" class="slot-demo slot-demo--tertiary forge-typography--label2">
-          footer-secondary-action slot
-        </div>
-
-        <div slot="footer-primary-action" class="slot-demo slot-demo--tertiary forge-typography--label2">
-          footer-primary-action slot
-        </div>
+      <forge-structured-card id="storybook-demo">
+        <span slot="before-title">before-title slot</span>
+        <span slot="title">title slot</span>
+        <span slot="header-actions"> header-actions slot </span>
+        <span slot="body">body slot</span>
+        <span slot="footer-start">footer-start slot</span>
+        <span slot="footer-secondary-action">footer-secondary-action slot</span>
+        <span slot="footer-primary-action">footer-primary-action slot</span>
       </forge-structured-card>
     `;
   }
