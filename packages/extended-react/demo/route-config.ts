@@ -6,6 +6,7 @@ import { QuantityFieldDemo } from './demos/quantity-field/QuantityFieldDemo';
 import { ResponsiveToolbarDemo } from './demos/responsive-toolbar/ResponsiveToolbarDemo';
 import { UserProfileDemo } from './demos/user-profile/UserProfileDemo';
 import { AppLauncherDemo } from './demos/app-launcher/AppLauncherDemo';
+import { StructuredCardDemo } from './demos/structured-card/StructuredCardDemo';
 
 export interface IAppRoute extends RouteProps {
   path: string;
@@ -26,6 +27,7 @@ const routes: IAppRoute[] = [
       { path: '/multi-select-header', component: MultiSelectHeaderDemo, text: 'Multi Select Header' },
       { path: '/quantity-field', component: QuantityFieldDemo, text: 'Quantity Field' },
       { path: '/responsive-toolbar', component: ResponsiveToolbarDemo, text: 'Responsive Toolbar' },
+      { path: '/structured-card', component: StructuredCardDemo, text: 'Structured Card' },
       { path: '/user-profile', component: UserProfileDemo, text: 'User Profile' }
     ]
   }

@@ -5,7 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { DemoCardComponent } from '../../../shared/components/demo-card/demo-card.component';
 import { StructuredCardDemoComponent } from './structured-card.component';
 import { StructuredCardRoutingModule } from './structured-card-routing.module';
-import { ForgeButtonModule, ForgeIconButtonModule, ForgeIconModule } from '@tylertech/forge-angular';
+import { ForgeButtonModule, ForgeIconButtonModule, ForgeIconModule, ForgeStackModule } from '@tylertech/forge-angular';
 import { ForgeExtendedStructuredCardModule } from 'projects/forge-extended-angular/src/lib/structured-card/structured-card.module';
 
 @NgModule({
@@ -18,7 +18,8 @@ import { ForgeExtendedStructuredCardModule } from 'projects/forge-extended-angul
     ForgeExtendedStructuredCardModule,
     ForgeIconModule,
     ForgeIconButtonModule,
-    ForgeButtonModule
+    ForgeButtonModule,
+    ForgeStackModule
   ]
 })
 export class StructuredCardModule {}
