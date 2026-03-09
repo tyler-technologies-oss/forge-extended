@@ -12,6 +12,7 @@ forge-content-scaffold {
 
 .container {
   --forge-card-padding: 0;
+  // We don't have a token to handle 12px so this is hardcoded for now
   --forge-card-shape: 12px;
 }
 
