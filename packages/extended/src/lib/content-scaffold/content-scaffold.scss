@@ -33,13 +33,16 @@
   border-bottom: 1px solid var(--forge-theme-outline);
 }
 
+.header-full-content {
+  display: block;
+}
+
 .header-start-container {
   grid-area: start;
   display: flex;
   align-items: center;
 
-  // When before-header-start slot is empty, add margin to header-start content
-  &.no-before-content slot[name='header-start']::slotted(*) {
+  slot[name='header-start']::slotted(*) {
     margin-inline-start: #{forge-spacing.variable(medium)};
   }
 }
@@ -81,8 +84,4 @@
 
 .footer-end {
   grid-area: end;
-}
-
-.display-none {
-  display: none;
 }

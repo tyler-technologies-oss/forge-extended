@@ -746,15 +746,19 @@
           ],
           "slots": [
             {
-              "description": "Content displayed before the header start slot. Conditionally rendered when header content is present.",
+              "description": "Full-width header content. Only used when `fullWidthHeader` is true.",
+              "name": "header"
+            },
+            {
+              "description": "Content displayed before the header start slot. Only used when `fullWidthHeader` is false.",
               "name": "before-header-start"
             },
             {
-              "description": "Content displayed at the start of the header section. Conditionally rendered when header content is present.",
+              "description": "Content displayed at the start of the header section. Only used when `fullWidthHeader` is false.",
               "name": "header-start"
             },
             {
-              "description": "Content displayed at the end of the header section. Conditionally rendered when header content is present.",
+              "description": "Content displayed at the end of the header section. Only used when `fullWidthHeader` is false.",
               "name": "header-end"
             },
             {
@@ -770,7 +774,30 @@
               "name": "footer-end"
             }
           ],
-          "members": [],
+          "members": [
+            {
+              "kind": "field",
+              "name": "fullWidthHeader",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "When true, enables the full-width header mode using the `header` slot instead of the multi-slot layout.",
+              "attribute": "full-width-header"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "full-width-header",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "When true, enables the full-width header mode using the `header` slot instead of the multi-slot layout.",
+              "fieldName": "fullWidthHeader"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
@@ -1685,6 +1712,12 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/types/types.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "declarations": [
         {
@@ -1739,12 +1772,6 @@
           }
         }
       ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/types/types.ts",
-      "declarations": [],
-      "exports": []
     },
     {
       "kind": "javascript-module",
@@ -1856,7 +1883,7 @@
     },
     "ContentScaffoldComponent": {
       "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "lineNumber": 34
+      "lineNumber": 38
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
@@ -1898,6 +1925,10 @@
       "path": "src/lib/user-profile/user-profile.ts",
       "lineNumber": 49
     },
+    "HeadingLevel": {
+      "path": "src/lib/types/types.ts",
+      "lineNumber": 1
+    },
     "AppLauncherLink": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "lineNumber": 16
@@ -1905,10 +1936,6 @@
     "AppLauncherLinkComponent": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "lineNumber": 26
-    },
-    "HeadingLevel": {
-      "path": "src/lib/types/types.ts",
-      "lineNumber": 1
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",

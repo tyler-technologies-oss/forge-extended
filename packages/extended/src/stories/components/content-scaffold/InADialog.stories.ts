@@ -23,7 +23,7 @@ const component = 'forge-content-scaffold';
 const meta = {
   title: 'Components/Content Scaffold',
   component,
-  tags: ['hidden'],
+  tags: [''],
   decorators: [
     storyStyles(`
       * {

@@ -1,10 +1,19 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '../utils/mixins';
 
 :host {
   display: block;
   --_forge-structured-card-body-height: var(--forge-structured-card-body-height, auto);
+}
+
+.header-container {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  grid-template-areas: 'start . end';
+  border-bottom: 1px solid #{forge-theme.variable(outline)};
 }
 
 forge-content-scaffold {
@@ -17,12 +26,21 @@ forge-content-scaffold {
   --forge-card-shape: 12px;
 }
 
-.footer-actions {
-  @include mixins.stack($gap: 16px, $isInline: true);
+.title-container {
+  @include mixins.stack($gap: 0, $isInline: true);
+  grid-area: start;
+}
+
+.actions-container {
+  grid-area: end;
 }
 
 ::slotted([slot='title']) {
   @include forge-typography.style(heading3);
+}
+
+.footer-actions {
+  @include mixins.stack($gap: 16px, $isInline: true);
 }
 
 ::slotted([slot='body']) {

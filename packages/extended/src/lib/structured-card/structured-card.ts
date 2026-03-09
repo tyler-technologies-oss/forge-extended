@@ -1,9 +1,9 @@
-import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
-import { when } from 'lit/directives/when.js';
+import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
+import { customElement, property } from 'lit/decorators.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import { defineCardComponent } from '@tylertech/forge';
 import { defineContentScaffoldComponent } from '../content-scaffold';
+import { hideWhenEmpty } from '../utils/lit-utils.js';
 import styles from './structured-card.scss?inline';
 import { HeadingLevel } from '$lib/types/types';
 
@@ -51,71 +51,33 @@ export class StructuredCardComponent extends LitElement {
   @property({ attribute: 'with-table', type: Boolean })
   public withTable = false;
 
-  @queryAssignedNodes({ slot: 'title', flatten: true })
-  private _titleNodes!: Node[];
-
-  @queryAssignedNodes({ slot: 'footer-secondary-action', flatten: true })
-  private _footerSecondaryActionNodes!: Node[];
-
-  @queryAssignedNodes({ slot: 'footer-primary-action', flatten: true })
-  private _footerPrimaryActionNodes!: Node[];
-
-  readonly #titleSlot = html`<slot name="title" @slotchange=${this.#handleSlotChange}></slot>`;
-  readonly #footerSecondaryActionSlot = html`<slot
-    name="footer-secondary-action"
-    @slotchange=${this.#handleSlotChange}></slot>`;
-  readonly #footerPrimaryActionSlot = html`<slot
-    name="footer-primary-action"
-    @slotchange=${this.#handleSlotChange}></slot>`;
-
-  get #title(): TemplateResult | typeof nothing {
-    const hasTitle = this._titleNodes.length > 0;
-
-    return when(
-      hasTitle,
-      () => html`
-        <div role="heading" aria-level=${this.headingLevel} id="title" class="title" slot="header-start">
-          ${this.#titleSlot}
-        </div>
-      `,
-      () => html`${this.#titleSlot}`
-    );
-  }
-
-  get #footerActions(): TemplateResult | typeof nothing {
-    const hasSecondaryAction = this._footerSecondaryActionNodes.length > 0;
-    const hasPrimaryAction = this._footerPrimaryActionNodes.length > 0;
-    const hasFooterActions = hasSecondaryAction || hasPrimaryAction;
-
-    return when(
-      hasFooterActions,
-      () => html`
-        <div class="footer-actions" slot="footer-end">
-          ${this.#footerSecondaryActionSlot} ${this.#footerPrimaryActionSlot}
-        </div>
-      `,
-      () => html` ${this.#footerSecondaryActionSlot} ${this.#footerPrimaryActionSlot} `
-    );
-  }
-
-  #handleSlotChange(evt: Event): void {
-    const slotName = (evt.target as HTMLSlotElement).name;
-    if (['title', 'footer-secondary-action', 'footer-primary-action'].includes(slotName)) {
-      this.requestUpdate();
-    }
-  }
-
   public override render(): TemplateResult {
-    return html` <forge-card class="container">
-      <forge-content-scaffold
-        style=${styleMap({ '--forge-content-scaffold-body-padding': this.withTable ? '0' : undefined })}>
-        <slot name="before-title" slot="before-header-start"></slot>
-        ${this.#title}
-        <slot name="header-actions" slot="header-end"></slot>
-        <slot name="body" slot="body"></slot>
-        <slot name="footer-start" slot="footer-start"></slot>
-        ${this.#footerActions}
-      </forge-content-scaffold>
-    </forge-card>`;
+    return html`
+      <forge-card class="container">
+        <forge-content-scaffold
+          full-width-header
+          style=${styleMap({ '--forge-content-scaffold-body-padding': this.withTable ? '0' : undefined })}>
+          <div slot="header" class="header-container">
+            <div class="title-container">
+              <slot name="before-title" slot="before-header-start"></slot>
+              <div role="heading" aria-level=${this.headingLevel} id="title" slot="header-start" ${hideWhenEmpty()}>
+                <slot name="title"></slot>
+              </div>
+            </div>
+
+            <div class="actions-container">
+              <slot name="header-actions" slot="header-end"></slot>
+            </div>
+          </div>
+
+          <slot name="body" slot="body"></slot>
+          <slot name="footer-start" slot="footer-start"></slot>
+          <div class="footer-actions" slot="footer-end" ${hideWhenEmpty()}>
+            <slot name="footer-secondary-action"></slot>
+            <slot name="footer-primary-action"></slot>
+          </div>
+        </forge-content-scaffold>
+      </forge-card>
+    `;
   }
 }
