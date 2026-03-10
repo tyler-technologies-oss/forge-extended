@@ -5,7 +5,7 @@
 
 :host {
   display: block;
-  --_forge-structured-card-body-height: var(--forge-structured-card-body-height, auto);
+  --_structured-card-body-height: var(--forge-structured-card-body-height, auto);
 }
 
 :host(:state(with-table)) {
@@ -29,7 +29,7 @@
 }
 
 forge-content-scaffold {
-  --forge-content-scaffold-body-height: var(--_forge-structured-card-body-height);
+  --forge-content-scaffold-body-height: var(--_structured-card-body-height);
 }
 
 .container {
@@ -75,5 +75,5 @@ forge-content-scaffold {
 }
 
 ::slotted([slot='body']) {
-  height: var(--_forge-structured-card-body-height);
+  height: var(--_structured-card-body-height);
 }

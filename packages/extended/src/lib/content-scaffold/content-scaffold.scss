@@ -6,33 +6,33 @@
 :host {
   display: block;
   height: 100%;
-  --_forge-content-scaffold-gap: var(--forge-content-scaffold-gap, #{forge-spacing.variable(medium)});
-  --_forge-content-scaffold-header-height: var(--forge-content-scaffold-header-height, auto);
-  --_forge-content-scaffold-header-background: var(--forge-content-scaffold-header-background, transparent);
-  --_forge-content-scaffold-header-min-height: var(--forge-content-scaffold-header-min-height, 48px);
-  --_forge-content-scaffold-body-height: var(--forge-content-scaffold-body-height, auto);
-  --_forge-content-scaffold-body-padding-inline: var(
+  --_content-scaffold-gap: var(--forge-content-scaffold-gap, #{forge-spacing.variable(medium)});
+  --_content-scaffold-header-height: var(--forge-content-scaffold-header-height, auto);
+  --_content-scaffold-header-background: var(--forge-content-scaffold-header-background, transparent);
+  --_content-scaffold-header-min-height: var(--forge-content-scaffold-header-min-height, 48px);
+  --_content-scaffold-body-height: var(--forge-content-scaffold-body-height, auto);
+  --_content-scaffold-body-padding-inline: var(
     --forge-content-scaffold-body-padding-inline,
     #{forge-spacing.variable(medium)}
   );
-  --_forge-content-scaffold-footer-height: var(--forge-content-scaffold-footer-height, auto);
-  --_forge-content-scaffold-footer-background: var(--forge-content-scaffold-footer-background, transparent);
-  --_forge-content-scaffold-footer-min-height: var(--forge-content-scaffold-footer-min-height, 48px);
+  --_content-scaffold-footer-height: var(--forge-content-scaffold-footer-height, auto);
+  --_content-scaffold-footer-background: var(--forge-content-scaffold-footer-background, transparent);
+  --_content-scaffold-footer-min-height: var(--forge-content-scaffold-footer-min-height, 48px);
 }
 
 .container {
   box-sizing: border-box;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: var(--_forge-content-scaffold-gap);
+  gap: var(--_content-scaffold-gap);
   height: 100%;
 }
 
 .header {
   @include mixins.toolbar-layout;
-  background-color: var(--_forge-content-scaffold-header-background);
-  height: var(--_forge-content-scaffold-header-height);
-  min-height: var(--_forge-content-scaffold-header-min-height);
+  background-color: var(--_content-scaffold-header-background);
+  height: var(--_content-scaffold-header-height);
+  min-height: var(--_content-scaffold-header-min-height);
   border-start-start-radius: 12px;
   border-start-end-radius: 12px;
   border-bottom: 1px solid var(--forge-theme-outline);
@@ -62,19 +62,19 @@
 
 .body {
   overflow-y: auto;
-  height: var(--_forge-content-scaffold-body-height);
+  height: var(--_content-scaffold-body-height);
 }
 
 .body-inner {
-  padding-inline: var(--_forge-content-scaffold-body-padding-inline);
+  padding-inline: var(--_content-scaffold-body-padding-inline);
 }
 
 .footer {
   @include mixins.toolbar-layout;
-  background-color: var(--_forge-content-scaffold-footer-background);
+  background-color: var(--_content-scaffold-footer-background);
 
-  height: var(--_forge-content-scaffold-footer-height);
-  min-height: var(--_forge-content-scaffold-footer-min-height);
+  height: var(--_content-scaffold-footer-height);
+  min-height: var(--_content-scaffold-footer-min-height);
   padding-inline: #{forge-spacing.variable(medium)};
   padding-block-end: #{forge-spacing.variable(xxsmall)};
 
