@@ -1,5 +1,5 @@
-import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
+import { customElement, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import styles from './content-scaffold.scss?inline';
 import { hideWhenEmpty } from '../utils/lit-utils.js';
@@ -15,17 +15,14 @@ export const ContentScaffoldComponentTagName: keyof HTMLElementTagNameMap = 'for
 /**
  * @tag forge-content-scaffold
  *
- * @property {boolean} fullWidthHeader - When true, enables the full-width header mode using the `header` slot instead of the multi-slot layout.
- * @property {boolean} fullWidthFooter - When true, enables the full-width footer mode using the `footer` slot instead of the multi-slot layout.
- *
- * @slot header - Full-width header content. Only used when `fullWidthHeader` is true.
- * @slot before-header-start - Content displayed before the header start slot. Only used when `fullWidthHeader` is false.
- * @slot header-start - Content displayed at the start of the header section. Only used when `fullWidthHeader` is false.
- * @slot header-end - Content displayed at the end of the header section. Only used when `fullWidthHeader` is false.
+ * @slot header - Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.
+ * @slot before-header-start - Content displayed before the header start slot. Only shown when the `header` slot is empty.
+ * @slot header-start - Content displayed at the start of the header section. Only shown when the `header` slot is empty.
+ * @slot header-end - Content displayed at the end of the header section. Only shown when the `header` slot is empty.
  * @slot body - The main body content that expands to fill available space.
- * @slot footer - Full-width footer content. Only used when `fullWidthFooter` is true.
- * @slot footer-start - Content displayed at the start of the footer section. Only used when `fullWidthFooter` is false.
- * @slot footer-end - Content displayed at the end of the footer section. Only used when `fullWidthFooter` is false.
+ * @slot footer - Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.
+ * @slot footer-start - Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.
+ * @slot footer-end - Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.
  *
  * @cssprop --forge-content-scaffold-gap - Controls the gap between header, body, and footer sections. Defaults to Forge's medium spacing token.
  * @cssprop --forge-content-scaffold-header-height - Controls the height of the header section. Defaults to `auto`.
@@ -41,59 +38,73 @@ export const ContentScaffoldComponentTagName: keyof HTMLElementTagNameMap = 'for
 export class ContentScaffoldComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
-  @property({ type: Boolean, attribute: 'full-width-header' })
-  public fullWidthHeader = false;
+  @queryAssignedNodes({ slot: 'header', flatten: true })
+  private _slottedHeaderNodes!: Node[];
 
-  @property({ type: Boolean, attribute: 'full-width-footer' })
-  public fullWidthFooter = false;
+  @queryAssignedNodes({ slot: 'footer', flatten: true })
+  private _slottedFooterNodes!: Node[];
+
+  readonly #headerSlot = html`<slot name="header"></slot>`;
+  readonly #footerSlot = html`<slot name="footer"></slot>`;
+
+  get #headerContent(): TemplateResult | typeof nothing {
+    const hasFullWidthHeader = this._slottedHeaderNodes.length > 0;
+    return when(
+      hasFullWidthHeader,
+      () => html` <div class="header-full-content">${this.#headerSlot}</div> `,
+      () => html`
+        <div class="header" ${hideWhenEmpty()}>
+          <div class="header-start-container">
+            <div ${hideWhenEmpty()}>
+              <slot name="before-header-start"></slot>
+            </div>
+            <slot name="header-start"></slot>
+          </div>
+          <div class="header-end" ${hideWhenEmpty()}>
+            <slot name="header-end"></slot>
+          </div>
+        </div>
+        ${this.#headerSlot}
+      `
+    );
+  }
+
+  get #footerContent(): TemplateResult | typeof nothing {
+    const hasFullWidthFooter = this._slottedFooterNodes.length > 0;
+    return when(
+      hasFullWidthFooter,
+      () => html` <div class="footer-full-content">${this.#footerSlot}</div> `,
+      () => html`
+        <div class="footer" ${hideWhenEmpty()}>
+          <div class="footer-start" ${hideWhenEmpty()}>
+            <slot name="footer-start"></slot>
+          </div>
+          <div class="footer-end" ${hideWhenEmpty()}>
+            <slot name="footer-end"></slot>
+          </div>
+        </div>
+        ${this.#footerSlot}
+      `
+    );
+  }
+
+  #handleSlotChange(evt: Event): void {
+    const slotName = (evt.target as HTMLSlotElement).name;
+    if (['header', 'footer'].includes(slotName)) {
+      this.requestUpdate();
+    }
+  }
 
   public override render(): TemplateResult {
     return html`
-      <div class="container">
-        ${when(
-          this.fullWidthHeader,
-          () => html`
-            <div class="header-full-content">
-              <slot name="header"></slot>
-            </div>
-          `,
-          () => html`
-            <div class="header" ${hideWhenEmpty()}>
-              <div class="header-start-container">
-                <div ${hideWhenEmpty()}>
-                  <slot name="before-header-start"></slot>
-                </div>
-                <slot name="header-start"></slot>
-              </div>
-              <div class="header-end" ${hideWhenEmpty()}>
-                <slot name="header-end"></slot>
-              </div>
-            </div>
-          `
-        )}
+      <div class="container" @slotchange=${this.#handleSlotChange}>
+        ${this.#headerContent}
         <div class="body" ${hideWhenEmpty()}>
           <div class="body-inner">
             <slot name="body"></slot>
           </div>
         </div>
-        ${when(
-          this.fullWidthFooter,
-          () => html`
-            <div class="footer-full-content">
-              <slot name="footer"></slot>
-            </div>
-          `,
-          () => html`
-            <div class="footer" ${hideWhenEmpty()}>
-              <div class="footer-start" ${hideWhenEmpty()}>
-                <slot name="footer-start"></slot>
-              </div>
-              <div class="footer-end" ${hideWhenEmpty()}>
-                <slot name="footer-end"></slot>
-              </div>
-            </div>
-          `
-        )}
+        ${this.#footerContent}
       </div>
     `;
   }

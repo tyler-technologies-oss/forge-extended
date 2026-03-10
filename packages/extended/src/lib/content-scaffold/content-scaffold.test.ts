@@ -33,6 +33,10 @@ class ContentScaffoldHarness {
     return element?.style.display === 'none';
   }
 
+  public get headerSlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="header"]') as HTMLSlotElement;
+  }
+
   public get beforeHeaderStartSlot(): HTMLSlotElement {
     return this.el.shadowRoot!.querySelector('slot[name="before-header-start"]') as HTMLSlotElement;
   }
@@ -47,6 +51,10 @@ class ContentScaffoldHarness {
 
   public get bodySlot(): HTMLSlotElement {
     return this.el.shadowRoot!.querySelector('slot[name="body"]') as HTMLSlotElement;
+  }
+
+  public get footerSlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="footer"]') as HTMLSlotElement;
   }
 
   public get footerStartSlot(): HTMLSlotElement {
@@ -70,10 +78,12 @@ describe('ContentScaffoldComponent', () => {
   it('should have all slots available', async () => {
     const harness = await createFixture();
 
+    expect(harness.headerSlot).to.be.ok;
     expect(harness.beforeHeaderStartSlot).to.be.ok;
     expect(harness.headerStartSlot).to.be.ok;
     expect(harness.headerEndSlot).to.be.ok;
     expect(harness.bodySlot).to.be.ok;
+    expect(harness.footerSlot).to.be.ok;
     expect(harness.footerStartSlot).to.be.ok;
     expect(harness.footerEndSlot).to.be.ok;
   });
@@ -394,11 +404,11 @@ describe('ContentScaffoldComponent', () => {
     });
   });
 
-  describe('full-width modes', () => {
-    describe('full-width header', () => {
-      it('should render full-width header when fullWidthHeader is true', async () => {
+  describe('slot detection for full-width modes', () => {
+    describe('full-width header via slot detection', () => {
+      it('should render full-width header when header slot has content', async () => {
         const el = await fixture<ContentScaffoldComponent>(html`
-          <forge-content-scaffold full-width-header>
+          <forge-content-scaffold>
             <div slot="header">Full Width Header</div>
           </forge-content-scaffold>
         `);
@@ -409,7 +419,7 @@ describe('ContentScaffoldComponent', () => {
         expect(harness.headerElement).to.be.null;
       });
 
-      it('should render standard header when fullWidthHeader is false', async () => {
+      it('should render multi-slot header when header slot is empty', async () => {
         const el = await fixture<ContentScaffoldComponent>(html`
           <forge-content-scaffold>
             <div slot="header-start">Standard Header</div>
@@ -423,31 +433,53 @@ describe('ContentScaffoldComponent', () => {
         expect(harness.headerFullWidthElement).to.be.null;
       });
 
-      it('should switch between header modes when fullWidthHeader property changes', async () => {
+      it('should switch to full-width header when content is added to header slot', async () => {
         const harness = await createFixture();
         await harness.el.updateComplete;
 
         expect(harness.headerElement).to.be.ok;
         expect(harness.headerFullWidthElement).to.be.null;
 
-        harness.el.fullWidthHeader = true;
+        const headerContent = document.createElement('div');
+        headerContent.slot = 'header';
+        headerContent.textContent = 'Full Width Header';
+        harness.el.appendChild(headerContent);
+
+        await new Promise(resolve => setTimeout(resolve, 0));
         await harness.el.updateComplete;
 
         expect(harness.headerElement).to.be.null;
         expect(harness.headerFullWidthElement).to.be.ok;
+      });
 
-        harness.el.fullWidthHeader = false;
-        await harness.el.updateComplete;
+      it('should switch to multi-slot header when content is removed from header slot', async () => {
+        const el = await fixture<ContentScaffoldComponent>(html`
+          <forge-content-scaffold>
+            <div slot="header" id="header-content">Full Width Header</div>
+            <div slot="header-start">Standard Header</div>
+          </forge-content-scaffold>
+        `);
+        const harness = new ContentScaffoldHarness(el);
+        await el.updateComplete;
+
+        expect(harness.headerFullWidthElement).to.be.ok;
+        expect(harness.headerElement).to.be.null;
+
+        const headerContent = el.querySelector('#header-content');
+        headerContent?.remove();
+
+        await new Promise(resolve => setTimeout(resolve, 0));
+        await el.updateComplete;
 
         expect(harness.headerElement).to.be.ok;
         expect(harness.headerFullWidthElement).to.be.null;
       });
     });
 
-    describe('full-width footer', () => {
-      it('should render full-width footer when fullWidthFooter is true', async () => {
+    describe('full-width footer via slot detection', () => {
+      it('should render full-width footer when footer slot has content', async () => {
         const el = await fixture<ContentScaffoldComponent>(html`
-          <forge-content-scaffold full-width-footer>
+          <forge-content-scaffold>
             <div slot="footer">Full Width Footer</div>
           </forge-content-scaffold>
         `);
@@ -458,7 +490,7 @@ describe('ContentScaffoldComponent', () => {
         expect(harness.footerElement).to.be.null;
       });
 
-      it('should render standard footer when fullWidthFooter is false', async () => {
+      it('should render multi-slot footer when footer slot is empty', async () => {
         const el = await fixture<ContentScaffoldComponent>(html`
           <forge-content-scaffold>
             <div slot="footer-start">Standard Footer</div>
@@ -472,21 +504,43 @@ describe('ContentScaffoldComponent', () => {
         expect(harness.footerFullWidthElement).to.be.null;
       });
 
-      it('should switch between footer modes when fullWidthFooter property changes', async () => {
+      it('should switch to full-width footer when content is added to footer slot', async () => {
         const harness = await createFixture();
         await harness.el.updateComplete;
 
         expect(harness.footerElement).to.be.ok;
         expect(harness.footerFullWidthElement).to.be.null;
 
-        harness.el.fullWidthFooter = true;
+        const footerContent = document.createElement('div');
+        footerContent.slot = 'footer';
+        footerContent.textContent = 'Full Width Footer';
+        harness.el.appendChild(footerContent);
+
+        await new Promise(resolve => setTimeout(resolve, 0));
         await harness.el.updateComplete;
 
         expect(harness.footerElement).to.be.null;
         expect(harness.footerFullWidthElement).to.be.ok;
+      });
 
-        harness.el.fullWidthFooter = false;
-        await harness.el.updateComplete;
+      it('should switch to multi-slot footer when content is removed from footer slot', async () => {
+        const el = await fixture<ContentScaffoldComponent>(html`
+          <forge-content-scaffold>
+            <div slot="footer" id="footer-content">Full Width Footer</div>
+            <div slot="footer-start">Standard Footer</div>
+          </forge-content-scaffold>
+        `);
+        const harness = new ContentScaffoldHarness(el);
+        await el.updateComplete;
+
+        expect(harness.footerFullWidthElement).to.be.ok;
+        expect(harness.footerElement).to.be.null;
+
+        const footerContent = el.querySelector('#footer-content');
+        footerContent?.remove();
+
+        await new Promise(resolve => setTimeout(resolve, 0));
+        await el.updateComplete;
 
         expect(harness.footerElement).to.be.ok;
         expect(harness.footerFullWidthElement).to.be.null;
@@ -494,9 +548,9 @@ describe('ContentScaffoldComponent', () => {
     });
 
     describe('combined full-width modes', () => {
-      it('should render both full-width header and footer when both properties are true', async () => {
+      it('should render both full-width header and footer when both slots have content', async () => {
         const el = await fixture<ContentScaffoldComponent>(html`
-          <forge-content-scaffold full-width-header full-width-footer>
+          <forge-content-scaffold>
             <div slot="header">Full Width Header</div>
             <div slot="body">Body</div>
             <div slot="footer">Full Width Footer</div>
@@ -511,6 +565,44 @@ describe('ContentScaffoldComponent', () => {
         expect(harness.isElementHidden(harness.bodyElement)).to.be.false;
         expect(harness.footerFullWidthElement).to.be.ok;
         expect(harness.footerElement).to.be.null;
+      });
+
+      it('should render multi-slot header with full-width footer', async () => {
+        const el = await fixture<ContentScaffoldComponent>(html`
+          <forge-content-scaffold>
+            <div slot="header-start">Standard Header</div>
+            <div slot="body">Body</div>
+            <div slot="footer">Full Width Footer</div>
+          </forge-content-scaffold>
+        `);
+        const harness = new ContentScaffoldHarness(el);
+        await el.updateComplete;
+
+        expect(harness.headerElement).to.be.ok;
+        expect(harness.headerFullWidthElement).to.be.null;
+        expect(harness.bodyElement).to.be.ok;
+        expect(harness.isElementHidden(harness.bodyElement)).to.be.false;
+        expect(harness.footerFullWidthElement).to.be.ok;
+        expect(harness.footerElement).to.be.null;
+      });
+
+      it('should render full-width header with multi-slot footer', async () => {
+        const el = await fixture<ContentScaffoldComponent>(html`
+          <forge-content-scaffold>
+            <div slot="header">Full Width Header</div>
+            <div slot="body">Body</div>
+            <div slot="footer-start">Standard Footer</div>
+          </forge-content-scaffold>
+        `);
+        const harness = new ContentScaffoldHarness(el);
+        await el.updateComplete;
+
+        expect(harness.headerFullWidthElement).to.be.ok;
+        expect(harness.headerElement).to.be.null;
+        expect(harness.bodyElement).to.be.ok;
+        expect(harness.isElementHidden(harness.bodyElement)).to.be.false;
+        expect(harness.footerElement).to.be.ok;
+        expect(harness.footerFullWidthElement).to.be.null;
       });
     });
   });

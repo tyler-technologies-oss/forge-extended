@@ -84,7 +84,7 @@ export class StructuredCardComponent extends LitElement {
   public override render(): TemplateResult {
     return html`
       <forge-card class="container">
-        <forge-content-scaffold @slotchange=${this.#handleSlotChange} full-width-header full-width-footer>
+        <forge-content-scaffold @slotchange=${this.#handleSlotChange}>
           <div slot="header" class="header-container" ${hideWhenEmpty()}>
             <div class="title-container">
               <slot name="before-title" slot="before-header-start"></slot>

@@ -36,46 +36,15 @@ const meta = {
     }
   },
 
-  decorators: [
-    storyStyles(`
-      .full-width-header {
-        background-color: var(--forge-theme-surface-dim);
-        height: 48px;
-        display: flex;
-        align-items: center;
-        padding-inline: 16px;
-      }
-       p {
-        margin:0;
-        padding: 0;
-       }
-
-    `)
-  ],
-
-  render: ({ fullWidthHeader }) => {
+  render: () => {
     return html`
-      <forge-content-scaffold .fullWidthHeader=${fullWidthHeader}>
-        <div slot="header" class="full-width-header">This is a full width element</div>
-        <div slot="body">
-          <forge-stack>
-            <p>
-              This example demonstrates the full-width header slot. The header content spans the entire width of the
-              scaffold without being constrained to start/end sections. This is useful for custom toolbars, navigation
-              bars, or any content that needs complete control over the header layout.
-            </p>
-            <p>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
-              industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
-              scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
-              electronic typesetting, remaining essentially unchanged.
-            </p>
-          </forge-stack>
+      <forge-content-scaffold id="storybook-demo">
+        <div slot="header">header slot</div>
+        <div class="body" slot="body">
+          <div class=" body-inner">body</div>
         </div>
-        <forge-button variant="filled" slot="footer-end">
-          <forge-icon slot="start" name="save"></forge-icon>
-          Save
-        </forge-button>
+        <div slot="footer-start">footer-start</div>
+        <div slot="footer-end">footer-end</div>
       </forge-content-scaffold>
     `;
   }

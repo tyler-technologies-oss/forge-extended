@@ -13,9 +13,6 @@ const meta = {
   title: 'Components/Content Scaffold',
   component,
   tags: ['hidden'],
-  parameters: {
-    layout: 'fullscreen'
-  },
   render: () => {
     return html`
       <forge-content-scaffold id="storybook-demo">
