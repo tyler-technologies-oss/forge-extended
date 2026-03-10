@@ -126,71 +126,71 @@ describe('StructuredCardComponent', () => {
       expect(harness.titleElement.getAttribute('aria-level')).to.equal('4');
     });
 
-    it('should have default fullWidth value of false', async () => {
+    it('should have default bodySpacing value of default', async () => {
       const harness = await createFixture();
 
-      expect(harness.el.fullWidth).to.be.false;
+      expect(harness.el.bodySpacing).to.equal('default');
     });
 
-    it('should set fullWidth via property', async () => {
+    it('should set bodySpacing via property', async () => {
       const harness = await createFixture();
 
-      harness.el.fullWidth = true;
+      harness.el.bodySpacing = 'none';
       await harness.el.updateComplete;
 
-      expect(harness.el.fullWidth).to.be.true;
+      expect(harness.el.bodySpacing).to.equal('none');
     });
 
-    it('should set fullWidth via attribute', async () => {
+    it('should set bodySpacing via attribute', async () => {
       const harness = await createFixture();
 
-      harness.el.setAttribute('full-width', '');
+      harness.el.setAttribute('body-spacing', 'none');
       await harness.el.updateComplete;
 
-      expect(harness.el.fullWidth).to.be.true;
+      expect(harness.el.bodySpacing).to.equal('none');
     });
 
-    it('should apply full-width state when fullWidth is true', async () => {
+    it('should apply body-spacing-none state when bodySpacing is none', async () => {
       const harness = await createFixture();
 
-      harness.el.fullWidth = true;
+      harness.el.bodySpacing = 'none';
       await harness.el.updateComplete;
 
-      expect(harness.hasState('full-width')).to.be.true;
+      expect(harness.hasState('body-spacing-none')).to.be.true;
     });
 
-    it('should not apply full-width state when fullWidth is false', async () => {
+    it('should not apply body-spacing-none state when bodySpacing is default', async () => {
       const harness = await createFixture();
 
-      harness.el.fullWidth = false;
+      harness.el.bodySpacing = 'default';
       await harness.el.updateComplete;
 
-      expect(harness.hasState('full-width')).to.be.false;
+      expect(harness.hasState('body-spacing-none')).to.be.false;
     });
 
-    it('should add full-width state when toggling fullWidth from false to true', async () => {
+    it('should add body-spacing-none state when toggling bodySpacing from default to none', async () => {
       const harness = await createFixture();
 
-      expect(harness.hasState('full-width')).to.be.false;
+      expect(harness.hasState('body-spacing-none')).to.be.false;
 
-      harness.el.fullWidth = true;
+      harness.el.bodySpacing = 'none';
       await harness.el.updateComplete;
 
-      expect(harness.hasState('full-width')).to.be.true;
+      expect(harness.hasState('body-spacing-none')).to.be.true;
     });
 
-    it('should remove full-width state when toggling fullWidth from true to false', async () => {
+    it('should remove body-spacing-none state when toggling bodySpacing from none to default', async () => {
       const harness = await createFixture();
 
-      harness.el.fullWidth = true;
+      harness.el.bodySpacing = 'none';
       await harness.el.updateComplete;
 
-      expect(harness.hasState('full-width')).to.be.true;
+      expect(harness.hasState('body-spacing-none')).to.be.true;
 
-      harness.el.fullWidth = false;
+      harness.el.bodySpacing = 'default';
       await harness.el.updateComplete;
 
-      expect(harness.hasState('full-width')).to.be.false;
+      expect(harness.hasState('body-spacing-none')).to.be.false;
     });
   });
 

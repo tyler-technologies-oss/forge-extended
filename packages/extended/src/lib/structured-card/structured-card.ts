@@ -28,7 +28,7 @@ export const StructuredCardComponentTagName: keyof HTMLElementTagNameMap = 'forg
  *
  * @cssprop --forge-structured-card-body-height - Controls the height of the body content. Defaults to `auto`.
  *
- * @state full-width - Applied when the `fullWidth` property is true. Used to style the component for full-width content.
+ * @state body-spacing-none - Applied when the `bodySpacing` property is set to `none`. Used to remove default body padding for full-width content.
  */
 @customElement(StructuredCardComponentTagName)
 export class StructuredCardComponent extends LitElement {
@@ -54,21 +54,22 @@ export class StructuredCardComponent extends LitElement {
   public headingLevel: HeadingLevel = 2;
 
   /**
-   * When set to `true`, removes the default padding from the body section to accommodate
-   * full-width content. This ensures content extends edge-to-edge within the card body.
+   * Controls the spacing applied to the body section. Defaults to `default`.
+   * - `default`: Applies standard padding to the body section.
+   * - `none`: Removes padding from the body section for full-width content like tables.
    */
-  @property({ attribute: 'full-width', type: Boolean })
-  public fullWidth = false;
+  @property({ attribute: 'body-spacing' })
+  public bodySpacing: 'none' | 'default' = 'default';
 
   @queryAssignedNodes({ slot: 'before-title', flatten: true })
   private _beforeTitleNodes!: Node[];
 
   public override willUpdate(changedProperties: Map<string, unknown>): void {
-    if (changedProperties.has('fullWidth')) {
-      if (this.fullWidth) {
-        this.#internals.states.add('full-width');
+    if (changedProperties.has('bodySpacing')) {
+      if (this.bodySpacing === 'none') {
+        this.#internals.states.add('body-spacing-none');
       } else {
-        this.#internals.states.delete('full-width');
+        this.#internals.states.delete('body-spacing-none');
       }
     }
   }
@@ -98,12 +99,10 @@ export class StructuredCardComponent extends LitElement {
                 <slot name="title"></slot>
               </div>
             </div>
-
             <div class="actions-container" ${hideWhenEmpty()}>
               <slot name="header-actions" slot="header-end"></slot>
             </div>
           </div>
-
           <slot name="body" slot="body"></slot>
           <div class="footer-container" slot="footer" ${hideWhenEmpty()}>
             <div class="footer-start-container">

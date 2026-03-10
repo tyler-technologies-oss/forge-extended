@@ -8,7 +8,7 @@
   --_structured-card-body-height: var(--forge-structured-card-body-height, auto);
 }
 
-:host(:state(full-width)) {
+:host(:state(body-spacing-none)) {
   forge-content-scaffold {
     --forge-content-scaffold-body-padding-inline: 0;
     --forge-content-scaffold-gap: 0;
