@@ -47,7 +47,7 @@ const meta = {
     }, 0);
 
     return html`
-      <forge-structured-card heading-level="2" with-table>
+      <forge-structured-card heading-level="2" full-width>
         <div slot="title">User Management</div>
         <forge-icon-button aria-label="Refresh data" slot="header-actions">
           <forge-icon name="refresh"></forge-icon>

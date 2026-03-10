@@ -20,8 +20,8 @@ export interface ForgeStructuredCardProps
     | "onBlur"
   > {
   /** When set to `true`, removes the default padding from the body section to accommodate
-tables and other full-width content. This ensures tables extend edge-to-edge within the card body. */
-  withTable?: boolean;
+full-width content. This ensures content extends edge-to-edge within the card body. */
+  fullWidth?: boolean;
 
   /** Controls the semantic heading level for the title content. Defaults to `2` (h2).
 Use this to maintain proper heading hierarchy in your document structure. */

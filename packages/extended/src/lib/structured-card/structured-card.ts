@@ -28,7 +28,7 @@ export const StructuredCardComponentTagName: keyof HTMLElementTagNameMap = 'forg
  *
  * @cssprop --forge-structured-card-body-height - Controls the height of the body content. Defaults to `auto`.
  *
- * @state with-table - Applied when the `withTable` property is true. Used to style the component for table content.
+ * @state full-width - Applied when the `fullWidth` property is true. Used to style the component for full-width content.
  */
 @customElement(StructuredCardComponentTagName)
 export class StructuredCardComponent extends LitElement {
@@ -55,20 +55,20 @@ export class StructuredCardComponent extends LitElement {
 
   /**
    * When set to `true`, removes the default padding from the body section to accommodate
-   * tables and other full-width content. This ensures tables extend edge-to-edge within the card body.
+   * full-width content. This ensures content extends edge-to-edge within the card body.
    */
-  @property({ attribute: 'with-table', type: Boolean })
-  public withTable = false;
+  @property({ attribute: 'full-width', type: Boolean })
+  public fullWidth = false;
 
   @queryAssignedNodes({ slot: 'before-title', flatten: true })
   private _beforeTitleNodes!: Node[];
 
   public override willUpdate(changedProperties: Map<string, unknown>): void {
-    if (changedProperties.has('withTable')) {
-      if (this.withTable) {
-        this.#internals.states.add('with-table');
+    if (changedProperties.has('fullWidth')) {
+      if (this.fullWidth) {
+        this.#internals.states.add('full-width');
       } else {
-        this.#internals.states.delete('with-table');
+        this.#internals.states.delete('full-width');
       }
     }
   }

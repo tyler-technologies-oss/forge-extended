@@ -8,7 +8,7 @@
   --_structured-card-body-height: var(--forge-structured-card-body-height, auto);
 }
 
-:host(:state(with-table)) {
+:host(:state(full-width)) {
   forge-content-scaffold {
     --forge-content-scaffold-body-padding-inline: 0;
     --forge-content-scaffold-gap: 0;
@@ -35,8 +35,6 @@ forge-content-scaffold {
 .container {
   --forge-card-padding: 0;
   --forge-card-gap: 0;
-  // We don't have a token to handle 12px so this is hardcoded for now
-  --forge-card-shape: 12px;
 }
 
 .title-container {

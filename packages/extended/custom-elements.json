@@ -1365,14 +1365,14 @@
             },
             {
               "kind": "field",
-              "name": "withTable",
+              "name": "fullWidth",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
               "default": "false",
-              "description": "When set to `true`, removes the default padding from the body section to accommodate\ntables and other full-width content. This ensures tables extend edge-to-edge within the card body.",
-              "attribute": "with-table"
+              "description": "When set to `true`, removes the default padding from the body section to accommodate\nfull-width content. This ensures content extends edge-to-edge within the card body.",
+              "attribute": "full-width"
             }
           ],
           "attributes": [
@@ -1386,13 +1386,13 @@
               "fieldName": "headingLevel"
             },
             {
-              "name": "with-table",
+              "name": "full-width",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "description": "When set to `true`, removes the default padding from the body section to accommodate\ntables and other full-width content. This ensures tables extend edge-to-edge within the card body.",
-              "fieldName": "withTable"
+              "description": "When set to `true`, removes the default padding from the body section to accommodate\nfull-width content. This ensures content extends edge-to-edge within the card body.",
+              "fieldName": "fullWidth"
             }
           ],
           "superclass": {
@@ -1403,8 +1403,8 @@
           "customElement": true,
           "states": [
             {
-              "name": "with-table",
-              "description": "Applied when the `withTable` property is true. Used to style the component for table content."
+              "name": "full-width",
+              "description": "Applied when the `fullWidth` property is true. Used to style the component for full-width content."
             }
           ]
         }

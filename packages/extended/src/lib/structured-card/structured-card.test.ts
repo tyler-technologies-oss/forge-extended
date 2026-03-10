@@ -126,71 +126,71 @@ describe('StructuredCardComponent', () => {
       expect(harness.titleElement.getAttribute('aria-level')).to.equal('4');
     });
 
-    it('should have default withTable value of false', async () => {
+    it('should have default fullWidth value of false', async () => {
       const harness = await createFixture();
 
-      expect(harness.el.withTable).to.be.false;
+      expect(harness.el.fullWidth).to.be.false;
     });
 
-    it('should set withTable via property', async () => {
+    it('should set fullWidth via property', async () => {
       const harness = await createFixture();
 
-      harness.el.withTable = true;
+      harness.el.fullWidth = true;
       await harness.el.updateComplete;
 
-      expect(harness.el.withTable).to.be.true;
+      expect(harness.el.fullWidth).to.be.true;
     });
 
-    it('should set withTable via attribute', async () => {
+    it('should set fullWidth via attribute', async () => {
       const harness = await createFixture();
 
-      harness.el.setAttribute('with-table', '');
+      harness.el.setAttribute('full-width', '');
       await harness.el.updateComplete;
 
-      expect(harness.el.withTable).to.be.true;
+      expect(harness.el.fullWidth).to.be.true;
     });
 
-    it('should apply with-table state when withTable is true', async () => {
+    it('should apply full-width state when fullWidth is true', async () => {
       const harness = await createFixture();
 
-      harness.el.withTable = true;
+      harness.el.fullWidth = true;
       await harness.el.updateComplete;
 
-      expect(harness.hasState('with-table')).to.be.true;
+      expect(harness.hasState('full-width')).to.be.true;
     });
 
-    it('should not apply with-table state when withTable is false', async () => {
+    it('should not apply full-width state when fullWidth is false', async () => {
       const harness = await createFixture();
 
-      harness.el.withTable = false;
+      harness.el.fullWidth = false;
       await harness.el.updateComplete;
 
-      expect(harness.hasState('with-table')).to.be.false;
+      expect(harness.hasState('full-width')).to.be.false;
     });
 
-    it('should add with-table state when toggling withTable from false to true', async () => {
+    it('should add full-width state when toggling fullWidth from false to true', async () => {
       const harness = await createFixture();
 
-      expect(harness.hasState('with-table')).to.be.false;
+      expect(harness.hasState('full-width')).to.be.false;
 
-      harness.el.withTable = true;
+      harness.el.fullWidth = true;
       await harness.el.updateComplete;
 
-      expect(harness.hasState('with-table')).to.be.true;
+      expect(harness.hasState('full-width')).to.be.true;
     });
 
-    it('should remove with-table state when toggling withTable from true to false', async () => {
+    it('should remove full-width state when toggling fullWidth from true to false', async () => {
       const harness = await createFixture();
 
-      harness.el.withTable = true;
+      harness.el.fullWidth = true;
       await harness.el.updateComplete;
 
-      expect(harness.hasState('with-table')).to.be.true;
+      expect(harness.hasState('full-width')).to.be.true;
 
-      harness.el.withTable = false;
+      harness.el.fullWidth = false;
       await harness.el.updateComplete;
 
-      expect(harness.hasState('with-table')).to.be.false;
+      expect(harness.hasState('full-width')).to.be.false;
     });
   });
 

@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 import "@tylertech/forge-extended/structured-card";
 
 export const ForgeStructuredCard = forwardRef((props, forwardedRef) => {
-  const { withTable, headingLevel, ...filteredProps } = props;
+  const { fullWidth, headingLevel, ...filteredProps } = props;
 
   return React.createElement(
     "forge-structured-card",
@@ -14,7 +14,7 @@ export const ForgeStructuredCard = forwardRef((props, forwardedRef) => {
       for: props.htmlFor,
       part: props.part,
       tabindex: props.tabIndex,
-      "with-table": props.withTable ? "" : undefined,
+      "full-width": props.fullWidth ? "" : undefined,
       style: { ...props.style },
     },
     props.children,

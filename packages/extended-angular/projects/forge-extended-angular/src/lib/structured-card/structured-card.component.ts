@@ -44,16 +44,16 @@ export class StructuredCardComponent {
 
   /**
    * When set to `true`, removes the default padding from the body section to accommodate
-   * tables and other full-width content. This ensures tables extend edge-to-edge within the card body.
+   * full-width content. This ensures content extends edge-to-edge within the card body.
    */
   @Input({ transform: booleanAttribute })
-  public set withTable(value: StructuredCardComponentCustomElement['withTable']) {
+  public set fullWidth(value: StructuredCardComponentCustomElement['fullWidth']) {
     this.zone.runOutsideAngular(() => {
-      this.nativeElement.withTable = value;
+      this.nativeElement.fullWidth = value;
     });
   }
-  public get withTable(): StructuredCardComponentCustomElement['withTable'] {
-    return this.nativeElement.withTable;
+  public get fullWidth(): StructuredCardComponentCustomElement['fullWidth'] {
+    return this.nativeElement.fullWidth;
   }
 
   constructor() {
