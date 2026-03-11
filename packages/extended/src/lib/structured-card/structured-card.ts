@@ -5,7 +5,7 @@ import { defineCardComponent } from '@tylertech/forge';
 import { defineContentScaffoldComponent } from '../content-scaffold';
 import { hideWhenEmpty } from '../utils/lit-utils.js';
 import styles from './structured-card.scss?inline';
-import { HeadingLevel } from '../types/types';
+import { HeadingLevel } from '$lib/utils/types';
 
 declare global {
   interface HTMLElementTagNameMap {

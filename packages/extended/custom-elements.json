@@ -696,6 +696,129 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ContentScaffoldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-content-scaffold'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ContentScaffoldComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the gap between header, body, and footer sections. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-gap"
+            },
+            {
+              "description": "Controls the height of the header section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-header-height"
+            },
+            {
+              "description": "Controls the background color of the header section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-header-background"
+            },
+            {
+              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-header-min-height"
+            },
+            {
+              "description": "Controls the height of the body section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-body-height"
+            },
+            {
+              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-body-padding-inline"
+            },
+            {
+              "description": "Controls the height of the footer section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-footer-height"
+            },
+            {
+              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-footer-background"
+            },
+            {
+              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-footer-min-height"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
+              "name": "header"
+            },
+            {
+              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
+              "name": "before-header-start"
+            },
+            {
+              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-start"
+            },
+            {
+              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-end"
+            },
+            {
+              "description": "The main body content that expands to fill available space.",
+              "name": "body"
+            },
+            {
+              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
+              "name": "footer"
+            },
+            {
+              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-start"
+            },
+            {
+              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-end"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-content-scaffold",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponentTagName",
+          "declaration": {
+            "name": "ContentScaffoldComponentTagName",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponent",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/multi-select-header/multi-select-header.ts",
       "declarations": [
         {
@@ -803,172 +926,6 @@
           "declaration": {
             "name": "MultiSelectHeaderComponent",
             "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ContentScaffoldComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-content-scaffold'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ContentScaffoldComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the gap between header, body, and footer sections. Defaults to Forge's medium spacing token.",
-              "name": "--forge-content-scaffold-gap"
-            },
-            {
-              "description": "Controls the height of the header section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-header-height"
-            },
-            {
-              "description": "Controls the background color of the header section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-header-background"
-            },
-            {
-              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-header-min-height"
-            },
-            {
-              "description": "Controls the height of the body section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-body-height"
-            },
-            {
-              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
-              "name": "--forge-content-scaffold-body-padding-inline"
-            },
-            {
-              "description": "Controls the height of the footer section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-footer-height"
-            },
-            {
-              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-footer-background"
-            },
-            {
-              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-footer-min-height"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Full-width header content. Only used when `fullWidthHeader` is true.",
-              "name": "header"
-            },
-            {
-              "description": "Content displayed before the header start slot. Only used when `fullWidthHeader` is false.",
-              "name": "before-header-start"
-            },
-            {
-              "description": "Content displayed at the start of the header section. Only used when `fullWidthHeader` is false.",
-              "name": "header-start"
-            },
-            {
-              "description": "Content displayed at the end of the header section. Only used when `fullWidthHeader` is false.",
-              "name": "header-end"
-            },
-            {
-              "description": "The main body content that expands to fill available space.",
-              "name": "body"
-            },
-            {
-              "description": "Full-width footer content. Only used when `fullWidthFooter` is true.",
-              "name": "footer"
-            },
-            {
-              "description": "Content displayed at the start of the footer section. Only used when `fullWidthFooter` is false.",
-              "name": "footer-start"
-            },
-            {
-              "description": "Content displayed at the end of the footer section. Only used when `fullWidthFooter` is false.",
-              "name": "footer-end"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "fullWidthHeader",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "When true, enables the full-width header mode using the `header` slot instead of the multi-slot layout.",
-              "attribute": "full-width-header"
-            },
-            {
-              "kind": "field",
-              "name": "fullWidthFooter",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "When true, enables the full-width footer mode using the `footer` slot instead of the multi-slot layout.",
-              "attribute": "full-width-footer"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "full-width-header",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "When true, enables the full-width header mode using the `header` slot instead of the multi-slot layout.",
-              "fieldName": "fullWidthHeader"
-            },
-            {
-              "name": "full-width-footer",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "When true, enables the full-width footer mode using the `footer` slot instead of the multi-slot layout.",
-              "fieldName": "fullWidthFooter"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-content-scaffold",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponentTagName",
-          "declaration": {
-            "name": "ContentScaffoldComponentTagName",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponent",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         }
       ]
@@ -1365,14 +1322,14 @@
             },
             {
               "kind": "field",
-              "name": "fullWidth",
+              "name": "bodySpacing",
               "type": {
-                "text": "boolean"
+                "text": "'none' | 'default'"
               },
               "privacy": "public",
-              "default": "false",
-              "description": "When set to `true`, removes the default padding from the body section to accommodate\nfull-width content. This ensures content extends edge-to-edge within the card body.",
-              "attribute": "full-width"
+              "default": "'default'",
+              "description": "Controls the spacing applied to the body section. Defaults to `default`.\n- `default`: Applies standard padding to the body section.\n- `none`: Removes padding from the body section for full-width content like tables.",
+              "attribute": "body-spacing"
             }
           ],
           "attributes": [
@@ -1386,13 +1343,13 @@
               "fieldName": "headingLevel"
             },
             {
-              "name": "full-width",
+              "name": "body-spacing",
               "type": {
-                "text": "boolean"
+                "text": "'none' | 'default'"
               },
-              "default": "false",
-              "description": "When set to `true`, removes the default padding from the body section to accommodate\nfull-width content. This ensures content extends edge-to-edge within the card body.",
-              "fieldName": "fullWidth"
+              "default": "'default'",
+              "description": "Controls the spacing applied to the body section. Defaults to `default`.\n- `default`: Applies standard padding to the body section.\n- `none`: Removes padding from the body section for full-width content like tables.",
+              "fieldName": "bodySpacing"
             }
           ],
           "superclass": {
@@ -1403,8 +1360,8 @@
           "customElement": true,
           "states": [
             {
-              "name": "full-width",
-              "description": "Applied when the `fullWidth` property is true. Used to style the component for full-width content."
+              "name": "body-spacing-none",
+              "description": "Applied when the `bodySpacing` property is set to `none`. Used to remove default body padding for full-width content."
             }
           ]
         }
@@ -1915,13 +1872,13 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
+    "ContentScaffoldComponent": {
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "lineNumber": 37
+    },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
       "lineNumber": 28
-    },
-    "ContentScaffoldComponent": {
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "lineNumber": 40
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",

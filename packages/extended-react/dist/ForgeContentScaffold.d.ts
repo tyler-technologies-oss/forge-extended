@@ -19,12 +19,6 @@ export interface ForgeContentScaffoldProps
     | "onFocus"
     | "onBlur"
   > {
-  /** When true, enables the full-width header mode using the `header` slot instead of the multi-slot layout. */
-  fullWidthHeader?: boolean;
-
-  /** When true, enables the full-width footer mode using the `footer` slot instead of the multi-slot layout. */
-  fullWidthFooter?: boolean;
-
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
 
@@ -53,14 +47,14 @@ export interface ForgeContentScaffoldProps
  *
  *
  * ### **Slots:**
- *  - **header** - Full-width header content. Only used when `fullWidthHeader` is true.
- * - **before-header-start** - Content displayed before the header start slot. Only used when `fullWidthHeader` is false.
- * - **header-start** - Content displayed at the start of the header section. Only used when `fullWidthHeader` is false.
- * - **header-end** - Content displayed at the end of the header section. Only used when `fullWidthHeader` is false.
+ *  - **header** - Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.
+ * - **before-header-start** - Content displayed before the header start slot. Only shown when the `header` slot is empty.
+ * - **header-start** - Content displayed at the start of the header section. Only shown when the `header` slot is empty.
+ * - **header-end** - Content displayed at the end of the header section. Only shown when the `header` slot is empty.
  * - **body** - The main body content that expands to fill available space.
- * - **footer** - Full-width footer content. Only used when `fullWidthFooter` is true.
- * - **footer-start** - Content displayed at the start of the footer section. Only used when `fullWidthFooter` is false.
- * - **footer-end** - Content displayed at the end of the footer section. Only used when `fullWidthFooter` is false.
+ * - **footer** - Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.
+ * - **footer-start** - Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.
+ * - **footer-end** - Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.
  *
  * ### **CSS Properties:**
  *  - **--forge-content-scaffold-gap** - Controls the gap between header, body, and footer sections. Defaults to Forge's medium spacing token. _(default: undefined)_

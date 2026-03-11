@@ -19,13 +19,14 @@ export interface ForgeStructuredCardProps
     | "onFocus"
     | "onBlur"
   > {
-  /** When set to `true`, removes the default padding from the body section to accommodate
-full-width content. This ensures content extends edge-to-edge within the card body. */
-  fullWidth?: boolean;
-
   /** Controls the semantic heading level for the title content. Defaults to `2` (h2).
 Use this to maintain proper heading hierarchy in your document structure. */
   headingLevel?: ForgeStructuredCardElement["headingLevel"];
+
+  /** Controls the spacing applied to the body section. Defaults to `default`.
+- `default`: Applies standard padding to the body section.
+- `none`: Removes padding from the body section for full-width content like tables. */
+  bodySpacing?: ForgeStructuredCardElement["bodySpacing"];
 
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
