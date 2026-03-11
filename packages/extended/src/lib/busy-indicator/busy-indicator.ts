@@ -11,7 +11,7 @@ import { when } from 'lit/directives/when.js';
 import { composeSlottedTextContent } from '../utils/slot-utils';
 
 import styles from './busy-indicator.scss?inline';
-import { HeadingLevel } from '$lib/utils/types';
+import { HeadingLevel } from '../utils/types';
 
 declare global {
   interface HTMLElementTagNameMap {
