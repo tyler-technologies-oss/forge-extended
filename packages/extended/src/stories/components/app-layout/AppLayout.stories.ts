@@ -1,6 +1,14 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
-import { defineAppBarComponent, defineScaffoldComponent, defineDrawerComponent, IconRegistry } from '@tylertech/forge';
+import {
+  defineAppBarComponent,
+  defineScaffoldComponent,
+  defineDrawerComponent,
+  IconRegistry,
+  defineListComponent,
+  defineListItemComponent,
+  defineIconComponent
+} from '@tylertech/forge';
 
 import '$lib/app-layout';
 import { tylIconHome, tylIconInbox, tylIconSettings, tylIconStar } from '@tylertech/tyler-icons';
@@ -9,6 +17,9 @@ import { storyStyles } from 'src/stories/decorators';
 defineAppBarComponent();
 defineScaffoldComponent();
 defineDrawerComponent();
+defineListComponent();
+defineListItemComponent();
+defineIconComponent();
 
 const component = 'forge-app-layout';
 
