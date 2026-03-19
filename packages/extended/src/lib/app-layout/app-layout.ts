@@ -20,6 +20,21 @@ declare global {
   interface HTMLElementTagNameMap {
     'forge-app-layout': AppLayoutComponent;
   }
+
+  interface HTMLElementEventMap {
+    'forge-app-layout-breakpoint-change': CustomEvent<AppLayoutBreakpointChangeEventData>;
+    'forge-app-layout-drawer-change': CustomEvent<AppLayoutDrawerChangeEventData>;
+  }
+}
+
+export type AppLayoutBreakpoint = 'small' | 'large';
+
+export interface AppLayoutBreakpointChangeEventData {
+  breakpoint: AppLayoutBreakpoint;
+}
+
+export interface AppLayoutDrawerChangeEventData {
+  open: boolean;
 }
 
 export const AppLayoutComponentTagName: keyof HTMLElementTagNameMap = 'forge-app-layout';
@@ -54,6 +69,9 @@ export const AppLayoutComponentTagName: keyof HTMLElementTagNameMap = 'forge-app
  * @state large - Screen width is 960px or above, navigation appears in body-left drawer
  * @state drawer-open - The navigation drawer is currently open
  * @state drawer-closed - The navigation drawer is currently closed
+ *
+ * @event {CustomEvent<AppLayoutBreakpointChangeEventData>} forge-app-layout-breakpoint-change - Fired when the screen size crosses the breakpoint threshold
+ * @event {CustomEvent<AppLayoutDrawerChangeEventData>} forge-app-layout-drawer-change - Fired when the navigation drawer opens or closes
  */
 
 @customElement(AppLayoutComponentTagName)
@@ -148,6 +166,7 @@ export class AppLayoutComponent extends LitElement {
   private _handleMediaQueryChange = (event: MediaQueryListEvent): void => {
     this._isLargeScreen = event.matches;
     this._updateStates();
+    this.#emitBreakpointChange(this._isLargeScreen ? 'large' : 'small');
   };
 
   private _updateStates(): void {
@@ -186,6 +205,7 @@ export class AppLayoutComponent extends LitElement {
     toggleState(this.#internals, 'drawer-closed', !this._leftDrawerOpen);
 
     this._applyDrawerStates();
+    this.#emitDrawerChange(this._leftDrawerOpen);
   };
 
   private _handleLeftDrawerAfterClose = (): void => {
@@ -194,6 +214,8 @@ export class AppLayoutComponent extends LitElement {
     // Update drawer states
     toggleState(this.#internals, 'drawer-open', false);
     toggleState(this.#internals, 'drawer-closed', true);
+
+    this.#emitDrawerChange(false);
   };
 
   private _handleSlotChange = (event: Event): void => {
@@ -211,6 +233,26 @@ export class AppLayoutComponent extends LitElement {
     if (leftDrawer && leftDrawer.open !== this._leftDrawerOpen) {
       leftDrawer.open = this._leftDrawerOpen;
     }
+  }
+
+  #emitBreakpointChange(breakpoint: AppLayoutBreakpoint): void {
+    const event = new CustomEvent<AppLayoutBreakpointChangeEventData>('forge-app-layout-breakpoint-change', {
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+      detail: { breakpoint }
+    });
+    this.dispatchEvent(event);
+  }
+
+  #emitDrawerChange(open: boolean): void {
+    const event = new CustomEvent<AppLayoutDrawerChangeEventData>('forge-app-layout-drawer-change', {
+      bubbles: true,
+      composed: true,
+      cancelable: true,
+      detail: { open }
+    });
+    this.dispatchEvent(event);
   }
 
   private get _hasNavigationContent(): boolean {

@@ -1,6 +1,6 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
-import { AppLayoutComponent } from './app-layout';
+import { AppLayoutComponent, AppLayoutBreakpointChangeEventData, AppLayoutDrawerChangeEventData } from './app-layout';
 import sinon from 'sinon';
 import type {
   IAppBarComponent,
@@ -222,6 +222,151 @@ describe('AppLayout', () => {
     await harness.el.updateComplete;
 
     expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+  });
+
+  describe('events', () => {
+    it('should emit forge-app-layout-drawer-change event when drawer opens', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+      const spy = sinon.spy();
+
+      harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+      harness.menuButton?.click();
+      await harness.el.updateComplete;
+
+      expect(spy.calledOnce).to.be.true;
+      const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
+      expect(eventDetail.open).to.be.true;
+    });
+
+    it('should emit forge-app-layout-drawer-change event when drawer closes', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+
+      // Open drawer first
+      harness.menuButton?.click();
+      await harness.el.updateComplete;
+
+      const spy = sinon.spy();
+      harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+      // Close drawer
+      harness.menuButton?.click();
+      await harness.el.updateComplete;
+
+      expect(spy.calledOnce).to.be.true;
+      const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
+      expect(eventDetail.open).to.be.false;
+    });
+
+    it('should emit forge-app-layout-breakpoint-change event when breakpoint is crossed', async () => {
+      let mediaQueryCallback: ((evt: MediaQueryListEvent) => void) | null = null;
+
+      sinon.stub(window, 'matchMedia').returns({
+        matches: false,
+        addEventListener: (eventName: string, callback: (evt: MediaQueryListEvent) => void) => {
+          if (eventName === 'change') {
+            mediaQueryCallback = callback;
+          }
+        },
+        removeEventListener: sinon.stub(),
+        media: '',
+        onchange: null,
+        addListener: sinon.stub(),
+        removeListener: sinon.stub(),
+        dispatchEvent: sinon.stub()
+      } as unknown as MediaQueryList);
+
+      const harness = await createFixture({ hasNavigation: true });
+      const spy = sinon.spy();
+
+      harness.el.addEventListener('forge-app-layout-breakpoint-change', spy);
+
+      // Simulate breakpoint change
+      mediaQueryCallback?.({ matches: true } as MediaQueryListEvent);
+      await harness.el.updateComplete;
+
+      expect(spy.calledOnce).to.be.true;
+      const eventDetail = spy.firstCall.args[0].detail as AppLayoutBreakpointChangeEventData;
+      expect(eventDetail.breakpoint).to.equal('large');
+    });
+
+    it('should emit forge-app-layout-breakpoint-change event with small when going below breakpoint', async () => {
+      let mediaQueryCallback: ((evt: MediaQueryListEvent) => void) | null = null;
+
+      sinon.stub(window, 'matchMedia').returns({
+        matches: true,
+        addEventListener: (eventName: string, callback: (evt: MediaQueryListEvent) => void) => {
+          if (eventName === 'change') {
+            mediaQueryCallback = callback;
+          }
+        },
+        removeEventListener: sinon.stub(),
+        media: '',
+        onchange: null,
+        addListener: sinon.stub(),
+        removeListener: sinon.stub(),
+        dispatchEvent: sinon.stub()
+      } as unknown as MediaQueryList);
+
+      const harness = await createFixture({ hasNavigation: true });
+      const spy = sinon.spy();
+
+      harness.el.addEventListener('forge-app-layout-breakpoint-change', spy);
+
+      // Simulate breakpoint change
+      mediaQueryCallback?.({ matches: false } as MediaQueryListEvent);
+      await harness.el.updateComplete;
+
+      expect(spy.calledOnce).to.be.true;
+      const eventDetail = spy.firstCall.args[0].detail as AppLayoutBreakpointChangeEventData;
+      expect(eventDetail.breakpoint).to.equal('small');
+    });
+
+    it('should have bubbles and composed set to true on drawer change event', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+      const spy = sinon.spy();
+
+      harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+      harness.menuButton?.click();
+      await harness.el.updateComplete;
+
+      const event = spy.firstCall.args[0] as CustomEvent;
+      expect(event.bubbles).to.be.true;
+      expect(event.composed).to.be.true;
+    });
+
+    it('should have bubbles and composed set to true on breakpoint change event', async () => {
+      let mediaQueryCallback: ((evt: MediaQueryListEvent) => void) | null = null;
+
+      sinon.stub(window, 'matchMedia').returns({
+        matches: false,
+        addEventListener: (eventName: string, callback: (evt: MediaQueryListEvent) => void) => {
+          if (eventName === 'change') {
+            mediaQueryCallback = callback;
+          }
+        },
+        removeEventListener: sinon.stub(),
+        media: '',
+        onchange: null,
+        addListener: sinon.stub(),
+        removeListener: sinon.stub(),
+        dispatchEvent: sinon.stub()
+      } as unknown as MediaQueryList);
+
+      const harness = await createFixture({ hasNavigation: true });
+      const spy = sinon.spy();
+
+      harness.el.addEventListener('forge-app-layout-breakpoint-change', spy);
+
+      mediaQueryCallback?.({ matches: true } as MediaQueryListEvent);
+      await harness.el.updateComplete;
+
+      const event = spy.firstCall.args[0] as CustomEvent;
+      expect(event.bubbles).to.be.true;
+      expect(event.composed).to.be.true;
+    });
   });
 });
 
