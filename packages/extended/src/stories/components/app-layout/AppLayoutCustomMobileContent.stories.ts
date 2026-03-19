@@ -115,6 +115,18 @@ export const CustomMobileContent: Story = {
     }, 0);
 
     return html`
+      <style>
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p {
+          margin: 0;
+          padding: 0;
+        }
+      </style>
       <forge-app-layout
         app-title=${args.appTitle}
         breakpoint=${args.breakpoint}
@@ -125,23 +137,28 @@ export const CustomMobileContent: Story = {
         </div>
 
         <div slot="body" style="padding: var(--forge-spacing-medium);">
-          <h2 class="forge-typography--heading2">Custom Mobile Content Demo</h2>
+          <h2 class="forge-typography--display1">Custom Mobile Content Demo</h2>
           <p class="forge-typography--body1" style="margin-block: var(--forge-spacing-medium);">
-            This demo shows how to use the <code>forge-app-layout-breakpoint-change</code> event to detect when the
-            layout changes between mobile and desktop modes, and render different content accordingly.
+            This demo demonstrates that you can use the <code>forge-app-layout-breakpoint-change</code> event to detect
+            when the layout changes between mobile and desktop modes, and render different content accordingly.
           </p>
           <p class="forge-typography--body1" style="margin-block-end: var(--forge-spacing-medium);">
-            <strong>Try resizing the window</strong> to see the navigation content change:
+            Try resizing the window to see the navigation content change:
           </p>
           <ul class="forge-typography--body1">
-            <li><strong>Mobile (small):</strong> Shows an inline message that only appears in mobile view</li>
-            <li><strong>Desktop (large):</strong> Shows standard navigation list without the message</li>
+            <li>
+              <span class="forge-typography--heading1">Mobile (small):</span> Shows an inline message that only appears
+              in mobile view
+            </li>
+            <li>
+              <span class="forge-typography--heading1">Desktop (large):</span> Shows standard navigation list without
+              the message
+            </li>
           </ul>
           <p
             class="forge-typography--body2"
             style="margin-block-start: var(--forge-spacing-large); color: var(--forge-theme-text-medium);">
-            Check the <strong>Actions</strong> panel below to see the events being emitted as you resize the window or
-            toggle the drawer.
+            Check the Actions panel below to see the events being emitted as you resize the window or toggle the drawer.
           </p>
         </div>
       </forge-app-layout>
