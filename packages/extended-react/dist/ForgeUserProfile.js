@@ -17,6 +17,11 @@ export const ForgeUserProfile = forwardRef((props, forwardedRef) => {
   /** Event listeners - run once */
   useEventListener(
     ref,
+    "forge-user-profile-sign-in",
+    props.onForgeUserProfileSignIn,
+  );
+  useEventListener(
+    ref,
     "forge-user-profile-sign-out",
     props.onForgeUserProfileSignOut,
   );

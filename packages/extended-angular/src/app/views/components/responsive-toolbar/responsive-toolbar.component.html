@@ -57,7 +57,9 @@
 </ng-template>
 
 <ng-template #desktopButtons>
-  <forge-button *ngFor="let action of toolbarActions; let i = index" [variant]="action.variant ?? 'text'">
-    {{ action.label }}
-  </forge-button>
+  @for (action of toolbarActions; track action; let i = $index) {
+    <forge-button [variant]="action.variant ?? 'text'">
+      {{ action.label }}
+    </forge-button>
+  }
 </ng-template>

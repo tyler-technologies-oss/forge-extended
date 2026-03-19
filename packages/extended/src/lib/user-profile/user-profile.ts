@@ -1,7 +1,7 @@
 import { LitElement, TemplateResult, html, nothing, unsafeCSS, PropertyValues } from 'lit';
-import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
+import { customElement, property, queryAssignedNodes, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
-import { tylIconLogout } from '@tylertech/tyler-icons';
+import { tylIconAccountOutline, tylIconLogout } from '@tylertech/tyler-icons';
 import {
   defineAvatarComponent,
   defineButtonComponent,
@@ -28,6 +28,7 @@ declare global {
   }
 
   interface HTMLElementEventMap {
+    'forge-user-profile-sign-in': Event;
     'forge-user-profile-sign-out': Event;
   }
 }
@@ -38,8 +39,10 @@ export const UserProfileComponentTagName: keyof HTMLElementTagNameMap = 'forge-u
  * @tag forge-user-profile
  *
  * @slot link - Slot for additional profile navigation links
+ * @slot sign-in-button-text - Slot for the sign in button text
  * @slot sign-out-button-text - Slot for the sign out button text
  *
+ * @event {Event} forge-user-profile-sign-in - Fired when the sign in button is clicked.
  * @event {Event} forge-user-profile-sign-out - Fired when the sign out button is clicked.
  */
 
@@ -54,7 +57,7 @@ export class UserProfileComponent extends LitElement {
     definePopoverComponent();
     defineToolbarComponent();
 
-    IconRegistry.define([tylIconLogout]);
+    IconRegistry.define([tylIconLogout, tylIconAccountOutline]);
   }
 
   public static override styles = unsafeCSS(styles);
@@ -83,17 +86,23 @@ export class UserProfileComponent extends LitElement {
   @property({ type: Boolean })
   public open = false;
 
+  /** Internal state tracking whether the user is signed in based on fullName */
+  @state()
+  private _signedIn = false;
+
   @queryAssignedNodes({ slot: 'link', flatten: true })
   private _slottedLinkNodes!: Node[];
 
   readonly #internals: ElementInternals;
   readonly #linkSlot = html`<slot name="link" id="link-slot"></slot>`;
+  readonly #signInButtonSlot = html`<slot name="sign-in-button-text" id="sign-in-button-slot">Sign in</slot>`;
   readonly #signOutButtonSlot = html`<slot name="sign-out-button-text" id="sign-out-button-slot">Sign Out</slot>`;
   readonly #themeToggleRef = createRef<ThemeToggleComponent>();
 
   constructor() {
     super();
     this.#internals = this.attachInternals();
+    this._signedIn = this.fullName.trim().length > 0;
   }
 
   public override updated(changedProperties: PropertyValues<this>): void {
@@ -101,6 +110,10 @@ export class UserProfileComponent extends LitElement {
 
     if (changedProperties.has('open')) {
       toggleState(this.#internals, 'open', this.open);
+    }
+
+    if (changedProperties.has('fullName')) {
+      this._signedIn = this.fullName.trim().length > 0;
     }
   }
 
@@ -127,6 +140,21 @@ export class UserProfileComponent extends LitElement {
     );
   }
 
+  get #triggerButton(): TemplateResult {
+    return this._signedIn
+      ? html`
+          <forge-icon-button theme="app-bar" aria-label="${this.buttonLabel}" id="popover-trigger">
+            <forge-avatar .text=${this.fullName} .imageUrl=${this.imageUrl} id="button-avatar"></forge-avatar>
+          </forge-icon-button>
+        `
+      : html`
+          <forge-button variant="outlined" class="sign-in-button" pill @click=${this.#handleSignIn}>
+            <forge-icon name="account_outline" slot="start"></forge-icon>
+            ${this.#signInButtonSlot}
+          </forge-button>
+        `;
+  }
+
   get #signOutButton(): TemplateResult | typeof nothing {
     return html`
       <forge-toolbar inverted>
@@ -143,34 +171,34 @@ export class UserProfileComponent extends LitElement {
   public override render(): TemplateResult {
     // prettier-ignore
     return html`
-      <forge-icon-button theme="app-bar" aria-label="${this.buttonLabel}" id="popover-trigger">
-        <forge-avatar .text=${this.fullName} .imageUrl=${this.imageUrl} id="button-avatar"></forge-avatar>
-      </forge-icon-button>
-      <forge-popover
-        id="user-profile-popover"
-        anchor="popover-trigger"
-        placement="bottom-end"
-        arrow
-        position-strategy="fixed"
-        .open=${this.open}
-        @forge-popover-toggle=${this.#handlePopoverToggle}
-        @slotchange=${this.#handleSlotChange}>
-        <div class="user-info-container">
-          <forge-avatar
-            .text=${this.fullName}
-            class="popover-avatar"
-            .imageUrl=${this.imageUrl}
-            id="popover-avatar"></forge-avatar>
-          <div class="user-info">
-            <div class="full-name">${this.fullName}</div>
-            <div class="email">${this.email}</div>
+      ${this.#triggerButton}
+      ${when(this._signedIn, () => html`
+        <forge-popover
+          id="user-profile-popover"
+          anchor="popover-trigger"
+          placement="bottom-end"
+          arrow
+          position-strategy="fixed"
+          .open=${this.open}
+          @forge-popover-toggle=${this.#handlePopoverToggle}
+          @slotchange=${this.#handleSlotChange}>
+          <div class="user-info-container">
+            <forge-avatar
+              .text=${this.fullName}
+              class="popover-avatar"
+              .imageUrl=${this.imageUrl}
+              id="popover-avatar"></forge-avatar>
+            <div class="user-info">
+              <div class="full-name">${this.fullName}</div>
+              <div class="email">${this.email}</div>
+            </div>
           </div>
-        </div>
-        ${when(this._slottedLinkNodes.length, () => html`<forge-divider></forge-divider>`)} 
-        ${this.#links}
-        ${this.#themeToggle} 
-        ${this.#signOutButton}
-      </forge-popover>
+          ${when(this._slottedLinkNodes.length, () => html`<forge-divider></forge-divider>`)}
+          ${this.#links}
+          ${this.#themeToggle}
+          ${this.#signOutButton}
+        </forge-popover>
+      `)}
     `;
   }
 
@@ -185,6 +213,14 @@ export class UserProfileComponent extends LitElement {
     this.open = evt.detail.newState === 'open';
   }
 
+  #handleSignIn(): void {
+    const event = new Event('forge-user-profile-sign-in', {
+      bubbles: true,
+      composed: true
+    });
+    this.dispatchEvent(event);
+  }
+
   #handleSignOut(): void {
     const event = new Event('forge-user-profile-sign-out', {
       bubbles: true,
@@ -195,7 +231,7 @@ export class UserProfileComponent extends LitElement {
 
   #handleSlotChange(evt: Event): void {
     const slotName = (evt.target as HTMLSlotElement).name;
-    if (['profile-button-text', 'link', 'sign-out-button-text'].includes(slotName)) {
+    if (['profile-button-text', 'link', 'sign-in-button-text', 'sign-out-button-text'].includes(slotName)) {
       this.requestUpdate();
     }
   }

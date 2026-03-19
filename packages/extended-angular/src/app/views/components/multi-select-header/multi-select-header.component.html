@@ -13,17 +13,21 @@
       [noBorder]="noBorder()"
       (forge-multi-select-header-select-all)="onSelectAll()">
       <!-- Select All Button Text (conditionally rendered) -->
-      <span slot="select-all-button-text" *ngIf="showSelectAllButton()">Select all</span>
+      @if (showSelectAllButton()) {
+        <span slot="select-all-button-text">Select all</span>
+      }
 
       <!-- Action Buttons (conditionally rendered) -->
-      <div slot="actions" *ngIf="showActions()">
-        <forge-icon-button (click)="onExport()">
-          <forge-icon name="download"></forge-icon>
-        </forge-icon-button>
-        <forge-icon-button (click)="onDelete()" [disabled]="selectedCount() === 0">
-          <forge-icon name="delete"></forge-icon>
-        </forge-icon-button>
-      </div>
+      @if (showActions()) {
+        <div slot="actions">
+          <forge-icon-button (click)="onExport()">
+            <forge-icon name="download"></forge-icon>
+          </forge-icon-button>
+          <forge-icon-button (click)="onDelete()" [disabled]="selectedCount() === 0">
+            <forge-icon name="delete"></forge-icon>
+          </forge-icon-button>
+        </div>
+      }
     </forge-multi-select-header>
   </forge-stack>
 </app-demo-card>

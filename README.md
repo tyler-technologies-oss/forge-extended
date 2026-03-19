@@ -71,65 +71,6 @@ import '@tylertech/forge-extended';
 | --------------------------- | ------------------ |
 | `^1.0.0`                    | `^3.0.0`           |
 
-## Local Development
+## Contributing
 
-This project uses [pnpm](https://pnpm.io/) for package management and is a monorepo using pnpm workspaces.
-
-Additionally, this project uses [Turoborepo](https://turbo.build/repo/docs) for managing the monorepo and orchestrating tasks.
-
-### Install
-
-```bash
-pnpm install
-```
-
-### Recommended VSCode Extensions
-
-It is recommended that you install the following extensions in Visual Studio Code for the best development experience:
-
-- [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint)
-- [Stylelint](https://marketplace.visualstudio.com/items?itemName=stylelint.vscode-stylelint)
-- [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode)
-- [Monorepo Workspace](https://marketplace.visualstudio.com/items?itemName=folke.vscode-monorepo-workspace)
-- [lit-plugin](https://marketplace.visualstudio.com/items?itemName=runem.lit-plugin)
-- [MDX](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx)
-
-### Run Storybook
-
-The following command will run Storybook, which is used for both local development and documentation.
-
-```bash
-pnpm storybook:extended
-```
-
-### Run dev site
-
-The following command will run all dev sites for each package in the monorepo:
-
-```bash
-pnpm dev
-```
-
-If you'd prefer to run a specific dev site for a workspace/package, you can do so like this:
-
-```bash
-pnpm dev:extended
-```
-
-> See the `scripts` section of the `package.json` for more dev site commands.
-
-### Build
-
-This runs a local production build of all packages.
-
-```bash
-pnpm build
-```
-
-### Run tests
-
-Executes the unit test suite.
-
-```bash
-pnpm test
-```
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, workflows, and release process.

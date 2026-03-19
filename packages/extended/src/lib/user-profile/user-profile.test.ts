@@ -7,6 +7,7 @@ import './profile-link/profile-link';
 import { AvatarComponent, ButtonComponent, PopoverComponent } from '@tylertech/forge';
 import { sendKeys, sendMouse } from '@web/test-runner-commands';
 import sinon from 'sinon';
+import { ThemeToggleComponent } from '../theme-toggle/theme-toggle';
 
 describe('UserProfile', () => {
   it('should contain shadow root', async () => {
@@ -278,6 +279,37 @@ describe('UserProfile', () => {
     expect(() => harness.el.setTheme('dark')).to.not.throw();
     expect(() => harness.el.setTheme('system')).to.not.throw();
   });
+
+  it('should show sign in button when fullName is not provided (user not logged in)', async () => {
+    const harness = await createFixture({ fullName: '' });
+
+    expect(harness.signInButton).to.exist;
+    expect(harness.signInButton.textContent?.trim()).to.equal('Sign in');
+  });
+
+  it('should not show popover when user is not logged in', async () => {
+    const harness = await createFixture({ fullName: '' });
+
+    // Popover should not be rendered when user is not signed in
+    expect(harness.popover).to.not.exist;
+  });
+
+  it('should dispatch forge-user-profile-sign-in event when sign in button is clicked', async () => {
+    const harness = await createFixture({ fullName: '' });
+    const spy = sinon.spy();
+
+    harness.el.addEventListener('forge-user-profile-sign-in', spy);
+
+    const { top, left, width, height } = harness.signInButton.getBoundingClientRect();
+    await sendMouse({
+      type: 'click',
+      position: [Math.round(left + width / 2), Math.round(top + height / 2)],
+      button: 'left'
+    });
+    await nextFrame();
+
+    expect(spy).to.have.been.called;
+  });
 });
 
 class UserProfileHarness {
@@ -323,8 +355,12 @@ class UserProfileHarness {
     return this.el.shadowRoot!.querySelector('#sign-out-button') as ButtonComponent;
   }
 
-  public get themeToggle(): any {
+  public get themeToggle(): ThemeToggleComponent | null {
     return this.el.shadowRoot!.querySelector('forge-theme-toggle');
+  }
+
+  public get signInButton(): ButtonComponent {
+    return this.el.shadowRoot!.querySelector('.sign-in-button') as ButtonComponent;
   }
 
   public async pressEscapeKey(): Promise<void> {
