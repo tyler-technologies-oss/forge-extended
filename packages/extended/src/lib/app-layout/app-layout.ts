@@ -9,7 +9,8 @@ import {
   defineIconComponent,
   IconRegistry,
   toggleState,
-  defineMiniDrawerComponent
+  defineMiniDrawerComponent,
+  defineAppBarMenuButtonComponent
 } from '@tylertech/forge';
 import { tylIconArrowBack, tylIconClose } from '@tylertech/tyler-icons';
 
@@ -64,6 +65,7 @@ export class AppLayoutComponent extends LitElement {
     defineMiniDrawerComponent();
     defineIconButtonComponent();
     defineIconComponent();
+    defineAppBarMenuButtonComponent();
 
     IconRegistry.define([tylIconArrowBack, tylIconClose]);
   }
