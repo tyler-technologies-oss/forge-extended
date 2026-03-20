@@ -19,7 +19,7 @@ export interface ForgeAppLayoutProps
     | "onFocus"
     | "onBlur"
   > {
-  /** Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: true) */
+  /** Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false) */
   useMiniDrawer?: boolean;
 
   /** Whether the mini drawer should expand on hover (default: false) */
@@ -51,6 +51,19 @@ export interface ForgeAppLayoutProps
 
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
+
+  /** Whether the current screen width is above the breakpoint (read-only) */
+  isLargeScreen?: ForgeAppLayoutElement["isLargeScreen"];
+
+  /** Fired when the screen size crosses the breakpoint threshold */
+  onForgeAppLayoutBreakpointChange?: (
+    event: CustomEvent<CustomEvent<AppLayoutBreakpointChangeEventData>>,
+  ) => void;
+
+  /** Fired when the navigation drawer opens or closes */
+  onForgeAppLayoutDrawerChange?: (
+    event: CustomEvent<CustomEvent<AppLayoutDrawerChangeEventData>>,
+  ) => void;
 }
 
 /**
@@ -58,9 +71,12 @@ export interface ForgeAppLayoutProps
  * ---
  *
  *
+ * ### **Events:**
+ *  - **forge-app-layout-breakpoint-change** - Fired when the screen size crosses the breakpoint threshold
+ * - **forge-app-layout-drawer-change** - Fired when the navigation drawer opens or closes
+ *
  * ### **Slots:**
- *  - **default** - The main content area
- * - **header** - Places content in the header
+ *  - **header** - Places content in the header
  * - **footer** - Places content in the footer
  * - **left** - Places content to the left of all content
  * - **right** - Places content to the right of all content
@@ -73,5 +89,10 @@ export interface ForgeAppLayoutProps
  * - **app-bar-start** - Places content in the app bar start slot
  * - **app-bar-center** - Places content in the app bar center slot
  * - **app-bar-end** - Places content in the app bar end slot
+ *
+ * ### **CSS Properties:**
+ *  - **--forge-app-layout-drawer-width** - Controls the width of the navigation drawer (default: 320px) _(default: undefined)_
+ * - **--forge-app-layout-dialog-width** - Controls the width of the navigation dialog on small screens (default: 320px) _(default: undefined)_
+ * - **--forge-app-layout-mini-drawer-z-index** - Controls the z-index of the mini drawer when using hover mode (default: 3) _(default: undefined)_
  */
 export const ForgeAppLayout: React.ForwardRefExoticComponent<ForgeAppLayoutProps>;

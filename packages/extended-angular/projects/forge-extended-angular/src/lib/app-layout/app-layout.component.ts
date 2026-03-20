@@ -51,7 +51,7 @@ export class AppLayoutComponent {
     return this.nativeElement.breakpoint;
   }
 
-  /** Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: true) */
+  /** Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false) */
   @Input({ transform: booleanAttribute })
   public set useMiniDrawer(value: AppLayoutComponentCustomElement['useMiniDrawer']) {
     this.zone.runOutsideAngular(() => {
@@ -71,6 +71,11 @@ export class AppLayoutComponent {
   }
   public get miniHover(): AppLayoutComponentCustomElement['miniHover'] {
     return this.nativeElement.miniHover;
+  }
+
+  /** Whether the current screen width is above the breakpoint (read-only) */
+  public get isLargeScreen(): AppLayoutComponentCustomElement['isLargeScreen'] {
+    return this.nativeElement.isLargeScreen;
   }
 
   constructor() {
