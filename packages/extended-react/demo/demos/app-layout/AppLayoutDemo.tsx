@@ -29,10 +29,10 @@ export function AppLayoutDemo(): JSX.Element {
         {/* App Bar End Content */}
         <ForgeStack slot="app-bar-end" inline alignment="center" gap="4">
           <ForgeIconButton aria-label="Search">
-            <ForgeIcon name="search" external />
+            <ForgeIcon name="search" />
           </ForgeIconButton>
           <ForgeIconButton aria-label="Notifications">
-            <ForgeIcon name="notifications" external />
+            <ForgeIcon name="notifications" />
           </ForgeIconButton>
         </ForgeStack>
 

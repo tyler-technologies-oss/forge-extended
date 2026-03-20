@@ -77,10 +77,9 @@ export const Demo: Story = {
           </forge-list-item>
         </forge-list>
 
-        <div class="content-container">
+        <div class="content-container" slot="body">
           <p class="forge-typography--body1">Resize the frame to see the responsive behavior</p>
         </div>
-        <div slot="modal-footer">Footer</div>
       </forge-app-layout>
     `;
   }

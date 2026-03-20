@@ -133,32 +133,32 @@ const meta = {
         ?mini-hover=${args.miniHover}>
         <forge-list navlist slot="navigation">
           <forge-list-item selected id="tooltip-host-dashboard">
-            <forge-tooltip anchor="tooltip-host-dashboard">Dashboard</forge-tooltip>
+            ${!args.miniHover ? html`<forge-tooltip anchor="tooltip-host-dashboard">Dashboard</forge-tooltip>` : ''}
             <forge-icon slot="leading" name="visibility" external></forge-icon>
             <button type="button">Dashboard</button>
           </forge-list-item>
           <forge-list-item id="tooltip-host-analytics">
-            <forge-tooltip anchor="tooltip-host-analytics">Analytics</forge-tooltip>
+            ${!args.miniHover ? html`<forge-tooltip anchor="tooltip-host-analytics">Analytics</forge-tooltip>` : ''}
             <forge-icon slot="leading" name="analytics" external></forge-icon>
             <button type="button">Analytics</button>
           </forge-list-item>
           <forge-list-item id="tooltip-host-reports">
-            <forge-tooltip anchor="tooltip-host-reports">Reports</forge-tooltip>
+            ${!args.miniHover ? html`<forge-tooltip anchor="tooltip-host-reports">Reports</forge-tooltip>` : ''}
             <forge-icon slot="leading" name="assessment" external></forge-icon>
             <button type="button">Reports</button>
           </forge-list-item>
           <forge-list-item id="tooltip-host-users">
-            <forge-tooltip anchor="tooltip-host-users">Users</forge-tooltip>
+            ${!args.miniHover ? html`<forge-tooltip anchor="tooltip-host-users">Users</forge-tooltip>` : ''}
             <forge-icon slot="leading" name="people" external></forge-icon>
             <button type="button">Users</button>
           </forge-list-item>
           <forge-list-item id="tooltip-host-settings">
-            <forge-tooltip anchor="tooltip-host-settings">Settings</forge-tooltip>
+            ${!args.miniHover ? html`<forge-tooltip anchor="tooltip-host-settings">Settings</forge-tooltip>` : ''}
             <forge-icon slot="leading" name="settings" external></forge-icon>
             <button type="button">Settings</button>
           </forge-list-item>
           <forge-list-item id="tooltip-host-help">
-            <forge-tooltip anchor="tooltip-host-help">Help</forge-tooltip>
+            ${!args.miniHover ? html`<forge-tooltip anchor="tooltip-host-help">Help</forge-tooltip>` : ''}
             <forge-icon slot="leading" name="help" external></forge-icon>
             <button type="button">Help</button>
           </forge-list-item>

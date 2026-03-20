@@ -167,6 +167,20 @@ describe('AppLayout', () => {
     expect(harness.el.matches(':state(small)')).to.be.false;
   });
 
+  it('should return false from isLargeScreen getter when below breakpoint', async () => {
+    setupMediaQuery(false);
+    const harness = await createFixture({ breakpoint: 960 });
+
+    expect(harness.el.isLargeScreen).to.be.false;
+  });
+
+  it('should return true from isLargeScreen getter when above breakpoint', async () => {
+    setupMediaQuery(true);
+    const harness = await createFixture({ breakpoint: 960 });
+
+    expect(harness.el.isLargeScreen).to.be.true;
+  });
+
   it('should have drawer-closed state by default on small screens', async () => {
     setupMediaQuery(false);
     const harness = await createFixture({ hasNavigation: true });
@@ -367,6 +381,63 @@ describe('AppLayout', () => {
       expect(event.bubbles).to.be.true;
       expect(event.composed).to.be.true;
     });
+
+    it('should reset drawer state when dialog is closed via forge-dialog-close event', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+
+      // Open the dialog
+      harness.menuButton?.click();
+      await harness.el.updateComplete;
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+
+      // Simulate dialog close (escape key or backdrop click triggers this event)
+      harness.simulateDialogClose();
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(drawer-closed)')).to.be.true;
+      expect(harness.el.matches(':state(drawer-open)')).to.be.false;
+    });
+
+    it('should emit forge-app-layout-drawer-change event when dialog is closed via forge-dialog-close', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+
+      // Open the dialog
+      harness.menuButton?.click();
+      await harness.el.updateComplete;
+
+      const spy = sinon.spy();
+      harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+      // Simulate dialog close
+      harness.simulateDialogClose();
+      await harness.el.updateComplete;
+
+      expect(spy.calledOnce).to.be.true;
+      const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
+      expect(eventDetail.open).to.be.false;
+    });
+
+    it('should allow reopening dialog with single click after closing via forge-dialog-close', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+
+      // Open the dialog
+      harness.menuButton?.click();
+      await harness.el.updateComplete;
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+
+      // Simulate dialog close (escape key or backdrop click)
+      harness.simulateDialogClose();
+      await harness.el.updateComplete;
+      expect(harness.el.matches(':state(drawer-closed)')).to.be.true;
+
+      // Click menu button again - should open on first click
+      harness.menuButton?.click();
+      await harness.el.updateComplete;
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+    });
   });
 });
 
@@ -419,6 +490,21 @@ class AppLayoutHarness {
 
   public get appBarEndSlot(): HTMLSlotElement {
     return this.el.shadowRoot!.querySelector('slot[name="app-bar-end"]') as HTMLSlotElement;
+  }
+
+  public get closeDrawerButton(): HTMLElement | null {
+    return this.el.shadowRoot?.querySelector('.close-drawer-button') as HTMLElement | null;
+  }
+
+  public simulateDialogClose(): void {
+    const dialog = this.dialogElement;
+    if (dialog) {
+      dialog.dispatchEvent(new CustomEvent('forge-dialog-close', { bubbles: true, composed: true }));
+    }
+  }
+
+  public simulateEscapeKey(): void {
+    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
   }
 }
 

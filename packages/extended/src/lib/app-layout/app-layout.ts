@@ -12,7 +12,7 @@ import {
   defineMiniDrawerComponent,
   defineAppBarMenuButtonComponent
 } from '@tylertech/forge';
-import { tylIconArrowBack, tylIconClose } from '@tylertech/tyler-icons';
+import { tylIconArrowBack, tylIconClose, tylIconTylerTalkingTLogo } from '@tylertech/tyler-icons';
 
 import styles from './app-layout.scss?inline';
 
@@ -46,8 +46,8 @@ export const AppLayoutComponentTagName: keyof HTMLElementTagNameMap = 'forge-app
  * @property {number} breakpoint - The screen width breakpoint in pixels for responsive behavior (default: 960)
  * @property {boolean} useMiniDrawer - Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)
  * @property {boolean} miniHover - Whether the mini drawer should expand on hover (default: false)
+ * @property {boolean} isLargeScreen - Whether the current screen width is above the breakpoint (read-only)
  *
- * @slot default - The main content area
  * @slot header - Places content in the header
  * @slot footer - Places content in the footer
  * @slot left - Places content to the left of all content
@@ -64,6 +64,7 @@ export const AppLayoutComponentTagName: keyof HTMLElementTagNameMap = 'forge-app
  *
  * @cssproperty --forge-app-layout-drawer-width - Controls the width of the navigation drawer (default: 320px)
  * @cssproperty --forge-app-layout-dialog-width - Controls the width of the navigation dialog on small screens (default: 320px)
+ * @cssproperty --forge-app-layout-mini-drawer-z-index - Controls the z-index of the mini drawer when using hover mode (default: 3)
  *
  * @state small - Screen width is below 960px, navigation appears in modal drawer
  * @state large - Screen width is 960px or above, navigation appears in body-left drawer
@@ -85,7 +86,7 @@ export class AppLayoutComponent extends LitElement {
     defineIconComponent();
     defineAppBarMenuButtonComponent();
 
-    IconRegistry.define([tylIconArrowBack, tylIconClose]);
+    IconRegistry.define([tylIconArrowBack, tylIconClose, tylIconTylerTalkingTLogo]);
   }
 
   public static override styles = unsafeCSS(styles);
@@ -104,6 +105,10 @@ export class AppLayoutComponent extends LitElement {
 
   @property({ type: Boolean, attribute: 'mini-hover' })
   public miniHover = false;
+
+  public get isLargeScreen(): boolean {
+    return this._isLargeScreen;
+  }
 
   @state()
   private _leftDrawerOpen = false;
@@ -255,7 +260,7 @@ export class AppLayoutComponent extends LitElement {
     this.dispatchEvent(event);
   }
 
-  private get _hasNavigationContent(): boolean {
+  get #hasNavigationContent(): boolean {
     return this._navigationNodes.length > 0;
   }
 
@@ -266,7 +271,7 @@ export class AppLayoutComponent extends LitElement {
       <forge-scaffold>
         <forge-app-bar slot="header" title-text=${this.appTitle} theme-mode="scoped">
           <slot name="app-bar-logo" slot="logo">
-            <forge-icon name="tyler_talking_t_logo" external></forge-icon>
+            <forge-icon name="tyler_talking_t_logo"></forge-icon>
           </slot>
           <slot name="app-bar-start" slot="start"></slot>
           ${when(
@@ -281,7 +286,7 @@ export class AppLayoutComponent extends LitElement {
 
         <!-- Small screens: Navigation in left slot -->
         ${!this._isLargeScreen
-          ? this._hasNavigationContent
+          ? this.#hasNavigationContent
             ? html`
                 <forge-dialog
                   class="left-sheet-dialog"
@@ -289,7 +294,7 @@ export class AppLayoutComponent extends LitElement {
                   preset="left-sheet"
                   slot="left"
                   ?open=${this._leftDrawerOpen}
-                  @forge-drawer-after-close=${this._handleLeftDrawerAfterClose}>
+                  @forge-dialog-close=${this._handleLeftDrawerAfterClose}>
                   <div class="drawer-container">
                     <forge-toolbar no-border>
                       <forge-icon-button
@@ -311,7 +316,7 @@ export class AppLayoutComponent extends LitElement {
 
         <!-- Large screens: Navigation in body-left slot -->
         ${this._isLargeScreen
-          ? this._hasNavigationContent
+          ? this.#hasNavigationContent
             ? html`
                 <div class="drawer-container ${this.miniHover ? 'mini-hover' : ''}" slot="body-left">
                   ${this.useMiniDrawer

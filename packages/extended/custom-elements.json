@@ -190,6 +190,252 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/app-layout/app-layout.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AppLayoutComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-app-layout'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AppLayoutComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the width of the navigation drawer (default: 320px)",
+              "name": "--forge-app-layout-drawer-width"
+            },
+            {
+              "description": "Controls the width of the navigation dialog on small screens (default: 320px)",
+              "name": "--forge-app-layout-dialog-width"
+            },
+            {
+              "description": "Controls the z-index of the mini drawer when using hover mode (default: 3)",
+              "name": "--forge-app-layout-mini-drawer-z-index"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Places content in the header",
+              "name": "header"
+            },
+            {
+              "description": "Places content in the footer",
+              "name": "footer"
+            },
+            {
+              "description": "Places content to the left of all content",
+              "name": "left"
+            },
+            {
+              "description": "Places content to the right of all content",
+              "name": "right"
+            },
+            {
+              "description": "Places content in the header of the body",
+              "name": "body-header"
+            },
+            {
+              "description": "Places content in the footer of the body",
+              "name": "body-footer"
+            },
+            {
+              "description": "Places content to the left of the body content",
+              "name": "body-left"
+            },
+            {
+              "description": "Places content to the right of the body content",
+              "name": "body-right"
+            },
+            {
+              "description": "Responsive navigation content that renders in left slot (small screens) or body-left slot (large screens)",
+              "name": "navigation"
+            },
+            {
+              "description": "Places content in the app bar logo slot",
+              "name": "app-bar-logo"
+            },
+            {
+              "description": "Places content in the app bar start slot",
+              "name": "app-bar-start"
+            },
+            {
+              "description": "Places content in the app bar center slot",
+              "name": "app-bar-center"
+            },
+            {
+              "description": "Places content in the app bar end slot",
+              "name": "app-bar-end"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "appTitle",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The title text to display in the app bar",
+              "attribute": "app-title"
+            },
+            {
+              "kind": "field",
+              "name": "breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "960",
+              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
+              "attribute": "breakpoint"
+            },
+            {
+              "kind": "field",
+              "name": "useMiniDrawer",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
+              "attribute": "use-mini-drawer"
+            },
+            {
+              "kind": "field",
+              "name": "miniHover",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the mini drawer should expand on hover (default: false)",
+              "attribute": "mini-hover"
+            },
+            {
+              "kind": "field",
+              "name": "isLargeScreen",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "description": "Whether the current screen width is above the breakpoint (read-only)"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<AppLayoutBreakpointChangeEventData>"
+              },
+              "description": "Fired when the screen size crosses the breakpoint threshold",
+              "name": "forge-app-layout-breakpoint-change"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<AppLayoutDrawerChangeEventData>"
+              },
+              "description": "Fired when the navigation drawer opens or closes",
+              "name": "forge-app-layout-drawer-change"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "app-title",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The title text to display in the app bar",
+              "fieldName": "appTitle"
+            },
+            {
+              "name": "breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "default": "960",
+              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
+              "fieldName": "breakpoint"
+            },
+            {
+              "name": "use-mini-drawer",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
+              "fieldName": "useMiniDrawer"
+            },
+            {
+              "name": "mini-hover",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the mini drawer should expand on hover (default: false)",
+              "fieldName": "miniHover"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-app-layout",
+          "customElement": true,
+          "states": [
+            {
+              "name": "small",
+              "description": "Screen width is below 960px, navigation appears in modal drawer"
+            },
+            {
+              "name": "large",
+              "description": "Screen width is 960px or above, navigation appears in body-left drawer"
+            },
+            {
+              "name": "drawer-open",
+              "description": "The navigation drawer is currently open"
+            },
+            {
+              "name": "drawer-closed",
+              "description": "The navigation drawer is currently closed"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLayoutComponentTagName",
+          "declaration": {
+            "name": "AppLayoutComponentTagName",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLayoutComponent",
+          "declaration": {
+            "name": "AppLayoutComponent",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLayoutComponent",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "declarations": [
         {
@@ -696,236 +942,113 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/app-layout/app-layout.ts",
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "AppLayoutComponentTagName",
+          "name": "MultiSelectHeaderComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-app-layout'"
+          "default": "'forge-multi-select-header'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "AppLayoutComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the width of the navigation drawer (default: 320px)",
-              "name": "--forge-app-layout-drawer-width"
-            },
-            {
-              "description": "Controls the width of the navigation dialog on small screens (default: 320px)",
-              "name": "--forge-app-layout-dialog-width"
-            }
-          ],
+          "name": "MultiSelectHeaderComponent",
           "slots": [
             {
-              "description": "The main content area",
-              "name": "default"
+              "description": "Text content for the select-all button",
+              "name": "select-all-button-text"
             },
             {
-              "description": "Places content in the header",
-              "name": "header"
-            },
-            {
-              "description": "Places content in the footer",
-              "name": "footer"
-            },
-            {
-              "description": "Places content to the left of all content",
-              "name": "left"
-            },
-            {
-              "description": "Places content to the right of all content",
-              "name": "right"
-            },
-            {
-              "description": "Places content in the header of the body",
-              "name": "body-header"
-            },
-            {
-              "description": "Places content in the footer of the body",
-              "name": "body-footer"
-            },
-            {
-              "description": "Places content to the left of the body content",
-              "name": "body-left"
-            },
-            {
-              "description": "Places content to the right of the body content",
-              "name": "body-right"
-            },
-            {
-              "description": "Responsive navigation content that renders in left slot (small screens) or body-left slot (large screens)",
-              "name": "navigation"
-            },
-            {
-              "description": "Places content in the app bar logo slot",
-              "name": "app-bar-logo"
-            },
-            {
-              "description": "Places content in the app bar start slot",
-              "name": "app-bar-start"
-            },
-            {
-              "description": "Places content in the app bar center slot",
-              "name": "app-bar-center"
-            },
-            {
-              "description": "Places content in the app bar end slot",
-              "name": "app-bar-end"
+              "description": "Action buttons (maps to the toolbar end slot)",
+              "name": "actions"
             }
           ],
           "members": [
             {
               "kind": "field",
-              "name": "appTitle",
+              "name": "text",
               "type": {
                 "text": "string"
               },
               "privacy": "public",
               "default": "''",
-              "description": "The title text to display in the app bar",
-              "attribute": "app-title"
+              "description": "The text to display in the header (typically showing selection count)",
+              "attribute": "text"
             },
             {
               "kind": "field",
-              "name": "breakpoint",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "960",
-              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
-              "attribute": "breakpoint"
-            },
-            {
-              "kind": "field",
-              "name": "useMiniDrawer",
+              "name": "noBorder",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
-              "default": "false",
-              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
-              "attribute": "use-mini-drawer"
-            },
-            {
-              "kind": "field",
-              "name": "miniHover",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Whether the mini drawer should expand on hover (default: false)",
-              "attribute": "mini-hover"
+              "default": "true",
+              "description": "Hides the bottom border",
+              "attribute": "no-border"
             }
           ],
           "events": [
             {
               "type": {
-                "text": "CustomEvent<AppLayoutBreakpointChangeEventData>"
+                "text": "CustomEvent"
               },
-              "description": "Fired when the screen size crosses the breakpoint threshold",
-              "name": "forge-app-layout-breakpoint-change"
-            },
-            {
-              "type": {
-                "text": "CustomEvent<AppLayoutDrawerChangeEventData>"
-              },
-              "description": "Fired when the navigation drawer opens or closes",
-              "name": "forge-app-layout-drawer-change"
+              "description": "Fired when the select-all button is clicked",
+              "name": "forge-multi-select-header-select-all"
             }
           ],
           "attributes": [
             {
-              "name": "app-title",
+              "name": "text",
               "type": {
                 "text": "string"
               },
               "default": "''",
-              "description": "The title text to display in the app bar",
-              "fieldName": "appTitle"
+              "description": "The text to display in the header (typically showing selection count)",
+              "fieldName": "text"
             },
             {
-              "name": "breakpoint",
-              "type": {
-                "text": "number"
-              },
-              "default": "960",
-              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
-              "fieldName": "breakpoint"
-            },
-            {
-              "name": "use-mini-drawer",
+              "name": "no-border",
               "type": {
                 "text": "boolean"
               },
-              "default": "false",
-              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
-              "fieldName": "useMiniDrawer"
-            },
-            {
-              "name": "mini-hover",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Whether the mini drawer should expand on hover (default: false)",
-              "fieldName": "miniHover"
+              "default": "true",
+              "description": "Hides the bottom border",
+              "fieldName": "noBorder"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-app-layout",
-          "customElement": true,
-          "states": [
-            {
-              "name": "small",
-              "description": "Screen width is below 960px, navigation appears in modal drawer"
-            },
-            {
-              "name": "large",
-              "description": "Screen width is 960px or above, navigation appears in body-left drawer"
-            },
-            {
-              "name": "drawer-open",
-              "description": "The navigation drawer is currently open"
-            },
-            {
-              "name": "drawer-closed",
-              "description": "The navigation drawer is currently closed"
-            }
-          ]
+          "tagName": "forge-multi-select-header",
+          "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "AppLayoutComponentTagName",
+          "name": "MultiSelectHeaderComponentTagName",
           "declaration": {
-            "name": "AppLayoutComponentTagName",
-            "module": "src/lib/app-layout/app-layout.ts"
+            "name": "MultiSelectHeaderComponentTagName",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         },
         {
           "kind": "js",
-          "name": "AppLayoutComponent",
+          "name": "MultiSelectHeaderComponent",
           "declaration": {
-            "name": "AppLayoutComponent",
-            "module": "src/lib/app-layout/app-layout.ts"
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "AppLayoutComponent",
-            "module": "src/lib/app-layout/app-layout.ts"
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         }
       ]
@@ -1344,119 +1467,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "MultiSelectHeaderComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-multi-select-header'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MultiSelectHeaderComponent",
-          "slots": [
-            {
-              "description": "Text content for the select-all button",
-              "name": "select-all-button-text"
-            },
-            {
-              "description": "Action buttons (maps to the toolbar end slot)",
-              "name": "actions"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "attribute": "text"
-            },
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "true",
-              "description": "Hides the bottom border",
-              "attribute": "no-border"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Fired when the select-all button is clicked",
-              "name": "forge-multi-select-header-select-all"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "fieldName": "text"
-            },
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Hides the bottom border",
-              "fieldName": "noBorder"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-multi-select-header",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponentTagName",
-          "declaration": {
-            "name": "MultiSelectHeaderComponentTagName",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponent",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/user-profile/user-profile.ts",
       "declarations": [
         {
@@ -1811,6 +1821,22 @@
       "path": "src/lib/app-launcher/app-launcher.ts",
       "lineNumber": 66
     },
+    "AppLayoutBreakpoint": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 30
+    },
+    "AppLayoutBreakpointChangeEventData": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 32
+    },
+    "AppLayoutDrawerChangeEventData": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 36
+    },
+    "AppLayoutComponent": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 78
+    },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 28
@@ -1843,21 +1869,9 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 39
     },
-    "AppLayoutBreakpoint": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 30
-    },
-    "AppLayoutBreakpointChangeEventData": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 32
-    },
-    "AppLayoutDrawerChangeEventData": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 36
-    },
-    "AppLayoutComponent": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 77
+    "MultiSelectHeaderComponent": {
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "lineNumber": 28
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
@@ -1886,10 +1900,6 @@
     "ThemeToggleComponent": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 41
-    },
-    "MultiSelectHeaderComponent": {
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "lineNumber": 28
     },
     "UserProfileComponent": {
       "path": "src/lib/user-profile/user-profile.ts",
