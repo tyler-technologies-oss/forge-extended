@@ -269,7 +269,7 @@ export class AppLayoutComponent extends LitElement {
 
     return html`
       <forge-scaffold>
-        <forge-app-bar slot="header" titleText=${this.appTitle} theme-mode="scoped">
+        <forge-app-bar slot="header" .titleText=${this.appTitle} theme-mode="scoped">
           <slot name="app-bar-logo" slot="logo">
             <forge-icon name="tyler_talking_t_logo"></forge-icon>
           </slot>
