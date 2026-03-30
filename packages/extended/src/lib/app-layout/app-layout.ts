@@ -132,7 +132,7 @@ export class AppLayoutComponent extends LitElement {
     this._setupMediaQuery();
   }
 
-  public override firstUpdated(changedProperties: PropertyValues): void {
+  public override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
     // Re-update states after first render when slotted content is available
     this._updateStates();
@@ -140,7 +140,7 @@ export class AppLayoutComponent extends LitElement {
     this._applyDrawerStates();
   }
 
-  public override updated(changedProperties: PropertyValues): void {
+  public override updated(changedProperties: PropertyValues<this>): void {
     super.updated(changedProperties);
 
     if (changedProperties.has('breakpoint')) {
@@ -269,16 +269,17 @@ export class AppLayoutComponent extends LitElement {
 
     return html`
       <forge-scaffold>
-        <forge-app-bar slot="header" title-text=${this.appTitle} theme-mode="scoped">
+        <forge-app-bar slot="header" titleText=${this.appTitle} theme-mode="scoped">
           <slot name="app-bar-logo" slot="logo">
             <forge-icon name="tyler_talking_t_logo"></forge-icon>
           </slot>
           <slot name="app-bar-start" slot="start"></slot>
           ${when(
             !this._isLargeScreen,
-            () => html`
-              <forge-app-bar-menu-button slot="start" @click=${this._toggleLeftDrawer}> </forge-app-bar-menu-button>
-            `
+            () =>
+              html`<forge-app-bar-menu-button
+                slot="start"
+                @click=${this._toggleLeftDrawer}></forge-app-bar-menu-button>`
           )}
           <slot name="app-bar-center" slot="center"></slot>
           <slot name="app-bar-end" slot="end"></slot>
@@ -340,10 +341,7 @@ export class AppLayoutComponent extends LitElement {
             : navigationSlot
           : ''}
 
-        <div slot="body">
-          <slot name="body"></slot>
-        </div>
-
+        <slot name="body" slot="body"></slot>
         <slot name="right" slot="right"></slot>
         <slot name="body-right" slot="body-right"></slot>
         <slot name="body-footer" slot="body-footer"></slot>

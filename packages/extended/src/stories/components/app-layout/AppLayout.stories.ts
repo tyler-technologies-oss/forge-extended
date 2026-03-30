@@ -77,7 +77,7 @@ export const Demo: Story = {
           </forge-list-item>
         </forge-list>
 
-        <div class="content-container" slot="body">
+        <div style="padding: var(--forge-spacing-medium);" slot="body">
           <p class="forge-typography--body1">Resize the frame to see the responsive behavior</p>
         </div>
       </forge-app-layout>
