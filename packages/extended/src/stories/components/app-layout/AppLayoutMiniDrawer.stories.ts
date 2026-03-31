@@ -131,7 +131,7 @@ const meta = {
         breakpoint=${args.breakpoint}
         use-mini-drawer
         ?mini-hover=${args.miniHover}>
-        <forge-list navlist slot="navigation">
+        <forge-list navlist slot="navigation" data-forge-app-layout-close>
           <forge-list-item selected id="tooltip-host-dashboard">
             ${!args.miniHover ? html`<forge-tooltip anchor="tooltip-host-dashboard">Dashboard</forge-tooltip>` : ''}
             <forge-icon slot="leading" name="visibility" external></forge-icon>

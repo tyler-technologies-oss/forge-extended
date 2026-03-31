@@ -163,7 +163,7 @@ const meta = {
         }
       </style>
       <forge-app-layout app-title=${args.appTitle} breakpoint=${args.breakpoint}>
-        <forge-list navlist slot="navigation">
+        <forge-list navlist slot="navigation" data-forge-app-layout-close>
           <!-- Dashboard Section -->
           <div class="forge-typography--body1 section-header">Dashboard</div>
           <forge-list-item class="section-item">

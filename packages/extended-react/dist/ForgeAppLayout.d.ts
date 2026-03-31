@@ -28,6 +28,9 @@ export interface ForgeAppLayoutProps
   /** The title text to display in the app bar */
   appTitle?: ForgeAppLayoutElement["appTitle"];
 
+  /** The URL that the app bar title links to */
+  appTitleHref?: ForgeAppLayoutElement["appTitleHref"];
+
   /** The screen width breakpoint in pixels for responsive behavior (default: 960) */
   breakpoint?: ForgeAppLayoutElement["breakpoint"];
 
@@ -67,13 +70,17 @@ export interface ForgeAppLayoutProps
 }
 
 /**
- *
+ * A responsive application layout component that provides an app bar with a navigation drawer.
+ * On small screens, the navigation appears in a modal dialog. On large screens, it appears in a side drawer.
  * ---
  *
  *
  * ### **Events:**
  *  - **forge-app-layout-breakpoint-change** - Fired when the screen size crosses the breakpoint threshold
  * - **forge-app-layout-drawer-change** - Fired when the navigation drawer opens or closes
+ *
+ * ### **Methods:**
+ *  - **closeDrawer(): _void_** - Closes the navigation drawer. Only has effect on small screens where the drawer is modal.
  *
  * ### **Slots:**
  *  - **header** - Places content in the header

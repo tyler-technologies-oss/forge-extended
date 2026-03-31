@@ -103,6 +103,61 @@ The component automatically adapts to screen size using a configurable breakpoin
 - Drawer automatically closes when screen size increases
 - Always uses a modal dialog drawer regardless of `use-mini-drawer` setting
 
+### Auto-close on Navigation
+
+On small screens, you can automatically close the modal drawer when a user clicks on a navigation item by adding the `data-forge-app-layout-close` attribute to any element within the navigation slot. The attribute can be placed on a parent element (like `<forge-list>`) to close the drawer on any click within that element:
+
+```html
+<forge-app-layout app-title="My Application">
+  <!-- All clicks within this list will close the drawer -->
+  <forge-list slot="navigation" navlist data-forge-app-layout-close>
+    <forge-list-item>
+      <forge-icon slot="start" name="home"></forge-icon>
+      <a href="/home">Home</a>
+    </forge-list-item>
+    <forge-list-item>
+      <forge-icon slot="start" name="settings"></forge-icon>
+      <a href="/settings">Settings</a>
+    </forge-list-item>
+  </forge-list>
+</forge-app-layout>
+```
+
+For more granular control, you can place the attribute on individual items:
+
+```html
+<forge-app-layout app-title="My Application">
+  <forge-list slot="navigation" navlist>
+    <!-- These items will close the drawer when clicked -->
+    <forge-list-item data-forge-app-layout-close>
+      <forge-icon slot="start" name="home"></forge-icon>
+      <a href="/home">Home</a>
+    </forge-list-item>
+
+    <!-- This item won't close the drawer (e.g., submenu toggle) -->
+    <forge-list-item>
+      <forge-icon slot="start" name="expand_more"></forge-icon>
+      <button type="button">Expand submenu</button>
+    </forge-list-item>
+  </forge-list>
+</forge-app-layout>
+```
+
+You can also programmatically close the drawer using the `closeDrawer()` method:
+
+```javascript
+const appLayout = document.querySelector('forge-app-layout');
+appLayout.closeDrawer();
+```
+
+The `APP_LAYOUT_CLOSE_ATTRIBUTE` constant is exported for use in JavaScript/TypeScript:
+
+```typescript
+import { APP_LAYOUT_CLOSE_ATTRIBUTE } from '@tylertech/forge-extended';
+
+element.setAttribute(APP_LAYOUT_CLOSE_ATTRIBUTE, '');
+```
+
 ### Custom Breakpoint
 
 You can customize the responsive breakpoint by setting the `breakpoint` property:

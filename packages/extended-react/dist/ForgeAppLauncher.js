@@ -39,7 +39,7 @@ export const ForgeAppLauncher = forwardRef((props, forwardedRef) => {
       for: props.htmlFor,
       part: props.part,
       tabindex: props.tabIndex,
-      open: props.open ? "" : undefined,
+      open: props.open ? true : undefined,
       style: { ...props.style },
     },
     props.children,

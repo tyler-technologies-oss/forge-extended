@@ -1,5 +1,5 @@
 <forge-list navlist>
-  <forge-list-item [selected]="homeLink.isActive">
+  <forge-list-item [selected]="homeLink.isActive" data-forge-app-layout-close>
     <forge-icon name="home" slot="start"></forge-icon>
     <a
       routerLink="/"
@@ -17,7 +17,7 @@
       <forge-open-icon slot="end"></forge-open-icon>
     </forge-list-item>
     @for (item of componentMenuItems; track item) {
-      <forge-list-item indented [selected]="componentMenuLink.isActive">
+      <forge-list-item indented [selected]="componentMenuLink.isActive" data-forge-app-layout-close>
         <a
           [routerLink]="[item.value]"
           #componentMenuLink="routerLinkActive"

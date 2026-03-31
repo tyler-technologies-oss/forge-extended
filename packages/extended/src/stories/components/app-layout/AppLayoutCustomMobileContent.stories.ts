@@ -88,7 +88,7 @@ export const CustomMobileContent: Story = {
 
       navigationContainer.innerHTML = `
         ${mobileOnlyBanner}
-        <forge-list navlist>
+        <forge-list navlist data-forge-app-layout-close>
           <forge-list-item>
             <forge-icon slot="start" name="home"></forge-icon>
             <a href="javascript: void(0);">Home</a>

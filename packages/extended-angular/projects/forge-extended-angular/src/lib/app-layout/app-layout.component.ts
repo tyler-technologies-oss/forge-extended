@@ -40,6 +40,17 @@ export class AppLayoutComponent {
     return this.nativeElement.appTitle;
   }
 
+  /** The URL that the app bar title links to */
+  @Input()
+  public set appTitleHref(value: AppLayoutComponentCustomElement['appTitleHref']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.appTitleHref = value;
+    });
+  }
+  public get appTitleHref(): AppLayoutComponentCustomElement['appTitleHref'] {
+    return this.nativeElement.appTitleHref;
+  }
+
   /** The screen width breakpoint in pixels for responsive behavior (default: 960) */
   @Input({ transform: numberAttribute })
   public set breakpoint(value: AppLayoutComponentCustomElement['breakpoint']) {
@@ -76,6 +87,13 @@ export class AppLayoutComponent {
   /** Whether the current screen width is above the breakpoint (read-only) */
   public get isLargeScreen(): AppLayoutComponentCustomElement['isLargeScreen'] {
     return this.nativeElement.isLargeScreen;
+  }
+
+  /** Closes the navigation drawer. Only has effect on small screens where the drawer is modal. */
+  public closeDrawer(
+    ...args: Parameters<AppLayoutComponentCustomElement['closeDrawer']>
+  ): ReturnType<AppLayoutComponentCustomElement['closeDrawer']> {
+    return this.zone.runOutsideAngular(() => this.nativeElement.closeDrawer(...args));
   }
 
   constructor() {
