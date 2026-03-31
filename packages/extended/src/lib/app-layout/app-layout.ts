@@ -1,6 +1,5 @@
 import { LitElement, TemplateResult, html, unsafeCSS, PropertyValues } from 'lit';
 import { when } from 'lit/directives/when.js';
-import { ifDefined } from 'lit/directives/if-defined.js';
 import { customElement, property, state, queryAssignedNodes } from 'lit/decorators.js';
 import {
   defineScaffoldComponent,
@@ -111,7 +110,7 @@ export class AppLayoutComponent extends LitElement {
   public appTitle = '';
 
   @property({ type: String, attribute: 'app-title-href' })
-  public appTitleHref: string | undefined;
+  public appTitleHref = '';
 
   @property({ type: Number })
   public breakpoint = 960;
@@ -308,11 +307,7 @@ export class AppLayoutComponent extends LitElement {
 
     return html`
       <forge-scaffold>
-        <forge-app-bar
-          slot="header"
-          .titleText=${this.appTitle}
-          href=${ifDefined(this.appTitleHref)}
-          theme-mode="scoped">
+        <forge-app-bar slot="header" .titleText=${this.appTitle} .href=${this.appTitleHref} theme-mode="scoped">
           <slot name="app-bar-logo" slot="logo">
             <forge-icon name="tyler_talking_t_logo"></forge-icon>
           </slot>
