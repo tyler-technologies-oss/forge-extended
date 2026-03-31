@@ -1,5 +1,6 @@
 import { LitElement, TemplateResult, html, unsafeCSS, PropertyValues } from 'lit';
 import { when } from 'lit/directives/when.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { customElement, property, state, queryAssignedNodes } from 'lit/decorators.js';
 import {
   defineScaffoldComponent,
@@ -38,15 +39,27 @@ export interface AppLayoutDrawerChangeEventData {
 }
 
 export const AppLayoutComponentTagName: keyof HTMLElementTagNameMap = 'forge-app-layout';
+export const APP_LAYOUT_CLOSE_ATTRIBUTE = 'data-forge-app-layout-close';
 
 /**
  * @tag forge-app-layout
  *
+ * @summary A responsive application layout component that provides an app bar with a navigation drawer.
+ * On small screens, the navigation appears in a modal dialog. On large screens, it appears in a side drawer.
+ *
+ * @description
+ * The navigation drawer on small screens can be automatically closed when a user clicks on a navigation item
+ * by adding the `data-forge-app-layout-close` attribute to any clickable element within the navigation slot.
+ * Alternatively, the `closeDrawer()` method can be called programmatically.
+ *
  * @property {string} appTitle - The title text to display in the app bar
+ * @property {string} [appTitleHref] - The URL that the app bar title links to
  * @property {number} breakpoint - The screen width breakpoint in pixels for responsive behavior (default: 960)
  * @property {boolean} useMiniDrawer - Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)
  * @property {boolean} miniHover - Whether the mini drawer should expand on hover (default: false)
  * @property {boolean} isLargeScreen - Whether the current screen width is above the breakpoint (read-only)
+ *
+ * @method closeDrawer - Closes the navigation drawer on small screens
  *
  * @slot header - Places content in the header
  * @slot footer - Places content in the footer
@@ -97,6 +110,9 @@ export class AppLayoutComponent extends LitElement {
   @property({ type: String, attribute: 'app-title' })
   public appTitle = '';
 
+  @property({ type: String, attribute: 'app-title-href' })
+  public appTitleHref: string | undefined;
+
   @property({ type: Number })
   public breakpoint = 960;
 
@@ -108,6 +124,20 @@ export class AppLayoutComponent extends LitElement {
 
   public get isLargeScreen(): boolean {
     return this._isLargeScreen;
+  }
+
+  /**
+   * Closes the navigation drawer. Only has effect on small screens where the drawer is modal.
+   */
+  public closeDrawer(): void {
+    if (this._isLargeScreen || !this._leftDrawerOpen) {
+      return;
+    }
+
+    this._leftDrawerOpen = false;
+    toggleState(this.#internals, 'drawer-open', false);
+    toggleState(this.#internals, 'drawer-closed', true);
+    this.#emitDrawerChange(false);
   }
 
   @state()
@@ -230,6 +260,15 @@ export class AppLayoutComponent extends LitElement {
     }
   };
 
+  private _handleNavigationClick = (event: Event): void => {
+    const path = event.composedPath();
+    const hasCloseAttribute = path.some(el => el instanceof HTMLElement && el.hasAttribute(APP_LAYOUT_CLOSE_ATTRIBUTE));
+
+    if (hasCloseAttribute) {
+      this.closeDrawer();
+    }
+  };
+
   private _applyDrawerStates(): void {
     // Directly set the open property on drawer elements to ensure they match our state
     const drawerSelector = this.useMiniDrawer ? 'forge-mini-drawer' : 'forge-drawer';
@@ -269,7 +308,11 @@ export class AppLayoutComponent extends LitElement {
 
     return html`
       <forge-scaffold>
-        <forge-app-bar slot="header" .titleText=${this.appTitle} theme-mode="scoped">
+        <forge-app-bar
+          slot="header"
+          .titleText=${this.appTitle}
+          href=${ifDefined(this.appTitleHref)}
+          theme-mode="scoped">
           <slot name="app-bar-logo" slot="logo">
             <forge-icon name="tyler_talking_t_logo"></forge-icon>
           </slot>
@@ -307,7 +350,7 @@ export class AppLayoutComponent extends LitElement {
                         <forge-icon name="close"></forge-icon>
                       </forge-icon-button>
                     </forge-toolbar>
-                    <aside>${navigationSlot}</aside>
+                    <aside @click=${this._handleNavigationClick}>${navigationSlot}</aside>
                   </div>
                 </forge-dialog>
               `

@@ -1,5 +1,6 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import {
   defineAppBarComponent,
   defineScaffoldComponent,
@@ -36,6 +37,13 @@ const meta = {
         category: 'Properties'
       }
     },
+    appTitleHref: {
+      control: 'text',
+      description: 'The URL that the app bar title links to',
+      table: {
+        category: 'Properties'
+      }
+    },
     breakpoint: {
       control: 'number',
       description: 'The screen width breakpoint in pixels for responsive behavior',
@@ -46,6 +54,7 @@ const meta = {
   },
   args: {
     appTitle: 'App Layout Demo',
+    appTitleHref: undefined,
     breakpoint: 960
   }
 } satisfies Meta;
@@ -57,8 +66,11 @@ type Story = StoryObj;
 export const Demo: Story = {
   render: args => {
     return html`
-      <forge-app-layout app-title=${args.appTitle} breakpoint=${args.breakpoint}>
-        <forge-list navlist slot="navigation">
+      <forge-app-layout
+        app-title=${args.appTitle}
+        app-title-href=${ifDefined(args.appTitleHref)}
+        breakpoint=${args.breakpoint}>
+        <forge-list navlist slot="navigation" data-forge-app-layout-close>
           <forge-list-item>
             <forge-icon slot="start" name="home"></forge-icon>
             <a href="javascript: void(0);">Home</a>

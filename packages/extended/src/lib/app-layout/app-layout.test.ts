@@ -79,6 +79,30 @@ describe('AppLayout', () => {
     expect(harness.appBarElement?.titleText).to.equal('Test App');
   });
 
+  it('should set app title href', async () => {
+    const harness = await createFixture({ appTitleHref: 'https://example.com' });
+
+    expect(harness.el.appTitleHref).to.equal('https://example.com');
+    expect(harness.appBarElement?.href).to.equal('https://example.com');
+  });
+
+  it('should set app title href via attribute', async () => {
+    const harness = await createFixture();
+
+    harness.el.setAttribute('app-title-href', 'https://test.com');
+    await harness.el.updateComplete;
+
+    expect(harness.el.appTitleHref).to.equal('https://test.com');
+    expect(harness.appBarElement?.href).to.equal('https://test.com');
+  });
+
+  it('should not set href on app bar when appTitleHref is undefined', async () => {
+    const harness = await createFixture();
+
+    expect(harness.el.appTitleHref).to.be.undefined;
+    expect(harness.appBarElement?.hasAttribute('href')).to.be.false;
+  });
+
   it('should set custom breakpoint', async () => {
     const harness = await createFixture({ breakpoint: 1200 });
 
@@ -236,6 +260,126 @@ describe('AppLayout', () => {
     await harness.el.updateComplete;
 
     expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+  });
+
+  describe('closeDrawer', () => {
+    it('should close the drawer when called on small screens', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+
+      // Open drawer first
+      harness.menuButton?.click();
+      await harness.el.updateComplete;
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+
+      // Call closeDrawer
+      harness.el.closeDrawer();
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(drawer-closed)')).to.be.true;
+      expect(harness.el.matches(':state(drawer-open)')).to.be.false;
+    });
+
+    it('should emit forge-app-layout-drawer-change event when closeDrawer is called', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+
+      // Open drawer first
+      harness.menuButton?.click();
+      await harness.el.updateComplete;
+
+      const spy = sinon.spy();
+      harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+      harness.el.closeDrawer();
+      await harness.el.updateComplete;
+
+      expect(spy.calledOnce).to.be.true;
+      const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
+      expect(eventDetail.open).to.be.false;
+    });
+
+    it('should not emit event when closeDrawer is called but drawer is already closed', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+
+      const spy = sinon.spy();
+      harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+      harness.el.closeDrawer();
+      await harness.el.updateComplete;
+
+      expect(spy.called).to.be.false;
+    });
+
+    it('should not close drawer when called on large screens', async () => {
+      setupMediaQuery(true);
+      const harness = await createFixture({ hasNavigation: true });
+
+      // Drawer is open by default on large screens
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+
+      const spy = sinon.spy();
+      harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+      harness.el.closeDrawer();
+      await harness.el.updateComplete;
+
+      // Should remain open and no event should be emitted
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+      expect(spy.called).to.be.false;
+    });
+
+    it('should close drawer when clicking element with data-forge-app-layout-close attribute', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true, navigationWithCloseAttribute: true });
+
+      // Open drawer first
+      harness.menuButton?.click();
+      await harness.el.updateComplete;
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+
+      // Click the nav item with close attribute
+      harness.clickNavItemWithCloseAttribute();
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(drawer-closed)')).to.be.true;
+    });
+
+    it('should emit forge-app-layout-drawer-change when clicking element with data-forge-app-layout-close', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true, navigationWithCloseAttribute: true });
+
+      // Open drawer first
+      harness.menuButton?.click();
+      await harness.el.updateComplete;
+
+      const spy = sinon.spy();
+      harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+      harness.clickNavItemWithCloseAttribute();
+      await harness.el.updateComplete;
+
+      expect(spy.calledOnce).to.be.true;
+      const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
+      expect(eventDetail.open).to.be.false;
+    });
+
+    it('should not close drawer when clicking element without data-forge-app-layout-close attribute', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true, navigationWithCloseAttribute: true });
+
+      // Open drawer first
+      harness.menuButton?.click();
+      await harness.el.updateComplete;
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+
+      // Click the nav item without close attribute
+      harness.clickNavItemWithoutCloseAttribute();
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+    });
   });
 
   describe('events', () => {
@@ -448,8 +592,10 @@ class AppLayoutHarness {
     return this.el.shadowRoot?.querySelector('forge-scaffold') as IScaffoldComponent | null;
   }
 
-  public get appBarElement(): (IAppBarComponent & { titleText: string }) | null {
-    return this.el.shadowRoot?.querySelector('forge-app-bar') as (IAppBarComponent & { titleText: string }) | null;
+  public get appBarElement(): (IAppBarComponent & { titleText: string; href: string }) | null {
+    return this.el.shadowRoot?.querySelector('forge-app-bar') as
+      | (IAppBarComponent & { titleText: string; href: string })
+      | null;
   }
 
   public get dialogElement(): IDialogComponent | null {
@@ -506,14 +652,26 @@ class AppLayoutHarness {
   public simulateEscapeKey(): void {
     document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
   }
+
+  public clickNavItemWithCloseAttribute(): void {
+    const navItem = this.el.querySelector('#nav-with-close') as HTMLElement | null;
+    navItem?.click();
+  }
+
+  public clickNavItemWithoutCloseAttribute(): void {
+    const navItem = this.el.querySelector('#nav-without-close') as HTMLElement | null;
+    navItem?.click();
+  }
 }
 
 interface AppLayoutFixtureConfig {
   appTitle?: string;
+  appTitleHref?: string;
   breakpoint?: number;
   useMiniDrawer?: boolean;
   miniHover?: boolean;
   hasNavigation?: boolean;
+  navigationWithCloseAttribute?: boolean;
   hasBodyContent?: boolean;
   hasLogo?: boolean;
   hasAppBarStart?: boolean;
@@ -523,24 +681,37 @@ interface AppLayoutFixtureConfig {
 
 async function createFixture({
   appTitle = '',
+  appTitleHref,
   breakpoint = 960,
   useMiniDrawer = false,
   miniHover = false,
   hasNavigation = false,
+  navigationWithCloseAttribute = false,
   hasBodyContent = false,
   hasLogo = false,
   hasAppBarStart = false,
   hasAppBarCenter = false,
   hasAppBarEnd = false
 }: AppLayoutFixtureConfig = {}): Promise<AppLayoutHarness> {
+  const navigationContent = navigationWithCloseAttribute
+    ? html`
+        <nav slot="navigation">
+          <a id="nav-with-close" href="#" data-forge-app-layout-close>Home</a>
+          <a id="nav-without-close" href="#">Settings</a>
+        </nav>
+      `
+    : hasNavigation
+      ? html`<nav slot="navigation">Navigation Content</nav>`
+      : '';
+
   const el = await fixture<AppLayoutComponent>(html`
     <forge-app-layout
       app-title=${appTitle}
+      .appTitleHref=${appTitleHref}
       breakpoint=${breakpoint}
       ?use-mini-drawer=${useMiniDrawer}
       ?mini-hover=${miniHover}>
-      ${hasNavigation ? html`<nav slot="navigation">Navigation Content</nav>` : ''}
-      ${hasBodyContent ? html`<div slot="body">Body Content</div>` : ''}
+      ${navigationContent} ${hasBodyContent ? html`<div slot="body">Body Content</div>` : ''}
       ${hasLogo ? html`<div slot="app-bar-logo">Logo</div>` : ''}
       ${hasAppBarStart ? html`<div slot="app-bar-start">Start Content</div>` : ''}
       ${hasAppBarCenter ? html`<div slot="app-bar-center">Center Content</div>` : ''}
