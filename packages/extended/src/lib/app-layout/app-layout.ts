@@ -129,10 +129,15 @@ export class AppLayoutComponent extends LitElement {
    * Closes the navigation drawer. Only has effect on small screens where the drawer is modal.
    */
   public closeDrawer(): void {
-    if (this._isLargeScreen || !this._leftDrawerOpen) {
+    if (!this._isLargeScreen) {
+      this.#setDrawerClosed();
+    }
+  }
+
+  #setDrawerClosed(): void {
+    if (!this._leftDrawerOpen) {
       return;
     }
-
     this._leftDrawerOpen = false;
     toggleState(this.#internals, 'drawer-open', false);
     toggleState(this.#internals, 'drawer-closed', true);
@@ -243,13 +248,7 @@ export class AppLayoutComponent extends LitElement {
   };
 
   private _handleLeftDrawerAfterClose = (): void => {
-    this._leftDrawerOpen = false;
-
-    // Update drawer states
-    toggleState(this.#internals, 'drawer-open', false);
-    toggleState(this.#internals, 'drawer-closed', true);
-
-    this.#emitDrawerChange(false);
+    this.#setDrawerClosed();
   };
 
   private _handleSlotChange = (event: Event): void => {
