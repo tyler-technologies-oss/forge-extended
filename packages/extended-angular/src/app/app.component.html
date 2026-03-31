@@ -1,11 +1,6 @@
-<forge-scaffold>
-  <app-header slot="header" (menuClicked)="onMenuClicked()" [showDrawerToggle]="canCloseDrawer"></app-header>
-  <app-sidenav
-    slot="body-left"
-    [open]="isDrawerOpen"
-    (modalClose)="isDrawerOpen = false"
-    (modalChange)="canCloseDrawer = $event"></app-sidenav>
-  <main class="app-content" slot="body">
+<forge-app-layout [appTitle]="appLayoutState.appTitle()" [breakpoint]="appLayoutState.breakpoint()">
+  <app-sidenav slot="navigation"></app-sidenav>
+  <div slot="body" class="app-content">
     <router-outlet></router-outlet>
-  </main>
-</forge-scaffold>
+  </div>
+</forge-app-layout>

@@ -23,6 +23,7 @@ import {
   ForgeExtendedQuantityFieldModule,
   ForgeExtendedUserProfileModule
 } from '@tylertech/forge-extended-angular';
+import { ForgeExtendedAppLayoutModule } from 'projects/forge-extended-angular/src/lib/app-layout/app-layout.module';
 
 @NgModule({
   declarations: [AppComponent, HomeComponent, SidenavComponent, HeaderComponent],
@@ -34,7 +35,8 @@ import {
     ForgeModule,
     ForgeExtendedQuantityFieldModule,
     ForgeExtendedUserProfileModule,
-    ForgeExtendedProfileLinkModule
+    ForgeExtendedProfileLinkModule,
+    ForgeExtendedAppLayoutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

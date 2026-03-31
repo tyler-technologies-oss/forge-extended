@@ -1,5 +1,16 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+  padding: 0;
+}
+
 .demo-section {
   display: flex;
   flex-direction: column;
@@ -13,4 +24,16 @@
 
 .content {
   padding: #{forge-spacing.variable(medium)};
+}
+
+.stack-xxxsmall {
+  display: flex;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(xxxsmall)};
+}
+
+.stack-medium {
+  display: flex;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(medium)};
 }

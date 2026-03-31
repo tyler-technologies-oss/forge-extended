@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { AppLayoutStateService } from './services/app-layout-state.service';
 
 @Component({
   selector: 'app-root',
@@ -7,6 +8,8 @@ import { Component } from '@angular/core';
   standalone: false
 })
 export class AppComponent {
+  readonly appLayoutState = inject(AppLayoutStateService);
+
   public isDrawerOpen = false;
   public canCloseDrawer = false;
 
