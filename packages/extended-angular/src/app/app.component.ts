@@ -8,12 +8,5 @@ import { AppLayoutStateService } from './services/app-layout-state.service';
   standalone: false
 })
 export class AppComponent {
-  readonly appLayoutState = inject(AppLayoutStateService);
-
-  public isDrawerOpen = false;
-  public canCloseDrawer = false;
-
-  public onMenuClicked(): void {
-    this.isDrawerOpen = !this.isDrawerOpen;
-  }
+  public readonly appLayoutState = inject(AppLayoutStateService);
 }
