@@ -26,10 +26,14 @@ footer {
     color: var(--forge-footer-theme-on-background, white);
     line-height: 2rem;
   }
+
+  .forge-footer__list {
+    display: contents;
+  }
 }
 
 :host([layout='alternative']) footer,
-:host([layout='alternative']) footer .custom-footer__content {
+:host([layout='alternative']) footer .forge-footer__content {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
