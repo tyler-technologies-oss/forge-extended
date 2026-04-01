@@ -57,7 +57,6 @@ The component uses `display: grid` with `grid-template-rows: auto 1fr auto` to a
 - Header and footer use `auto` sizing, taking only the space their content requires
 - Body uses `1fr`, expanding to fill all remaining vertical space
 - The container is set to `height: 100%`, inheriting height from its parent
-- By default, sections are separated by a medium spacing gap (controlled via `--forge-content-scaffold-gap`)
 
 > **Note:** For the Content Scaffold to properly fill available space, ensure its parent container has a defined height.
 
@@ -65,7 +64,6 @@ The component uses `display: grid` with `grid-template-rows: auto 1fr auto` to a
 
 The component exposes several CSS custom properties for customization:
 
-- `--forge-content-scaffold-gap` - Controls the gap between header, body, and footer sections. Defaults to Forge's medium spacing token.
 - `--forge-content-scaffold-header-height` - Controls the height of the header section. Defaults to `auto`.
 - `--forge-content-scaffold-header-background` - Controls the background color of the header. Defaults to `transparent`.
 - `--forge-content-scaffold-header-min-height` - Controls the minimum height of the header. Defaults to `48px`.
@@ -74,5 +72,6 @@ The component exposes several CSS custom properties for customization:
 - `--forge-content-scaffold-footer-height` - Controls the height of the footer section. Defaults to `auto`.
 - `--forge-content-scaffold-footer-background` - Controls the background color of the footer. Defaults to `transparent`.
 - `--forge-content-scaffold-footer-min-height` - Controls the minimum height of the footer. Defaults to `48px`.
+- `--forge-content-scaffold-footer-full-padding` - Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.
 
 ## API

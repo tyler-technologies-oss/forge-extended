@@ -6,7 +6,6 @@
 :host {
   display: block;
   height: 100%;
-  --_content-scaffold-gap: var(--forge-content-scaffold-gap, #{forge-spacing.variable(medium)});
   --_content-scaffold-header-height: var(--forge-content-scaffold-header-height, auto);
   --_content-scaffold-header-background: var(--forge-content-scaffold-header-background, transparent);
   --_content-scaffold-header-min-height: var(--forge-content-scaffold-header-min-height, 48px);

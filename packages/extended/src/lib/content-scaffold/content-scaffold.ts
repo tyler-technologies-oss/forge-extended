@@ -24,7 +24,6 @@ export const ContentScaffoldComponentTagName: keyof HTMLElementTagNameMap = 'for
  * @slot footer-start - Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.
  * @slot footer-end - Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.
  *
- * @cssprop --forge-content-scaffold-gap - Controls the gap between header, body, and footer sections. Defaults to Forge's medium spacing token.
  * @cssprop --forge-content-scaffold-header-height - Controls the height of the header section. Defaults to `auto`.
  * @cssprop --forge-content-scaffold-header-background - Controls the background color of the header section. Defaults to `transparent`.
  * @cssprop --forge-content-scaffold-header-min-height - Controls the minimum height of the header section. Defaults to `48px`.
@@ -33,6 +32,7 @@ export const ContentScaffoldComponentTagName: keyof HTMLElementTagNameMap = 'for
  * @cssprop --forge-content-scaffold-footer-height - Controls the height of the footer section. Defaults to `auto`.
  * @cssprop --forge-content-scaffold-footer-background - Controls the background color of the footer section. Defaults to `transparent`.
  * @cssprop --forge-content-scaffold-footer-min-height - Controls the minimum height of the footer section. Defaults to `48px`.
+ * @cssprop --forge-content-scaffold-footer-full-padding - Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.
  */
 @customElement(ContentScaffoldComponentTagName)
 export class ContentScaffoldComponent extends LitElement {
