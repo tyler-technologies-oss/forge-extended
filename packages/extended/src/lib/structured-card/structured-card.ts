@@ -22,7 +22,7 @@ export const StructuredCardComponentTagName: keyof HTMLElementTagNameMap = 'forg
  * @slot title - The title content displayed in the header
  * @slot header-actions - Action buttons or controls displayed at the end of the header
  * @slot body - The main body content of the card
- * @slot footer - Content displayed at the start of the footer (e.g., pagination controls)
+ * @slot footer-start - Content displayed at the start of the footer (e.g., pagination controls)
  * @slot footer-secondary-action - Secondary action button displayed at the end of the footer
  * @slot footer-primary-action - Primary action button displayed at the end of the footer
  *
@@ -87,12 +87,11 @@ export class StructuredCardComponent extends LitElement {
         <forge-content-scaffold @slotchange=${this.#handleSlotChange}>
           <div slot="header" class="header-container" ${hideWhenEmpty()}>
             <div class="title-container">
-              <slot name="before-title" slot="before-header-start"></slot>
+              <slot name="before-title"></slot>
               <div
                 role="heading"
                 aria-level=${this.headingLevel}
                 id="title"
-                slot="header-start"
                 class=${classMap({
                   'title-with-margin': this._beforeTitleNodes.length === 0
                 })}>
