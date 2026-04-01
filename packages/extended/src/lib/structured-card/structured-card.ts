@@ -69,11 +69,8 @@ export class StructuredCardComponent extends LitElement {
     }
   }
 
-  #handleSlotChange(evt: Event): void {
-    const slotName = (evt.target as HTMLSlotElement).name;
-    if (slotName === 'before-title') {
-      this.requestUpdate();
-    }
+  #handleSlotChange(): void {
+    this.requestUpdate();
   }
 
   public override render(): TemplateResult {
