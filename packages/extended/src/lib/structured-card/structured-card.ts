@@ -94,7 +94,7 @@ export class StructuredCardComponent extends LitElement {
               </div>
             </div>
             <div class="actions-container" ${hideWhenEmpty()}>
-              <slot name="header-actions" slot="header-end"></slot>
+              <slot name="header-actions"></slot>
             </div>
           </div>
           <slot name="body" slot="body"></slot>
