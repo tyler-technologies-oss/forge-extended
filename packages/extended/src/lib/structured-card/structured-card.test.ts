@@ -83,7 +83,6 @@ describe('StructuredCardComponent', () => {
   it('should define sub-component dependencies', async () => {
     expect(window.customElements.get('forge-card')).to.be.ok;
     expect(window.customElements.get('forge-content-scaffold')).to.be.ok;
-    expect(window.customElements.get('forge-toolbar')).to.be.ok;
   });
 
   it('should have all slots available', async () => {

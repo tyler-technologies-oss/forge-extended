@@ -35,7 +35,7 @@
   min-height: var(--_content-scaffold-header-min-height);
   border-start-start-radius: 12px;
   border-start-end-radius: 12px;
-  border-bottom: 1px solid var(--forge-theme-outline);
+  border-bottom: 1px solid #{forge-theme.variable(outline)};
 }
 
 .header-full-content {

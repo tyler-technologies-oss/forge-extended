@@ -1,8 +1,8 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
-import { defineCardComponent } from '@tylertech/forge';
-import { defineContentScaffoldComponent } from '../content-scaffold';
+import { defineCardComponent, toggleState } from '@tylertech/forge';
+import '../content-scaffold/content-scaffold.js';
 import { hideWhenEmpty } from '../utils/lit-utils.js';
 import styles from './structured-card.scss?inline';
 import { HeadingLevel } from '../utils/types';
@@ -34,7 +34,6 @@ export const StructuredCardComponentTagName: keyof HTMLElementTagNameMap = 'forg
 export class StructuredCardComponent extends LitElement {
   static {
     defineCardComponent();
-    defineContentScaffoldComponent();
   }
 
   public static override styles = unsafeCSS(styles);
@@ -66,11 +65,7 @@ export class StructuredCardComponent extends LitElement {
 
   public override willUpdate(changedProperties: Map<string, unknown>): void {
     if (changedProperties.has('bodySpacing')) {
-      if (this.bodySpacing === 'none') {
-        this.#internals.states.add('body-spacing-none');
-      } else {
-        this.#internals.states.delete('body-spacing-none');
-      }
+      toggleState(this.#internals, 'body-spacing-none', this.bodySpacing === 'none');
     }
   }
 
@@ -84,10 +79,10 @@ export class StructuredCardComponent extends LitElement {
   public override render(): TemplateResult {
     return html`
       <forge-card class="container">
-        <forge-content-scaffold @slotchange=${this.#handleSlotChange}>
+        <forge-content-scaffold>
           <div slot="header" class="header-container" ${hideWhenEmpty()}>
             <div class="title-container">
-              <slot name="before-title"></slot>
+              <slot name="before-title" @slotchange=${this.#handleSlotChange}></slot>
               <div
                 role="heading"
                 aria-level=${this.headingLevel}

@@ -26,16 +26,6 @@ const meta = {
   title: 'Components/Content Scaffold',
   component,
   tags: ['hidden'],
-  args: {
-    fullWidthHeader: true
-  },
-  argTypes: {
-    fullWidthHeader: {
-      control: 'boolean',
-      description: 'Enable full-width header mode'
-    }
-  },
-
   render: () => {
     return html`
       <forge-content-scaffold id="storybook-demo">
