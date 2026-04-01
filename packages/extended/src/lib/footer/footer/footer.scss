@@ -1,0 +1,40 @@
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/tokens/color-palette' as color-palette;
+
+:host {
+  display: block;
+  box-sizing: border-box;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+footer {
+  background-color: var(--forge-footer-theme-background, #424242);
+  padding: var(--forge-footer-padding, 24px);
+  padding-left: var(--forge-footer-padding-left, 24px);
+  padding-right: var(--forge-footer-padding-right, 24px);
+  display: flex;
+  align-items: center;
+
+  ::slotted(*:not(:last-of-type))::after {
+    margin: 0 var(--forge-footer-divider-margin, 12px);
+    content: '|';
+    color: var(--forge-footer-theme-on-background, white);
+    line-height: 2rem;
+  }
+}
+
+:host([layout='alternative']) footer,
+:host([layout='alternative']) footer .custom-footer__content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+:host([layout='alternative']) footer {
+  text-align: center;
+}
