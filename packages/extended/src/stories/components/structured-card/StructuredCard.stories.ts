@@ -20,7 +20,7 @@ const meta = {
         <span slot="before-title">before-title slot</span>
         <span slot="title">title slot</span>
         <span slot="header-actions"> header-actions slot </span>
-        <span slot="body">body slot</span>
+        <span slot="body" style="height: 300px;">body slot</span>
         <span slot="footer-start">footer-start slot</span>
         <span slot="footer-secondary-action">footer-secondary-action slot</span>
         <span slot="footer-primary-action">footer-primary-action slot</span>

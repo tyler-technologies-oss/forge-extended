@@ -11,7 +11,7 @@
 :host(:state(body-spacing-none)) {
   forge-content-scaffold {
     --forge-content-scaffold-body-padding-inline: 0;
-    --forge-content-scaffold-gap: 0;
+    --forge-content-scaffold-footer-full-padding: 0;
   }
 
   .footer-container {
@@ -24,7 +24,6 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   grid-template-areas: 'start . end';
-  border-bottom: 1px solid #{forge-theme.variable(outline)};
   min-height: 48px;
 }
 
@@ -59,8 +58,6 @@ forge-content-scaffold {
   grid-template-columns: auto 1fr auto;
   align-items: center;
   grid-template-areas: 'start . end';
-  padding-inline: #{forge-spacing.variable(small)};
-  padding-block-end: #{forge-spacing.variable(small)};
 }
 
 .footer-start-container {

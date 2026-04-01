@@ -37,6 +37,8 @@ forge-content-scaffold[id='storybook-demo'] {
 // forge-structured-card
 forge-structured-card[id='storybook-demo'] {
   [slot] {
+    display: block;
+    height: 100%;
     padding: var(--forge-spacing-xxsmall);
     border: 2px dashed;
     border-radius: 4px;

@@ -16,6 +16,10 @@
     #{forge-spacing.variable(medium)}
   );
   --_content-scaffold-footer-height: var(--forge-content-scaffold-footer-height, auto);
+  --_content-scaffold-footer-full-padding: var(
+    --forge-content-scaffold-footer-full-padding,
+    #{forge-spacing.variable(small)}
+  );
   --_content-scaffold-footer-background: var(--forge-content-scaffold-footer-background, transparent);
   --_content-scaffold-footer-min-height: var(--forge-content-scaffold-footer-min-height, 48px);
 }
@@ -24,7 +28,6 @@
   box-sizing: border-box;
   display: grid;
   grid-template-rows: auto 1fr auto;
-  gap: var(--_content-scaffold-gap);
   height: 100%;
 }
 
@@ -40,6 +43,7 @@
 
 .header-full-content {
   display: block;
+  height: auto;
 }
 
 .header-start-container {
@@ -92,4 +96,5 @@
 
 .footer-full-content {
   display: block;
+  padding: var(--_content-scaffold-footer-full-padding);
 }

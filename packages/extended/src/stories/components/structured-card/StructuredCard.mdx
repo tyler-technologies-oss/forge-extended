@@ -5,8 +5,6 @@ import * as WithTableStories from './WithTable.stories';
 import * as WithBeforeTitleSlotStories from './WithBeforeTitleSlot.stories';
 import * as ScrollableBodyContentStories from './ScrollableBodyContent.stories';
 import * as WithHeaderActionsStories from './WithHeaderActions.stories';
-import * as CardWithNoHeaderStories from './CardWithNoHeader.stories';
-import * as CardWithNoFooterStories from './CardWithNoFooter.stories';
 
 <Meta of={StructuredCardStories} />
 
@@ -55,18 +53,6 @@ Use the `body-spacing="none"` attribute (or `bodySpacing` property) for full-wid
 Set `--forge-structured-card-body-height` to a fixed value to enable scrollable body content.
 
 <Canvas of={ScrollableBodyContentStories.ScrollableBodyContent} />
-
-#### Card Without Header
-
-Simple cards that don't need a header section.
-
-<Canvas of={CardWithNoHeaderStories.CardWithNoHeader} />
-
-#### Card Without Footer
-
-Cards that don't require footer actions.
-
-<Canvas of={CardWithNoFooterStories.CardWithNoFooter} />
 
 ## API
 
