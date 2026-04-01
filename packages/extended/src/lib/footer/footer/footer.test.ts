@@ -62,18 +62,6 @@ describe('FooterComponent', () => {
       await harness.el.updateComplete;
       expect(harness.el.getAttribute('layout')).to.equal('alternative');
     });
-
-    // it('should remove media query when layout changes from "auto" to "standard"', async () => {
-    //   const harness = await createFixture(html`<forge-footer layout="auto"></forge-footer>`);
-    //   const spy = sinon.spy(
-    //     harness.el as unknown as { _removeMediaQuery: () => void },
-    //     '_removeMediaQuery'
-    //   );
-    //   harness.el.layout = 'standard';
-    //   await harness.el.updateComplete;
-    //   expect(spy.called).to.be.true;
-    //   spy.restore();
-    // });
   });
 
   describe('Rendering', () => {
