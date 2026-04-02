@@ -484,183 +484,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-confirmation-dialog'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ConfirmationDialogComponent",
-          "slots": [
-            {
-              "description": "The title of the dialog",
-              "name": "title"
-            },
-            {
-              "description": "The dialog message",
-              "name": "message"
-            },
-            {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
-            },
-            {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "isBusy",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
-            },
-            {
-              "kind": "field",
-              "name": "busyLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
-              },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "fieldName": "open"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog",
-              "fieldName": "description"
-            },
-            {
-              "name": "is-busy",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
-            },
-            {
-              "name": "busy-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-confirmation-dialog",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
-          "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponent",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "declarations": [
         {
@@ -984,6 +807,183 @@
           "declaration": {
             "name": "BusyIndicatorComponent",
             "module": "src/lib/busy-indicator/busy-indicator.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ConfirmationDialogComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-confirmation-dialog'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ConfirmationDialogComponent",
+          "slots": [
+            {
+              "description": "The title of the dialog",
+              "name": "title"
+            },
+            {
+              "description": "The dialog message",
+              "name": "message"
+            },
+            {
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
+            },
+            {
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
+            },
+            {
+              "kind": "field",
+              "name": "busyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+              },
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
+            },
+            {
+              "name": "busy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-confirmation-dialog",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponentTagName",
+          "declaration": {
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponent",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         }
       ]
@@ -1552,6 +1552,142 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/structured-card/structured-card.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "StructuredCardComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-structured-card'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "StructuredCardComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the body content. Defaults to `auto`.",
+              "name": "--forge-structured-card-body-height"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Content displayed before the title in the header",
+              "name": "before-title"
+            },
+            {
+              "description": "The title content displayed in the header",
+              "name": "title"
+            },
+            {
+              "description": "Action buttons or controls displayed at the end of the header",
+              "name": "header-actions"
+            },
+            {
+              "description": "The main body content of the card",
+              "name": "body"
+            },
+            {
+              "description": "Content displayed at the start of the footer (e.g., pagination controls)",
+              "name": "footer-start"
+            },
+            {
+              "description": "Secondary action button displayed at the end of the footer",
+              "name": "footer-secondary-action"
+            },
+            {
+              "description": "Primary action button displayed at the end of the footer",
+              "name": "footer-primary-action"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "headingLevel",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "privacy": "public",
+              "default": "2",
+              "description": "Controls the semantic heading level for the title content. Defaults to `2` (h2).\nUse this to maintain proper heading hierarchy in your document structure.",
+              "attribute": "heading-level"
+            },
+            {
+              "kind": "field",
+              "name": "bodySpacing",
+              "type": {
+                "text": "'none' | 'default'"
+              },
+              "privacy": "public",
+              "default": "'default'",
+              "description": "Controls the spacing applied to the body section. Defaults to `default`.\n- `default`: Applies standard padding to the body section.\n- `none`: Removes padding from the body section for full-width content like tables.",
+              "attribute": "body-spacing"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "heading-level",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "default": "2",
+              "description": "Controls the semantic heading level for the title content. Defaults to `2` (h2).\nUse this to maintain proper heading hierarchy in your document structure.",
+              "fieldName": "headingLevel"
+            },
+            {
+              "name": "body-spacing",
+              "type": {
+                "text": "'none' | 'default'"
+              },
+              "default": "'default'",
+              "description": "Controls the spacing applied to the body section. Defaults to `default`.\n- `default`: Applies standard padding to the body section.\n- `none`: Removes padding from the body section for full-width content like tables.",
+              "fieldName": "bodySpacing"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-structured-card",
+          "customElement": true,
+          "states": [
+            {
+              "name": "body-spacing-none",
+              "description": "Applied when the `bodySpacing` property is set to `none`. Used to remove default body padding for full-width content."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "StructuredCardComponentTagName",
+          "declaration": {
+            "name": "StructuredCardComponentTagName",
+            "module": "src/lib/structured-card/structured-card.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "StructuredCardComponent",
+          "declaration": {
+            "name": "StructuredCardComponent",
+            "module": "src/lib/structured-card/structured-card.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "StructuredCardComponent",
+            "module": "src/lib/structured-card/structured-card.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "declarations": [
         {
@@ -1861,142 +1997,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/structured-card/structured-card.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "StructuredCardComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-structured-card'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "StructuredCardComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the height of the body content. Defaults to `auto`.",
-              "name": "--forge-structured-card-body-height"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Content displayed before the title in the header",
-              "name": "before-title"
-            },
-            {
-              "description": "The title content displayed in the header",
-              "name": "title"
-            },
-            {
-              "description": "Action buttons or controls displayed at the end of the header",
-              "name": "header-actions"
-            },
-            {
-              "description": "The main body content of the card",
-              "name": "body"
-            },
-            {
-              "description": "Content displayed at the start of the footer (e.g., pagination controls)",
-              "name": "footer-start"
-            },
-            {
-              "description": "Secondary action button displayed at the end of the footer",
-              "name": "footer-secondary-action"
-            },
-            {
-              "description": "Primary action button displayed at the end of the footer",
-              "name": "footer-primary-action"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "headingLevel",
-              "type": {
-                "text": "HeadingLevel"
-              },
-              "privacy": "public",
-              "default": "2",
-              "description": "Controls the semantic heading level for the title content. Defaults to `2` (h2).\nUse this to maintain proper heading hierarchy in your document structure.",
-              "attribute": "heading-level"
-            },
-            {
-              "kind": "field",
-              "name": "bodySpacing",
-              "type": {
-                "text": "'none' | 'default'"
-              },
-              "privacy": "public",
-              "default": "'default'",
-              "description": "Controls the spacing applied to the body section. Defaults to `default`.\n- `default`: Applies standard padding to the body section.\n- `none`: Removes padding from the body section for full-width content like tables.",
-              "attribute": "body-spacing"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "heading-level",
-              "type": {
-                "text": "HeadingLevel"
-              },
-              "default": "2",
-              "description": "Controls the semantic heading level for the title content. Defaults to `2` (h2).\nUse this to maintain proper heading hierarchy in your document structure.",
-              "fieldName": "headingLevel"
-            },
-            {
-              "name": "body-spacing",
-              "type": {
-                "text": "'none' | 'default'"
-              },
-              "default": "'default'",
-              "description": "Controls the spacing applied to the body section. Defaults to `default`.\n- `default`: Applies standard padding to the body section.\n- `none`: Removes padding from the body section for full-width content like tables.",
-              "fieldName": "bodySpacing"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-structured-card",
-          "customElement": true,
-          "states": [
-            {
-              "name": "body-spacing-none",
-              "description": "Applied when the `bodySpacing` property is set to `none`. Used to remove default body padding for full-width content."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "StructuredCardComponentTagName",
-          "declaration": {
-            "name": "StructuredCardComponentTagName",
-            "module": "src/lib/structured-card/structured-card.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "StructuredCardComponent",
-          "declaration": {
-            "name": "StructuredCardComponent",
-            "module": "src/lib/structured-card/structured-card.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "StructuredCardComponent",
-            "module": "src/lib/structured-card/structured-card.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "declarations": [
         {
@@ -2144,22 +2144,6 @@
       "path": "src/lib/app-layout/app-layout.ts",
       "lineNumber": 90
     },
-    "ConfirmationDialogActionEventReason": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 28
-    },
-    "ConfirmationDialogActionEventData": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 30
-    },
-    "ConfirmationDialogProperties": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 35
-    },
-    "ConfirmationDialogComponent": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 55
-    },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 26
@@ -2175,6 +2159,22 @@
     "BusyIndicatorComponent": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 40
+    },
+    "ConfirmationDialogActionEventReason": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 28
+    },
+    "ConfirmationDialogActionEventData": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 30
+    },
+    "ConfirmationDialogProperties": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 35
+    },
+    "ConfirmationDialogComponent": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 55
     },
     "ContentScaffoldComponent": {
       "path": "src/lib/content-scaffold/content-scaffold.ts",
@@ -2200,6 +2200,10 @@
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 48
     },
+    "StructuredCardComponent": {
+      "path": "src/lib/structured-card/structured-card.ts",
+      "lineNumber": 33
+    },
     "ThemeToggleTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 28
@@ -2215,10 +2219,6 @@
     "UserProfileComponent": {
       "path": "src/lib/user-profile/user-profile.ts",
       "lineNumber": 49
-    },
-    "StructuredCardComponent": {
-      "path": "src/lib/structured-card/structured-card.ts",
-      "lineNumber": 33
     },
     "AppLauncherLink": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",

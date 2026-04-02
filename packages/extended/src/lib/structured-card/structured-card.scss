@@ -65,7 +65,7 @@ forge-content-scaffold {
 }
 
 .footer-actions {
-  @include mixins.stack($gap: 16px, $isInline: true);
+  @include mixins.stack($gap: #{forge-spacing.variable(medium)}, $isInline: true);
   grid-area: end;
 }
 

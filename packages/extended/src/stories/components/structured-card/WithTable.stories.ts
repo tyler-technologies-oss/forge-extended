@@ -38,13 +38,13 @@ const meta = {
       { property: 'role', header: 'Role' }
     ];
 
-    setTimeout(() => {
+    requestAnimationFrame(() => {
       const table = document.querySelector('forge-table');
       if (table) {
         table.data = tableData;
         table.columnConfigurations = columnConfigurations;
       }
-    }, 0);
+    });
 
     return html`
       <forge-structured-card heading-level="2" body-spacing="none">

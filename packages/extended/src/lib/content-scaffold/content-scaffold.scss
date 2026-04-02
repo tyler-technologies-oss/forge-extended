@@ -1,6 +1,7 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
+@use '@tylertech/forge/sass/core/styles/scrollbar' as forge-scrollbar;
 @use '../utils/mixins' as mixins;
 
 :host {
@@ -26,7 +27,7 @@
 .container {
   box-sizing: border-box;
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 1fr auto;
   height: 100%;
 }
 
@@ -37,7 +38,6 @@
   min-height: var(--_content-scaffold-header-min-height);
   border-start-start-radius: 12px;
   border-start-end-radius: 12px;
-  border-bottom: 1px solid #{forge-theme.variable(outline)};
 }
 
 .header-full-content {
@@ -64,6 +64,8 @@
 }
 
 .body {
+  @include forge-scrollbar.base;
+
   overflow-y: auto;
   height: var(--_content-scaffold-body-height);
 }

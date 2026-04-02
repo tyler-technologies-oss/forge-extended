@@ -57,8 +57,7 @@ export interface ForgeContentScaffoldProps
  * - **footer-end** - Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.
  *
  * ### **CSS Properties:**
- *  - **--forge-content-scaffold-gap** - Controls the gap between header, body, and footer sections. Defaults to Forge's medium spacing token. _(default: undefined)_
- * - **--forge-content-scaffold-header-height** - Controls the height of the header section. Defaults to `auto`. _(default: undefined)_
+ *  - **--forge-content-scaffold-header-height** - Controls the height of the header section. Defaults to `auto`. _(default: undefined)_
  * - **--forge-content-scaffold-header-background** - Controls the background color of the header section. Defaults to `transparent`. _(default: undefined)_
  * - **--forge-content-scaffold-header-min-height** - Controls the minimum height of the header section. Defaults to `48px`. _(default: undefined)_
  * - **--forge-content-scaffold-body-height** - Controls the height of the body section. Defaults to `auto`. _(default: undefined)_
@@ -66,5 +65,6 @@ export interface ForgeContentScaffoldProps
  * - **--forge-content-scaffold-footer-height** - Controls the height of the footer section. Defaults to `auto`. _(default: undefined)_
  * - **--forge-content-scaffold-footer-background** - Controls the background color of the footer section. Defaults to `transparent`. _(default: undefined)_
  * - **--forge-content-scaffold-footer-min-height** - Controls the minimum height of the footer section. Defaults to `48px`. _(default: undefined)_
+ * - **--forge-content-scaffold-footer-full-padding** - Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token. _(default: undefined)_
  */
 export const ForgeContentScaffold: React.ForwardRefExoticComponent<ForgeContentScaffoldProps>;

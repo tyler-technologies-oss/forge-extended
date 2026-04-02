@@ -60,7 +60,7 @@ Use this to maintain proper heading hierarchy in your document structure. */
  * - **title** - The title content displayed in the header
  * - **header-actions** - Action buttons or controls displayed at the end of the header
  * - **body** - The main body content of the card
- * - **footer** - Content displayed at the start of the footer (e.g., pagination controls)
+ * - **footer-start** - Content displayed at the start of the footer (e.g., pagination controls)
  * - **footer-secondary-action** - Secondary action button displayed at the end of the footer
  * - **footer-primary-action** - Primary action button displayed at the end of the footer
  *
