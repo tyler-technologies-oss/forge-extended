@@ -4,7 +4,6 @@ import * as CountCardStories from './CountCard.stories';
 import * as MultipleCardsStories from './MultipleCards.stories';
 import * as WithFullWidthStories from './WithFullWidth.stories';
 import * as AdditionalBodyContentStories from './AdditionalBodyContent.stories';
-import * as WithCountBadgeStories from './WithCountBadge.stories';
 import * as WithMenuStories from './WithMenu.stories';
 
 <Meta of={CountCardStories} />
@@ -54,60 +53,11 @@ Use the `body` slot to add supplementary content below the count. This is useful
 
 <Canvas of={AdditionalBodyContentStories.AdditionalBodyContent} />
 
-### With Count Badge
-
-Use the `forge-count-badge` component in the `header-end` slot to display change indicators, status badges, or other supplementary information.
-
-<Canvas of={WithCountBadgeStories.WithCountBadge} />
-
 ### With Menu
 
 Use the `header-end` slot to add an options menu for card-level actions.
 
 <Canvas of={WithMenuStories.WithMenu} />
-
-## Count Badge
-
-The `forge-count-badge` is a utility component designed to work alongside the count card. It wraps the core `forge-badge` component with
-modified styling that better complements the count card's visual design, including adjusted shape and container-based theme colors.
-
-### Usage
-
-Place the count badge in the `header-end` slot to display change indicators, status labels, or other supplementary information.
-
-```html
-<forge-count-card>
-  <forge-icon slot="icon" name="trending_up"></forge-icon>
-  <span slot="label">Revenue</span>
-  <forge-count-badge slot="header-end" theme="success">+12.5%</forge-count-badge>
-  <span slot="count">$48,250.00</span>
-</forge-count-card>
-```
-
-### Theme Variants
-
-The count badge supports the following theme variants:
-
-| Theme       | Use Case                              |
-| ----------- | ------------------------------------- |
-| `success`   | Positive changes, growth indicators   |
-| `error`     | Negative changes, decline indicators  |
-| `warning`   | Cautionary or attention-needed states |
-| `info`      | Neutral information                   |
-| `primary`   | Primary brand emphasis                |
-| `secondary` | Secondary emphasis                    |
-| `tertiary`  | Tertiary emphasis                     |
-
-### Count Badge Slots
-
-- **default** - The badge content (e.g., "+12%", "New")
-- **end** - Optional content placed at the end of the badge, passed through to the inner `forge-badge`
-
-### Count Badge CSS Custom Properties
-
-- `--forge-count-badge-background` - Override the background color of the badge.
-- `--forge-count-badge-color` - Override the text color of the badge.
-- `--forge-count-badge-border-color` - Override the border color of the badge.
 
 ## CSS Custom Properties
 

@@ -1,7 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 import { defineIconComponent, defineIconButtonComponent, defineMenuComponent, IconRegistry } from '@tylertech/forge';
-import { tylIconAttachMoney, tylIconMore, tylIconMoreVert } from '@tylertech/tyler-icons';
+import { tylIconAttachMoney, tylIconMoreVert } from '@tylertech/tyler-icons';
 
 import '$lib/count-card';
 

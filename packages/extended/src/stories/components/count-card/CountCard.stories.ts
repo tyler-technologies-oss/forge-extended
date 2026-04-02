@@ -1,11 +1,12 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit';
-import { defineIconComponent, IconRegistry } from '@tylertech/forge';
+import { defineIconComponent, defineBadgeComponent, IconRegistry } from '@tylertech/forge';
 import { tylIconAttachMoney } from '@tylertech/tyler-icons';
 
 import '$lib/count-card';
 
 defineIconComponent();
+defineBadgeComponent();
 IconRegistry.define([tylIconAttachMoney]);
 
 const component = 'forge-count-card';
@@ -20,7 +21,7 @@ const meta = {
           ${args.showIcon ? html`<forge-icon slot="icon" name="attach_money"></forge-icon>` : nothing}
           ${args.showLabel ? html`<span slot="label">${args.labelText}</span>` : nothing}
           ${args.showHeaderEnd
-            ? html`<forge-count-badge slot="header-end" theme=${args.badgeTheme}>${args.badgeText}</forge-count-badge>`
+            ? html`<forge-badge slot="header-end" theme=${args.badgeTheme}>${args.badgeText}</forge-badge>`
             : nothing}
           <span slot="count">${args.countText}</span>
           ${args.showFullWidth
