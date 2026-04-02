@@ -9,13 +9,18 @@
   --_count-card-icon-color: var(--forge-count-card-icon-color, #{forge-theme.variable(on-surface)});
   --_count-card-icon-container-size: var(--forge-count-card-icon-container-size, 24px);
   --_count-card-icon-size: var(--forge-count-card-icon-size, 16px);
+  height: 100%;
 }
 
 forge-card {
   --forge-card-padding: 0;
+  height: 100%;
 }
 
 .inner-container {
+  display: flex;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(medium)};
   padding: #{forge-spacing.variable(medium)};
 }
 
@@ -24,7 +29,8 @@ forge-card {
   align-items: center;
   justify-content: space-between;
   gap: #{forge-spacing.variable(small)};
-  margin-block-end: #{forge-spacing.variable(small)};
+  padding-inline: #{forge-spacing.variable(medium)};
+  padding-block-start: #{forge-spacing.variable(medium)};
 }
 
 .header-start {
@@ -58,4 +64,23 @@ forge-card {
 .count {
   @include forge-typography.style(heading6);
   color: #{forge-theme.variable(text-high)};
+}
+
+//
+// Theme States
+//
+
+$themes: primary, secondary, tertiary, success, error, warning, info;
+
+@each $theme in $themes {
+  :host(:state(#{$theme})) {
+    --_count-card-icon-background: var(
+      --forge-count-card-icon-background,
+      #{forge-theme.variable(#{$theme}-container-low)}
+    );
+    --_count-card-icon-color: var(
+      --forge-count-card-icon-color,
+      #{forge-theme.variable(on-#{$theme}-container-minimum)}
+    );
+  }
 }

@@ -2,9 +2,9 @@ import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
 import CustomArgTypes from '../../blocks/CustomArgTypes';
 import * as CountCardStories from './CountCard.stories';
 import * as MultipleCardsStories from './MultipleCards.stories';
-import * as CustomIconStylesStories from './CustomIconStyles.stories';
 import * as WithoutIconStories from './WithoutIcon.stories';
 import * as WithFullBleedStories from './WithFullBleed.stories';
+import * as AdditionalBodyContentStories from './AdditionalBodyContent.stories';
 import * as WithCountBadgeStories from './WithCountBadge.stories';
 
 <Meta of={CountCardStories} />
@@ -17,12 +17,13 @@ A card component for displaying counts, metrics, or key values with an accompany
 
 ## Usage
 
-The Count Card uses a slot-based architecture with five main areas:
+The Count Card uses a slot-based architecture with six main areas:
 
 - **icon** - An icon displayed in a styled container at the start of the header
 - **label** - Descriptive text next to the icon explaining what the count represents
 - **header-end** - Optional content at the end of the header, ideal for badges or accessory menus
 - **count** - The main value or metric displayed prominently
+- **body** - Optional content below the count for additional details or secondary information
 - **full-bleed** - Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators
 
 ```html
@@ -41,12 +42,6 @@ Count cards work well in grid layouts to create dashboard-style displays.
 
 <Canvas of={MultipleCardsStories.MultipleCards} />
 
-### Custom Icon Styles
-
-Use CSS custom properties to customize the icon container appearance.
-
-<Canvas of={CustomIconStylesStories.CustomIconStyles} />
-
 ### Without Icon
 
 The icon slot is optional. When omitted, the icon container is automatically hidden.
@@ -55,9 +50,15 @@ The icon slot is optional. When omitted, the icon container is automatically hid
 
 ### With Full Bleed Content
 
-Use the `full-bleed` slot to add full-width content below the primary card content. This is ideal for sparklines, meters, progress bars, or any visualization that should span the entire width of the card.
+Use the `full-bleed` slot to add full-width content below the primary card content. This is ideal for sparklines, progress bars, or any visualization that should span the entire width of the card.
 
 <Canvas of={WithFullBleedStories.WithFullBleed} />
+
+### Additional Body Content
+
+Use the `body` slot to add supplementary content below the count. This is useful for displaying additional context, progress indicators, or secondary metrics.
+
+<Canvas of={AdditionalBodyContentStories.AdditionalBodyContent} />
 
 ### With Count Badge
 

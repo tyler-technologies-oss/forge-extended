@@ -11,7 +11,6 @@ IconRegistry.define([tylIconTrendingUp, tylIconTrendingDown, tylIconPeople]);
 const component = 'forge-count-card';
 
 const meta = {
-  tags: ['hidden'],
   title: 'Components/Count Card',
   component,
   render: () => {

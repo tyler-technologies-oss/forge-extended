@@ -1,6 +1,6 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
-import { defineCardComponent } from '@tylertech/forge';
+import { customElement, property } from 'lit/decorators.js';
+import { defineCardComponent, Theme, toggleState } from '@tylertech/forge';
 import styles from './count-card.scss?inline';
 import { hideWhenEmpty } from '../utils/lit-utils';
 
@@ -11,6 +11,8 @@ declare global {
 }
 
 export const CountCardComponentTagName: keyof HTMLElementTagNameMap = 'forge-count-card';
+
+const THEME_STATES: Theme[] = ['primary', 'secondary', 'tertiary', 'success', 'error', 'warning', 'info'];
 
 /**
  * A card component for displaying a count or metric with an icon and label.
@@ -27,6 +29,14 @@ export const CountCardComponentTagName: keyof HTMLElementTagNameMap = 'forge-cou
  * @cssprop --forge-count-card-icon-color - Controls the color of the icon. Defaults to Forge's on-surface color.
  * @cssprop --forge-count-card-icon-container-size - Controls the size of the icon container. Defaults to `24px`.
  * @cssprop --forge-count-card-icon-size - Controls the size of the icon itself. Defaults to `16px`.
+ *
+ * @state success - Applied when the theme is set to `success`.
+ * @state error - Applied when the theme is set to `error`.
+ * @state warning - Applied when the theme is set to `warning`.
+ * @state info - Applied when the theme is set to `info`.
+ * @state primary - Applied when the theme is set to `primary`.
+ * @state secondary - Applied when the theme is set to `secondary`.
+ * @state tertiary - Applied when the theme is set to `tertiary`.
  */
 @customElement(CountCardComponentTagName)
 export class CountCardComponent extends LitElement {
@@ -36,28 +46,50 @@ export class CountCardComponent extends LitElement {
 
   public static override styles = unsafeCSS(styles);
 
+  readonly #internals: ElementInternals;
+
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+  }
+
+  /** The theme variant applied to the icon container. */
+  @property({ type: String })
+  public theme?: Theme;
+
+  public override willUpdate(changedProperties: Map<string, unknown>): void {
+    if (changedProperties.has('theme')) {
+      for (const state of THEME_STATES) {
+        toggleState(this.#internals, state, this.theme === state);
+      }
+    }
+  }
+
   public override render(): TemplateResult {
     return html`
       <forge-card class="container">
-        <div class="inner-container">
-          <div class="header">
-            <div class="header-start">
-              <div class="icon-container" ${hideWhenEmpty()}>
-                <slot name="icon"></slot>
-              </div>
-              <div class="label">
-                <slot name="label"></slot>
-              </div>
+        <div class="header">
+          <div class="header-start">
+            <div class="icon-container" ${hideWhenEmpty()}>
+              <slot name="icon"></slot>
             </div>
-            <div class="header-end" ${hideWhenEmpty()}>
-              <slot name="header-end"></slot>
+            <div class="label" ${hideWhenEmpty()}>
+              <slot name="label"></slot>
             </div>
           </div>
-          <div class="count">
-            <slot name="count"></slot>
+          <div class="header-end" ${hideWhenEmpty()}>
+            <slot name="header-end"></slot>
           </div>
         </div>
-        <div class="full-bleed">
+        <div class="inner-container">
+          <div class="count" ${hideWhenEmpty()}>
+            <slot name="count"></slot>
+          </div>
+          <div class="body" ${hideWhenEmpty()}>
+            <slot name="body"></slot>
+          </div>
+        </div>
+        <div class="full-bleed" ${hideWhenEmpty()}>
           <slot name="full-bleed"></slot>
         </div>
       </forge-card>
