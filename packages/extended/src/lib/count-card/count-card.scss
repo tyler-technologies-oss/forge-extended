@@ -1,0 +1,45 @@
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
+
+:host {
+  display: block;
+  --_count-card-icon-background: var(--forge-count-card-icon-background, #{forge-theme.variable(surface-container)});
+  --_count-card-icon-color: var(--forge-count-card-icon-color, #{forge-theme.variable(on-surface)});
+  --_count-card-icon-container-size: var(--forge-count-card-icon-container-size, 24px);
+  --_count-card-icon-size: var(--forge-count-card-icon-size, 16px);
+}
+
+.container {
+  --forge-card-padding: #{forge-spacing.variable(medium)};
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: #{forge-spacing.variable(small)};
+  margin-block-end: #{forge-spacing.variable(small)};
+}
+
+.icon-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  block-size: var(--_count-card-icon-container-size);
+  inline-size: var(--_count-card-icon-container-size);
+  background-color: var(--_count-card-icon-background);
+  color: var(--_count-card-icon-color);
+  border-radius: #{forge-shape.variable(medium)};
+  --forge-icon-font-size: var(--_count-card-icon-size);
+}
+
+.label {
+  @include forge-typography.style(label1);
+  color: #{forge-theme.variable(text-medium)};
+}
+
+.count {
+  @include forge-typography.style(heading6);
+  color: #{forge-theme.variable(text-high)};
+}
