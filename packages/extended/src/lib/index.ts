@@ -8,5 +8,7 @@ export * from './user-profile/profile-link';
 export * from './multi-select-header';
 export * from './app-launcher';
 export * from './app-launcher/app-launcher-link';
+export * from './structured-card';
+export * from './content-scaffold';
 export * from './app-layout';
 // -- EXPORTS PLACEHOLDER (DO NOT REMOVE) --
