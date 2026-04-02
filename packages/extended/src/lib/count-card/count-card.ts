@@ -37,6 +37,7 @@ const THEME_STATES: Theme[] = ['primary', 'secondary', 'tertiary', 'success', 'e
  * @state primary - Applied when the theme is set to `primary`.
  * @state secondary - Applied when the theme is set to `secondary`.
  * @state tertiary - Applied when the theme is set to `tertiary`.
+ * @state tonal - Applied when the tonal property is set to `true`.
  */
 @customElement(CountCardComponentTagName)
 export class CountCardComponent extends LitElement {
@@ -57,11 +58,18 @@ export class CountCardComponent extends LitElement {
   @property({ type: String })
   public theme?: Theme;
 
+  /** Whether to apply tonal styling to the card. */
+  @property({ type: Boolean })
+  public tonal = false;
+
   public override willUpdate(changedProperties: Map<string, unknown>): void {
     if (changedProperties.has('theme')) {
       for (const state of THEME_STATES) {
         toggleState(this.#internals, state, this.theme === state);
       }
+    }
+    if (changedProperties.has('tonal')) {
+      toggleState(this.#internals, 'tonal', this.tonal);
     }
   }
 

@@ -17,7 +17,7 @@ const meta = {
   render: args => {
     return html`
       <div style="width: 320px;">
-        <forge-count-card>
+        <forge-count-card ?tonal=${args.tonal}>
           ${args.showIcon ? html`<forge-icon slot="icon" name="attach_money"></forge-icon>` : nothing}
           ${args.showLabel ? html`<span slot="label">${args.labelText}</span>` : nothing}
           ${args.showHeaderEnd
@@ -40,6 +40,11 @@ const meta = {
     `;
   },
   argTypes: {
+    tonal: {
+      control: 'boolean',
+      description: 'Apply tonal styling to the card',
+      table: { category: 'Properties' }
+    },
     showIcon: {
       control: 'boolean',
       description: 'Toggle the icon slot',
@@ -83,6 +88,7 @@ const meta = {
     }
   },
   args: {
+    tonal: false,
     showIcon: true,
     showLabel: true,
     showHeaderEnd: true,

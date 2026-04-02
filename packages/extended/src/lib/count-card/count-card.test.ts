@@ -147,6 +147,36 @@ describe('CountCardComponent', () => {
       expect(harness.headerEndSlot.assignedNodes().length).to.be.greaterThan(0);
     });
   });
+
+  describe('tonal', () => {
+    it('should not have tonal state by default', async () => {
+      const harness = await createFixture();
+
+      expect(harness.el.tonal).to.be.false;
+      expect(harness.el.matches(':state(tonal)')).to.be.false;
+    });
+
+    it('should apply tonal state when tonal property is true', async () => {
+      const el = await fixture<CountCardComponent>(html`<forge-count-card tonal></forge-count-card>`);
+
+      expect(el.tonal).to.be.true;
+      expect(el.matches(':state(tonal)')).to.be.true;
+    });
+
+    it('should toggle tonal state dynamically', async () => {
+      const harness = await createFixture();
+
+      harness.el.tonal = true;
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(tonal)')).to.be.true;
+
+      harness.el.tonal = false;
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(tonal)')).to.be.false;
+    });
+  });
 });
 
 async function createFixture(): Promise<CountCardHarness> {
