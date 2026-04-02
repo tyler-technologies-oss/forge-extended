@@ -23,7 +23,7 @@ const THEME_STATES: Theme[] = ['primary', 'secondary', 'tertiary', 'success', 'e
  * @slot label - The label text displayed next to the icon.
  * @slot header-end - Optional content at the end of the header, ideal for badges or accessory menus.
  * @slot count - The main count or value displayed prominently below the header.
- * @slot full-bleed - Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators.
+ * @slot full-width - Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators.
  *
  * @cssprop --forge-count-card-icon-background - Controls the background color of the icon container. Defaults to Forge's surface-container color.
  * @cssprop --forge-count-card-icon-color - Controls the color of the icon. Defaults to Forge's on-surface color.
@@ -89,8 +89,8 @@ export class CountCardComponent extends LitElement {
             <slot name="body"></slot>
           </div>
         </div>
-        <div class="full-bleed" ${hideWhenEmpty()}>
-          <slot name="full-bleed"></slot>
+        <div class="full-width" ${hideWhenEmpty()}>
+          <slot name="full-width"></slot>
         </div>
       </forge-card>
     `;

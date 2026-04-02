@@ -20,7 +20,7 @@ const meta = {
           <forge-icon slot="icon" name="trending_up"></forge-icon>
           <span slot="label">Weekly Sales</span>
           <span slot="count">$4,250.00</span>
-          <svg slot="full-bleed" viewBox="0 0 200 40" style="width: 100%; display: block;">
+          <svg slot="full-width" viewBox="0 0 200 40" style="width: 100%; display: block;">
             <polyline
               fill="none"
               stroke="var(--forge-theme-primary)"
@@ -37,4 +37,4 @@ export default meta;
 
 type Story = StoryObj;
 
-export const WithFullBleed: Story = {};
+export const WithFullWidth: Story = {};

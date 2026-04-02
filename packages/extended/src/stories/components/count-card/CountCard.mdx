@@ -3,7 +3,7 @@ import CustomArgTypes from '../../blocks/CustomArgTypes';
 import * as CountCardStories from './CountCard.stories';
 import * as MultipleCardsStories from './MultipleCards.stories';
 import * as WithoutIconStories from './WithoutIcon.stories';
-import * as WithFullBleedStories from './WithFullBleed.stories';
+import * as WithFullWidthStories from './WithFullWidth.stories';
 import * as AdditionalBodyContentStories from './AdditionalBodyContent.stories';
 import * as WithCountBadgeStories from './WithCountBadge.stories';
 
@@ -24,7 +24,7 @@ The Count Card uses a slot-based architecture with six main areas:
 - **header-end** - Optional content at the end of the header, ideal for badges or accessory menus
 - **count** - The main value or metric displayed prominently
 - **body** - Optional content below the count for additional details or secondary information
-- **full-bleed** - Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators
+- **full-width** - Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators
 
 ```html
 <forge-count-card>
@@ -48,11 +48,11 @@ The icon slot is optional. When omitted, the icon container is automatically hid
 
 <Canvas of={WithoutIconStories.WithoutIcon} />
 
-### With Full Bleed Content
+### With Full Width Content
 
-Use the `full-bleed` slot to add full-width content below the primary card content. This is ideal for sparklines, progress bars, or any visualization that should span the entire width of the card.
+Use the `full-width` slot to add full-width content below the primary card content. This is ideal for sparklines, progress bars, or any visualization that should span the entire width of the card.
 
-<Canvas of={WithFullBleedStories.WithFullBleed} />
+<Canvas of={WithFullWidthStories.WithFullWidth} />
 
 ### Additional Body Content
 

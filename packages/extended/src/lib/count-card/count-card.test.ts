@@ -37,12 +37,12 @@ class CountCardHarness {
     return this.el.shadowRoot!.querySelector('slot[name="count"]') as HTMLSlotElement;
   }
 
-  public get fullBleedSlot(): HTMLSlotElement {
-    return this.el.shadowRoot!.querySelector('slot[name="full-bleed"]') as HTMLSlotElement;
+  public get fullWidthSlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="full-width"]') as HTMLSlotElement;
   }
 
-  public get fullBleedElement(): HTMLElement {
-    return this.el.shadowRoot!.querySelector('.full-bleed') as HTMLElement;
+  public get fullWidthElement(): HTMLElement {
+    return this.el.shadowRoot!.querySelector('.full-width') as HTMLElement;
   }
 
   public get headerEndSlot(): HTMLSlotElement {
@@ -74,7 +74,7 @@ describe('CountCardComponent', () => {
     expect(harness.labelSlot).to.be.ok;
     expect(harness.headerEndSlot).to.be.ok;
     expect(harness.countSlot).to.be.ok;
-    expect(harness.fullBleedSlot).to.be.ok;
+    expect(harness.fullWidthSlot).to.be.ok;
   });
 
   it('should have header structure', async () => {
@@ -125,15 +125,15 @@ describe('CountCardComponent', () => {
       expect(harness.countSlot.assignedNodes().length).to.be.greaterThan(0);
     });
 
-    it('should project content into full-bleed slot', async () => {
+    it('should project content into full-width slot', async () => {
       const el = await fixture<CountCardComponent>(html`
         <forge-count-card>
-          <div slot="full-bleed">Sparkline content</div>
+          <div slot="full-width">Sparkline content</div>
         </forge-count-card>
       `);
       const harness = new CountCardHarness(el);
 
-      expect(harness.fullBleedSlot.assignedNodes().length).to.be.greaterThan(0);
+      expect(harness.fullWidthSlot.assignedNodes().length).to.be.greaterThan(0);
     });
 
     it('should project content into header-end slot', async () => {

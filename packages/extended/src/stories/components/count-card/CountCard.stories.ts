@@ -23,9 +23,9 @@ const meta = {
             ? html`<forge-count-badge slot="header-end" theme=${args.badgeTheme}>${args.badgeText}</forge-count-badge>`
             : nothing}
           ${args.showCount ? html`<span slot="count">${args.countText}</span>` : nothing}
-          ${args.showFullBleed
+          ${args.showFullWidth
             ? html`
-                <svg slot="full-bleed" viewBox="0 0 200 40" style="width: 100%; display: block;">
+                <svg slot="full-width" viewBox="0 0 200 40" style="width: 100%; display: block;">
                   <polyline
                     fill="none"
                     stroke="var(--forge-theme-primary)"
@@ -59,9 +59,9 @@ const meta = {
       description: 'Toggle the count slot',
       table: { category: 'Slots' }
     },
-    showFullBleed: {
+    showFullWidth: {
       control: 'boolean',
-      description: 'Toggle the full-bleed slot (sparkline)',
+      description: 'Toggle the full-width slot (sparkline)',
       table: { category: 'Slots' }
     },
     labelText: {
@@ -91,7 +91,7 @@ const meta = {
     showLabel: true,
     showHeaderEnd: true,
     showCount: true,
-    showFullBleed: false,
+    showFullWidth: false,
     labelText: 'Tomorrows money',
     countText: '$303.33',
     badgeText: '+12%',
