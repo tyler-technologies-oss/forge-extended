@@ -44,8 +44,13 @@ export class ContentScaffoldComponent extends LitElement {
   @queryAssignedNodes({ slot: 'footer', flatten: true })
   private _slottedFooterNodes!: Node[];
 
-  readonly #headerSlot = html`<slot name="header"></slot>`;
-  readonly #footerSlot = html`<slot name="footer"></slot>`;
+  get #headerSlot(): TemplateResult {
+    return html`<slot name="header" @slotchange=${this.#handleSlotChange}></slot>`;
+  }
+
+  get #footerSlot(): TemplateResult {
+    return html`<slot name="footer" @slotchange=${this.#handleSlotChange}></slot>`;
+  }
 
   get #headerContent(): TemplateResult | typeof nothing {
     const hasFullWidthHeader = this._slottedHeaderNodes.length > 0;
