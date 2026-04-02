@@ -1,13 +1,13 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 import { defineIconComponent, defineMeterComponent, IconRegistry } from '@tylertech/forge';
-import { tylIconAttachMoney } from '@tylertech/tyler-icons';
+import { tylIconAttachMoney, tylIconTrendingUp } from '@tylertech/tyler-icons';
 
 import '$lib/count-card';
 
 defineIconComponent();
 defineMeterComponent();
-IconRegistry.define([tylIconAttachMoney]);
+IconRegistry.define([tylIconAttachMoney, tylIconTrendingUp]);
 
 const component = 'forge-count-card';
 
@@ -38,6 +38,10 @@ const meta = {
         <forge-count-card>
           <forge-icon slot="icon" name="attach_money"></forge-icon>
           <span slot="label">Todays money</span>
+          <forge-count-badge slot="header-end" theme="success">
+            +8.2%
+            <forge-icon slot="end" name="trending_up"></forge-icon>
+          </forge-count-badge>
           <span slot="count">$50,846.00</span>
           <div slot="body" class="meter-body">
             <span class="forge-typography--body1">66% of monthly target</span>
