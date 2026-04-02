@@ -22,7 +22,7 @@ const meta = {
           ${args.showHeaderEnd
             ? html`<forge-count-badge slot="header-end" theme=${args.badgeTheme}>${args.badgeText}</forge-count-badge>`
             : nothing}
-          ${args.showCount ? html`<span slot="count">${args.countText}</span>` : nothing}
+          <span slot="count">${args.countText}</span>
           ${args.showFullWidth
             ? html`
                 <svg slot="full-width" viewBox="0 0 200 40" style="width: 100%; display: block;">
@@ -52,11 +52,6 @@ const meta = {
     showHeaderEnd: {
       control: 'boolean',
       description: 'Toggle the header-end slot (badge)',
-      table: { category: 'Slots' }
-    },
-    showCount: {
-      control: 'boolean',
-      description: 'Toggle the count slot',
       table: { category: 'Slots' }
     },
     showFullWidth: {
@@ -90,7 +85,6 @@ const meta = {
     showIcon: true,
     showLabel: true,
     showHeaderEnd: true,
-    showCount: true,
     showFullWidth: false,
     labelText: 'Tomorrows money',
     countText: '$303.33',
