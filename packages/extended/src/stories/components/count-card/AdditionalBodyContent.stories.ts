@@ -36,7 +36,6 @@ const meta = {
       </style>
       <div style="width: 320px;">
         <forge-count-card>
-          <forge-icon slot="icon" name="attach_money"></forge-icon>
           <span slot="label">Todays money</span>
           <forge-count-badge slot="header-end" theme="success">
             +8.2%
