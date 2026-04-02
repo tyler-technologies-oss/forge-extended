@@ -2,10 +2,10 @@ import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
 import CustomArgTypes from '../../blocks/CustomArgTypes';
 import * as CountCardStories from './CountCard.stories';
 import * as MultipleCardsStories from './MultipleCards.stories';
-import * as WithoutIconStories from './WithoutIcon.stories';
 import * as WithFullWidthStories from './WithFullWidth.stories';
 import * as AdditionalBodyContentStories from './AdditionalBodyContent.stories';
 import * as WithCountBadgeStories from './WithCountBadge.stories';
+import * as WithMenuStories from './WithMenu.stories';
 
 <Meta of={CountCardStories} />
 
@@ -42,12 +42,6 @@ Count cards work well in grid layouts to create dashboard-style displays.
 
 <Canvas of={MultipleCardsStories.MultipleCards} />
 
-### Without Icon
-
-The icon slot is optional. When omitted, the icon container is automatically hidden.
-
-<Canvas of={WithoutIconStories.WithoutIcon} />
-
 ### With Full Width Content
 
 Use the `full-width` slot to add full-width content below the primary card content. This is ideal for sparklines, progress bars, or any visualization that should span the entire width of the card.
@@ -65,6 +59,12 @@ Use the `body` slot to add supplementary content below the count. This is useful
 Use the `forge-count-badge` component in the `header-end` slot to display change indicators, status badges, or other supplementary information.
 
 <Canvas of={WithCountBadgeStories.WithCountBadge} />
+
+### With Menu
+
+Use the `header-end` slot to add an options menu for card-level actions.
+
+<Canvas of={WithMenuStories.WithMenu} />
 
 ## Count Badge
 
