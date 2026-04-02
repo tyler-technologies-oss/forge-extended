@@ -1,5 +1,0 @@
-import{w as r}from"./base-lit-element-Bi5P9PLz.js";/**
- * @license
- * Copyright 2017 Google LLC
- * SPDX-License-Identifier: BSD-3-Clause
- */function a(t){return r({...t,state:!0,attribute:!1})}export{a as r};
