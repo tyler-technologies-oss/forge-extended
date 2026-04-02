@@ -990,126 +990,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/count-card/count-badge.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "CountBadgeComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-count-badge'"
-        },
-        {
-          "kind": "class",
-          "description": "A badge component designed for use within count cards to display status or change indicators.",
-          "name": "CountBadgeComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the background color of the badge.",
-              "name": "--forge-count-badge-background"
-            },
-            {
-              "description": "Controls the text color of the badge.",
-              "name": "--forge-count-badge-color"
-            }
-          ],
-          "slots": [
-            {
-              "description": "The badge content (e.g., \"+12%\", \"New\", etc.)",
-              "name": ""
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "theme",
-              "type": {
-                "text": "Theme"
-              },
-              "privacy": "public",
-              "default": "'success'",
-              "description": "The theme variant of the badge.",
-              "attribute": "theme"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "theme",
-              "type": {
-                "text": "Theme"
-              },
-              "default": "'success'",
-              "description": "The theme variant of the badge.",
-              "fieldName": "theme"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-count-badge",
-          "customElement": true,
-          "states": [
-            {
-              "name": "success",
-              "description": "Applied when the theme is set to `success`."
-            },
-            {
-              "name": "error",
-              "description": "Applied when the theme is set to `error`."
-            },
-            {
-              "name": "warning",
-              "description": "Applied when the theme is set to `warning`."
-            },
-            {
-              "name": "info",
-              "description": "Applied when the theme is set to `info`."
-            },
-            {
-              "name": "primary",
-              "description": "Applied when the theme is set to `primary`."
-            },
-            {
-              "name": "secondary",
-              "description": "Applied when the theme is set to `secondary`."
-            },
-            {
-              "name": "tertiary",
-              "description": "Applied when the theme is set to `tertiary`."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "CountBadgeComponentTagName",
-          "declaration": {
-            "name": "CountBadgeComponentTagName",
-            "module": "src/lib/count-card/count-badge.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "CountBadgeComponent",
-          "declaration": {
-            "name": "CountBadgeComponent",
-            "module": "src/lib/count-card/count-badge.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "CountBadgeComponent",
-            "module": "src/lib/count-card/count-badge.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/count-card/count-card.ts",
       "declarations": [
         {
@@ -1169,21 +1049,41 @@
               "kind": "field",
               "name": "theme",
               "type": {
-                "text": "Theme | undefined"
+                "text": "'primary' | 'secondary' | 'tertiary' | 'success' | 'error' | 'warning' | 'info'"
               },
               "privacy": "public",
               "description": "The theme variant applied to the icon container.",
               "attribute": "theme"
+            },
+            {
+              "kind": "field",
+              "name": "tonal",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to apply tonal styling to the card.",
+              "attribute": "tonal"
             }
           ],
           "attributes": [
             {
               "name": "theme",
               "type": {
-                "text": "Theme | undefined"
+                "text": "'primary' | 'secondary' | 'tertiary' | 'success' | 'error' | 'warning' | 'info'"
               },
               "description": "The theme variant applied to the icon container.",
               "fieldName": "theme"
+            },
+            {
+              "name": "tonal",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to apply tonal styling to the card.",
+              "fieldName": "tonal"
             }
           ],
           "superclass": {
@@ -1220,6 +1120,10 @@
             {
               "name": "tertiary",
               "description": "Applied when the theme is set to `tertiary`."
+            },
+            {
+              "name": "tonal",
+              "description": "Applied when the tonal property is set to `true`."
             }
           ]
         }
@@ -2179,13 +2083,9 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
-    "CountBadgeComponent": {
-      "path": "src/lib/count-card/count-badge.ts",
-      "lineNumber": 34
-    },
     "CountCardComponent": {
       "path": "src/lib/count-card/count-card.ts",
-      "lineNumber": 41
+      "lineNumber": 42
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
