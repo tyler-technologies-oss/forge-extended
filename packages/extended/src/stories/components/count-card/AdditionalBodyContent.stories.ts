@@ -47,7 +47,7 @@ const meta = {
             <span class="forge-typography--body1">100k</span>
           </div>
           <div slot="body" class="body-content">
-            <forge-meter value="0.66" min="0" max="1"></forge-meter>
+            <forge-meter value="0.66" min="0" max="1" theme="success"></forge-meter>
             <span class="forge-typography--label1 last-updated">Last updated 12/12/2025</span>
           </div>
         </forge-count-card>
