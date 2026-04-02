@@ -22,8 +22,20 @@ forge-card {
 .header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: #{forge-spacing.variable(small)};
   margin-block-end: #{forge-spacing.variable(small)};
+}
+
+.header-start {
+  display: flex;
+  align-items: center;
+  gap: #{forge-spacing.variable(small)};
+}
+
+.header-end {
+  display: flex;
+  align-items: center;
 }
 
 .icon-container {

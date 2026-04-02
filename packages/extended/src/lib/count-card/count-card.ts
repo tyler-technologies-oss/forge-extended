@@ -19,6 +19,7 @@ export const CountCardComponentTagName: keyof HTMLElementTagNameMap = 'forge-cou
  *
  * @slot icon - The icon displayed at the start of the card header.
  * @slot label - The label text displayed next to the icon.
+ * @slot header-end - Optional content at the end of the header, ideal for badges or accessory menus.
  * @slot count - The main count or value displayed prominently below the header.
  * @slot full-bleed - Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators.
  *
@@ -40,11 +41,16 @@ export class CountCardComponent extends LitElement {
       <forge-card class="container">
         <div class="inner-container">
           <div class="header">
-            <div class="icon-container" ${hideWhenEmpty()}>
-              <slot name="icon"></slot>
+            <div class="header-start">
+              <div class="icon-container" ${hideWhenEmpty()}>
+                <slot name="icon"></slot>
+              </div>
+              <div class="label">
+                <slot name="label"></slot>
+              </div>
             </div>
-            <div class="label">
-              <slot name="label"></slot>
+            <div class="header-end" ${hideWhenEmpty()}>
+              <slot name="header-end"></slot>
             </div>
           </div>
           <div class="count">

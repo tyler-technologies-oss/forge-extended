@@ -1,0 +1,30 @@
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
+
+:host {
+  display: inline-flex;
+  --_count-badge-background: var(--forge-count-badge-background);
+  --_count-badge-color: var(--forge-count-badge-color);
+  --_count-badge-border-color: var(--forge-count-badge-border-color);
+}
+
+forge-badge {
+  --forge-badge-background: var(--_count-badge-background);
+  --forge-badge-shape: #{forge-shape.variable(medium)};
+  --forge-badge-border-style: solid;
+  --forge-badge-border-color: var(--_count-badge-border-color);
+}
+
+//
+// Theme States
+//
+
+$themes: primary, secondary, tertiary, success, error, warning, info;
+
+@each $theme in $themes {
+  :host(:state(#{$theme})) {
+    --_count-badge-background: var(--forge-count-badge-background, #{forge-theme.variable(#{$theme}-container-low)});
+    --_count-badge-color: var(--forge-count-badge-color, #{forge-theme.variable(on-#{$theme}-container-minimum)});
+    --_count-badge-border-color: #{forge-theme.variable(#{$theme}-container-high)};
+  }
+}

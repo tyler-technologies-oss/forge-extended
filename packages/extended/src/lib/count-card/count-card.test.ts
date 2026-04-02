@@ -44,6 +44,14 @@ class CountCardHarness {
   public get fullBleedElement(): HTMLElement {
     return this.el.shadowRoot!.querySelector('.full-bleed') as HTMLElement;
   }
+
+  public get headerEndSlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="header-end"]') as HTMLSlotElement;
+  }
+
+  public get headerEndElement(): HTMLElement {
+    return this.el.shadowRoot!.querySelector('.header-end') as HTMLElement;
+  }
 }
 
 describe('CountCardComponent', () => {
@@ -64,6 +72,7 @@ describe('CountCardComponent', () => {
 
     expect(harness.iconSlot).to.be.ok;
     expect(harness.labelSlot).to.be.ok;
+    expect(harness.headerEndSlot).to.be.ok;
     expect(harness.countSlot).to.be.ok;
     expect(harness.fullBleedSlot).to.be.ok;
   });
@@ -125,6 +134,17 @@ describe('CountCardComponent', () => {
       const harness = new CountCardHarness(el);
 
       expect(harness.fullBleedSlot.assignedNodes().length).to.be.greaterThan(0);
+    });
+
+    it('should project content into header-end slot', async () => {
+      const el = await fixture<CountCardComponent>(html`
+        <forge-count-card>
+          <span slot="header-end">Badge</span>
+        </forge-count-card>
+      `);
+      const harness = new CountCardHarness(el);
+
+      expect(harness.headerEndSlot.assignedNodes().length).to.be.greaterThan(0);
     });
   });
 });

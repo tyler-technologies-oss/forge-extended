@@ -5,6 +5,7 @@ import * as MultipleCardsStories from './MultipleCards.stories';
 import * as CustomIconStylesStories from './CustomIconStyles.stories';
 import * as WithoutIconStories from './WithoutIcon.stories';
 import * as WithFullBleedStories from './WithFullBleed.stories';
+import * as WithCountBadgeStories from './WithCountBadge.stories';
 
 <Meta of={CountCardStories} />
 
@@ -16,10 +17,11 @@ A card component for displaying counts, metrics, or key values with an accompany
 
 ## Usage
 
-The Count Card uses a slot-based architecture with four main areas:
+The Count Card uses a slot-based architecture with five main areas:
 
 - **icon** - An icon displayed in a styled container at the start of the header
 - **label** - Descriptive text next to the icon explaining what the count represents
+- **header-end** - Optional content at the end of the header, ideal for badges or accessory menus
 - **count** - The main value or metric displayed prominently
 - **full-bleed** - Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators
 
@@ -56,6 +58,55 @@ The icon slot is optional. When omitted, the icon container is automatically hid
 Use the `full-bleed` slot to add full-width content below the primary card content. This is ideal for sparklines, meters, progress bars, or any visualization that should span the entire width of the card.
 
 <Canvas of={WithFullBleedStories.WithFullBleed} />
+
+### With Count Badge
+
+Use the `forge-count-badge` component in the `header-end` slot to display change indicators, status badges, or other supplementary information.
+
+<Canvas of={WithCountBadgeStories.WithCountBadge} />
+
+## Count Badge
+
+The `forge-count-badge` is a utility component designed to work alongside the count card. It wraps the core `forge-badge` component with
+modified styling that better complements the count card's visual design, including adjusted shape and container-based theme colors.
+
+### Usage
+
+Place the count badge in the `header-end` slot to display change indicators, status labels, or other supplementary information.
+
+```html
+<forge-count-card>
+  <forge-icon slot="icon" name="trending_up"></forge-icon>
+  <span slot="label">Revenue</span>
+  <forge-count-badge slot="header-end" theme="success">+12.5%</forge-count-badge>
+  <span slot="count">$48,250.00</span>
+</forge-count-card>
+```
+
+### Theme Variants
+
+The count badge supports the following theme variants:
+
+| Theme       | Use Case                              |
+| ----------- | ------------------------------------- |
+| `success`   | Positive changes, growth indicators   |
+| `error`     | Negative changes, decline indicators  |
+| `warning`   | Cautionary or attention-needed states |
+| `info`      | Neutral information                   |
+| `primary`   | Primary brand emphasis                |
+| `secondary` | Secondary emphasis                    |
+| `tertiary`  | Tertiary emphasis                     |
+
+### Count Badge Slots
+
+- **default** - The badge content (e.g., "+12%", "New")
+- **end** - Optional content placed at the end of the badge, passed through to the inner `forge-badge`
+
+### Count Badge CSS Custom Properties
+
+- `--forge-count-badge-background` - Override the background color of the badge.
+- `--forge-count-badge-color` - Override the text color of the badge.
+- `--forge-count-badge-border-color` - Override the border color of the badge.
 
 ## CSS Custom Properties
 
