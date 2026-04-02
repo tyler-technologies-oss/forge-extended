@@ -11,8 +11,12 @@
   --_count-card-icon-size: var(--forge-count-card-icon-size, 16px);
 }
 
-.container {
-  --forge-card-padding: #{forge-spacing.variable(medium)};
+forge-card {
+  --forge-card-padding: 0;
+}
+
+.inner-container {
+  padding: #{forge-spacing.variable(medium)};
 }
 
 .header {
@@ -35,7 +39,7 @@
 }
 
 .label {
-  @include forge-typography.style(label1);
+  @include forge-typography.style(body1);
   color: #{forge-theme.variable(text-medium)};
 }
 

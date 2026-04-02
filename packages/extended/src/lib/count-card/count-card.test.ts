@@ -36,6 +36,14 @@ class CountCardHarness {
   public get countSlot(): HTMLSlotElement {
     return this.el.shadowRoot!.querySelector('slot[name="count"]') as HTMLSlotElement;
   }
+
+  public get fullBleedSlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="full-bleed"]') as HTMLSlotElement;
+  }
+
+  public get fullBleedElement(): HTMLElement {
+    return this.el.shadowRoot!.querySelector('.full-bleed') as HTMLElement;
+  }
 }
 
 describe('CountCardComponent', () => {
@@ -57,6 +65,7 @@ describe('CountCardComponent', () => {
     expect(harness.iconSlot).to.be.ok;
     expect(harness.labelSlot).to.be.ok;
     expect(harness.countSlot).to.be.ok;
+    expect(harness.fullBleedSlot).to.be.ok;
   });
 
   it('should have header structure', async () => {
@@ -105,6 +114,17 @@ describe('CountCardComponent', () => {
       const harness = new CountCardHarness(el);
 
       expect(harness.countSlot.assignedNodes().length).to.be.greaterThan(0);
+    });
+
+    it('should project content into full-bleed slot', async () => {
+      const el = await fixture<CountCardComponent>(html`
+        <forge-count-card>
+          <div slot="full-bleed">Sparkline content</div>
+        </forge-count-card>
+      `);
+      const harness = new CountCardHarness(el);
+
+      expect(harness.fullBleedSlot.assignedNodes().length).to.be.greaterThan(0);
     });
   });
 });

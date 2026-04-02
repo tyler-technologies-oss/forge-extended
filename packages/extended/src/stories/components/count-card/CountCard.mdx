@@ -1,6 +1,10 @@
 import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
 import CustomArgTypes from '../../blocks/CustomArgTypes';
 import * as CountCardStories from './CountCard.stories';
+import * as MultipleCardsStories from './MultipleCards.stories';
+import * as CustomIconStylesStories from './CustomIconStyles.stories';
+import * as WithoutIconStories from './WithoutIcon.stories';
+import * as WithFullBleedStories from './WithFullBleed.stories';
 
 <Meta of={CountCardStories} />
 
@@ -12,11 +16,12 @@ A card component for displaying counts, metrics, or key values with an accompany
 
 ## Usage
 
-The Count Card uses a slot-based architecture with three main areas:
+The Count Card uses a slot-based architecture with four main areas:
 
 - **icon** - An icon displayed in a styled container at the start of the header
 - **label** - Descriptive text next to the icon explaining what the count represents
 - **count** - The main value or metric displayed prominently
+- **full-bleed** - Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators
 
 ```html
 <forge-count-card>
@@ -32,19 +37,32 @@ The Count Card uses a slot-based architecture with three main areas:
 
 Count cards work well in grid layouts to create dashboard-style displays.
 
-<Canvas of={CountCardStories.MultipleCards} />
+<Canvas of={MultipleCardsStories.MultipleCards} />
 
 ### Custom Icon Styles
 
 Use CSS custom properties to customize the icon container appearance.
 
-<Canvas of={CountCardStories.CustomIconStyles} />
+<Canvas of={CustomIconStylesStories.CustomIconStyles} />
+
+### Without Icon
+
+The icon slot is optional. When omitted, the icon container is automatically hidden.
+
+<Canvas of={WithoutIconStories.WithoutIcon} />
+
+### With Full Bleed Content
+
+Use the `full-bleed` slot to add full-width content below the primary card content. This is ideal for sparklines, meters, progress bars, or any visualization that should span the entire width of the card.
+
+<Canvas of={WithFullBleedStories.WithFullBleed} />
 
 ## CSS Custom Properties
 
 - `--forge-count-card-icon-background` - Background color of the icon container. Defaults to surface-container.
 - `--forge-count-card-icon-color` - Color of the icon. Defaults to on-surface.
-- `--forge-count-card-icon-size` - Size of the icon container. Defaults to `40px`.
+- `--forge-count-card-icon-container-size` - Size of the icon container. Defaults to `24px`.
+- `--forge-count-card-icon-size` - Size of the icon itself. Defaults to `16px`.
 
 ## API
 

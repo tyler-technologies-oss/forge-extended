@@ -1,24 +1,19 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
-import { defineIconComponent, IconRegistry } from '@tylertech/forge';
-import { tylIconAttachMoney } from '@tylertech/tyler-icons';
 
 import '$lib/count-card';
-
-defineIconComponent();
-IconRegistry.define([tylIconAttachMoney]);
 
 const component = 'forge-count-card';
 
 const meta = {
+  tags: ['hidden'],
   title: 'Components/Count Card',
   component,
   render: () => {
     return html`
       <forge-count-card>
-        <forge-icon slot="icon" name="attach_money"></forge-icon>
-        <span slot="label">Tomorrows money</span>
-        <span slot="count">$303.33</span>
+        <span slot="label">Total Sales</span>
+        <span slot="count">$8,742.50</span>
       </forge-count-card>
     `;
   }
@@ -28,4 +23,4 @@ export default meta;
 
 type Story = StoryObj;
 
-export const Demo: Story = {};
+export const WithoutIcon: Story = {};
