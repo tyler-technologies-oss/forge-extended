@@ -1,5 +1,16 @@
 # @tylertech/forge-extended
 
+## 1.4.0
+
+### Minor Changes
+
+- fcdf883: Created a new structured card component to help with consistent card UIs
+- 7ed2aa1: Created a new app layout component. This component wraps the forge-scaffold component and provides it a bit of responsive functionality
+
+### Patch Changes
+
+- caf23d3: fix(app-launcher): add default fallback icon when `iconName` missing
+
 ## 1.3.0
 
 ### Minor Changes

@@ -190,335 +190,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "BusyIndicatorComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-busy-indicator'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "BusyIndicatorComponent",
-          "slots": [
-            {
-              "description": "The title text to display.",
-              "name": "title"
-            },
-            {
-              "description": "The message to display.",
-              "name": "message"
-            },
-            {
-              "description": "The text for the cancel button.",
-              "name": "cancel-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the busy indicator is open.",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "mode",
-              "type": {
-                "text": "BusyIndicatorMode"
-              },
-              "privacy": "public",
-              "default": "'fullscreen'",
-              "description": "Whether the busy indicator is fullscreen or inline.",
-              "attribute": "mode"
-            },
-            {
-              "kind": "field",
-              "name": "titleText",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The title text to display.",
-              "attribute": "title-text"
-            },
-            {
-              "kind": "field",
-              "name": "headingLevel",
-              "type": {
-                "text": "1 | 2 | 3 | 4 | 5 | 6"
-              },
-              "privacy": "public",
-              "default": "1",
-              "description": "The heading level for the title.",
-              "attribute": "heading-level"
-            },
-            {
-              "kind": "field",
-              "name": "message",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The message to display.",
-              "attribute": "message"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog.",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog.",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "cancelable",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the cancel button is displayed.",
-              "attribute": "cancelable"
-            },
-            {
-              "kind": "field",
-              "name": "variant",
-              "type": {
-                "text": "BusyIndicatorVariant"
-              },
-              "privacy": "public",
-              "default": "'spinner'",
-              "description": "The variant of the busy indicator.\n- `spinner` (default): displays a spinner.\n- `progress`: displays a progress bar.\n- `message-only`: No progress indicator is displayed.",
-              "attribute": "variant"
-            },
-            {
-              "kind": "field",
-              "name": "determinate",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the loading indicator is determinate.",
-              "attribute": "determinate"
-            },
-            {
-              "kind": "field",
-              "name": "progress",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "0",
-              "description": "The progress amount for the progress bar.",
-              "attribute": "progress"
-            },
-            {
-              "kind": "field",
-              "name": "buffer",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "0",
-              "description": "The buffer amount for the progress bar.",
-              "attribute": "buffer"
-            },
-            {
-              "kind": "field",
-              "name": "transparent",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the busy indicator surface should be transparent (no background or elevation).",
-              "attribute": "transparent"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<void>"
-              },
-              "description": "Fired when the cancel button is clicked.",
-              "name": "forge-busy-indicator-cancel"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the busy indicator is open.",
-              "fieldName": "open"
-            },
-            {
-              "name": "mode",
-              "type": {
-                "text": "BusyIndicatorMode"
-              },
-              "default": "'fullscreen'",
-              "description": "Whether the busy indicator is fullscreen or inline.",
-              "fieldName": "mode"
-            },
-            {
-              "name": "title-text",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The title text to display.",
-              "fieldName": "titleText"
-            },
-            {
-              "name": "heading-level",
-              "type": {
-                "text": "1 | 2 | 3 | 4 | 5 | 6"
-              },
-              "default": "1",
-              "description": "The heading level for the title.",
-              "fieldName": "headingLevel"
-            },
-            {
-              "name": "message",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The message to display.",
-              "fieldName": "message"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog.",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog.",
-              "fieldName": "description"
-            },
-            {
-              "name": "cancelable",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the cancel button is displayed.",
-              "fieldName": "cancelable"
-            },
-            {
-              "name": "variant",
-              "type": {
-                "text": "BusyIndicatorVariant"
-              },
-              "default": "'spinner'",
-              "description": "The variant of the busy indicator.\n- `spinner` (default): displays a spinner.\n- `progress`: displays a progress bar.\n- `message-only`: No progress indicator is displayed.",
-              "fieldName": "variant"
-            },
-            {
-              "name": "determinate",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the loading indicator is determinate.",
-              "fieldName": "determinate"
-            },
-            {
-              "name": "progress",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "The progress amount for the progress bar.",
-              "fieldName": "progress"
-            },
-            {
-              "name": "buffer",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "The buffer amount for the progress bar.",
-              "fieldName": "buffer"
-            },
-            {
-              "name": "transparent",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the busy indicator surface should be transparent (no background or elevation).",
-              "fieldName": "transparent"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-busy-indicator",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "BusyIndicatorComponentTagName",
-          "declaration": {
-            "name": "BusyIndicatorComponentTagName",
-            "module": "src/lib/busy-indicator/busy-indicator.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "BusyIndicatorComponent",
-          "declaration": {
-            "name": "BusyIndicatorComponent",
-            "module": "src/lib/busy-indicator/busy-indicator.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "BusyIndicatorComponent",
-            "module": "src/lib/busy-indicator/busy-indicator.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/app-layout/app-layout.ts",
       "declarations": [
         {
@@ -813,36 +484,32 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
+          "name": "BusyIndicatorComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-confirmation-dialog'"
+          "default": "'forge-busy-indicator'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "ConfirmationDialogComponent",
+          "name": "BusyIndicatorComponent",
           "slots": [
             {
-              "description": "The title of the dialog",
+              "description": "The title text to display.",
               "name": "title"
             },
             {
-              "description": "The dialog message",
+              "description": "The message to display.",
               "name": "message"
             },
             {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
-            },
-            {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
+              "description": "The text for the cancel button.",
+              "name": "cancel-text"
             }
           ],
           "members": [
@@ -854,8 +521,50 @@
               },
               "privacy": "public",
               "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
+              "description": "Indicates whether the busy indicator is open.",
               "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "mode",
+              "type": {
+                "text": "BusyIndicatorMode"
+              },
+              "privacy": "public",
+              "default": "'fullscreen'",
+              "description": "Whether the busy indicator is fullscreen or inline.",
+              "attribute": "mode"
+            },
+            {
+              "kind": "field",
+              "name": "titleText",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The title text to display.",
+              "attribute": "title-text"
+            },
+            {
+              "kind": "field",
+              "name": "headingLevel",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "privacy": "public",
+              "default": "1",
+              "description": "The heading level for the title.",
+              "attribute": "heading-level"
+            },
+            {
+              "kind": "field",
+              "name": "message",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The message to display.",
+              "attribute": "message"
             },
             {
               "kind": "field",
@@ -864,7 +573,7 @@
                 "text": "string | undefined"
               },
               "privacy": "public",
-              "description": "The accessible label for dialog",
+              "description": "The accessible label for dialog.",
               "attribute": "label"
             },
             {
@@ -874,39 +583,83 @@
                 "text": "string | undefined"
               },
               "privacy": "public",
-              "description": "The accessible description for dialog",
+              "description": "The accessible description for dialog.",
               "attribute": "description"
             },
             {
               "kind": "field",
-              "name": "isBusy",
+              "name": "cancelable",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
               "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
+              "description": "Indicates whether the cancel button is displayed.",
+              "attribute": "cancelable"
             },
             {
               "kind": "field",
-              "name": "busyLabel",
+              "name": "variant",
               "type": {
-                "text": "string"
+                "text": "BusyIndicatorVariant"
               },
               "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
+              "default": "'spinner'",
+              "description": "The variant of the busy indicator.\n- `spinner` (default): displays a spinner.\n- `progress`: displays a progress bar.\n- `message-only`: No progress indicator is displayed.",
+              "attribute": "variant"
+            },
+            {
+              "kind": "field",
+              "name": "determinate",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the loading indicator is determinate.",
+              "attribute": "determinate"
+            },
+            {
+              "kind": "field",
+              "name": "progress",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "0",
+              "description": "The progress amount for the progress bar.",
+              "attribute": "progress"
+            },
+            {
+              "kind": "field",
+              "name": "buffer",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "0",
+              "description": "The buffer amount for the progress bar.",
+              "attribute": "buffer"
+            },
+            {
+              "kind": "field",
+              "name": "transparent",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the busy indicator surface should be transparent (no background or elevation).",
+              "attribute": "transparent"
             }
           ],
           "events": [
             {
               "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+                "text": "CustomEvent<void>"
               },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
+              "description": "Fired when the cancel button is clicked.",
+              "name": "forge-busy-indicator-cancel"
             }
           ],
           "attributes": [
@@ -916,15 +669,49 @@
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
+              "description": "Indicates whether the busy indicator is open.",
               "fieldName": "open"
+            },
+            {
+              "name": "mode",
+              "type": {
+                "text": "BusyIndicatorMode"
+              },
+              "default": "'fullscreen'",
+              "description": "Whether the busy indicator is fullscreen or inline.",
+              "fieldName": "mode"
+            },
+            {
+              "name": "title-text",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The title text to display.",
+              "fieldName": "titleText"
+            },
+            {
+              "name": "heading-level",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "default": "1",
+              "description": "The heading level for the title.",
+              "fieldName": "headingLevel"
+            },
+            {
+              "name": "message",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The message to display.",
+              "fieldName": "message"
             },
             {
               "name": "label",
               "type": {
                 "text": "string | undefined"
               },
-              "description": "The accessible label for dialog",
+              "description": "The accessible label for dialog.",
               "fieldName": "label"
             },
             {
@@ -932,58 +719,94 @@
               "type": {
                 "text": "string | undefined"
               },
-              "description": "The accessible description for dialog",
+              "description": "The accessible description for dialog.",
               "fieldName": "description"
             },
             {
-              "name": "is-busy",
+              "name": "cancelable",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
+              "description": "Indicates whether the cancel button is displayed.",
+              "fieldName": "cancelable"
             },
             {
-              "name": "busy-label",
+              "name": "variant",
               "type": {
-                "text": "string"
+                "text": "BusyIndicatorVariant"
               },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
+              "default": "'spinner'",
+              "description": "The variant of the busy indicator.\n- `spinner` (default): displays a spinner.\n- `progress`: displays a progress bar.\n- `message-only`: No progress indicator is displayed.",
+              "fieldName": "variant"
+            },
+            {
+              "name": "determinate",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the loading indicator is determinate.",
+              "fieldName": "determinate"
+            },
+            {
+              "name": "progress",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "The progress amount for the progress bar.",
+              "fieldName": "progress"
+            },
+            {
+              "name": "buffer",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "The buffer amount for the progress bar.",
+              "fieldName": "buffer"
+            },
+            {
+              "name": "transparent",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the busy indicator surface should be transparent (no background or elevation).",
+              "fieldName": "transparent"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-confirmation-dialog",
+          "tagName": "forge-busy-indicator",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
+          "name": "BusyIndicatorComponentTagName",
           "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+            "name": "BusyIndicatorComponentTagName",
+            "module": "src/lib/busy-indicator/busy-indicator.ts"
           }
         },
         {
           "kind": "js",
-          "name": "ConfirmationDialogComponent",
+          "name": "BusyIndicatorComponent",
           "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+            "name": "BusyIndicatorComponent",
+            "module": "src/lib/busy-indicator/busy-indicator.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+            "name": "BusyIndicatorComponent",
+            "module": "src/lib/busy-indicator/busy-indicator.ts"
           }
         }
       ]
@@ -1049,7 +872,7 @@
               "kind": "field",
               "name": "theme",
               "type": {
-                "text": "'primary' | 'secondary' | 'tertiary' | 'success' | 'error' | 'warning' | 'info'"
+                "text": "Theme | undefined"
               },
               "privacy": "public",
               "description": "The theme variant applied to the icon container.",
@@ -1071,7 +894,7 @@
             {
               "name": "theme",
               "type": {
-                "text": "'primary' | 'secondary' | 'tertiary' | 'success' | 'error' | 'warning' | 'info'"
+                "text": "Theme | undefined"
               },
               "description": "The theme variant applied to the icon container.",
               "fieldName": "theme"
@@ -1269,6 +1092,183 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ConfirmationDialogComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-confirmation-dialog'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ConfirmationDialogComponent",
+          "slots": [
+            {
+              "description": "The title of the dialog",
+              "name": "title"
+            },
+            {
+              "description": "The dialog message",
+              "name": "message"
+            },
+            {
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
+            },
+            {
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
+            },
+            {
+              "kind": "field",
+              "name": "busyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+              },
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
+            },
+            {
+              "name": "busy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-confirmation-dialog",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponentTagName",
+          "declaration": {
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponent",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/quantity-field/quantity-field.ts",
       "declarations": [
         {
@@ -1443,6 +1443,129 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ContentScaffoldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-content-scaffold'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ContentScaffoldComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the header section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-header-height"
+            },
+            {
+              "description": "Controls the background color of the header section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-header-background"
+            },
+            {
+              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-header-min-height"
+            },
+            {
+              "description": "Controls the height of the body section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-body-height"
+            },
+            {
+              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-body-padding-inline"
+            },
+            {
+              "description": "Controls the height of the footer section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-footer-height"
+            },
+            {
+              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-footer-background"
+            },
+            {
+              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-footer-min-height"
+            },
+            {
+              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
+              "name": "--forge-content-scaffold-footer-full-padding"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
+              "name": "header"
+            },
+            {
+              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
+              "name": "before-header-start"
+            },
+            {
+              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-start"
+            },
+            {
+              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-end"
+            },
+            {
+              "description": "The main body content that expands to fill available space.",
+              "name": "body"
+            },
+            {
+              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
+              "name": "footer"
+            },
+            {
+              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-start"
+            },
+            {
+              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-end"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-content-scaffold",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponentTagName",
+          "declaration": {
+            "name": "ContentScaffoldComponentTagName",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponent",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "declarations": [
         {
@@ -1589,6 +1712,142 @@
           "declaration": {
             "name": "ResponsiveToolbarComponent",
             "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/structured-card/structured-card.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "StructuredCardComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-structured-card'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "StructuredCardComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the body content. Defaults to `auto`.",
+              "name": "--forge-structured-card-body-height"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Content displayed before the title in the header",
+              "name": "before-title"
+            },
+            {
+              "description": "The title content displayed in the header",
+              "name": "title"
+            },
+            {
+              "description": "Action buttons or controls displayed at the end of the header",
+              "name": "header-actions"
+            },
+            {
+              "description": "The main body content of the card",
+              "name": "body"
+            },
+            {
+              "description": "Content displayed at the start of the footer (e.g., pagination controls)",
+              "name": "footer-start"
+            },
+            {
+              "description": "Secondary action button displayed at the end of the footer",
+              "name": "footer-secondary-action"
+            },
+            {
+              "description": "Primary action button displayed at the end of the footer",
+              "name": "footer-primary-action"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "headingLevel",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "privacy": "public",
+              "default": "2",
+              "description": "Controls the semantic heading level for the title content. Defaults to `2` (h2).\nUse this to maintain proper heading hierarchy in your document structure.",
+              "attribute": "heading-level"
+            },
+            {
+              "kind": "field",
+              "name": "bodySpacing",
+              "type": {
+                "text": "'none' | 'default'"
+              },
+              "privacy": "public",
+              "default": "'default'",
+              "description": "Controls the spacing applied to the body section. Defaults to `default`.\n- `default`: Applies standard padding to the body section.\n- `none`: Removes padding from the body section for full-width content like tables.",
+              "attribute": "body-spacing"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "heading-level",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "default": "2",
+              "description": "Controls the semantic heading level for the title content. Defaults to `2` (h2).\nUse this to maintain proper heading hierarchy in your document structure.",
+              "fieldName": "headingLevel"
+            },
+            {
+              "name": "body-spacing",
+              "type": {
+                "text": "'none' | 'default'"
+              },
+              "default": "'default'",
+              "description": "Controls the spacing applied to the body section. Defaults to `default`.\n- `default`: Applies standard padding to the body section.\n- `none`: Removes padding from the body section for full-width content like tables.",
+              "fieldName": "bodySpacing"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-structured-card",
+          "customElement": true,
+          "states": [
+            {
+              "name": "body-spacing-none",
+              "description": "Applied when the `bodySpacing` property is set to `none`. Used to remove default body padding for full-width content."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "StructuredCardComponentTagName",
+          "declaration": {
+            "name": "StructuredCardComponentTagName",
+            "module": "src/lib/structured-card/structured-card.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "StructuredCardComponent",
+          "declaration": {
+            "name": "StructuredCardComponent",
+            "module": "src/lib/structured-card/structured-card.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "StructuredCardComponent",
+            "module": "src/lib/structured-card/structured-card.ts"
           }
         }
       ]
@@ -2025,31 +2284,15 @@
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 42
+      "lineNumber": 43
     },
     "AppView": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 49
+      "lineNumber": 50
     },
     "AppLauncherComponent": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 66
-    },
-    "BusyIndicatorMode": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 25
-    },
-    "BusyIndicatorVariant": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 26
-    },
-    "BusyIndicatorFocusMode": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 27
-    },
-    "BusyIndicatorComponent": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 39
+      "lineNumber": 67
     },
     "AppLayoutBreakpoint": {
       "path": "src/lib/app-layout/app-layout.ts",
@@ -2067,6 +2310,30 @@
       "path": "src/lib/app-layout/app-layout.ts",
       "lineNumber": 90
     },
+    "BusyIndicatorMode": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 26
+    },
+    "BusyIndicatorVariant": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 27
+    },
+    "BusyIndicatorFocusMode": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 28
+    },
+    "BusyIndicatorComponent": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 40
+    },
+    "CountCardComponent": {
+      "path": "src/lib/count-card/count-card.ts",
+      "lineNumber": 42
+    },
+    "MultiSelectHeaderComponent": {
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "lineNumber": 28
+    },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 28
@@ -2083,17 +2350,13 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
-    "CountCardComponent": {
-      "path": "src/lib/count-card/count-card.ts",
-      "lineNumber": 42
-    },
-    "MultiSelectHeaderComponent": {
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "lineNumber": 28
-    },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
+    },
+    "ContentScaffoldComponent": {
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "lineNumber": 37
     },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
@@ -2106,6 +2369,10 @@
     "ResponsiveToolbarComponent": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 48
+    },
+    "StructuredCardComponent": {
+      "path": "src/lib/structured-card/structured-card.ts",
+      "lineNumber": 33
     },
     "ThemeToggleTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
