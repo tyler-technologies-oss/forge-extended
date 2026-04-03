@@ -9,6 +9,7 @@
   --_count-card-icon-color: var(--forge-count-card-icon-color, #{forge-theme.variable(on-surface)});
   --_count-card-icon-container-size: var(--forge-count-card-icon-container-size, 24px);
   --_count-card-icon-size: var(--forge-count-card-icon-size, 16px);
+  --_count-card-color: var(--forge-count-card-color);
   height: 100%;
 }
 
@@ -58,12 +59,12 @@ forge-card {
 
 .label {
   @include forge-typography.style(body1);
-  color: #{forge-theme.variable(text-medium)};
+  color: var(--_count-card-color);
 }
 
 .count {
   @include forge-typography.style(heading6);
-  color: #{forge-theme.variable(text-high)};
+  color: var(--_count-card-color);
 }
 
 //
@@ -76,12 +77,13 @@ $themes: primary, secondary, tertiary, success, error, warning, info;
   :host(:state(#{$theme})) {
     --forge-card-background: #{forge-theme.variable(#{$theme}-container-minimum)};
     --forge-card-color: #{forge-theme.variable(on-#{$theme})};
-    --forge-card-outline-color: #{forge-theme.variable(#{$theme})};
+    --forge-card-outline-color: #{forge-theme.variable(on-#{$theme}-container)};
     --forge-card-outline-width: 1px;
     --forge-card-outline-style: solid;
 
     --_count-card-icon-background: #{forge-theme.variable(#{$theme}-container-low)};
-    --_count-card-icon-color: #{forge-theme.variable(#{$theme})};
+    --_count-card-icon-color: #{forge-theme.variable(on-#{$theme}-container)};
+    --_count-card-color: #{forge-theme.variable(on-#{$theme}-container)};
   }
 }
 
