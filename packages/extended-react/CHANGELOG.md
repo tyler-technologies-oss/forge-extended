@@ -1,5 +1,19 @@
 # @tylertech/forge-extended-react
 
+## 1.4.0
+
+### Minor Changes
+
+- fcdf883: Created a new structured card component to help with consistent card UIs
+- 7ed2aa1: Created a new app layout component. This component wraps the forge-scaffold component and provides it a bit of responsive functionality
+
+### Patch Changes
+
+- Updated dependencies [caf23d3]
+- Updated dependencies [fcdf883]
+- Updated dependencies [7ed2aa1]
+  - @tylertech/forge-extended@1.4.0
+
 ## 1.3.0
 
 ### Minor Changes
