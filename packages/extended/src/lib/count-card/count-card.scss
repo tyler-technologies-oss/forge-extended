@@ -17,13 +17,6 @@ forge-card {
   height: 100%;
 }
 
-:host(:state(tonal)) {
-  --forge-card-background: var(--forge-theme-surface-dim);
-  --forge-card-outline-color: var(--forge-theme-outline);
-  --forge-card-outline-width: 1px;
-  --forge-card-outline-style: solid;
-}
-
 .inner-container {
   display: flex;
   flex-direction: column;
@@ -81,13 +74,24 @@ $themes: primary, secondary, tertiary, success, error, warning, info;
 
 @each $theme in $themes {
   :host(:state(#{$theme})) {
-    --_count-card-icon-background: var(
-      --forge-count-card-icon-background,
-      #{forge-theme.variable(#{$theme}-container-low)}
-    );
-    --_count-card-icon-color: var(
-      --forge-count-card-icon-color,
-      #{forge-theme.variable(on-#{$theme}-container-minimum)}
-    );
+    --forge-card-background: #{forge-theme.variable(#{$theme}-container-minimum)};
+    --forge-card-color: #{forge-theme.variable(on-#{$theme})};
+    --forge-card-outline-color: #{forge-theme.variable(#{$theme})};
+    --forge-card-outline-width: 1px;
+    --forge-card-outline-style: solid;
+
+    --_count-card-icon-background: #{forge-theme.variable(#{$theme}-container-low)};
+    --_count-card-icon-color: #{forge-theme.variable(#{$theme})};
   }
+}
+
+:host(:state(info-secondary)) {
+  --forge-card-background: #{forge-theme.variable(surface-dim)};
+  --forge-card-outline-color: #{forge-theme.variable(outline)};
+  --forge-card-outline-width: 1px;
+  --forge-card-outline-style: solid;
+}
+
+:host(:state(no-border)) {
+  --forge-card-outline-width: 0;
 }

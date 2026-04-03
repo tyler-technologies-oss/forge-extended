@@ -17,11 +17,11 @@ const meta = {
   render: args => {
     return html`
       <div style="width: 320px;">
-        <forge-count-card ?tonal=${args.tonal}>
+        <forge-count-card theme=${args.theme || nothing} ?no-border=${args.noBorder}>
           ${args.showIcon ? html`<forge-icon slot="icon" name="attach_money"></forge-icon>` : nothing}
           ${args.showLabel ? html`<span slot="label">${args.labelText}</span>` : nothing}
           ${args.showHeaderEnd
-            ? html`<forge-badge slot="header-end" theme=${args.badgeTheme}>${args.badgeText}</forge-badge>`
+            ? html`<forge-badge slot="header-end" theme=${args.theme || nothing}>${args.badgeText}</forge-badge>`
             : nothing}
           <span slot="count">${args.countText}</span>
           ${args.showFullWidth
@@ -40,9 +40,15 @@ const meta = {
     `;
   },
   argTypes: {
-    tonal: {
+    theme: {
+      control: 'select',
+      options: ['primary', 'secondary', 'tertiary', 'success', 'error', 'warning', 'info', 'info-secondary'],
+      description: 'Theme variant applied to the card',
+      table: { category: 'Properties' }
+    },
+    noBorder: {
       control: 'boolean',
-      description: 'Apply tonal styling to the card',
+      description: 'Hide the card border',
       table: { category: 'Properties' }
     },
     showIcon: {
@@ -79,24 +85,18 @@ const meta = {
       control: 'text',
       description: 'Badge text content',
       table: { category: 'Content' }
-    },
-    badgeTheme: {
-      control: 'select',
-      options: ['primary', 'secondary', 'tertiary', 'success', 'error', 'warning', 'info'],
-      description: 'Badge theme variant',
-      table: { category: 'Badge' }
     }
   },
   args: {
-    tonal: false,
+    theme: 'primary',
+    noBorder: false,
     showIcon: true,
     showLabel: true,
     showHeaderEnd: true,
     showFullWidth: false,
     labelText: 'Tomorrows money',
     countText: '$303.33',
-    badgeText: '+12%',
-    badgeTheme: 'success'
+    badgeText: '+12%'
   }
 } satisfies Meta;
 

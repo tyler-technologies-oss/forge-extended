@@ -148,33 +148,70 @@ describe('CountCardComponent', () => {
     });
   });
 
-  describe('tonal', () => {
-    it('should not have tonal state by default', async () => {
+  describe('theme', () => {
+    it('should not have theme by default', async () => {
       const harness = await createFixture();
 
-      expect(harness.el.tonal).to.be.false;
-      expect(harness.el.matches(':state(tonal)')).to.be.false;
+      expect(harness.el.theme).to.be.undefined;
     });
 
-    it('should apply tonal state when tonal property is true', async () => {
-      const el = await fixture<CountCardComponent>(html`<forge-count-card tonal></forge-count-card>`);
+    it('should apply theme state when theme property is set', async () => {
+      const el = await fixture<CountCardComponent>(html`<forge-count-card theme="primary"></forge-count-card>`);
 
-      expect(el.tonal).to.be.true;
-      expect(el.matches(':state(tonal)')).to.be.true;
+      expect(el.theme).to.equal('primary');
+      expect(el.matches(':state(primary)')).to.be.true;
     });
 
-    it('should toggle tonal state dynamically', async () => {
+    it('should apply info-secondary theme state', async () => {
+      const el = await fixture<CountCardComponent>(html`<forge-count-card theme="info-secondary"></forge-count-card>`);
+
+      expect(el.theme).to.equal('info-secondary');
+      expect(el.matches(':state(info-secondary)')).to.be.true;
+    });
+
+    it('should toggle theme state dynamically', async () => {
       const harness = await createFixture();
 
-      harness.el.tonal = true;
+      harness.el.theme = 'success';
       await harness.el.updateComplete;
 
-      expect(harness.el.matches(':state(tonal)')).to.be.true;
+      expect(harness.el.matches(':state(success)')).to.be.true;
 
-      harness.el.tonal = false;
+      harness.el.theme = 'error';
       await harness.el.updateComplete;
 
-      expect(harness.el.matches(':state(tonal)')).to.be.false;
+      expect(harness.el.matches(':state(error)')).to.be.true;
+      expect(harness.el.matches(':state(success)')).to.be.false;
+    });
+  });
+
+  describe('noBorder', () => {
+    it('should not have no-border state by default', async () => {
+      const harness = await createFixture();
+
+      expect(harness.el.noBorder).to.be.false;
+      expect(harness.el.matches(':state(no-border)')).to.be.false;
+    });
+
+    it('should apply no-border state when noBorder property is true', async () => {
+      const el = await fixture<CountCardComponent>(html`<forge-count-card no-border></forge-count-card>`);
+
+      expect(el.noBorder).to.be.true;
+      expect(el.matches(':state(no-border)')).to.be.true;
+    });
+
+    it('should toggle no-border state dynamically', async () => {
+      const harness = await createFixture();
+
+      harness.el.noBorder = true;
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(no-border)')).to.be.true;
+
+      harness.el.noBorder = false;
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(no-border)')).to.be.false;
     });
   });
 });

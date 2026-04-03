@@ -5,7 +5,7 @@ import * as MultipleCardsStories from './MultipleCards.stories';
 import * as WithFullWidthStories from './WithFullWidth.stories';
 import * as AdditionalBodyContentStories from './AdditionalBodyContent.stories';
 import * as WithMenuStories from './WithMenu.stories';
-import * as TonalStories from './Tonal.stories';
+import * as ThemesStories from './Themes.stories';
 
 <Meta of={CountCardStories} />
 
@@ -60,11 +60,11 @@ Use the `header-end` slot to add an options menu for card-level actions.
 
 <Canvas of={WithMenuStories.WithMenu} />
 
-### Tonal
+### Themes
 
-Use the `tonal` property to apply a subtle tonal background with an outline border, providing visual distinction while maintaining a softer appearance.
+Use the `theme` property to apply semantic color styling to the card. Available themes include `primary`, `secondary`, `tertiary`, `success`, `error`, `warning`, `info`, and `info-secondary`.
 
-<Canvas of={TonalStories.Tonal} />
+<Canvas of={ThemesStories.Themes} />
 
 ## API
 

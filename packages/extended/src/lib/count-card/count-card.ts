@@ -1,6 +1,6 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
-import { defineCardComponent, Theme, toggleState } from '@tylertech/forge';
+import { defineCardComponent, toggleState } from '@tylertech/forge';
 import styles from './count-card.scss?inline';
 import { hideWhenEmpty } from '../utils/lit-utils';
 
@@ -12,7 +12,26 @@ declare global {
 
 export const CountCardComponentTagName: keyof HTMLElementTagNameMap = 'forge-count-card';
 
-const THEME_STATES: Theme[] = ['primary', 'secondary', 'tertiary', 'success', 'error', 'warning', 'info'];
+export type CountCardTheme =
+  | 'primary'
+  | 'secondary'
+  | 'tertiary'
+  | 'success'
+  | 'error'
+  | 'warning'
+  | 'info'
+  | 'info-secondary';
+
+const THEME_STATES: CountCardTheme[] = [
+  'primary',
+  'secondary',
+  'tertiary',
+  'success',
+  'error',
+  'warning',
+  'info',
+  'info-secondary'
+];
 
 /**
  * A card component for displaying a count or metric with an icon and label.
@@ -23,6 +42,7 @@ const THEME_STATES: Theme[] = ['primary', 'secondary', 'tertiary', 'success', 'e
  * @slot label - The label text displayed next to the icon.
  * @slot header-end - Optional content at the end of the header, ideal for badges or accessory menus.
  * @slot count - The main count or value displayed prominently below the header.
+ * @slot body - Optional content below the count for additional details or secondary information.
  * @slot full-width - Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators.
  *
  * @cssprop --forge-count-card-icon-background - Controls the background color of the icon container. Defaults to Forge's surface-container color.
@@ -37,7 +57,8 @@ const THEME_STATES: Theme[] = ['primary', 'secondary', 'tertiary', 'success', 'e
  * @state primary - Applied when the theme is set to `primary`.
  * @state secondary - Applied when the theme is set to `secondary`.
  * @state tertiary - Applied when the theme is set to `tertiary`.
- * @state tonal - Applied when the tonal property is set to `true`.
+ * @state info-secondary - Applied when the theme is set to `info-secondary`. Provides a subtle tonal style.
+ * @state no-border - Applied when the `noBorder` property is `true`.
  */
 @customElement(CountCardComponentTagName)
 export class CountCardComponent extends LitElement {
@@ -54,13 +75,13 @@ export class CountCardComponent extends LitElement {
     this.#internals = this.attachInternals();
   }
 
-  /** The theme variant applied to the icon container. */
+  /** The theme variant applied to the card. */
   @property({ type: String })
-  public theme?: Theme;
+  public theme?: CountCardTheme;
 
-  /** Whether to apply tonal styling to the card. */
-  @property({ type: Boolean })
-  public tonal = false;
+  /** Whether to hide the card border. */
+  @property({ type: Boolean, attribute: 'no-border' })
+  public noBorder = false;
 
   public override willUpdate(changedProperties: Map<string, unknown>): void {
     if (changedProperties.has('theme')) {
@@ -68,8 +89,8 @@ export class CountCardComponent extends LitElement {
         toggleState(this.#internals, state, this.theme === state);
       }
     }
-    if (changedProperties.has('tonal')) {
-      toggleState(this.#internals, 'tonal', this.tonal);
+    if (changedProperties.has('noBorder')) {
+      toggleState(this.#internals, 'no-border', this.noBorder);
     }
   }
 
