@@ -29,7 +29,6 @@ forge-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: #{forge-spacing.variable(small)};
   padding-inline: #{forge-spacing.variable(medium)};
   padding-block-start: #{forge-spacing.variable(medium)};
 }
@@ -62,8 +61,15 @@ forge-card {
   color: var(--_count-card-color);
 }
 
+.count-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .count {
   @include forge-typography.style(heading6);
+
   color: var(--_count-card-color);
 }
 

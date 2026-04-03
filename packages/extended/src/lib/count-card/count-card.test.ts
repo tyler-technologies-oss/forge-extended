@@ -37,6 +37,10 @@ class CountCardHarness {
     return this.el.shadowRoot!.querySelector('slot[name="count"]') as HTMLSlotElement;
   }
 
+  public get countEndSlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="count-end"]') as HTMLSlotElement;
+  }
+
   public get fullWidthSlot(): HTMLSlotElement {
     return this.el.shadowRoot!.querySelector('slot[name="full-width"]') as HTMLSlotElement;
   }
@@ -74,6 +78,7 @@ describe('CountCardComponent', () => {
     expect(harness.labelSlot).to.be.ok;
     expect(harness.headerEndSlot).to.be.ok;
     expect(harness.countSlot).to.be.ok;
+    expect(harness.countEndSlot).to.be.ok;
     expect(harness.fullWidthSlot).to.be.ok;
   });
 
@@ -123,6 +128,17 @@ describe('CountCardComponent', () => {
       const harness = new CountCardHarness(el);
 
       expect(harness.countSlot.assignedNodes().length).to.be.greaterThan(0);
+    });
+
+    it('should project content into count-end slot', async () => {
+      const el = await fixture<CountCardComponent>(html`
+        <forge-count-card>
+          <span slot="count-end">/mo</span>
+        </forge-count-card>
+      `);
+      const harness = new CountCardHarness(el);
+
+      expect(harness.countEndSlot.assignedNodes().length).to.be.greaterThan(0);
     });
 
     it('should project content into full-width slot', async () => {

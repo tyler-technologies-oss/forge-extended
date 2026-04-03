@@ -42,6 +42,7 @@ const THEME_STATES: CountCardTheme[] = [
  * @slot label - The label text displayed next to the icon.
  * @slot header-end - Optional content at the end of the header, ideal for badges or accessory menus.
  * @slot count - The main count or value displayed prominently below the header.
+ * @slot count-end - Optional content displayed after the count, ideal for units or secondary values.
  * @slot body - Optional content below the count for additional details or secondary information.
  * @slot full-width - Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators.
  *
@@ -111,8 +112,11 @@ export class CountCardComponent extends LitElement {
           </div>
         </div>
         <div class="inner-container">
-          <div class="count" ${hideWhenEmpty()}>
-            <slot name="count"></slot>
+          <div class="count-container" ${hideWhenEmpty()}>
+            <div class="count">
+              <slot name="count"></slot>
+            </div>
+            <slot name="count-end"></slot>
           </div>
           <div class="body" ${hideWhenEmpty()}>
             <slot name="body"></slot>

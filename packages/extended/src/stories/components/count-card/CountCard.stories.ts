@@ -24,6 +24,9 @@ const meta = {
             ? html`<forge-badge slot="header-end" theme=${args.theme || nothing}>${args.badgeText}</forge-badge>`
             : nothing}
           <span slot="count">${args.countText}</span>
+          ${args.showCountEnd
+            ? html`<forge-badge slot="count-end" theme=${args.theme || nothing}>${args.countEndText}</forge-badge>`
+            : nothing}
           ${args.showFullWidth
             ? html`
                 <svg slot="full-width" viewBox="0 0 200 40" style="width: 100%; display: block;">
@@ -66,6 +69,11 @@ const meta = {
       description: 'Toggle the header-end slot (badge)',
       table: { category: 'Slots' }
     },
+    showCountEnd: {
+      control: 'boolean',
+      description: 'Toggle the count-end slot (badge)',
+      table: { category: 'Slots' }
+    },
     showFullWidth: {
       control: 'boolean',
       description: 'Toggle the full-width slot (sparkline)',
@@ -81,6 +89,11 @@ const meta = {
       description: 'Count text content',
       table: { category: 'Content' }
     },
+    countEndText: {
+      control: 'text',
+      description: 'Count end text content',
+      table: { category: 'Content' }
+    },
     badgeText: {
       control: 'text',
       description: 'Badge text content',
@@ -93,9 +106,11 @@ const meta = {
     showIcon: true,
     showLabel: true,
     showHeaderEnd: true,
+    showCountEnd: false,
     showFullWidth: false,
     labelText: 'Tomorrows money',
     countText: '$303.33',
+    countEndText: '+5%',
     badgeText: '+12%'
   }
 } satisfies Meta;
