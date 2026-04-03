@@ -83,7 +83,7 @@ $themes: primary, secondary, tertiary, success, error, warning, info;
   :host(:state(#{$theme})) {
     --forge-card-background: #{forge-theme.variable(#{$theme}-container-minimum)};
     --forge-card-color: #{forge-theme.variable(on-#{$theme})};
-    --forge-card-outline-color: #{forge-theme.variable(on-#{$theme}-container)};
+    --forge-card-outline-color: #{forge-theme.variable(#{$theme}-container)};
     --forge-card-outline-width: 1px;
     --forge-card-outline-style: solid;
 
