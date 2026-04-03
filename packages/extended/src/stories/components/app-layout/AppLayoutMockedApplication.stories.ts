@@ -13,7 +13,8 @@ import {
   defineMenuComponent,
   defineDividerComponent,
   IconRegistry,
-  defineStackComponent
+  defineStackComponent,
+  defineBadgeComponent
 } from '@tylertech/forge';
 import {
   tylIconDashboard,
@@ -45,6 +46,7 @@ defineToolbarComponent();
 defineMenuComponent();
 defineDividerComponent();
 defineStackComponent();
+defineBadgeComponent();
 
 IconRegistry.define([
   tylIconDashboard,
