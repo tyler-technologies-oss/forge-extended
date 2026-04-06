@@ -28,6 +28,10 @@ const routes: Routes = [
       )
   },
   {
+    path: 'count-card',
+    loadChildren: () => import('../../views/components/count-card/count-card.module').then(m => m.CountCardModule)
+  },
+  {
     path: 'user-profile',
     loadChildren: () => import('../../views/components/user-profile/user-profile.module').then(m => m.UserProfileModule)
   },
