@@ -1,5 +1,7 @@
 ---
 "@tylertech/forge-extended": minor
+"@tylertech/forge-extended-react": minor
+"@tylertech/forge-extended-angular": minor
 ---
 
 feat(count-card): add Count Card component
