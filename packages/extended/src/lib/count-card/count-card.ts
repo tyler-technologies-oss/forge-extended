@@ -1,6 +1,6 @@
-import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
-import { defineCardComponent, toggleState } from '@tylertech/forge';
+import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
+import { defineCardComponent, defineTooltipComponent, toggleState } from '@tylertech/forge';
 import styles from './count-card.scss?inline';
 import { hideWhenEmpty } from '../utils/lit-utils';
 
@@ -50,8 +50,9 @@ const THEME_STATES: CountCardTheme[] = [
  *
  * @cssprop --forge-count-card-icon-background - Controls the background color of the icon container. Defaults to Forge's surface-container color.
  * @cssprop --forge-count-card-icon-color - Controls the color of the icon. Defaults to Forge's on-surface color.
- * @cssprop --forge-count-card-icon-container-size - Controls the size of the icon container. Defaults to `24px`.
- * @cssprop --forge-count-card-icon-size - Controls the size of the icon itself. Defaults to `16px`.
+ * @cssprop --forge-count-card-icon-container-size - Controls the size of the icon container. Defaults to `32px`.
+ * @cssprop --forge-count-card-icon-size - Controls the size of the icon itself. Defaults to `24px`.
+ * @cssprop --forge-count-card-color - Controls the text color of the label and count. Inherited from theme when a theme is applied.
  *
  * @state none - Applied when the theme is set to `none`. Uses the default card styling.
  * @state primary - Applied when the theme is set to `primary`.
@@ -68,6 +69,7 @@ const THEME_STATES: CountCardTheme[] = [
 export class CountCardComponent extends LitElement {
   static {
     defineCardComponent();
+    defineTooltipComponent();
   }
 
   public static override styles = unsafeCSS(styles);
@@ -87,10 +89,28 @@ export class CountCardComponent extends LitElement {
   @property({ type: Boolean, attribute: 'no-border' })
   public noBorder = false;
 
+  @state()
+  private _labelText = '';
+
+  @state()
+  private _countText = '';
+
+  #handleLabelSlotChange(event: Event): void {
+    const slot = event.target as HTMLSlotElement;
+    const nodes = slot.assignedNodes({ flatten: true });
+    this._labelText = nodes.map(node => node.textContent?.trim() ?? '').join(' ');
+  }
+
+  #handleCountSlotChange(event: Event): void {
+    const slot = event.target as HTMLSlotElement;
+    const nodes = slot.assignedNodes({ flatten: true });
+    this._countText = nodes.map(node => node.textContent?.trim() ?? '').join(' ');
+  }
+
   public override willUpdate(changedProperties: Map<string, unknown>): void {
     if (changedProperties.has('theme')) {
-      for (const state of THEME_STATES) {
-        toggleState(this.#internals, state, this.theme === state);
+      for (const themeState of THEME_STATES) {
+        toggleState(this.#internals, themeState, this.theme === themeState);
       }
     }
     if (changedProperties.has('noBorder')) {
@@ -100,15 +120,16 @@ export class CountCardComponent extends LitElement {
 
   public override render(): TemplateResult {
     return html`
-      <forge-card class="container">
+      <forge-card>
         <div class="header">
           <div class="header-start">
             <div class="icon-container" ${hideWhenEmpty()}>
               <slot name="icon"></slot>
             </div>
             <div class="label" ${hideWhenEmpty()}>
-              <slot name="label"></slot>
+              <slot name="label" @slotchange=${this.#handleLabelSlotChange}></slot>
             </div>
+            ${this._labelText ? html`<forge-tooltip>${this._labelText}</forge-tooltip>` : nothing}
           </div>
           <div class="header-end" ${hideWhenEmpty()}>
             <slot name="header-end"></slot>
@@ -117,15 +138,16 @@ export class CountCardComponent extends LitElement {
         <div class="inner-container">
           <div class="count-container" ${hideWhenEmpty()}>
             <div class="count">
-              <slot name="count"></slot>
+              <slot name="count" @slotchange=${this.#handleCountSlotChange}></slot>
             </div>
+            ${this._countText ? html`<forge-tooltip>${this._countText}</forge-tooltip>` : nothing}
             <slot name="count-end"></slot>
           </div>
-          <div class="body" ${hideWhenEmpty()}>
+          <div ${hideWhenEmpty()}>
             <slot name="body"></slot>
           </div>
         </div>
-        <div class="full-width" ${hideWhenEmpty()}>
+        <div ${hideWhenEmpty()}>
           <slot name="full-width"></slot>
         </div>
       </forge-card>

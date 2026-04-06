@@ -31,6 +31,7 @@ forge-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: #{forge-spacing.variable(small)};
   padding-inline: #{forge-spacing.variable(medium)};
   padding-block-start: #{forge-spacing.variable(medium)};
 }
@@ -50,6 +51,7 @@ forge-card {
   display: flex;
   align-items: center;
   justify-content: center;
+  min-inline-size: var(--_count-card-icon-container-size);
   block-size: var(--_count-card-icon-container-size);
   inline-size: var(--_count-card-icon-container-size);
   background-color: var(--_count-card-icon-background);
@@ -62,19 +64,28 @@ forge-card {
   @include forge-typography.style(body1);
   text-box-trim: trim-both;
   color: var(--_count-card-color);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .count-container {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: #{forge-spacing.variable(xsmall)};
+  min-inline-size: 0;
 }
 
 .count {
   @include forge-typography.style(heading6);
   text-box-trim: trim-both;
-
   color: var(--_count-card-color);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 //

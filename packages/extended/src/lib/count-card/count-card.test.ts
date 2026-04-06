@@ -41,12 +41,12 @@ class CountCardHarness {
     return this.el.shadowRoot!.querySelector('slot[name="count-end"]') as HTMLSlotElement;
   }
 
-  public get fullWidthSlot(): HTMLSlotElement {
-    return this.el.shadowRoot!.querySelector('slot[name="full-width"]') as HTMLSlotElement;
+  public get bodySlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="body"]') as HTMLSlotElement;
   }
 
-  public get fullWidthElement(): HTMLElement {
-    return this.el.shadowRoot!.querySelector('.full-width') as HTMLElement;
+  public get fullWidthSlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="full-width"]') as HTMLSlotElement;
   }
 
   public get headerEndSlot(): HTMLSlotElement {
@@ -80,6 +80,7 @@ describe('CountCardComponent', () => {
     expect(harness.countSlot).to.be.ok;
     expect(harness.countEndSlot).to.be.ok;
     expect(harness.fullWidthSlot).to.be.ok;
+    expect(harness.bodySlot).to.be.ok;
   });
 
   it('should have header structure', async () => {
