@@ -11,7 +11,7 @@ $icon-container-size: 32px !default;
   --_count-card-icon-color: var(--forge-count-card-icon-color, #{forge-theme.variable(on-surface)});
   --_count-card-icon-container-size: var(--forge-count-card-icon-container-size, #{$icon-container-size});
   --_count-card-icon-size: var(--forge-count-card-icon-size, calc(#{$icon-container-size} - 8px));
-  --_count-card-color: var(--forge-count-card-color);
+  --_count-card-color: var(--forge-count-card-color, #{forge-theme.variable(text-high)});
   height: 100%;
 }
 
