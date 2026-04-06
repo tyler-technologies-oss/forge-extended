@@ -56,6 +56,14 @@ class CountCardHarness {
   public get headerEndElement(): HTMLElement {
     return this.el.shadowRoot!.querySelector('.header-end') as HTMLElement;
   }
+
+  public get labelTooltip(): HTMLElement | null {
+    return this.el.shadowRoot!.querySelector('.header-start > forge-tooltip') as HTMLElement | null;
+  }
+
+  public get countTooltip(): HTMLElement | null {
+    return this.el.shadowRoot!.querySelector('.count-container > forge-tooltip') as HTMLElement | null;
+  }
 }
 
 describe('CountCardComponent', () => {
@@ -230,6 +238,68 @@ describe('CountCardComponent', () => {
       await harness.el.updateComplete;
 
       expect(harness.el.matches(':state(no-border)')).to.be.false;
+    });
+  });
+
+  describe('tooltips', () => {
+    it('should render label tooltip with slot content', async () => {
+      const el = await fixture<CountCardComponent>(html`
+        <forge-count-card>
+          <span slot="label">Test Label</span>
+        </forge-count-card>
+      `);
+      const harness = new CountCardHarness(el);
+
+      expect(harness.labelTooltip).to.be.ok;
+      expect(harness.labelTooltip?.textContent).to.equal('Test Label');
+    });
+
+    it('should render count tooltip with slot content', async () => {
+      const el = await fixture<CountCardComponent>(html`
+        <forge-count-card>
+          <span slot="count">$1,234.56</span>
+        </forge-count-card>
+      `);
+      const harness = new CountCardHarness(el);
+
+      expect(harness.countTooltip).to.be.ok;
+      expect(harness.countTooltip?.textContent).to.equal('$1,234.56');
+    });
+
+    it('should update label tooltip when slot content changes dynamically', async () => {
+      const el = await fixture<CountCardComponent>(html`
+        <forge-count-card>
+          <span slot="label">Initial Label</span>
+        </forge-count-card>
+      `);
+      const harness = new CountCardHarness(el);
+      const labelSpan = el.querySelector('[slot="label"]') as HTMLSpanElement;
+
+      expect(harness.labelTooltip?.textContent).to.equal('Initial Label');
+
+      labelSpan.textContent = 'Updated Label';
+      await new Promise(resolve => setTimeout(resolve, 0));
+      await harness.el.updateComplete;
+
+      expect(harness.labelTooltip?.textContent).to.equal('Updated Label');
+    });
+
+    it('should update count tooltip when slot content changes dynamically', async () => {
+      const el = await fixture<CountCardComponent>(html`
+        <forge-count-card>
+          <span slot="count">100</span>
+        </forge-count-card>
+      `);
+      const harness = new CountCardHarness(el);
+      const countSpan = el.querySelector('[slot="count"]') as HTMLSpanElement;
+
+      expect(harness.countTooltip?.textContent).to.equal('100');
+
+      countSpan.textContent = '200';
+      await new Promise(resolve => setTimeout(resolve, 0));
+      await harness.el.updateComplete;
+
+      expect(harness.countTooltip?.textContent).to.equal('200');
     });
   });
 });

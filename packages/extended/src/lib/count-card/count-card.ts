@@ -1,8 +1,9 @@
 import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property } from 'lit/decorators.js';
 import { defineCardComponent, defineTooltipComponent, toggleState } from '@tylertech/forge';
 import styles from './count-card.scss?inline';
 import { hideWhenEmpty } from '../utils/lit-utils';
+import { SlotTextController } from '../utils/slot-utils';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -75,6 +76,8 @@ export class CountCardComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
   readonly #internals: ElementInternals;
+  readonly #labelController = new SlotTextController(this, { slotName: 'label' });
+  readonly #countController = new SlotTextController(this, { slotName: 'count' });
 
   constructor() {
     super();
@@ -88,24 +91,6 @@ export class CountCardComponent extends LitElement {
   /** Whether to hide the card border. */
   @property({ type: Boolean, attribute: 'no-border' })
   public noBorder = false;
-
-  @state()
-  private _labelText = '';
-
-  @state()
-  private _countText = '';
-
-  #handleLabelSlotChange(event: Event): void {
-    const slot = event.target as HTMLSlotElement;
-    const nodes = slot.assignedNodes({ flatten: true });
-    this._labelText = nodes.map(node => node.textContent?.trim() ?? '').join(' ');
-  }
-
-  #handleCountSlotChange(event: Event): void {
-    const slot = event.target as HTMLSlotElement;
-    const nodes = slot.assignedNodes({ flatten: true });
-    this._countText = nodes.map(node => node.textContent?.trim() ?? '').join(' ');
-  }
 
   public override willUpdate(changedProperties: Map<string, unknown>): void {
     if (changedProperties.has('theme')) {
@@ -127,9 +112,9 @@ export class CountCardComponent extends LitElement {
               <slot name="icon"></slot>
             </div>
             <div class="label" ${hideWhenEmpty()}>
-              <slot name="label" @slotchange=${this.#handleLabelSlotChange}></slot>
+              <slot name="label" @slotchange=${this.#labelController.handleSlotChange}></slot>
             </div>
-            ${this._labelText ? html`<forge-tooltip>${this._labelText}</forge-tooltip>` : nothing}
+            ${this.#labelController.text ? html`<forge-tooltip>${this.#labelController.text}</forge-tooltip>` : nothing}
           </div>
           <div class="header-end" ${hideWhenEmpty()}>
             <slot name="header-end"></slot>
@@ -138,9 +123,9 @@ export class CountCardComponent extends LitElement {
         <div class="inner-container">
           <div class="count-container" ${hideWhenEmpty()}>
             <div class="count">
-              <slot name="count" @slotchange=${this.#handleCountSlotChange}></slot>
+              <slot name="count" @slotchange=${this.#countController.handleSlotChange}></slot>
             </div>
-            ${this._countText ? html`<forge-tooltip>${this._countText}</forge-tooltip>` : nothing}
+            ${this.#countController.text ? html`<forge-tooltip>${this.#countController.text}</forge-tooltip>` : nothing}
             <slot name="count-end"></slot>
           </div>
           <div ${hideWhenEmpty()}>
