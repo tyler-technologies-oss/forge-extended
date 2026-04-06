@@ -106,34 +106,40 @@ export class CountCardComponent extends LitElement {
   public override render(): TemplateResult {
     return html`
       <forge-card>
-        <div class="header">
-          <div class="header-start">
-            <div class="icon-container" ${hideWhenEmpty()}>
-              <slot name="icon"></slot>
+        <div class="outer-container">
+          <div class="header">
+            <div class="header-start">
+              <div class="icon-container" ${hideWhenEmpty()}>
+                <slot name="icon"></slot>
+              </div>
+              <div class="label" ${hideWhenEmpty()}>
+                <slot name="label" @slotchange=${this.#labelController.handleSlotChange}></slot>
+              </div>
+              ${this.#labelController.text
+                ? html`<forge-tooltip>${this.#labelController.text}</forge-tooltip>`
+                : nothing}
             </div>
-            <div class="label" ${hideWhenEmpty()}>
-              <slot name="label" @slotchange=${this.#labelController.handleSlotChange}></slot>
+            <div class="header-end" ${hideWhenEmpty()}>
+              <slot name="header-end"></slot>
             </div>
-            ${this.#labelController.text ? html`<forge-tooltip>${this.#labelController.text}</forge-tooltip>` : nothing}
           </div>
-          <div class="header-end" ${hideWhenEmpty()}>
-            <slot name="header-end"></slot>
-          </div>
-        </div>
-        <div class="inner-container">
-          <div class="count-container" ${hideWhenEmpty()}>
-            <div class="count">
-              <slot name="count" @slotchange=${this.#countController.handleSlotChange}></slot>
+          <div class="inner-container">
+            <div class="count-container" ${hideWhenEmpty()}>
+              <div class="count">
+                <slot name="count" @slotchange=${this.#countController.handleSlotChange}></slot>
+              </div>
+              ${this.#countController.text
+                ? html`<forge-tooltip>${this.#countController.text}</forge-tooltip>`
+                : nothing}
+              <slot name="count-end"></slot>
             </div>
-            ${this.#countController.text ? html`<forge-tooltip>${this.#countController.text}</forge-tooltip>` : nothing}
-            <slot name="count-end"></slot>
+            <div ${hideWhenEmpty()}>
+              <slot name="body"></slot>
+            </div>
           </div>
           <div ${hideWhenEmpty()}>
-            <slot name="body"></slot>
+            <slot name="full-width"></slot>
           </div>
-        </div>
-        <div ${hideWhenEmpty()}>
-          <slot name="full-width"></slot>
         </div>
       </forge-card>
     `;
