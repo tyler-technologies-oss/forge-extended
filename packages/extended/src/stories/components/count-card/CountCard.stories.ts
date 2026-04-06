@@ -45,7 +45,7 @@ const meta = {
   argTypes: {
     theme: {
       control: 'select',
-      options: ['primary', 'secondary', 'tertiary', 'success', 'error', 'warning', 'info', 'info-secondary'],
+      options: ['none', 'primary', 'secondary', 'tertiary', 'success', 'error', 'warning', 'info', 'info-secondary'],
       description: 'Theme variant applied to the card',
       table: { category: 'Properties' }
     },
@@ -101,7 +101,7 @@ const meta = {
     }
   },
   args: {
-    theme: 'primary',
+    theme: 'none',
     noBorder: false,
     showIcon: true,
     showLabel: true,

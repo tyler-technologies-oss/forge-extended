@@ -165,10 +165,11 @@ describe('CountCardComponent', () => {
   });
 
   describe('theme', () => {
-    it('should not have theme by default', async () => {
+    it('should have none theme by default', async () => {
       const harness = await createFixture();
 
-      expect(harness.el.theme).to.be.undefined;
+      expect(harness.el.theme).to.equal('none');
+      expect(harness.el.matches(':state(none)')).to.be.true;
     });
 
     it('should apply theme state when theme property is set', async () => {

@@ -3,12 +3,14 @@
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
 
+$icon-container-size: 32px !default;
+
 :host {
   display: block;
   --_count-card-icon-background: var(--forge-count-card-icon-background, #{forge-theme.variable(surface-container)});
   --_count-card-icon-color: var(--forge-count-card-icon-color, #{forge-theme.variable(on-surface)});
-  --_count-card-icon-container-size: var(--forge-count-card-icon-container-size, 24px);
-  --_count-card-icon-size: var(--forge-count-card-icon-size, 16px);
+  --_count-card-icon-container-size: var(--forge-count-card-icon-container-size, #{$icon-container-size});
+  --_count-card-icon-size: var(--forge-count-card-icon-size, calc(#{$icon-container-size} - 8px));
   --_count-card-color: var(--forge-count-card-color);
   height: 100%;
 }
@@ -58,6 +60,7 @@ forge-card {
 
 .label {
   @include forge-typography.style(body1);
+  text-box-trim: trim-both;
   color: var(--_count-card-color);
 }
 
@@ -69,6 +72,7 @@ forge-card {
 
 .count {
   @include forge-typography.style(heading6);
+  text-box-trim: trim-both;
 
   color: var(--_count-card-color);
 }

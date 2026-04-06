@@ -13,6 +13,7 @@ declare global {
 export const CountCardComponentTagName: keyof HTMLElementTagNameMap = 'forge-count-card';
 
 export type CountCardTheme =
+  | 'none'
   | 'primary'
   | 'secondary'
   | 'tertiary'
@@ -23,6 +24,7 @@ export type CountCardTheme =
   | 'info-secondary';
 
 const THEME_STATES: CountCardTheme[] = [
+  'none',
   'primary',
   'secondary',
   'tertiary',
@@ -51,13 +53,14 @@ const THEME_STATES: CountCardTheme[] = [
  * @cssprop --forge-count-card-icon-container-size - Controls the size of the icon container. Defaults to `24px`.
  * @cssprop --forge-count-card-icon-size - Controls the size of the icon itself. Defaults to `16px`.
  *
+ * @state none - Applied when the theme is set to `none`. Uses the default card styling.
+ * @state primary - Applied when the theme is set to `primary`.
+ * @state secondary - Applied when the theme is set to `secondary`.
+ * @state tertiary - Applied when the theme is set to `tertiary`.
  * @state success - Applied when the theme is set to `success`.
  * @state error - Applied when the theme is set to `error`.
  * @state warning - Applied when the theme is set to `warning`.
  * @state info - Applied when the theme is set to `info`.
- * @state primary - Applied when the theme is set to `primary`.
- * @state secondary - Applied when the theme is set to `secondary`.
- * @state tertiary - Applied when the theme is set to `tertiary`.
  * @state info-secondary - Applied when the theme is set to `info-secondary`. Provides a subtle tonal style.
  * @state no-border - Applied when the `noBorder` property is `true`.
  */
@@ -78,7 +81,7 @@ export class CountCardComponent extends LitElement {
 
   /** The theme variant applied to the card. */
   @property({ type: String })
-  public theme?: CountCardTheme;
+  public theme: CountCardTheme = 'none';
 
   /** Whether to hide the card border. */
   @property({ type: Boolean, attribute: 'no-border' })

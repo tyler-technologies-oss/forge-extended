@@ -9,7 +9,8 @@ import {
   tylIconStar,
   tylIconWarning,
   tylIconError,
-  tylIconInfo
+  tylIconInfo,
+  tylIconDashboard
 } from '@tylertech/tyler-icons';
 
 import '$lib/count-card';
@@ -23,7 +24,8 @@ IconRegistry.define([
   tylIconStar,
   tylIconWarning,
   tylIconError,
-  tylIconInfo
+  tylIconInfo,
+  tylIconDashboard
 ]);
 
 const component = 'forge-count-card';
@@ -34,6 +36,12 @@ const meta = {
   render: () => {
     return html`
       <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px;">
+        <forge-count-card theme="none">
+          <forge-icon slot="icon" name="dashboard"></forge-icon>
+          <span slot="label">None (Default)</span>
+          <span slot="count">100</span>
+        </forge-count-card>
+
         <forge-count-card theme="primary">
           <forge-icon slot="icon" name="star"></forge-icon>
           <span slot="label">Primary</span>
