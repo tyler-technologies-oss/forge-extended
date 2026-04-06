@@ -1,0 +1,17 @@
+import{b as t,t as v,c as h,d}from"./constants-DY0TjSdo.js";import{r as p,E as i,x as m}from"./iframe-D_k7Yc7z.js";import{z as o,D as l}from"./with-default-aria-D52gWb8s.js";import{r as c}from"./state-qnHxN1wv.js";import{o as u}from"./style-map-VHXfP5Fx.js";import{e as y}from"./class-map-BUn3t_br.js";/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */var n;const _=':host{display:inline-block}:host([hidden]){display:none}.forge-avatar{--_avatar-size:var(--forge-avatar-size, 40px);--_avatar-background:var(--forge-avatar-background, var(--forge-theme-tertiary, #3d5afe));--_avatar-color:var(--forge-avatar-color, var(--forge-theme-on-tertiary, #ffffff));--_avatar-transition-duration:var(--forge-avatar-transition-duration, var(--forge-animation-duration-short4, 200ms));--_avatar-transition-timing:var(--forge-avatar-transition-timing, var(--forge-animation-easing-standard, cubic-bezier(0.2, 0, 0, 1)));--_avatar-shape:var(--forge-avatar-shape, calc(var(--forge-shape-round, 50%) * var(--forge-shape-factor, 1)))}.forge-avatar{display:flex;align-items:center;justify-content:center;overflow:hidden;transition:height var(--_avatar-transition-duration) var(--_avatar-transition-timing),width var(--_avatar-transition-duration) var(--_avatar-transition-timing);border-radius:var(--_avatar-shape);box-sizing:border-box;width:var(--_avatar-size);height:var(--_avatar-size);background-color:var(--_avatar-background);background-position:center;background-repeat:no-repeat;background-size:cover;-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-subheading2-font-family, var(--forge-typography-font-family, "Roboto", sans-serif));font-size:var(--forge-typography-subheading2-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-subheading2-font-size-scale, 1)));font-weight:var(--forge-typography-subheading2-font-weight,400);line-height:var(--forge-typography-subheading2-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-subheading2-line-height-scale, 1.25)));letter-spacing:var(--forge-typography-subheading2-letter-spacing, normal);text-transform:var(--forge-typography-subheading2-text-transform,inherit);text-decoration:var(--forge-typography-subheading2-text-decoration,inherit);color:var(--_avatar-color)}.forge-avatar--image{background-color:inherit}',b=(e,a)=>e?.trim()?a===1?e[0].toUpperCase():(e.match(/\S+/g)??[]).slice(0,a).reduce((g,f)=>g+=f[0].toUpperCase(),""):"",s="forge-avatar";let r=class extends l{constructor(){super(...arguments),this.text="",this.letterCount=2,this.imageUrl=""}willUpdate(a){a.has("imageUrl")&&this._tryLoadImage()}render(){return m`
+      <div
+        aria-hidden="true"
+        part="root"
+        class=${y({"forge-avatar":!0,"forge-avatar--image":!!this._image})}
+        style=${this._image?u({backgroundImage:`url(${this._image.src})`}):i}>
+        <slot>${this._image?i:b(this.text,this.letterCount)}</slot>
+      </div>
+    `}async _tryLoadImage(){if(this.imageUrl){const a=new Image;a.onload=()=>this._image=a,a.onerror=()=>this._image=void 0,a.src=this.imageUrl}else this._image=void 0}};n=h;r.styles=p(_);r[n]=s;t([o()],r.prototype,"text",void 0);t([o({type:Number,attribute:"letter-count"})],r.prototype,"letterCount",void 0);t([o({type:String,attribute:"image-url"})],r.prototype,"imageUrl",void 0);t([c()],r.prototype,"_image",void 0);r=t([v(s)],r);/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */function L(){d(r)}export{L as d};
