@@ -59,6 +59,7 @@ Use this to maintain proper heading hierarchy in your document structure. */
  *  - **before-title** - Content displayed before the title in the header
  * - **title** - The title content displayed in the header
  * - **header-actions** - Action buttons or controls displayed at the end of the header
+ * - **after-header-actions** - Content displayed after the header actions, designed specifically for icon buttons that need to run up against the card edge (e.g., close button)
  * - **body** - The main body content of the card
  * - **footer-start** - Content displayed at the start of the footer (e.g., pagination controls)
  * - **footer-secondary-action** - Secondary action button displayed at the end of the footer
