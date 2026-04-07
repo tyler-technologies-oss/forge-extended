@@ -21,7 +21,7 @@ export const StructuredCardComponentTagName: keyof HTMLElementTagNameMap = 'forg
  * @slot before-title - Content displayed before the title in the header
  * @slot title - The title content displayed in the header
  * @slot header-actions - Action buttons or controls displayed at the end of the header
- * @slot after-header-actions - Content displayed after the header actions, designed specifically for icon buttons that need to run up against the card edge (e.g., close button)
+ * @slot after-header-actions - Content displayed after the header actions, designed specifically for icon buttons that need to run up against the card edge (ie: menu icon button)
  * @slot body - The main body content of the card
  * @slot footer-start - Content displayed at the start of the footer (e.g., pagination controls)
  * @slot footer-secondary-action - Secondary action button displayed at the end of the footer

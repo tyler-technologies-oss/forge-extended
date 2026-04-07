@@ -17,24 +17,9 @@ A pre-configured card layout optimized for common patterns in Tyler Cloud applic
 
 <Canvas of={StructuredCardStories.Demo} />
 
-## Slots
-
-- **before-title** - Content before the title (e.g., back button, icon)
-- **title** - Card title/heading
-- **header-actions** - Actions in the header (e.g., menus, buttons)
-- **after-header-actions** - Content after the header actions, designed specifically for icon buttons that need to run up against the card edge (e.g., close button)
-- **body** - Main content area (expands to fill space)
-- **footer-start** - Footer start content (e.g., pagination)
-- **footer-secondary-action** - Secondary action button
-- **footer-primary-action** - Primary action button
-
-> **Note:** Parent container must have a defined height for the card to fill available space.
-
 ## Examples
 
 #### With Form
-
-Use the `header-actions` slot to add save or submit buttons alongside a form in the body.
 
 <Canvas of={WithFormStories.WithForm} />
 
