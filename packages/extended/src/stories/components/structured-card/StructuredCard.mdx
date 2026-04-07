@@ -4,7 +4,8 @@ import * as StructuredCardStories from './StructuredCard.stories';
 import * as WithTableStories from './WithTable.stories';
 import * as WithBeforeTitleSlotStories from './WithBeforeTitleSlot.stories';
 import * as ScrollableBodyContentStories from './ScrollableBodyContent.stories';
-import * as WithHeaderActionsStories from './WithHeaderActions.stories';
+import * as HeaderIconButtonStories from './HeaderIconButton.stories';
+import * as WithFormStories from './WithForm.stories';
 
 <Meta of={StructuredCardStories} />
 
@@ -16,25 +17,17 @@ A pre-configured card layout optimized for common patterns in Tyler Cloud applic
 
 <Canvas of={StructuredCardStories.Demo} />
 
-## Slots
-
-- **before-title** - Content before the title (e.g., back button, icon)
-- **title** - Card title/heading
-- **header-actions** - Actions in the header (e.g., menus, buttons)
-- **body** - Main content area (expands to fill space)
-- **footer-start** - Footer start content (e.g., pagination)
-- **footer-secondary-action** - Secondary action button
-- **footer-primary-action** - Primary action button
-
-> **Note:** Parent container must have a defined height for the card to fill available space.
-
 ## Examples
 
-#### With Header Actions
+#### With Form
 
-Add menus, buttons, or controls to the header using the `header-actions` slot.
+<Canvas of={WithFormStories.WithForm} />
 
-<Canvas of={WithHeaderActionsStories.WithHeaderActions} />
+#### With Header Icon Button
+
+Use the `after-header-actions` slot for icon buttons that need to run up against the card edge, such as overflow menus or close buttons.
+
+<Canvas of={HeaderIconButtonStories.HeaderIconButton} />
 
 #### Detail Panel with Back Navigation
 

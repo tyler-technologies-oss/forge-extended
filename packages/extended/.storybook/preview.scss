@@ -45,6 +45,7 @@ forge-structured-card[id='storybook-demo'] {
   }
 
   [slot='header-actions'],
+  [slot='after-header-actions'],
   [slot='before-title'] {
     @include forge-typography.style(label1);
     background: var(--forge-theme-primary-container-low);
