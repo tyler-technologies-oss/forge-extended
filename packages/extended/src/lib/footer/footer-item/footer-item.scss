@@ -1,0 +1,23 @@
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/tokens/color-palette' as color-palette;
+
+:host {
+  display: flex;
+  box-sizing: border-box;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.forge-footer-item {
+  font-size: 1rem;
+  line-height: 2rem;
+  color: var(--forge-footer-theme-on-background, #ffffff);
+}
+
+::slotted(*) {
+  color: var(--forge-footer-theme-on-background, white);
+}
