@@ -22,9 +22,9 @@
 
 .header-container {
   display: grid;
-  grid-template-columns: auto 1fr auto auto;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  grid-template-areas: 'start . actions end';
+  grid-template-areas: 'start . actions';
   min-height: 48px;
 }
 
