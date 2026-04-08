@@ -8,6 +8,7 @@
 
 :host {
   --_drawer-width: var(--forge-app-layout-drawer-width, 320px);
+  --_drawer-border-width: var(--forge-app-layout-drawer-border-width, 1px);
   --_dialog-width: var(--forge-app-layout-dialog-width, 320px);
   --_mini-drawer-z-index: var(--forge-app-layout-mini-drawer-z-index, 3);
   display: block;
@@ -34,6 +35,7 @@ slot[name='app-bar-logo'] {
 
 forge-drawer {
   --forge-drawer-width: var(--_drawer-width);
+  --forge-drawer-border-width: var(--_drawer-border-width);
 }
 
 .close-drawer-button {

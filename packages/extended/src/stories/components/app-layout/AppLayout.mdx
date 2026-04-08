@@ -252,6 +252,32 @@ When `mini-hover` is enabled:
 
 > **Note:** The mini drawer mode only affects the navigation drawer on large screens (above the breakpoint). On small screens, the navigation will always use a modal drawer regardless of the `use-mini-drawer` setting.
 
+## Hiding the App Bar
+
+In some cases, you may want to use the app-layout component without the built-in app bar, such as when embedding the layout within another application or using a custom header. You can hide the app bar by setting the `no-app-bar` attribute:
+
+```html
+<forge-app-layout no-app-bar>
+  <!-- Custom header content in the header slot -->
+  <div slot="header">
+    <my-custom-header></my-custom-header>
+  </div>
+
+  <!-- Navigation content -->
+  <forge-list slot="navigation" navlist>
+    <forge-list-item>
+      <forge-icon slot="start" name="dashboard"></forge-icon>
+      <button type="button">Dashboard</button>
+    </forge-list-item>
+  </forge-list>
+
+  <!-- Main content -->
+  <main>Your content here</main>
+</forge-app-layout>
+```
+
+> **Note:** When the app bar is hidden, the built-in menu button for toggling the navigation drawer on small screens will also be hidden. You will need to provide your own mechanism for opening the navigation drawer on small screens if needed.
+
 ## Layout Slots
 
 Beyond the app bar and navigation, the component provides additional layout slots for content placement:

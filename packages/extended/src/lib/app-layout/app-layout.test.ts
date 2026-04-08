@@ -44,6 +44,7 @@ describe('AppLayout', () => {
     expect(harness.el.breakpoint).to.equal(960);
     expect(harness.el.useMiniDrawer).to.be.false;
     expect(harness.el.miniHover).to.be.false;
+    expect(harness.el.noAppBar).to.be.false;
   });
 
   it('should initialize drawer as closed in constructor', async () => {
@@ -137,6 +138,39 @@ describe('AppLayout', () => {
     await harness.el.updateComplete;
 
     expect(harness.el.miniHover).to.be.true;
+  });
+
+  it('should set no app bar', async () => {
+    const harness = await createFixture({ noAppBar: true });
+
+    expect(harness.el.noAppBar).to.be.true;
+  });
+
+  it('should set no app bar via attribute', async () => {
+    const harness = await createFixture();
+
+    harness.el.setAttribute('no-app-bar', '');
+    await harness.el.updateComplete;
+
+    expect(harness.el.noAppBar).to.be.true;
+  });
+
+  it('should render app bar by default', async () => {
+    const harness = await createFixture();
+
+    expect(harness.appBarElement).to.exist;
+  });
+
+  it('should hide app bar when noAppBar is true', async () => {
+    const harness = await createFixture({ noAppBar: true });
+
+    expect(harness.appBarElement).to.not.exist;
+  });
+
+  it('should show app bar when noAppBar is false', async () => {
+    const harness = await createFixture({ noAppBar: false });
+
+    expect(harness.appBarElement).to.exist;
   });
 
   it('content should project into the navigation slot', async () => {
@@ -670,6 +704,7 @@ interface AppLayoutFixtureConfig {
   breakpoint?: number;
   useMiniDrawer?: boolean;
   miniHover?: boolean;
+  noAppBar?: boolean;
   hasNavigation?: boolean;
   navigationWithCloseAttribute?: boolean;
   hasBodyContent?: boolean;
@@ -685,6 +720,7 @@ async function createFixture({
   breakpoint = 960,
   useMiniDrawer = false,
   miniHover = false,
+  noAppBar = false,
   hasNavigation = false,
   navigationWithCloseAttribute = false,
   hasBodyContent = false,
@@ -710,7 +746,8 @@ async function createFixture({
       .appTitleHref=${appTitleHref}
       breakpoint=${breakpoint}
       ?use-mini-drawer=${useMiniDrawer}
-      ?mini-hover=${miniHover}>
+      ?mini-hover=${miniHover}
+      ?no-app-bar=${noAppBar}>
       ${navigationContent} ${hasBodyContent ? html`<div slot="body">Body Content</div>` : ''}
       ${hasLogo ? html`<div slot="app-bar-logo">Logo</div>` : ''}
       ${hasAppBarStart ? html`<div slot="app-bar-start">Start Content</div>` : ''}

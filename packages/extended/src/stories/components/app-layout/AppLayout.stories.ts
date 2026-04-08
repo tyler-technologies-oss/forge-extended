@@ -50,12 +50,20 @@ const meta = {
       table: {
         category: 'Properties'
       }
+    },
+    noAppBar: {
+      control: 'boolean',
+      description: 'Whether to hide the app bar',
+      table: {
+        category: 'Properties'
+      }
     }
   },
   args: {
     appTitle: 'App Layout Demo',
     appTitleHref: undefined,
-    breakpoint: 960
+    breakpoint: 960,
+    noAppBar: false
   }
 } satisfies Meta;
 
@@ -69,7 +77,8 @@ export const Demo: Story = {
       <forge-app-layout
         app-title=${args.appTitle}
         app-title-href=${ifDefined(args.appTitleHref)}
-        breakpoint=${args.breakpoint}>
+        breakpoint=${args.breakpoint}
+        ?no-app-bar=${args.noAppBar}>
         <forge-list navlist slot="navigation" data-forge-app-layout-close>
           <forge-list-item>
             <forge-icon slot="start" name="home"></forge-icon>

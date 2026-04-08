@@ -56,6 +56,7 @@ export const APP_LAYOUT_CLOSE_ATTRIBUTE = 'data-forge-app-layout-close';
  * @property {number} breakpoint - The screen width breakpoint in pixels for responsive behavior (default: 960)
  * @property {boolean} useMiniDrawer - Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)
  * @property {boolean} miniHover - Whether the mini drawer should expand on hover (default: false)
+ * @property {boolean} noAppBar - Whether to hide the app bar (default: false)
  * @property {boolean} isLargeScreen - Whether the current screen width is above the breakpoint (read-only)
  *
  * @method closeDrawer - Closes the navigation drawer on small screens
@@ -75,6 +76,7 @@ export const APP_LAYOUT_CLOSE_ATTRIBUTE = 'data-forge-app-layout-close';
  * @slot app-bar-end - Places content in the app bar end slot
  *
  * @cssproperty --forge-app-layout-drawer-width - Controls the width of the navigation drawer (default: 320px)
+ * @cssproperty --forge-app-layout-drawer-border-width - Controls the border width of the navigation drawer (default: 1px)
  * @cssproperty --forge-app-layout-dialog-width - Controls the width of the navigation dialog on small screens (default: 320px)
  * @cssproperty --forge-app-layout-mini-drawer-z-index - Controls the z-index of the mini drawer when using hover mode (default: 3)
  *
@@ -120,6 +122,9 @@ export class AppLayoutComponent extends LitElement {
 
   @property({ type: Boolean, attribute: 'mini-hover' })
   public miniHover = false;
+
+  @property({ type: Boolean, attribute: 'no-app-bar' })
+  public noAppBar = false;
 
   public get isLargeScreen(): boolean {
     return this._isLargeScreen;
@@ -306,21 +311,26 @@ export class AppLayoutComponent extends LitElement {
 
     return html`
       <forge-scaffold>
-        <forge-app-bar slot="header" .titleText=${this.appTitle} .href=${this.appTitleHref} theme-mode="scoped">
-          <slot name="app-bar-logo" slot="logo">
-            <forge-icon name="tyler_talking_t_logo"></forge-icon>
-          </slot>
-          <slot name="app-bar-start" slot="start"></slot>
-          ${when(
-            !this._isLargeScreen,
-            () =>
-              html`<forge-app-bar-menu-button
-                slot="start"
-                @click=${this._toggleLeftDrawer}></forge-app-bar-menu-button>`
-          )}
-          <slot name="app-bar-center" slot="center"></slot>
-          <slot name="app-bar-end" slot="end"></slot>
-        </forge-app-bar>
+        ${when(
+          !this.noAppBar,
+          () => html`
+            <forge-app-bar slot="header" .titleText=${this.appTitle} .href=${this.appTitleHref} theme-mode="scoped">
+              <slot name="app-bar-logo" slot="logo">
+                <forge-icon name="tyler_talking_t_logo"></forge-icon>
+              </slot>
+              <slot name="app-bar-start" slot="start"></slot>
+              ${when(
+                !this._isLargeScreen,
+                () =>
+                  html`<forge-app-bar-menu-button
+                    slot="start"
+                    @click=${this._toggleLeftDrawer}></forge-app-bar-menu-button>`
+              )}
+              <slot name="app-bar-center" slot="center"></slot>
+              <slot name="app-bar-end" slot="end"></slot>
+            </forge-app-bar>
+          `
+        )}
 
         <!-- Small screens: Navigation in left slot -->
         ${!this._isLargeScreen
