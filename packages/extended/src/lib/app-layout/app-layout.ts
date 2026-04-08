@@ -59,6 +59,7 @@ export const APP_LAYOUT_CLOSE_ATTRIBUTE = 'data-forge-app-layout-close';
  * @property {boolean} noAppBar - Whether to hide the app bar (default: false)
  * @property {boolean} isLargeScreen - Whether the current screen width is above the breakpoint (read-only)
  *
+ * @method openDrawer - Opens the navigation drawer on small screens
  * @method closeDrawer - Closes the navigation drawer on small screens
  *
  * @slot header - Places content in the header
@@ -131,12 +132,31 @@ export class AppLayoutComponent extends LitElement {
   }
 
   /**
+   * Opens the navigation drawer. Only has effect on small screens where the drawer is modal.
+   */
+  public openDrawer(): void {
+    if (!this._isLargeScreen) {
+      this.#setDrawerOpen();
+    }
+  }
+
+  /**
    * Closes the navigation drawer. Only has effect on small screens where the drawer is modal.
    */
   public closeDrawer(): void {
     if (!this._isLargeScreen) {
       this.#setDrawerClosed();
     }
+  }
+
+  #setDrawerOpen(): void {
+    if (this._leftDrawerOpen) {
+      return;
+    }
+    this._leftDrawerOpen = true;
+    toggleState(this.#internals, 'drawer-open', true);
+    toggleState(this.#internals, 'drawer-closed', false);
+    this.#emitDrawerChange(true);
   }
 
   #setDrawerClosed(): void {

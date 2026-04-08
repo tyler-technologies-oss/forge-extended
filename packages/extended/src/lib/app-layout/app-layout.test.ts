@@ -296,6 +296,72 @@ describe('AppLayout', () => {
     expect(harness.el.matches(':state(drawer-open)')).to.be.true;
   });
 
+  describe('openDrawer', () => {
+    it('should open the drawer when called on small screens', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+
+      expect(harness.el.matches(':state(drawer-closed)')).to.be.true;
+
+      harness.el.openDrawer();
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+      expect(harness.el.matches(':state(drawer-closed)')).to.be.false;
+    });
+
+    it('should emit forge-app-layout-drawer-change event when openDrawer is called', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+
+      const spy = sinon.spy();
+      harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+      harness.el.openDrawer();
+      await harness.el.updateComplete;
+
+      expect(spy.calledOnce).to.be.true;
+      const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
+      expect(eventDetail.open).to.be.true;
+    });
+
+    it('should not emit event when openDrawer is called but drawer is already open', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+
+      // Open drawer first
+      harness.el.openDrawer();
+      await harness.el.updateComplete;
+
+      const spy = sinon.spy();
+      harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+      harness.el.openDrawer();
+      await harness.el.updateComplete;
+
+      expect(spy.called).to.be.false;
+    });
+
+    it('should not open drawer when called on large screens', async () => {
+      setupMediaQuery(true);
+      const harness = await createFixture({ hasNavigation: true });
+
+      // Drawer is open by default on large screens
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+
+      // Close it first (won't work on large screens, so we verify the method has no effect)
+      const spy = sinon.spy();
+      harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+      harness.el.openDrawer();
+      await harness.el.updateComplete;
+
+      // Should remain open and no event should be emitted (since it was already open)
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+      expect(spy.called).to.be.false;
+    });
+  });
+
   describe('closeDrawer', () => {
     it('should close the drawer when called on small screens', async () => {
       setupMediaQuery(false);

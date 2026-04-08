@@ -143,10 +143,15 @@ For more granular control, you can place the attribute on individual items:
 </forge-app-layout>
 ```
 
-You can also programmatically close the drawer using the `closeDrawer()` method:
+You can also programmatically open or close the drawer using the `openDrawer()` and `closeDrawer()` methods:
 
 ```javascript
 const appLayout = document.querySelector('forge-app-layout');
+
+// Open the drawer
+appLayout.openDrawer();
+
+// Close the drawer
 appLayout.closeDrawer();
 ```
 
@@ -276,7 +281,31 @@ In some cases, you may want to use the app-layout component without the built-in
 </forge-app-layout>
 ```
 
-> **Note:** When the app bar is hidden, the built-in menu button for toggling the navigation drawer on small screens will also be hidden. You will need to provide your own mechanism for opening the navigation drawer on small screens if needed.
+> **Note:** When the app bar is hidden, the built-in menu button for toggling the navigation drawer on small screens will also be hidden. You will need to provide your own button and use the `openDrawer()` method to open the navigation drawer on small screens.
+
+```html
+<forge-app-layout id="app-layout" no-app-bar>
+  <forge-app-bar slot="header">
+    <!-- Custom menu button to open the drawer -->
+    <forge-icon-button slot="start" id="menu-button" aria-label="Open navigation">
+      <forge-icon name="menu"></forge-icon>
+    </forge-icon-button>
+  </forge-app-bar>
+
+  <forge-list slot="navigation" navlist>
+    <!-- Navigation items -->
+  </forge-list>
+</forge-app-layout>
+
+<script>
+  const appLayout = document.getElementById('app-layout');
+  const menuButton = document.getElementById('menu-button');
+
+  menuButton.addEventListener('click', () => {
+    appLayout.openDrawer();
+  });
+</script>
+```
 
 ## Layout Slots
 
