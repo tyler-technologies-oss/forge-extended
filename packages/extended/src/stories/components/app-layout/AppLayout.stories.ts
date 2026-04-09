@@ -57,13 +57,22 @@ const meta = {
       table: {
         category: 'Properties'
       }
+    },
+    preset: {
+      control: 'select',
+      options: ['backoffice', 'public', 'documentation'],
+      description: 'The layout preset to use',
+      table: {
+        category: 'Properties'
+      }
     }
   },
   args: {
     appTitle: 'App Layout Demo',
     appTitleHref: undefined,
     breakpoint: 960,
-    noAppBar: false
+    noAppBar: false,
+    preset: 'backoffice'
   }
 } satisfies Meta;
 
@@ -78,7 +87,8 @@ export const Demo: Story = {
         app-title=${args.appTitle}
         app-title-href=${ifDefined(args.appTitleHref)}
         breakpoint=${args.breakpoint}
-        ?no-app-bar=${args.noAppBar}>
+        ?no-app-bar=${args.noAppBar}
+        preset=${args.preset}>
         <forge-list navlist slot="navigation" data-forge-app-layout-close>
           <forge-list-item>
             <forge-icon slot="start" name="home"></forge-icon>
@@ -98,8 +108,10 @@ export const Demo: Story = {
           </forge-list-item>
         </forge-list>
 
-        <div style="padding: var(--forge-spacing-medium);" slot="body">
-          <p class="forge-typography--body1">Resize the frame to see the responsive behavior</p>
+        <div slot="body">
+          <p class="forge-typography--body1" style="margin:0; padding: 0;">
+            Resize the frame to see the responsive behavior
+          </p>
         </div>
       </forge-app-layout>
     `;

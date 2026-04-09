@@ -307,6 +307,51 @@ In some cases, you may want to use the app-layout component without the built-in
 </script>
 ```
 
+## Layout Presets
+
+The `preset` property allows you to configure the app-layout for different application types. Each preset applies a CSS state that can be used for targeted styling.
+
+### Available Presets
+
+- **backoffice** (default): For internal business applications and administrative interfaces
+- **public**: For public-facing applications and customer portals
+- **documentation**: For documentation sites and knowledge bases (app bar is not rendered)
+
+```html
+<!-- Default backoffice preset -->
+<forge-app-layout app-title="Admin Dashboard">
+  <!-- ... -->
+</forge-app-layout>
+
+<!-- Public-facing application -->
+<forge-app-layout app-title="Customer Portal" preset="public">
+  <!-- ... -->
+</forge-app-layout>
+
+<!-- Documentation site -->
+<forge-app-layout app-title="Developer Docs" preset="documentation">
+  <!-- ... -->
+</forge-app-layout>
+```
+
+### Styling Based on Preset
+
+You can use CSS custom states to apply preset-specific styles:
+
+```css
+forge-app-layout:state(backoffice) {
+  /* Styles for backoffice preset */
+}
+
+forge-app-layout:state(public) {
+  /* Styles for public preset */
+}
+
+forge-app-layout:state(documentation) {
+  /* Styles for documentation preset */
+}
+```
+
 ## Layout Slots
 
 Beyond the app bar and navigation, the component provides additional layout slots for content placement:

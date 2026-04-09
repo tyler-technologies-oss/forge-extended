@@ -44,11 +44,20 @@ const meta = {
       table: {
         category: 'Properties'
       }
+    },
+    preset: {
+      control: 'select',
+      options: ['backoffice', 'public', 'documentation'],
+      description: 'The layout preset to use',
+      table: {
+        category: 'Properties'
+      }
     }
   },
   args: {
     appTitle: 'Custom Mobile Content Demo',
-    breakpoint: 960
+    breakpoint: 960,
+    preset: 'backoffice'
   }
 } satisfies Meta;
 
@@ -130,6 +139,7 @@ export const CustomMobileContent: Story = {
       <forge-app-layout
         app-title=${args.appTitle}
         breakpoint=${args.breakpoint}
+        preset=${args.preset}
         @forge-app-layout-breakpoint-change=${handleBreakpointChange}
         @forge-app-layout-drawer-change=${handleDrawerChange}>
         <div id="navigation-container" slot="navigation">

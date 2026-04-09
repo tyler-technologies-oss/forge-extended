@@ -1,6 +1,11 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
-import { AppLayoutComponent, AppLayoutBreakpointChangeEventData, AppLayoutDrawerChangeEventData } from './app-layout';
+import {
+  AppLayoutComponent,
+  AppLayoutBreakpointChangeEventData,
+  AppLayoutDrawerChangeEventData,
+  AppLayoutPreset
+} from './app-layout';
 import sinon from 'sinon';
 import type {
   IAppBarComponent,
@@ -45,6 +50,7 @@ describe('AppLayout', () => {
     expect(harness.el.useMiniDrawer).to.be.false;
     expect(harness.el.miniHover).to.be.false;
     expect(harness.el.noAppBar).to.be.false;
+    expect(harness.el.preset).to.equal('backoffice');
   });
 
   it('should initialize drawer as closed in constructor', async () => {
@@ -223,6 +229,81 @@ describe('AppLayout', () => {
 
     expect(harness.el.matches(':state(large)')).to.be.true;
     expect(harness.el.matches(':state(small)')).to.be.false;
+  });
+
+  describe('preset', () => {
+    it('should have backoffice state by default', async () => {
+      const harness = await createFixture();
+
+      expect(harness.el.preset).to.equal('backoffice');
+      expect(harness.el.matches(':state(backoffice)')).to.be.true;
+      expect(harness.el.matches(':state(public)')).to.be.false;
+      expect(harness.el.matches(':state(documentation)')).to.be.false;
+    });
+
+    it('should set public preset', async () => {
+      const harness = await createFixture({ preset: 'public' });
+
+      expect(harness.el.preset).to.equal('public');
+      expect(harness.el.matches(':state(public)')).to.be.true;
+      expect(harness.el.matches(':state(backoffice)')).to.be.false;
+      expect(harness.el.matches(':state(documentation)')).to.be.false;
+    });
+
+    it('should set documentation preset', async () => {
+      const harness = await createFixture({ preset: 'documentation' });
+
+      expect(harness.el.preset).to.equal('documentation');
+      expect(harness.el.matches(':state(documentation)')).to.be.true;
+      expect(harness.el.matches(':state(backoffice)')).to.be.false;
+      expect(harness.el.matches(':state(public)')).to.be.false;
+    });
+
+    it('should set preset via attribute', async () => {
+      const harness = await createFixture();
+
+      harness.el.setAttribute('preset', 'public');
+      await harness.el.updateComplete;
+
+      expect(harness.el.preset).to.equal('public');
+      expect(harness.el.matches(':state(public)')).to.be.true;
+    });
+
+    it('should update state when preset property changes', async () => {
+      const harness = await createFixture();
+
+      expect(harness.el.matches(':state(backoffice)')).to.be.true;
+
+      harness.el.preset = 'documentation';
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(documentation)')).to.be.true;
+      expect(harness.el.matches(':state(backoffice)')).to.be.false;
+    });
+
+    it('should reflect preset attribute on the host element', async () => {
+      const harness = await createFixture({ preset: 'public' });
+
+      expect(harness.el.getAttribute('preset')).to.equal('public');
+    });
+
+    it('should not render app bar when preset is documentation', async () => {
+      const harness = await createFixture({ preset: 'documentation' });
+
+      expect(harness.appBarElement).to.not.exist;
+    });
+
+    it('should render app bar when preset is backoffice', async () => {
+      const harness = await createFixture({ preset: 'backoffice' });
+
+      expect(harness.appBarElement).to.exist;
+    });
+
+    it('should render app bar when preset is public', async () => {
+      const harness = await createFixture({ preset: 'public' });
+
+      expect(harness.appBarElement).to.exist;
+    });
   });
 
   it('should return false from isLargeScreen getter when below breakpoint', async () => {
@@ -771,6 +852,7 @@ interface AppLayoutFixtureConfig {
   useMiniDrawer?: boolean;
   miniHover?: boolean;
   noAppBar?: boolean;
+  preset?: AppLayoutPreset;
   hasNavigation?: boolean;
   navigationWithCloseAttribute?: boolean;
   hasBodyContent?: boolean;
@@ -787,6 +869,7 @@ async function createFixture({
   useMiniDrawer = false,
   miniHover = false,
   noAppBar = false,
+  preset = 'backoffice',
   hasNavigation = false,
   navigationWithCloseAttribute = false,
   hasBodyContent = false,
@@ -813,7 +896,8 @@ async function createFixture({
       breakpoint=${breakpoint}
       ?use-mini-drawer=${useMiniDrawer}
       ?mini-hover=${miniHover}
-      ?no-app-bar=${noAppBar}>
+      ?no-app-bar=${noAppBar}
+      preset=${preset}>
       ${navigationContent} ${hasBodyContent ? html`<div slot="body">Body Content</div>` : ''}
       ${hasLogo ? html`<div slot="app-bar-logo">Logo</div>` : ''}
       ${hasAppBarStart ? html`<div slot="app-bar-start">Start Content</div>` : ''}

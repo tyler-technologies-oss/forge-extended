@@ -10,7 +10,8 @@ import {
   IconRegistry,
   toggleState,
   defineMiniDrawerComponent,
-  defineAppBarMenuButtonComponent
+  defineAppBarMenuButtonComponent,
+  defineCardComponent
 } from '@tylertech/forge';
 import { tylIconArrowBack, tylIconClose, tylIconTylerTalkingTLogo } from '@tylertech/tyler-icons';
 
@@ -28,6 +29,7 @@ declare global {
 }
 
 export type AppLayoutBreakpoint = 'small' | 'large';
+export type AppLayoutPreset = 'backoffice' | 'public' | 'documentation';
 
 export interface AppLayoutBreakpointChangeEventData {
   breakpoint: AppLayoutBreakpoint;
@@ -57,6 +59,7 @@ export const APP_LAYOUT_CLOSE_ATTRIBUTE = 'data-forge-app-layout-close';
  * @property {boolean} useMiniDrawer - Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)
  * @property {boolean} miniHover - Whether the mini drawer should expand on hover (default: false)
  * @property {boolean} noAppBar - Whether to hide the app bar (default: false)
+ * @property {AppLayoutPreset} preset - The layout preset to use: 'backoffice', 'public', or 'documentation'. The 'documentation' preset hides the app bar. (default: 'backoffice')
  * @property {boolean} isLargeScreen - Whether the current screen width is above the breakpoint (read-only)
  *
  * @method openDrawer - Opens the navigation drawer on small screens
@@ -85,6 +88,9 @@ export const APP_LAYOUT_CLOSE_ATTRIBUTE = 'data-forge-app-layout-close';
  * @state large - Screen width is 960px or above, navigation appears in body-left drawer
  * @state drawer-open - The navigation drawer is currently open
  * @state drawer-closed - The navigation drawer is currently closed
+ * @state backoffice - The backoffice preset is active
+ * @state public - The public preset is active
+ * @state documentation - The documentation preset is active
  *
  * @event {CustomEvent<AppLayoutBreakpointChangeEventData>} forge-app-layout-breakpoint-change - Fired when the screen size crosses the breakpoint threshold
  * @event {CustomEvent<AppLayoutDrawerChangeEventData>} forge-app-layout-drawer-change - Fired when the navigation drawer opens or closes
@@ -100,6 +106,7 @@ export class AppLayoutComponent extends LitElement {
     defineIconButtonComponent();
     defineIconComponent();
     defineAppBarMenuButtonComponent();
+    defineCardComponent();
 
     IconRegistry.define([tylIconArrowBack, tylIconClose, tylIconTylerTalkingTLogo]);
   }
@@ -126,6 +133,9 @@ export class AppLayoutComponent extends LitElement {
 
   @property({ type: Boolean, attribute: 'no-app-bar' })
   public noAppBar = false;
+
+  @property({ type: String, reflect: true })
+  public preset: AppLayoutPreset = 'backoffice';
 
   public get isLargeScreen(): boolean {
     return this._isLargeScreen;
@@ -206,6 +216,10 @@ export class AppLayoutComponent extends LitElement {
       this._cleanupMediaQuery();
       this._setupMediaQuery();
     }
+
+    if (changedProperties.has('preset')) {
+      this.#updatePresetStates();
+    }
   }
 
   public override disconnectedCallback(): void {
@@ -236,6 +250,9 @@ export class AppLayoutComponent extends LitElement {
   private _updateStates(): void {
     toggleState(this.#internals, 'small', !this._isLargeScreen);
     toggleState(this.#internals, 'large', this._isLargeScreen);
+
+    // Update preset states
+    this.#updatePresetStates();
 
     // Set drawer defaults based on breakpoint
     if (this._isLargeScreen) {
@@ -322,6 +339,12 @@ export class AppLayoutComponent extends LitElement {
     this.dispatchEvent(event);
   }
 
+  #updatePresetStates(): void {
+    toggleState(this.#internals, 'backoffice', this.preset === 'backoffice');
+    toggleState(this.#internals, 'public', this.preset === 'public');
+    toggleState(this.#internals, 'documentation', this.preset === 'documentation');
+  }
+
   get #hasNavigationContent(): boolean {
     return this._navigationNodes.length > 0;
   }
@@ -332,7 +355,7 @@ export class AppLayoutComponent extends LitElement {
     return html`
       <forge-scaffold>
         ${when(
-          !this.noAppBar,
+          !this.noAppBar && this.preset !== 'documentation',
           () => html`
             <forge-app-bar slot="header" .titleText=${this.appTitle} .href=${this.appTitleHref} theme-mode="scoped">
               <slot name="app-bar-logo" slot="logo">
@@ -407,8 +430,19 @@ export class AppLayoutComponent extends LitElement {
               `
             : navigationSlot
           : ''}
-
-        <slot name="body" slot="body"></slot>
+        ${this.preset === 'documentation'
+          ? html`
+              <div class="documentation-body-container" slot="body">
+                <forge-card>
+                  <slot name="body"></slot>
+                </forge-card>
+              </div>
+            `
+          : html`
+              <div class="documentation-body-container" slot="body">
+                <slot name="body"></slot>
+              </div>
+            `}
         <slot name="right" slot="right"></slot>
         <slot name="body-right" slot="body-right"></slot>
         <slot name="body-footer" slot="body-footer"></slot>

@@ -218,6 +218,10 @@
               "name": "--forge-app-layout-drawer-width"
             },
             {
+              "description": "Controls the border width of the navigation drawer (default: 1px)",
+              "name": "--forge-app-layout-drawer-border-width"
+            },
+            {
               "description": "Controls the width of the navigation dialog on small screens (default: 320px)",
               "name": "--forge-app-layout-dialog-width"
             },
@@ -349,6 +353,18 @@
             },
             {
               "kind": "field",
+              "name": "preset",
+              "type": {
+                "text": "AppLayoutPreset"
+              },
+              "privacy": "public",
+              "default": "'backoffice'",
+              "description": "The layout preset to use: 'backoffice', 'public', or 'documentation' (default: 'backoffice')",
+              "attribute": "preset",
+              "reflects": true
+            },
+            {
+              "kind": "field",
               "name": "isLargeScreen",
               "type": {
                 "text": "boolean"
@@ -356,6 +372,17 @@
               "privacy": "public",
               "readonly": true,
               "description": "Whether the current screen width is above the breakpoint (read-only)"
+            },
+            {
+              "kind": "method",
+              "name": "openDrawer",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Opens the navigation drawer. Only has effect on small screens where the drawer is modal."
             },
             {
               "kind": "method",
@@ -439,6 +466,15 @@
               "default": "false",
               "description": "Whether to hide the app bar (default: false)",
               "fieldName": "noAppBar"
+            },
+            {
+              "name": "preset",
+              "type": {
+                "text": "AppLayoutPreset"
+              },
+              "default": "'backoffice'",
+              "description": "The layout preset to use: 'backoffice', 'public', or 'documentation' (default: 'backoffice')",
+              "fieldName": "preset"
             }
           ],
           "superclass": {
@@ -464,6 +500,18 @@
             {
               "name": "drawer-closed",
               "description": "The navigation drawer is currently closed"
+            },
+            {
+              "name": "backoffice",
+              "description": "The backoffice preset is active"
+            },
+            {
+              "name": "public",
+              "description": "The public preset is active"
+            },
+            {
+              "name": "documentation",
+              "description": "The documentation preset is active"
             }
           ]
         }
@@ -498,6 +546,293 @@
           "declaration": {
             "name": "AppLayoutComponent",
             "module": "src/lib/app-layout/app-layout.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "MultiSelectHeaderComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-multi-select-header'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MultiSelectHeaderComponent",
+          "slots": [
+            {
+              "description": "Text content for the select-all button",
+              "name": "select-all-button-text"
+            },
+            {
+              "description": "Action buttons (maps to the toolbar end slot)",
+              "name": "actions"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "attribute": "text"
+            },
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Hides the bottom border",
+              "attribute": "no-border"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the select-all button is clicked",
+              "name": "forge-multi-select-header-select-all"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "fieldName": "text"
+            },
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Hides the bottom border",
+              "fieldName": "noBorder"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-multi-select-header",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MultiSelectHeaderComponentTagName",
+          "declaration": {
+            "name": "MultiSelectHeaderComponentTagName",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "MultiSelectHeaderComponent",
+          "declaration": {
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/quantity-field/quantity-field.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "QuantityFieldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-quantity-field'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "QuantityFieldComponent",
+          "slots": [
+            {
+              "description": "Reserved for the `<input>` element.",
+              "name": ""
+            },
+            {
+              "description": "The label for the field.",
+              "name": "label"
+            },
+            {
+              "description": "The decrement button.",
+              "name": "decrement-button"
+            },
+            {
+              "description": "The icon for the decrement button.",
+              "name": "decrement-icon"
+            },
+            {
+              "description": "The increment button.",
+              "name": "increment-button"
+            },
+            {
+              "description": "The icon for the increment button.",
+              "name": "increment-icon"
+            },
+            {
+              "description": "The support text for the field.",
+              "name": "support-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the field is invalid.",
+              "attribute": "invalid"
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the field is required.",
+              "attribute": "required"
+            },
+            {
+              "kind": "field",
+              "name": "decrementLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Decrement'",
+              "description": "The accessible label for the decrement button.",
+              "attribute": "decrement-label"
+            },
+            {
+              "kind": "field",
+              "name": "incrementLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Increment'",
+              "description": "The accessible label for the increment button.",
+              "attribute": "increment-label"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the field is invalid.",
+              "fieldName": "invalid"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the field is required.",
+              "fieldName": "required"
+            },
+            {
+              "name": "decrement-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Decrement'",
+              "description": "The accessible label for the decrement button.",
+              "fieldName": "decrementLabel"
+            },
+            {
+              "name": "increment-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Increment'",
+              "description": "The accessible label for the increment button.",
+              "fieldName": "incrementLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-quantity-field",
+          "customElement": true,
+          "states": [
+            {
+              "name": "required",
+              "description": "Indicates whether the field is in its required state."
+            },
+            {
+              "name": "invalid",
+              "description": "Indicates whether the field is in its invalid state."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "QuantityFieldComponentTagName",
+          "declaration": {
+            "name": "QuantityFieldComponentTagName",
+            "module": "src/lib/quantity-field/quantity-field.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "QuantityFieldComponent",
+          "declaration": {
+            "name": "QuantityFieldComponent",
+            "module": "src/lib/quantity-field/quantity-field.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "QuantityFieldComponent",
+            "module": "src/lib/quantity-field/quantity-field.ts"
           }
         }
       ]
@@ -1127,293 +1462,6 @@
           "declaration": {
             "name": "ContentScaffoldComponent",
             "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "MultiSelectHeaderComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-multi-select-header'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MultiSelectHeaderComponent",
-          "slots": [
-            {
-              "description": "Text content for the select-all button",
-              "name": "select-all-button-text"
-            },
-            {
-              "description": "Action buttons (maps to the toolbar end slot)",
-              "name": "actions"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "attribute": "text"
-            },
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "true",
-              "description": "Hides the bottom border",
-              "attribute": "no-border"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Fired when the select-all button is clicked",
-              "name": "forge-multi-select-header-select-all"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "fieldName": "text"
-            },
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Hides the bottom border",
-              "fieldName": "noBorder"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-multi-select-header",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponentTagName",
-          "declaration": {
-            "name": "MultiSelectHeaderComponentTagName",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponent",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/quantity-field/quantity-field.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "QuantityFieldComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-quantity-field'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "QuantityFieldComponent",
-          "slots": [
-            {
-              "description": "Reserved for the `<input>` element.",
-              "name": ""
-            },
-            {
-              "description": "The label for the field.",
-              "name": "label"
-            },
-            {
-              "description": "The decrement button.",
-              "name": "decrement-button"
-            },
-            {
-              "description": "The icon for the decrement button.",
-              "name": "decrement-icon"
-            },
-            {
-              "description": "The increment button.",
-              "name": "increment-button"
-            },
-            {
-              "description": "The icon for the increment button.",
-              "name": "increment-icon"
-            },
-            {
-              "description": "The support text for the field.",
-              "name": "support-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "invalid",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the field is invalid.",
-              "attribute": "invalid"
-            },
-            {
-              "kind": "field",
-              "name": "required",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the field is required.",
-              "attribute": "required"
-            },
-            {
-              "kind": "field",
-              "name": "decrementLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Decrement'",
-              "description": "The accessible label for the decrement button.",
-              "attribute": "decrement-label"
-            },
-            {
-              "kind": "field",
-              "name": "incrementLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Increment'",
-              "description": "The accessible label for the increment button.",
-              "attribute": "increment-label"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "invalid",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the field is invalid.",
-              "fieldName": "invalid"
-            },
-            {
-              "name": "required",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the field is required.",
-              "fieldName": "required"
-            },
-            {
-              "name": "decrement-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Decrement'",
-              "description": "The accessible label for the decrement button.",
-              "fieldName": "decrementLabel"
-            },
-            {
-              "name": "increment-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Increment'",
-              "description": "The accessible label for the increment button.",
-              "fieldName": "incrementLabel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-quantity-field",
-          "customElement": true,
-          "states": [
-            {
-              "name": "required",
-              "description": "Indicates whether the field is in its required state."
-            },
-            {
-              "name": "invalid",
-              "description": "Indicates whether the field is in its invalid state."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "QuantityFieldComponentTagName",
-          "declaration": {
-            "name": "QuantityFieldComponentTagName",
-            "module": "src/lib/quantity-field/quantity-field.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "QuantityFieldComponent",
-          "declaration": {
-            "name": "QuantityFieldComponent",
-            "module": "src/lib/quantity-field/quantity-field.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "QuantityFieldComponent",
-            "module": "src/lib/quantity-field/quantity-field.ts"
           }
         }
       ]
@@ -2138,7 +2186,7 @@
       ]
     }
   ],
-  "branchName": "main",
+  "branchName": "feat",
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",
@@ -2156,17 +2204,29 @@
       "path": "src/lib/app-layout/app-layout.ts",
       "lineNumber": 30
     },
+    "AppLayoutPreset": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 31
+    },
     "AppLayoutBreakpointChangeEventData": {
       "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 32
+      "lineNumber": 33
     },
     "AppLayoutDrawerChangeEventData": {
       "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 36
+      "lineNumber": 37
     },
     "AppLayoutComponent": {
       "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 91
+      "lineNumber": 98
+    },
+    "MultiSelectHeaderComponent": {
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "lineNumber": 28
+    },
+    "QuantityFieldComponent": {
+      "path": "src/lib/quantity-field/quantity-field.ts",
+      "lineNumber": 35
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -2203,14 +2263,6 @@
     "ContentScaffoldComponent": {
       "path": "src/lib/content-scaffold/content-scaffold.ts",
       "lineNumber": 37
-    },
-    "MultiSelectHeaderComponent": {
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "lineNumber": 28
-    },
-    "QuantityFieldComponent": {
-      "path": "src/lib/quantity-field/quantity-field.ts",
-      "lineNumber": 35
     },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",

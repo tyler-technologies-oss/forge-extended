@@ -79,6 +79,7 @@ const meta = {
         body {
           margin: 0 !important;
           padding: 0 !important;
+          background-color: var(--forge-theme-surface-dim);
         }
 
         .secondary-header {
@@ -87,8 +88,6 @@ const meta = {
 
         .body {
           height: 100%;
-          background-color: var(--forge-theme-surface-dim);
-          padding-inline: var(--forge-spacing-medium);
         }
 
         .tab-container {
@@ -130,7 +129,8 @@ const meta = {
         app-title=${args.appTitle}
         breakpoint=${args.breakpoint}
         use-mini-drawer
-        ?mini-hover=${args.miniHover}>
+        ?mini-hover=${args.miniHover}
+        preset=${args.preset}>
         <forge-list navlist slot="navigation" data-forge-app-layout-close>
           <forge-list-item selected id="tooltip-host-dashboard">
             ${!args.miniHover ? html`<forge-tooltip anchor="tooltip-host-dashboard">Dashboard</forge-tooltip>` : ''}
@@ -165,7 +165,7 @@ const meta = {
         </forge-list>
 
         <main slot="body" class="body">
-          <forge-toolbar class="secondary-header" no-border>
+          <forge-toolbar class="secondary-header" no-border auto-height>
             <!-- Back button - always visible -->
             <forge-stack inline alignment="center" gap="32" slot="before-start">
               <forge-stack alignment="center" inline gap="8">
@@ -377,12 +377,21 @@ const meta = {
       table: {
         category: 'Properties'
       }
+    },
+    preset: {
+      control: 'select',
+      options: ['backoffice', 'public', 'documentation'],
+      description: 'The layout preset to use',
+      table: {
+        category: 'Properties'
+      }
     }
   },
   args: {
     appTitle: 'App Layout Mini Drawer',
     breakpoint: 768,
-    miniHover: false
+    miniHover: false,
+    preset: 'backoffice'
   }
 } satisfies Meta;
 
