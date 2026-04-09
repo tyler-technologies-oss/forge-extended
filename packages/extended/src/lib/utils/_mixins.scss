@@ -27,9 +27,3 @@
   align-items: center;
   grid-template-areas: 'start . end';
 }
-
-@mixin text-box-trim {
-  @supports (text-box-trim: trim-both) {
-    text-box-trim: trim-both;
-  }
-}

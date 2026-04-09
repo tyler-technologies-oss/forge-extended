@@ -261,6 +261,43 @@ describe('CountCardComponent', () => {
     });
   });
 
+  describe('has-action state', () => {
+    it('should not have has-action state by default', async () => {
+      const harness = await createFixture();
+
+      expect(harness.el.matches(':state(has-action)')).to.be.false;
+    });
+
+    it('should apply has-action state when content is slotted into action slot', async () => {
+      const el = await fixture<CountCardComponent>(html`
+        <forge-count-card>
+          <button slot="action">Action</button>
+        </forge-count-card>
+      `);
+
+      expect(el.matches(':state(has-action)')).to.be.true;
+    });
+
+    it('should toggle has-action state when action slot content changes dynamically', async () => {
+      const harness = await createFixture();
+
+      expect(harness.el.matches(':state(has-action)')).to.be.false;
+
+      const button = document.createElement('button');
+      button.slot = 'action';
+      button.textContent = 'Action';
+      harness.el.appendChild(button);
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(has-action)')).to.be.true;
+
+      harness.el.removeChild(button);
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(has-action)')).to.be.false;
+    });
+  });
+
   describe('tooltips', () => {
     it('should render label tooltip with slot content', async () => {
       const el = await fixture<CountCardComponent>(html`

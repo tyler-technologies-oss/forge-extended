@@ -1,5 +1,5 @@
 import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
 import { defineCardComponent, defineTooltipComponent, toggleState } from '@tylertech/forge';
 import styles from './count-card.scss?inline';
 import { hideWhenEmpty } from '../utils/lit-utils';
@@ -66,6 +66,7 @@ const THEME_STATES: CountCardTheme[] = [
  * @state info - Applied when the theme is set to `info`.
  * @state info-secondary - Applied when the theme is set to `info-secondary`. Provides a subtle tonal style.
  * @state no-border - Applied when the `noBorder` property is `true`.
+ * @state has-action - Applied when content is slotted into the `action` slot.
  */
 @customElement(CountCardComponentTagName)
 export class CountCardComponent extends LitElement {
@@ -79,6 +80,9 @@ export class CountCardComponent extends LitElement {
   readonly #internals: ElementInternals;
   readonly #labelController = new SlotTextController(this, { slotName: 'label' });
   readonly #countController = new SlotTextController(this, { slotName: 'count' });
+
+  @queryAssignedNodes({ slot: 'action', flatten: true })
+  private _actionSlotNodes!: Node[];
 
   constructor() {
     super();
@@ -104,6 +108,10 @@ export class CountCardComponent extends LitElement {
     }
   }
 
+  #handleActionSlotChange(): void {
+    toggleState(this.#internals, 'has-action', this._actionSlotNodes.length > 0);
+  }
+
   public override render(): TemplateResult {
     return html`
       <forge-card>
@@ -124,7 +132,7 @@ export class CountCardComponent extends LitElement {
               <slot name="header-end"></slot>
             </div>
             <div class="action" ${hideWhenEmpty()}>
-              <slot name="action"></slot>
+              <slot name="action" @slotchange=${this.#handleActionSlotChange}></slot>
             </div>
           </div>
           <div class="inner-container">
