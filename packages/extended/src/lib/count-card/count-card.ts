@@ -1,4 +1,4 @@
-import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { defineCardComponent, defineTooltipComponent, toggleState } from '@tylertech/forge';
 import styles from './count-card.scss?inline';
@@ -93,7 +93,7 @@ export class CountCardComponent extends LitElement {
   @property({ type: Boolean, attribute: 'no-border' })
   public noBorder = false;
 
-  public override willUpdate(changedProperties: Map<string, unknown>): void {
+  public override willUpdate(changedProperties: PropertyValues<this>): void {
     if (changedProperties.has('theme')) {
       for (const themeState of THEME_STATES) {
         toggleState(this.#internals, themeState, this.theme === themeState);

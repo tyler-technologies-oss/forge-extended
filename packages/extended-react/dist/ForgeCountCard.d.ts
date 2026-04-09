@@ -55,7 +55,8 @@ export interface ForgeCountCardProps
  * ### **Slots:**
  *  - **icon** - The icon displayed at the start of the card header.
  * - **label** - The label text displayed next to the icon.
- * - **header-end** - Optional content at the end of the header, ideal for badges or accessory menus.
+ * - **header-end** - Optional content at the end of the header, ideal for badges or small accessories.
+ * - **action** - Optional slot for a `forge-icon-button`. Use this instead of `header-end` for icon buttons, as it provides proper alignment for the 48x48 touch target.
  * - **count** - The main count or value displayed prominently below the header.
  * - **count-end** - Optional content displayed after the count, ideal for units or secondary values.
  * - **body** - Optional content below the count for additional details or secondary information.

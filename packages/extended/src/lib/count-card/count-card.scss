@@ -2,6 +2,7 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
+@use '../utils/mixins' as mixins;
 
 $icon-container-size: 32px !default;
 
@@ -73,7 +74,7 @@ forge-card {
 
 .label {
   @include forge-typography.style(body1);
-  text-box-trim: trim-both;
+  @include mixins.text-box-trim;
   color: var(--_count-card-color);
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -93,7 +94,7 @@ forge-card {
 
 .count {
   @include forge-typography.style(heading6);
-  text-box-trim: trim-both;
+  @include mixins.text-box-trim;
   color: var(--_count-card-color);
   overflow: hidden;
   text-overflow: ellipsis;

@@ -25,8 +25,7 @@ import { NgModule } from '@angular/core';
     ForgeExtendedUserProfileModule,
     ForgeExtendedCountCardModule,
     ForgeExtendedAppLayoutModule,
-    ForgeExtendedStructuredCardModule,
-    ForgeExtendedCountCardModule
+    ForgeExtendedStructuredCardModule
   ]
 })
 export class ForgeExtendedModule {}
