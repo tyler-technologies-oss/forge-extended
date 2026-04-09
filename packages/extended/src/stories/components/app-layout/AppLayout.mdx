@@ -143,10 +143,15 @@ For more granular control, you can place the attribute on individual items:
 </forge-app-layout>
 ```
 
-You can also programmatically close the drawer using the `closeDrawer()` method:
+You can also programmatically open or close the drawer using the `openDrawer()` and `closeDrawer()` methods:
 
 ```javascript
 const appLayout = document.querySelector('forge-app-layout');
+
+// Open the drawer
+appLayout.openDrawer();
+
+// Close the drawer
 appLayout.closeDrawer();
 ```
 
@@ -251,6 +256,101 @@ When `mini-hover` is enabled:
 - This provides a space-efficient navigation option while maintaining easy access to full labels
 
 > **Note:** The mini drawer mode only affects the navigation drawer on large screens (above the breakpoint). On small screens, the navigation will always use a modal drawer regardless of the `use-mini-drawer` setting.
+
+## Hiding the App Bar
+
+In some cases, you may want to use the app-layout component without the built-in app bar, such as when embedding the layout within another application or using a custom header. You can hide the app bar by setting the `no-app-bar` attribute:
+
+```html
+<forge-app-layout no-app-bar>
+  <!-- Custom header content in the header slot -->
+  <div slot="header">
+    <my-custom-header></my-custom-header>
+  </div>
+
+  <!-- Navigation content -->
+  <forge-list slot="navigation" navlist>
+    <forge-list-item>
+      <forge-icon slot="start" name="dashboard"></forge-icon>
+      <button type="button">Dashboard</button>
+    </forge-list-item>
+  </forge-list>
+
+  <!-- Main content -->
+  <main>Your content here</main>
+</forge-app-layout>
+```
+
+> **Note:** When the app bar is hidden, the built-in menu button for toggling the navigation drawer on small screens will also be hidden. You will need to provide your own button and use the `openDrawer()` method to open the navigation drawer on small screens.
+
+```html
+<forge-app-layout id="app-layout" no-app-bar>
+  <forge-app-bar slot="header">
+    <!-- Custom menu button to open the drawer -->
+    <forge-icon-button slot="start" id="menu-button" aria-label="Open navigation">
+      <forge-icon name="menu"></forge-icon>
+    </forge-icon-button>
+  </forge-app-bar>
+
+  <forge-list slot="navigation" navlist>
+    <!-- Navigation items -->
+  </forge-list>
+</forge-app-layout>
+
+<script>
+  const appLayout = document.getElementById('app-layout');
+  const menuButton = document.getElementById('menu-button');
+
+  menuButton.addEventListener('click', () => {
+    appLayout.openDrawer();
+  });
+</script>
+```
+
+## Layout Presets
+
+The `preset` property allows you to configure the app-layout for different application types. Each preset applies a CSS state that can be used for targeted styling.
+
+### Available Presets
+
+- **backoffice** (default): For internal business applications and administrative interfaces
+- **public**: For public-facing applications and customer portals
+- **documentation**: For documentation sites and knowledge bases (app bar is not rendered)
+
+```html
+<!-- Default backoffice preset -->
+<forge-app-layout app-title="Admin Dashboard">
+  <!-- ... -->
+</forge-app-layout>
+
+<!-- Public-facing application -->
+<forge-app-layout app-title="Customer Portal" preset="public">
+  <!-- ... -->
+</forge-app-layout>
+
+<!-- Documentation site -->
+<forge-app-layout app-title="Developer Docs" preset="documentation">
+  <!-- ... -->
+</forge-app-layout>
+```
+
+### Styling Based on Preset
+
+You can use CSS custom states to apply preset-specific styles:
+
+```css
+forge-app-layout:state(backoffice) {
+  /* Styles for backoffice preset */
+}
+
+forge-app-layout:state(public) {
+  /* Styles for public preset */
+}
+
+forge-app-layout:state(documentation) {
+  /* Styles for documentation preset */
+}
+```
 
 ## Layout Slots
 

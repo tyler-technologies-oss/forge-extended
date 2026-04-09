@@ -1,6 +1,11 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
-import { AppLayoutComponent, AppLayoutBreakpointChangeEventData, AppLayoutDrawerChangeEventData } from './app-layout';
+import {
+  AppLayoutComponent,
+  AppLayoutBreakpointChangeEventData,
+  AppLayoutDrawerChangeEventData,
+  AppLayoutPreset
+} from './app-layout';
 import sinon from 'sinon';
 import type {
   IAppBarComponent,
@@ -44,6 +49,8 @@ describe('AppLayout', () => {
     expect(harness.el.breakpoint).to.equal(960);
     expect(harness.el.useMiniDrawer).to.be.false;
     expect(harness.el.miniHover).to.be.false;
+    expect(harness.el.noAppBar).to.be.false;
+    expect(harness.el.preset).to.equal('backoffice');
   });
 
   it('should initialize drawer as closed in constructor', async () => {
@@ -139,6 +146,39 @@ describe('AppLayout', () => {
     expect(harness.el.miniHover).to.be.true;
   });
 
+  it('should set no app bar', async () => {
+    const harness = await createFixture({ noAppBar: true });
+
+    expect(harness.el.noAppBar).to.be.true;
+  });
+
+  it('should set no app bar via attribute', async () => {
+    const harness = await createFixture();
+
+    harness.el.setAttribute('no-app-bar', '');
+    await harness.el.updateComplete;
+
+    expect(harness.el.noAppBar).to.be.true;
+  });
+
+  it('should render app bar by default', async () => {
+    const harness = await createFixture();
+
+    expect(harness.appBarElement).to.exist;
+  });
+
+  it('should hide app bar when noAppBar is true', async () => {
+    const harness = await createFixture({ noAppBar: true });
+
+    expect(harness.appBarElement).to.not.exist;
+  });
+
+  it('should show app bar when noAppBar is false', async () => {
+    const harness = await createFixture({ noAppBar: false });
+
+    expect(harness.appBarElement).to.exist;
+  });
+
   it('content should project into the navigation slot', async () => {
     const harness = await createFixture({ hasNavigation: true });
 
@@ -189,6 +229,81 @@ describe('AppLayout', () => {
 
     expect(harness.el.matches(':state(large)')).to.be.true;
     expect(harness.el.matches(':state(small)')).to.be.false;
+  });
+
+  describe('preset', () => {
+    it('should have backoffice state by default', async () => {
+      const harness = await createFixture();
+
+      expect(harness.el.preset).to.equal('backoffice');
+      expect(harness.el.matches(':state(backoffice)')).to.be.true;
+      expect(harness.el.matches(':state(public)')).to.be.false;
+      expect(harness.el.matches(':state(documentation)')).to.be.false;
+    });
+
+    it('should set public preset', async () => {
+      const harness = await createFixture({ preset: 'public' });
+
+      expect(harness.el.preset).to.equal('public');
+      expect(harness.el.matches(':state(public)')).to.be.true;
+      expect(harness.el.matches(':state(backoffice)')).to.be.false;
+      expect(harness.el.matches(':state(documentation)')).to.be.false;
+    });
+
+    it('should set documentation preset', async () => {
+      const harness = await createFixture({ preset: 'documentation' });
+
+      expect(harness.el.preset).to.equal('documentation');
+      expect(harness.el.matches(':state(documentation)')).to.be.true;
+      expect(harness.el.matches(':state(backoffice)')).to.be.false;
+      expect(harness.el.matches(':state(public)')).to.be.false;
+    });
+
+    it('should set preset via attribute', async () => {
+      const harness = await createFixture();
+
+      harness.el.setAttribute('preset', 'public');
+      await harness.el.updateComplete;
+
+      expect(harness.el.preset).to.equal('public');
+      expect(harness.el.matches(':state(public)')).to.be.true;
+    });
+
+    it('should update state when preset property changes', async () => {
+      const harness = await createFixture();
+
+      expect(harness.el.matches(':state(backoffice)')).to.be.true;
+
+      harness.el.preset = 'documentation';
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(documentation)')).to.be.true;
+      expect(harness.el.matches(':state(backoffice)')).to.be.false;
+    });
+
+    it('should reflect preset attribute on the host element', async () => {
+      const harness = await createFixture({ preset: 'public' });
+
+      expect(harness.el.getAttribute('preset')).to.equal('public');
+    });
+
+    it('should not render app bar when preset is documentation', async () => {
+      const harness = await createFixture({ preset: 'documentation' });
+
+      expect(harness.appBarElement).to.not.exist;
+    });
+
+    it('should render app bar when preset is backoffice', async () => {
+      const harness = await createFixture({ preset: 'backoffice' });
+
+      expect(harness.appBarElement).to.exist;
+    });
+
+    it('should render app bar when preset is public', async () => {
+      const harness = await createFixture({ preset: 'public' });
+
+      expect(harness.appBarElement).to.exist;
+    });
   });
 
   it('should return false from isLargeScreen getter when below breakpoint', async () => {
@@ -260,6 +375,72 @@ describe('AppLayout', () => {
     await harness.el.updateComplete;
 
     expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+  });
+
+  describe('openDrawer', () => {
+    it('should open the drawer when called on small screens', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+
+      expect(harness.el.matches(':state(drawer-closed)')).to.be.true;
+
+      harness.el.openDrawer();
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+      expect(harness.el.matches(':state(drawer-closed)')).to.be.false;
+    });
+
+    it('should emit forge-app-layout-drawer-change event when openDrawer is called', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+
+      const spy = sinon.spy();
+      harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+      harness.el.openDrawer();
+      await harness.el.updateComplete;
+
+      expect(spy.calledOnce).to.be.true;
+      const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
+      expect(eventDetail.open).to.be.true;
+    });
+
+    it('should not emit event when openDrawer is called but drawer is already open', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasNavigation: true });
+
+      // Open drawer first
+      harness.el.openDrawer();
+      await harness.el.updateComplete;
+
+      const spy = sinon.spy();
+      harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+      harness.el.openDrawer();
+      await harness.el.updateComplete;
+
+      expect(spy.called).to.be.false;
+    });
+
+    it('should not open drawer when called on large screens', async () => {
+      setupMediaQuery(true);
+      const harness = await createFixture({ hasNavigation: true });
+
+      // Drawer is open by default on large screens
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+
+      // Close it first (won't work on large screens, so we verify the method has no effect)
+      const spy = sinon.spy();
+      harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+      harness.el.openDrawer();
+      await harness.el.updateComplete;
+
+      // Should remain open and no event should be emitted (since it was already open)
+      expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+      expect(spy.called).to.be.false;
+    });
   });
 
   describe('closeDrawer', () => {
@@ -670,6 +851,8 @@ interface AppLayoutFixtureConfig {
   breakpoint?: number;
   useMiniDrawer?: boolean;
   miniHover?: boolean;
+  noAppBar?: boolean;
+  preset?: AppLayoutPreset;
   hasNavigation?: boolean;
   navigationWithCloseAttribute?: boolean;
   hasBodyContent?: boolean;
@@ -685,6 +868,8 @@ async function createFixture({
   breakpoint = 960,
   useMiniDrawer = false,
   miniHover = false,
+  noAppBar = false,
+  preset = 'backoffice',
   hasNavigation = false,
   navigationWithCloseAttribute = false,
   hasBodyContent = false,
@@ -710,7 +895,9 @@ async function createFixture({
       .appTitleHref=${appTitleHref}
       breakpoint=${breakpoint}
       ?use-mini-drawer=${useMiniDrawer}
-      ?mini-hover=${miniHover}>
+      ?mini-hover=${miniHover}
+      ?no-app-bar=${noAppBar}
+      preset=${preset}>
       ${navigationContent} ${hasBodyContent ? html`<div slot="body">Body Content</div>` : ''}
       ${hasLogo ? html`<div slot="app-bar-logo">Logo</div>` : ''}
       ${hasAppBarStart ? html`<div slot="app-bar-start">Start Content</div>` : ''}

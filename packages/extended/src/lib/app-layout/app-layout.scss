@@ -1,24 +1,54 @@
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 @use '@tylertech/forge/sass/core/styles/typography' as forge-typography;
 @use '@tylertech/forge/sass/core/styles/elevation' as forge-elevation;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 
 //
 // Host
 //
 
 :host {
-  --_drawer-width: var(--forge-app-layout-drawer-width, 320px);
+  --_drawer-width: var(--forge-app-layout-drawer-width, 250px);
+  --_drawer-border-width: var(--forge-app-layout-drawer-border-width, 1px);
+  --_drawer-background: var(--forge-app-layout-drawer-background, #{forge-theme.variable(surface)});
   --_dialog-width: var(--forge-app-layout-dialog-width, 320px);
   --_mini-drawer-z-index: var(--forge-app-layout-mini-drawer-z-index, 3);
+  --_mini-drawer-border-width: var(--forge-app-layout-mini-drawer-border-width, 1px);
   display: block;
   height: 100%;
+}
+
+:host(:state(documentation)) {
+  --_mini-drawer-border-width: 0;
+  --_drawer-border-width: 0;
+  --_drawer-background: transparent;
+  --_drawer-width: 250px;
+
+  background: linear-gradient(
+    to bottom,
+    #{forge-theme.variable(primary-container-minimum)},
+    #{forge-theme.variable(primary-container)}
+  );
+
+  .documentation-body-container {
+    padding-inline: 0;
+    padding-block: #{forge-spacing.variable(xsmall)};
+
+    forge-card {
+      --forge-card-padding: #{forge-spacing.variable(large)};
+    }
+  }
+}
+
+.documentation-body-container {
+  padding: #{forge-spacing.variable(medium)};
 }
 
 forge-app-bar {
   --forge-app-bar-logo-font-size: 40px;
   --forge-app-bar-columns: auto 1fr auto;
 
-  :host(:state(small)) {
+  :host(:state(small)) & {
     --forge-app-bar-row-padding: 0;
   }
 }
@@ -34,6 +64,13 @@ slot[name='app-bar-logo'] {
 
 forge-drawer {
   --forge-drawer-width: var(--_drawer-width);
+  --forge-drawer-border-width: var(--_drawer-border-width);
+  --forge-drawer-background: var(--_drawer-background);
+}
+
+forge-mini-drawer {
+  --forge-drawer-border-width: var(--_mini-drawer-border-width);
+  --forge-drawer-background: var(--_drawer-background);
 }
 
 .close-drawer-button {

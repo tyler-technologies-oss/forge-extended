@@ -114,6 +114,7 @@ const meta = {
 
         body {
           height: 100dvh;
+          background-color: var(--forge-theme-surface-dim);
         }
 
         .secondary-header {
@@ -122,11 +123,6 @@ const meta = {
 
         .section-header {
           margin: var(--forge-spacing-xsmall);
-        }
-
-        [slot='body'] {
-          background-color: var(--forge-theme-surface-dim);
-          padding-inline: var(--forge-spacing-medium);
         }
 
         .tab-container {
@@ -164,7 +160,7 @@ const meta = {
           --forge-button-tonal-background: #e5e8f7;
         }
       </style>
-      <forge-app-layout app-title=${args.appTitle} breakpoint=${args.breakpoint}>
+      <forge-app-layout app-title=${args.appTitle} breakpoint=${args.breakpoint} preset=${args.preset}>
         <forge-list navlist slot="navigation" data-forge-app-layout-close>
           <!-- Dashboard Section -->
           <div class="forge-typography--body1 section-header">Dashboard</div>
@@ -229,7 +225,7 @@ const meta = {
         </forge-list>
 
         <main slot="body">
-          <forge-toolbar class="secondary-header" no-border>
+          <forge-toolbar class="secondary-header" no-border auto-height>
             <!-- Back button - always visible -->
             <forge-stack inline alignment="center" gap="32" slot="before-start">
               <forge-stack alignment="center" inline gap="8">
@@ -433,11 +429,20 @@ const meta = {
       table: {
         category: 'Properties'
       }
+    },
+    preset: {
+      control: 'select',
+      options: ['backoffice', 'public', 'documentation'],
+      description: 'The layout preset to use',
+      table: {
+        category: 'Properties'
+      }
     }
   },
   args: {
     appTitle: 'App Layout Demo',
-    breakpoint: 960
+    breakpoint: 960,
+    preset: 'backoffice'
   }
 } satisfies Meta;
 
