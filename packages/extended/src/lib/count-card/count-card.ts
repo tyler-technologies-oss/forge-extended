@@ -43,7 +43,8 @@ const THEME_STATES: CountCardTheme[] = [
  *
  * @slot icon - The icon displayed at the start of the card header.
  * @slot label - The label text displayed next to the icon.
- * @slot header-end - Optional content at the end of the header, ideal for badges or accessory menus.
+ * @slot header-end - Optional content at the end of the header, ideal for badges or small accessories.
+ * @slot action - Optional slot for a `forge-icon-button`. Use this instead of `header-end` for icon buttons, as it provides proper alignment for the 48x48 touch target.
  * @slot count - The main count or value displayed prominently below the header.
  * @slot count-end - Optional content displayed after the count, ideal for units or secondary values.
  * @slot body - Optional content below the count for additional details or secondary information.
@@ -121,6 +122,9 @@ export class CountCardComponent extends LitElement {
             </div>
             <div class="header-end" ${hideWhenEmpty()}>
               <slot name="header-end"></slot>
+            </div>
+            <div class="action" ${hideWhenEmpty()}>
+              <slot name="action"></slot>
             </div>
           </div>
           <div class="inner-container">

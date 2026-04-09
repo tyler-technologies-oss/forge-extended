@@ -1,13 +1,14 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html, nothing } from 'lit';
-import { defineIconComponent, defineBadgeComponent, IconRegistry } from '@tylertech/forge';
-import { tylIconAttachMoney } from '@tylertech/tyler-icons';
+import { defineIconComponent, defineBadgeComponent, defineIconButtonComponent, IconRegistry } from '@tylertech/forge';
+import { tylIconAttachMoney, tylIconMoreVert } from '@tylertech/tyler-icons';
 
 import '$lib/count-card';
 
 defineIconComponent();
 defineBadgeComponent();
-IconRegistry.define([tylIconAttachMoney]);
+defineIconButtonComponent();
+IconRegistry.define([tylIconAttachMoney, tylIconMoreVert]);
 
 const component = 'forge-count-card';
 
@@ -22,6 +23,13 @@ const meta = {
           ${args.showLabel ? html`<span slot="label">${args.labelText}</span>` : nothing}
           ${args.showHeaderEnd
             ? html`<forge-badge slot="header-end" theme=${args.theme || nothing}>${args.badgeText}</forge-badge>`
+            : nothing}
+          ${args.showAction
+            ? html`
+                <forge-icon-button slot="action" aria-label="More options">
+                  <forge-icon name="more_vert"></forge-icon>
+                </forge-icon-button>
+              `
             : nothing}
           <span slot="count">${args.countText}</span>
           ${args.showCountEnd
@@ -69,6 +77,11 @@ const meta = {
       description: 'Toggle the header-end slot (badge)',
       table: { category: 'Slots' }
     },
+    showAction: {
+      control: 'boolean',
+      description: 'Toggle the action slot (icon button)',
+      table: { category: 'Slots' }
+    },
     showCountEnd: {
       control: 'boolean',
       description: 'Toggle the count-end slot (badge)',
@@ -106,6 +119,7 @@ const meta = {
     showIcon: true,
     showLabel: true,
     showHeaderEnd: true,
+    showAction: false,
     showCountEnd: false,
     showFullWidth: false,
     labelText: 'Tomorrows money',

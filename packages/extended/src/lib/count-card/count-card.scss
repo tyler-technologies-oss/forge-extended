@@ -20,11 +20,21 @@ forge-card {
   height: 100%;
 }
 
+.outer-container {
+  position: relative;
+}
+
 .inner-container {
   display: flex;
   flex-direction: column;
   gap: #{forge-spacing.variable(medium)};
   padding: #{forge-spacing.variable(medium)};
+}
+
+.action {
+  position: absolute;
+  inset-block-start: #{forge-spacing.variable(xsmall)};
+  inset-inline-end: #{forge-spacing.variable(xsmall)};
 }
 
 .header {

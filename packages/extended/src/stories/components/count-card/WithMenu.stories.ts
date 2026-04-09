@@ -27,9 +27,9 @@ const meta = {
         <forge-count-card>
           <forge-icon slot="icon" name="attach_money"></forge-icon>
           <span slot="label">Revenue</span>
-          <forge-menu slot="header-end" .options=${menuOptions}>
-            <forge-icon-button aria-label="More options" dense>
-              <forge-icon name="more_vert" external></forge-icon>
+          <forge-menu slot="action" .options=${menuOptions}>
+            <forge-icon-button aria-label="More options">
+              <forge-icon name="more_vert"></forge-icon>
             </forge-icon-button>
           </forge-menu>
           <span slot="count">$12,450.00</span>

@@ -17,15 +17,18 @@ A card component for displaying counts, metrics, or key values with an accompany
 
 ## Usage
 
-The Count Card uses a slot-based architecture with seven main areas:
+The Count Card uses a slot-based architecture with eight main areas:
 
 - **icon** - An icon displayed in a styled container at the start of the header
 - **label** - Descriptive text next to the icon explaining what the count represents
-- **header-end** - Optional content at the end of the header, ideal for badges or accessory menus
+- **header-end** - Optional content at the end of the header, ideal for badges or small accessories
+- **action** - Optional slot for a `forge-icon-button` (see note below)
 - **count** - The main value or metric displayed prominently
 - **count-end** - Optional content displayed after the count, ideal for units or secondary values
 - **body** - Optional content below the count for additional details or secondary information
 - **full-width** - Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators
+
+> **Note:** Use the `action` slot instead of `header-end` when adding a `forge-icon-button`. Icon buttons have a 48x48px touch target that can disrupt the card's layout when placed in `header-end`. The `action` slot provides proper alignment for icon buttons.
 
 ```html
 <forge-count-card>
@@ -57,7 +60,7 @@ Use the `body` slot to add supplementary content below the count. This is useful
 
 ### With Menu
 
-Use the `header-end` slot to add an options menu for card-level actions.
+Use the `action` slot to add an icon button for card-level actions like an options menu.
 
 <Canvas of={WithMenuStories.WithMenu} />
 

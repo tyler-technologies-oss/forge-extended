@@ -53,8 +53,16 @@ class CountCardHarness {
     return this.el.shadowRoot!.querySelector('slot[name="header-end"]') as HTMLSlotElement;
   }
 
+  public get actionSlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="action"]') as HTMLSlotElement;
+  }
+
   public get headerEndElement(): HTMLElement {
     return this.el.shadowRoot!.querySelector('.header-end') as HTMLElement;
+  }
+
+  public get actionElement(): HTMLElement {
+    return this.el.shadowRoot!.querySelector('.action') as HTMLElement;
   }
 
   public get labelTooltip(): HTMLElement | null {
@@ -85,6 +93,7 @@ describe('CountCardComponent', () => {
     expect(harness.iconSlot).to.be.ok;
     expect(harness.labelSlot).to.be.ok;
     expect(harness.headerEndSlot).to.be.ok;
+    expect(harness.actionSlot).to.be.ok;
     expect(harness.countSlot).to.be.ok;
     expect(harness.countEndSlot).to.be.ok;
     expect(harness.fullWidthSlot).to.be.ok;
@@ -170,6 +179,17 @@ describe('CountCardComponent', () => {
       const harness = new CountCardHarness(el);
 
       expect(harness.headerEndSlot.assignedNodes().length).to.be.greaterThan(0);
+    });
+
+    it('should project content into action slot', async () => {
+      const el = await fixture<CountCardComponent>(html`
+        <forge-count-card>
+          <button slot="action">Action</button>
+        </forge-count-card>
+      `);
+      const harness = new CountCardHarness(el);
+
+      expect(harness.actionSlot.assignedNodes().length).to.be.greaterThan(0);
     });
   });
 
