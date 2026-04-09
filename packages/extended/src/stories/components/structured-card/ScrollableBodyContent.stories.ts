@@ -37,7 +37,7 @@ const meta = {
       <div class="card-container">
         <forge-structured-card style="--forge-structured-card-body-height: 200px;">
           <span slot="title">Project Details</span>
-          <forge-icon-button aria-label="More actions" slot="header-actions">
+          <forge-icon-button aria-label="More actions" slot="after-header-actions">
             <forge-icon name="more_vert"></forge-icon>
           </forge-icon-button>
           <div slot="body">

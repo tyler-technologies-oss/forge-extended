@@ -53,6 +53,10 @@ class StructuredCardHarness {
     return this.el.shadowRoot!.querySelector('slot[name="header-actions"]') as HTMLSlotElement;
   }
 
+  public get afterHeaderActionsSlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="after-header-actions"]') as HTMLSlotElement;
+  }
+
   public get bodySlot(): HTMLSlotElement {
     return this.el.shadowRoot!.querySelector('slot[name="body"]') as HTMLSlotElement;
   }
@@ -91,6 +95,7 @@ describe('StructuredCardComponent', () => {
     expect(harness.beforeTitleSlot).to.be.ok;
     expect(harness.titleSlot).to.be.ok;
     expect(harness.headerActionsSlot).to.be.ok;
+    expect(harness.afterHeaderActionsSlot).to.be.ok;
     expect(harness.bodySlot).to.be.ok;
     expect(harness.footerStartSlot).to.be.ok;
     expect(harness.footerSecondaryActionSlot).to.be.ok;
@@ -225,6 +230,17 @@ describe('StructuredCardComponent', () => {
       const harness = new StructuredCardHarness(el);
 
       expect(harness.headerActionsSlot.assignedNodes().length).to.be.greaterThan(0);
+    });
+
+    it('should project content into after-header-actions slot', async () => {
+      const el = await fixture<StructuredCardComponent>(html`
+        <forge-structured-card>
+          <div slot="after-header-actions">After Actions</div>
+        </forge-structured-card>
+      `);
+      const harness = new StructuredCardHarness(el);
+
+      expect(harness.afterHeaderActionsSlot.assignedNodes().length).to.be.greaterThan(0);
     });
 
     it('should project content into body slot', async () => {

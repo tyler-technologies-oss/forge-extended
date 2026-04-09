@@ -12,6 +12,7 @@
   forge-content-scaffold {
     --forge-content-scaffold-body-padding-inline: 0;
     --forge-content-scaffold-footer-full-padding: 0;
+    --forge-content-scaffold-body-padding-block: 0;
   }
 
   .footer-container {
@@ -23,7 +24,7 @@
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  grid-template-areas: 'start . end';
+  grid-template-areas: 'start . actions';
   min-height: 48px;
 }
 
@@ -34,6 +35,7 @@ forge-content-scaffold {
 .container {
   --forge-card-padding: 0;
   --forge-card-gap: 0;
+  height: 100%;
 }
 
 .title-container {
@@ -45,12 +47,21 @@ forge-content-scaffold {
   margin-inline-start: #{forge-spacing.variable(medium)};
 }
 
-.actions-container {
-  grid-area: end;
-}
-
 ::slotted([slot='title']) {
   @include forge-typography.style(heading3);
+}
+
+.actions-container {
+  @include mixins.stack($gap: 0, $isInline: true);
+  grid-area: actions;
+}
+
+::slotted([slot='header-actions']) {
+  margin-inline-end: #{forge-spacing.variable(medium)};
+}
+
+::slotted([slot='body']) {
+  height: var(--_structured-card-body-height);
 }
 
 .footer-container {
@@ -67,8 +78,4 @@ forge-content-scaffold {
 .footer-actions {
   @include mixins.stack($gap: #{forge-spacing.variable(medium)}, $isInline: true);
   grid-area: end;
-}
-
-::slotted([slot='body']) {
-  height: var(--_structured-card-body-height);
 }

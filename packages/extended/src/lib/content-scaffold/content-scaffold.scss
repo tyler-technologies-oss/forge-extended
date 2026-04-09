@@ -15,6 +15,12 @@
     --forge-content-scaffold-body-padding-inline,
     #{forge-spacing.variable(medium)}
   );
+
+  --_content-scaffold-body-padding-block: var(
+    --forge-content-scaffold-body-padding-block,
+    #{forge-spacing.variable(xxsmall)}
+  );
+
   --_content-scaffold-footer-height: var(--forge-content-scaffold-footer-height, auto);
   --_content-scaffold-footer-full-padding: var(
     --forge-content-scaffold-footer-full-padding,
@@ -72,6 +78,7 @@
 
 .body-inner {
   padding-inline: var(--_content-scaffold-body-padding-inline);
+  padding-block: var(--_content-scaffold-body-padding-block);
 }
 
 .footer {

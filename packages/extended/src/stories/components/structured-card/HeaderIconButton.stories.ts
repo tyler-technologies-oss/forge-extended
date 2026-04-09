@@ -70,7 +70,7 @@ const meta = {
       <div class="actions-card-container">
         <forge-structured-card heading-level="2">
           <div slot="title">Project Details</div>
-          <forge-menu slot="header-actions" .options=${menuOptions} @forge-menu-select=${handleMenuSelect}>
+          <forge-menu slot="after-header-actions" .options=${menuOptions} @forge-menu-select=${handleMenuSelect}>
             <forge-icon-button aria-label="More actions">
               <forge-icon name="more_vert"></forge-icon>
             </forge-icon-button>
@@ -105,4 +105,4 @@ export default meta;
 
 type Story = StoryObj;
 
-export const WithHeaderActions: Story = {};
+export const HeaderIconButton: Story = {};

@@ -41,10 +41,10 @@ const meta = {
     return html`
       <forge-structured-card heading-level="2" body-spacing="none">
         <div slot="title">User Management</div>
-        <forge-icon-button aria-label="Refresh data" slot="header-actions">
+        <forge-icon-button aria-label="Refresh data" slot="after-header-actions">
           <forge-icon name="refresh"></forge-icon>
         </forge-icon-button>
-        <forge-icon-button aria-label="Download report" slot="header-actions">
+        <forge-icon-button aria-label="Download report" slot="after-header-actions">
           <forge-icon name="download"></forge-icon>
         </forge-icon-button>
         <forge-table slot="body" .data=${tableData} .columnConfigurations=${columnConfigurations}></forge-table>
