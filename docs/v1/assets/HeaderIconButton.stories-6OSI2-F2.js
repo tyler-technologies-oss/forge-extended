@@ -1,0 +1,41 @@
+import{x as t}from"./iframe-DatE1pPE.js";import{s as n}from"./decorators-D6rrKW_H.js";import{I as r,p as a,n as i,m as s,C as m,e as d,g as c,l}from"./with-default-aria-D1B2n6Ht.js";import"./structured-card-LoxBuQVX.js";import{d as p}from"./index-BF_Gb8vv.js";import{d as u}from"./index-C_JSjESe.js";import{d as g}from"./index-DalXRqud.js";import{d as f}from"./index-CC9ZllM9.js";import{d as y}from"./index-BL3_VDB5.js";import"./_commonjsHelpers-CqkleIqs.js";import"./constants-BuXSMmg1.js";import"./query-assigned-nodes-cwDSNLIu.js";import"./base-CShCMygk.js";import"./class-map-DHwt3Od8.js";import"./directive-CJw_OlP2.js";import"./content-scaffold-IGo-mzja.js";import"./when-3fO0zp9C.js";import"./lit-utils-CnQt0oyh.js";import"./async-directive-0rciksg7.js";import"./index-BxqU3naQ.js";import"./base-button-adapter-CjJaTJRp.js";import"./focus-indicator-Iu12CDTY.js";import"./icon-BtY27vTh.js";import"./icon-button-BLN4LihF.js";import"./list-dropdown-aware-core-CLeDoug_.js";import"./linear-progress-constants-CB8ZQvWH.js";import"./list-BWX3FeQH.js";import"./popover-DgoDrEVb.js";import"./with-longpress-listener-5LKxHbUE.js";import"./dismissible-stack-C10-507m.js";import"./skeleton-constants-BDgTfkp0.js";import"./tooltip-D_jHW8Le.js";p();u();g();f();y();r.define([a,i,s,m,d,c,l]);const I="forge-structured-card",Y={title:"Components/Structured Card",component:I,decorators:[n(`
+      .actions-card-container {
+        max-width: 600px;
+      }
+
+      p {
+        margin: 0;
+        padding: 0;
+      }
+    `)],render:()=>t`
+      <div class="actions-card-container">
+        <forge-structured-card heading-level="2">
+          <div slot="title">Project Details</div>
+          <forge-menu slot="after-header-actions" .options=${[{label:"Edit",value:"edit",leadingIcon:"edit",leadingIconType:"component"},{label:"Share",value:"share",leadingIcon:"share",leadingIconType:"component"},{label:"Download",value:"download",leadingIcon:"download",leadingIconType:"component"},{label:"Delete",value:"delete",leadingIcon:"delete",leadingIconType:"component"}]} @forge-menu-select=${o=>{console.log("Menu option selected:",o.detail)}}>
+            <forge-icon-button aria-label="More actions">
+              <forge-icon name="more_vert"></forge-icon>
+            </forge-icon-button>
+          </forge-menu>
+
+          <div slot="body" class="card-content">
+            <p>
+              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the
+              industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and
+              scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into
+              electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release
+              of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software
+              like Aldus PageMaker including versions of Lorem Ipsum.
+            </p>
+          </div>
+
+          <forge-button variant="text" slot="footer-secondary-action">
+            <forge-icon slot="start" name="delete"></forge-icon>
+            Cancel
+          </forge-button>
+          <forge-button variant="filled" slot="footer-primary-action">
+            <forge-icon slot="start" name="save"></forge-icon>
+            Save
+          </forge-button>
+        </forge-structured-card>
+      </div>
+    `},e={};e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:"{}",...e.parameters?.docs?.source}}};const Z=["HeaderIconButton"];export{e as HeaderIconButton,Z as __namedExportsOrder,Y as default};
