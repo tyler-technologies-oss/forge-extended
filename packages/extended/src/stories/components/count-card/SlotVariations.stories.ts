@@ -38,7 +38,7 @@ const meta = {
     ];
 
     return html`
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--forge-spacing-medium);">
         <!-- Card 1: With header-end badge -->
         <forge-count-card>
           <forge-icon slot="icon" name="attach_money"></forge-icon>

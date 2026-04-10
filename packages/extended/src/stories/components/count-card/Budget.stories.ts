@@ -23,7 +23,7 @@ const meta = {
   component,
   render: () => {
     return html`
-      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;">
+      <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--forge-spacing-medium);">
         <forge-count-card>
           <forge-icon slot="icon" name="attach_money"></forge-icon>
           <span slot="label">Cost</span>
