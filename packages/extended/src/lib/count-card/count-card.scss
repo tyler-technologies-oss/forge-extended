@@ -45,6 +45,7 @@ forge-card {
   gap: #{forge-spacing.variable(small)};
   padding-inline: #{forge-spacing.variable(medium)};
   padding-block-start: #{forge-spacing.variable(medium)};
+  min-height: 36px;
 }
 
 .header-start {

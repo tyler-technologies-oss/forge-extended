@@ -30,6 +30,10 @@ The Count Card uses a slot-based architecture with eight main areas:
 
 > **Note:** Use the `action` slot instead of `header-end` when adding a `forge-icon-button`. Icon buttons have a 48x48px touch target that can disrupt the card's layout when placed in `header-end`. The `action` slot provides proper alignment for icon buttons.
 
+### Structural Consistency
+
+As a best practice, we recommend that all count cards on a given page use the same slot structure. While not required, this helps maintain visual alignment and consistency when cards are displayed together in a grid.
+
 ```html
 <forge-count-card>
   <forge-icon slot="icon" name="attach_money"></forge-icon>
