@@ -8,6 +8,7 @@ import { ResponsiveToolbarDemo } from './demos/responsive-toolbar/ResponsiveTool
 import { UserProfileDemo } from './demos/user-profile/UserProfileDemo';
 import { AppLauncherDemo } from './demos/app-launcher/AppLauncherDemo';
 import { StructuredCardDemo } from './demos/structured-card/StructuredCardDemo';
+import { CountCardDemo } from './demos/count-card/CountCardDemo';
 
 export interface IAppRoute extends RouteProps {
   path: string;
@@ -26,6 +27,7 @@ const routes: IAppRoute[] = [
       { path: '/app-launcher', component: AppLauncherDemo, text: 'App Launcher' },
       { path: '/app-layout', component: AppLayoutDemo, text: 'App Layout' },
       { path: '/busy-indicator', component: BusyIndicatorDemo, text: 'Busy Indicator' },
+      { path: '/count-card', component: CountCardDemo, text: 'Count Card' },
       { path: '/multi-select-header', component: MultiSelectHeaderDemo, text: 'Multi Select Header' },
       { path: '/quantity-field', component: QuantityFieldDemo, text: 'Quantity Field' },
       { path: '/responsive-toolbar', component: ResponsiveToolbarDemo, text: 'Responsive Toolbar' },

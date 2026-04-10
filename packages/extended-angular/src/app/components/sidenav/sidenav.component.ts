@@ -30,6 +30,7 @@ export class SidenavComponent implements AfterViewInit {
     { label: 'App Layout', value: '/component/app-layout' },
     { label: 'Busy Indicator', value: '/component/busy-indicator' },
     { label: 'Confirmation Dialog', value: '/component/confirmation-dialog' },
+    { label: 'Count Card', value: '/component/count-card' },
     { label: 'Multi Select Header', value: '/component/multi-select-header' },
     { label: 'Quantity Field', value: '/component/quantity-field' },
     { label: 'Responsive Toolbar', value: '/component/responsive-toolbar' },

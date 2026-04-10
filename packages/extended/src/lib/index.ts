@@ -11,4 +11,5 @@ export * from './app-launcher/app-launcher-link';
 export * from './structured-card';
 export * from './content-scaffold';
 export * from './app-layout';
+export * from './count-card';
 // -- EXPORTS PLACEHOLDER (DO NOT REMOVE) --
