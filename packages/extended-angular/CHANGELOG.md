@@ -1,5 +1,32 @@
 # @tylertech/forge-extended-angular
 
+## 2.2.0
+
+### Minor Changes
+
+- 4b3a229: feat(count-card): add Count Card component
+
+  A new component for displaying labeled counts/metrics with optional icons, badges, and visualizations. Supports multiple theme variants (primary, secondary, tertiary, success, error, warning, info, info-secondary) and various slots for customization including icon, label, count, header-end, count-end, body, and full-width content areas.
+
+### Patch Changes
+
+- Updated dependencies [4b3a229]
+  - @tylertech/forge-extended@1.6.0
+
+## 2.1.0
+
+### Minor Changes
+
+- fcdf883: Created a new structured card component to help with consistent card UIs
+- 7ed2aa1: Created a new app layout component. This component wraps the forge-scaffold component and provides it a bit of responsive functionality
+
+### Patch Changes
+
+- Updated dependencies [caf23d3]
+- Updated dependencies [fcdf883]
+- Updated dependencies [7ed2aa1]
+  - @tylertech/forge-extended@1.4.0
+
 ## 2.0.1
 
 ### Patch Changes

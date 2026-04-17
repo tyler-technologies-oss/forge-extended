@@ -1,11 +1,14 @@
 import { RouteProps } from 'react-router';
 import { Home } from './core/home/Home';
+import { AppLayoutDemo } from './demos/app-layout/AppLayoutDemo';
 import { BusyIndicatorDemo } from './demos/busy-indicator/BusyIndicatorDemo';
 import { MultiSelectHeaderDemo } from './demos/multi-select-header/MultiSelectHeaderDemo';
 import { QuantityFieldDemo } from './demos/quantity-field/QuantityFieldDemo';
 import { ResponsiveToolbarDemo } from './demos/responsive-toolbar/ResponsiveToolbarDemo';
 import { UserProfileDemo } from './demos/user-profile/UserProfileDemo';
 import { AppLauncherDemo } from './demos/app-launcher/AppLauncherDemo';
+import { StructuredCardDemo } from './demos/structured-card/StructuredCardDemo';
+import { CountCardDemo } from './demos/count-card/CountCardDemo';
 
 export interface IAppRoute extends RouteProps {
   path: string;
@@ -22,10 +25,13 @@ const routes: IAppRoute[] = [
     icon: 'settings_input_component',
     routes: [
       { path: '/app-launcher', component: AppLauncherDemo, text: 'App Launcher' },
+      { path: '/app-layout', component: AppLayoutDemo, text: 'App Layout' },
       { path: '/busy-indicator', component: BusyIndicatorDemo, text: 'Busy Indicator' },
+      { path: '/count-card', component: CountCardDemo, text: 'Count Card' },
       { path: '/multi-select-header', component: MultiSelectHeaderDemo, text: 'Multi Select Header' },
       { path: '/quantity-field', component: QuantityFieldDemo, text: 'Quantity Field' },
       { path: '/responsive-toolbar', component: ResponsiveToolbarDemo, text: 'Responsive Toolbar' },
+      { path: '/structured-card', component: StructuredCardDemo, text: 'Structured Card' },
       { path: '/user-profile', component: UserProfileDemo, text: 'User Profile' }
     ]
   }

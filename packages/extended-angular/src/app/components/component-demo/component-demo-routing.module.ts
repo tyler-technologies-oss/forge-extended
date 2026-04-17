@@ -28,6 +28,10 @@ const routes: Routes = [
       )
   },
   {
+    path: 'count-card',
+    loadChildren: () => import('../../views/components/count-card/count-card.module').then(m => m.CountCardModule)
+  },
+  {
     path: 'user-profile',
     loadChildren: () => import('../../views/components/user-profile/user-profile.module').then(m => m.UserProfileModule)
   },
@@ -41,6 +45,15 @@ const routes: Routes = [
   {
     path: 'app-launcher',
     loadChildren: () => import('../../views/components/app-launcher/app-launcher.module').then(m => m.AppLauncherModule)
+  },
+  {
+    path: 'app-layout',
+    loadChildren: () => import('../../views/components/app-layout/app-layout.module').then(m => m.AppLayoutModule)
+  },
+  {
+    path: 'structured-card',
+    loadChildren: () =>
+      import('../../views/components/structured-card/structured-card.module').then(m => m.StructuredCardModule)
   }
 ];
 

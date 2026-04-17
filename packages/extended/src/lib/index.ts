@@ -10,4 +10,8 @@ export * from './app-launcher';
 export * from './app-launcher/app-launcher-link';
 export * from './footer/footer';
 export * from './footer/footer-item';
+export * from './structured-card';
+export * from './content-scaffold';
+export * from './app-layout';
+export * from './count-card';
 // -- EXPORTS PLACEHOLDER (DO NOT REMOVE) --
