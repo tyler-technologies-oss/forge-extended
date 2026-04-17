@@ -97,8 +97,9 @@ export class FooterComponent extends LitElement {
   public override render(): TemplateResult {
     return html`
       <footer>
-        <ul role="list" class="footer__list"></ul>
-        <slot></slot>
+        <ul role="list" class="footer__list">
+          <slot></slot>
+        </ul>
       </footer>
     `;
   }
