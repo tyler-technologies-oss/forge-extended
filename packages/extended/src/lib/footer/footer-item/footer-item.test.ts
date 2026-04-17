@@ -53,7 +53,7 @@ class FooterItemHarness {
   constructor(public el: FooterItemComponent) {}
 
   public get wrapper(): HTMLDivElement | null {
-    return this.el.shadowRoot?.querySelector('.forge-footer-item') as HTMLDivElement;
+    return this.el.shadowRoot?.querySelector('.footer-item') as HTMLDivElement;
   }
 
   public get slot(): HTMLSlotElement | null {

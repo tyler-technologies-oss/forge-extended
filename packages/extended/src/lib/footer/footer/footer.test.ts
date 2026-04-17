@@ -24,7 +24,7 @@ describe('FooterComponent', () => {
       });
 
       const harness = await createFixture();
-      expect(harness.el.layout).to.equal('alternative');
+      expect(harness.el.matches(':state(alternative)')).to.be.true;
     });
 
     it('should resolve auto layout to "standard" when viewport is wide', async () => {
@@ -40,7 +40,7 @@ describe('FooterComponent', () => {
       });
 
       const harness = await createFixture();
-      expect(harness.el.layout).to.equal('standard');
+      expect(harness.el.matches(':state(standard)')).to.be.true;
     });
 
     it('should have default layoutBreakpoint value of 900', async () => {
@@ -56,11 +56,11 @@ describe('FooterComponent', () => {
       expect(harness.el.getAttribute('layout')).to.equal('standard');
     });
 
-    it('should update layout attribute when property changes', async () => {
+    it('should update layout state when property changes', async () => {
       const harness = await createFixture(html`<forge-footer layout="standard"></forge-footer>`);
       harness.el.layout = 'alternative';
       await harness.el.updateComplete;
-      expect(harness.el.getAttribute('layout')).to.equal('alternative');
+      expect(harness.el.matches(':state(alternative)')).to.be.true;
     });
   });
 
@@ -88,18 +88,6 @@ describe('FooterComponent', () => {
       const assigned = harness.slot?.assignedElements();
       expect(assigned?.length).to.equal(2);
       expect(assigned?.[0].tagName).to.equal('A');
-    });
-  });
-
-  describe('Media query behavior', () => {
-    it('should set up media query when layout is "auto" on connection', async () => {
-      const harness = await createFixture(html`<forge-footer layout="auto"></forge-footer>`);
-      expect((harness.el as unknown as { _mediaQuery?: MediaQueryList })._mediaQuery).to.exist;
-    });
-
-    it('should not set up media query when layout is "standard"', async () => {
-      const harness = await createFixture(html`<forge-footer layout="standard"></forge-footer>`);
-      expect((harness.el as unknown as { _mediaQuery?: MediaQueryList })._mediaQuery).to.be.undefined;
     });
   });
 });

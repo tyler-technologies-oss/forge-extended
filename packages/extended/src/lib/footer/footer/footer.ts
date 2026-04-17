@@ -1,6 +1,8 @@
-import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
+import { LitElement, PropertyValues, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { toggleState } from '@tylertech/forge';
 import styles from './footer.scss?inline';
+import '../footer-item/footer-item';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -10,78 +12,92 @@ declare global {
 
 export const FooterComponentTagName: keyof HTMLElementTagNameMap = 'forge-footer';
 
+/**
+ * @tag forge-footer
+ *
+ * @slot - Slot for footer items or custom content
+ *
+ * @property {('standard'|'alternative'|'auto')} layout - Defines the footer layout mode
+ * @property {number} layoutBreakpoint - Width breakpoint used when layout is set to `auto`
+ */
+
 @customElement(FooterComponentTagName)
 export class FooterComponent extends LitElement {
+  readonly #internals: ElementInternals;
+
+  constructor() {
+    super();
+    this.#internals = this.attachInternals();
+  }
   public static override styles = unsafeCSS(styles);
+
   @property({ type: String })
   public layout: 'standard' | 'alternative' | 'auto' = 'auto';
 
   @property({ type: Number })
   public layoutBreakpoint = 900;
 
-  private _mediaQuery?: MediaQueryList;
+  #mediaQuery?: MediaQueryList;
 
   public connectedCallback(): void {
     super.connectedCallback();
-    this._applyLayout();
+    this.#applyLayout();
   }
 
   public disconnectedCallback(): void {
     super.disconnectedCallback();
-    this._removeMediaQuery();
+    this.#removeMediaQuery();
   }
 
-  public updated(changedProps: Map<string, unknown>): void {
-    if (changedProps.has('layout')) {
-      this._applyLayout();
+  public override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('layout')) {
+      this.#applyLayout();
     }
-    if (changedProps.has('layoutBreakpoint')) {
-      this._applyLayoutBreakpoint();
+    if (changedProperties.has('layoutBreakpoint')) {
+      this.#applyLayoutBreakpoint();
     }
   }
 
-  private _applyLayout(): void {
+  #applyLayout(): void {
     if (this.layout === 'auto') {
-      this._setMediaQuery();
-      this.setAttribute('layout', 'auto');
+      this.#setMediaQuery();
+      toggleState(this.#internals, 'auto', true);
       return;
     }
-    this._removeMediaQuery();
-    this.setAttribute('layout', this.layout);
+    this.#removeMediaQuery();
+    toggleState(this.#internals, 'auto', false);
+    toggleState(this.#internals, this.layout, true);
   }
 
-  private _applyLayoutBreakpoint(): void {
+  #applyLayoutBreakpoint(): void {
     this.setAttribute('layout-breakpoint', this.layoutBreakpoint.toString());
     if (this.layout === 'auto') {
-      this._removeMediaQuery();
-      this._setMediaQuery();
+      this.#removeMediaQuery();
+      this.#setMediaQuery();
     }
   }
 
-  private _setMediaQuery(): void {
-    this._mediaQuery = window.matchMedia(`(max-width: ${this.layoutBreakpoint}px)`);
-    this._mediaQuery.addEventListener('change', this._onMediaChange);
-    this._onMediaChange(this._mediaQuery);
+  #setMediaQuery(): void {
+    this.#mediaQuery = window.matchMedia(`(max-width: ${this.layoutBreakpoint}px)`);
+    this.#mediaQuery.addEventListener('change', this.#onMediaChange);
+    this.#onMediaChange(this.#mediaQuery);
   }
 
-  private _removeMediaQuery(): void {
-    if (this._mediaQuery) {
-      this._mediaQuery.removeEventListener('change', this._onMediaChange);
+  #removeMediaQuery(): void {
+    if (this.#mediaQuery) {
+      this.#mediaQuery.removeEventListener('change', this.#onMediaChange);
     }
   }
 
-  private _onMediaChange = (evt: MediaQueryList | MediaQueryListEvent): void => {
-    if (evt.matches) {
-      this.setAttribute('layout', 'alternative');
-    } else {
-      this.setAttribute('layout', 'standard');
-    }
+  #onMediaChange = (evt: MediaQueryList | MediaQueryListEvent): void => {
+    toggleState(this.#internals, 'alternative', evt.matches);
+    toggleState(this.#internals, 'standard', !evt.matches);
   };
 
   public override render(): TemplateResult {
     return html`
       <footer>
-        <ul role="list" class="forge-footer__list"></ul>
+        <ul role="list" class="footer__list"></ul>
         <slot></slot>
       </footer>
     `;

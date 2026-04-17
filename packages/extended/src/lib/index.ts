@@ -8,4 +8,6 @@ export * from './user-profile/profile-link';
 export * from './multi-select-header';
 export * from './app-launcher';
 export * from './app-launcher/app-launcher-link';
+export * from './footer/footer';
+export * from './footer/footer-item';
 // -- EXPORTS PLACEHOLDER (DO NOT REMOVE) --
