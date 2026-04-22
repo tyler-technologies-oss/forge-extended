@@ -1,5 +1,12 @@
 # @tylertech/forge-extended
 
+## 1.6.1
+
+### Patch Changes
+
+- 830f100: fix(structured-card): more responsive footer
+  - modified the footer layout to use flex and wrap when needed
+
 ## 1.6.0
 
 ### Minor Changes
