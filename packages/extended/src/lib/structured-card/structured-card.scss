@@ -11,7 +11,7 @@
 :host(:state(body-spacing-none)) {
   forge-content-scaffold {
     --forge-content-scaffold-body-padding-inline: 0;
-    --forge-content-scaffold-footer-full-padding: 0;
+    --forge-content-scaffold-footer-full-padding: #{forge-spacing.variable(small)} #{forge-spacing.variable(medium)};
     --forge-content-scaffold-body-padding-block: 0;
   }
 
@@ -65,17 +65,19 @@ forge-content-scaffold {
 }
 
 .footer-container {
-  display: grid;
-  grid-template-columns: auto 1fr auto;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  grid-template-areas: 'start . end';
+  flex-wrap: wrap;
+  column-gap: #{forge-spacing.variable(medium)};
 }
 
 .footer-start-container {
-  grid-area: start;
+  flex: 1;
+  flex-basis: content;
+  justify-content: flex-end;
 }
 
 .footer-actions {
   @include mixins.stack($gap: #{forge-spacing.variable(medium)}, $isInline: true);
-  grid-area: end;
 }
