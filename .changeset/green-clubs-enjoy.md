@@ -1,5 +1,5 @@
 ---
-'@tylertech/forge-extended': minor
+'@tylertech/forge-extended': patch
 ---
 
 feat(structured-card): more responsive footer
