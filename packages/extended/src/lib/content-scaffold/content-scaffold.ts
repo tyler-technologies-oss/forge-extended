@@ -102,15 +102,15 @@ export class ContentScaffoldComponent extends LitElement {
 
   public override render(): TemplateResult {
     return html`
-      ${this.#headerContent}
-      <div class="container" @slotchange=${this.#handleSlotChange}>
+      <div class="outer-container" @slotchange=${this.#handleSlotChange}>
+        ${this.#headerContent}
         <div class="body" ${hideWhenEmpty()}>
           <div class="body-inner">
             <slot name="body"></slot>
           </div>
         </div>
+        ${this.#footerContent}
       </div>
-      ${this.#footerContent}
     `;
   }
 }

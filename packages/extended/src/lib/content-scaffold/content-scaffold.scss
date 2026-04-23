@@ -5,8 +5,6 @@
 @use '../utils/mixins' as mixins;
 
 :host {
-  display: grid;
-  grid-template-rows: auto 1fr auto;
   height: 100%;
   --_content-scaffold-header-height: var(--forge-content-scaffold-header-height, auto);
   --_content-scaffold-header-background: var(--forge-content-scaffold-header-background, transparent);
@@ -29,6 +27,12 @@
   );
   --_content-scaffold-footer-background: var(--forge-content-scaffold-footer-background, transparent);
   --_content-scaffold-footer-min-height: var(--forge-content-scaffold-footer-min-height, 48px);
+}
+
+.outer-container {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100%;
 }
 
 .container {
