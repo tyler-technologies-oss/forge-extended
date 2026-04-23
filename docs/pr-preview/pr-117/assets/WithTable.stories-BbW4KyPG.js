@@ -1,0 +1,13 @@
+import{x as e}from"./iframe-jIu5SHun.js";import{I as r,H as t,J as a,g as i}from"./with-default-aria-CAxpHz7d.js";import"./structured-card-B_Om21cR.js";import{d as n,a as m}from"./index-DldXaS8m.js";import{d as p}from"./index-BZAh-mPf.js";import{d as l}from"./index-Bv7OxRa7.js";import"./constants-BCDXA3X6.js";import"./query-assigned-nodes-cwDSNLIu.js";import"./base-CShCMygk.js";import"./class-map-C67lmCmz.js";import"./directive-CJw_OlP2.js";import"./content-scaffold-CljPqIQ1.js";import"./when-3fO0zp9C.js";import"./lit-utils-Bk4gblj4.js";import"./async-directive-DqWFd2EV.js";import"./index-DvCjSoQd.js";import"./icon-button-B_h3KTVL.js";import"./base-button-adapter-44w80FD7.js";import"./focus-indicator-xmVPxQxu.js";import"./icon-BwWww8Mn.js";import"./tooltip-DduLWRrp.js";import"./with-longpress-listener-DiiYn4rs.js";import"./dismissible-stack-DeFE9N0P.js";import"./select-CnfK-HGG.js";import"./with-form-associated-DCzxBx4i.js";import"./field-BJ95hi7D.js";import"./list-dropdown-aware-core-qnJ4yxsY.js";import"./linear-progress-constants-wtiKDI_1.js";import"./list-ZkxMIwLA.js";import"./popover-B4_hlWNv.js";import"./skeleton-constants-DHwaJPri.js";import"./divider-C6pGjvG1.js";import"./circular-progress-B0zHl6CG.js";import"./scaffold-DPxFFfmU.js";import"./toolbar-BUJqnE4A.js";n();p();l();m();r.define([t,a,i]);const s="forge-structured-card",L={title:"Components/Structured Card",component:s,render:()=>e`
+      <forge-structured-card heading-level="2" body-spacing="none">
+        <div slot="title">User Management</div>
+        <forge-icon-button aria-label="Refresh data" slot="after-header-actions">
+          <forge-icon name="refresh"></forge-icon>
+        </forge-icon-button>
+        <forge-icon-button aria-label="Download report" slot="after-header-actions">
+          <forge-icon name="download"></forge-icon>
+        </forge-icon-button>
+        <forge-table slot="body" .data=${[{id:1,name:"John Doe",email:"john.doe@example.com",role:"Admin"},{id:2,name:"Jane Smith",email:"jane.smith@example.com",role:"User"},{id:3,name:"Bob Johnson",email:"bob.johnson@example.com",role:"User"},{id:4,name:"Alice Williams",email:"alice.williams@example.com",role:"Manager"},{id:5,name:"Charlie Brown",email:"charlie.brown@example.com",role:"User"}]} .columnConfigurations=${[{property:"name",header:"Name"},{property:"email",header:"Email"},{property:"role",header:"Role"}]}></forge-table>
+        <forge-paginator slot="footer-primary-action" page-size="5" total="25" page-index="0"></forge-paginator>
+      </forge-structured-card>
+    `},o={};o.parameters={...o.parameters,docs:{...o.parameters?.docs,source:{originalSource:"{}",...o.parameters?.docs?.source}}};const Q=["WithTable"];export{o as WithTable,Q as __namedExportsOrder,L as default};
