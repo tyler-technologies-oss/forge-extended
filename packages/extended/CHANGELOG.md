@@ -1,5 +1,11 @@
 # @tylertech/forge-extended
 
+## 1.6.2
+
+### Patch Changes
+
+- fc2bef5: fix(structured-card): fixed an issue with multiple cards used within a flex container
+
 ## 1.6.1
 
 ### Patch Changes
