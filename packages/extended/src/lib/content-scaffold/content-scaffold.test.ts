@@ -5,8 +5,8 @@ import { ContentScaffoldComponent } from './content-scaffold';
 class ContentScaffoldHarness {
   constructor(public el: ContentScaffoldComponent) {}
 
-  public get containerElement(): HTMLElement {
-    return this.el.shadowRoot!.querySelector('.container') as HTMLElement;
+  public get outerContainerElement(): HTMLElement {
+    return this.el.shadowRoot!.querySelector('.outer-container') as HTMLElement;
   }
 
   public get headerElement(): HTMLElement | null {
@@ -72,7 +72,7 @@ describe('ContentScaffoldComponent', () => {
 
     expect(harness.el).to.be.instanceOf(ContentScaffoldComponent);
     expect(harness.el.shadowRoot).to.be.ok;
-    expect(harness.containerElement).to.be.ok;
+    expect(harness.outerContainerElement).to.be.ok;
   });
 
   it('should have all slots available', async () => {
