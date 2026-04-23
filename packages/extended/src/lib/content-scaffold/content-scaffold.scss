@@ -5,7 +5,8 @@
 @use '../utils/mixins' as mixins;
 
 :host {
-  display: block;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
   height: 100%;
   --_content-scaffold-header-height: var(--forge-content-scaffold-header-height, auto);
   --_content-scaffold-header-background: var(--forge-content-scaffold-header-background, transparent);

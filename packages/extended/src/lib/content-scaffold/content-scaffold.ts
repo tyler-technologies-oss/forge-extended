@@ -109,8 +109,8 @@ export class ContentScaffoldComponent extends LitElement {
             <slot name="body"></slot>
           </div>
         </div>
-        ${this.#footerContent}
       </div>
+      ${this.#footerContent}
     `;
   }
 }
