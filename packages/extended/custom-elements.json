@@ -1101,7 +1101,7 @@
               },
               "privacy": "public",
               "default": "'spinner'",
-              "description": "The variant of the busy indicator.\n- `spinner` (default): displays a spinner.\n- `progress`: displays a progress bar.\n- `message-only`: No progress indicator is displayed.",
+              "description": "The variant of the busy indicator.\r\n- `spinner` (default): displays a spinner.\r\n- `progress`: displays a progress bar.\r\n- `message-only`: No progress indicator is displayed.",
               "attribute": "variant"
             },
             {
@@ -1233,7 +1233,7 @@
                 "text": "BusyIndicatorVariant"
               },
               "default": "'spinner'",
-              "description": "The variant of the busy indicator.\n- `spinner` (default): displays a spinner.\n- `progress`: displays a progress bar.\n- `message-only`: No progress indicator is displayed.",
+              "description": "The variant of the busy indicator.\r\n- `spinner` (default): displays a spinner.\r\n- `progress`: displays a progress bar.\r\n- `message-only`: No progress indicator is displayed.",
               "fieldName": "variant"
             },
             {
@@ -1888,92 +1888,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ThemeToggleComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-theme-toggle'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ThemeToggleComponent",
-          "slots": [
-            {
-              "description": "The title shown above the toggle buttons",
-              "name": "title"
-            }
-          ],
-          "members": [
-            {
-              "kind": "method",
-              "name": "setTheme",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "ThemeToggleTheme"
-                  }
-                }
-              ],
-              "description": "Sets the current theme."
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ThemeToggleThemeEventData>"
-              },
-              "description": "Fired when the theme is changed",
-              "name": "forge-theme-toggle-update"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-theme-toggle",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ThemeToggleComponentTagName",
-          "declaration": {
-            "name": "ThemeToggleComponentTagName",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ThemeToggleComponent",
-          "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/user-profile/user-profile.ts",
       "declarations": [
         {
@@ -2254,6 +2168,163 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/footer/footer/footer.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "FooterComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-footer'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "FooterComponent",
+          "slots": [
+            {
+              "description": "Slot for footer items or custom content",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "layout",
+              "type": {
+                "text": "('standard'|'alternative'|'auto')"
+              },
+              "privacy": "public",
+              "default": "'auto'",
+              "description": "Defines the footer layout mode",
+              "attribute": "layout"
+            },
+            {
+              "kind": "field",
+              "name": "layoutBreakpoint",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "900",
+              "description": "Width breakpoint used when layout is set to `auto`",
+              "attribute": "layoutBreakpoint"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "layout",
+              "type": {
+                "text": "('standard'|'alternative'|'auto')"
+              },
+              "default": "'auto'",
+              "description": "Defines the footer layout mode",
+              "fieldName": "layout"
+            },
+            {
+              "name": "layoutBreakpoint",
+              "type": {
+                "text": "number"
+              },
+              "default": "900",
+              "description": "Width breakpoint used when layout is set to `auto`",
+              "fieldName": "layoutBreakpoint"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-footer",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FooterComponentTagName",
+          "declaration": {
+            "name": "FooterComponentTagName",
+            "module": "src/lib/footer/footer/footer.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "FooterComponent",
+          "declaration": {
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer/footer.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer/footer.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/footer/footer-item/footer-item.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "FooterItemComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-footer-item'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "FooterItemComponent",
+          "slots": [
+            {
+              "description": "Slot for footer item content (e.g., text, links, or icons).",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-footer-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FooterItemComponentTagName",
+          "declaration": {
+            "name": "FooterItemComponentTagName",
+            "module": "src/lib/footer/footer-item/footer-item.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "FooterItemComponent",
+          "declaration": {
+            "name": "FooterItemComponent",
+            "module": "src/lib/footer/footer-item/footer-item.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "FooterItemComponent",
+            "module": "src/lib/footer/footer-item/footer-item.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
@@ -2435,6 +2506,14 @@
     "AppLauncherLinkComponent": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "lineNumber": 26
+    },
+    "FooterComponent": {
+      "path": "src/lib/footer/footer/footer.ts",
+      "lineNumber": 24
+    },
+    "FooterItemComponent": {
+      "path": "src/lib/footer/footer-item/footer-item.ts",
+      "lineNumber": 20
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",

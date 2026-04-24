@@ -1,0 +1,21 @@
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+
+:host {
+  display: block;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+.footer-item {
+  box-sizing: border-box;
+  display: inline-block;
+  font-size: 1rem;
+  line-height: 2rem;
+  color: #{forge-theme.variable(text-high)};
+}
+
+::slotted(*) {
+  color: #{forge-theme.variable(text-high)};
+}

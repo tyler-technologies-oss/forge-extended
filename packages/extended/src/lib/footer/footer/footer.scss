@@ -1,0 +1,40 @@
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+
+:host {
+  display: block;
+  box-sizing: border-box;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+footer {
+  background-color: var(--forge-theme-surface-bright);
+  padding: #{forge-spacing.variable(large)};
+  display: flex;
+  align-items: center;
+
+  ::slotted(*:not(:last-of-type))::after {
+    margin: 0 #{forge-spacing.variable(small)};
+    content: '|';
+    color: #{forge-theme.variable(text-high)};
+    line-height: 2rem;
+  }
+
+  .footer__list {
+    display: contents;
+  }
+}
+
+:host(:state(alternative)) footer,
+:host(:state(alternative)) footer .footer__content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+:host(:state(alternative)) footer {
+  text-align: center;
+}
