@@ -1,5 +1,52 @@
 # @tylertech/forge-extended
 
+## 1.6.2
+
+### Patch Changes
+
+- fc2bef5: fix(structured-card): fixed an issue with multiple cards used within a flex container
+
+## 1.6.1
+
+### Patch Changes
+
+- 830f100: fix(structured-card): more responsive footer
+  - modified the footer layout to use flex and wrap when needed
+
+## 1.6.0
+
+### Minor Changes
+
+- 4b3a229: feat(count-card): add Count Card component
+
+  A new component for displaying labeled counts/metrics with optional icons, badges, and visualizations. Supports multiple theme variants (primary, secondary, tertiary, success, error, warning, info, info-secondary) and various slots for customization including icon, label, count, header-end, count-end, body, and full-width content areas.
+
+## 1.5.0
+
+### Minor Changes
+
+- abd3b21: feat(structured-card): add `after-header-actions` slot for edge-aligned icon buttons
+  - Added new `after-header-actions` slot designed for icon buttons that need to run up against the card edge (e.g., close buttons, overflow menus)
+  - Added spacing between `header-actions` and `after-header-actions` slots
+  - Adjust the inner forge-card height to always expand to the height of its parent
+
+## 1.4.0
+
+### Minor Changes
+
+- fcdf883: Created a new structured card component to help with consistent card UIs
+- 7ed2aa1: Created a new app layout component. This component wraps the forge-scaffold component and provides it a bit of responsive functionality
+
+### Patch Changes
+
+- caf23d3: fix(app-launcher): add default fallback icon when `iconName` missing
+
+## 1.3.0
+
+### Minor Changes
+
+- d43be5d: The user profile component now handles the signed out state by rendering a sign in button if no fullName property is set
+
 ## 1.2.1
 
 ### Patch Changes

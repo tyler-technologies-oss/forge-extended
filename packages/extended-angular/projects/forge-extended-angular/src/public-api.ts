@@ -8,5 +8,10 @@ export * from './lib/multi-select-header';
 export * from './lib/responsive-toolbar';
 export * from './lib/user-profile';
 export * from './lib/profile-link';
+export * from './lib/app-launcher';
+export * from './lib/app-launcher-link';
+export * from './lib/count-card';
+export * from './lib/app-layout';
+export * from './lib/structured-card';
 
 export * from './lib/forge.module';

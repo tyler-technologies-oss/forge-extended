@@ -1,0 +1,83 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '../utils/mixins';
+
+:host {
+  display: block;
+  --_structured-card-body-height: var(--forge-structured-card-body-height, auto);
+}
+
+:host(:state(body-spacing-none)) {
+  forge-content-scaffold {
+    --forge-content-scaffold-body-padding-inline: 0;
+    --forge-content-scaffold-footer-full-padding: #{forge-spacing.variable(small)} #{forge-spacing.variable(medium)};
+    --forge-content-scaffold-body-padding-block: 0;
+  }
+
+  .footer-container {
+    padding-block-end: 0;
+  }
+}
+
+.header-container {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  grid-template-areas: 'start . actions';
+  min-height: 48px;
+}
+
+forge-content-scaffold {
+  --forge-content-scaffold-body-height: var(--_structured-card-body-height);
+}
+
+.container {
+  --forge-card-padding: 0;
+  --forge-card-gap: 0;
+  height: 100%;
+}
+
+.title-container {
+  @include mixins.stack($gap: 0, $isInline: true);
+  grid-area: start;
+}
+
+.title-with-margin {
+  margin-inline-start: #{forge-spacing.variable(medium)};
+}
+
+::slotted([slot='title']) {
+  @include forge-typography.style(heading3);
+}
+
+.actions-container {
+  @include mixins.stack($gap: 0, $isInline: true);
+  grid-area: actions;
+}
+
+::slotted([slot='header-actions']) {
+  margin-inline-end: #{forge-spacing.variable(medium)};
+}
+
+::slotted([slot='body']) {
+  height: var(--_structured-card-body-height);
+}
+
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  column-gap: #{forge-spacing.variable(medium)};
+}
+
+.footer-start-container {
+  flex: 1;
+  flex-basis: content;
+  justify-content: flex-end;
+}
+
+.footer-actions {
+  @include mixins.stack($gap: #{forge-spacing.variable(medium)}, $isInline: true);
+}

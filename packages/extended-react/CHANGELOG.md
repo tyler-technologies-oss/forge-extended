@@ -1,5 +1,43 @@
 # @tylertech/forge-extended-react
 
+## 1.5.0
+
+### Minor Changes
+
+- 4b3a229: feat(count-card): add Count Card component
+
+  A new component for displaying labeled counts/metrics with optional icons, badges, and visualizations. Supports multiple theme variants (primary, secondary, tertiary, success, error, warning, info, info-secondary) and various slots for customization including icon, label, count, header-end, count-end, body, and full-width content areas.
+
+### Patch Changes
+
+- Updated dependencies [4b3a229]
+  - @tylertech/forge-extended@1.6.0
+
+## 1.4.0
+
+### Minor Changes
+
+- fcdf883: Created a new structured card component to help with consistent card UIs
+- 7ed2aa1: Created a new app layout component. This component wraps the forge-scaffold component and provides it a bit of responsive functionality
+
+### Patch Changes
+
+- Updated dependencies [caf23d3]
+- Updated dependencies [fcdf883]
+- Updated dependencies [7ed2aa1]
+  - @tylertech/forge-extended@1.4.0
+
+## 1.3.0
+
+### Minor Changes
+
+- d43be5d: The user profile component now handles the signed out state by rendering a sign in button if no fullName property is set
+
+### Patch Changes
+
+- Updated dependencies [d43be5d]
+  - @tylertech/forge-extended@1.3.0
+
 ## 1.2.0
 
 ### Minor Changes
