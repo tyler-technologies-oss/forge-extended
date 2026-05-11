@@ -11,7 +11,7 @@
 }
 
 footer {
-  background-color: var(--forge-theme-surface-bright);
+  background-color: var(--forge-theme-outline);
   padding: #{forge-spacing.variable(large)};
   display: flex;
   align-items: center;
@@ -26,13 +26,29 @@ footer {
   .footer__list {
     display: contents;
   }
+
+  .footer__logo {
+    margin-left: auto;
+  }
 }
 
 :host(:state(alternative)) footer,
 :host(:state(alternative)) footer .footer__content {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr auto;
   justify-content: center;
+  gap: 24px;
+
+  .footer__list {
+    display: flex;
+    flex-wrap: wrap;
+    padding: initial;
+    text-align: left;
+  }
+
+  .footer__logo {
+    display: contents;
+  }
 }
 
 :host(:state(alternative)) footer {

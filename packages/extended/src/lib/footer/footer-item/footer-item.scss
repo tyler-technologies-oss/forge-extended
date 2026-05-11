@@ -13,9 +13,10 @@
   display: inline-block;
   font-size: 1rem;
   line-height: 2rem;
-  color: #{forge-theme.variable(text-high)};
+  color: var(--forge-theme-on-brand);
 }
 
 ::slotted(*) {
-  color: #{forge-theme.variable(text-high)};
+  color: var(--forge-theme-on-brand);
+  text-decoration: none;
 }

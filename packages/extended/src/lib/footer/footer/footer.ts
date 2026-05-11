@@ -100,6 +100,9 @@ export class FooterComponent extends LitElement {
         <ul role="list" class="footer__list">
           <slot></slot>
         </ul>
+        <div class="footer__logo">
+          <slot name="graphic"></slot>
+        </div>
       </footer>
     `;
   }
