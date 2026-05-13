@@ -19,6 +19,7 @@ import { HeaderComponent } from './components/header/header.component';
 import { HomeComponent } from './views/home/home.component';
 
 import {
+  ForgeExtendedFooterModule,
   ForgeExtendedProfileLinkModule,
   ForgeExtendedQuantityFieldModule,
   ForgeExtendedUserProfileModule
@@ -36,7 +37,8 @@ import { ForgeExtendedAppLayoutModule } from 'projects/forge-extended-angular/sr
     ForgeExtendedQuantityFieldModule,
     ForgeExtendedUserProfileModule,
     ForgeExtendedProfileLinkModule,
-    ForgeExtendedAppLayoutModule
+    ForgeExtendedAppLayoutModule,
+    ForgeExtendedFooterModule
   ],
   providers: [],
   bootstrap: [AppComponent]

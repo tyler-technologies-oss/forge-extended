@@ -15,19 +15,26 @@ const meta = {
   title: 'Components/Footer',
   component,
   render: args => html`
-    <div class="page-shell">
-      <main class="content">
-        <h1>Page content</h1>
-        <p>Use the footer to display persistent page navigation, policy links, or application information.</p>
-      </main>
+    <forge-footer .layout=${args.layout} .layoutBreakpoint=${args.layoutBreakpoint}>
+      <forge-footer-item>
+        <a href="javascript: void(0);">About</a>
+      </forge-footer-item>
+      <forge-footer-item>
+        <a href="javascript: void(0);">Contact</a>
+      </forge-footer-item>
+      <forge-footer-item>
+        <a href="javascript: void(0);">Privacy</a>
+      </forge-footer-item>
+      <forge-footer-item>
+        <span>© 2026 Tyler Technologies</span>
+      </forge-footer-item>
 
-      <forge-footer .layout=${args.layout} .layoutBreakpoint=${args.layoutBreakpoint}>
-        <forge-footer-item><a href="#">About</a></forge-footer-item>
-        <forge-footer-item><a href="#">Contact</a></forge-footer-item>
-        <forge-footer-item><a href="#">Privacy</a></forge-footer-item>
-        <forge-footer-item><span>© 2026 Tyler Technologies</span></forge-footer-item>
-      </forge-footer>
-    </div>
+      <a slot="graphic" href="https://www.tylertech.com/" target="_blank">
+        <img
+          src="https://cdn.forge.tylertech.com/v1/images/branding/tyler/tyler-empowered-logo-white.svg"
+          alt="Empowered by Tyler Technologies" />
+      </a>
+    </forge-footer>
   `,
   argTypes: {
     layout: {

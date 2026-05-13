@@ -1,9 +1,20 @@
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
 @use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/tokens/color-palette' as color-palette;
+@use '@tylertech/forge/sass/typography' as forge-typography;
 
 :host {
   display: block;
   box-sizing: border-box;
+
+  --_footer-background: var(--forge-footer-background, #{color-palette.$grey-800});
+  --_footer-on-background: var(--forge-footer-on-background, #ffffff);
+  --_footer-padding: var(--forge-footer-padding, #{forge-spacing.variable(large)});
+  --_footer-padding-left: var(--forge-footer-padding-left, var(--_footer-padding));
+  --_footer-padding-right: var(--forge-footer-padding-right, var(--_footer-padding));
+  --_footer-gap: var(--forge-footer-gap, #{forge-spacing.variable(xxlarge)});
+  --_footer-alternative-gap: var(--forge-footer-alternative-gap, #{forge-spacing.variable(xlarge)});
+  --_footer-divider-margin: var(--forge-footer-divider-margin, #{forge-spacing.variable(small)});
 }
 
 :host([hidden]) {
@@ -11,46 +22,48 @@
 }
 
 footer {
-  background-color: var(--forge-theme-outline);
-  padding: #{forge-spacing.variable(large)};
-  display: flex;
-  align-items: center;
-
-  ::slotted(*:not(:last-of-type))::after {
-    margin: 0 #{forge-spacing.variable(small)};
-    content: '|';
-    color: #{forge-theme.variable(text-high)};
-    line-height: 2rem;
-  }
-
-  .footer__list {
-    display: contents;
-  }
-
-  .footer__logo {
-    margin-left: auto;
-  }
-}
-
-:host(:state(alternative)) footer,
-:host(:state(alternative)) footer .footer__content {
+  background-color: var(--_footer-background);
+  padding: var(--_footer-padding);
+  padding-inline-start: var(--_footer-padding-left);
+  padding-inline-end: var(--_footer-padding-right);
+  gap: var(--_footer-gap);
   display: grid;
   grid-template-columns: 1fr auto;
-  justify-content: center;
-  gap: 24px;
+  align-items: center;
 
-  .footer__list {
-    display: flex;
-    flex-wrap: wrap;
-    padding: initial;
-    text-align: left;
+  ::slotted(forge-footer-item:not(:last-of-type))::after {
+    content: '|';
+    content: '|' / '';
+    font-size: 1rem;
+    margin-inline: var(--_footer-divider-margin);
+    color: var(--_footer-on-background);
+    line-height: 1.375rem;
   }
 
-  .footer__logo {
-    display: contents;
+  .list {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+
+    @supports not (grid-area: auto) {
+      margin-right: var(--_footer-gap);
+    }
   }
 }
 
 :host(:state(alternative)) footer {
+  gap: var(--_footer-alternative-gap);
+  grid-template-columns: 1fr;
+  grid-auto-flow: row;
+  justify-items: center;
   text-align: center;
+
+  .list {
+    justify-content: center;
+
+    @supports not (grid-area: auto) {
+      margin-bottom: var(--_footer-alternative-gap);
+      margin-right: 0;
+    }
+  }
 }

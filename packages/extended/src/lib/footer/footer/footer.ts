@@ -1,8 +1,11 @@
 import { LitElement, PropertyValues, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { toggleState } from '@tylertech/forge';
-import styles from './footer.scss?inline';
+import { setDefaultAria } from '@tylertech/forge/esm/core/utils/a11y-utils';
+
 import '../footer-item/footer-item';
+
+import styles from './footer.scss?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -10,41 +13,62 @@ declare global {
   }
 }
 
+export type FooterLayout = 'standard' | 'alternative' | 'auto';
+
 export const FooterComponentTagName: keyof HTMLElementTagNameMap = 'forge-footer';
 
 /**
+ * A footer component for displaying navigation, copyright, and branding information at the bottom of a page.
+ *
  * @tag forge-footer
  *
- * @slot - Slot for footer items or custom content
+ * @slot - Slot for footer items or custom content.
+ * @slot graphic - Slot for footer graphic, such as a logo.
  *
- * @property {('standard'|'alternative'|'auto')} layout - Defines the footer layout mode
- * @property {number} layoutBreakpoint - Width breakpoint used when layout is set to `auto`
+ * @cssprop --forge-footer-background - Controls the background color of the footer.
+ * @cssprop --forge-footer-on-background - Controls the text color of footer content.
+ * @cssprop --forge-footer-padding - Controls the padding of the footer.
+ * @cssprop --forge-footer-padding-left - Controls the left padding of the footer.
+ * @cssprop --forge-footer-padding-right - Controls the right padding of the footer.
+ * @cssprop --forge-footer-gap - Controls the gap between footer content and graphic in standard layout.
+ * @cssprop --forge-footer-alternative-gap - Controls the gap between stacked elements in alternative layout.
+ * @cssprop --forge-footer-divider-margin - Controls the margin around dividers between footer items.
+ *
+ * @state standard - Applied when the layout is set to `standard` or when in `auto` mode above the breakpoint.
+ * @state alternative - Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint.
+ * @state auto - Applied when the layout is set to `auto`.
  */
 
 @customElement(FooterComponentTagName)
 export class FooterComponent extends LitElement {
+  public static override styles = unsafeCSS(styles);
+
   readonly #internals: ElementInternals;
 
   constructor() {
     super();
     this.#internals = this.attachInternals();
   }
-  public static override styles = unsafeCSS(styles);
 
+  /** Defines the footer layout mode. */
   @property({ type: String })
-  public layout: 'standard' | 'alternative' | 'auto' = 'auto';
+  public layout: FooterLayout = 'auto';
 
-  @property({ type: Number })
+  /** Width breakpoint in pixels used when layout is set to `auto`. */
+  @property({ type: Number, attribute: 'layout-breakpoint' })
   public layoutBreakpoint = 900;
 
   #mediaQuery?: MediaQueryList;
 
-  public connectedCallback(): void {
+  public override connectedCallback(): void {
     super.connectedCallback();
+    setDefaultAria(this, this.#internals, {
+      role: 'contentinfo'
+    });
     this.#applyLayout();
   }
 
-  public disconnectedCallback(): void {
+  public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.#removeMediaQuery();
   }
@@ -66,11 +90,11 @@ export class FooterComponent extends LitElement {
     }
     this.#removeMediaQuery();
     toggleState(this.#internals, 'auto', false);
-    toggleState(this.#internals, this.layout, true);
+    toggleState(this.#internals, 'standard', this.layout === 'standard');
+    toggleState(this.#internals, 'alternative', this.layout === 'alternative');
   }
 
   #applyLayoutBreakpoint(): void {
-    this.setAttribute('layout-breakpoint', this.layoutBreakpoint.toString());
     if (this.layout === 'auto') {
       this.#removeMediaQuery();
       this.#setMediaQuery();
@@ -84,9 +108,7 @@ export class FooterComponent extends LitElement {
   }
 
   #removeMediaQuery(): void {
-    if (this.#mediaQuery) {
-      this.#mediaQuery.removeEventListener('change', this.#onMediaChange);
-    }
+    this.#mediaQuery?.removeEventListener('change', this.#onMediaChange);
   }
 
   #onMediaChange = (evt: MediaQueryList | MediaQueryListEvent): void => {
@@ -96,13 +118,11 @@ export class FooterComponent extends LitElement {
 
   public override render(): TemplateResult {
     return html`
-      <footer>
-        <ul role="list" class="footer__list">
+      <footer part="root">
+        <div role="list" class="list" part="content">
           <slot></slot>
-        </ul>
-        <div class="footer__logo">
-          <slot name="graphic"></slot>
         </div>
+        <slot name="graphic"></slot>
       </footer>
     `;
   }

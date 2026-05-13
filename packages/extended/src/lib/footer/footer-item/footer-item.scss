@@ -1,7 +1,11 @@
 @use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/typography' as forge-typography;
 
 :host {
-  display: block;
+  display: inline;
+  box-sizing: border-box;
+
+  --_footer-item-color: var(--forge-footer-item-color, #ffffff);
 }
 
 :host([hidden]) {
@@ -9,14 +13,25 @@
 }
 
 .footer-item {
+  @include forge-typography.style(body1);
+  color: var(--_footer-item-color);
+  line-height: 1.375rem;
   box-sizing: border-box;
-  display: inline-block;
-  font-size: 1rem;
-  line-height: 2rem;
-  color: var(--forge-theme-on-brand);
+  display: inline-flex;
+  word-break: normal;
 }
 
 ::slotted(*) {
-  color: var(--forge-theme-on-brand);
+  @include forge-typography.style(body1);
+  color: var(--_footer-item-color);
+  line-height: 1.375rem;
+  margin: 0;
+}
+
+::slotted(a) {
+  text-decoration: underline;
+}
+
+::slotted(a:hover) {
   text-decoration: none;
 }
