@@ -1,4 +1,4 @@
 {
   "**/*": ["prettier --write --ignore-unknown"],
-  "**/*.{ts,tsx}": ["pnpm exec eslint --parser-options tsconfigRootDir:. --ext .ts,.tsx"]
+  "**/*.{ts,tsx}": ["pnpm exec eslint"]
 }

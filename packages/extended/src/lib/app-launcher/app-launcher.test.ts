@@ -1,7 +1,7 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html, nextFrame } from '@open-wc/testing';
 import { AppLauncherComponent, AppLauncherOption } from './app-launcher';
-import { PopoverComponent, DialogComponent } from '@tylertech/forge';
+import { PopoverComponent, DialogComponent, type IIconComponent } from '@tylertech/forge';
 import { AppLauncherLink } from './app-launcher-link';
 import sinon from 'sinon';
 
@@ -102,6 +102,30 @@ describe('AppLauncher', () => {
   });
 
   describe('Number properties', () => {});
+
+  describe('App icons', () => {
+    it('should render default icon when app has no iconName', async () => {
+      const harness = await createFixture({
+        relatedApps: [{ label: 'App Without Icon', iconName: '', uri: 'http://test.com' }]
+      });
+
+      const icon = harness.getAppIcon(0);
+      expect(icon).to.exist;
+      expect(icon!.name).to.equal('application');
+      expect(icon!.external).to.be.false;
+    });
+
+    it('should render external icon when app has iconName', async () => {
+      const harness = await createFixture({
+        relatedApps: [{ label: 'App With Icon', iconName: 'custom_icon', uri: 'http://test.com' }]
+      });
+
+      const icon = harness.getAppIcon(0);
+      expect(icon).to.exist;
+      expect(icon!.name).to.equal('custom_icon');
+      expect(icon!.external).to.be.true;
+    });
+  });
 
   describe('Loading functionality', () => {
     it('should show loading view when both arrays are empty', async () => {
@@ -1154,6 +1178,14 @@ class AppLauncherHarness {
 
   public get loadingSkeleton(): HTMLElement[] {
     return Array.from(this.el.shadowRoot!.querySelectorAll('.loading-state forge-skeleton')) as HTMLElement[];
+  }
+
+  public getAppIcon(index: number): IIconComponent | null {
+    const appItems = this.appLinks;
+    if (index >= appItems.length) {
+      return null;
+    }
+    return appItems[index].querySelector('forge-avatar forge-icon') as IIconComponent;
   }
 
   public async typeInSearchField(text: string): Promise<void> {

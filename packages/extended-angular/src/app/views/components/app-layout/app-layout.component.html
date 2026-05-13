@@ -1,0 +1,38 @@
+<app-demo-card headerText="App Layout">
+  <div class="stack-medium">
+    <forge-inline-message theme="info-secondary">
+      <forge-icon slot="icon" name="info"></forge-icon>
+      <span
+        >This Angular demo app itself uses the <code>&lt;forge-app-layout&gt;</code> component. The layout you see with
+        the app bar and navigation drawer is powered by it. Resize your browser window to see it in action.</span
+      >
+    </forge-inline-message>
+
+    <div class="stack-xxxsmall">
+      <h3 class="forge-typography--heading2">Live Configuration</h3>
+      <p class="forge-typography--body1">
+        Modify the properties below to see changes reflected in the app layout above.
+      </p>
+    </div>
+
+    <forge-text-field>
+      <label for="app-title">App Title</label>
+      <input
+        id="app-title"
+        type="text"
+        [ngModel]="appLayoutState.appTitle()"
+        (ngModelChange)="appLayoutState.setAppTitle($event)" />
+    </forge-text-field>
+
+    <forge-text-field>
+      <label for="breakpoint">Breakpoint (px)</label>
+      <input
+        id="breakpoint"
+        type="number"
+        [ngModel]="appLayoutState.breakpoint()"
+        (ngModelChange)="appLayoutState.setBreakpoint($event)" />
+    </forge-text-field>
+
+    <forge-button variant="outlined" (click)="appLayoutState.reset()">Reset to Defaults</forge-button>
+  </div>
+</app-demo-card>

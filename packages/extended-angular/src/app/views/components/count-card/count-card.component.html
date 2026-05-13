@@ -1,0 +1,113 @@
+<app-demo-card headerText="Count Card">
+  <div class="demo-container">
+    <!-- Controls -->
+    <div class="controls">
+      <forge-select label="Theme" [value]="selectedTheme()" (change)="selectedTheme.set($any($event).target.value)">
+        @for (theme of themes; track theme) {
+          <forge-option [value]="theme">{{ theme }}</forge-option>
+        }
+      </forge-select>
+      <forge-switch [selected]="noBorder()" (forge-switch-change)="noBorder.set($event.detail)">No Border</forge-switch>
+    </div>
+
+    <!-- Basic Examples -->
+    <h3>Basic Count Cards</h3>
+    <div class="card-grid">
+      <forge-count-card [theme]="selectedTheme()" [noBorder]="noBorder()">
+        <forge-icon slot="icon" name="shopping_cart"></forge-icon>
+        <span slot="label">Orders</span>
+        <span slot="count">1,234</span>
+      </forge-count-card>
+
+      <forge-count-card [theme]="selectedTheme()" [noBorder]="noBorder()">
+        <forge-icon slot="icon" name="people"></forge-icon>
+        <span slot="label">Active Users</span>
+        <span slot="count">5,678</span>
+      </forge-count-card>
+
+      <forge-count-card [theme]="selectedTheme()" [noBorder]="noBorder()">
+        <forge-icon slot="icon" name="attach_money"></forge-icon>
+        <span slot="label">Revenue</span>
+        <span slot="count">$42,500</span>
+      </forge-count-card>
+    </div>
+
+    <!-- With Header End Slot -->
+    <h3>With Header Actions</h3>
+    <div class="card-grid">
+      <forge-count-card [theme]="selectedTheme()" [noBorder]="noBorder()">
+        <forge-icon slot="icon" name="trending_up"></forge-icon>
+        <span slot="label">Growth Rate</span>
+        <forge-badge slot="header-end" theme="success">+15%</forge-badge>
+        <span slot="count">23.5%</span>
+      </forge-count-card>
+
+      <forge-count-card [theme]="selectedTheme()" [noBorder]="noBorder()">
+        <forge-icon slot="icon" name="shopping_cart"></forge-icon>
+        <span slot="label">Orders</span>
+        <forge-icon-button slot="header-end" aria-label="More options" dense>
+          <forge-icon name="more_vert"></forge-icon>
+        </forge-icon-button>
+        <span slot="count">1,234</span>
+      </forge-count-card>
+    </div>
+
+    <!-- With Body Slot -->
+    <h3>With Body Content</h3>
+    <div class="card-grid">
+      <forge-count-card [theme]="selectedTheme()" [noBorder]="noBorder()">
+        <forge-icon slot="icon" name="warning"></forge-icon>
+        <span slot="label">Open Issues</span>
+        <span slot="count">42</span>
+        <span slot="body">12 critical, 30 minor</span>
+      </forge-count-card>
+
+      <forge-count-card [theme]="selectedTheme()" [noBorder]="noBorder()">
+        <forge-icon slot="icon" name="people"></forge-icon>
+        <span slot="label">Team Members</span>
+        <span slot="count">28</span>
+        <span slot="body">4 online now</span>
+      </forge-count-card>
+    </div>
+
+    <!-- Theme Variations -->
+    <h3>Theme Variations</h3>
+    <div class="card-grid">
+      <forge-count-card theme="primary" [noBorder]="noBorder()">
+        <forge-icon slot="icon" name="shopping_cart"></forge-icon>
+        <span slot="label">Primary</span>
+        <span slot="count">123</span>
+      </forge-count-card>
+
+      <forge-count-card theme="success" [noBorder]="noBorder()">
+        <forge-icon slot="icon" name="trending_up"></forge-icon>
+        <span slot="label">Success</span>
+        <span slot="count">456</span>
+      </forge-count-card>
+
+      <forge-count-card theme="error" [noBorder]="noBorder()">
+        <forge-icon slot="icon" name="warning"></forge-icon>
+        <span slot="label">Error</span>
+        <span slot="count">7</span>
+      </forge-count-card>
+
+      <forge-count-card theme="warning" [noBorder]="noBorder()">
+        <forge-icon slot="icon" name="warning"></forge-icon>
+        <span slot="label">Warning</span>
+        <span slot="count">89</span>
+      </forge-count-card>
+
+      <forge-count-card theme="info" [noBorder]="noBorder()">
+        <forge-icon slot="icon" name="people"></forge-icon>
+        <span slot="label">Info</span>
+        <span slot="count">321</span>
+      </forge-count-card>
+
+      <forge-count-card theme="info-secondary" [noBorder]="noBorder()">
+        <forge-icon slot="icon" name="attach_money"></forge-icon>
+        <span slot="label">Info Secondary</span>
+        <span slot="count">654</span>
+      </forge-count-card>
+    </div>
+  </div>
+</app-demo-card>

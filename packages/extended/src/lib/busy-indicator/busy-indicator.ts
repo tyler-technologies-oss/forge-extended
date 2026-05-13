@@ -11,6 +11,7 @@ import { when } from 'lit/directives/when.js';
 import { composeSlottedTextContent } from '../utils/slot-utils';
 
 import styles from './busy-indicator.scss?inline';
+import { HeadingLevel } from '../utils/types';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -61,7 +62,7 @@ export class BusyIndicatorComponent extends LitElement {
 
   /** The heading level for the title. */
   @property({ attribute: 'heading-level', type: Number })
-  public headingLevel: 1 | 2 | 3 | 4 | 5 | 6 = 1;
+  public headingLevel: HeadingLevel = 1;
 
   /** The message to display. */
   @property()

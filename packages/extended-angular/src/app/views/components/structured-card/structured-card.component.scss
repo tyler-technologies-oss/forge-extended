@@ -1,0 +1,14 @@
+demo-card {
+  display: block;
+  margin-block-end: 16px;
+}
+
+forge-structured-card {
+  width: 100%;
+  max-width: 600px;
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}

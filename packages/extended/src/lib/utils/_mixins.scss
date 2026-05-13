@@ -1,12 +1,13 @@
 @mixin stack($gap: 16px, $isInline: false) {
+  display: flex;
+
   @if $isInline {
     flex-direction: row;
     align-items: center;
   } @else {
     flex-direction: column;
   }
-  display: flex;
-  flex-direction: column;
+
   gap: $gap;
 }
 
@@ -18,4 +19,11 @@
   width: 1px;
   height: 1px;
   white-space: nowrap;
+}
+
+@mixin toolbar-layout {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  grid-template-areas: 'start . end';
 }

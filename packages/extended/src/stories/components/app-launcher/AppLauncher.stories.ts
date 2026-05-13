@@ -40,7 +40,7 @@ const relatedApps: AppLauncherOption[] = [
   },
   {
     label: 'GitHub',
-    iconName: 'security',
+    iconName: '',
     uri: 'https://google.com',
     target: '_blank'
   },

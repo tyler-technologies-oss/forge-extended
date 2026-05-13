@@ -23,12 +23,13 @@ import {
   toggleState
 } from '@tylertech/forge';
 import {
+  tylIconApplication,
   tylIconApps,
-  tylIconOpenInNew,
-  tylIconSearch,
+  tylIconArrowBack,
   tylIconChevronRight,
   tylIconClose,
-  tylIconArrowBack
+  tylIconOpenInNew,
+  tylIconSearch
 } from '@tylertech/tyler-icons';
 
 import styles from './app-launcher.scss?inline';
@@ -80,12 +81,13 @@ export class AppLauncherComponent extends LitElement {
     defineSkeletonComponent();
 
     IconRegistry.define([
+      tylIconApplication,
       tylIconApps,
-      tylIconOpenInNew,
-      tylIconSearch,
+      tylIconArrowBack,
       tylIconChevronRight,
       tylIconClose,
-      tylIconArrowBack
+      tylIconOpenInNew,
+      tylIconSearch
     ]);
   }
 
@@ -432,7 +434,7 @@ export class AppLauncherComponent extends LitElement {
     return html`
       <forge-list-item class="app-list-item">
         <forge-avatar class="app-avatar" slot="start">
-          <forge-icon name=${app.iconName} external></forge-icon>
+          <forge-icon name=${app.iconName || 'application'} ?external=${!!app.iconName}></forge-icon>
         </forge-avatar>
         <a href="${app.uri}" target="${app.target || '_blank'}">${app.label}</a>
       </forge-list-item>

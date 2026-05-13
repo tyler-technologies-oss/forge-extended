@@ -1,0 +1,23 @@
+.demo-container {
+  display: grid;
+  gap: var(--forge-spacing-large);
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: center;
+  justify-content: start;
+  gap: var(--forge-spacing-medium);
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--forge-spacing-medium);
+}
+
+h3 {
+  margin: 0;
+  padding: 0;
+}
