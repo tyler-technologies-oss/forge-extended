@@ -26,6 +26,16 @@ describe('FooterItem', () => {
       expect(el.getAttribute('role')).to.equal('listitem');
       document.body.removeChild(el);
     });
+
+    it('should be accessible', async () => {
+      const container = await fixture<HTMLDivElement>(html`
+        <div role="list">
+          <forge-footer-item><a href="#">Link</a></forge-footer-item>
+        </div>
+      `);
+      const footerItem = container.querySelector('forge-footer-item') as FooterItemComponent;
+      await expect(footerItem).shadowDom.to.be.accessible();
+    });
   });
 
   describe('Rendering', () => {
@@ -40,11 +50,26 @@ describe('FooterItem', () => {
       expect(harness.wrapper?.tagName).to.equal('DIV');
     });
 
+    it('should render wrapper div with footer-item class', async () => {
+      const harness = await createFixture();
+      expect(harness.wrapper).to.exist;
+      expect(harness.wrapper?.classList.contains('footer-item')).to.be.true;
+    });
+
     it('should display slotted content correctly', async () => {
       const harness = await createFixture(html`<forge-footer-item><a href="#">Link Text</a></forge-footer-item>`);
       const assigned = harness.slot?.assignedElements();
       expect(assigned).to.have.lengthOf(1);
       expect(assigned?.[0].tagName).to.equal('A');
+    });
+  });
+
+  describe('CSS parts', () => {
+    it('should expose root part', async () => {
+      const harness = await createFixture();
+      const root = harness.el.shadowRoot!.querySelector('[part="root"]');
+      expect(root).to.exist;
+      expect(root?.classList.contains('footer-item')).to.be.true;
     });
   });
 });
