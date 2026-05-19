@@ -61,6 +61,65 @@ however you see fit. You are responsible for closing the busy indicator manually
 
 <CustomArgTypes />
 
+## Angular Service
+
+The `@tylertech/forge-extended-angular` package provides a `BusyIndicatorService` that makes it easy to programmatically create and control busy indicators without managing the element directly in your template.
+
+The service is provided at the root level and can be injected anywhere in your application.
+
+### Usage
+
+Import the module and inject the service:
+
+```typescript
+import { BusyIndicatorService } from '@tylertech/forge-extended-angular';
+
+@Component({ ... })
+export class MyComponent {
+  private _busyIndicatorService = inject(BusyIndicatorService);
+
+  public doWork(): void {
+    const ref = this._busyIndicatorService.open({ message: 'Loading...' });
+    doSomethingAsync().finally(() => ref.hide());
+  }
+}
+```
+
+### `BusyIndicatorService.open(config?, parent?)`
+
+| Parameter | Type                              | Default         | Description                                                                                    |
+| --------- | --------------------------------- | --------------- | ---------------------------------------------------------------------------------------------- |
+| `config`  | `Partial<BusyIndicatorComponent>` | `undefined`     | Optional configuration to apply to the busy indicator element (any property on the component). |
+| `parent`  | `HTMLElement`                     | `document.body` | The element to append the busy indicator to.                                                   |
+
+Returns a `BusyIndicatorRef` instance.
+
+### `BusyIndicatorRef`
+
+The object returned by `open()` provides the following API:
+
+| Member          | Type                            | Description                                                                            |
+| --------------- | ------------------------------- | -------------------------------------------------------------------------------------- |
+| `hide()`        | `void`                          | Closes and removes the busy indicator from the DOM.                                    |
+| `nativeElement` | `BusyIndicatorComponent`        | The underlying `<forge-busy-indicator>` element.                                       |
+| `afterCancel`   | `Observable<CustomEvent<void>>` | Emits when the user clicks the cancel button. Only active when `cancelable` is `true`. |
+
+### Cancelable Example
+
+```typescript
+public doWork(): void {
+  const ref = this._busyIndicatorService.open({
+    message: 'Loading...',
+    cancelable: true
+  });
+
+  ref.afterCancel.subscribe(() => {
+    // Handle cancellation
+    ref.hide();
+  });
+}
+```
+
 ## Accessibility
 
 The busy indicator is a dialog that will prevent the user from interacting with the parts of the page while the process is running. It is important to ensure
