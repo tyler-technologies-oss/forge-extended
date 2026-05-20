@@ -60,6 +60,8 @@ export const APP_LAYOUT_CLOSE_ATTRIBUTE = 'data-forge-app-layout-close';
  *
  * @method closeDrawer - Closes the navigation drawer on small screens
  *
+ * @slot - Default slot. Content without a slot attribute is placed in the body area.
+ * @slot body - Explicit body slot. Alternative to using the default slot.
  * @slot header - Places content in the header
  * @slot footer - Places content in the footer
  * @slot left - Places content to the left of all content
@@ -379,6 +381,7 @@ export class AppLayoutComponent extends LitElement {
           : ''}
 
         <slot name="body" slot="body"></slot>
+        <slot slot="body"></slot>
         <slot name="right" slot="right"></slot>
         <slot name="body-right" slot="body-right"></slot>
         <slot name="body-footer" slot="body-footer"></slot>

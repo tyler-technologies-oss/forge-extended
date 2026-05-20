@@ -151,6 +151,20 @@ describe('AppLayout', () => {
     expect(harness.bodySlot.assignedNodes().length).to.greaterThanOrEqual(1);
   });
 
+  it('should project content without a slot attribute into the body slot by default', async () => {
+    const el = await fixture<AppLayoutComponent>(html`
+      <forge-app-layout>
+        <div id="default-content">Default Body Content</div>
+      </forge-app-layout>
+    `);
+
+    const defaultSlot = el.shadowRoot!.querySelector('slot:not([name])') as HTMLSlotElement;
+    const assignedElements = defaultSlot.assignedElements({ flatten: true });
+
+    expect(assignedElements.length).to.be.greaterThan(0);
+    expect(assignedElements.some(element => element.id === 'default-content')).to.be.true;
+  });
+
   it('content should project into the app-bar-logo slot', async () => {
     const harness = await createFixture({ hasLogo: true });
 
