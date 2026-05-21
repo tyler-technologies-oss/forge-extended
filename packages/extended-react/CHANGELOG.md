@@ -1,5 +1,13 @@
 # @tylertech/forge-extended-react
 
+## 1.5.1
+
+### Patch Changes
+
+- b158256: fix:(app-layout): forward default slot content to the body slot
+- Updated dependencies [b158256]
+  - @tylertech/forge-extended@1.6.3
+
 ## 1.5.0
 
 ### Minor Changes

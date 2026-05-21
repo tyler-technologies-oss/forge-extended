@@ -1,5 +1,11 @@
 # @tylertech/forge-extended
 
+## 1.6.3
+
+### Patch Changes
+
+- b158256: fix:(app-layout): forward default slot content to the body slot
+
 ## 1.6.2
 
 ### Patch Changes
