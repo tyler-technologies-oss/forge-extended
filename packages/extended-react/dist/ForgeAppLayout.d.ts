@@ -83,7 +83,9 @@ export interface ForgeAppLayoutProps
  *  - **closeDrawer(): _void_** - Closes the navigation drawer. Only has effect on small screens where the drawer is modal.
  *
  * ### **Slots:**
- *  - **header** - Places content in the header
+ *  - _default_ - Default slot. Content without a slot attribute is placed in the body area.
+ * - **body** - Explicit body slot. Alternative to using the default slot.
+ * - **header** - Places content in the header
  * - **footer** - Places content in the footer
  * - **left** - Places content to the left of all content
  * - **right** - Places content to the right of all content
