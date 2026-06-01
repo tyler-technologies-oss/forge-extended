@@ -161,15 +161,18 @@ This library provides Angular wrappers for all Forge extended components:
 
 | Component | Module | Description |
 |-----------|--------|-------------|
+| `<forge-app-layout>` | `ForgeAppLayoutModule` | Application layout container |
 | `<forge-app-launcher>` | `ForgeAppLauncherModule` | Application launcher with navigation |
 | `<forge-app-launcher-link>` | `ForgeAppLauncherLinkModule` | Link items for app launcher |
 | `<forge-busy-indicator>` | `ForgeBusyIndicatorModule` | Loading indicator overlay |
 | `<forge-confirmation-dialog>` | `ForgeConfirmationDialogModule` | Confirmation dialog component |
+| `<forge-content-scaffold>` | `ForgeContentScaffoldModule` | Content scaffold layout container |
+| `<forge-count-card>` | `ForgeCountCardModule` | Count summary card component |
 | `<forge-multi-select-header>` | `ForgeMultiSelectHeaderModule` | Multi-select table header |
 | `<forge-profile-link>` | `ForgeProfileLinkModule` | User profile link component |
 | `<forge-quantity-field>` | `ForgeQuantityFieldModule` | Numeric input with increment/decrement |
 | `<forge-responsive-toolbar>` | `ForgeResponsiveToolbarModule` | Responsive toolbar container |
-| `<forge-theme-toggle>` | `ForgeThemeToggleModule` | Light/dark theme toggle |
+| `<forge-structured-card>` | `ForgeStructuredCardModule` | Structured card container |
 | `<forge-user-profile>` | `ForgeUserProfileModule` | User profile dropdown |
 
 Each component is exported as a standalone Angular module that you can import individually for tree-shaking.
