@@ -1,4 +1,4 @@
-import { LitElement, TemplateResult, html, unsafeCSS, PropertyValues } from 'lit';
+import { LitElement, TemplateResult, html, unsafeCSS, PropertyValues, nothing } from 'lit';
 import { when } from 'lit/directives/when.js';
 import { customElement, property, state, queryAssignedNodes } from 'lit/decorators.js';
 import {
@@ -14,6 +14,7 @@ import {
 } from '@tylertech/forge';
 import { tylIconArrowBack, tylIconClose, tylIconTylerTalkingTLogo } from '@tylertech/tyler-icons';
 
+import { BreakpointHandler } from './breakpoint-handler';
 import styles from './app-layout.scss?inline';
 
 declare global {
@@ -52,6 +53,11 @@ export const APP_LAYOUT_RIGHT_TOGGLE_ATTRIBUTE = 'data-forge-app-layout-right';
  * The navigation drawer on small screens can be automatically closed when a user clicks on a navigation item
  * by adding the `data-forge-app-layout-close` attribute to any clickable element within the navigation slot.
  * Alternatively, the `closeDrawer()` method can be called programmatically.
+ *
+ * **Asymmetric Drawer Behavior:**
+ * The left navigation drawer auto-opens on large screens because it serves as primary navigation that should
+ * typically be visible on desktop. The right drawer remains closed by default on all screen sizes because it
+ * contains contextual content that should be user-triggered (e.g., details panels, filters).
  *
  * @property {string} appTitle - The title text to display in the app bar
  * @property {string} [appTitleHref] - The URL that the app bar title links to
@@ -154,18 +160,8 @@ export class AppLayoutComponent extends LitElement {
    */
   public closeDrawer(): void {
     if (!this._isLeftLargeScreen) {
-      this.#setDrawerClosed();
+      this.#closeLeftDrawer();
     }
-  }
-
-  #setDrawerClosed(): void {
-    if (!this._leftDrawerOpen) {
-      return;
-    }
-    this._leftDrawerOpen = false;
-    toggleState(this.#internals, 'drawer-open', false);
-    toggleState(this.#internals, 'drawer-closed', true);
-    this.#emitDrawerChange(false);
   }
 
   /**
@@ -189,39 +185,33 @@ export class AppLayoutComponent extends LitElement {
     this.#setRightDrawerOpen(!this._rightDrawerOpen);
   }
 
-  #setRightDrawerOpen(open: boolean): void {
-    if (this._rightDrawerOpen === open) {
-      return;
-    }
-    this._rightDrawerOpen = open;
-    toggleState(this.#internals, 'right-drawer-open', open);
-    toggleState(this.#internals, 'right-drawer-closed', !open);
-    this.#emitRightDrawerChange(open);
-  }
+  // Main breakpoint state
+  @state() private _isLargeScreen = false;
 
-  @state()
-  private _leftDrawerOpen = false;
+  // Left drawer state
+  @state() private _leftDrawerOpen = false;
+  @state() private _isLeftLargeScreen = false;
 
-  @state()
-  private _rightDrawerOpen = false;
+  // Right drawer state
+  @state() private _rightDrawerOpen = false;
+  @state() private _isRightLargeScreen = false;
 
-  @state()
-  private _isLargeScreen = false;
+  // Breakpoint handlers
+  #mainBreakpointHandler: BreakpointHandler;
+  #leftBreakpointHandler: BreakpointHandler | null = null;
+  #rightBreakpointHandler: BreakpointHandler | null = null;
 
-  @state()
-  private _isLeftLargeScreen = false;
-
-  @state()
-  private _isRightLargeScreen = false;
-
-  private _mediaQuery: MediaQueryList | null = null;
-  private _leftMediaQuery: MediaQueryList | null = null;
-  private _rightMediaQuery: MediaQueryList | null = null;
   readonly #internals: ElementInternals;
 
   constructor() {
     super();
     this.#internals = this.attachInternals();
+
+    // Initialize main breakpoint handler
+    this.#mainBreakpointHandler = new BreakpointHandler(
+      () => this.breakpoint,
+      isLargeScreen => this.#handleMainBreakpointChange(isLargeScreen)
+    );
 
     // Initialize drawer state immediately to prevent default open behavior
     this._leftDrawerOpen = false;
@@ -229,138 +219,118 @@ export class AppLayoutComponent extends LitElement {
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    this._setupMediaQuery();
-    this._setupLeftMediaQuery();
-    this._setupRightMediaQuery();
-    document.addEventListener('click', this._handleRightToggleButtonClick, true);
+    this.#mainBreakpointHandler.setup();
+    this.#setupLeftBreakpointHandler();
+    this.#setupRightBreakpointHandler();
+    document.addEventListener('click', this.#handleRightToggleButtonClick, true);
   }
 
   public override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
     // Re-update states after first render when slotted content is available
-    this._updateStates();
+    this.#updateMainStates();
     // Force drawer states to be applied immediately after render
-    this._applyDrawerStates();
+    this.#applyDrawerStates();
   }
 
   public override updated(changedProperties: PropertyValues<this>): void {
     super.updated(changedProperties);
 
     if (changedProperties.has('breakpoint')) {
-      this._cleanupMediaQuery();
-      this._setupMediaQuery();
+      this.#mainBreakpointHandler.update();
     }
 
     if (changedProperties.has('leftBreakpoint')) {
-      this._cleanupLeftMediaQuery();
-      this._setupLeftMediaQuery();
+      this.#cleanupLeftBreakpointHandler();
+      this.#setupLeftBreakpointHandler();
     }
 
     if (changedProperties.has('rightBreakpoint')) {
-      this._cleanupRightMediaQuery();
-      this._setupRightMediaQuery();
+      this.#cleanupRightBreakpointHandler();
+      this.#setupRightBreakpointHandler();
     }
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
-    this._cleanupMediaQuery();
-    this._cleanupLeftMediaQuery();
-    this._cleanupRightMediaQuery();
-    document.removeEventListener('click', this._handleRightToggleButtonClick, true);
+    this.#mainBreakpointHandler.cleanup();
+    this.#cleanupLeftBreakpointHandler();
+    this.#cleanupRightBreakpointHandler();
+    document.removeEventListener('click', this.#handleRightToggleButtonClick, true);
   }
 
-  private _setupMediaQuery(): void {
-    this._mediaQuery = window.matchMedia(`(min-width: ${this.breakpoint}px)`);
-    this._isLargeScreen = this._mediaQuery.matches;
-    this._updateStates();
-    this._mediaQuery.addEventListener('change', this._handleMediaQueryChange);
-  }
+  // --- Breakpoint Handler Setup/Cleanup ---
 
-  private _cleanupMediaQuery(): void {
-    if (this._mediaQuery) {
-      this._mediaQuery.removeEventListener('change', this._handleMediaQueryChange);
-      this._mediaQuery = null;
-    }
-  }
-
-  private _handleMediaQueryChange = (event: MediaQueryListEvent): void => {
-    this._isLargeScreen = event.matches;
-    this._updateStates();
-    this.#emitBreakpointChange(this._isLargeScreen ? 'large' : 'small');
-  };
-
-  private _setupLeftMediaQuery(): void {
-    // If leftBreakpoint is set, use it; otherwise fall back to main breakpoint
+  #setupLeftBreakpointHandler(): void {
     if (this.leftBreakpoint !== undefined) {
-      this._leftMediaQuery = window.matchMedia(`(min-width: ${this.leftBreakpoint}px)`);
-      this._isLeftLargeScreen = this._leftMediaQuery.matches;
-      this._leftMediaQuery.addEventListener('change', this._handleLeftMediaQueryChange);
+      const leftBreakpoint = this.leftBreakpoint;
+      this.#leftBreakpointHandler = new BreakpointHandler(
+        () => leftBreakpoint,
+        isLargeScreen => this.#handleLeftBreakpointChange(isLargeScreen)
+      );
+      this.#leftBreakpointHandler.setup();
     } else {
-      // Use main breakpoint state
+      // Sync with main breakpoint
       this._isLeftLargeScreen = this._isLargeScreen;
-    }
-    this._updateLeftDrawerState();
-  }
-
-  private _cleanupLeftMediaQuery(): void {
-    if (this._leftMediaQuery) {
-      this._leftMediaQuery.removeEventListener('change', this._handleLeftMediaQueryChange);
-      this._leftMediaQuery = null;
+      this.#updateLeftDrawerState();
     }
   }
 
-  private _handleLeftMediaQueryChange = (event: MediaQueryListEvent): void => {
-    this._isLeftLargeScreen = event.matches;
-    this._updateLeftDrawerState();
-  };
+  #cleanupLeftBreakpointHandler(): void {
+    if (this.#leftBreakpointHandler) {
+      this.#leftBreakpointHandler.cleanup();
+      this.#leftBreakpointHandler = null;
+    }
+  }
 
-  private _setupRightMediaQuery(): void {
-    // If rightBreakpoint is set, use it; otherwise fall back to main breakpoint
+  #setupRightBreakpointHandler(): void {
     if (this.rightBreakpoint !== undefined) {
-      this._rightMediaQuery = window.matchMedia(`(min-width: ${this.rightBreakpoint}px)`);
-      this._isRightLargeScreen = this._rightMediaQuery.matches;
-      this._rightMediaQuery.addEventListener('change', this._handleRightMediaQueryChange);
+      const rightBreakpoint = this.rightBreakpoint;
+      this.#rightBreakpointHandler = new BreakpointHandler(
+        () => rightBreakpoint,
+        isLargeScreen => this.#handleRightBreakpointChange(isLargeScreen)
+      );
+      this.#rightBreakpointHandler.setup();
     } else {
-      // Use main breakpoint state
+      // Sync with main breakpoint
       this._isRightLargeScreen = this._isLargeScreen;
     }
   }
 
-  private _cleanupRightMediaQuery(): void {
-    if (this._rightMediaQuery) {
-      this._rightMediaQuery.removeEventListener('change', this._handleRightMediaQueryChange);
-      this._rightMediaQuery = null;
+  #cleanupRightBreakpointHandler(): void {
+    if (this.#rightBreakpointHandler) {
+      this.#rightBreakpointHandler.cleanup();
+      this.#rightBreakpointHandler = null;
     }
   }
 
-  private _handleRightMediaQueryChange = (event: MediaQueryListEvent): void => {
-    this._isRightLargeScreen = event.matches;
-  };
+  // --- Breakpoint Change Handlers ---
 
-  private _updateLeftDrawerState(): void {
-    // Set drawer defaults based on left breakpoint
-    if (this._isLeftLargeScreen) {
-      this._leftDrawerOpen = true;
-    } else {
-      this._leftDrawerOpen = false;
-    }
-    toggleState(this.#internals, 'drawer-open', this._leftDrawerOpen);
-    toggleState(this.#internals, 'drawer-closed', !this._leftDrawerOpen);
-
-    if (this.hasUpdated) {
-      this._applyDrawerStates();
-    }
+  #handleMainBreakpointChange(isLargeScreen: boolean): void {
+    this._isLargeScreen = isLargeScreen;
+    this.#updateMainStates();
+    this.#emitBreakpointChange(isLargeScreen ? 'large' : 'small');
   }
 
-  private _updateStates(): void {
+  #handleLeftBreakpointChange(isLargeScreen: boolean): void {
+    this._isLeftLargeScreen = isLargeScreen;
+    this.#updateLeftDrawerState();
+  }
+
+  #handleRightBreakpointChange(isLargeScreen: boolean): void {
+    this._isRightLargeScreen = isLargeScreen;
+  }
+
+  // --- State Management ---
+
+  #updateMainStates(): void {
     toggleState(this.#internals, 'small', !this._isLargeScreen);
     toggleState(this.#internals, 'large', this._isLargeScreen);
 
     // Sync left/right large screen states if they don't have their own breakpoints
     if (this.leftBreakpoint === undefined) {
       this._isLeftLargeScreen = this._isLargeScreen;
-      this._updateLeftDrawerState();
+      this.#updateLeftDrawerState();
     }
 
     if (this.rightBreakpoint === undefined) {
@@ -373,51 +343,22 @@ export class AppLayoutComponent extends LitElement {
 
     // Apply drawer states immediately after updating them
     if (this.hasUpdated) {
-      this._applyDrawerStates();
+      this.#applyDrawerStates();
     }
   }
 
-  private _toggleLeftDrawer = (): void => {
-    // Only allow toggling on small screens (based on left breakpoint)
-    if (this._isLeftLargeScreen) {
-      return;
-    }
-
-    this._leftDrawerOpen = !this._leftDrawerOpen;
-
-    // Update drawer states
+  #updateLeftDrawerState(): void {
+    // Left drawer auto-opens on large screens (primary navigation)
+    this._leftDrawerOpen = this._isLeftLargeScreen;
     toggleState(this.#internals, 'drawer-open', this._leftDrawerOpen);
     toggleState(this.#internals, 'drawer-closed', !this._leftDrawerOpen);
 
-    this._applyDrawerStates();
-    this.#emitDrawerChange(this._leftDrawerOpen);
-  };
-
-  private _handleLeftDrawerAfterClose = (): void => {
-    this.#setDrawerClosed();
-  };
-
-  private _handleRightDrawerClose = (): void => {
-    this.#setRightDrawerOpen(false);
-  };
-
-  private _handleSlotChange = (event: Event): void => {
-    const slotName = (event.target as HTMLSlotElement).name;
-    if (['navigation', 'body-right-content'].includes(slotName)) {
-      this.requestUpdate();
+    if (this.hasUpdated) {
+      this.#applyDrawerStates();
     }
-  };
+  }
 
-  private _handleNavigationClick = (event: Event): void => {
-    const path = event.composedPath();
-    const hasCloseAttribute = path.some(el => el instanceof HTMLElement && el.hasAttribute(APP_LAYOUT_CLOSE_ATTRIBUTE));
-
-    if (hasCloseAttribute) {
-      this.closeDrawer();
-    }
-  };
-
-  private _applyDrawerStates(): void {
+  #applyDrawerStates(): void {
     // Directly set the open property on drawer elements to ensure they match our state
     const drawerSelector = this.useMiniDrawer ? 'forge-mini-drawer' : 'forge-drawer';
     const leftDrawer = this.shadowRoot?.querySelector(drawerSelector) as (HTMLElement & { open: boolean }) | null;
@@ -426,6 +367,83 @@ export class AppLayoutComponent extends LitElement {
       leftDrawer.open = this._leftDrawerOpen;
     }
   }
+
+  // --- Left Drawer Operations ---
+
+  #toggleLeftDrawer = (): void => {
+    // Only allow toggling on small screens (based on left breakpoint)
+    if (this._isLeftLargeScreen) {
+      return;
+    }
+
+    this._leftDrawerOpen = !this._leftDrawerOpen;
+    toggleState(this.#internals, 'drawer-open', this._leftDrawerOpen);
+    toggleState(this.#internals, 'drawer-closed', !this._leftDrawerOpen);
+
+    this.#applyDrawerStates();
+    this.#emitDrawerChange(this._leftDrawerOpen);
+  };
+
+  #closeLeftDrawer(): void {
+    if (!this._leftDrawerOpen) {
+      return;
+    }
+    this._leftDrawerOpen = false;
+    toggleState(this.#internals, 'drawer-open', false);
+    toggleState(this.#internals, 'drawer-closed', true);
+    this.#emitDrawerChange(false);
+  }
+
+  #handleLeftDrawerAfterClose = (): void => {
+    this.#closeLeftDrawer();
+  };
+
+  // --- Right Drawer Operations ---
+
+  #setRightDrawerOpen(open: boolean): void {
+    if (this._rightDrawerOpen === open) {
+      return;
+    }
+    this._rightDrawerOpen = open;
+    toggleState(this.#internals, 'right-drawer-open', open);
+    toggleState(this.#internals, 'right-drawer-closed', !open);
+    this.#emitRightDrawerChange(open);
+  }
+
+  #handleRightDrawerClose = (): void => {
+    this.#setRightDrawerOpen(false);
+  };
+
+  #handleRightToggleButtonClick = (event: Event): void => {
+    const path = event.composedPath();
+    const hasToggleAttribute = path.some(
+      el => el instanceof HTMLElement && el.hasAttribute(APP_LAYOUT_RIGHT_TOGGLE_ATTRIBUTE)
+    );
+
+    if (hasToggleAttribute) {
+      this.toggleRightDrawer();
+    }
+  };
+
+  // --- Slot Handling ---
+
+  #handleSlotChange = (event: Event): void => {
+    const slotName = (event.target as HTMLSlotElement).name;
+    if (['navigation', 'body-right-content'].includes(slotName)) {
+      this.requestUpdate();
+    }
+  };
+
+  #handleNavigationClick = (event: Event): void => {
+    const path = event.composedPath();
+    const hasCloseAttribute = path.some(el => el instanceof HTMLElement && el.hasAttribute(APP_LAYOUT_CLOSE_ATTRIBUTE));
+
+    if (hasCloseAttribute) {
+      this.closeDrawer();
+    }
+  };
+
+  // --- Event Emitters ---
 
   #emitBreakpointChange(breakpoint: AppLayoutBreakpoint): void {
     const event = new CustomEvent<AppLayoutBreakpointChangeEventData>('forge-app-layout-breakpoint-change', {
@@ -457,16 +475,7 @@ export class AppLayoutComponent extends LitElement {
     this.dispatchEvent(event);
   }
 
-  private _handleRightToggleButtonClick = (event: Event): void => {
-    const path = event.composedPath();
-    const hasToggleAttribute = path.some(
-      el => el instanceof HTMLElement && el.hasAttribute(APP_LAYOUT_RIGHT_TOGGLE_ATTRIBUTE)
-    );
-
-    if (hasToggleAttribute) {
-      this.toggleRightDrawer();
-    }
-  };
+  // --- Content Detection ---
 
   get #hasNavigationContent(): boolean {
     return this._navigationNodes.length > 0;
@@ -476,10 +485,137 @@ export class AppLayoutComponent extends LitElement {
     return this._bodyRightContentNodes.length > 0;
   }
 
-  public override render(): TemplateResult {
-    const navigationSlot = html`<slot name="navigation" @slotchange=${this._handleSlotChange}></slot>`;
-    const bodyRightContentSlot = html`<slot name="body-right-content" @slotchange=${this._handleSlotChange}></slot>`;
+  // --- Drawer Templates ---
 
+  get #navigationSlot(): TemplateResult {
+    return html`<slot name="navigation" @slotchange=${this.#handleSlotChange}></slot>`;
+  }
+
+  get #bodyRightContentSlot(): TemplateResult {
+    return html`<slot name="body-right-content" @slotchange=${this.#handleSlotChange}></slot>`;
+  }
+
+  get #leftDrawerSmallScreenTemplate(): TemplateResult | typeof nothing {
+    if (this._isLeftLargeScreen) {
+      return nothing;
+    }
+
+    if (!this.#hasNavigationContent) {
+      return this.#navigationSlot;
+    }
+
+    return html`
+      <forge-dialog
+        class="left-sheet-dialog"
+        fullscreen-threshold="0"
+        preset="left-sheet"
+        slot="left"
+        ?open=${this._leftDrawerOpen}
+        @forge-dialog-close=${this.#handleLeftDrawerAfterClose}>
+        <div class="drawer-container">
+          <forge-toolbar no-border>
+            <forge-icon-button
+              autofocus
+              class="close-drawer-button"
+              slot="before-start"
+              aria-label="Close navigation drawer"
+              @click=${this.#toggleLeftDrawer}>
+              <forge-icon name="close"></forge-icon>
+            </forge-icon-button>
+          </forge-toolbar>
+          <aside @click=${this.#handleNavigationClick}>${this.#navigationSlot}</aside>
+        </div>
+      </forge-dialog>
+    `;
+  }
+
+  get #leftDrawerLargeScreenTemplate(): TemplateResult | typeof nothing {
+    if (!this._isLeftLargeScreen) {
+      return nothing;
+    }
+
+    if (!this.#hasNavigationContent) {
+      return this.#navigationSlot;
+    }
+
+    return html`
+      <div class="drawer-container ${this.miniHover ? 'mini-hover' : ''}" slot="body-left">
+        ${this.useMiniDrawer
+          ? html`
+              <forge-mini-drawer
+                ?hover=${this.miniHover}
+                ?open=${this._leftDrawerOpen}
+                @forge-drawer-after-close=${this.#handleLeftDrawerAfterClose}>
+                ${this.#navigationSlot}
+              </forge-mini-drawer>
+            `
+          : html`
+              <forge-drawer ?open=${this._leftDrawerOpen} @forge-drawer-after-close=${this.#handleLeftDrawerAfterClose}>
+                ${this.#navigationSlot}
+              </forge-drawer>
+            `}
+      </div>
+    `;
+  }
+
+  get #rightDrawerSmallScreenTemplate(): TemplateResult | typeof nothing {
+    if (this._isRightLargeScreen) {
+      return nothing;
+    }
+
+    if (!this.#hasBodyRightContent) {
+      return this.#bodyRightContentSlot;
+    }
+
+    return html`
+      <forge-dialog
+        class="right-sheet-dialog"
+        fullscreen-threshold="0"
+        preset="right-sheet"
+        slot="right"
+        ?open=${this._rightDrawerOpen}
+        @forge-dialog-close=${this.#handleRightDrawerClose}>
+        <div class="drawer-container">
+          <forge-toolbar no-border>
+            <forge-icon-button
+              autofocus
+              class="close-drawer-button"
+              slot="before-start"
+              aria-label="Close right drawer"
+              @click=${this.closeRightDrawer}>
+              <forge-icon name="close"></forge-icon>
+            </forge-icon-button>
+          </forge-toolbar>
+          <aside>${this.#bodyRightContentSlot}</aside>
+        </div>
+      </forge-dialog>
+    `;
+  }
+
+  get #rightDrawerLargeScreenTemplate(): TemplateResult | typeof nothing {
+    if (!this._isRightLargeScreen) {
+      return nothing;
+    }
+
+    if (!this.#hasBodyRightContent) {
+      return this.#bodyRightContentSlot;
+    }
+
+    return html`
+      <div class="drawer-container right-drawer-container" slot="body-right">
+        <forge-drawer
+          direction="right"
+          ?open=${this._rightDrawerOpen}
+          @forge-drawer-after-close=${this.#handleRightDrawerClose}>
+          ${this.#bodyRightContentSlot}
+        </forge-drawer>
+      </div>
+    `;
+  }
+
+  // --- Render ---
+
+  public override render(): TemplateResult {
     return html`
       <forge-scaffold>
         <forge-app-bar slot="header" .titleText=${this.appTitle} .href=${this.appTitleHref} theme-mode="scoped">
@@ -492,116 +628,22 @@ export class AppLayoutComponent extends LitElement {
             () =>
               html`<forge-app-bar-menu-button
                 slot="start"
-                @click=${this._toggleLeftDrawer}></forge-app-bar-menu-button>`
+                @click=${this.#toggleLeftDrawer}></forge-app-bar-menu-button>`
           )}
           <slot name="app-bar-center" slot="center"></slot>
           <slot name="app-bar-end" slot="end"></slot>
         </forge-app-bar>
 
-        <!-- Small screens: Navigation in left slot -->
-        ${!this._isLeftLargeScreen
-          ? this.#hasNavigationContent
-            ? html`
-                <forge-dialog
-                  class="left-sheet-dialog"
-                  fullscreen-threshold="0"
-                  preset="left-sheet"
-                  slot="left"
-                  ?open=${this._leftDrawerOpen}
-                  @forge-dialog-close=${this._handleLeftDrawerAfterClose}>
-                  <div class="drawer-container">
-                    <forge-toolbar no-border>
-                      <forge-icon-button
-                        autofocus
-                        class="close-drawer-button"
-                        slot="before-start"
-                        aria-label="Close navigation drawer"
-                        @click=${this._toggleLeftDrawer}>
-                        <forge-icon name="close"></forge-icon>
-                      </forge-icon-button>
-                    </forge-toolbar>
-                    <aside @click=${this._handleNavigationClick}>${navigationSlot}</aside>
-                  </div>
-                </forge-dialog>
-              `
-            : navigationSlot
-          : ''}
+        <!-- Left drawer templates -->
+        ${this.#leftDrawerSmallScreenTemplate} ${this.#leftDrawerLargeScreenTemplate}
+
         <slot name="body-header" slot="body-header"></slot>
-
-        <!-- Large screens: Navigation in body-left slot -->
-        ${this._isLeftLargeScreen
-          ? this.#hasNavigationContent
-            ? html`
-                <div class="drawer-container ${this.miniHover ? 'mini-hover' : ''}" slot="body-left">
-                  ${this.useMiniDrawer
-                    ? html`
-                        <forge-mini-drawer
-                          ?hover=${this.miniHover}
-                          ?open=${this._leftDrawerOpen}
-                          @forge-drawer-after-close=${this._handleLeftDrawerAfterClose}>
-                          ${navigationSlot}
-                        </forge-mini-drawer>
-                      `
-                    : html`
-                        <forge-drawer
-                          ?open=${this._leftDrawerOpen}
-                          @forge-drawer-after-close=${this._handleLeftDrawerAfterClose}>
-                          ${navigationSlot}
-                        </forge-drawer>
-                      `}
-                </div>
-              `
-            : navigationSlot
-          : ''}
-
         <slot name="body" slot="body"></slot>
         <slot slot="body"></slot>
         <slot name="right" slot="right"></slot>
 
-        <!-- Small screens: Body right content in dialog -->
-        ${!this._isRightLargeScreen
-          ? this.#hasBodyRightContent
-            ? html`
-                <forge-dialog
-                  class="right-sheet-dialog"
-                  fullscreen-threshold="0"
-                  preset="right-sheet"
-                  slot="right"
-                  ?open=${this._rightDrawerOpen}
-                  @forge-dialog-close=${this._handleRightDrawerClose}>
-                  <div class="drawer-container">
-                    <forge-toolbar no-border>
-                      <forge-icon-button
-                        autofocus
-                        class="close-drawer-button"
-                        slot="before-start"
-                        aria-label="Close right drawer"
-                        @click=${this.closeRightDrawer}>
-                        <forge-icon name="close"></forge-icon>
-                      </forge-icon-button>
-                    </forge-toolbar>
-                    <aside>${bodyRightContentSlot}</aside>
-                  </div>
-                </forge-dialog>
-              `
-            : bodyRightContentSlot
-          : ''}
-
-        <!-- Large screens: Body right content in drawer -->
-        ${this._isRightLargeScreen
-          ? this.#hasBodyRightContent
-            ? html`
-                <div class="drawer-container right-drawer-container" slot="body-right">
-                  <forge-drawer
-                    direction="right"
-                    ?open=${this._rightDrawerOpen}
-                    @forge-drawer-after-close=${this._handleRightDrawerClose}>
-                    ${bodyRightContentSlot}
-                  </forge-drawer>
-                </div>
-              `
-            : bodyRightContentSlot
-          : ''}
+        <!-- Right drawer templates -->
+        ${this.#rightDrawerSmallScreenTemplate} ${this.#rightDrawerLargeScreenTemplate}
 
         <slot name="body-right" slot="body-right"></slot>
         <slot name="body-footer" slot="body-footer"></slot>

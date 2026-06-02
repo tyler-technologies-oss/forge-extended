@@ -103,6 +103,23 @@ The component automatically adapts to screen size using a configurable breakpoin
 - Drawer automatically closes when screen size increases
 - Always uses a modal dialog drawer regardless of `use-mini-drawer` setting
 
+### Asymmetric Drawer Behavior
+
+The left and right drawers intentionally have different default behaviors:
+
+**Left Navigation Drawer:**
+
+- Auto-opens on large screens because it serves as primary navigation that should typically be visible on desktop
+- Auto-closes when transitioning to small screens
+
+**Right Content Drawer:**
+
+- Remains closed by default on all screen sizes
+- Contains contextual content (details panels, filters, etc.) that should be user-triggered
+- Must be explicitly opened via `openRightDrawer()` or clicking an element with `data-forge-app-layout-right`
+
+This asymmetry reflects the typical usage pattern where primary navigation should be readily accessible, while supplementary content panels are shown on demand.
+
 ### Auto-close on Navigation
 
 On small screens, you can automatically close the modal drawer when a user clicks on a navigation item by adding the `data-forge-app-layout-close` attribute to any element within the navigation slot. The attribute can be placed on a parent element (like `<forge-list>`) to close the drawer on any click within that element:
