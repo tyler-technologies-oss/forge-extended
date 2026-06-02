@@ -174,6 +174,28 @@ You can customize the responsive breakpoint by setting the `breakpoint` property
 </forge-app-layout>
 ```
 
+### Independent Breakpoints for Left and Right Drawers
+
+You can set separate breakpoints for the left navigation drawer and right content drawer using `left-breakpoint` and `right-breakpoint`. This allows the drawers to respond independently to different screen sizes:
+
+```html
+<!-- Left drawer switches at 1200px, right drawer switches at 1400px -->
+<forge-app-layout app-title="Complex Layout" breakpoint="960" left-breakpoint="1200" right-breakpoint="1400">
+  <nav slot="navigation">Navigation</nav>
+  <main>Content</main>
+  <aside slot="body-right-content">Details Panel</aside>
+</forge-app-layout>
+```
+
+When using independent breakpoints:
+
+- The main `breakpoint` property remains as the default fallback
+- If `left-breakpoint` is set, the left navigation uses that breakpoint; otherwise it falls back to `breakpoint`
+- If `right-breakpoint` is set, the right content drawer uses that breakpoint; otherwise it falls back to `breakpoint`
+- The `isLargeScreen` property still reflects the main `breakpoint` for backwards compatibility
+
+This is useful when you want the navigation to remain visible at larger screen sizes but have the right panel collapse earlier, or vice versa.
+
 ## Navigation Content
 
 The navigation slot accepts any content but works best with structured navigation elements like `<forge-list>`:
@@ -289,6 +311,96 @@ Beyond the app bar and navigation, the component provides additional layout slot
     <p>&copy; 2024 Tyler Technologies. All rights reserved.</p>
   </footer>
 </forge-app-layout>
+```
+
+## Right Drawer Content
+
+Similar to the navigation drawer, the `body-right-content` slot provides responsive content that appears in a drawer on the right side. On large screens, it renders as a drawer in the body-right area. On small screens, it transforms into a modal dialog.
+
+### Basic Usage
+
+```html
+<forge-app-layout app-title="My Application">
+  <!-- Main content -->
+  <main>Your content here</main>
+
+  <!-- Right drawer content -->
+  <aside slot="body-right-content">
+    <h2>Details Panel</h2>
+    <p>Additional information displayed in the right drawer.</p>
+  </aside>
+</forge-app-layout>
+```
+
+### Toggling the Right Drawer
+
+Unlike the navigation drawer which has a built-in menu button, the right drawer requires a trigger element. Add the `data-forge-app-layout-right` attribute to any element to make it toggle the right drawer:
+
+```html
+<forge-app-layout app-title="My Application">
+  <!-- App bar with toggle button -->
+  <forge-icon-button slot="app-bar-end" data-forge-app-layout-right aria-label="Toggle details panel">
+    <forge-icon name="info"></forge-icon>
+  </forge-icon-button>
+
+  <!-- Main content -->
+  <main>Your content here</main>
+
+  <!-- Right drawer content -->
+  <aside slot="body-right-content">
+    <h2>Details Panel</h2>
+    <p>Additional information displayed in the right drawer.</p>
+  </aside>
+</forge-app-layout>
+```
+
+The `APP_LAYOUT_RIGHT_TOGGLE_ATTRIBUTE` constant is exported for use in JavaScript/TypeScript:
+
+```typescript
+import { APP_LAYOUT_RIGHT_TOGGLE_ATTRIBUTE } from '@tylertech/forge-extended';
+
+element.setAttribute(APP_LAYOUT_RIGHT_TOGGLE_ATTRIBUTE, '');
+```
+
+### Programmatic Control
+
+You can also control the right drawer programmatically using the following methods:
+
+```javascript
+const appLayout = document.querySelector('forge-app-layout');
+
+// Open the right drawer
+appLayout.openRightDrawer();
+
+// Close the right drawer
+appLayout.closeRightDrawer();
+
+// Toggle the right drawer
+appLayout.toggleRightDrawer();
+```
+
+### Right Drawer Events
+
+The component emits a `forge-app-layout-right-drawer-change` event when the right drawer opens or closes:
+
+```javascript
+appLayout.addEventListener('forge-app-layout-right-drawer-change', event => {
+  console.log('Right drawer is now:', event.detail.open ? 'open' : 'closed');
+});
+```
+
+### Right Drawer CSS Custom Properties
+
+You can customize the right drawer dimensions using CSS custom properties:
+
+```css
+forge-app-layout {
+  /* Width of the right drawer on large screens */
+  --forge-app-layout-right-drawer-width: 400px;
+
+  /* Width of the right drawer dialog on small screens */
+  --forge-app-layout-right-dialog-width: 320px;
+}
 ```
 
 ## API

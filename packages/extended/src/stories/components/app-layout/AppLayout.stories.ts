@@ -8,11 +8,12 @@ import {
   IconRegistry,
   defineListComponent,
   defineListItemComponent,
-  defineIconComponent
+  defineIconComponent,
+  defineIconButtonComponent
 } from '@tylertech/forge';
 
 import '$lib/app-layout';
-import { tylIconHome, tylIconInbox, tylIconSettings, tylIconStar } from '@tylertech/tyler-icons';
+import { tylIconHome, tylIconInbox, tylIconInfo, tylIconSettings, tylIconStar } from '@tylertech/tyler-icons';
 import { storyStyles } from 'src/stories/decorators';
 
 defineAppBarComponent();
@@ -21,10 +22,11 @@ defineDrawerComponent();
 defineListComponent();
 defineListItemComponent();
 defineIconComponent();
+defineIconButtonComponent();
 
 const component = 'forge-app-layout';
 
-IconRegistry.define([tylIconHome, tylIconInbox, tylIconSettings, tylIconStar]);
+IconRegistry.define([tylIconHome, tylIconInbox, tylIconInfo, tylIconSettings, tylIconStar]);
 
 const meta = {
   title: 'Components/App Layout',
@@ -50,12 +52,28 @@ const meta = {
       table: {
         category: 'Properties'
       }
+    },
+    leftBreakpoint: {
+      control: 'number',
+      description: 'Optional separate breakpoint for the left navigation drawer. Falls back to breakpoint if not set.',
+      table: {
+        category: 'Properties'
+      }
+    },
+    rightBreakpoint: {
+      control: 'number',
+      description: 'Optional separate breakpoint for the right content drawer. Falls back to breakpoint if not set.',
+      table: {
+        category: 'Properties'
+      }
     }
   },
   args: {
     appTitle: 'App Layout Demo',
     appTitleHref: undefined,
-    breakpoint: 960
+    breakpoint: 960,
+    leftBreakpoint: undefined,
+    rightBreakpoint: undefined
   }
 } satisfies Meta;
 
@@ -69,7 +87,9 @@ export const Demo: Story = {
       <forge-app-layout
         app-title=${args.appTitle}
         app-title-href=${ifDefined(args.appTitleHref)}
-        breakpoint=${args.breakpoint}>
+        breakpoint=${args.breakpoint}
+        .leftBreakpoint=${args.leftBreakpoint}
+        .rightBreakpoint=${args.rightBreakpoint}>
         <forge-list navlist slot="navigation" data-forge-app-layout-close>
           <forge-list-item>
             <forge-icon slot="start" name="home"></forge-icon>
@@ -91,6 +111,50 @@ export const Demo: Story = {
 
         <div style="padding: var(--forge-spacing-medium);" slot="body">
           <p class="forge-typography--body1">Resize the frame to see the responsive behavior</p>
+        </div>
+      </forge-app-layout>
+    `;
+  }
+};
+
+export const WithRightDrawer: Story = {
+  render: args => {
+    return html`
+      <forge-app-layout
+        app-title=${args.appTitle}
+        app-title-href=${ifDefined(args.appTitleHref)}
+        breakpoint=${args.breakpoint}
+        .leftBreakpoint=${args.leftBreakpoint}
+        .rightBreakpoint=${args.rightBreakpoint}>
+        <forge-list navlist slot="navigation" data-forge-app-layout-close>
+          <forge-list-item>
+            <forge-icon slot="start" name="home"></forge-icon>
+            <a href="javascript: void(0);">Home</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="inbox"></forge-icon>
+            <a href="javascript: void(0);">Inbox</a>
+          </forge-list-item>
+          <forge-list-item>
+            <forge-icon slot="start" name="settings"></forge-icon>
+            <a href="javascript: void(0);">Settings</a>
+          </forge-list-item>
+        </forge-list>
+
+        <forge-icon-button slot="app-bar-end" data-forge-app-layout-right aria-label="Toggle details panel">
+          <forge-icon name="info"></forge-icon>
+        </forge-icon-button>
+
+        <div style="padding: var(--forge-spacing-medium);" slot="body">
+          <p class="forge-typography--body1">Click the info button in the app bar to toggle the right drawer.</p>
+          <p class="forge-typography--body1">Resize the frame to see the responsive behavior.</p>
+        </div>
+
+        <div slot="body-right-content" style="padding: var(--forge-spacing-medium);">
+          <h3 class="forge-typography--heading5">Details Panel</h3>
+          <p class="forge-typography--body1">This content appears in the right drawer.</p>
+          <p class="forge-typography--body1">On large screens, it appears as a drawer on the right side of the body.</p>
+          <p class="forge-typography--body1">On small screens, it appears as a modal dialog.</p>
         </div>
       </forge-app-layout>
     `;

@@ -597,6 +597,513 @@ describe('AppLayout', () => {
       expect(harness.el.matches(':state(drawer-open)')).to.be.true;
     });
   });
+
+  describe('body-right-content', () => {
+    it('content should project into the body-right-content slot', async () => {
+      const harness = await createFixture({ hasBodyRightContent: true });
+
+      expect(harness.bodyRightContentSlot.assignedNodes().length).to.greaterThanOrEqual(1);
+    });
+
+    it('should have right-drawer-closed state by default', async () => {
+      const harness = await createFixture({ hasBodyRightContent: true });
+
+      expect(harness.el.matches(':state(right-drawer-closed)')).to.be.true;
+      expect(harness.el.matches(':state(right-drawer-open)')).to.be.false;
+    });
+
+    it('should render dialog on small screens when body-right-content is present', async () => {
+      setupMediaQuery(false);
+      const harness = await createFixture({ hasBodyRightContent: true });
+
+      harness.el.openRightDrawer();
+      await harness.el.updateComplete;
+
+      expect(harness.rightDialogElement).to.exist;
+    });
+
+    it('should render drawer on large screens when body-right-content is present', async () => {
+      setupMediaQuery(true);
+      const harness = await createFixture({ hasBodyRightContent: true });
+
+      harness.el.openRightDrawer();
+      await harness.el.updateComplete;
+
+      expect(harness.rightDrawerElement).to.exist;
+    });
+
+    describe('openRightDrawer', () => {
+      it('should open the right drawer', async () => {
+        const harness = await createFixture({ hasBodyRightContent: true });
+
+        expect(harness.el.matches(':state(right-drawer-closed)')).to.be.true;
+
+        harness.el.openRightDrawer();
+        await harness.el.updateComplete;
+
+        expect(harness.el.matches(':state(right-drawer-open)')).to.be.true;
+        expect(harness.el.matches(':state(right-drawer-closed)')).to.be.false;
+      });
+
+      it('should emit forge-app-layout-right-drawer-change event when opening', async () => {
+        const harness = await createFixture({ hasBodyRightContent: true });
+        const spy = sinon.spy();
+
+        harness.el.addEventListener('forge-app-layout-right-drawer-change', spy);
+        harness.el.openRightDrawer();
+        await harness.el.updateComplete;
+
+        expect(spy.calledOnce).to.be.true;
+        const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
+        expect(eventDetail.open).to.be.true;
+      });
+
+      it('should not emit event when already open', async () => {
+        const harness = await createFixture({ hasBodyRightContent: true });
+
+        harness.el.openRightDrawer();
+        await harness.el.updateComplete;
+
+        const spy = sinon.spy();
+        harness.el.addEventListener('forge-app-layout-right-drawer-change', spy);
+
+        harness.el.openRightDrawer();
+        await harness.el.updateComplete;
+
+        expect(spy.called).to.be.false;
+      });
+    });
+
+    describe('closeRightDrawer', () => {
+      it('should close the right drawer', async () => {
+        const harness = await createFixture({ hasBodyRightContent: true });
+
+        harness.el.openRightDrawer();
+        await harness.el.updateComplete;
+        expect(harness.el.matches(':state(right-drawer-open)')).to.be.true;
+
+        harness.el.closeRightDrawer();
+        await harness.el.updateComplete;
+
+        expect(harness.el.matches(':state(right-drawer-closed)')).to.be.true;
+        expect(harness.el.matches(':state(right-drawer-open)')).to.be.false;
+      });
+
+      it('should emit forge-app-layout-right-drawer-change event when closing', async () => {
+        const harness = await createFixture({ hasBodyRightContent: true });
+
+        harness.el.openRightDrawer();
+        await harness.el.updateComplete;
+
+        const spy = sinon.spy();
+        harness.el.addEventListener('forge-app-layout-right-drawer-change', spy);
+
+        harness.el.closeRightDrawer();
+        await harness.el.updateComplete;
+
+        expect(spy.calledOnce).to.be.true;
+        const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
+        expect(eventDetail.open).to.be.false;
+      });
+
+      it('should not emit event when already closed', async () => {
+        const harness = await createFixture({ hasBodyRightContent: true });
+        const spy = sinon.spy();
+
+        harness.el.addEventListener('forge-app-layout-right-drawer-change', spy);
+
+        harness.el.closeRightDrawer();
+        await harness.el.updateComplete;
+
+        expect(spy.called).to.be.false;
+      });
+    });
+
+    describe('toggleRightDrawer', () => {
+      it('should toggle right drawer from closed to open', async () => {
+        const harness = await createFixture({ hasBodyRightContent: true });
+
+        expect(harness.el.matches(':state(right-drawer-closed)')).to.be.true;
+
+        harness.el.toggleRightDrawer();
+        await harness.el.updateComplete;
+
+        expect(harness.el.matches(':state(right-drawer-open)')).to.be.true;
+      });
+
+      it('should toggle right drawer from open to closed', async () => {
+        const harness = await createFixture({ hasBodyRightContent: true });
+
+        harness.el.openRightDrawer();
+        await harness.el.updateComplete;
+        expect(harness.el.matches(':state(right-drawer-open)')).to.be.true;
+
+        harness.el.toggleRightDrawer();
+        await harness.el.updateComplete;
+
+        expect(harness.el.matches(':state(right-drawer-closed)')).to.be.true;
+      });
+    });
+
+    describe('data-forge-app-layout-right attribute', () => {
+      it('should toggle right drawer when clicking element with data-forge-app-layout-right attribute', async () => {
+        const harness = await createFixture({ hasBodyRightContent: true, hasRightToggleButton: true });
+
+        expect(harness.el.matches(':state(right-drawer-closed)')).to.be.true;
+
+        harness.rightToggleButton?.click();
+        await harness.el.updateComplete;
+
+        expect(harness.el.matches(':state(right-drawer-open)')).to.be.true;
+      });
+
+      it('should emit forge-app-layout-right-drawer-change when clicking toggle button', async () => {
+        const harness = await createFixture({ hasBodyRightContent: true, hasRightToggleButton: true });
+        const spy = sinon.spy();
+
+        harness.el.addEventListener('forge-app-layout-right-drawer-change', spy);
+        harness.rightToggleButton?.click();
+        await harness.el.updateComplete;
+
+        expect(spy.calledOnce).to.be.true;
+        const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
+        expect(eventDetail.open).to.be.true;
+      });
+
+      it('should close right drawer when clicking toggle button again', async () => {
+        const harness = await createFixture({ hasBodyRightContent: true, hasRightToggleButton: true });
+
+        harness.rightToggleButton?.click();
+        await harness.el.updateComplete;
+        expect(harness.el.matches(':state(right-drawer-open)')).to.be.true;
+
+        harness.rightToggleButton?.click();
+        await harness.el.updateComplete;
+        expect(harness.el.matches(':state(right-drawer-closed)')).to.be.true;
+      });
+    });
+
+    describe('right drawer dialog events', () => {
+      it('should close right drawer when dialog fires forge-dialog-close event', async () => {
+        setupMediaQuery(false);
+        const harness = await createFixture({ hasBodyRightContent: true });
+
+        harness.el.openRightDrawer();
+        await harness.el.updateComplete;
+        expect(harness.el.matches(':state(right-drawer-open)')).to.be.true;
+
+        harness.simulateRightDialogClose();
+        await harness.el.updateComplete;
+
+        expect(harness.el.matches(':state(right-drawer-closed)')).to.be.true;
+      });
+
+      it('should emit forge-app-layout-right-drawer-change when dialog closes', async () => {
+        setupMediaQuery(false);
+        const harness = await createFixture({ hasBodyRightContent: true });
+
+        harness.el.openRightDrawer();
+        await harness.el.updateComplete;
+
+        const spy = sinon.spy();
+        harness.el.addEventListener('forge-app-layout-right-drawer-change', spy);
+
+        harness.simulateRightDialogClose();
+        await harness.el.updateComplete;
+
+        expect(spy.calledOnce).to.be.true;
+        const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
+        expect(eventDetail.open).to.be.false;
+      });
+    });
+
+    describe('right drawer event properties', () => {
+      it('should have bubbles and composed set to true on right drawer change event', async () => {
+        const harness = await createFixture({ hasBodyRightContent: true });
+        const spy = sinon.spy();
+
+        harness.el.addEventListener('forge-app-layout-right-drawer-change', spy);
+        harness.el.openRightDrawer();
+        await harness.el.updateComplete;
+
+        const event = spy.firstCall.args[0] as CustomEvent;
+        expect(event.bubbles).to.be.true;
+        expect(event.composed).to.be.true;
+      });
+    });
+  });
+
+  describe('leftBreakpoint and rightBreakpoint', () => {
+    it('should have undefined leftBreakpoint and rightBreakpoint by default', async () => {
+      const harness = await createFixture();
+
+      expect(harness.el.leftBreakpoint).to.be.undefined;
+      expect(harness.el.rightBreakpoint).to.be.undefined;
+    });
+
+    it('should set leftBreakpoint via property', async () => {
+      const harness = await createFixture({ leftBreakpoint: 800 });
+
+      expect(harness.el.leftBreakpoint).to.equal(800);
+    });
+
+    it('should set rightBreakpoint via property', async () => {
+      const harness = await createFixture({ rightBreakpoint: 1200 });
+
+      expect(harness.el.rightBreakpoint).to.equal(1200);
+    });
+
+    it('should set leftBreakpoint via attribute', async () => {
+      const harness = await createFixture();
+
+      harness.el.setAttribute('left-breakpoint', '800');
+      await harness.el.updateComplete;
+
+      expect(harness.el.leftBreakpoint).to.equal(800);
+    });
+
+    it('should set rightBreakpoint via attribute', async () => {
+      const harness = await createFixture();
+
+      harness.el.setAttribute('right-breakpoint', '1200');
+      await harness.el.updateComplete;
+
+      expect(harness.el.rightBreakpoint).to.equal(1200);
+    });
+
+    it('should use main breakpoint for left navigation when leftBreakpoint is not set', async () => {
+      setupMediaQuery(true); // Large screen
+      const harness = await createFixture({ hasNavigation: true });
+
+      // On large screens without specific leftBreakpoint, should use main breakpoint
+      expect(harness.drawerElement).to.exist;
+      expect(harness.dialogElement).to.not.exist;
+    });
+
+    it('should use main breakpoint for right drawer when rightBreakpoint is not set', async () => {
+      setupMediaQuery(true); // Large screen
+      const harness = await createFixture({ hasBodyRightContent: true });
+
+      harness.el.openRightDrawer();
+      await harness.el.updateComplete;
+
+      // On large screens without specific rightBreakpoint, should show drawer
+      expect(harness.rightDrawerElement).to.exist;
+      expect(harness.rightDialogElement).to.not.exist;
+    });
+
+    it('should show menu button based on left breakpoint when leftBreakpoint is set', async () => {
+      // Create a mock that returns different values for different queries
+      const matchMediaStub = sinon.stub(window, 'matchMedia');
+
+      // Main breakpoint (960) - large screen
+      matchMediaStub.withArgs('(min-width: 960px)').returns({
+        matches: true,
+        addEventListener: sinon.stub(),
+        removeEventListener: sinon.stub(),
+        media: '',
+        onchange: null,
+        addListener: sinon.stub(),
+        removeListener: sinon.stub(),
+        dispatchEvent: sinon.stub()
+      } as unknown as MediaQueryList);
+
+      // Left breakpoint (1200) - small screen for left
+      matchMediaStub.withArgs('(min-width: 1200px)').returns({
+        matches: false,
+        addEventListener: sinon.stub(),
+        removeEventListener: sinon.stub(),
+        media: '',
+        onchange: null,
+        addListener: sinon.stub(),
+        removeListener: sinon.stub(),
+        dispatchEvent: sinon.stub()
+      } as unknown as MediaQueryList);
+
+      const harness = await createFixture({ hasNavigation: true, leftBreakpoint: 1200 });
+
+      // Menu button should be visible because left breakpoint says we're on small screen
+      expect(harness.menuButton).to.exist;
+    });
+
+    it('should show right dialog when rightBreakpoint makes it small screen', async () => {
+      // Create a mock that returns different values for different queries
+      const matchMediaStub = sinon.stub(window, 'matchMedia');
+
+      // Main breakpoint (960) - large screen
+      matchMediaStub.withArgs('(min-width: 960px)').returns({
+        matches: true,
+        addEventListener: sinon.stub(),
+        removeEventListener: sinon.stub(),
+        media: '',
+        onchange: null,
+        addListener: sinon.stub(),
+        removeListener: sinon.stub(),
+        dispatchEvent: sinon.stub()
+      } as unknown as MediaQueryList);
+
+      // Right breakpoint (1400) - small screen for right
+      matchMediaStub.withArgs('(min-width: 1400px)').returns({
+        matches: false,
+        addEventListener: sinon.stub(),
+        removeEventListener: sinon.stub(),
+        media: '',
+        onchange: null,
+        addListener: sinon.stub(),
+        removeListener: sinon.stub(),
+        dispatchEvent: sinon.stub()
+      } as unknown as MediaQueryList);
+
+      const harness = await createFixture({ hasBodyRightContent: true, rightBreakpoint: 1400 });
+
+      harness.el.openRightDrawer();
+      await harness.el.updateComplete;
+
+      // Right dialog should be visible because right breakpoint says we're on small screen
+      expect(harness.rightDialogElement).to.exist;
+    });
+
+    it('should cleanup left media query when leftBreakpoint changes', async () => {
+      const matchMediaStub = sinon.stub(window, 'matchMedia');
+      const removeEventListenerStub = sinon.stub();
+
+      matchMediaStub.returns({
+        matches: true,
+        addEventListener: sinon.stub(),
+        removeEventListener: removeEventListenerStub,
+        media: '',
+        onchange: null,
+        addListener: sinon.stub(),
+        removeListener: sinon.stub(),
+        dispatchEvent: sinon.stub()
+      } as unknown as MediaQueryList);
+
+      const harness = await createFixture({ leftBreakpoint: 800 });
+
+      harness.el.leftBreakpoint = 1000;
+      await harness.el.updateComplete;
+
+      expect(removeEventListenerStub.called).to.be.true;
+    });
+
+    it('should cleanup right media query when rightBreakpoint changes', async () => {
+      const matchMediaStub = sinon.stub(window, 'matchMedia');
+      const removeEventListenerStub = sinon.stub();
+
+      matchMediaStub.returns({
+        matches: true,
+        addEventListener: sinon.stub(),
+        removeEventListener: removeEventListenerStub,
+        media: '',
+        onchange: null,
+        addListener: sinon.stub(),
+        removeListener: sinon.stub(),
+        dispatchEvent: sinon.stub()
+      } as unknown as MediaQueryList);
+
+      const harness = await createFixture({ rightBreakpoint: 800 });
+
+      harness.el.rightBreakpoint = 1000;
+      await harness.el.updateComplete;
+
+      expect(removeEventListenerStub.called).to.be.true;
+    });
+
+    it('should update left drawer state when left media query changes', async () => {
+      const matchMediaStub = sinon.stub(window, 'matchMedia');
+      let leftMediaQueryChangeHandler: ((event: MediaQueryListEvent) => void) | null = null;
+
+      matchMediaStub.callsFake(query => {
+        const isLeftQuery = query.includes('1200');
+        return {
+          matches: true,
+          addEventListener: (event: string, handler: (event: MediaQueryListEvent) => void) => {
+            if (isLeftQuery && event === 'change') {
+              leftMediaQueryChangeHandler = handler;
+            }
+          },
+          removeEventListener: sinon.stub(),
+          media: query,
+          onchange: null,
+          addListener: sinon.stub(),
+          removeListener: sinon.stub(),
+          dispatchEvent: sinon.stub()
+        } as unknown as MediaQueryList;
+      });
+
+      const harness = await createFixture({ hasNavigation: true, leftBreakpoint: 1200 });
+
+      // Simulate media query change to small screen
+      if (leftMediaQueryChangeHandler) {
+        leftMediaQueryChangeHandler({ matches: false } as MediaQueryListEvent);
+        await harness.el.updateComplete;
+      }
+
+      expect(harness.el.matches(':state(drawer-closed)')).to.be.true;
+    });
+
+    it('should update right large screen state when right media query changes', async () => {
+      const matchMediaStub = sinon.stub(window, 'matchMedia');
+      let rightMediaQueryChangeHandler: ((event: MediaQueryListEvent) => void) | null = null;
+
+      matchMediaStub.callsFake(query => {
+        const isRightQuery = query.includes('1400');
+        return {
+          matches: true,
+          addEventListener: (event: string, handler: (event: MediaQueryListEvent) => void) => {
+            if (isRightQuery && event === 'change') {
+              rightMediaQueryChangeHandler = handler;
+            }
+          },
+          removeEventListener: sinon.stub(),
+          media: query,
+          onchange: null,
+          addListener: sinon.stub(),
+          removeListener: sinon.stub(),
+          dispatchEvent: sinon.stub()
+        } as unknown as MediaQueryList;
+      });
+
+      const harness = await createFixture({ hasBodyRightContent: true, rightBreakpoint: 1400 });
+
+      // Initially on large screen, open drawer shows as drawer
+      harness.el.openRightDrawer();
+      await harness.el.updateComplete;
+      expect(harness.rightDrawerElement).to.exist;
+
+      // Simulate media query change to small screen
+      if (rightMediaQueryChangeHandler) {
+        rightMediaQueryChangeHandler({ matches: false } as MediaQueryListEvent);
+        await harness.el.updateComplete;
+      }
+
+      // Now should show dialog instead
+      expect(harness.rightDialogElement).to.exist;
+    });
+
+    it('should cleanup left and right media queries on disconnect', async () => {
+      const matchMediaStub = sinon.stub(window, 'matchMedia');
+      const removeEventListenerStub = sinon.stub();
+
+      matchMediaStub.returns({
+        matches: true,
+        addEventListener: sinon.stub(),
+        removeEventListener: removeEventListenerStub,
+        media: '',
+        onchange: null,
+        addListener: sinon.stub(),
+        removeListener: sinon.stub(),
+        dispatchEvent: sinon.stub()
+      } as unknown as MediaQueryList);
+
+      const harness = await createFixture({ leftBreakpoint: 800, rightBreakpoint: 1200 });
+
+      harness.el.remove();
+
+      // Should have called removeEventListener for main, left, and right media queries
+      expect(removeEventListenerStub.callCount).to.be.greaterThanOrEqual(3);
+    });
+  });
 });
 
 class AppLayoutHarness {
@@ -656,6 +1163,29 @@ class AppLayoutHarness {
     return this.el.shadowRoot?.querySelector('.close-drawer-button') as HTMLElement | null;
   }
 
+  public get bodyRightContentSlot(): HTMLSlotElement {
+    return this.el.shadowRoot!.querySelector('slot[name="body-right-content"]') as HTMLSlotElement;
+  }
+
+  public get rightDialogElement(): IDialogComponent | null {
+    return this.el.shadowRoot?.querySelector('forge-dialog.right-sheet-dialog') as IDialogComponent | null;
+  }
+
+  public get rightDrawerElement(): IDrawerComponent | null {
+    return this.el.shadowRoot?.querySelector('.right-drawer-container forge-drawer') as IDrawerComponent | null;
+  }
+
+  public get rightToggleButton(): HTMLElement | null {
+    return document.querySelector('#right-toggle') as HTMLElement | null;
+  }
+
+  public simulateRightDialogClose(): void {
+    const dialog = this.rightDialogElement;
+    if (dialog) {
+      dialog.dispatchEvent(new CustomEvent('forge-dialog-close', { bubbles: true, composed: true }));
+    }
+  }
+
   public simulateDialogClose(): void {
     const dialog = this.dialogElement;
     if (dialog) {
@@ -682,11 +1212,15 @@ interface AppLayoutFixtureConfig {
   appTitle?: string;
   appTitleHref?: string;
   breakpoint?: number;
+  leftBreakpoint?: number;
+  rightBreakpoint?: number;
   useMiniDrawer?: boolean;
   miniHover?: boolean;
   hasNavigation?: boolean;
   navigationWithCloseAttribute?: boolean;
   hasBodyContent?: boolean;
+  hasBodyRightContent?: boolean;
+  hasRightToggleButton?: boolean;
   hasLogo?: boolean;
   hasAppBarStart?: boolean;
   hasAppBarCenter?: boolean;
@@ -697,11 +1231,15 @@ async function createFixture({
   appTitle = '',
   appTitleHref,
   breakpoint = 960,
+  leftBreakpoint,
+  rightBreakpoint,
   useMiniDrawer = false,
   miniHover = false,
   hasNavigation = false,
   navigationWithCloseAttribute = false,
   hasBodyContent = false,
+  hasBodyRightContent = false,
+  hasRightToggleButton = false,
   hasLogo = false,
   hasAppBarStart = false,
   hasAppBarCenter = false,
@@ -723,9 +1261,13 @@ async function createFixture({
       app-title=${appTitle}
       .appTitleHref=${appTitleHref}
       breakpoint=${breakpoint}
+      .leftBreakpoint=${leftBreakpoint}
+      .rightBreakpoint=${rightBreakpoint}
       ?use-mini-drawer=${useMiniDrawer}
       ?mini-hover=${miniHover}>
       ${navigationContent} ${hasBodyContent ? html`<div slot="body">Body Content</div>` : ''}
+      ${hasBodyRightContent ? html`<div slot="body-right-content">Body Right Content</div>` : ''}
+      ${hasRightToggleButton ? html`<button id="right-toggle" data-forge-app-layout-right>Toggle Right</button>` : ''}
       ${hasLogo ? html`<div slot="app-bar-logo">Logo</div>` : ''}
       ${hasAppBarStart ? html`<div slot="app-bar-start">Start Content</div>` : ''}
       ${hasAppBarCenter ? html`<div slot="app-bar-center">Center Content</div>` : ''}
