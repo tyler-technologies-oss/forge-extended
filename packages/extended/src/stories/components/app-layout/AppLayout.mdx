@@ -160,12 +160,22 @@ For more granular control, you can place the attribute on individual items:
 </forge-app-layout>
 ```
 
-You can also programmatically close the drawer using the `closeDrawer()` method:
+You can also programmatically control the left navigation drawer using these methods:
 
 ```javascript
 const appLayout = document.querySelector('forge-app-layout');
-appLayout.closeDrawer();
+
+// Open the left navigation drawer
+appLayout.openLeftDrawer();
+
+// Close the left navigation drawer
+appLayout.closeLeftDrawer();
+
+// Toggle the left navigation drawer
+appLayout.toggleLeftDrawer();
 ```
+
+> **Note:** These methods only have an effect on small screens where the drawer is modal. On large screens, the left navigation drawer is always visible.
 
 The `APP_LAYOUT_CLOSE_ATTRIBUTE` constant is exported for use in JavaScript/TypeScript:
 

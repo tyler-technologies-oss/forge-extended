@@ -567,7 +567,7 @@ describe('AppLayout', () => {
       expect(eventDetail.open).to.be.false;
     });
 
-    describe('closeDrawer method', () => {
+    describe('closeDrawer method (deprecated)', () => {
       it('should close the drawer when called on small screens', async () => {
         setupMediaQuery(false);
         const harness = await createFixture({ hasNavigation: true });
@@ -626,6 +626,191 @@ describe('AppLayout', () => {
         harness.el.closeDrawer();
         await harness.el.updateComplete;
 
+        expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+        expect(spy.called).to.be.false;
+      });
+    });
+
+    describe('openLeftDrawer method', () => {
+      it('should open the drawer when called on small screens', async () => {
+        setupMediaQuery(false);
+        const harness = await createFixture({ hasNavigation: true });
+
+        expect(harness.el.matches(':state(drawer-closed)')).to.be.true;
+
+        harness.el.openLeftDrawer();
+        await harness.el.updateComplete;
+
+        expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+        expect(harness.el.matches(':state(drawer-closed)')).to.be.false;
+      });
+
+      it('should emit forge-app-layout-drawer-change event when opening', async () => {
+        setupMediaQuery(false);
+        const harness = await createFixture({ hasNavigation: true });
+        const spy = sinon.spy();
+
+        harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+        harness.el.openLeftDrawer();
+        await harness.el.updateComplete;
+
+        expect(spy.calledOnce).to.be.true;
+        const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
+        expect(eventDetail.open).to.be.true;
+      });
+
+      it('should not emit event when already open', async () => {
+        setupMediaQuery(false);
+        const harness = await createFixture({ hasNavigation: true });
+
+        harness.el.openLeftDrawer();
+        await harness.el.updateComplete;
+
+        const spy = sinon.spy();
+        harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+        harness.el.openLeftDrawer();
+        await harness.el.updateComplete;
+
+        expect(spy.called).to.be.false;
+      });
+
+      it('should not open drawer when called on large screens', async () => {
+        setupMediaQuery(true);
+        const harness = await createFixture({ hasNavigation: true });
+
+        // Drawer auto-opens on large screens, so it's already open
+        expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+
+        const spy = sinon.spy();
+        harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+        harness.el.openLeftDrawer();
+        await harness.el.updateComplete;
+
+        // State should remain unchanged, no event emitted
+        expect(spy.called).to.be.false;
+      });
+    });
+
+    describe('closeLeftDrawer method', () => {
+      it('should close the drawer when called on small screens', async () => {
+        setupMediaQuery(false);
+        const harness = await createFixture({ hasNavigation: true });
+
+        harness.el.openLeftDrawer();
+        await harness.el.updateComplete;
+        expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+
+        harness.el.closeLeftDrawer();
+        await harness.el.updateComplete;
+
+        expect(harness.el.matches(':state(drawer-closed)')).to.be.true;
+        expect(harness.el.matches(':state(drawer-open)')).to.be.false;
+      });
+
+      it('should emit forge-app-layout-drawer-change event when closing', async () => {
+        setupMediaQuery(false);
+        const harness = await createFixture({ hasNavigation: true });
+
+        harness.el.openLeftDrawer();
+        await harness.el.updateComplete;
+
+        const spy = sinon.spy();
+        harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+        harness.el.closeLeftDrawer();
+        await harness.el.updateComplete;
+
+        expect(spy.calledOnce).to.be.true;
+        const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
+        expect(eventDetail.open).to.be.false;
+      });
+
+      it('should not emit event when already closed', async () => {
+        setupMediaQuery(false);
+        const harness = await createFixture({ hasNavigation: true });
+        const spy = sinon.spy();
+
+        harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+        harness.el.closeLeftDrawer();
+        await harness.el.updateComplete;
+
+        expect(spy.called).to.be.false;
+      });
+
+      it('should not close drawer when called on large screens', async () => {
+        setupMediaQuery(true);
+        const harness = await createFixture({ hasNavigation: true });
+
+        expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+
+        const spy = sinon.spy();
+        harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+        harness.el.closeLeftDrawer();
+        await harness.el.updateComplete;
+
+        expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+        expect(spy.called).to.be.false;
+      });
+    });
+
+    describe('toggleLeftDrawer method', () => {
+      it('should toggle drawer from closed to open on small screens', async () => {
+        setupMediaQuery(false);
+        const harness = await createFixture({ hasNavigation: true });
+
+        expect(harness.el.matches(':state(drawer-closed)')).to.be.true;
+
+        harness.el.toggleLeftDrawer();
+        await harness.el.updateComplete;
+
+        expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+      });
+
+      it('should toggle drawer from open to closed on small screens', async () => {
+        setupMediaQuery(false);
+        const harness = await createFixture({ hasNavigation: true });
+
+        harness.el.openLeftDrawer();
+        await harness.el.updateComplete;
+        expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+
+        harness.el.toggleLeftDrawer();
+        await harness.el.updateComplete;
+
+        expect(harness.el.matches(':state(drawer-closed)')).to.be.true;
+      });
+
+      it('should emit forge-app-layout-drawer-change event when toggling', async () => {
+        setupMediaQuery(false);
+        const harness = await createFixture({ hasNavigation: true });
+        const spy = sinon.spy();
+
+        harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+        harness.el.toggleLeftDrawer();
+        await harness.el.updateComplete;
+
+        expect(spy.calledOnce).to.be.true;
+        const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
+        expect(eventDetail.open).to.be.true;
+      });
+
+      it('should not toggle drawer when called on large screens', async () => {
+        setupMediaQuery(true);
+        const harness = await createFixture({ hasNavigation: true });
+
+        expect(harness.el.matches(':state(drawer-open)')).to.be.true;
+
+        const spy = sinon.spy();
+        harness.el.addEventListener('forge-app-layout-drawer-change', spy);
+
+        harness.el.toggleLeftDrawer();
+        await harness.el.updateComplete;
+
+        // State should remain unchanged, no event emitted
         expect(harness.el.matches(':state(drawer-open)')).to.be.true;
         expect(spy.called).to.be.false;
       });

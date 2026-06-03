@@ -67,7 +67,10 @@ export const APP_LAYOUT_CLOSE_ATTRIBUTE = 'data-forge-app-layout-close';
  * @property {boolean} miniHover - Whether the mini drawer should expand on hover (default: false)
  * @property {boolean} isLargeScreen - Whether the current screen width is above the breakpoint (read-only)
  *
- * @method closeDrawer - Closes the navigation drawer on small screens
+ * @method openLeftDrawer - Opens the left navigation drawer on small screens
+ * @method closeLeftDrawer - Closes the left navigation drawer on small screens
+ * @method toggleLeftDrawer - Toggles the left navigation drawer open/closed on small screens
+ * @method closeDrawer - Deprecated alias for closeLeftDrawer()
  * @method openRightDrawer - Opens the right drawer
  * @method closeRightDrawer - Closes the right drawer
  * @method toggleRightDrawer - Toggles the right drawer open/closed
@@ -155,11 +158,37 @@ export class AppLayoutComponent extends LitElement {
   }
 
   /**
-   * Closes the navigation drawer. Only has effect on small screens where the drawer is modal.
+   * Opens the left navigation drawer. Only has effect on small screens where the drawer is modal.
    */
-  public closeDrawer(): void {
+  public openLeftDrawer(): void {
+    if (!this._isLeftLargeScreen) {
+      this.#openLeftDrawer();
+    }
+  }
+
+  /**
+   * Closes the left navigation drawer. Only has effect on small screens where the drawer is modal.
+   */
+  public closeLeftDrawer(): void {
     if (!this._isLeftLargeScreen) {
       this.#closeLeftDrawer();
+    }
+  }
+
+  /**
+   * Closes the left navigation drawer. Only has effect on small screens where the drawer is modal.
+   * @deprecated Use `closeLeftDrawer()` instead for consistency with other drawer methods.
+   */
+  public closeDrawer(): void {
+    this.closeLeftDrawer();
+  }
+
+  /**
+   * Toggles the left navigation drawer open/closed. Only has effect on small screens where the drawer is modal.
+   */
+  public toggleLeftDrawer(): void {
+    if (!this._isLeftLargeScreen) {
+      this.#toggleLeftDrawer();
     }
   }
 
@@ -367,6 +396,16 @@ export class AppLayoutComponent extends LitElement {
 
   // --- Left Drawer Operations ---
 
+  #openLeftDrawer(): void {
+    if (this._leftDrawerOpen) {
+      return;
+    }
+    this._leftDrawerOpen = true;
+    toggleState(this.#internals, 'drawer-open', true);
+    toggleState(this.#internals, 'drawer-closed', false);
+    this.#emitDrawerChange(true);
+  }
+
   #toggleLeftDrawer = (): void => {
     // Only allow toggling on small screens (based on left breakpoint)
     if (this._isLeftLargeScreen) {
@@ -425,7 +464,7 @@ export class AppLayoutComponent extends LitElement {
     const hasCloseAttribute = path.some(el => el instanceof HTMLElement && el.hasAttribute(APP_LAYOUT_CLOSE_ATTRIBUTE));
 
     if (hasCloseAttribute) {
-      this.closeDrawer();
+      this.closeLeftDrawer();
     }
   };
 
