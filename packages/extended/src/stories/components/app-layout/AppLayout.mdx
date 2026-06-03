@@ -116,7 +116,7 @@ The left and right drawers intentionally have different default behaviors:
 
 - Remains closed by default on all screen sizes
 - Contains contextual content (details panels, filters, etc.) that should be user-triggered
-- Must be explicitly opened via `openRightDrawer()` or clicking an element with `data-forge-app-layout-right`
+- Must be explicitly opened via `openRightDrawer()` or by wiring up your own toggle button
 
 This asymmetry reflects the typical usage pattern where primary navigation should be readily accessible, while supplementary content panels are shown on demand.
 
@@ -351,12 +351,12 @@ Similar to the navigation drawer, the `body-right-content` slot provides respons
 
 ### Toggling the Right Drawer
 
-Unlike the navigation drawer which has a built-in menu button, the right drawer requires a trigger element. Add the `data-forge-app-layout-right` attribute to any element to make it toggle the right drawer:
+Unlike the navigation drawer which has a built-in menu button, the right drawer requires you to wire up your own trigger element. Use the `toggleRightDrawer()`, `openRightDrawer()`, or `closeRightDrawer()` methods to control the drawer:
 
 ```html
-<forge-app-layout app-title="My Application">
+<forge-app-layout id="app-layout" app-title="My Application">
   <!-- App bar with toggle button -->
-  <forge-icon-button slot="app-bar-end" data-forge-app-layout-right aria-label="Toggle details panel">
+  <forge-icon-button id="right-drawer-toggle" slot="app-bar-end" aria-label="Toggle details panel">
     <forge-icon name="info"></forge-icon>
   </forge-icon-button>
 
@@ -369,19 +369,20 @@ Unlike the navigation drawer which has a built-in menu button, the right drawer 
     <p>Additional information displayed in the right drawer.</p>
   </aside>
 </forge-app-layout>
-```
 
-The `APP_LAYOUT_RIGHT_TOGGLE_ATTRIBUTE` constant is exported for use in JavaScript/TypeScript:
+<script>
+  const appLayout = document.getElementById('app-layout');
+  const toggleButton = document.getElementById('right-drawer-toggle');
 
-```typescript
-import { APP_LAYOUT_RIGHT_TOGGLE_ATTRIBUTE } from '@tylertech/forge-extended';
-
-element.setAttribute(APP_LAYOUT_RIGHT_TOGGLE_ATTRIBUTE, '');
+  toggleButton.addEventListener('click', () => {
+    appLayout.toggleRightDrawer();
+  });
+</script>
 ```
 
 ### Programmatic Control
 
-You can also control the right drawer programmatically using the following methods:
+You can control the right drawer programmatically using the following methods:
 
 ```javascript
 const appLayout = document.querySelector('forge-app-layout');

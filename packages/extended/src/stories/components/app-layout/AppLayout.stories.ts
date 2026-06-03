@@ -119,6 +119,12 @@ export const Demo: Story = {
 
 export const WithRightDrawer: Story = {
   render: args => {
+    function handleToggleRightDrawer(event: Event): void {
+      const button = event.currentTarget as HTMLElement;
+      const appLayout = button.closest('forge-app-layout');
+      appLayout?.toggleRightDrawer();
+    }
+
     return html`
       <forge-app-layout
         app-title=${args.appTitle}
@@ -141,7 +147,7 @@ export const WithRightDrawer: Story = {
           </forge-list-item>
         </forge-list>
 
-        <forge-icon-button slot="app-bar-end" data-forge-app-layout-right aria-label="Toggle details panel">
+        <forge-icon-button slot="app-bar-end" aria-label="Toggle details panel" @click=${handleToggleRightDrawer}>
           <forge-icon name="info"></forge-icon>
         </forge-icon-button>
 

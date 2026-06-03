@@ -827,44 +827,6 @@ describe('AppLayout', () => {
         expect(harness.el.matches(':state(right-drawer-closed)')).to.be.true;
       });
     });
-
-    describe('data-forge-app-layout-right attribute', () => {
-      it('should toggle right drawer when clicking element with data-forge-app-layout-right attribute', async () => {
-        const harness = await createFixture({ hasBodyRightContent: true, hasRightToggleButton: true });
-
-        expect(harness.el.matches(':state(right-drawer-closed)')).to.be.true;
-
-        harness.rightToggleButton?.click();
-        await harness.el.updateComplete;
-
-        expect(harness.el.matches(':state(right-drawer-open)')).to.be.true;
-      });
-
-      it('should emit forge-app-layout-right-drawer-change when clicking toggle button', async () => {
-        const harness = await createFixture({ hasBodyRightContent: true, hasRightToggleButton: true });
-        const spy = sinon.spy();
-
-        harness.el.addEventListener('forge-app-layout-right-drawer-change', spy);
-        harness.rightToggleButton?.click();
-        await harness.el.updateComplete;
-
-        expect(spy.calledOnce).to.be.true;
-        const eventDetail = spy.firstCall.args[0].detail as AppLayoutDrawerChangeEventData;
-        expect(eventDetail.open).to.be.true;
-      });
-
-      it('should close right drawer when clicking toggle button again', async () => {
-        const harness = await createFixture({ hasBodyRightContent: true, hasRightToggleButton: true });
-
-        harness.rightToggleButton?.click();
-        await harness.el.updateComplete;
-        expect(harness.el.matches(':state(right-drawer-open)')).to.be.true;
-
-        harness.rightToggleButton?.click();
-        await harness.el.updateComplete;
-        expect(harness.el.matches(':state(right-drawer-closed)')).to.be.true;
-      });
-    });
   });
 
   describe('Independent Breakpoints', () => {
@@ -1157,10 +1119,6 @@ class AppLayoutHarness {
     return this.el.shadowRoot?.querySelector('.right-drawer-container forge-drawer') as IDrawerComponent | null;
   }
 
-  public get rightToggleButton(): HTMLElement | null {
-    return document.querySelector('#right-toggle') as HTMLElement | null;
-  }
-
   public simulateRightDialogClose(): void {
     const dialog = this.rightDialogElement;
     if (dialog) {
@@ -1202,7 +1160,6 @@ interface AppLayoutFixtureConfig {
   navigationWithCloseAttribute?: boolean;
   hasBodyContent?: boolean;
   hasBodyRightContent?: boolean;
-  hasRightToggleButton?: boolean;
   hasLogo?: boolean;
   hasAppBarStart?: boolean;
   hasAppBarCenter?: boolean;
@@ -1221,7 +1178,6 @@ async function createFixture({
   navigationWithCloseAttribute = false,
   hasBodyContent = false,
   hasBodyRightContent = false,
-  hasRightToggleButton = false,
   hasLogo = false,
   hasAppBarStart = false,
   hasAppBarCenter = false,
@@ -1249,7 +1205,6 @@ async function createFixture({
       ?mini-hover=${miniHover}>
       ${navigationContent} ${hasBodyContent ? html`<div slot="body">Body Content</div>` : ''}
       ${hasBodyRightContent ? html`<div slot="body-right-content">Body Right Content</div>` : ''}
-      ${hasRightToggleButton ? html`<button id="right-toggle" data-forge-app-layout-right>Toggle Right</button>` : ''}
       ${hasLogo ? html`<div slot="app-bar-logo">Logo</div>` : ''}
       ${hasAppBarStart ? html`<div slot="app-bar-start">Start Content</div>` : ''}
       ${hasAppBarCenter ? html`<div slot="app-bar-center">Center Content</div>` : ''}

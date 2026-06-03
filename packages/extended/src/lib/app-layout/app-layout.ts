@@ -41,7 +41,6 @@ export interface AppLayoutDrawerChangeEventData {
 
 export const AppLayoutComponentTagName: keyof HTMLElementTagNameMap = 'forge-app-layout';
 export const APP_LAYOUT_CLOSE_ATTRIBUTE = 'data-forge-app-layout-close';
-export const APP_LAYOUT_RIGHT_TOGGLE_ATTRIBUTE = 'data-forge-app-layout-right';
 
 /**
  * @tag forge-app-layout
@@ -222,7 +221,6 @@ export class AppLayoutComponent extends LitElement {
     this.#mainBreakpointHandler.setup();
     this.#setupLeftBreakpointHandler();
     this.#setupRightBreakpointHandler();
-    document.addEventListener('click', this.#handleRightToggleButtonClick, true);
   }
 
   public override firstUpdated(changedProperties: PropertyValues<this>): void {
@@ -256,7 +254,6 @@ export class AppLayoutComponent extends LitElement {
     this.#mainBreakpointHandler.cleanup();
     this.#cleanupLeftBreakpointHandler();
     this.#cleanupRightBreakpointHandler();
-    document.removeEventListener('click', this.#handleRightToggleButtonClick, true);
   }
 
   // --- Breakpoint Handler Setup/Cleanup ---
@@ -412,17 +409,6 @@ export class AppLayoutComponent extends LitElement {
 
   #handleRightDrawerClose = (): void => {
     this.#setRightDrawerOpen(false);
-  };
-
-  #handleRightToggleButtonClick = (event: Event): void => {
-    const path = event.composedPath();
-    const hasToggleAttribute = path.some(
-      el => el instanceof HTMLElement && el.hasAttribute(APP_LAYOUT_RIGHT_TOGGLE_ATTRIBUTE)
-    );
-
-    if (hasToggleAttribute) {
-      this.toggleRightDrawer();
-    }
   };
 
   // --- Slot Handling ---
