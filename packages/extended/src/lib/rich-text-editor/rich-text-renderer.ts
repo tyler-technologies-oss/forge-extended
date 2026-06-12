@@ -22,9 +22,16 @@ export const RichTextRendererComponentTagName: keyof HTMLElementTagNameMap = 'fo
 /**
  * @tag forge-rich-text-renderer
  *
+ * @summary
+ * Renders rich text content in a read-only format for display purposes.
+ *
  * @description
- * This component is responsible for rendering rich text content (either ProseMirror JSON or HTML string) in either a
- * editable or read-only mode.
+ * This component is responsible for rendering rich text content in a read-only mode. It accepts
+ * content in ProseMirror JSON format (the same format produced by the editor's change event) and
+ * displays it with proper formatting. Use this component to display rich text content that was
+ * created with the forge-rich-text-editor component.
+ *
+ * @property {RichTextRendererContent} content - The content to render in ProseMirror JSON format.
  */
 @customElement(RichTextRendererComponentTagName)
 export class RichTextRendererComponent extends LitElement {

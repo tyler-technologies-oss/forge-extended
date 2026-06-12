@@ -21,12 +21,28 @@ const DEFAULT_EXTENSIONS: AnyExtension[] = [Document, Text, Paragraph];
 /**
  * @tag forge-rich-text-context
  *
+ * @summary
+ * Provides the editor context for composed rich text editor layouts where toolbar and content are separated.
+ *
  * @description
  * This component provides the context for the rich text editor and all auxiliary components.
- * It initializes the editor and provides methods to set the editor element and register features.
- * It also provides the editor context to child components.
+ * It initializes the TipTap editor instance and provides methods to set the editor element and register features.
+ * Use this component when you need to separate the toolbar from the content area, such as for fixed toolbars
+ * or multi-column layouts. For simple inline editor usage, use forge-rich-text-editor instead.
  *
- * @event {CustomEvent<{ json: Record<string, any> }>} change - Fired when the content of the editor changes.
+ * @slot - The default slot for toolbar components and forge-rich-text-content.
+ *
+ * @property {string} [editorId='editor'] - The ID of the element to instantiate the editor against.
+ * @property {string} [content=''] - The HTML content of the editor.
+ * @property {boolean} [disabled=false] - Whether the editor is disabled.
+ * @property {boolean} [readOnly=false] - Whether the editor is in readonly mode.
+ *
+ * @attribute {string} editor-id - The ID of the element to instantiate the editor against.
+ * @attribute {string} content - The HTML content of the editor.
+ * @attribute {boolean} disabled - Whether the editor is disabled.
+ * @attribute {boolean} readonly - Whether the editor is in readonly mode.
+ *
+ * @event {CustomEvent<{ json: Record<string, any> }>} change - Fired when the content of the editor changes. The detail contains the editor content in JSON format.
  */
 @customElement(RichTextContextComponentTagName)
 export class RichTextContextComponent extends LitElement {
@@ -98,8 +114,8 @@ export class RichTextContextComponent extends LitElement {
     disabled: false,
     readOnly: false,
     content: '',
-    isActive(identifier: string | object) {
-      return this.editor?.isActive(identifier) ?? false;
+    isActive(identifier: string | object, attributes?: object) {
+      return this.editor?.isActive(identifier, attributes) ?? false;
     },
     isEditable() {
       return !this.disabled && !this.readOnly && !!this.editor;

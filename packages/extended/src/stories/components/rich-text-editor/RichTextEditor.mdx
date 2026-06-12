@@ -1,4 +1,4 @@
-import { Meta, Title, Canvas } from '@storybook/blocks';
+import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
 import CustomArgTypes from '../../blocks/CustomArgTypes';
 import * as RichTextEditorStories from './RichTextEditor.stories';
 
@@ -6,11 +6,107 @@ import * as RichTextEditorStories from './RichTextEditor.stories';
 
 <Title />
 
-TODO: A basic description of the `Rich Text Editor` component goes here.
+The `<forge-rich-text-editor>` component provides a powerful and accessible rich text editing experience powered by [TipTap](https://tiptap.dev/). It offers a flexible, component-based architecture where editing features are added as child components, allowing you to compose exactly the functionality your application needs.
+
+The editor supports both standalone usage (with toolbar inline) and composed usage (with toolbar separated from content), making it adaptable to various UI layouts.
 
 <Canvas of={RichTextEditorStories.Demo} />
 
-TODO: If applicable, add any additional content for the `Rich Text Editor` component here.
+## Usage
+
+The rich text editor follows a compositional pattern where you add feature components as children. Each feature component provides specific editing capabilities and registers itself with the editor:
+
+```html
+<forge-rich-text-editor>
+  <forge-rte-standard-tools></forge-rte-standard-tools>
+  <forge-rte-feature-divider></forge-rte-feature-divider>
+  <forge-rte-code></forge-rte-code>
+  <forge-rte-link></forge-rte-link>
+</forge-rich-text-editor>
+```
+
+### Available Features
+
+#### Standard Tools (`<forge-rte-standard-tools>`)
+
+The standard tools component provides common formatting features:
+
+- **Bold**: Apply bold formatting to selected text
+- **Italic**: Apply italic formatting to selected text
+- **Underline**: Apply underline formatting to selected text
+- **Strikethrough**: Apply strikethrough formatting to selected text
+- **Bulleted List**: Create unordered lists
+- **Numbered List**: Create ordered lists
+- **Headings**: Format text as heading levels 1, 2, or 3
+- **Text Alignment**: Align text left, center, right, or justify
+
+The standard tools component exposes each feature through properties that allow you to customize labels for accessibility:
+
+```html
+<forge-rte-standard-tools
+  bold-label="Make text bold"
+  h1-label="Large heading"
+  h2-label="Medium heading"
+  h3-label="Small heading"
+  align-left-label="Align left"
+  align-center-label="Align center"
+  align-right-label="Align right"
+  align-justify-label="Justify text">
+</forge-rte-standard-tools>
+```
+
+#### Additional Features
+
+- **Code** (`<forge-rte-code>`): Inline code formatting
+- **Link** (`<forge-rte-link>`): Insert and edit hyperlinks
+- **Divider** (`<forge-rte-feature-divider>`): Visual separator between feature groups
+
+### Headings Feature
+
+The rich text editor supports three levels of headings (H1, H2, H3) through the standard tools component. Each heading level has:
+
+- A dedicated button with a unique icon
+- Active state indication when the cursor is in a heading
+- Customizable accessible labels
+- Toggle behavior (clicking the active heading button converts back to paragraph)
+
+Headings follow proper semantic HTML structure and can be styled consistently with your application's typography system.
+
+### Composed Layout
+
+For more complex layouts where you want to separate the toolbar from the content area, use the `<forge-rich-text-context>` component:
+
+```html
+<forge-rich-text-context>
+  <forge-card class="toolbar" raised>
+    <forge-rte-standard-tools></forge-rte-standard-tools>
+  </forge-card>
+  <forge-card class="content-card" raised>
+    <forge-rich-text-content></forge-rich-text-content>
+  </forge-card>
+</forge-rich-text-context>
+```
+
+This pattern is useful for fixed toolbars, multi-column layouts, or when you need precise control over toolbar placement.
+
+### Events
+
+The editor emits a `change` event whenever the content is modified:
+
+```javascript
+const editor = document.querySelector('forge-rich-text-editor');
+editor.addEventListener('change', evt => {
+  console.log('Editor content:', evt.detail);
+});
+```
+
+### Rendering Content
+
+Use the `<forge-rich-text-renderer>` component to display rich text content in a read-only format:
+
+```html
+<forge-rich-text-renderer></forge-rich-text-renderer>
+```
 
 ## API
 
@@ -18,4 +114,9 @@ TODO: If applicable, add any additional content for the `Rich Text Editor` compo
 
 ## Accessibility
 
-TODO: If applicable, add accessibility guidelines for the `Rich Text Editor` component here.
+- All toolbar buttons include descriptive `aria-label` attributes that can be customized via component properties
+- The editor maintains proper keyboard navigation and focus management
+- Heading levels follow semantic HTML structure (h1, h2, h3) for screen reader compatibility
+- Toolbar buttons indicate their active/inactive state through both visual styling and ARIA attributes
+- All formatting commands are keyboard accessible via standard shortcuts (Ctrl+B for bold, etc.)
+- Link editing includes proper focus management and keyboard support

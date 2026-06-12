@@ -17,9 +17,14 @@ export const RichTextContentComponentTagName: keyof HTMLElementTagNameMap = 'for
 /**
  * @tag forge-rich-text-content
  *
+ * @summary
+ * Renders the editable content area for composed rich text editor layouts.
+ *
  * @description
  * This component is responsible for rendering the content area of the rich text editor.
- * It provides the editor element reference to the editor context.
+ * It provides the editor element reference to the editor context and must be used within
+ * a forge-rich-text-context component. Use this when you need to separate the toolbar from
+ * the content area in your layout.
  */
 @customElement(RichTextContentComponentTagName)
 export class RichTextContentComponent extends LitElement {

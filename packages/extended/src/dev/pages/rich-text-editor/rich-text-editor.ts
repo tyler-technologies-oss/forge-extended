@@ -7,6 +7,7 @@ import '$lib/rich-text-editor/features/rte-standard-tools';
 // import '$lib/rich-text-editor/features/rte-underline';
 import '$lib/rich-text-editor/features/rte-code';
 import '$lib/rich-text-editor/features/rte-link';
+import '$lib/rich-text-editor/features/rte-heading';
 import '$lib/rich-text-editor/rich-text-renderer';
 import { type RichTextEditorComponent } from '$lib/rich-text-editor';
 

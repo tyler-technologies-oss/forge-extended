@@ -18,9 +18,26 @@ export const RichTextEditorComponentTagName: keyof HTMLElementTagNameMap = 'forg
 /**
  * @tag forge-rich-text-editor
  *
+ * @summary
+ * A rich text editor component powered by TipTap that provides a flexible, component-based
+ * architecture for composing editing features.
+ *
  * @description
- * The Rich Text Editor component provides a rich text editing experience.
- * It includes a toolbar for formatting options and a content area for editing text.
+ * The Rich Text Editor component provides a powerful and accessible rich text editing experience.
+ * It includes a toolbar for formatting options and a content area for editing text. Features are
+ * added as child components, allowing you to compose exactly the functionality your application needs.
+ *
+ * @slot - The default slot is reserved for feature components (toolbar buttons like forge-rte-standard-tools, forge-rte-code, forge-rte-link, etc.).
+ *
+ * @property {string} [content=''] - The HTML content of the editor.
+ * @property {boolean} [disabled=false] - Whether the editor is disabled.
+ * @property {boolean} [readOnly=false] - Whether the editor is in readonly mode.
+ *
+ * @attribute {string} content - The HTML content of the editor.
+ * @attribute {boolean} disabled - Whether the editor is disabled.
+ * @attribute {boolean} readonly - Whether the editor is in readonly mode.
+ *
+ * @event {CustomEvent<{ json: Record<string, any> }>} change - Fired when the content of the editor changes. The detail contains the editor content in JSON format.
  */
 @customElement(RichTextEditorComponentTagName)
 export class RichTextEditorComponent extends LitElement {

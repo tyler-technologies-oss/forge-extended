@@ -190,294 +190,329 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/app-layout/app-layout.ts",
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "AppLayoutComponentTagName",
+          "name": "BusyIndicatorComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-app-layout'"
-        },
-        {
-          "kind": "variable",
-          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
-          "type": {
-            "text": "string"
-          },
-          "default": "'data-forge-app-layout-close'"
+          "default": "'forge-busy-indicator'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "AppLayoutComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the width of the navigation drawer (default: 320px)",
-              "name": "--forge-app-layout-drawer-width"
-            },
-            {
-              "description": "Controls the width of the navigation dialog on small screens (default: 320px)",
-              "name": "--forge-app-layout-dialog-width"
-            },
-            {
-              "description": "Controls the z-index of the mini drawer when using hover mode (default: 3)",
-              "name": "--forge-app-layout-mini-drawer-z-index"
-            }
-          ],
+          "name": "BusyIndicatorComponent",
           "slots": [
             {
-              "description": "Places content in the header",
-              "name": "header"
+              "description": "The title text to display.",
+              "name": "title"
             },
             {
-              "description": "Places content in the footer",
-              "name": "footer"
+              "description": "The message to display.",
+              "name": "message"
             },
             {
-              "description": "Places content to the left of all content",
-              "name": "left"
-            },
-            {
-              "description": "Places content to the right of all content",
-              "name": "right"
-            },
-            {
-              "description": "Places content in the header of the body",
-              "name": "body-header"
-            },
-            {
-              "description": "Places content in the footer of the body",
-              "name": "body-footer"
-            },
-            {
-              "description": "Places content to the left of the body content",
-              "name": "body-left"
-            },
-            {
-              "description": "Places content to the right of the body content",
-              "name": "body-right"
-            },
-            {
-              "description": "Responsive navigation content that renders in left slot (small screens) or body-left slot (large screens)",
-              "name": "navigation"
-            },
-            {
-              "description": "Places content in the app bar logo slot",
-              "name": "app-bar-logo"
-            },
-            {
-              "description": "Places content in the app bar start slot",
-              "name": "app-bar-start"
-            },
-            {
-              "description": "Places content in the app bar center slot",
-              "name": "app-bar-center"
-            },
-            {
-              "description": "Places content in the app bar end slot",
-              "name": "app-bar-end"
+              "description": "The text for the cancel button.",
+              "name": "cancel-text"
             }
           ],
           "members": [
             {
               "kind": "field",
-              "name": "appTitle",
+              "name": "open",
               "type": {
-                "text": "string"
+                "text": "boolean"
               },
               "privacy": "public",
-              "default": "''",
-              "description": "The title text to display in the app bar",
-              "attribute": "app-title"
+              "default": "false",
+              "description": "Indicates whether the busy indicator is open.",
+              "attribute": "open"
             },
             {
               "kind": "field",
-              "name": "appTitleHref",
+              "name": "mode",
               "type": {
-                "text": "string"
+                "text": "BusyIndicatorMode"
               },
               "privacy": "public",
-              "default": "''",
-              "description": "The URL that the app bar title links to",
-              "attribute": "app-title-href"
+              "default": "'fullscreen'",
+              "description": "Whether the busy indicator is fullscreen or inline.",
+              "attribute": "mode"
             },
             {
               "kind": "field",
-              "name": "breakpoint",
+              "name": "titleText",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The title text to display.",
+              "attribute": "title-text"
+            },
+            {
+              "kind": "field",
+              "name": "headingLevel",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "privacy": "public",
+              "default": "1",
+              "description": "The heading level for the title.",
+              "attribute": "heading-level"
+            },
+            {
+              "kind": "field",
+              "name": "message",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The message to display.",
+              "attribute": "message"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog.",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "cancelable",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the cancel button is displayed.",
+              "attribute": "cancelable"
+            },
+            {
+              "kind": "field",
+              "name": "variant",
+              "type": {
+                "text": "BusyIndicatorVariant"
+              },
+              "privacy": "public",
+              "default": "'spinner'",
+              "description": "The variant of the busy indicator.\n- `spinner` (default): displays a spinner.\n- `progress`: displays a progress bar.\n- `message-only`: No progress indicator is displayed.",
+              "attribute": "variant"
+            },
+            {
+              "kind": "field",
+              "name": "determinate",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the loading indicator is determinate.",
+              "attribute": "determinate"
+            },
+            {
+              "kind": "field",
+              "name": "progress",
               "type": {
                 "text": "number"
               },
               "privacy": "public",
-              "default": "960",
-              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
-              "attribute": "breakpoint"
+              "default": "0",
+              "description": "The progress amount for the progress bar.",
+              "attribute": "progress"
             },
             {
               "kind": "field",
-              "name": "useMiniDrawer",
+              "name": "buffer",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "0",
+              "description": "The buffer amount for the progress bar.",
+              "attribute": "buffer"
+            },
+            {
+              "kind": "field",
+              "name": "transparent",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
               "default": "false",
-              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
-              "attribute": "use-mini-drawer"
-            },
-            {
-              "kind": "field",
-              "name": "miniHover",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Whether the mini drawer should expand on hover (default: false)",
-              "attribute": "mini-hover"
-            },
-            {
-              "kind": "field",
-              "name": "isLargeScreen",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "readonly": true,
-              "description": "Whether the current screen width is above the breakpoint (read-only)"
-            },
-            {
-              "kind": "method",
-              "name": "closeDrawer",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "description": "Closes the navigation drawer. Only has effect on small screens where the drawer is modal."
+              "description": "Indicates whether the busy indicator surface should be transparent (no background or elevation).",
+              "attribute": "transparent"
             }
           ],
           "events": [
             {
               "type": {
-                "text": "CustomEvent<AppLayoutBreakpointChangeEventData>"
+                "text": "CustomEvent<void>"
               },
-              "description": "Fired when the screen size crosses the breakpoint threshold",
-              "name": "forge-app-layout-breakpoint-change"
-            },
-            {
-              "type": {
-                "text": "CustomEvent<AppLayoutDrawerChangeEventData>"
-              },
-              "description": "Fired when the navigation drawer opens or closes",
-              "name": "forge-app-layout-drawer-change"
+              "description": "Fired when the cancel button is clicked.",
+              "name": "forge-busy-indicator-cancel"
             }
           ],
           "attributes": [
             {
-              "name": "app-title",
+              "name": "open",
               "type": {
-                "text": "string"
+                "text": "boolean"
               },
-              "default": "''",
-              "description": "The title text to display in the app bar",
-              "fieldName": "appTitle"
+              "default": "false",
+              "description": "Indicates whether the busy indicator is open.",
+              "fieldName": "open"
             },
             {
-              "name": "app-title-href",
+              "name": "mode",
               "type": {
-                "text": "string"
+                "text": "BusyIndicatorMode"
               },
-              "default": "''",
-              "description": "The URL that the app bar title links to",
-              "fieldName": "appTitleHref"
+              "default": "'fullscreen'",
+              "description": "Whether the busy indicator is fullscreen or inline.",
+              "fieldName": "mode"
             },
             {
-              "name": "breakpoint",
+              "name": "title-text",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The title text to display.",
+              "fieldName": "titleText"
+            },
+            {
+              "name": "heading-level",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "default": "1",
+              "description": "The heading level for the title.",
+              "fieldName": "headingLevel"
+            },
+            {
+              "name": "message",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The message to display.",
+              "fieldName": "message"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog.",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog.",
+              "fieldName": "description"
+            },
+            {
+              "name": "cancelable",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the cancel button is displayed.",
+              "fieldName": "cancelable"
+            },
+            {
+              "name": "variant",
+              "type": {
+                "text": "BusyIndicatorVariant"
+              },
+              "default": "'spinner'",
+              "description": "The variant of the busy indicator.\n- `spinner` (default): displays a spinner.\n- `progress`: displays a progress bar.\n- `message-only`: No progress indicator is displayed.",
+              "fieldName": "variant"
+            },
+            {
+              "name": "determinate",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the loading indicator is determinate.",
+              "fieldName": "determinate"
+            },
+            {
+              "name": "progress",
               "type": {
                 "text": "number"
               },
-              "default": "960",
-              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
-              "fieldName": "breakpoint"
+              "default": "0",
+              "description": "The progress amount for the progress bar.",
+              "fieldName": "progress"
             },
             {
-              "name": "use-mini-drawer",
+              "name": "buffer",
+              "type": {
+                "text": "number"
+              },
+              "default": "0",
+              "description": "The buffer amount for the progress bar.",
+              "fieldName": "buffer"
+            },
+            {
+              "name": "transparent",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
-              "fieldName": "useMiniDrawer"
-            },
-            {
-              "name": "mini-hover",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Whether the mini drawer should expand on hover (default: false)",
-              "fieldName": "miniHover"
+              "description": "Indicates whether the busy indicator surface should be transparent (no background or elevation).",
+              "fieldName": "transparent"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-app-layout",
-          "customElement": true,
-          "summary": "A responsive application layout component that provides an app bar with a navigation drawer.\nOn small screens, the navigation appears in a modal dialog. On large screens, it appears in a side drawer.",
-          "states": [
-            {
-              "name": "small",
-              "description": "Screen width is below 960px, navigation appears in modal drawer"
-            },
-            {
-              "name": "large",
-              "description": "Screen width is 960px or above, navigation appears in body-left drawer"
-            },
-            {
-              "name": "drawer-open",
-              "description": "The navigation drawer is currently open"
-            },
-            {
-              "name": "drawer-closed",
-              "description": "The navigation drawer is currently closed"
-            }
-          ]
+          "tagName": "forge-busy-indicator",
+          "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "AppLayoutComponentTagName",
+          "name": "BusyIndicatorComponentTagName",
           "declaration": {
-            "name": "AppLayoutComponentTagName",
-            "module": "src/lib/app-layout/app-layout.ts"
+            "name": "BusyIndicatorComponentTagName",
+            "module": "src/lib/busy-indicator/busy-indicator.ts"
           }
         },
         {
           "kind": "js",
-          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+          "name": "BusyIndicatorComponent",
           "declaration": {
-            "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
-            "module": "src/lib/app-layout/app-layout.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AppLayoutComponent",
-          "declaration": {
-            "name": "AppLayoutComponent",
-            "module": "src/lib/app-layout/app-layout.ts"
+            "name": "BusyIndicatorComponent",
+            "module": "src/lib/busy-indicator/busy-indicator.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "AppLayoutComponent",
-            "module": "src/lib/app-layout/app-layout.ts"
+            "name": "BusyIndicatorComponent",
+            "module": "src/lib/busy-indicator/busy-indicator.ts"
           }
         }
       ]
@@ -980,329 +1015,407 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "path": "src/lib/app-layout/app-layout.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "BusyIndicatorComponentTagName",
+          "name": "AppLayoutComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-busy-indicator'"
+          "default": "'forge-app-layout'"
+        },
+        {
+          "kind": "variable",
+          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+          "type": {
+            "text": "string"
+          },
+          "default": "'data-forge-app-layout-close'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "BusyIndicatorComponent",
+          "name": "AppLayoutComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the width of the navigation drawer (default: 320px)",
+              "name": "--forge-app-layout-drawer-width"
+            },
+            {
+              "description": "Controls the width of the navigation dialog on small screens (default: 320px)",
+              "name": "--forge-app-layout-dialog-width"
+            },
+            {
+              "description": "Controls the z-index of the mini drawer when using hover mode (default: 3)",
+              "name": "--forge-app-layout-mini-drawer-z-index"
+            }
+          ],
           "slots": [
             {
-              "description": "The title text to display.",
-              "name": "title"
+              "description": "Places content in the header",
+              "name": "header"
             },
             {
-              "description": "The message to display.",
-              "name": "message"
+              "description": "Places content in the footer",
+              "name": "footer"
             },
             {
-              "description": "The text for the cancel button.",
-              "name": "cancel-text"
+              "description": "Places content to the left of all content",
+              "name": "left"
+            },
+            {
+              "description": "Places content to the right of all content",
+              "name": "right"
+            },
+            {
+              "description": "Places content in the header of the body",
+              "name": "body-header"
+            },
+            {
+              "description": "Places content in the footer of the body",
+              "name": "body-footer"
+            },
+            {
+              "description": "Places content to the left of the body content",
+              "name": "body-left"
+            },
+            {
+              "description": "Places content to the right of the body content",
+              "name": "body-right"
+            },
+            {
+              "description": "Responsive navigation content that renders in left slot (small screens) or body-left slot (large screens)",
+              "name": "navigation"
+            },
+            {
+              "description": "Places content in the app bar logo slot",
+              "name": "app-bar-logo"
+            },
+            {
+              "description": "Places content in the app bar start slot",
+              "name": "app-bar-start"
+            },
+            {
+              "description": "Places content in the app bar center slot",
+              "name": "app-bar-center"
+            },
+            {
+              "description": "Places content in the app bar end slot",
+              "name": "app-bar-end"
             }
           ],
           "members": [
             {
               "kind": "field",
-              "name": "open",
+              "name": "appTitle",
               "type": {
-                "text": "boolean"
+                "text": "string"
               },
               "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the busy indicator is open.",
-              "attribute": "open"
+              "default": "''",
+              "description": "The title text to display in the app bar",
+              "attribute": "app-title"
             },
             {
               "kind": "field",
-              "name": "mode",
+              "name": "appTitleHref",
               "type": {
-                "text": "BusyIndicatorMode"
+                "text": "string"
               },
               "privacy": "public",
-              "default": "'fullscreen'",
-              "description": "Whether the busy indicator is fullscreen or inline.",
-              "attribute": "mode"
+              "default": "''",
+              "description": "The URL that the app bar title links to",
+              "attribute": "app-title-href"
             },
             {
               "kind": "field",
-              "name": "titleText",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The title text to display.",
-              "attribute": "title-text"
-            },
-            {
-              "kind": "field",
-              "name": "headingLevel",
-              "type": {
-                "text": "HeadingLevel"
-              },
-              "privacy": "public",
-              "default": "1",
-              "description": "The heading level for the title.",
-              "attribute": "heading-level"
-            },
-            {
-              "kind": "field",
-              "name": "message",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The message to display.",
-              "attribute": "message"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog.",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog.",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "cancelable",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the cancel button is displayed.",
-              "attribute": "cancelable"
-            },
-            {
-              "kind": "field",
-              "name": "variant",
-              "type": {
-                "text": "BusyIndicatorVariant"
-              },
-              "privacy": "public",
-              "default": "'spinner'",
-              "description": "The variant of the busy indicator.\n- `spinner` (default): displays a spinner.\n- `progress`: displays a progress bar.\n- `message-only`: No progress indicator is displayed.",
-              "attribute": "variant"
-            },
-            {
-              "kind": "field",
-              "name": "determinate",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the loading indicator is determinate.",
-              "attribute": "determinate"
-            },
-            {
-              "kind": "field",
-              "name": "progress",
+              "name": "breakpoint",
               "type": {
                 "text": "number"
               },
               "privacy": "public",
-              "default": "0",
-              "description": "The progress amount for the progress bar.",
-              "attribute": "progress"
+              "default": "960",
+              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
+              "attribute": "breakpoint"
             },
             {
               "kind": "field",
-              "name": "buffer",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "0",
-              "description": "The buffer amount for the progress bar.",
-              "attribute": "buffer"
-            },
-            {
-              "kind": "field",
-              "name": "transparent",
+              "name": "useMiniDrawer",
               "type": {
                 "text": "boolean"
               },
               "privacy": "public",
               "default": "false",
-              "description": "Indicates whether the busy indicator surface should be transparent (no background or elevation).",
-              "attribute": "transparent"
+              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
+              "attribute": "use-mini-drawer"
+            },
+            {
+              "kind": "field",
+              "name": "miniHover",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the mini drawer should expand on hover (default: false)",
+              "attribute": "mini-hover"
+            },
+            {
+              "kind": "field",
+              "name": "isLargeScreen",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "description": "Whether the current screen width is above the breakpoint (read-only)"
+            },
+            {
+              "kind": "method",
+              "name": "closeDrawer",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Closes the navigation drawer. Only has effect on small screens where the drawer is modal."
             }
           ],
           "events": [
             {
               "type": {
-                "text": "CustomEvent<void>"
+                "text": "CustomEvent<AppLayoutBreakpointChangeEventData>"
               },
-              "description": "Fired when the cancel button is clicked.",
-              "name": "forge-busy-indicator-cancel"
+              "description": "Fired when the screen size crosses the breakpoint threshold",
+              "name": "forge-app-layout-breakpoint-change"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<AppLayoutDrawerChangeEventData>"
+              },
+              "description": "Fired when the navigation drawer opens or closes",
+              "name": "forge-app-layout-drawer-change"
             }
           ],
           "attributes": [
             {
-              "name": "open",
+              "name": "app-title",
               "type": {
-                "text": "boolean"
+                "text": "string"
               },
-              "default": "false",
-              "description": "Indicates whether the busy indicator is open.",
-              "fieldName": "open"
+              "default": "''",
+              "description": "The title text to display in the app bar",
+              "fieldName": "appTitle"
             },
             {
-              "name": "mode",
+              "name": "app-title-href",
               "type": {
-                "text": "BusyIndicatorMode"
+                "text": "string"
               },
-              "default": "'fullscreen'",
-              "description": "Whether the busy indicator is fullscreen or inline.",
-              "fieldName": "mode"
+              "default": "''",
+              "description": "The URL that the app bar title links to",
+              "fieldName": "appTitleHref"
             },
             {
-              "name": "title-text",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The title text to display.",
-              "fieldName": "titleText"
-            },
-            {
-              "name": "heading-level",
-              "type": {
-                "text": "HeadingLevel"
-              },
-              "default": "1",
-              "description": "The heading level for the title.",
-              "fieldName": "headingLevel"
-            },
-            {
-              "name": "message",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The message to display.",
-              "fieldName": "message"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog.",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog.",
-              "fieldName": "description"
-            },
-            {
-              "name": "cancelable",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the cancel button is displayed.",
-              "fieldName": "cancelable"
-            },
-            {
-              "name": "variant",
-              "type": {
-                "text": "BusyIndicatorVariant"
-              },
-              "default": "'spinner'",
-              "description": "The variant of the busy indicator.\n- `spinner` (default): displays a spinner.\n- `progress`: displays a progress bar.\n- `message-only`: No progress indicator is displayed.",
-              "fieldName": "variant"
-            },
-            {
-              "name": "determinate",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the loading indicator is determinate.",
-              "fieldName": "determinate"
-            },
-            {
-              "name": "progress",
+              "name": "breakpoint",
               "type": {
                 "text": "number"
               },
-              "default": "0",
-              "description": "The progress amount for the progress bar.",
-              "fieldName": "progress"
+              "default": "960",
+              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
+              "fieldName": "breakpoint"
             },
             {
-              "name": "buffer",
-              "type": {
-                "text": "number"
-              },
-              "default": "0",
-              "description": "The buffer amount for the progress bar.",
-              "fieldName": "buffer"
-            },
-            {
-              "name": "transparent",
+              "name": "use-mini-drawer",
               "type": {
                 "text": "boolean"
               },
               "default": "false",
-              "description": "Indicates whether the busy indicator surface should be transparent (no background or elevation).",
-              "fieldName": "transparent"
+              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
+              "fieldName": "useMiniDrawer"
+            },
+            {
+              "name": "mini-hover",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the mini drawer should expand on hover (default: false)",
+              "fieldName": "miniHover"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-busy-indicator",
+          "tagName": "forge-app-layout",
+          "customElement": true,
+          "summary": "A responsive application layout component that provides an app bar with a navigation drawer.\nOn small screens, the navigation appears in a modal dialog. On large screens, it appears in a side drawer.",
+          "states": [
+            {
+              "name": "small",
+              "description": "Screen width is below 960px, navigation appears in modal drawer"
+            },
+            {
+              "name": "large",
+              "description": "Screen width is 960px or above, navigation appears in body-left drawer"
+            },
+            {
+              "name": "drawer-open",
+              "description": "The navigation drawer is currently open"
+            },
+            {
+              "name": "drawer-closed",
+              "description": "The navigation drawer is currently closed"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLayoutComponentTagName",
+          "declaration": {
+            "name": "AppLayoutComponentTagName",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+          "declaration": {
+            "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLayoutComponent",
+          "declaration": {
+            "name": "AppLayoutComponent",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLayoutComponent",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "MultiSelectHeaderComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-multi-select-header'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MultiSelectHeaderComponent",
+          "slots": [
+            {
+              "description": "Text content for the select-all button",
+              "name": "select-all-button-text"
+            },
+            {
+              "description": "Action buttons (maps to the toolbar end slot)",
+              "name": "actions"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "attribute": "text"
+            },
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Hides the bottom border",
+              "attribute": "no-border"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the select-all button is clicked",
+              "name": "forge-multi-select-header-select-all"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "fieldName": "text"
+            },
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Hides the bottom border",
+              "fieldName": "noBorder"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-multi-select-header",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "BusyIndicatorComponentTagName",
+          "name": "MultiSelectHeaderComponentTagName",
           "declaration": {
-            "name": "BusyIndicatorComponentTagName",
-            "module": "src/lib/busy-indicator/busy-indicator.ts"
+            "name": "MultiSelectHeaderComponentTagName",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         },
         {
           "kind": "js",
-          "name": "BusyIndicatorComponent",
+          "name": "MultiSelectHeaderComponent",
           "declaration": {
-            "name": "BusyIndicatorComponent",
-            "module": "src/lib/busy-indicator/busy-indicator.ts"
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "BusyIndicatorComponent",
-            "module": "src/lib/busy-indicator/busy-indicator.ts"
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         }
       ]
@@ -1483,119 +1596,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "MultiSelectHeaderComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-multi-select-header'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MultiSelectHeaderComponent",
-          "slots": [
-            {
-              "description": "Text content for the select-all button",
-              "name": "select-all-button-text"
-            },
-            {
-              "description": "Action buttons (maps to the toolbar end slot)",
-              "name": "actions"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "attribute": "text"
-            },
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "true",
-              "description": "Hides the bottom border",
-              "attribute": "no-border"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Fired when the select-all button is clicked",
-              "name": "forge-multi-select-header-select-all"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "fieldName": "text"
-            },
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Hides the bottom border",
-              "fieldName": "noBorder"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-multi-select-header",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponentTagName",
-          "declaration": {
-            "name": "MultiSelectHeaderComponentTagName",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponent",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "declarations": [
         {
@@ -1742,6 +1742,425 @@
           "declaration": {
             "name": "ResponsiveToolbarComponent",
             "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/editor-context.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "editorContext",
+          "description": "The Lit context that will be provided by the Rich Text Editor component\nand consumed by sub-components"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "editorContext",
+          "declaration": {
+            "name": "editorContext",
+            "module": "src/lib/rich-text-editor/editor-context.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/rich-text-content.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextContentComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rich-text-content'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextContentComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rich-text-content",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextContentComponentTagName",
+          "declaration": {
+            "name": "RichTextContentComponentTagName",
+            "module": "src/lib/rich-text-editor/rich-text-content.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextContentComponent",
+          "declaration": {
+            "name": "RichTextContentComponent",
+            "module": "src/lib/rich-text-editor/rich-text-content.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextContentComponent",
+            "module": "src/lib/rich-text-editor/rich-text-content.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/rich-text-context.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextContextComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rich-text-context'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextContextComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "editorId",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'editor'",
+              "description": "The ID of the element to instantiate the editor against.",
+              "attribute": "editor-id"
+            },
+            {
+              "kind": "field",
+              "name": "content",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The content of the editor.",
+              "attribute": "content"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the editor is disabled.",
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "readOnly",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the editor is in readonly mode.",
+              "attribute": "readonly"
+            },
+            {
+              "kind": "field",
+              "name": "editorContext",
+              "type": {
+                "text": "EditorContext"
+              },
+              "privacy": "public",
+              "default": "{ editor: null, disabled: false, readOnly: false, content: '', isActive(identifier: string | object, attributes?: object) { return this.editor?.isActive(identifier, attributes) ?? false; }, isEditable() { return !this.disabled && !this.readOnly && !!this.editor; }, setEditorElement: this.#setEditorElement.bind(this), registerFeature: this.#registerFeature.bind(this) }",
+              "description": "Provide the editor context to child components."
+            },
+            {
+              "kind": "method",
+              "name": "toJSON",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "object | undefined"
+                }
+              }
+            }
+          ],
+          "events": [
+            {
+              "name": "change",
+              "type": {
+                "text": "CustomEvent<{ json: Record<string, any> }>"
+              },
+              "description": "Fired when the content of the editor changes."
+            }
+          ],
+          "attributes": [
+            {
+              "name": "editor-id",
+              "type": {
+                "text": "string"
+              },
+              "default": "'editor'",
+              "description": "The ID of the element to instantiate the editor against.",
+              "fieldName": "editorId"
+            },
+            {
+              "name": "content",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The content of the editor.",
+              "fieldName": "content"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the editor is disabled.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the editor is in readonly mode.",
+              "fieldName": "readOnly"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rich-text-context",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextContextComponentTagName",
+          "declaration": {
+            "name": "RichTextContextComponentTagName",
+            "module": "src/lib/rich-text-editor/rich-text-context.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextContextComponent",
+          "declaration": {
+            "name": "RichTextContextComponent",
+            "module": "src/lib/rich-text-editor/rich-text-context.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextContextComponent",
+            "module": "src/lib/rich-text-editor/rich-text-context.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/rich-text-editor.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextEditorComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rich-text-editor'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextEditorComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "content",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The content of the editor.",
+              "attribute": "content"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the editor is disabled.",
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "readOnly",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the editor is in readonly mode.",
+              "attribute": "readonly"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "content",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The content of the editor.",
+              "fieldName": "content"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the editor is disabled.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "readonly",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the editor is in readonly mode.",
+              "fieldName": "readOnly"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rich-text-editor",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextEditorComponentTagName",
+          "declaration": {
+            "name": "RichTextEditorComponentTagName",
+            "module": "src/lib/rich-text-editor/rich-text-editor.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextEditorComponent",
+          "declaration": {
+            "name": "RichTextEditorComponent",
+            "module": "src/lib/rich-text-editor/rich-text-editor.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextEditorComponent",
+            "module": "src/lib/rich-text-editor/rich-text-editor.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/rich-text-renderer.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextRendererComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rich-text-renderer'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextRendererComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "content",
+              "type": {
+                "text": "RichTextRendererContent | undefined"
+              },
+              "privacy": "public",
+              "attribute": "content"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "content",
+              "type": {
+                "text": "RichTextRendererContent | undefined"
+              },
+              "fieldName": "content"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rich-text-renderer",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextRendererComponentTagName",
+          "declaration": {
+            "name": "RichTextRendererComponentTagName",
+            "module": "src/lib/rich-text-editor/rich-text-renderer.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextRendererComponent",
+          "declaration": {
+            "name": "RichTextRendererComponent",
+            "module": "src/lib/rich-text-editor/rich-text-renderer.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextRendererComponent",
+            "module": "src/lib/rich-text-editor/rich-text-renderer.ts"
           }
         }
       ]
@@ -2254,6 +2673,1223 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rich-text-editor-feature.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-align.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureAlignComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-align'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureAlignComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "leftLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Align Left'",
+              "description": "The accessible labels for the left align button.",
+              "attribute": "leftLabel"
+            },
+            {
+              "kind": "field",
+              "name": "centerLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Align Center'",
+              "description": "The accessible labels for the center align button.",
+              "attribute": "centerLabel"
+            },
+            {
+              "kind": "field",
+              "name": "rightLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Align Right'",
+              "description": "The accessible labels for the right align button.",
+              "attribute": "rightLabel"
+            },
+            {
+              "kind": "field",
+              "name": "justifyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Justify'",
+              "description": "The accessible labels for the justify align button.",
+              "attribute": "justifyLabel"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[ TextAlign.configure({ types: ['heading', Paragraph.name] }) ]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "left-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Align Left'",
+              "description": "The accessible labels for the left align button.",
+              "fieldName": "leftLabel"
+            },
+            {
+              "name": "center-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Align Center'",
+              "description": "The accessible labels for the center align button.",
+              "fieldName": "centerLabel"
+            },
+            {
+              "name": "right-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Align Right'",
+              "description": "The accessible labels for the right align button.",
+              "fieldName": "rightLabel"
+            },
+            {
+              "name": "justify-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Justify'",
+              "description": "The accessible labels for the justify align button.",
+              "fieldName": "justifyLabel"
+            },
+            {
+              "name": "leftLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Align Left'",
+              "description": "The accessible labels for the left align button.",
+              "attribute": "left-label",
+              "fieldName": "leftLabel"
+            },
+            {
+              "name": "centerLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Align Center'",
+              "description": "The accessible labels for the center align button.",
+              "attribute": "center-label",
+              "fieldName": "centerLabel"
+            },
+            {
+              "name": "rightLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Align Right'",
+              "description": "The accessible labels for the right align button.",
+              "attribute": "right-label",
+              "fieldName": "rightLabel"
+            },
+            {
+              "name": "justifyLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Justify'",
+              "description": "The accessible labels for the justify align button.",
+              "attribute": "justify-label",
+              "fieldName": "justifyLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-align",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureAlignComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureAlignComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-align.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureAlignComponent",
+          "declaration": {
+            "name": "RichTextFeatureAlignComponent",
+            "module": "src/lib/rich-text-editor/features/rte-align.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureAlignComponent",
+            "module": "src/lib/rich-text-editor/features/rte-align.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-bold.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureBoldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-bold'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureBoldComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Bold'",
+              "description": "The accessible label for the button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[Bold]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Bold'",
+              "description": "The accessible label for the button.",
+              "fieldName": "label",
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-bold",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureBoldComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureBoldComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-bold.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureBoldComponent",
+          "declaration": {
+            "name": "RichTextFeatureBoldComponent",
+            "module": "src/lib/rich-text-editor/features/rte-bold.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureBoldComponent",
+            "module": "src/lib/rich-text-editor/features/rte-bold.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-bullet-list.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RteBulletListComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-bullet-list'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RteBulletListComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Bullet List'",
+              "description": "The accessible label for the button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[BulletList, ListItem]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Bullet List'",
+              "description": "The accessible label for the button.",
+              "fieldName": "label",
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-bullet-list",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RteBulletListComponentTagName",
+          "declaration": {
+            "name": "RteBulletListComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-bullet-list.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RteBulletListComponent",
+          "declaration": {
+            "name": "RteBulletListComponent",
+            "module": "src/lib/rich-text-editor/features/rte-bullet-list.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RteBulletListComponent",
+            "module": "src/lib/rich-text-editor/features/rte-bullet-list.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-code.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureCodeComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-code'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureCodeComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "description": "The accessible label for the button.",
+              "default": "'Code'",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[Code]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "description": "The accessible label for the button.",
+              "default": "'Code'",
+              "fieldName": "label",
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-code",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureCodeComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureCodeComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-code.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureCodeComponent",
+          "declaration": {
+            "name": "RichTextFeatureCodeComponent",
+            "module": "src/lib/rich-text-editor/features/rte-code.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureCodeComponent",
+            "module": "src/lib/rich-text-editor/features/rte-code.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-feature-divider.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureDividerComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-feature-divider'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureDividerComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-feature-divider",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureDividerComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureDividerComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-feature-divider.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureDividerComponent",
+          "declaration": {
+            "name": "RichTextFeatureDividerComponent",
+            "module": "src/lib/rich-text-editor/features/rte-feature-divider.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureDividerComponent",
+            "module": "src/lib/rich-text-editor/features/rte-feature-divider.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-heading.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureHeadingComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-heading'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureHeadingComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "h1Label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Heading 1'",
+              "description": "The accessible label for the heading 1 button.",
+              "attribute": "h1-label"
+            },
+            {
+              "kind": "field",
+              "name": "h2Label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Heading 2'",
+              "description": "The accessible label for the heading 2 button.",
+              "attribute": "h2-label"
+            },
+            {
+              "kind": "field",
+              "name": "h3Label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Heading 3'",
+              "description": "The accessible label for the heading 3 button.",
+              "attribute": "h3-label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[ Heading.configure({ levels: [1, 2, 3] }) ]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "h1-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Heading 1'",
+              "description": "The accessible label for the heading 1 button.",
+              "fieldName": "h1Label",
+              "attribute": "h1-label"
+            },
+            {
+              "name": "h2-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Heading 2'",
+              "description": "The accessible label for the heading 2 button.",
+              "fieldName": "h2Label",
+              "attribute": "h2-label"
+            },
+            {
+              "name": "h3-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Heading 3'",
+              "description": "The accessible label for the heading 3 button.",
+              "fieldName": "h3Label",
+              "attribute": "h3-label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-heading",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureHeadingComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureHeadingComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-heading.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureHeadingComponent",
+          "declaration": {
+            "name": "RichTextFeatureHeadingComponent",
+            "module": "src/lib/rich-text-editor/features/rte-heading.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureHeadingComponent",
+            "module": "src/lib/rich-text-editor/features/rte-heading.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-italic.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RteItalicComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-italic'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RteItalicComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Italic'",
+              "description": "The accessible label for the button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[Italic]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Italic'",
+              "description": "The accessible label for the button.",
+              "fieldName": "label",
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-italic",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RteItalicComponentTagName",
+          "declaration": {
+            "name": "RteItalicComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-italic.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RteItalicComponent",
+          "declaration": {
+            "name": "RteItalicComponent",
+            "module": "src/lib/rich-text-editor/features/rte-italic.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RteItalicComponent",
+            "module": "src/lib/rich-text-editor/features/rte-italic.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-link.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureLinkComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-link'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureLinkComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Link'",
+              "description": "The accessible label for the button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[Link.configure({})]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Link'",
+              "description": "The accessible label for the button.",
+              "fieldName": "label",
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-link",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureLinkComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureLinkComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-link.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureLinkComponent",
+          "declaration": {
+            "name": "RichTextFeatureLinkComponent",
+            "module": "src/lib/rich-text-editor/features/rte-link.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureLinkComponent",
+            "module": "src/lib/rich-text-editor/features/rte-link.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-ordered-list.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RteOrderedListComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-ordered-list'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RteOrderedListComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Ordered List'",
+              "description": "The accessible label for the button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[OrderedList, ListItem]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Ordered List'",
+              "description": "The accessible label for the button.",
+              "fieldName": "label",
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-ordered-list",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RteOrderedListComponentTagName",
+          "declaration": {
+            "name": "RteOrderedListComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-ordered-list.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RteOrderedListComponent",
+          "declaration": {
+            "name": "RteOrderedListComponent",
+            "module": "src/lib/rich-text-editor/features/rte-ordered-list.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RteOrderedListComponent",
+            "module": "src/lib/rich-text-editor/features/rte-ordered-list.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-standard-tools.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RteStandardToolsComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-standard-tools'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RteStandardToolsComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-standard-tools",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RteStandardToolsComponentTagName",
+          "declaration": {
+            "name": "RteStandardToolsComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-standard-tools.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RteStandardToolsComponent",
+          "declaration": {
+            "name": "RteStandardToolsComponent",
+            "module": "src/lib/rich-text-editor/features/rte-standard-tools.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RteStandardToolsComponent",
+            "module": "src/lib/rich-text-editor/features/rte-standard-tools.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-strike.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureStrikeComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-strike'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureStrikeComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Strikethrough'",
+              "description": "The accessible label for the button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[Strike]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Strikethrough'",
+              "description": "The accessible label for the button.",
+              "fieldName": "label",
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-strike",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureStrikeComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureStrikeComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-strike.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureStrikeComponent",
+          "declaration": {
+            "name": "RichTextFeatureStrikeComponent",
+            "module": "src/lib/rich-text-editor/features/rte-strike.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureStrikeComponent",
+            "module": "src/lib/rich-text-editor/features/rte-strike.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-underline.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RteUnderlineComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-underline'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RteUnderlineComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Underline'",
+              "description": "The accessible label for the button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[Underline]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Underline'",
+              "description": "The accessible label for the button.",
+              "fieldName": "label",
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-underline",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RteUnderlineComponentTagName",
+          "declaration": {
+            "name": "RteUnderlineComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-underline.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RteUnderlineComponent",
+          "declaration": {
+            "name": "RteUnderlineComponent",
+            "module": "src/lib/rich-text-editor/features/rte-underline.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RteUnderlineComponent",
+            "module": "src/lib/rich-text-editor/features/rte-underline.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-undo-redo.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureUndoRedoComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-undo-redo'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureUndoRedoComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "undoLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Undo'",
+              "description": "The accessible label for the undo button.",
+              "attribute": "undoLabel"
+            },
+            {
+              "kind": "field",
+              "name": "redoLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Redo'",
+              "description": "The accessible label for the redo button.",
+              "attribute": "redoLabel"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[UndoRedo]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "undo-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Undo'",
+              "description": "The accessible label for the undo button.",
+              "fieldName": "undoLabel"
+            },
+            {
+              "name": "redo-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Redo'",
+              "description": "The accessible label for the redo button.",
+              "fieldName": "redoLabel"
+            },
+            {
+              "name": "undoLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Undo'",
+              "description": "The accessible label for the undo button.",
+              "attribute": "undo-label",
+              "fieldName": "undoLabel"
+            },
+            {
+              "name": "redoLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Redo'",
+              "description": "The accessible label for the redo button.",
+              "attribute": "redo-label",
+              "fieldName": "redoLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-undo-redo",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureUndoRedoComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureUndoRedoComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-undo-redo.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureUndoRedoComponent",
+          "declaration": {
+            "name": "RichTextFeatureUndoRedoComponent",
+            "module": "src/lib/rich-text-editor/features/rte-undo-redo.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureUndoRedoComponent",
+            "module": "src/lib/rich-text-editor/features/rte-undo-redo.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
@@ -2312,9 +3948,149 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/core/rich-text-feature-button.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RteToolButtonComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-tool-button'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RteToolButtonComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Tool'",
+              "description": "The label for the bold button",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "icon",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The icon name.",
+              "attribute": "icon"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "The disabled state of the button.",
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "active",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "The active state of the button.",
+              "attribute": "active"
+            }
+          ],
+          "events": [
+            {
+              "name": "forge-rte-tool-toggle",
+              "type": {
+                "text": "CustomEvent"
+              }
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Tool'",
+              "description": "The label for the bold button",
+              "fieldName": "label"
+            },
+            {
+              "name": "icon",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The icon name.",
+              "fieldName": "icon"
+            },
+            {
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "The disabled state of the button.",
+              "fieldName": "disabled"
+            },
+            {
+              "name": "active",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "The active state of the button.",
+              "fieldName": "active"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-tool-button",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RteToolButtonComponentTagName",
+          "declaration": {
+            "name": "RteToolButtonComponentTagName",
+            "module": "src/lib/rich-text-editor/features/core/rich-text-feature-button.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RteToolButtonComponent",
+          "declaration": {
+            "name": "RteToolButtonComponent",
+            "module": "src/lib/rich-text-editor/features/core/rich-text-feature-button.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RteToolButtonComponent",
+            "module": "src/lib/rich-text-editor/features/core/rich-text-feature-button.ts"
+          }
+        }
+      ]
     }
   ],
-  "branchName": "fix",
+  "branchName": "rte",
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",
@@ -2328,21 +4104,21 @@
       "path": "src/lib/app-launcher/app-launcher.ts",
       "lineNumber": 67
     },
-    "AppLayoutBreakpoint": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 30
+    "BusyIndicatorMode": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 26
     },
-    "AppLayoutBreakpointChangeEventData": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 32
+    "BusyIndicatorVariant": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 27
     },
-    "AppLayoutDrawerChangeEventData": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 36
+    "BusyIndicatorFocusMode": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 28
     },
-    "AppLayoutComponent": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 90
+    "BusyIndicatorComponent": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 40
     },
     "ContentScaffoldComponent": {
       "path": "src/lib/content-scaffold/content-scaffold.ts",
@@ -2372,29 +4148,29 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
-    "BusyIndicatorMode": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 26
+    "AppLayoutBreakpoint": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 30
     },
-    "BusyIndicatorVariant": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 27
+    "AppLayoutBreakpointChangeEventData": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 32
     },
-    "BusyIndicatorFocusMode": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 28
+    "AppLayoutDrawerChangeEventData": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 36
     },
-    "BusyIndicatorComponent": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 40
-    },
-    "QuantityFieldComponent": {
-      "path": "src/lib/quantity-field/quantity-field.ts",
-      "lineNumber": 35
+    "AppLayoutComponent": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 90
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
       "lineNumber": 28
+    },
+    "QuantityFieldComponent": {
+      "path": "src/lib/quantity-field/quantity-field.ts",
+      "lineNumber": 35
     },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
@@ -2407,6 +4183,30 @@
     "ResponsiveToolbarComponent": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 48
+    },
+    "EditorContext": {
+      "path": "src/lib/rich-text-editor/editor-context.ts",
+      "lineNumber": 8
+    },
+    "RichTextContentComponent": {
+      "path": "src/lib/rich-text-editor/rich-text-content.ts",
+      "lineNumber": 24
+    },
+    "RichTextContextComponent": {
+      "path": "src/lib/rich-text-editor/rich-text-context.ts",
+      "lineNumber": 31
+    },
+    "RichTextEditorComponent": {
+      "path": "src/lib/rich-text-editor/rich-text-editor.ts",
+      "lineNumber": 25
+    },
+    "RichTextRendererContent": {
+      "path": "src/lib/rich-text-editor/rich-text-renderer.ts",
+      "lineNumber": 7
+    },
+    "RichTextRendererComponent": {
+      "path": "src/lib/rich-text-editor/rich-text-renderer.ts",
+      "lineNumber": 29
     },
     "StructuredCardComponent": {
       "path": "src/lib/structured-card/structured-card.ts",
@@ -2436,9 +4236,69 @@
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "lineNumber": 26
     },
+    "RichTextEditorFeature": {
+      "path": "src/lib/rich-text-editor/features/rich-text-editor-feature.ts",
+      "lineNumber": 3
+    },
+    "RichTextFeatureAlignComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-align.ts",
+      "lineNumber": 29
+    },
+    "RichTextFeatureBoldComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-bold.ts",
+      "lineNumber": 23
+    },
+    "RteBulletListComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-bullet-list.ts",
+      "lineNumber": 23
+    },
+    "RichTextFeatureCodeComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-code.ts",
+      "lineNumber": 23
+    },
+    "RichTextFeatureDividerComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-feature-divider.ts",
+      "lineNumber": 16
+    },
+    "RichTextFeatureHeadingComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-heading.ts",
+      "lineNumber": 23
+    },
+    "RteItalicComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-italic.ts",
+      "lineNumber": 23
+    },
+    "RichTextFeatureLinkComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-link.ts",
+      "lineNumber": 24
+    },
+    "RteOrderedListComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-ordered-list.ts",
+      "lineNumber": 23
+    },
+    "RteStandardToolsComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-standard-tools.ts",
+      "lineNumber": 26
+    },
+    "RichTextFeatureStrikeComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-strike.ts",
+      "lineNumber": 23
+    },
+    "RteUnderlineComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-underline.ts",
+      "lineNumber": 23
+    },
+    "RichTextFeatureUndoRedoComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-undo-redo.ts",
+      "lineNumber": 22
+    },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "lineNumber": 21
+    },
+    "RteToolButtonComponent": {
+      "path": "src/lib/rich-text-editor/features/core/rich-text-feature-button.ts",
+      "lineNumber": 20
     }
   }
 }

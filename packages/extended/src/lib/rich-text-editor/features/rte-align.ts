@@ -1,5 +1,4 @@
 import { consume } from '@lit/context';
-import { Heading } from '@tiptap/extension-heading';
 import { Paragraph } from '@tiptap/extension-paragraph';
 import { TextAlign } from '@tiptap/extension-text-align';
 import { IconRegistry } from '@tylertech/forge';
@@ -77,9 +76,8 @@ export class RichTextFeatureAlignComponent extends LitElement implements RichTex
   public justifyLabel = 'Justify';
 
   public readonly extensions = [
-    Heading,
     TextAlign.configure({
-      types: [Heading.name, Paragraph.name]
+      types: ['heading', Paragraph.name]
     })
   ];
 
