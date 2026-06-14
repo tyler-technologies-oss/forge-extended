@@ -204,7 +204,9 @@ async function createFixture(options: UnderlineFixtureOptions = {}): Promise<Und
     el,
     underlineFeature,
     button: () =>
-      boldFeature.shadowRoot!.querySelector('forge-rte-tool-button')!.shadowRoot!.querySelector('forge-icon-button')!,
+      underlineFeature
+        .shadowRoot!.querySelector('forge-rte-tool-button')!
+        .shadowRoot!.querySelector('forge-icon-button')!,
     async clickButton() {
       this.button().click();
       await this.waitForUpdate();
