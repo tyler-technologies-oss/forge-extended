@@ -1,6 +1,5 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
-import sinon from 'sinon';
 import type { Editor } from '@tiptap/core';
 import { RichTextEditorComponent } from '../rich-text-editor';
 import { RichTextFeatureHeadingComponent } from './rte-heading';
@@ -62,31 +61,52 @@ describe('RTE Heading Feature', () => {
   it('should toggle H1 when H1 button is clicked', async () => {
     const harness = await createFixture();
     const editor = await harness.getEditor();
-    const spy = sinon.spy(editor.chain().focus(), 'toggleHeading');
 
+    // Set content and select it
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    // Click H1 button
     await harness.clickH1Button();
 
-    expect(spy).to.have.been.calledOnce;
+    // Verify H1 was applied
+    const output = editor.getHTML();
+    expect(output).to.include('<h1>test text</h1>');
   });
 
   it('should toggle H2 when H2 button is clicked', async () => {
     const harness = await createFixture();
     const editor = await harness.getEditor();
-    const spy = sinon.spy(editor.chain().focus(), 'toggleHeading');
 
+    // Set content and select it
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    // Click H2 button
     await harness.clickH2Button();
 
-    expect(spy).to.have.been.calledOnce;
+    // Verify H2 was applied
+    const output = editor.getHTML();
+    expect(output).to.include('<h2>test text</h2>');
   });
 
   it('should toggle H3 when H3 button is clicked', async () => {
     const harness = await createFixture();
     const editor = await harness.getEditor();
-    const spy = sinon.spy(editor.chain().focus(), 'toggleHeading');
 
+    // Set content and select it
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    // Click H3 button
     await harness.clickH3Button();
 
-    expect(spy).to.have.been.calledOnce;
+    // Verify H3 was applied
+    const output = editor.getHTML();
+    expect(output).to.include('<h3>test text</h3>');
   });
 
   it('should disable all buttons when editor is disabled', async () => {
