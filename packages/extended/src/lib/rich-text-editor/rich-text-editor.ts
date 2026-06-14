@@ -65,7 +65,12 @@ export class RichTextEditorComponent extends LitElement {
     return html`
       <forge-rich-text-context .readOnly=${this.readOnly} .disabled=${this.disabled} .content=${this.content}>
         <div class="forge-rich-text-editor">
-          <div class="editor-toolbar" role="toolbar">
+          <div
+            class="editor-toolbar"
+            role="toolbar"
+            aria-label="Rich text formatting toolbar"
+            aria-controls="forge-rte-content"
+            aria-orientation="horizontal">
             <slot></slot>
           </div>
           <forge-rich-text-content></forge-rich-text-content>

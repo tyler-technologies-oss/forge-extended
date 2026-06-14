@@ -225,3 +225,33 @@ async function createFixture(options: BoldFixtureOptions = {}): Promise<BoldFixt
     }
   };
 }
+
+describe('RTE Bold - ARIA attributes', () => {
+  it('should have aria-label on button', async () => {
+    const harness = await createFixture();
+    const button = harness.button();
+
+    expect(button.getAttribute('aria-label')).to.equal('Bold');
+  });
+
+  it('should have custom aria-label when label property is set', async () => {
+    const harness = await createFixture({ label: 'Make text bold' });
+    const button = harness.button();
+
+    expect(button.getAttribute('aria-label')).to.equal('Make text bold');
+  });
+
+  it('should have aria-keyshortcuts attribute', async () => {
+    const harness = await createFixture();
+    const button = harness.button();
+
+    expect(button.getAttribute('aria-keyshortcuts')).to.equal('Control+B');
+  });
+
+  it('should have aria-controls pointing to content area', async () => {
+    const harness = await createFixture();
+    const button = harness.button();
+
+    expect(button.getAttribute('aria-controls')).to.equal('forge-rte-content');
+  });
+});

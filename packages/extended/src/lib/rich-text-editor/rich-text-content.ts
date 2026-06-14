@@ -41,9 +41,20 @@ export class RichTextContentComponent extends LitElement {
   }
 
   public override render(): TemplateResult {
+    const isReadonly = this._editorContext?.readOnly ?? false;
+    const isDisabled = this._editorContext?.disabled ?? false;
+
     return html`
       <div class="editor-content-wrapper">
-        <div ${ref(this.#editorElementRef)} class="editor-content" role="textbox"></div>
+        <div
+          ${ref(this.#editorElementRef)}
+          id="forge-rte-content"
+          class="editor-content"
+          role="textbox"
+          aria-label="Rich text editor content"
+          aria-multiline="true"
+          aria-readonly=${isReadonly ? 'true' : 'false'}
+          aria-disabled=${isDisabled ? 'true' : 'false'}></div>
         <forge-focus-indicator inward target="editor"></forge-focus-indicator>
       </div>
     `;

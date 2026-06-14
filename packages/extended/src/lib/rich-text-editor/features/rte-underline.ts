@@ -56,6 +56,7 @@ export class RteUnderlineComponent extends LitElement implements RichTextEditorF
         @forge-rte-tool-toggle=${this._toggle}
         label=${this.label}
         icon=${tylIconFormatUnderlined.name}
+        keyboard-shortcut="Control+U"
         ?disabled=${!this._editorContext.isEditable()}
         ?active=${this._editorContext.isActive(Underline.name)}></forge-rte-tool-button>
     `;

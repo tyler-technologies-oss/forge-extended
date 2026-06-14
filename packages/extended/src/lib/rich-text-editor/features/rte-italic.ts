@@ -56,6 +56,7 @@ export class RteItalicComponent extends LitElement implements RichTextEditorFeat
         @forge-rte-tool-toggle=${this._toggle}
         label=${this.label}
         icon=${tylIconFormatItalic.name}
+        keyboard-shortcut="Control+I"
         ?disabled=${!this._editorContext.isEditable()}
         ?active=${this._editorContext.isActive(Italic.name)}></forge-rte-tool-button>
     `;

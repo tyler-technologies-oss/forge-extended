@@ -45,6 +45,10 @@ export class RteToolButtonComponent extends LitElement {
   @property({ type: Boolean })
   public active = false;
 
+  /** The keyboard shortcut for this tool (e.g., "Control+B" for bold). */
+  @property({ type: String, attribute: 'keyboard-shortcut' })
+  public keyboardShortcut: string | undefined;
+
   public override render(): TemplateResult {
     return html`
       <forge-icon-button
@@ -56,7 +60,9 @@ export class RteToolButtonComponent extends LitElement {
         @pointerdown=${this.#handlePointerDown}
         @keydown=${this.#handleKeydown}
         ?disabled=${this.disabled}
-        aria-label=${this.label}>
+        aria-label=${this.label}
+        aria-keyshortcuts=${this.keyboardShortcut || ''}
+        aria-controls="forge-rte-content">
         <forge-icon .name=${this.icon}></forge-icon>
         <forge-icon slot="on" .name=${this.icon}></forge-icon>
       </forge-icon-button>

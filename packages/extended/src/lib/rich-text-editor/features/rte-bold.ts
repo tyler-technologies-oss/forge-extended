@@ -56,6 +56,7 @@ export class RichTextFeatureBoldComponent extends LitElement implements RichText
         @forge-rte-tool-toggle=${this._toggle}
         label=${this.label}
         icon=${tylIconFormatBold.name}
+        keyboard-shortcut="Control+B"
         ?disabled=${!this._editorContext.isEditable()}
         ?active=${this._editorContext.isActive(Bold.name)}></forge-rte-tool-button>
     `;
