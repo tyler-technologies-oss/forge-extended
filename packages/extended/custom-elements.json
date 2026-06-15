@@ -190,300 +190,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/app-layout/app-layout.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "AppLayoutComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-app-layout'"
-        },
-        {
-          "kind": "variable",
-          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
-          "type": {
-            "text": "string"
-          },
-          "default": "'data-forge-app-layout-close'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AppLayoutComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the width of the navigation drawer (default: 320px)",
-              "name": "--forge-app-layout-drawer-width"
-            },
-            {
-              "description": "Controls the width of the navigation dialog on small screens (default: 320px)",
-              "name": "--forge-app-layout-dialog-width"
-            },
-            {
-              "description": "Controls the z-index of the mini drawer when using hover mode (default: 3)",
-              "name": "--forge-app-layout-mini-drawer-z-index"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Places content in the header",
-              "name": "header"
-            },
-            {
-              "description": "Places content in the footer",
-              "name": "footer"
-            },
-            {
-              "description": "Places content to the left of all content",
-              "name": "left"
-            },
-            {
-              "description": "Places content to the right of all content",
-              "name": "right"
-            },
-            {
-              "description": "Places content in the header of the body",
-              "name": "body-header"
-            },
-            {
-              "description": "Places content in the footer of the body",
-              "name": "body-footer"
-            },
-            {
-              "description": "Places content to the left of the body content",
-              "name": "body-left"
-            },
-            {
-              "description": "Places content to the right of the body content",
-              "name": "body-right"
-            },
-            {
-              "description": "Responsive navigation content that renders in left slot (small screens) or body-left slot (large screens)",
-              "name": "navigation"
-            },
-            {
-              "description": "Places content in the app bar logo slot",
-              "name": "app-bar-logo"
-            },
-            {
-              "description": "Places content in the app bar start slot",
-              "name": "app-bar-start"
-            },
-            {
-              "description": "Places content in the app bar center slot",
-              "name": "app-bar-center"
-            },
-            {
-              "description": "Places content in the app bar end slot",
-              "name": "app-bar-end"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "appTitle",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The title text to display in the app bar",
-              "attribute": "app-title"
-            },
-            {
-              "kind": "field",
-              "name": "appTitleHref",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The URL that the app bar title links to",
-              "attribute": "app-title-href"
-            },
-            {
-              "kind": "field",
-              "name": "breakpoint",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "960",
-              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
-              "attribute": "breakpoint"
-            },
-            {
-              "kind": "field",
-              "name": "useMiniDrawer",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
-              "attribute": "use-mini-drawer"
-            },
-            {
-              "kind": "field",
-              "name": "miniHover",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Whether the mini drawer should expand on hover (default: false)",
-              "attribute": "mini-hover"
-            },
-            {
-              "kind": "field",
-              "name": "isLargeScreen",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "readonly": true,
-              "description": "Whether the current screen width is above the breakpoint (read-only)"
-            },
-            {
-              "kind": "method",
-              "name": "closeDrawer",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "description": "Closes the navigation drawer. Only has effect on small screens where the drawer is modal."
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<AppLayoutBreakpointChangeEventData>"
-              },
-              "description": "Fired when the screen size crosses the breakpoint threshold",
-              "name": "forge-app-layout-breakpoint-change"
-            },
-            {
-              "type": {
-                "text": "CustomEvent<AppLayoutDrawerChangeEventData>"
-              },
-              "description": "Fired when the navigation drawer opens or closes",
-              "name": "forge-app-layout-drawer-change"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "app-title",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The title text to display in the app bar",
-              "fieldName": "appTitle"
-            },
-            {
-              "name": "app-title-href",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The URL that the app bar title links to",
-              "fieldName": "appTitleHref"
-            },
-            {
-              "name": "breakpoint",
-              "type": {
-                "text": "number"
-              },
-              "default": "960",
-              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
-              "fieldName": "breakpoint"
-            },
-            {
-              "name": "use-mini-drawer",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
-              "fieldName": "useMiniDrawer"
-            },
-            {
-              "name": "mini-hover",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Whether the mini drawer should expand on hover (default: false)",
-              "fieldName": "miniHover"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-app-layout",
-          "customElement": true,
-          "summary": "A responsive application layout component that provides an app bar with a navigation drawer.\nOn small screens, the navigation appears in a modal dialog. On large screens, it appears in a side drawer.",
-          "states": [
-            {
-              "name": "small",
-              "description": "Screen width is below 960px, navigation appears in modal drawer"
-            },
-            {
-              "name": "large",
-              "description": "Screen width is 960px or above, navigation appears in body-left drawer"
-            },
-            {
-              "name": "drawer-open",
-              "description": "The navigation drawer is currently open"
-            },
-            {
-              "name": "drawer-closed",
-              "description": "The navigation drawer is currently closed"
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AppLayoutComponentTagName",
-          "declaration": {
-            "name": "AppLayoutComponentTagName",
-            "module": "src/lib/app-layout/app-layout.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
-          "declaration": {
-            "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
-            "module": "src/lib/app-layout/app-layout.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AppLayoutComponent",
-          "declaration": {
-            "name": "AppLayoutComponent",
-            "module": "src/lib/app-layout/app-layout.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "AppLayoutComponent",
-            "module": "src/lib/app-layout/app-layout.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "declarations": [
         {
@@ -807,6 +513,300 @@
           "declaration": {
             "name": "BusyIndicatorComponent",
             "module": "src/lib/busy-indicator/busy-indicator.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/app-layout/app-layout.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AppLayoutComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-app-layout'"
+        },
+        {
+          "kind": "variable",
+          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+          "type": {
+            "text": "string"
+          },
+          "default": "'data-forge-app-layout-close'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AppLayoutComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the width of the navigation drawer (default: 320px)",
+              "name": "--forge-app-layout-drawer-width"
+            },
+            {
+              "description": "Controls the width of the navigation dialog on small screens (default: 320px)",
+              "name": "--forge-app-layout-dialog-width"
+            },
+            {
+              "description": "Controls the z-index of the mini drawer when using hover mode (default: 3)",
+              "name": "--forge-app-layout-mini-drawer-z-index"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Places content in the header",
+              "name": "header"
+            },
+            {
+              "description": "Places content in the footer",
+              "name": "footer"
+            },
+            {
+              "description": "Places content to the left of all content",
+              "name": "left"
+            },
+            {
+              "description": "Places content to the right of all content",
+              "name": "right"
+            },
+            {
+              "description": "Places content in the header of the body",
+              "name": "body-header"
+            },
+            {
+              "description": "Places content in the footer of the body",
+              "name": "body-footer"
+            },
+            {
+              "description": "Places content to the left of the body content",
+              "name": "body-left"
+            },
+            {
+              "description": "Places content to the right of the body content",
+              "name": "body-right"
+            },
+            {
+              "description": "Responsive navigation content that renders in left slot (small screens) or body-left slot (large screens)",
+              "name": "navigation"
+            },
+            {
+              "description": "Places content in the app bar logo slot",
+              "name": "app-bar-logo"
+            },
+            {
+              "description": "Places content in the app bar start slot",
+              "name": "app-bar-start"
+            },
+            {
+              "description": "Places content in the app bar center slot",
+              "name": "app-bar-center"
+            },
+            {
+              "description": "Places content in the app bar end slot",
+              "name": "app-bar-end"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "appTitle",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The title text to display in the app bar",
+              "attribute": "app-title"
+            },
+            {
+              "kind": "field",
+              "name": "appTitleHref",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The URL that the app bar title links to",
+              "attribute": "app-title-href"
+            },
+            {
+              "kind": "field",
+              "name": "breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "960",
+              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
+              "attribute": "breakpoint"
+            },
+            {
+              "kind": "field",
+              "name": "useMiniDrawer",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
+              "attribute": "use-mini-drawer"
+            },
+            {
+              "kind": "field",
+              "name": "miniHover",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the mini drawer should expand on hover (default: false)",
+              "attribute": "mini-hover"
+            },
+            {
+              "kind": "field",
+              "name": "isLargeScreen",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "description": "Whether the current screen width is above the breakpoint (read-only)"
+            },
+            {
+              "kind": "method",
+              "name": "closeDrawer",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Closes the navigation drawer. Only has effect on small screens where the drawer is modal."
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<AppLayoutBreakpointChangeEventData>"
+              },
+              "description": "Fired when the screen size crosses the breakpoint threshold",
+              "name": "forge-app-layout-breakpoint-change"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<AppLayoutDrawerChangeEventData>"
+              },
+              "description": "Fired when the navigation drawer opens or closes",
+              "name": "forge-app-layout-drawer-change"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "app-title",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The title text to display in the app bar",
+              "fieldName": "appTitle"
+            },
+            {
+              "name": "app-title-href",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The URL that the app bar title links to",
+              "fieldName": "appTitleHref"
+            },
+            {
+              "name": "breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "default": "960",
+              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
+              "fieldName": "breakpoint"
+            },
+            {
+              "name": "use-mini-drawer",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
+              "fieldName": "useMiniDrawer"
+            },
+            {
+              "name": "mini-hover",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the mini drawer should expand on hover (default: false)",
+              "fieldName": "miniHover"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-app-layout",
+          "customElement": true,
+          "summary": "A responsive application layout component that provides an app bar with a navigation drawer.\nOn small screens, the navigation appears in a modal dialog. On large screens, it appears in a side drawer.",
+          "states": [
+            {
+              "name": "small",
+              "description": "Screen width is below 960px, navigation appears in modal drawer"
+            },
+            {
+              "name": "large",
+              "description": "Screen width is 960px or above, navigation appears in body-left drawer"
+            },
+            {
+              "name": "drawer-open",
+              "description": "The navigation drawer is currently open"
+            },
+            {
+              "name": "drawer-closed",
+              "description": "The navigation drawer is currently closed"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLayoutComponentTagName",
+          "declaration": {
+            "name": "AppLayoutComponentTagName",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+          "declaration": {
+            "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLayoutComponent",
+          "declaration": {
+            "name": "AppLayoutComponent",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLayoutComponent",
+            "module": "src/lib/app-layout/app-layout.ts"
           }
         }
       ]
@@ -3706,13 +3706,35 @@
             },
             {
               "kind": "field",
+              "name": "validateUrls",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Whether to validate URLs before applying them.",
+              "attribute": "validate-urls"
+            },
+            {
+              "kind": "field",
+              "name": "autoProtocol",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Whether to automatically add https:// protocol if missing.",
+              "attribute": "auto-protocol"
+            },
+            {
+              "kind": "field",
               "name": "extensions",
               "type": {
                 "text": "array"
               },
               "privacy": "public",
               "readonly": true,
-              "default": "[Link.configure({})]"
+              "default": "[ Link.configure({ openOnClick: false, HTMLAttributes: { target: '_blank', rel: 'noopener noreferrer nofollow' } }) ]"
             }
           ],
           "attributes": [
@@ -3725,6 +3747,44 @@
               "description": "The accessible label for the button.",
               "fieldName": "label",
               "attribute": "label"
+            },
+            {
+              "name": "validateUrls",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Whether to validate URLs before applying them.",
+              "fieldName": "validateUrls"
+            },
+            {
+              "name": "autoProtocol",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Whether to automatically add https:// protocol if missing.",
+              "fieldName": "autoProtocol"
+            },
+            {
+              "name": "validate-urls",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Whether to validate URLs before applying them.",
+              "attribute": "validateUrls",
+              "fieldName": "validateUrls"
+            },
+            {
+              "name": "auto-protocol",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Whether to automatically add https:// protocol if missing.",
+              "attribute": "autoProtocol",
+              "fieldName": "autoProtocol"
             }
           ],
           "superclass": {
@@ -4426,22 +4486,6 @@
       "path": "src/lib/app-launcher/app-launcher.ts",
       "lineNumber": 67
     },
-    "AppLayoutBreakpoint": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 30
-    },
-    "AppLayoutBreakpointChangeEventData": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 32
-    },
-    "AppLayoutDrawerChangeEventData": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 36
-    },
-    "AppLayoutComponent": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 90
-    },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 26
@@ -4457,6 +4501,22 @@
     "BusyIndicatorComponent": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 40
+    },
+    "AppLayoutBreakpoint": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 30
+    },
+    "AppLayoutBreakpointChangeEventData": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 32
+    },
+    "AppLayoutDrawerChangeEventData": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 36
+    },
+    "AppLayoutComponent": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 90
     },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
@@ -4596,7 +4656,7 @@
     },
     "RichTextFeatureLinkComponent": {
       "path": "src/lib/rich-text-editor/features/rte-link.ts",
-      "lineNumber": 24
+      "lineNumber": 25
     },
     "RteOrderedListComponent": {
       "path": "src/lib/rich-text-editor/features/rte-ordered-list.ts",

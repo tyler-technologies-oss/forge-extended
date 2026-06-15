@@ -1,9 +1,10 @@
 import { consume } from '@lit/context';
 import { Link } from '@tiptap/extension-link';
-import { IconRegistry, IPopoverToggleEventData } from '@tylertech/forge';
+import { defineButtonComponent, IconRegistry, IPopoverToggleEventData } from '@tylertech/forge';
 import { tylIconLink } from '@tylertech/tyler-icons';
 import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { editorContext, EditorContext } from '../editor-context';
 import { RichTextEditorFeature } from './rich-text-editor-feature';
 import { VirtualElement } from '@tylertech/forge/esm/core/utils/position-utils';
@@ -25,6 +26,7 @@ export const RichTextFeatureLinkComponentTagName: keyof HTMLElementTagNameMap = 
 export class RichTextFeatureLinkComponent extends LitElement implements RichTextEditorFeature {
   static {
     IconRegistry.define(tylIconLink);
+    defineButtonComponent();
   }
 
   public static override styles = css`
@@ -33,7 +35,23 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
     }
 
     .link-popover {
-      padding: 8px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      min-width: 320px;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 8px;
+      justify-content: flex-end;
+    }
+
+    .error-message {
+      color: var(--forge-theme-error);
+      font-size: 12px;
+      margin-block-start: -8px;
     }
   `;
 
@@ -45,7 +63,31 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
   @property({ type: String })
   public label = 'Link';
 
-  public readonly extensions = [Link.configure({})];
+  /**
+   * Whether to validate URLs before applying them.
+   * @default true
+   * @attribute
+   */
+  @property({ type: Boolean, attribute: 'validate-urls' })
+  public validateUrls = true;
+
+  /**
+   * Whether to automatically add https:// protocol if missing.
+   * @default true
+   * @attribute
+   */
+  @property({ type: Boolean, attribute: 'auto-protocol' })
+  public autoProtocol = true;
+
+  public readonly extensions = [
+    Link.configure({
+      openOnClick: false,
+      HTMLAttributes: {
+        target: '_blank',
+        rel: 'noopener noreferrer nofollow'
+      }
+    })
+  ];
 
   @state()
   @consume({ context: editorContext, subscribe: true })
@@ -56,6 +98,9 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
 
   @state()
   private _linkUrl = '';
+
+  @state()
+  private _validationError = '';
 
   public firstUpdated(_changedProperties: PropertyValues<this>): void {
     this._editorContext?.registerFeature(this);
@@ -76,6 +121,8 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
   }
 
   public override render(): TemplateResult {
+    const isEditingExistingLink = !!this._popoverAnchor && this._editorContext.isActive(Link.name);
+
     return html`
       <forge-rte-tool-button
         @forge-rte-tool-toggle=${this.#toggle}
@@ -90,12 +137,27 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
         <div class="link-popover">
           <forge-text-field density="small">
             <input
-              type="text"
-              placeholder="Enter link URL"
+              type="url"
+              placeholder="https://example.com"
               .value=${this._linkUrl}
               @input=${this.#handleLinkInput}
-              @keydown=${this.#handleLinkKeydown} />
+              @keydown=${this.#handleLinkKeydown}
+              aria-label="Link URL"
+              aria-describedby=${ifDefined(this._validationError ? 'link-error' : undefined)}
+              aria-invalid=${!!this._validationError} />
           </forge-text-field>
+          ${this._validationError
+            ? html`<div id="link-error" class="error-message" role="alert">${this._validationError}</div>`
+            : ''}
+          <div class="button-group">
+            <forge-button variant="raised" @click=${this.#applyLink} ?disabled=${!!this._validationError}>
+              ${isEditingExistingLink ? 'Update' : 'Apply'}
+            </forge-button>
+            ${isEditingExistingLink
+              ? html`<forge-button variant="outlined" @click=${this.#removeLink}>Remove Link</forge-button>`
+              : ''}
+            <forge-button variant="text" @click=${this.#cancel}>Cancel</forge-button>
+          </div>
         </div>
       </forge-popover>
     `;
@@ -103,36 +165,91 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
 
   #handlePopoverToggle(evt: CustomEvent<IPopoverToggleEventData>): void {
     if (evt.detail.newState === 'closed') {
-      this._popoverAnchor = undefined;
-      this._linkUrl = '';
+      this.#resetState();
     }
   }
 
   #handleLinkInput(evt: Event): void {
-    this._linkUrl = (evt.target as HTMLInputElement).value;
+    this._linkUrl = (evt.target as HTMLInputElement).value.trim();
+    this.#validateUrl();
   }
 
   #handleLinkKeydown(evt: KeyboardEvent): void {
     if (evt.key === 'Enter') {
       evt.preventDefault();
-      this.#applyLink();
+      if (!this._validationError) {
+        this.#applyLink();
+      }
     } else if (evt.key === 'Escape') {
       evt.preventDefault();
-      this._popoverAnchor = undefined;
-      this._linkUrl = '';
+      this.#cancel();
     }
   }
 
+  #validateUrl(): void {
+    this._validationError = '';
+
+    if (!this._linkUrl) {
+      return; // Empty is valid - it removes the link
+    }
+
+    if (!this.validateUrls) {
+      return; // Validation disabled
+    }
+
+    // Basic URL validation pattern
+    const urlPattern = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(:\d+)?(\/[^\s]*)?$/;
+
+    if (!urlPattern.test(this._linkUrl)) {
+      this._validationError = 'Please enter a valid URL (e.g., https://example.com)';
+    }
+  }
+
+  #normalizeUrl(url: string): string {
+    if (!url) {
+      return '';
+    }
+
+    const trimmed = url.trim();
+
+    // Auto-add https:// if no protocol specified
+    if (this.autoProtocol && !trimmed.match(/^[a-zA-Z][a-zA-Z0-9+.-]*:/)) {
+      return `https://${trimmed}`;
+    }
+
+    return trimmed;
+  }
+
   #applyLink(): void {
+    if (this._validationError) {
+      return;
+    }
+
     if (this._linkUrl) {
-      this._editorContext.editor?.chain().focus().setLink({ href: this._linkUrl }).run();
+      const normalizedUrl = this.#normalizeUrl(this._linkUrl);
+      this._editorContext.editor?.chain().focus().setLink({ href: normalizedUrl }).run();
       this._editorContext.announce('Link added');
     } else {
       this._editorContext.editor?.chain().focus().unsetLink().run();
       this._editorContext.announce('Link removed');
     }
+    this.#resetState();
+  }
+
+  #removeLink(): void {
+    this._editorContext.editor?.chain().focus().unsetLink().run();
+    this._editorContext.announce('Link removed');
+    this.#resetState();
+  }
+
+  #cancel(): void {
+    this.#resetState();
+  }
+
+  #resetState(): void {
     this._popoverAnchor = undefined;
     this._linkUrl = '';
+    this._validationError = '';
   }
 
   async #toggle(_evt: CustomEvent): Promise<void> {

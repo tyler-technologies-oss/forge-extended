@@ -255,6 +255,11 @@ interface LinkFixture {
   linkFeature: RichTextFeatureLinkComponent;
   button: () => HTMLElement;
   popover: () => HTMLElement;
+  getInput: () => HTMLInputElement;
+  getApplyButton: () => HTMLElement | null;
+  getRemoveButton: () => HTMLElement | null;
+  getCancelButton: () => HTMLElement | null;
+  getErrorMessage: () => HTMLElement | null;
   clickButton: () => Promise<void>;
   getEditor: () => Promise<Editor>;
   waitForUpdate: () => Promise<void>;
@@ -279,6 +284,20 @@ async function createFixture(options: LinkFixtureOptions = {}): Promise<LinkFixt
     button: () =>
       linkFeature.shadowRoot!.querySelector('forge-rte-tool-button')!.shadowRoot!.querySelector('forge-icon-button')!,
     popover: () => linkFeature.shadowRoot!.querySelector('forge-popover')!,
+    getInput: () => linkFeature.shadowRoot!.querySelector('input')!,
+    getApplyButton: () => {
+      const buttons = Array.from(linkFeature.shadowRoot!.querySelectorAll('forge-button'));
+      return buttons.find(btn => btn.textContent?.includes('Apply') || btn.textContent?.includes('Update')) || null;
+    },
+    getRemoveButton: () => {
+      const buttons = Array.from(linkFeature.shadowRoot!.querySelectorAll('forge-button'));
+      return buttons.find(btn => btn.textContent?.includes('Remove')) || null;
+    },
+    getCancelButton: () => {
+      const buttons = Array.from(linkFeature.shadowRoot!.querySelectorAll('forge-button'));
+      return buttons.find(btn => btn.textContent?.includes('Cancel')) || null;
+    },
+    getErrorMessage: () => linkFeature.shadowRoot!.querySelector('.error-message'),
     async clickButton() {
       this.button().click();
       await this.waitForUpdate();
@@ -296,8 +315,7 @@ async function createFixture(options: LinkFixtureOptions = {}): Promise<LinkFixt
       await linkFeature.updateComplete;
       // Give TipTap time to process
       await new Promise(resolve => setTimeout(resolve, 100));
-    },
-    getInput: () => linkFeature.shadowRoot!.querySelector('input')!
+    }
   };
 }
 
@@ -433,5 +451,530 @@ describe('RTE Link - Keyboard navigation', () => {
     // Verify input is pre-filled
     const input = harness.getInput();
     expect(input.value).to.equal('https://existing.com');
+  });
+});
+
+describe('RTE Link - Validation', () => {
+  it('should validate URLs by default', async () => {
+    const harness = await createFixture();
+
+    expect(harness.linkFeature.validateUrls).to.be.true;
+  });
+
+  it('should show error for invalid URL', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'not a valid url';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const error = harness.getErrorMessage();
+    expect(error).to.exist;
+    expect(error?.textContent).to.include('valid URL');
+  });
+
+  it('should accept valid URL with https protocol', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'https://example.com';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const error = harness.getErrorMessage();
+    expect(error).to.not.exist;
+  });
+
+  it('should accept valid URL with http protocol', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'http://example.com';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const error = harness.getErrorMessage();
+    expect(error).to.not.exist;
+  });
+
+  it('should accept URL without protocol', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'example.com';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const error = harness.getErrorMessage();
+    expect(error).to.not.exist;
+  });
+
+  it('should accept URL with path', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'https://example.com/path/to/page';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const error = harness.getErrorMessage();
+    expect(error).to.not.exist;
+  });
+
+  it('should accept URL with port', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'https://example.com:8080/path';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const error = harness.getErrorMessage();
+    expect(error).to.not.exist;
+  });
+
+  it('should accept empty URL for link removal', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p><a href="https://example.com">test text</a></p>');
+    editor.commands.setTextSelection(3);
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = '';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const error = harness.getErrorMessage();
+    expect(error).to.not.exist;
+  });
+
+  it('should disable apply button when validation error exists', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'invalid url';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const applyButton = harness.getApplyButton();
+    expect(applyButton?.hasAttribute('disabled')).to.be.true;
+  });
+
+  it('should not prevent Enter when validation error exists', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'invalid url';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const enterEvent = new KeyboardEvent('keydown', { key: 'Enter', bubbles: true, cancelable: true });
+    input.dispatchEvent(enterEvent);
+    await harness.waitForUpdate();
+
+    // Verify link was NOT applied
+    const output = editor.getHTML();
+    expect(output).not.to.include('href="invalid url"');
+  });
+
+  it('should add ARIA attributes for validation error', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'invalid';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    expect(input.getAttribute('aria-invalid')).to.equal('true');
+    expect(input.getAttribute('aria-describedby')).to.equal('link-error');
+  });
+});
+
+describe('RTE Link - Auto Protocol', () => {
+  it('should auto-add https protocol by default', async () => {
+    const harness = await createFixture();
+
+    expect(harness.linkFeature.autoProtocol).to.be.true;
+  });
+
+  it('should add https:// to URL without protocol when applied', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'example.com';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const applyButton = harness.getApplyButton();
+    applyButton?.click();
+    await harness.waitForUpdate();
+
+    const output = editor.getHTML();
+    expect(output).to.include('href="https://example.com"');
+  });
+
+  it('should not modify URL that already has protocol', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'http://example.com';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const applyButton = harness.getApplyButton();
+    applyButton?.click();
+    await harness.waitForUpdate();
+
+    const output = editor.getHTML();
+    expect(output).to.include('href="http://example.com"');
+    expect(output).not.to.include('https://http://');
+  });
+});
+
+describe('RTE Link - Enhanced UI', () => {
+  it('should render Apply button', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const applyButton = harness.getApplyButton();
+    expect(applyButton).to.exist;
+    expect(applyButton?.textContent).to.include('Apply');
+  });
+
+  it('should render Update button when editing existing link', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p><a href="https://example.com">test text</a></p>');
+    editor.commands.setTextSelection(3);
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const applyButton = harness.getApplyButton();
+    expect(applyButton).to.exist;
+    expect(applyButton?.textContent).to.include('Update');
+  });
+
+  it('should render Remove Link button when editing existing link', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p><a href="https://example.com">test text</a></p>');
+    editor.commands.setTextSelection(3);
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const removeButton = harness.getRemoveButton();
+    expect(removeButton).to.exist;
+    expect(removeButton?.textContent).to.include('Remove');
+  });
+
+  it('should not render Remove Link button for new links', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const removeButton = harness.getRemoveButton();
+    expect(removeButton).to.not.exist;
+  });
+
+  it('should render Cancel button', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const cancelButton = harness.getCancelButton();
+    expect(cancelButton).to.exist;
+    expect(cancelButton?.textContent).to.include('Cancel');
+  });
+
+  it('should apply link when Apply button is clicked', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'https://example.com';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const applyButton = harness.getApplyButton();
+    applyButton?.click();
+    await harness.waitForUpdate();
+
+    const output = editor.getHTML();
+    expect(output).to.include('href="https://example.com"');
+  });
+
+  it('should remove link when Remove Link button is clicked', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p><a href="https://example.com">test text</a></p>');
+    editor.commands.setTextSelection(3);
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const removeButton = harness.getRemoveButton();
+    removeButton?.click();
+    await harness.waitForUpdate();
+
+    const output = editor.getHTML();
+    expect(output).not.to.include('<a');
+    expect(output).to.include('test text');
+  });
+
+  it('should close popover when Cancel button is clicked', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'https://example.com';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const cancelButton = harness.getCancelButton();
+    cancelButton?.click();
+    await harness.waitForUpdate();
+
+    // Verify link was NOT applied
+    const output = editor.getHTML();
+    expect(output).not.to.include('href="https://example.com"');
+
+    // Verify popover is closed
+    const popover = harness.popover();
+    expect(popover.open).to.be.false;
+  });
+
+  it('should set input type to url', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    expect(input.type).to.equal('url');
+  });
+
+  it('should have appropriate placeholder text', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    expect(input.placeholder).to.equal('https://example.com');
+  });
+});
+
+describe('RTE Link - Security Attributes', () => {
+  it('should configure link extension with security attributes', async () => {
+    const harness = await createFixture();
+
+    expect(harness.linkFeature.extensions).to.have.lengthOf(1);
+    const linkExt = harness.linkFeature.extensions[0];
+    expect(linkExt.name).to.equal('link');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((linkExt.options as any).HTMLAttributes.target).to.equal('_blank');
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((linkExt.options as any).HTMLAttributes.rel).to.equal('noopener noreferrer nofollow');
+  });
+
+  it('should apply target="_blank" to created links', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'https://example.com';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const applyButton = harness.getApplyButton();
+    applyButton?.click();
+    await harness.waitForUpdate();
+
+    const output = editor.getHTML();
+    expect(output).to.include('target="_blank"');
+  });
+
+  it('should apply rel="noopener noreferrer nofollow" to created links', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    const input = harness.getInput();
+    input.value = 'https://example.com';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const applyButton = harness.getApplyButton();
+    applyButton?.click();
+    await harness.waitForUpdate();
+
+    const output = editor.getHTML();
+    expect(output).to.include('rel="noopener noreferrer nofollow"');
+  });
+
+  it('should configure openOnClick to false', async () => {
+    const harness = await createFixture();
+
+    const linkExt = harness.linkFeature.extensions[0];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((linkExt.options as any).openOnClick).to.be.false;
   });
 });

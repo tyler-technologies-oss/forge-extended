@@ -32,7 +32,7 @@ const meta = {
           ? html`
               <forge-rte-feature-divider></forge-rte-feature-divider>
               <forge-rte-code></forge-rte-code>
-              <forge-rte-link></forge-rte-link>
+              <forge-rte-link ?validate-urls=${args.validateUrls} ?auto-protocol=${args.autoProtocol}></forge-rte-link>
             `
           : nothing}
       </forge-rich-text-editor>
@@ -79,6 +79,14 @@ const meta = {
     showAdditionalFeatures: {
       control: 'boolean',
       description: 'Show code and link features in addition to standard tools'
+    },
+    validateUrls: {
+      control: 'boolean',
+      description: 'Whether to validate URLs in the link popover'
+    },
+    autoProtocol: {
+      control: 'boolean',
+      description: 'Whether to automatically add https:// protocol to links without a protocol'
     }
   },
   args: {
@@ -91,7 +99,9 @@ const meta = {
     showWordCount: false,
     allowPasteFormatting: true,
     allowPasteImages: false,
-    showAdditionalFeatures: true
+    showAdditionalFeatures: true,
+    validateUrls: true,
+    autoProtocol: true
   }
 } satisfies Meta;
 
