@@ -56,6 +56,11 @@ export const RichTextEditorComponentTagName: keyof HTMLElementTagNameMap = 'forg
  * @event {CustomEvent<void>} initialized - Fired when the editor has been successfully initialized.
  * @event {CustomEvent<{ error: string }>} initialization-error - Fired when editor initialization fails. The detail contains the error message.
  * @event {CustomEvent<{ context: string; error: string }>} error - Fired when a non-fatal error occurs during editor operation. The detail contains context and error message.
+ *
+ * @method toJSON() - Returns the editor content as JSON in ProseMirror format. Returns undefined if the editor is not initialized.
+ * @method toHTML() - Returns the editor content as an HTML string. Returns an empty string if the editor is not initialized.
+ * @method isInitialized - Getter that returns whether the editor has been successfully initialized.
+ * @method initializationError - Getter that returns the initialization error message, if any.
  */
 @customElement(RichTextEditorComponentTagName)
 export class RichTextEditorComponent extends LitElement {
@@ -133,5 +138,47 @@ export class RichTextEditorComponent extends LitElement {
         </div>
       </forge-rich-text-context>
     `;
+  }
+
+  /**
+   * Returns the editor content as JSON in ProseMirror format.
+   * Returns undefined if the editor is not initialized or if an error occurs.
+   *
+   * @returns The editor content as a JSON object, or undefined if unavailable.
+   */
+  public toJSON(): object | undefined {
+    const contextElement = this.shadowRoot?.querySelector('forge-rich-text-context') as RichTextContextComponent;
+    return contextElement?.toJSON();
+  }
+
+  /**
+   * Returns the editor content as an HTML string.
+   * Returns an empty string if the editor is not initialized or if an error occurs.
+   *
+   * @returns The editor content as HTML.
+   */
+  public toHTML(): string {
+    const contextElement = this.shadowRoot?.querySelector('forge-rich-text-context') as RichTextContextComponent;
+    return contextElement?.toHTML() ?? '';
+  }
+
+  /**
+   * Returns whether the editor has been successfully initialized.
+   *
+   * @returns True if the editor is initialized, false otherwise.
+   */
+  public get isInitialized(): boolean {
+    const contextElement = this.shadowRoot?.querySelector('forge-rich-text-context') as RichTextContextComponent;
+    return contextElement?.isInitialized ?? false;
+  }
+
+  /**
+   * Returns the initialization error message, if any.
+   *
+   * @returns The initialization error message, or null if no error occurred.
+   */
+  public get initializationError(): string | null {
+    const contextElement = this.shadowRoot?.querySelector('forge-rich-text-context') as RichTextContextComponent;
+    return contextElement?.initializationError ?? null;
   }
 }

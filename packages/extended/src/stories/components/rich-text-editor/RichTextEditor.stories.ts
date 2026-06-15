@@ -124,3 +124,101 @@ export default meta;
 type Story = StoryObj;
 
 export const Demo: Story = {};
+
+export const OutputFormats: Story = {
+  render: () => {
+    const sampleContent =
+      '<h1>Sample Document</h1><p>This is a paragraph with <strong>bold</strong> and <em>italic</em> text.</p><ul><li><p>Bullet item 1</p></li><li><p>Bullet item 2</p></li></ul>';
+
+    const handleGetJSON = (e: Event) => {
+      const editor = (e.target as HTMLElement).previousElementSibling as any;
+      const json = editor.toJSON();
+      const output = document.getElementById('json-output');
+      if (output) {
+        output.textContent = JSON.stringify(json, null, 2);
+      }
+      console.log('JSON Output:', json);
+    };
+
+    const handleGetHTML = (e: Event) => {
+      const editor = (e.target as HTMLElement).parentElement?.previousElementSibling as any;
+      const htmlContent = editor.toHTML();
+      const output = document.getElementById('html-output');
+      if (output) {
+        output.textContent = htmlContent;
+      }
+      console.log('HTML Output:', htmlContent);
+    };
+
+    return html`
+      <style>
+        .output-demo {
+          display: flex;
+          flex-direction: column;
+          gap: 16px;
+        }
+        .output-buttons {
+          display: flex;
+          gap: 8px;
+        }
+        .output-display {
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 16px;
+        }
+        .output-section {
+          display: flex;
+          flex-direction: column;
+          gap: 8px;
+        }
+        .output-section h3 {
+          margin: 0;
+          font-size: 16px;
+          font-weight: 600;
+        }
+        .output-content {
+          background: var(--forge-theme-surface-container);
+          border: 1px solid var(--forge-theme-outline);
+          border-radius: 4px;
+          padding: 12px;
+          font-family: monospace;
+          font-size: 12px;
+          white-space: pre-wrap;
+          word-break: break-all;
+          max-height: 300px;
+          overflow: auto;
+        }
+      </style>
+      <div class="output-demo">
+        <forge-rich-text-editor .content=${sampleContent}>
+          <forge-rte-standard-tools></forge-rte-standard-tools>
+        </forge-rich-text-editor>
+
+        <div class="output-buttons">
+          <button @click=${handleGetJSON}>Get JSON Output</button>
+          <button @click=${handleGetHTML}>Get HTML Output</button>
+        </div>
+
+        <div class="output-display">
+          <div class="output-section">
+            <h3>JSON Output (ProseMirror format)</h3>
+            <div class="output-content" id="json-output">Click "Get JSON Output" to see the editor content as JSON</div>
+          </div>
+
+          <div class="output-section">
+            <h3>HTML Output</h3>
+            <div class="output-content" id="html-output">Click "Get HTML Output" to see the editor content as HTML</div>
+          </div>
+        </div>
+      </div>
+    `;
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          'The rich text editor provides `toJSON()` and `toHTML()` methods to export content in different formats. Use `toJSON()` to get the ProseMirror document structure for storage or processing, and `toHTML()` to get a clean HTML string for display or further processing.'
+      }
+    }
+  }
+};
