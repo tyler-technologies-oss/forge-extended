@@ -6,6 +6,13 @@ import type { RichTextContentComponent } from './rich-text-content';
 import './rich-text-editor';
 import './features/rte-bold';
 
+async function waitForEditor(el: RichTextEditorComponent): Promise<RichTextContextComponent> {
+  await new Promise(resolve => setTimeout(resolve, 100));
+  const context = el.shadowRoot!.querySelector('forge-rich-text-context') as RichTextContextComponent;
+  await context?.updateComplete;
+  return context;
+}
+
 describe('RTE Content Validation', () => {
   it('should contain shadow root', async () => {
     const el = await fixture<RichTextEditorComponent>(html`
@@ -105,9 +112,8 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
       const countsEl = context?.shadowRoot?.querySelector('.editor-counts');
       expect(countsEl).to.be.null;
     });
@@ -119,10 +125,8 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
-      await context?.updateComplete;
       const countsEl = context?.shadowRoot?.querySelector('.editor-counts');
       expect(countsEl).not.to.be.null;
       expect(countsEl?.textContent).to.include('0 characters');
@@ -135,9 +139,8 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
       const countsEl = context?.shadowRoot?.querySelector('.editor-counts');
       expect(countsEl).not.to.be.null;
       expect(countsEl?.textContent).to.include('0 / 100 characters');
@@ -150,16 +153,15 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const content = el.querySelector('forge-rich-text-content') as RichTextContentComponent;
+      const content = context.querySelector('forge-rich-text-content') as RichTextContentComponent;
       const editorEl = content?.shadowRoot?.querySelector('.ProseMirror') as HTMLElement;
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello world' });
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
       const countsEl = context?.shadowRoot?.querySelector('.editor-counts');
       expect(countsEl?.textContent).to.include('11 characters');
     });
@@ -173,9 +175,8 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
       const countsEl = context?.shadowRoot?.querySelector('.editor-counts');
       expect(countsEl).to.be.null;
     });
@@ -187,9 +188,8 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
       const countsEl = context?.shadowRoot?.querySelector('.editor-counts');
       expect(countsEl).not.to.be.null;
       expect(countsEl?.textContent).to.include('0 words');
@@ -202,16 +202,15 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const content = el.querySelector('forge-rich-text-content') as RichTextContentComponent;
+      const content = context.querySelector('forge-rich-text-content') as RichTextContentComponent;
       const editorEl = content?.shadowRoot?.querySelector('.ProseMirror') as HTMLElement;
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello world test' });
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
       const countsEl = context?.shadowRoot?.querySelector('.editor-counts');
       expect(countsEl?.textContent).to.include('3 words');
     });
@@ -223,9 +222,8 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
       const countsEl = context?.shadowRoot?.querySelector('.editor-counts');
       expect(countsEl).not.to.be.null;
       expect(countsEl?.textContent).to.include('0 characters');
@@ -242,16 +240,15 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const content = el.querySelector('forge-rich-text-content') as RichTextContentComponent;
+      const content = context.querySelector('forge-rich-text-content') as RichTextContentComponent;
       const editorEl = content?.shadowRoot?.querySelector('.ProseMirror') as HTMLElement;
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello' });
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
       const errorEl = context?.shadowRoot?.querySelector('.editor-error');
       expect(errorEl).to.be.null;
     });
@@ -263,16 +260,15 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const content = el.querySelector('forge-rich-text-content') as RichTextContentComponent;
+      const content = context.querySelector('forge-rich-text-content') as RichTextContentComponent;
       const editorEl = content?.shadowRoot?.querySelector('.ProseMirror') as HTMLElement;
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello world' });
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
       const errorEl = context?.shadowRoot?.querySelector('.editor-error');
       expect(errorEl).not.to.be.null;
       expect(errorEl?.textContent).to.include('exceeds maximum length');
@@ -285,16 +281,15 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const content = el.querySelector('forge-rich-text-content') as RichTextContentComponent;
+      const content = context.querySelector('forge-rich-text-content') as RichTextContentComponent;
       const editorEl = content?.shadowRoot?.querySelector('.ProseMirror') as HTMLElement;
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello world' });
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
       const errorEl = context?.shadowRoot?.querySelector('.editor-error');
       expect(errorEl).not.to.be.null;
       expect(errorEl?.textContent).to.equal('Too long!');
@@ -307,7 +302,7 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
       let validationFired = false;
       let validationDetail: { isValid: boolean; errors: string[] } | null = null;
@@ -317,12 +312,12 @@ describe('RTE Content Validation', () => {
         validationDetail = evt.detail;
       }) as EventListener);
 
-      const content = el.querySelector('forge-rich-text-content') as RichTextContentComponent;
+      const content = context.querySelector('forge-rich-text-content') as RichTextContentComponent;
       const editorEl = content?.shadowRoot?.querySelector('.ProseMirror') as HTMLElement;
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello world' });
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
       expect(validationFired).to.be.true;
       expect(validationDetail?.isValid).to.be.false;
@@ -337,7 +332,7 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
       let validationFired = false;
       let validationDetail: { isValid: boolean; errors: string[] } | null = null;
@@ -347,7 +342,7 @@ describe('RTE Content Validation', () => {
         validationDetail = evt.detail;
       }) as EventListener);
 
-      const content = el.querySelector('forge-rich-text-content') as RichTextContentComponent;
+      const content = context.querySelector('forge-rich-text-content') as RichTextContentComponent;
       const editorEl = content?.shadowRoot?.querySelector('.ProseMirror') as HTMLElement;
       editorEl?.focus();
 
@@ -357,7 +352,7 @@ describe('RTE Content Validation', () => {
       await sendKeys({ up: 'Control' });
       await sendKeys({ press: 'Backspace' });
       await sendKeys({ type: 'Hi' });
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
       expect(validationFired).to.be.true;
       expect(validationDetail?.isValid).to.be.true;
@@ -373,16 +368,15 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const content = el.querySelector('forge-rich-text-content') as RichTextContentComponent;
+      const content = context.querySelector('forge-rich-text-content') as RichTextContentComponent;
       const editorEl = content?.shadowRoot?.querySelector('.ProseMirror') as HTMLElement;
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello world' });
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
       const errorEl = context?.shadowRoot?.querySelector('.editor-error');
       expect(errorEl?.getAttribute('role')).to.equal('alert');
     });
@@ -394,16 +388,15 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const content = el.querySelector('forge-rich-text-content') as RichTextContentComponent;
+      const content = context.querySelector('forge-rich-text-content') as RichTextContentComponent;
       const editorEl = content?.shadowRoot?.querySelector('.ProseMirror') as HTMLElement;
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello world' });
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
       const errorEl = context?.shadowRoot?.querySelector('.editor-error');
       expect(errorEl?.getAttribute('aria-live')).to.equal('polite');
     });
@@ -415,9 +408,8 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
       const countsEl = context?.shadowRoot?.querySelector('.editor-counts');
       expect(countsEl?.getAttribute('aria-live')).to.equal('polite');
     });
@@ -429,9 +421,8 @@ describe('RTE Content Validation', () => {
         </forge-rich-text-editor>
       `);
 
-      await new Promise(resolve => setTimeout(resolve, 100));
+      const context = await waitForEditor(el);
 
-      const context = el.querySelector('forge-rich-text-context') as RichTextContextComponent;
       const countsEl = context?.shadowRoot?.querySelector('.editor-counts');
       expect(countsEl?.getAttribute('aria-atomic')).to.equal('true');
     });
