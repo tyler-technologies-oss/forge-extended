@@ -51,11 +51,11 @@ export const RichTextEditorComponentTagName: keyof HTMLElementTagNameMap = 'forg
  * @attribute {boolean} allow-paste-images - Whether to allow images to be pasted into the editor.
  * @attribute {boolean} suppress-errors - Whether to suppress error logging to console.
  *
- * @event {CustomEvent<{ json: Record<string, any> }>} change - Fired when the content of the editor changes. The detail contains the editor content in JSON format.
- * @event {CustomEvent<{ isValid: boolean; errors: string[] }>} validation - Fired when validation state changes. The detail contains validation status and error messages.
+ * @event {CustomEvent<RichTextEditorChangeEventDetail>} change - Fired when the content of the editor changes. The detail contains the editor content in ProseMirror JSON format.
+ * @event {CustomEvent<RichTextEditorValidationEventDetail>} validation - Fired when validation state changes. The detail contains validation status and error messages.
  * @event {CustomEvent<void>} initialized - Fired when the editor has been successfully initialized.
- * @event {CustomEvent<{ error: string }>} initialization-error - Fired when editor initialization fails. The detail contains the error message.
- * @event {CustomEvent<{ context: string; error: string }>} error - Fired when a non-fatal error occurs during editor operation. The detail contains context and error message.
+ * @event {CustomEvent<RichTextEditorInitializationErrorEventDetail>} initialization-error - Fired when editor initialization fails. The detail contains the error message.
+ * @event {CustomEvent<RichTextEditorErrorEventDetail>} error - Fired when a non-fatal error occurs during editor operation. The detail contains context and error message.
  *
  * @method toJSON() - Returns the editor content as JSON in ProseMirror format. Returns undefined if the editor is not initialized.
  * @method toHTML() - Returns the editor content as an HTML string. Returns an empty string if the editor is not initialized.

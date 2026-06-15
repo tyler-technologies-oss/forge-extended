@@ -7,13 +7,13 @@ export interface PasteHandlerOptions {
    * Whether to allow pasted content to retain formatting.
    * When false, all pasted content is treated as plain text.
    */
-  allowPasteFormatting: boolean;
+  readonly allowPasteFormatting: boolean;
 
   /**
    * Whether to allow images to be pasted into the editor.
    * When false, image elements are stripped from pasted content.
    */
-  allowPasteImages: boolean;
+  readonly allowPasteImages: boolean;
 }
 
 /**

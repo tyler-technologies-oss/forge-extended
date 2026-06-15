@@ -7,7 +7,14 @@ import CharacterCount from '@tiptap/extension-character-count';
 import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
-import { editorContext, EditorContext } from './editor-context';
+import {
+  editorContext,
+  EditorContext,
+  RichTextEditorChangeEventDetail,
+  RichTextEditorValidationEventDetail,
+  RichTextEditorInitializationErrorEventDetail,
+  RichTextEditorErrorEventDetail
+} from './editor-context';
 import { RichTextEditorFeature } from './features/rich-text-editor-feature';
 import { PasteHandler } from './extensions/paste-handler';
 
@@ -59,11 +66,11 @@ const DEFAULT_EXTENSIONS: AnyExtension[] = [Document, Text, Paragraph];
  * @attribute {boolean} allow-paste-images - Whether to allow images to be pasted into the editor.
  * @attribute {boolean} suppress-errors - Whether to suppress error logging to console.
  *
- * @event {CustomEvent<{ json: Record<string, any> }>} change - Fired when the content of the editor changes. The detail contains the editor content in JSON format.
- * @event {CustomEvent<{ isValid: boolean; errors: string[] }>} validation - Fired when validation state changes. The detail contains validation status and error messages.
+ * @event {CustomEvent<RichTextEditorChangeEventDetail>} change - Fired when the content of the editor changes. The detail contains the editor content in ProseMirror JSON format.
+ * @event {CustomEvent<RichTextEditorValidationEventDetail>} validation - Fired when validation state changes. The detail contains validation status and error messages.
  * @event {CustomEvent<void>} initialized - Fired when the editor has been successfully initialized.
- * @event {CustomEvent<{ error: string }>} initialization-error - Fired when editor initialization fails. The detail contains the error message.
- * @event {CustomEvent<{ context: string; error: string }>} error - Fired when a non-fatal error occurs during editor operation. The detail contains context and error message.
+ * @event {CustomEvent<RichTextEditorInitializationErrorEventDetail>} initialization-error - Fired when editor initialization fails. The detail contains the error message.
+ * @event {CustomEvent<RichTextEditorErrorEventDetail>} error - Fired when a non-fatal error occurs during editor operation. The detail contains context and error message.
  */
 @customElement(RichTextContextComponentTagName)
 export class RichTextContextComponent extends LitElement {
@@ -403,7 +410,7 @@ export class RichTextContextComponent extends LitElement {
       // Dispatch validation event if state changed
       if (hasChanged) {
         this.dispatchEvent(
-          new CustomEvent('validation', {
+          new CustomEvent<RichTextEditorValidationEventDetail>('validation', {
             detail: {
               isValid,
               errors
@@ -521,7 +528,7 @@ export class RichTextContextComponent extends LitElement {
             this.#validateContent();
 
             this.dispatchEvent(
-              new CustomEvent('change', {
+              new CustomEvent<RichTextEditorChangeEventDetail>('change', {
                 detail: { json },
                 bubbles: true,
                 composed: true
@@ -571,7 +578,7 @@ export class RichTextContextComponent extends LitElement {
     }
 
     this.dispatchEvent(
-      new CustomEvent('initialization-error', {
+      new CustomEvent<RichTextEditorInitializationErrorEventDetail>('initialization-error', {
         detail: { error: errorMessage },
         bubbles: true,
         composed: true
@@ -590,7 +597,7 @@ export class RichTextContextComponent extends LitElement {
     }
 
     this.dispatchEvent(
-      new CustomEvent('error', {
+      new CustomEvent<RichTextEditorErrorEventDetail>('error', {
         detail: { context, error: errorMessage },
         bubbles: true,
         composed: true

@@ -4,9 +4,20 @@ import { customElement, property } from 'lit/decorators.js';
 
 import styles from './rich-text-renderer.scss?inline';
 
+/**
+ * Type representing rich text content in TipTap's ProseMirror JSON format.
+ * This is a complex generic type from TipTap that represents the document structure.
+ * The `any` types here are TipTap's internal representation and cannot be avoided
+ * without importing the entire TipTap schema system.
+ *
+ * This format is produced by the editor's `toJSON()` method and can be consumed
+ * by this renderer component for read-only display.
+ */
 export type RichTextRendererContent = DocumentType<
+  // Document attributes (TipTap internal format - schema-dependent)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Record<string, any> | undefined,
+  // Node types array (TipTap internal format - extension-dependent)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   NodeType<string, undefined | Record<string, any>, any, (NodeType | TextType)[]>[]
 >;
