@@ -282,6 +282,12 @@ export class RichTextContextComponent extends LitElement {
   };
 
   public override disconnectedCallback(): void {
+    // Cancel any pending initialization frame
+    if (this.#initFrame) {
+      window.cancelAnimationFrame(this.#initFrame);
+      this.#initFrame = undefined;
+    }
+
     this.#destroyEditor();
     super.disconnectedCallback();
   }
