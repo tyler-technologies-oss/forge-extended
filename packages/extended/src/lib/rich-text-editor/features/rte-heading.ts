@@ -111,10 +111,18 @@ export class RichTextFeatureHeadingComponent extends LitElement implements RichT
   }
 
   private async _toggle(level: 1 | 2 | 3): Promise<void> {
-    const wasActive = this._editorContext.isActive('heading', { level });
-    this._editorContext.editor?.chain().focus().toggleHeading({ level }).run();
+    try {
+      const wasActive = this._editorContext.isActive('heading', { level });
+      const success = this._editorContext.editor?.chain().focus().toggleHeading({ level }).run();
 
-    const message = wasActive ? 'Paragraph style' : `Heading ${level}`;
-    this._editorContext.announce(message);
+      if (success) {
+        const message = wasActive ? 'Paragraph style' : `Heading ${level}`;
+        this._editorContext.announce(message);
+      } else {
+        console.warn(`[RTE Heading] Command execution failed for level ${level}`);
+      }
+    } catch (error) {
+      console.error(`[RTE Heading] Error toggling heading ${level}:`, error);
+    }
   }
 }

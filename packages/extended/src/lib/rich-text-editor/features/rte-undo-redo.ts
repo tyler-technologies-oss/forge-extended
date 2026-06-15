@@ -108,32 +108,50 @@ export class RichTextFeatureUndoRedoComponent extends LitElement implements Rich
   }
 
   async #undo(): Promise<void> {
-    this._editorContext.editor?.chain().undo().run();
-    this._editorContext.announce('Undo');
+    try {
+      const success = this._editorContext.editor?.chain().undo().run();
 
-    await this.updateComplete;
+      if (success) {
+        this._editorContext.announce('Undo');
 
-    if (!this._editorContext.editor?.can().undo()) {
-      if (this._editorContext.editor?.can().redo()) {
-        this.#redoButtonRef.value?.focus();
+        await this.updateComplete;
+
+        if (!this._editorContext.editor?.can().undo()) {
+          if (this._editorContext.editor?.can().redo()) {
+            this.#redoButtonRef.value?.focus();
+          } else {
+            this._editorContext.editor?.chain().focus().run();
+          }
+        }
       } else {
-        this._editorContext.editor?.chain().focus().run();
+        console.warn('[RTE UndoRedo] Undo command execution failed');
       }
+    } catch (error) {
+      console.error('[RTE UndoRedo] Error executing undo:', error);
     }
   }
 
   async #redo(): Promise<void> {
-    this._editorContext.editor?.chain().redo().run();
-    this._editorContext.announce('Redo');
+    try {
+      const success = this._editorContext.editor?.chain().redo().run();
 
-    await this.updateComplete;
+      if (success) {
+        this._editorContext.announce('Redo');
 
-    if (!this._editorContext.editor?.can().redo()) {
-      if (this._editorContext.editor?.can().undo()) {
-        this.#undoButtonRef.value?.focus();
+        await this.updateComplete;
+
+        if (!this._editorContext.editor?.can().redo()) {
+          if (this._editorContext.editor?.can().undo()) {
+            this.#undoButtonRef.value?.focus();
+          } else {
+            this._editorContext.editor?.chain().focus().run();
+          }
+        }
       } else {
-        this._editorContext.editor?.chain().focus().run();
+        console.warn('[RTE UndoRedo] Redo command execution failed');
       }
+    } catch (error) {
+      console.error('[RTE UndoRedo] Error executing redo:', error);
     }
   }
 }

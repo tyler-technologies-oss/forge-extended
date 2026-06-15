@@ -76,10 +76,18 @@ export class RteUnderlineComponent extends LitElement implements RichTextEditorF
   }
 
   private _toggle(_evt: CustomEvent<boolean>): void {
-    const wasActive = this._editorContext.isActive(Underline.name);
-    this._editorContext.editor?.chain().focus().toggleUnderline().run();
+    try {
+      const wasActive = this._editorContext.isActive(Underline.name);
+      const success = this._editorContext.editor?.chain().focus().toggleUnderline().run();
 
-    const message = wasActive ? 'Underline removed' : 'Underline applied';
-    this._editorContext.announce(message);
+      if (success) {
+        const message = wasActive ? 'Underline removed' : 'Underline applied';
+        this._editorContext.announce(message);
+      } else {
+        console.warn('[RTE Underline] Command execution failed');
+      }
+    } catch (error) {
+      console.error('[RTE Underline] Error toggling underline:', error);
+    }
   }
 }

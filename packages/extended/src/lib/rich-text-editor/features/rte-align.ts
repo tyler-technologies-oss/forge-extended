@@ -138,17 +138,23 @@ export class RichTextFeatureAlignComponent extends LitElement implements RichTex
   }
 
   private async _toggle(which: 'left' | 'center' | 'right' | 'justify'): Promise<void> {
-    const wasActive = this._editorContext.isActive({ textAlign: which });
-    this._editorContext.editor?.chain().focus().toggleTextAlign(which).run();
+    try {
+      const wasActive = this._editorContext.isActive({ textAlign: which });
+      const success = this._editorContext.editor?.chain().focus().toggleTextAlign(which).run();
 
-    if (!wasActive) {
-      const alignmentLabels = {
-        left: 'Left aligned',
-        center: 'Center aligned',
-        right: 'Right aligned',
-        justify: 'Justified'
-      };
-      this._editorContext.announce(alignmentLabels[which]);
+      if (success && !wasActive) {
+        const alignmentLabels = {
+          left: 'Left aligned',
+          center: 'Center aligned',
+          right: 'Right aligned',
+          justify: 'Justified'
+        };
+        this._editorContext.announce(alignmentLabels[which]);
+      } else if (!success) {
+        console.warn(`[RTE Align] Command execution failed for ${which}`);
+      }
+    } catch (error) {
+      console.error(`[RTE Align] Error toggling ${which} alignment:`, error);
     }
   }
 }

@@ -41,7 +41,12 @@ export class RichTextContentComponent extends LitElement {
   #announcementTimeout: number | undefined;
 
   public firstUpdated(_changedProperties: PropertyValues<this>): void {
-    this._editorContext.setEditorElement(this.#editorElementRef.value as HTMLElement);
+    const element = this.#editorElementRef.value;
+    if (!element) {
+      console.error('[RichTextContent] Editor element ref failed to attach');
+      return;
+    }
+    this._editorContext.setEditorElement(element as HTMLElement);
     this._editorContext.setAnnouncementCallback(this.#announceToScreenReader.bind(this));
   }
 

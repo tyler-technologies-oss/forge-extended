@@ -75,10 +75,18 @@ export class RichTextFeatureCodeComponent extends LitElement implements RichText
   }
 
   private async _toggle(_evt: CustomEvent): Promise<void> {
-    const wasActive = this._editorContext.isActive(Code.name);
-    this._editorContext.editor?.chain().focus().toggleCode().run();
+    try {
+      const wasActive = this._editorContext.isActive(Code.name);
+      const success = this._editorContext.editor?.chain().focus().toggleCode().run();
 
-    const message = wasActive ? 'Code removed' : 'Code applied';
-    this._editorContext.announce(message);
+      if (success) {
+        const message = wasActive ? 'Code removed' : 'Code applied';
+        this._editorContext.announce(message);
+      } else {
+        console.warn('[RTE Code] Command execution failed');
+      }
+    } catch (error) {
+      console.error('[RTE Code] Error toggling code:', error);
+    }
   }
 }

@@ -75,10 +75,18 @@ export class RichTextFeatureStrikeComponent extends LitElement implements RichTe
   }
 
   private async _toggle(_evt: CustomEvent): Promise<void> {
-    const wasActive = this._editorContext.isActive(Strike.name);
-    this._editorContext.editor?.chain().focus().toggleStrike().run();
+    try {
+      const wasActive = this._editorContext.isActive(Strike.name);
+      const success = this._editorContext.editor?.chain().focus().toggleStrike().run();
 
-    const message = wasActive ? 'Strikethrough removed' : 'Strikethrough applied';
-    this._editorContext.announce(message);
+      if (success) {
+        const message = wasActive ? 'Strikethrough removed' : 'Strikethrough applied';
+        this._editorContext.announce(message);
+      } else {
+        console.warn('[RTE Strike] Command execution failed');
+      }
+    } catch (error) {
+      console.error('[RTE Strike] Error toggling strike:', error);
+    }
   }
 }

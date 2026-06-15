@@ -76,10 +76,18 @@ export class RteBulletListComponent extends LitElement implements RichTextEditor
   }
 
   private _toggle(_evt: CustomEvent<boolean>): void {
-    const wasActive = this._editorContext.isActive(BulletList.name);
-    this._editorContext.editor?.chain().focus().toggleBulletList().run();
+    try {
+      const wasActive = this._editorContext.isActive(BulletList.name);
+      const success = this._editorContext.editor?.chain().focus().toggleBulletList().run();
 
-    const message = wasActive ? 'List removed' : 'Bullet list';
-    this._editorContext.announce(message);
+      if (success) {
+        const message = wasActive ? 'List removed' : 'Bullet list';
+        this._editorContext.announce(message);
+      } else {
+        console.warn('[RTE BulletList] Command execution failed');
+      }
+    } catch (error) {
+      console.error('[RTE BulletList] Error toggling bullet list:', error);
+    }
   }
 }

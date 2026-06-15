@@ -215,10 +215,19 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
       return; // Validation disabled
     }
 
-    // Basic URL validation pattern
+    // Primary regex validation
     const urlPattern = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(:\d+)?(\/[^\s]*)?$/;
 
     if (!urlPattern.test(this._linkUrl)) {
+      this._validationError = 'Please enter a valid URL (e.g., https://example.com)';
+      return;
+    }
+
+    // Additional validation using URL constructor for enhanced security
+    try {
+      const normalizedUrl = this.#normalizeUrl(this._linkUrl);
+      new URL(normalizedUrl);
+    } catch {
       this._validationError = 'Please enter a valid URL (e.g., https://example.com)';
     }
   }
@@ -243,21 +252,43 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
       return;
     }
 
-    if (this._linkUrl) {
-      const normalizedUrl = this.#normalizeUrl(this._linkUrl);
-      this._editorContext.editor?.chain().focus().setLink({ href: normalizedUrl }).run();
-      this._editorContext.announce('Link added');
-    } else {
-      this._editorContext.editor?.chain().focus().unsetLink().run();
-      this._editorContext.announce('Link removed');
+    try {
+      if (this._linkUrl) {
+        const normalizedUrl = this.#normalizeUrl(this._linkUrl);
+        const success = this._editorContext.editor?.chain().focus().setLink({ href: normalizedUrl }).run();
+        if (success) {
+          this._editorContext.announce('Link added');
+        } else {
+          console.warn('[RTE Link] Failed to apply link');
+        }
+      } else {
+        const success = this._editorContext.editor?.chain().focus().unsetLink().run();
+        if (success) {
+          this._editorContext.announce('Link removed');
+        } else {
+          console.warn('[RTE Link] Failed to remove link');
+        }
+      }
+      this.#resetState();
+    } catch (error) {
+      console.error('[RTE Link] Error applying link:', error);
+      this.#resetState();
     }
-    this.#resetState();
   }
 
   #removeLink(): void {
-    this._editorContext.editor?.chain().focus().unsetLink().run();
-    this._editorContext.announce('Link removed');
-    this.#resetState();
+    try {
+      const success = this._editorContext.editor?.chain().focus().unsetLink().run();
+      if (success) {
+        this._editorContext.announce('Link removed');
+      } else {
+        console.warn('[RTE Link] Failed to remove link');
+      }
+      this.#resetState();
+    } catch (error) {
+      console.error('[RTE Link] Error removing link:', error);
+      this.#resetState();
+    }
   }
 
   #cancel(): void {

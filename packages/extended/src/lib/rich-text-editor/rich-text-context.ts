@@ -379,32 +379,38 @@ export class RichTextContextComponent extends LitElement {
   }
 
   #validateContent(): void {
-    const errors: string[] = [];
-    let isValid = true;
+    try {
+      const errors: string[] = [];
+      let isValid = true;
 
-    // Check max length
-    if (this.maxLength > 0 && this._characterCount > this.maxLength) {
-      isValid = false;
-      errors.push(`Content exceeds maximum length of ${this.maxLength} characters`);
-    }
+      // Check max length
+      if (this.maxLength > 0 && this._characterCount > this.maxLength) {
+        isValid = false;
+        errors.push(`Content exceeds maximum length of ${this.maxLength} characters`);
+      }
 
-    // Update validation state
-    const hasChanged = this._isValid !== isValid;
-    this._isValid = isValid;
-    this._validationErrors = errors;
+      // Update validation state
+      const hasChanged = this._isValid !== isValid;
+      this._isValid = isValid;
+      this._validationErrors = errors;
 
-    // Dispatch validation event if state changed
-    if (hasChanged) {
-      this.dispatchEvent(
-        new CustomEvent('validation', {
-          detail: {
-            isValid,
-            errors
-          },
-          bubbles: true,
-          composed: true
-        })
-      );
+      // Dispatch validation event if state changed
+      if (hasChanged) {
+        this.dispatchEvent(
+          new CustomEvent('validation', {
+            detail: {
+              isValid,
+              errors
+            },
+            bubbles: true,
+            composed: true
+          })
+        );
+      }
+    } catch (error) {
+      if (!this.suppressErrors) {
+        console.error('[RichTextEditor] Validation error:', error);
+      }
     }
   }
 

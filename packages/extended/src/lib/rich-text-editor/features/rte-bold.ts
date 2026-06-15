@@ -76,11 +76,19 @@ export class RichTextFeatureBoldComponent extends LitElement implements RichText
   }
 
   private async _toggle(_evt: CustomEvent): Promise<void> {
-    const wasActive = this._editorContext.isActive(Bold.name);
-    this._editorContext.editor?.chain().focus().toggleBold().run();
+    try {
+      const wasActive = this._editorContext.isActive(Bold.name);
+      const success = this._editorContext.editor?.chain().focus().toggleBold().run();
 
-    // Announce state change to screen readers
-    const message = wasActive ? 'Bold removed' : 'Bold applied';
-    this._editorContext.announce(message);
+      if (success) {
+        // Announce state change to screen readers
+        const message = wasActive ? 'Bold removed' : 'Bold applied';
+        this._editorContext.announce(message);
+      } else {
+        console.warn('[RTE Bold] Command execution failed');
+      }
+    } catch (error) {
+      console.error('[RTE Bold] Error toggling bold:', error);
+    }
   }
 }
