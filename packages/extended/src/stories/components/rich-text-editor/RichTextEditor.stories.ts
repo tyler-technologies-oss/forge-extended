@@ -20,6 +20,12 @@ const meta = {
         .content=${args.content}
         ?disabled=${args.disabled}
         ?readOnly=${args.readOnly}
+        .maxLength=${args.maxLength}
+        .errorMessage=${args.errorMessage}
+        ?showCharacterCount=${args.showCharacterCount}
+        ?showWordCount=${args.showWordCount}
+        ?allowPasteFormatting=${args.allowPasteFormatting}
+        ?allowPasteImages=${args.allowPasteImages}
         @change=${changeAction}>
         <forge-rte-standard-tools></forge-rte-standard-tools>
         ${args.showAdditionalFeatures
@@ -46,6 +52,30 @@ const meta = {
       control: 'boolean',
       description: 'Whether the editor is in readonly mode'
     },
+    maxLength: {
+      control: 'number',
+      description: 'Maximum character length allowed (0 = no limit)'
+    },
+    errorMessage: {
+      control: 'text',
+      description: 'Custom error message to display when validation fails'
+    },
+    showCharacterCount: {
+      control: 'boolean',
+      description: 'Whether to show character count below the editor'
+    },
+    showWordCount: {
+      control: 'boolean',
+      description: 'Whether to show word count below the editor'
+    },
+    allowPasteFormatting: {
+      control: 'boolean',
+      description: 'Whether to allow pasted content to retain formatting (false = plain text only)'
+    },
+    allowPasteImages: {
+      control: 'boolean',
+      description: 'Whether to allow images to be pasted into the editor'
+    },
     showAdditionalFeatures: {
       control: 'boolean',
       description: 'Show code and link features in addition to standard tools'
@@ -55,6 +85,12 @@ const meta = {
     content: '',
     disabled: false,
     readOnly: false,
+    maxLength: 0,
+    errorMessage: '',
+    showCharacterCount: false,
+    showWordCount: false,
+    allowPasteFormatting: true,
+    allowPasteImages: false,
     showAdditionalFeatures: true
   }
 } satisfies Meta;

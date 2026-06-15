@@ -36,6 +36,8 @@ export const RichTextEditorComponentTagName: keyof HTMLElementTagNameMap = 'forg
  * @property {string} [errorMessage=''] - Error message to display when validation fails.
  * @property {boolean} [showCharacterCount=false] - Whether to show character count below the editor.
  * @property {boolean} [showWordCount=false] - Whether to show word count below the editor.
+ * @property {boolean} [allowPasteFormatting=true] - Whether to allow pasted content to retain formatting. When false, all pasted content is treated as plain text.
+ * @property {boolean} [allowPasteImages=false] - Whether to allow images to be pasted into the editor.
  *
  * @attribute {string} content - The HTML content of the editor.
  * @attribute {boolean} disabled - Whether the editor is disabled.
@@ -44,6 +46,8 @@ export const RichTextEditorComponentTagName: keyof HTMLElementTagNameMap = 'forg
  * @attribute {string} error-message - Error message to display when validation fails.
  * @attribute {boolean} show-character-count - Whether to show character count below the editor.
  * @attribute {boolean} show-word-count - Whether to show word count below the editor.
+ * @attribute {boolean} allow-paste-formatting - Whether to allow pasted content to retain formatting.
+ * @attribute {boolean} allow-paste-images - Whether to allow images to be pasted into the editor.
  *
  * @event {CustomEvent<{ json: Record<string, any> }>} change - Fired when the content of the editor changes. The detail contains the editor content in JSON format.
  * @event {CustomEvent<{ isValid: boolean; errors: string[] }>} validation - Fired when validation state changes. The detail contains validation status and error messages.
@@ -80,6 +84,14 @@ export class RichTextEditorComponent extends LitElement {
   @property({ type: Boolean, attribute: 'show-word-count' })
   public showWordCount = false;
 
+  /** Whether to allow pasted content to retain formatting. When false, all pasted content is treated as plain text. */
+  @property({ type: Boolean, attribute: 'allow-paste-formatting' })
+  public allowPasteFormatting = true;
+
+  /** Whether to allow images to be pasted into the editor. */
+  @property({ type: Boolean, attribute: 'allow-paste-images' })
+  public allowPasteImages = false;
+
   constructor() {
     super();
     const contextRoot = new ContextRoot();
@@ -95,7 +107,9 @@ export class RichTextEditorComponent extends LitElement {
         .maxLength=${this.maxLength}
         .errorMessage=${this.errorMessage}
         .showCharacterCount=${this.showCharacterCount}
-        .showWordCount=${this.showWordCount}>
+        .showWordCount=${this.showWordCount}
+        .allowPasteFormatting=${this.allowPasteFormatting}
+        .allowPasteImages=${this.allowPasteImages}>
         <div class="forge-rich-text-editor">
           <div
             class="editor-toolbar"

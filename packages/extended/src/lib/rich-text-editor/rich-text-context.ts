@@ -9,6 +9,7 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { editorContext, EditorContext } from './editor-context';
 import { RichTextEditorFeature } from './features/rich-text-editor-feature';
+import { PasteHandler } from './extensions/paste-handler';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -42,6 +43,8 @@ const DEFAULT_EXTENSIONS: AnyExtension[] = [Document, Text, Paragraph];
  * @property {string} [errorMessage=''] - Error message to display when validation fails.
  * @property {boolean} [showCharacterCount=false] - Whether to show character count below the editor.
  * @property {boolean} [showWordCount=false] - Whether to show word count below the editor.
+ * @property {boolean} [allowPasteFormatting=true] - Whether to allow pasted content to retain formatting. When false, all pasted content is treated as plain text.
+ * @property {boolean} [allowPasteImages=false] - Whether to allow images to be pasted into the editor.
  *
  * @attribute {string} editor-id - The ID of the element to instantiate the editor against.
  * @attribute {string} content - The HTML content of the editor.
@@ -51,6 +54,8 @@ const DEFAULT_EXTENSIONS: AnyExtension[] = [Document, Text, Paragraph];
  * @attribute {string} error-message - Error message to display when validation fails.
  * @attribute {boolean} show-character-count - Whether to show character count below the editor.
  * @attribute {boolean} show-word-count - Whether to show word count below the editor.
+ * @attribute {boolean} allow-paste-formatting - Whether to allow pasted content to retain formatting.
+ * @attribute {boolean} allow-paste-images - Whether to allow images to be pasted into the editor.
  *
  * @event {CustomEvent<{ json: Record<string, any> }>} change - Fired when the content of the editor changes. The detail contains the editor content in JSON format.
  * @event {CustomEvent<{ isValid: boolean; errors: string[] }>} validation - Fired when validation state changes. The detail contains validation status and error messages.
@@ -119,6 +124,14 @@ export class RichTextContextComponent extends LitElement {
   /** Whether to show word count below the editor. */
   @property({ type: Boolean, attribute: 'show-word-count' })
   public showWordCount = false;
+
+  /** Whether to allow pasted content to retain formatting. When false, all pasted content is treated as plain text. */
+  @property({ type: Boolean, attribute: 'allow-paste-formatting' })
+  public allowPasteFormatting = true;
+
+  /** Whether to allow images to be pasted into the editor. */
+  @property({ type: Boolean, attribute: 'allow-paste-images' })
+  public allowPasteImages = false;
 
   /** The TipTap editor instance */
   @state()
@@ -335,9 +348,18 @@ export class RichTextContextComponent extends LitElement {
       limit: this.maxLength > 0 ? this.maxLength : undefined
     });
 
-    const extensions = [...DEFAULT_EXTENSIONS, characterCountExtension, ...featureExtensions].filter(
-      (ext, index, self) => self.findIndex(e => e.name === ext.name) === index
-    );
+    // Add PasteHandler extension
+    const pasteHandlerExtension = PasteHandler.configure({
+      allowPasteFormatting: this.allowPasteFormatting,
+      allowPasteImages: this.allowPasteImages
+    });
+
+    const extensions = [
+      ...DEFAULT_EXTENSIONS,
+      characterCountExtension,
+      pasteHandlerExtension,
+      ...featureExtensions
+    ].filter((ext, index, self) => self.findIndex(e => e.name === ext.name) === index);
 
     if (!this.#editorElement) {
       throw new Error('Editor element is not set. Please set the editor element before initializing the editor.');
