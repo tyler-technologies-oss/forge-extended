@@ -45,6 +45,7 @@ const DEFAULT_EXTENSIONS: AnyExtension[] = [Document, Text, Paragraph];
  * @property {boolean} [showWordCount=false] - Whether to show word count below the editor.
  * @property {boolean} [allowPasteFormatting=true] - Whether to allow pasted content to retain formatting. When false, all pasted content is treated as plain text.
  * @property {boolean} [allowPasteImages=false] - Whether to allow images to be pasted into the editor.
+ * @property {boolean} [suppressErrors=false] - Whether to suppress error logging to console (useful for debugging).
  *
  * @attribute {string} editor-id - The ID of the element to instantiate the editor against.
  * @attribute {string} content - The HTML content of the editor.
@@ -56,9 +57,13 @@ const DEFAULT_EXTENSIONS: AnyExtension[] = [Document, Text, Paragraph];
  * @attribute {boolean} show-word-count - Whether to show word count below the editor.
  * @attribute {boolean} allow-paste-formatting - Whether to allow pasted content to retain formatting.
  * @attribute {boolean} allow-paste-images - Whether to allow images to be pasted into the editor.
+ * @attribute {boolean} suppress-errors - Whether to suppress error logging to console.
  *
  * @event {CustomEvent<{ json: Record<string, any> }>} change - Fired when the content of the editor changes. The detail contains the editor content in JSON format.
  * @event {CustomEvent<{ isValid: boolean; errors: string[] }>} validation - Fired when validation state changes. The detail contains validation status and error messages.
+ * @event {CustomEvent<void>} initialized - Fired when the editor has been successfully initialized.
+ * @event {CustomEvent<{ error: string }>} initialization-error - Fired when editor initialization fails. The detail contains the error message.
+ * @event {CustomEvent<{ context: string; error: string }>} error - Fired when a non-fatal error occurs during editor operation. The detail contains context and error message.
  */
 @customElement(RichTextContextComponentTagName)
 export class RichTextContextComponent extends LitElement {
@@ -91,6 +96,43 @@ export class RichTextContextComponent extends LitElement {
       line-height: var(--forge-typography-body-small-line-height);
       margin-inline-start: auto;
     }
+
+    .editor-initialization-error {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: var(--forge-spacing-large);
+      gap: var(--forge-spacing-medium);
+      background-color: var(--forge-theme-error-container);
+      color: var(--forge-theme-on-error-container);
+      border-radius: var(--forge-shape-medium);
+      margin: var(--forge-spacing-medium);
+      text-align: center;
+    }
+
+    .editor-initialization-error__title {
+      font-size: var(--forge-typography-title-medium-size);
+      font-weight: var(--forge-typography-title-medium-weight);
+      line-height: var(--forge-typography-title-medium-line-height);
+      margin: 0;
+    }
+
+    .editor-initialization-error__message {
+      font-size: var(--forge-typography-body-medium-size);
+      font-weight: var(--forge-typography-body-medium-weight);
+      line-height: var(--forge-typography-body-medium-line-height);
+      margin: 0;
+    }
+
+    .editor-initialization-error__details {
+      font-size: var(--forge-typography-body-small-size);
+      font-weight: var(--forge-typography-body-small-weight);
+      line-height: var(--forge-typography-body-small-line-height);
+      color: var(--forge-theme-text-secondary);
+      margin: 0;
+      max-width: 600px;
+    }
   `;
 
   /** The ID of the element to instantiate the editor against. */
@@ -108,6 +150,10 @@ export class RichTextContextComponent extends LitElement {
   /** Whether the editor is in readonly mode. */
   @property({ type: Boolean, attribute: 'readonly' })
   public readOnly = false;
+
+  /** Whether to suppress initialization errors (useful for debugging). */
+  @property({ type: Boolean, attribute: 'suppress-errors' })
+  public suppressErrors = false;
 
   /** Maximum character length allowed. 0 means no limit. */
   @property({ type: Number, attribute: 'max-length' })
@@ -152,6 +198,10 @@ export class RichTextContextComponent extends LitElement {
   /** Validation error messages */
   @state()
   private _validationErrors: string[] = [];
+
+  /** Initialization error state */
+  @state()
+  private _initializationError: string | null = null;
 
   #featureInstances: Set<RichTextEditorFeature> = new Set();
   #initFrame: number | undefined;
@@ -238,33 +288,58 @@ export class RichTextContextComponent extends LitElement {
 
   public override willUpdate(changedProperties: PropertyValues<this>): void {
     if (this.hasUpdated && changedProperties.has('content')) {
-      this.editorContext.editor?.commands.setContent(this.content);
+      try {
+        this.editorContext.editor?.commands.setContent(this.content);
+      } catch (error) {
+        this.#handleEditorError('Failed to set content', error);
+      }
     }
 
     if (changedProperties.has('disabled') || changedProperties.has('readOnly')) {
-      this.editorContext.editor?.setEditable(!this.disabled && !this.readOnly);
-      this.editorContext = {
-        ...this.editorContext,
-        disabled: this.disabled,
-        readOnly: this.readOnly
-      };
+      try {
+        this.editorContext.editor?.setEditable(!this.disabled && !this.readOnly);
+        this.editorContext = {
+          ...this.editorContext,
+          disabled: this.disabled,
+          readOnly: this.readOnly
+        };
 
-      // Announce state changes to screen readers
-      if (this.hasUpdated && changedProperties.has('disabled')) {
-        const message = this.disabled ? 'Editor disabled' : 'Editor enabled';
-        this.#announce(message);
-      }
-      if (this.hasUpdated && changedProperties.has('readOnly')) {
-        const message = this.readOnly ? 'Editor read-only' : 'Editor editable';
-        this.#announce(message);
+        // Announce state changes to screen readers
+        if (this.hasUpdated && changedProperties.has('disabled')) {
+          const message = this.disabled ? 'Editor disabled' : 'Editor enabled';
+          this.#announce(message);
+        }
+        if (this.hasUpdated && changedProperties.has('readOnly')) {
+          const message = this.readOnly ? 'Editor read-only' : 'Editor editable';
+          this.#announce(message);
+        }
+      } catch (error) {
+        this.#handleEditorError('Failed to update editor state', error);
       }
     }
   }
 
   public override render(): TemplateResult {
+    // If initialization failed, show error message
+    if (this._initializationError) {
+      return this.#renderInitializationError();
+    }
+
     return html`
       <slot></slot>
       ${when(this.showCharacterCount || this.showWordCount || !this._isValid, () => this.#renderFooter())}
+    `;
+  }
+
+  #renderInitializationError(): TemplateResult {
+    return html`
+      <div class="editor-initialization-error" role="alert" aria-live="assertive">
+        <p class="editor-initialization-error__title">Editor Initialization Failed</p>
+        <p class="editor-initialization-error__message">
+          The rich text editor could not be initialized. Please refresh the page to try again.
+        </p>
+        <p class="editor-initialization-error__details">${this._initializationError}</p>
+      </div>
     `;
   }
 
@@ -333,83 +408,182 @@ export class RichTextContextComponent extends LitElement {
     }
   }
 
+  /**
+   * Returns the editor content as JSON. Returns undefined if editor is not initialized or if an error occurs.
+   */
   public toJSON(): object | undefined {
-    return this._editor?.getJSON();
+    try {
+      return this._editor?.getJSON();
+    } catch (error) {
+      this.#handleEditorError('Failed to get JSON content', error);
+      return undefined;
+    }
+  }
+
+  /**
+   * Returns the editor content as HTML. Returns empty string if editor is not initialized or if an error occurs.
+   */
+  public toHTML(): string {
+    try {
+      return this._editor?.getHTML() ?? '';
+    } catch (error) {
+      this.#handleEditorError('Failed to get HTML content', error);
+      return '';
+    }
+  }
+
+  /**
+   * Returns whether the editor has been successfully initialized.
+   */
+  public get isInitialized(): boolean {
+    return !!this._editor && !this._initializationError;
+  }
+
+  /**
+   * Returns the initialization error message, if any.
+   */
+  public get initializationError(): string | null {
+    return this._initializationError;
   }
 
   #initEditor(): void {
-    this.#destroyEditor();
+    try {
+      this.#destroyEditor();
 
-    // Features can contain duplicate extensions. Make sure to filter out any duplicates
-    const featureExtensions = Array.from(this.#featureInstances).flatMap(feature => feature.extensions);
+      // Clear any previous initialization errors
+      this._initializationError = null;
 
-    // Add CharacterCount extension if maxLength is set or if counts should be displayed
-    const characterCountExtension = CharacterCount.configure({
-      limit: this.maxLength > 0 ? this.maxLength : undefined
-    });
+      // Features can contain duplicate extensions. Make sure to filter out any duplicates
+      const featureExtensions = Array.from(this.#featureInstances).flatMap(feature => feature.extensions);
 
-    // Add PasteHandler extension
-    const pasteHandlerExtension = PasteHandler.configure({
-      allowPasteFormatting: this.allowPasteFormatting,
-      allowPasteImages: this.allowPasteImages
-    });
+      // Add CharacterCount extension if maxLength is set or if counts should be displayed
+      const characterCountExtension = CharacterCount.configure({
+        limit: this.maxLength > 0 ? this.maxLength : undefined
+      });
 
-    const extensions = [
-      ...DEFAULT_EXTENSIONS,
-      characterCountExtension,
-      pasteHandlerExtension,
-      ...featureExtensions
-    ].filter((ext, index, self) => self.findIndex(e => e.name === ext.name) === index);
+      // Add PasteHandler extension
+      const pasteHandlerExtension = PasteHandler.configure({
+        allowPasteFormatting: this.allowPasteFormatting,
+        allowPasteImages: this.allowPasteImages
+      });
 
-    if (!this.#editorElement) {
-      throw new Error('Editor element is not set. Please set the editor element before initializing the editor.');
+      const extensions = [
+        ...DEFAULT_EXTENSIONS,
+        characterCountExtension,
+        pasteHandlerExtension,
+        ...featureExtensions
+      ].filter((ext, index, self) => self.findIndex(e => e.name === ext.name) === index);
+
+      if (!this.#editorElement) {
+        throw new Error('Editor element is not set. Please set the editor element before initializing the editor.');
+      }
+
+      this._editor = new TipTapEditor({
+        element: this.#editorElement,
+        extensions,
+        content: this.editorContext.content,
+        editable: !(this.editorContext.disabled || this.editorContext.readOnly),
+        injectCSS: false,
+        onTransaction: () => {
+          try {
+            this.#featureInstances.forEach(feature => feature.requestUpdate());
+          } catch (error) {
+            this.#handleEditorError('Transaction update failed', error);
+          }
+        },
+        coreExtensionOptions: {
+          clipboardTextSerializer: {
+            blockSeparator: '\n'
+          }
+        },
+        onUpdate: ({ editor }) => {
+          try {
+            const json = editor.getJSON();
+
+            // Update character and word counts
+            const charCountStorage = editor.storage.characterCount;
+            this._characterCount = charCountStorage?.characters?.() ?? 0;
+            this._wordCount = charCountStorage?.words?.() ?? 0;
+
+            // Perform validation
+            this.#validateContent();
+
+            this.dispatchEvent(
+              new CustomEvent('change', {
+                detail: { json },
+                bubbles: true,
+                composed: true
+              })
+            );
+          } catch (error) {
+            this.#handleEditorError('Content update failed', error);
+          }
+        }
+      });
+
+      this.editorContext = {
+        ...this.editorContext,
+        editor: this._editor
+      };
+
+      // Initialize counts
+      const storage = this._editor.storage.characterCount;
+      this._characterCount = storage?.characters?.() ?? 0;
+      this._wordCount = storage?.words?.() ?? 0;
+
+      // Initial validation
+      this.#validateContent();
+
+      // Dispatch initialization success event
+      this.dispatchEvent(
+        new CustomEvent('initialized', {
+          bubbles: true,
+          composed: true
+        })
+      );
+    } catch (error) {
+      this.#handleInitializationError(error);
+    }
+  }
+
+  /**
+   * Handles initialization errors by setting error state and dispatching error event.
+   */
+  #handleInitializationError(error: unknown): void {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown initialization error';
+
+    this._initializationError = errorMessage;
+
+    if (!this.suppressErrors) {
+      console.error('[RichTextEditor] Initialization failed:', error);
     }
 
-    this._editor = new TipTapEditor({
-      element: this.#editorElement,
-      extensions,
-      content: this.editorContext.content,
-      editable: !(this.editorContext.disabled || this.editorContext.readOnly),
-      injectCSS: false,
-      onTransaction: () => this.#featureInstances.forEach(feature => feature.requestUpdate()),
-      coreExtensionOptions: {
-        clipboardTextSerializer: {
-          blockSeparator: '\n'
-        }
-      },
-      onUpdate: ({ editor }) => {
-        const json = editor.getJSON();
+    this.dispatchEvent(
+      new CustomEvent('initialization-error', {
+        detail: { error: errorMessage },
+        bubbles: true,
+        composed: true
+      })
+    );
+  }
 
-        // Update character and word counts
-        const charCountStorage = editor.storage.characterCount;
-        this._characterCount = charCountStorage?.characters?.() ?? 0;
-        this._wordCount = charCountStorage?.words?.() ?? 0;
+  /**
+   * Handles runtime editor errors (non-fatal).
+   */
+  #handleEditorError(context: string, error: unknown): void {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 
-        // Perform validation
-        this.#validateContent();
+    if (!this.suppressErrors) {
+      console.error(`[RichTextEditor] ${context}:`, error);
+    }
 
-        this.dispatchEvent(
-          new CustomEvent('change', {
-            detail: { json },
-            bubbles: true,
-            composed: true
-          })
-        );
-      }
-    });
-
-    this.editorContext = {
-      ...this.editorContext,
-      editor: this._editor
-    };
-
-    // Initialize counts
-    const storage = this._editor.storage.characterCount;
-    this._characterCount = storage?.characters?.() ?? 0;
-    this._wordCount = storage?.words?.() ?? 0;
-
-    // Initial validation
-    this.#validateContent();
+    this.dispatchEvent(
+      new CustomEvent('error', {
+        detail: { context, error: errorMessage },
+        bubbles: true,
+        composed: true
+      })
+    );
   }
 
   #destroyEditor(): void {

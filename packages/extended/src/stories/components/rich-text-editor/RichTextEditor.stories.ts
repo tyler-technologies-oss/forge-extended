@@ -11,6 +11,10 @@ import '$lib/rich-text-editor/rich-text-renderer';
 const component = 'forge-rich-text-editor';
 
 const changeAction = action('change');
+const validationAction = action('validation');
+const initializedAction = action('initialized');
+const initializationErrorAction = action('initialization-error');
+const errorAction = action('error');
 
 const meta = {
   title: 'Components/Rich Text Editor',
@@ -26,7 +30,12 @@ const meta = {
         ?showWordCount=${args.showWordCount}
         ?allowPasteFormatting=${args.allowPasteFormatting}
         ?allowPasteImages=${args.allowPasteImages}
-        @change=${changeAction}>
+        ?suppressErrors=${args.suppressErrors}
+        @change=${changeAction}
+        @validation=${validationAction}
+        @initialized=${initializedAction}
+        @initialization-error=${initializationErrorAction}
+        @error=${errorAction}>
         <forge-rte-standard-tools></forge-rte-standard-tools>
         ${args.showAdditionalFeatures
           ? html`
@@ -87,6 +96,10 @@ const meta = {
     autoProtocol: {
       control: 'boolean',
       description: 'Whether to automatically add https:// protocol to links without a protocol'
+    },
+    suppressErrors: {
+      control: 'boolean',
+      description: 'Whether to suppress error logging to console (useful for debugging)'
     }
   },
   args: {
@@ -101,7 +114,8 @@ const meta = {
     allowPasteImages: false,
     showAdditionalFeatures: true,
     validateUrls: true,
-    autoProtocol: true
+    autoProtocol: true,
+    suppressErrors: false
   }
 } satisfies Meta;
 
