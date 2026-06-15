@@ -19,6 +19,20 @@ export const RteOrderedListComponentTagName: keyof HTMLElementTagNameMap = 'forg
 
 /**
  * @tag forge-rte-ordered-list
+ *
+ * @summary
+ * Provides a numbered (ordered) list button for the rich text editor.
+ *
+ * @description
+ * The ordered list feature component renders a toolbar button that allows users to create or
+ * remove numbered (ordered) lists. The button shows an active state when the cursor is
+ * positioned within an ordered list. Clicking an active button removes the list formatting,
+ * converting items back to paragraphs. The feature announces state changes to screen readers
+ * for accessibility.
+ *
+ * @property {string} [label='Ordered List'] - The accessible label for the ordered list button.
+ *
+ * @attribute {string} label - The accessible label for the ordered list button.
  */
 @customElement(RteOrderedListComponentTagName)
 export class RteOrderedListComponent extends LitElement implements RichTextEditorFeature {

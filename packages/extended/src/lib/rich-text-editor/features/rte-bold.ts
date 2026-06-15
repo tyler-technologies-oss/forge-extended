@@ -19,6 +19,19 @@ export const RichTextFeatureBoldComponentTagName: keyof HTMLElementTagNameMap = 
 
 /**
  * @tag forge-rte-bold
+ *
+ * @summary
+ * Provides a bold text formatting button for the rich text editor.
+ *
+ * @description
+ * The bold feature component renders a toolbar button that allows users to apply or remove
+ * bold formatting to selected text. The button shows an active state when the cursor is
+ * positioned within bold text. Keyboard shortcut Control+B is supported. The feature
+ * announces state changes to screen readers for accessibility.
+ *
+ * @property {string} [label='Bold'] - The accessible label for the bold button.
+ *
+ * @attribute {string} label - The accessible label for the bold button.
  */
 @customElement(RichTextFeatureBoldComponentTagName)
 export class RichTextFeatureBoldComponent extends LitElement implements RichTextEditorFeature {

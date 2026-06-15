@@ -18,6 +18,21 @@ export const RichTextFeatureUndoRedoComponentTagName: keyof HTMLElementTagNameMa
 
 /**
  * @tag forge-rte-undo-redo
+ *
+ * @summary
+ * Provides undo and redo buttons for the rich text editor history management.
+ *
+ * @description
+ * The undo/redo feature component renders two toolbar buttons that allow users to undo or redo
+ * changes to the editor content. The buttons are automatically disabled when there is no history
+ * to undo or redo. The feature announces actions to screen readers for accessibility. Keyboard
+ * shortcuts Control+Z (undo) and Control+Shift+Z (redo) are supported through TipTap.
+ *
+ * @property {string} [undoLabel='Undo'] - The accessible label for the undo button.
+ * @property {string} [redoLabel='Redo'] - The accessible label for the redo button.
+ *
+ * @attribute {string} undo-label - The accessible label for the undo button.
+ * @attribute {string} redo-label - The accessible label for the redo button.
  */
 @customElement(RichTextFeatureUndoRedoComponentTagName)
 export class RichTextFeatureUndoRedoComponent extends LitElement implements RichTextEditorFeature {

@@ -19,6 +19,19 @@ export const RichTextFeatureStrikeComponentTagName: keyof HTMLElementTagNameMap 
 
 /**
  * @tag forge-rte-strike
+ *
+ * @summary
+ * Provides a strikethrough text formatting button for the rich text editor.
+ *
+ * @description
+ * The strikethrough feature component renders a toolbar button that allows users to apply or
+ * remove strikethrough formatting to selected text. The button shows an active state when the
+ * cursor is positioned within strikethrough text. The feature announces state changes to screen
+ * readers for accessibility.
+ *
+ * @property {string} [label='Strikethrough'] - The accessible label for the strikethrough button.
+ *
+ * @attribute {string} label - The accessible label for the strikethrough button.
  */
 @customElement(RichTextFeatureStrikeComponentTagName)
 export class RichTextFeatureStrikeComponent extends LitElement implements RichTextEditorFeature {

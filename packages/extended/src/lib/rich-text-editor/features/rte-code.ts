@@ -19,6 +19,19 @@ export const RichTextFeatureCodeComponentTagName: keyof HTMLElementTagNameMap = 
 
 /**
  * @tag forge-rte-code
+ *
+ * @summary
+ * Provides an inline code formatting button for the rich text editor.
+ *
+ * @description
+ * The code feature component renders a toolbar button that allows users to apply or remove
+ * inline code formatting to selected text. The button shows an active state when the cursor is
+ * positioned within code text. This creates monospaced inline code, not code blocks. The feature
+ * announces state changes to screen readers for accessibility.
+ *
+ * @property {string} [label='Code'] - The accessible label for the code button.
+ *
+ * @attribute {string} label - The accessible label for the code button.
  */
 @customElement(RichTextFeatureCodeComponentTagName)
 export class RichTextFeatureCodeComponent extends LitElement implements RichTextEditorFeature {

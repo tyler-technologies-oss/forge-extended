@@ -19,6 +19,20 @@ export const RteBulletListComponentTagName: keyof HTMLElementTagNameMap = 'forge
 
 /**
  * @tag forge-rte-bullet-list
+ *
+ * @summary
+ * Provides a bulleted (unordered) list button for the rich text editor.
+ *
+ * @description
+ * The bullet list feature component renders a toolbar button that allows users to create or
+ * remove bulleted (unordered) lists. The button shows an active state when the cursor is
+ * positioned within a bullet list. Clicking an active button removes the list formatting,
+ * converting items back to paragraphs. The feature announces state changes to screen readers
+ * for accessibility.
+ *
+ * @property {string} [label='Bullet List'] - The accessible label for the bullet list button.
+ *
+ * @attribute {string} label - The accessible label for the bullet list button.
  */
 @customElement(RteBulletListComponentTagName)
 export class RteBulletListComponent extends LitElement implements RichTextEditorFeature {

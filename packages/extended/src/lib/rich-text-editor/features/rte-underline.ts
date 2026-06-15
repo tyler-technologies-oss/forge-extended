@@ -19,6 +19,19 @@ export const RteUnderlineComponentTagName: keyof HTMLElementTagNameMap = 'forge-
 
 /**
  * @tag forge-rte-underline
+ *
+ * @summary
+ * Provides an underline text formatting button for the rich text editor.
+ *
+ * @description
+ * The underline feature component renders a toolbar button that allows users to apply or remove
+ * underline formatting to selected text. The button shows an active state when the cursor is
+ * positioned within underlined text. Keyboard shortcut Control+U is supported. The feature
+ * announces state changes to screen readers for accessibility.
+ *
+ * @property {string} [label='Underline'] - The accessible label for the underline button.
+ *
+ * @attribute {string} label - The accessible label for the underline button.
  */
 @customElement(RteUnderlineComponentTagName)
 export class RteUnderlineComponent extends LitElement implements RichTextEditorFeature {

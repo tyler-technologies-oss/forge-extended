@@ -12,6 +12,14 @@ export const RichTextFeatureDividerComponentTagName: keyof HTMLElementTagNameMap
 
 /**
  * @tag forge-rte-feature-divider
+ *
+ * @summary
+ * A vertical divider for separating groups of buttons in the rich text editor toolbar.
+ *
+ * @description
+ * The divider component provides visual separation between groups of related toolbar buttons.
+ * It renders a vertical line with a maximum height of 24px. Use this component to organize
+ * the toolbar into logical sections (e.g., separating text formatting from paragraph formatting).
  */
 @customElement(RichTextFeatureDividerComponentTagName)
 export class RichTextFeatureDividerComponent extends LitElement {

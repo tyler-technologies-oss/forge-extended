@@ -19,6 +19,19 @@ export const RteItalicComponentTagName: keyof HTMLElementTagNameMap = 'forge-rte
 
 /**
  * @tag forge-rte-italic
+ *
+ * @summary
+ * Provides an italic text formatting button for the rich text editor.
+ *
+ * @description
+ * The italic feature component renders a toolbar button that allows users to apply or remove
+ * italic formatting to selected text. The button shows an active state when the cursor is
+ * positioned within italic text. Keyboard shortcut Control+I is supported. The feature
+ * announces state changes to screen readers for accessibility.
+ *
+ * @property {string} [label='Italic'] - The accessible label for the italic button.
+ *
+ * @attribute {string} label - The accessible label for the italic button.
  */
 @customElement(RteItalicComponentTagName)
 export class RteItalicComponent extends LitElement implements RichTextEditorFeature {

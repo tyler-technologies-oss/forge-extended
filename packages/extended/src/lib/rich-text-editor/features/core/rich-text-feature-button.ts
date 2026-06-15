@@ -16,6 +16,30 @@ export const RteToolButtonComponentTagName: keyof HTMLElementTagNameMap = 'forge
 
 /**
  * @tag forge-rte-tool-button
+ *
+ * @summary
+ * An internal toolbar button component used by rich text editor feature components.
+ *
+ * @description
+ * This is an internal component that provides a consistent button implementation for all rich
+ * text editor formatting features. It wraps the Forge icon button component and provides
+ * standardized behavior for keyboard shortcuts, ARIA attributes, active states, and event
+ * handling. This component is not intended to be used directly by consumers - instead use
+ * the feature components like forge-rte-bold, forge-rte-italic, etc.
+ *
+ * @property {string} [label='Tool'] - The accessible label for the button.
+ * @property {string} [icon] - The icon name from Tyler Icons to display.
+ * @property {boolean} [disabled=false] - Whether the button is disabled.
+ * @property {boolean} [active=false] - Whether the button is in an active/pressed state.
+ * @property {string} [keyboardShortcut] - The keyboard shortcut for this tool (e.g., "Control+B").
+ *
+ * @attribute {string} label - The accessible label for the button.
+ * @attribute {string} icon - The icon name to display.
+ * @attribute {boolean} disabled - Whether the button is disabled.
+ * @attribute {boolean} active - Whether the button is in active state.
+ * @attribute {string} keyboard-shortcut - The keyboard shortcut for this tool.
+ *
+ * @event {CustomEvent<boolean>} forge-rte-tool-toggle - Fired when the button is clicked or activated. The detail contains the toggle state.
  */
 @customElement(RteToolButtonComponentTagName)
 export class RteToolButtonComponent extends LitElement {

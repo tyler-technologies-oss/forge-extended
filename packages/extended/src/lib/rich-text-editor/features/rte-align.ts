@@ -25,6 +25,25 @@ export const RichTextFeatureAlignComponentTagName: keyof HTMLElementTagNameMap =
 
 /**
  * @tag forge-rte-align
+ *
+ * @summary
+ * Provides text alignment buttons (left, center, right, justify) for the rich text editor.
+ *
+ * @description
+ * The alignment feature component renders four toolbar buttons that allow users to change the
+ * horizontal alignment of text. Each button shows an active state when the cursor is positioned
+ * within text with that alignment. Alignment can be applied to paragraphs and headings. The
+ * feature announces state changes to screen readers for accessibility.
+ *
+ * @property {string} [leftLabel='Align Left'] - The accessible label for the left align button.
+ * @property {string} [centerLabel='Align Center'] - The accessible label for the center align button.
+ * @property {string} [rightLabel='Align Right'] - The accessible label for the right align button.
+ * @property {string} [justifyLabel='Justify'] - The accessible label for the justify button.
+ *
+ * @attribute {string} left-label - The accessible label for the left align button.
+ * @attribute {string} center-label - The accessible label for the center align button.
+ * @attribute {string} right-label - The accessible label for the right align button.
+ * @attribute {string} justify-label - The accessible label for the justify button.
  */
 @customElement(RichTextFeatureAlignComponentTagName)
 export class RichTextFeatureAlignComponent extends LitElement implements RichTextEditorFeature {

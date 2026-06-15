@@ -21,6 +21,24 @@ export const RichTextFeatureLinkComponentTagName: keyof HTMLElementTagNameMap = 
 
 /**
  * @tag forge-rte-link
+ *
+ * @summary
+ * Provides a link creation and editing button for the rich text editor.
+ *
+ * @description
+ * The link feature component renders a toolbar button that allows users to create hyperlinks
+ * from selected text. Clicking the button opens a popover with a URL input field. The component
+ * supports URL validation, automatic protocol addition, and provides Apply/Update/Remove/Cancel
+ * buttons based on context. Links open in new tabs with security attributes (noopener, noreferrer,
+ * nofollow). The feature announces state changes to screen readers for accessibility.
+ *
+ * @property {string} [label='Link'] - The accessible label for the link button.
+ * @property {boolean} [validateUrls=true] - Whether to validate URL format before applying. When enabled, shows error messages for invalid URLs.
+ * @property {boolean} [autoProtocol=true] - Whether to automatically add https:// protocol if missing from the URL.
+ *
+ * @attribute {string} label - The accessible label for the link button.
+ * @attribute {boolean} validate-urls - Whether to validate URL format before applying.
+ * @attribute {boolean} auto-protocol - Whether to automatically add https:// protocol if missing.
  */
 @customElement(RichTextFeatureLinkComponentTagName)
 export class RichTextFeatureLinkComponent extends LitElement implements RichTextEditorFeature {
