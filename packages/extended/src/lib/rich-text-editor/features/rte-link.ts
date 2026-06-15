@@ -61,6 +61,20 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
     this._editorContext?.registerFeature(this);
   }
 
+  public override updated(changedProperties: PropertyValues<this>): void {
+    // Auto-focus input when popover opens
+    if (changedProperties.has('_popoverAnchor')) {
+      if (this._popoverAnchor) {
+        // Use setTimeout to ensure popover is rendered
+        setTimeout(() => {
+          const input = this.shadowRoot?.querySelector('input');
+          input?.focus();
+          input?.select(); // Select existing text for easy editing
+        }, 50);
+      }
+    }
+  }
+
   public override render(): TemplateResult {
     return html`
       <forge-rte-tool-button

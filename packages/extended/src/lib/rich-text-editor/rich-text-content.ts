@@ -55,7 +55,7 @@ export class RichTextContentComponent extends LitElement {
           aria-multiline="true"
           aria-readonly=${isReadonly ? 'true' : 'false'}
           aria-disabled=${isDisabled ? 'true' : 'false'}></div>
-        <forge-focus-indicator inward target="editor"></forge-focus-indicator>
+        <forge-focus-indicator inward></forge-focus-indicator>
       </div>
     `;
   }
