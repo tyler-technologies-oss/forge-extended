@@ -4,6 +4,17 @@ import type { IForgeIconButtonComponent } from '@tylertech/forge';
 import './rich-text-editor';
 import './features/rte-standard-tools';
 import type { RichTextEditorComponent } from './rich-text-editor';
+import type { RichTextContextComponent } from './rich-text-context';
+
+/**
+ * Helper to wait for editor initialization and return the context component
+ */
+async function waitForEditor(el: RichTextEditorComponent): Promise<RichTextContextComponent> {
+  await new Promise(resolve => setTimeout(resolve, 100));
+  const context = el.shadowRoot!.querySelector('forge-rich-text-context') as RichTextContextComponent;
+  await context?.updateComplete;
+  return context;
+}
 
 describe('Rich Text Editor - State Visual Indicators', () => {
   describe('Disabled state', () => {
@@ -32,12 +43,10 @@ describe('Rich Text Editor - State Visual Indicators', () => {
         </forge-rich-text-editor>
       `);
 
-      await el.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await waitForEditor(el);
 
-      const root = el.shadowRoot as ShadowRoot;
-      const toolbar = root.querySelector('.editor-toolbar') as HTMLElement;
-      const buttons = Array.from(toolbar.querySelectorAll('forge-icon-button'));
+      // Toolbar buttons are slotted content (light DOM)
+      const buttons = Array.from(el.querySelectorAll('forge-icon-button'));
 
       expect(buttons.length).to.be.greaterThan(0);
       buttons.forEach(button => {
@@ -52,11 +61,8 @@ describe('Rich Text Editor - State Visual Indicators', () => {
         </forge-rich-text-editor>
       `);
 
-      await el.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 150));
-
-      const editorContext = el._editorContext;
-      expect(editorContext.editor?.isEditable).to.be.false;
+      const context = await waitForEditor(el);
+      expect(context.editor?.isEditable).to.be.false;
     });
   });
 
@@ -82,12 +88,10 @@ describe('Rich Text Editor - State Visual Indicators', () => {
         </forge-rich-text-editor>
       `);
 
-      await el.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await waitForEditor(el);
 
-      const root = el.shadowRoot as ShadowRoot;
-      const toolbar = root.querySelector('.editor-toolbar') as HTMLElement;
-      const buttons = Array.from(toolbar.querySelectorAll('forge-icon-button'));
+      // Toolbar buttons are slotted content (light DOM)
+      const buttons = Array.from(el.querySelectorAll('forge-icon-button'));
 
       expect(buttons.length).to.be.greaterThan(0);
       buttons.forEach(button => {
@@ -102,11 +106,8 @@ describe('Rich Text Editor - State Visual Indicators', () => {
         </forge-rich-text-editor>
       `);
 
-      await el.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 150));
-
-      const editorContext = el._editorContext;
-      expect(editorContext.editor?.isEditable).to.be.false;
+      const context = await waitForEditor(el);
+      expect(context.editor?.isEditable).to.be.false;
     });
   });
 
@@ -118,10 +119,8 @@ describe('Rich Text Editor - State Visual Indicators', () => {
         </forge-rich-text-editor>
       `);
 
-      await el.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 150));
-
-      const editor = el._editorContext.editor;
+      const context = await waitForEditor(el);
+      const editor = context.editor;
       if (!editor) {
         throw new Error('Editor not initialized');
       }
@@ -133,10 +132,8 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       await el.updateComplete;
       await new Promise(resolve => setTimeout(resolve, 100));
 
-      // Find bold button
-      const root = el.shadowRoot as ShadowRoot;
-      const toolbar = root.querySelector('.editor-toolbar') as HTMLElement;
-      const boldButtons = Array.from(toolbar.querySelectorAll('forge-icon-button')).filter(
+      // Find bold button in light DOM (slotted content)
+      const boldButtons = Array.from(el.querySelectorAll('forge-icon-button')).filter(
         btn => btn.getAttribute('aria-label')?.includes('Bold') || btn.querySelector('forge-icon[name*="format_bold"]')
       );
 
@@ -152,10 +149,8 @@ describe('Rich Text Editor - State Visual Indicators', () => {
         </forge-rich-text-editor>
       `);
 
-      await el.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 150));
-
-      const editor = el._editorContext.editor;
+      const context = await waitForEditor(el);
+      const editor = context.editor;
       if (!editor) {
         throw new Error('Editor not initialized');
       }
@@ -167,10 +162,8 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       await el.updateComplete;
       await new Promise(resolve => setTimeout(resolve, 100));
 
-      // Find H1 button
-      const root = el.shadowRoot as ShadowRoot;
-      const toolbar = root.querySelector('.editor-toolbar') as HTMLElement;
-      const h1Buttons = Array.from(toolbar.querySelectorAll('forge-icon-button')).filter(
+      // Find H1 button in light DOM (slotted content)
+      const h1Buttons = Array.from(el.querySelectorAll('forge-icon-button')).filter(
         btn => btn.getAttribute('aria-label')?.includes('H1') || btn.getAttribute('aria-label')?.includes('Heading 1')
       );
 
@@ -203,12 +196,10 @@ describe('Rich Text Editor - State Visual Indicators', () => {
         </forge-rich-text-editor>
       `);
 
-      await el.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 100));
+      await waitForEditor(el);
 
-      const root = el.shadowRoot as ShadowRoot;
-      const toolbar = root.querySelector('.editor-toolbar') as HTMLElement;
-      const buttons = Array.from(toolbar.querySelectorAll('forge-icon-button'));
+      // Toolbar buttons are slotted content (light DOM)
+      const buttons = Array.from(el.querySelectorAll('forge-icon-button'));
 
       expect(buttons.length).to.be.greaterThan(0);
 
@@ -229,13 +220,11 @@ describe('Rich Text Editor - State Visual Indicators', () => {
         </forge-rich-text-editor>
       `);
 
-      await el.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 150));
+      const context = await waitForEditor(el);
 
       // Initially enabled
       expect(el.disabled).to.be.false;
-      const editorContext = el._editorContext;
-      expect(editorContext.editor?.isEditable).to.be.true;
+      expect(context.editor?.isEditable).to.be.true;
 
       // Disable
       el.disabled = true;
@@ -243,7 +232,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       await new Promise(resolve => setTimeout(resolve, 100));
 
       expect(el.hasAttribute('disabled')).to.be.true;
-      expect(editorContext.editor?.isEditable).to.be.false;
+      expect(context.editor?.isEditable).to.be.false;
 
       // Re-enable
       el.disabled = false;
@@ -251,7 +240,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       await new Promise(resolve => setTimeout(resolve, 100));
 
       expect(el.hasAttribute('disabled')).to.be.false;
-      expect(editorContext.editor?.isEditable).to.be.true;
+      expect(context.editor?.isEditable).to.be.true;
     });
 
     it('should update visual state when toggling readonly', async () => {
@@ -261,13 +250,11 @@ describe('Rich Text Editor - State Visual Indicators', () => {
         </forge-rich-text-editor>
       `);
 
-      await el.updateComplete;
-      await new Promise(resolve => setTimeout(resolve, 150));
+      const context = await waitForEditor(el);
 
       // Initially not readonly
       expect(el.readonly).to.be.false;
-      const editorContext = el._editorContext;
-      expect(editorContext.editor?.isEditable).to.be.true;
+      expect(context.editor?.isEditable).to.be.true;
 
       // Set readonly
       el.readonly = true;
@@ -275,7 +262,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       await new Promise(resolve => setTimeout(resolve, 100));
 
       expect(el.hasAttribute('readonly')).to.be.true;
-      expect(editorContext.editor?.isEditable).to.be.false;
+      expect(context.editor?.isEditable).to.be.false;
 
       // Unset readonly
       el.readonly = false;
@@ -283,7 +270,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       await new Promise(resolve => setTimeout(resolve, 100));
 
       expect(el.hasAttribute('readonly')).to.be.false;
-      expect(editorContext.editor?.isEditable).to.be.true;
+      expect(context.editor?.isEditable).to.be.true;
     });
   });
 });

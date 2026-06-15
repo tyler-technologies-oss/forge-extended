@@ -869,6 +869,9 @@ describe('RTE Link - Enhanced UI', () => {
     cancelButton?.click();
     await harness.waitForUpdate();
 
+    // Wait for popover close animation
+    await new Promise(resolve => setTimeout(resolve, 150));
+
     // Verify link was NOT applied
     const output = editor.getHTML();
     expect(output).not.to.include('href="https://example.com"');

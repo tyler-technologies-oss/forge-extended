@@ -1,6 +1,22 @@
 import { expect, fixture, html } from '@open-wc/testing';
 import { RichTextEditorComponent } from './rich-text-editor';
+import type { RichTextContextComponent } from './rich-text-context';
 import './rich-text-editor';
+
+/**
+ * Helper to wait for editor initialization
+ */
+async function waitForEditor(el: RichTextEditorComponent): Promise<void> {
+  await new Promise(resolve => setTimeout(resolve, 200));
+  const context = el.shadowRoot!.querySelector('forge-rich-text-context') as RichTextContextComponent;
+  await context?.updateComplete;
+  // Wait for editor to be fully initialized
+  let attempts = 0;
+  while (!el.isInitialized && attempts < 20) {
+    await new Promise(resolve => setTimeout(resolve, 50));
+    attempts++;
+  }
+}
 
 describe('RTE Performance', () => {
   it('should contain shadow root', async () => {
@@ -397,7 +413,7 @@ describe('RTE Performance', () => {
         html`<forge-rich-text-editor content="<p>Initial</p>"></forge-rich-text-editor>`
       );
 
-      await new Promise(resolve => setTimeout(resolve, 150));
+      await waitForEditor(el);
 
       // Generate 2000 words
       const words = Array.from({ length: 2000 }, (_, i) => `word${i}`);
@@ -422,7 +438,7 @@ describe('RTE Performance', () => {
         html`<forge-rich-text-editor content="<p>Initial</p>"></forge-rich-text-editor>`
       );
 
-      await new Promise(resolve => setTimeout(resolve, 150));
+      await waitForEditor(el);
 
       // Generate 2000 words
       const words = Array.from({ length: 2000 }, (_, i) => `word${i}`);
@@ -449,7 +465,7 @@ describe('RTE Performance', () => {
         html`<forge-rich-text-editor content="<p>Start</p>"></forge-rich-text-editor>`
       );
 
-      await new Promise(resolve => setTimeout(resolve, 150));
+      await waitForEditor(el);
 
       // Verify initial state
       expect(el.isInitialized).to.be.true;

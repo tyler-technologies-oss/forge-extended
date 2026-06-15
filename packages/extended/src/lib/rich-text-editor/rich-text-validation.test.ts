@@ -160,7 +160,7 @@ describe('RTE Content Validation', () => {
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello world' });
-      const context = await waitForEditor(el);
+      await waitForEditor(el);
 
       const countsEl = context?.shadowRoot?.querySelector('.editor-counts');
       expect(countsEl?.textContent).to.include('11 characters');
@@ -209,7 +209,7 @@ describe('RTE Content Validation', () => {
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello world test' });
-      const context = await waitForEditor(el);
+      await waitForEditor(el);
 
       const countsEl = context?.shadowRoot?.querySelector('.editor-counts');
       expect(countsEl?.textContent).to.include('3 words');
@@ -247,7 +247,7 @@ describe('RTE Content Validation', () => {
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello' });
-      const context = await waitForEditor(el);
+      await waitForEditor(el);
 
       const errorEl = context?.shadowRoot?.querySelector('.editor-error');
       expect(errorEl).to.be.null;
@@ -267,7 +267,7 @@ describe('RTE Content Validation', () => {
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello world' });
-      const context = await waitForEditor(el);
+      await waitForEditor(el);
 
       const errorEl = context?.shadowRoot?.querySelector('.editor-error');
       expect(errorEl).not.to.be.null;
@@ -288,7 +288,7 @@ describe('RTE Content Validation', () => {
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello world' });
-      const context = await waitForEditor(el);
+      await waitForEditor(el);
 
       const errorEl = context?.shadowRoot?.querySelector('.editor-error');
       expect(errorEl).not.to.be.null;
@@ -375,7 +375,7 @@ describe('RTE Content Validation', () => {
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello world' });
-      const context = await waitForEditor(el);
+      await waitForEditor(el);
 
       const errorEl = context?.shadowRoot?.querySelector('.editor-error');
       expect(errorEl?.getAttribute('role')).to.equal('alert');
@@ -395,7 +395,7 @@ describe('RTE Content Validation', () => {
       editorEl?.focus();
 
       await sendKeys({ type: 'Hello world' });
-      const context = await waitForEditor(el);
+      await waitForEditor(el);
 
       const errorEl = context?.shadowRoot?.querySelector('.editor-error');
       expect(errorEl?.getAttribute('aria-live')).to.equal('polite');

@@ -1,8 +1,32 @@
 import { html } from 'lit';
-import { fixture, expect, elementUpdated } from '@open-wc/testing';
+import { fixture, expect } from '@open-wc/testing';
 import type { RichTextEditorComponent } from './rich-text-editor';
+import type { RichTextContextComponent } from './rich-text-context';
+import type { RichTextContentComponent } from './rich-text-content';
 import './rich-text-editor';
 import './features/rte-standard-tools';
+
+async function waitForEditor(el: RichTextEditorComponent): Promise<RichTextContextComponent> {
+  await new Promise(resolve => setTimeout(resolve, 200));
+  const context = el.shadowRoot!.querySelector('forge-rich-text-context') as RichTextContextComponent;
+  await context?.updateComplete;
+  return context;
+}
+
+function getLiveRegion(el: RichTextEditorComponent): HTMLElement | null {
+  const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
+  return contentComponent?.shadowRoot?.querySelector('[role="status"]') as HTMLElement | null;
+}
+
+async function waitForAnnouncement(el: RichTextEditorComponent, expectedText?: string): Promise<void> {
+  // Simple wait approach - announcements should happen quickly
+  await new Promise(resolve => setTimeout(resolve, 200));
+  const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content') as RichTextContentComponent;
+  if (contentComponent) {
+    await contentComponent.updateComplete;
+  }
+  await new Promise(resolve => setTimeout(resolve, 100));
+}
 
 describe('RTE Screen Reader Support', () => {
   describe('Live Region', () => {
@@ -13,13 +37,12 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await waitForEditor(el);
 
       const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
       expect(contentComponent).to.exist;
 
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion).to.exist;
       expect(liveRegion?.getAttribute('aria-live')).to.equal('polite');
       expect(liveRegion?.getAttribute('aria-atomic')).to.equal('true');
@@ -32,11 +55,9 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await waitForEditor(el);
 
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.classList.contains('sr-only')).to.be.true;
     });
 
@@ -47,11 +68,9 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await waitForEditor(el);
 
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent?.trim()).to.equal('');
     });
   });
@@ -64,12 +83,10 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<p>Test content</p>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<p>Test content</p>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
       const boldFeature = el.querySelector('forge-rte-bold');
       const button = boldFeature?.shadowRoot
@@ -77,11 +94,9 @@ describe('RTE Screen Reader Support', () => {
         ?.shadowRoot?.querySelector('button');
       button?.click();
 
-      await new Promise(resolve => setTimeout(resolve, 250));
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content') as any;
-      await contentComponent?.updateComplete;
+      await waitForAnnouncement(el, 'Bold applied');
 
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Bold applied');
     });
 
@@ -92,12 +107,10 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<p><strong>Test</strong></p>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<p><strong>Test</strong></p>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
       const boldFeature = el.querySelector('forge-rte-bold');
       const button = boldFeature?.shadowRoot
@@ -105,11 +118,9 @@ describe('RTE Screen Reader Support', () => {
         ?.shadowRoot?.querySelector('button');
       button?.click();
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 250));
+      await waitForAnnouncement(el, 'Bold removed');
 
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Bold removed');
     });
 
@@ -120,12 +131,10 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<p>Test content</p>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<p>Test content</p>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
       const italicFeature = el.querySelector('forge-rte-italic');
       const button = italicFeature?.shadowRoot
@@ -133,11 +142,9 @@ describe('RTE Screen Reader Support', () => {
         ?.shadowRoot?.querySelector('button');
       button?.click();
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 250));
+      await waitForAnnouncement(el, 'Italic applied');
 
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Italic applied');
     });
 
@@ -148,12 +155,10 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<p>Test content</p>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<p>Test content</p>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
       const underlineFeature = el.querySelector('forge-rte-underline');
       const button = underlineFeature?.shadowRoot
@@ -161,11 +166,9 @@ describe('RTE Screen Reader Support', () => {
         ?.shadowRoot?.querySelector('button');
       button?.click();
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 250));
+      await waitForAnnouncement(el, 'Underline applied');
 
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Underline applied');
     });
 
@@ -176,12 +179,10 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<p>Test content</p>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<p>Test content</p>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
       const strikeFeature = el.querySelector('forge-rte-strike');
       const button = strikeFeature?.shadowRoot
@@ -189,11 +190,9 @@ describe('RTE Screen Reader Support', () => {
         ?.shadowRoot?.querySelector('button');
       button?.click();
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 250));
+      await waitForAnnouncement(el, 'Strikethrough applied');
 
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Strikethrough applied');
     });
 
@@ -204,12 +203,10 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<p>Test content</p>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<p>Test content</p>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
       const codeFeature = el.querySelector('forge-rte-code');
       const button = codeFeature?.shadowRoot
@@ -217,11 +214,9 @@ describe('RTE Screen Reader Support', () => {
         ?.shadowRoot?.querySelector('button');
       button?.click();
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 250));
+      await waitForAnnouncement(el, 'Code applied');
 
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Code applied');
     });
   });
@@ -234,23 +229,19 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<p>Test content</p>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<p>Test content</p>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
       const headingFeature = el.querySelector('forge-rte-heading');
       const buttons = headingFeature?.shadowRoot?.querySelectorAll('forge-rte-tool-button');
       const h1Button = buttons?.[0]?.shadowRoot?.querySelector('button');
       h1Button?.click();
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 250));
+      await waitForAnnouncement(el, 'Heading 1');
 
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Heading 1');
     });
 
@@ -261,23 +252,19 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<h1>Test heading</h1>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<h1>Test heading</h1>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
       const headingFeature = el.querySelector('forge-rte-heading');
       const buttons = headingFeature?.shadowRoot?.querySelectorAll('forge-rte-tool-button');
       const h1Button = buttons?.[0]?.shadowRoot?.querySelector('button');
       h1Button?.click();
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 250));
+      await waitForAnnouncement(el, 'Paragraph style');
 
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Paragraph style');
     });
   });
@@ -290,12 +277,10 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<p>Test content</p>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<p>Test content</p>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
       const bulletListFeature = el.querySelector('forge-rte-bullet-list');
       const button = bulletListFeature?.shadowRoot
@@ -303,11 +288,9 @@ describe('RTE Screen Reader Support', () => {
         ?.shadowRoot?.querySelector('button');
       button?.click();
 
-      await new Promise(resolve => setTimeout(resolve, 250));
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      await elementUpdated(contentComponent!);
+      await waitForAnnouncement(el, 'Bullet list');
 
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Bullet list');
     });
 
@@ -318,12 +301,10 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<p>Test content</p>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<p>Test content</p>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
       const orderedListFeature = el.querySelector('forge-rte-ordered-list');
       const button = orderedListFeature?.shadowRoot
@@ -331,11 +312,9 @@ describe('RTE Screen Reader Support', () => {
         ?.shadowRoot?.querySelector('button');
       button?.click();
 
-      await new Promise(resolve => setTimeout(resolve, 250));
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      await elementUpdated(contentComponent!);
+      await waitForAnnouncement(el, 'Numbered list');
 
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Numbered list');
     });
 
@@ -346,12 +325,10 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<ul><li>Test item</li></ul>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<ul><li>Test item</li></ul>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
       const bulletListFeature = el.querySelector('forge-rte-bullet-list');
       const button = bulletListFeature?.shadowRoot
@@ -359,11 +336,9 @@ describe('RTE Screen Reader Support', () => {
         ?.shadowRoot?.querySelector('button');
       button?.click();
 
-      await new Promise(resolve => setTimeout(resolve, 250));
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      await elementUpdated(contentComponent!);
+      await waitForAnnouncement(el, 'List removed');
 
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('List removed');
     });
   });
@@ -376,23 +351,19 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<p>Test content</p>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<p>Test content</p>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
       const alignFeature = el.querySelector('forge-rte-align');
       const buttons = alignFeature?.shadowRoot?.querySelectorAll('forge-rte-tool-button');
       const centerButton = buttons?.[1]?.shadowRoot?.querySelector('button');
       centerButton?.click();
 
-      await new Promise(resolve => setTimeout(resolve, 250));
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      await elementUpdated(contentComponent!);
+      await waitForAnnouncement(el, 'Center aligned');
 
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Center aligned');
     });
 
@@ -403,23 +374,19 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<p>Test content</p>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<p>Test content</p>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
       const alignFeature = el.querySelector('forge-rte-align');
       const buttons = alignFeature?.shadowRoot?.querySelectorAll('forge-rte-tool-button');
       const rightButton = buttons?.[2]?.shadowRoot?.querySelector('button');
       rightButton?.click();
 
-      await new Promise(resolve => setTimeout(resolve, 250));
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      await elementUpdated(contentComponent!);
+      await waitForAnnouncement(el, 'Right aligned');
 
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Right aligned');
     });
   });
@@ -432,13 +399,11 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<p>Test content</p>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
-      context.editorContext.editor?.chain().focus().toggleBold().run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<p>Test content</p>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      editor?.chain().focus().toggleBold().run();
 
       await new Promise(resolve => setTimeout(resolve, 100));
 
@@ -447,11 +412,9 @@ describe('RTE Screen Reader Support', () => {
       const undoButton = buttons?.[0]?.shadowRoot?.querySelector('button');
       undoButton?.click();
 
-      await new Promise(resolve => setTimeout(resolve, 250));
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      await elementUpdated(contentComponent!);
+      await waitForAnnouncement(el, 'Undo');
 
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Undo');
     });
 
@@ -462,15 +425,13 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<p>Test content</p>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
-      context.editorContext.editor?.chain().focus().toggleBold().run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<p>Test content</p>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      editor?.chain().focus().toggleBold().run();
       await new Promise(resolve => setTimeout(resolve, 100));
-      context.editorContext.editor?.chain().undo().run();
+      editor?.chain().undo().run();
       await new Promise(resolve => setTimeout(resolve, 100));
 
       const undoRedoFeature = el.querySelector('forge-rte-undo-redo');
@@ -478,11 +439,9 @@ describe('RTE Screen Reader Support', () => {
       const redoButton = buttons?.[1]?.shadowRoot?.querySelector('button');
       redoButton?.click();
 
-      await new Promise(resolve => setTimeout(resolve, 250));
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      await elementUpdated(contentComponent!);
+      await waitForAnnouncement(el, 'Redo');
 
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Redo');
     });
   });
@@ -495,15 +454,12 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await waitForEditor(el);
 
       el.disabled = true;
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 250));
+      await waitForAnnouncement(el, 'Editor disabled');
 
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Editor disabled');
     });
 
@@ -514,15 +470,12 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await waitForEditor(el);
 
       el.disabled = false;
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 250));
+      await waitForAnnouncement(el, 'Editor enabled');
 
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Editor enabled');
     });
 
@@ -533,15 +486,12 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await waitForEditor(el);
 
       el.readOnly = true;
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 250));
+      await waitForAnnouncement(el, 'Editor read-only');
 
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Editor read-only');
     });
 
@@ -552,15 +502,12 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
+      await waitForEditor(el);
 
       el.readOnly = false;
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 250));
+      await waitForAnnouncement(el, 'Editor editable');
 
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Editor editable');
     });
   });
@@ -573,12 +520,10 @@ describe('RTE Screen Reader Support', () => {
         </forge-rich-text-editor>
       `);
 
-      await elementUpdated(el);
-      await new Promise(resolve => setTimeout(resolve, 200));
-
-      const context = el.shadowRoot?.querySelector('forge-rich-text-context') as any;
-      context.editorContext.editor?.commands.setContent('<p>Test content</p>');
-      context.editorContext.editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
+      const context = await waitForEditor(el);
+      const editor = context.editorContext.editor;
+      editor?.commands.setContent('<p>Test content</p>');
+      editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
       const boldFeature = el.querySelector('forge-rte-bold');
       const button = boldFeature?.shadowRoot
@@ -586,16 +531,15 @@ describe('RTE Screen Reader Support', () => {
         ?.shadowRoot?.querySelector('button');
       button?.click();
 
-      await new Promise(resolve => setTimeout(resolve, 250));
-      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
-      await elementUpdated(contentComponent!);
+      await waitForAnnouncement(el, 'Bold applied');
 
-      const liveRegion = contentComponent?.shadowRoot?.querySelector('[role="status"]');
+      const liveRegion = getLiveRegion(el);
       expect(liveRegion?.textContent).to.equal('Bold applied');
 
       // Wait for cleanup timeout (1000ms)
       await new Promise(resolve => setTimeout(resolve, 1100));
-      await elementUpdated(contentComponent!);
+      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content') as RichTextContentComponent;
+      await contentComponent?.updateComplete;
 
       expect(liveRegion?.textContent?.trim()).to.equal('');
     });
