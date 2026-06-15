@@ -79,12 +79,9 @@ export class RteToolButtonComponent extends LitElement {
   }
 
   #handleKeydown(evt: KeyboardEvent): void {
-    if ([' ', 'Enter'].includes(evt.key)) {
+    if (evt.key === ' ' || evt.key === 'Enter') {
       evt.preventDefault();
-
-      if (evt.key === 'Enter') {
-        (evt.target as HTMLElement).click();
-      }
+      (evt.target as HTMLElement).click();
     }
   }
 }

@@ -54,6 +54,9 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
   @state()
   private _popoverAnchor?: VirtualElement;
 
+  @state()
+  private _linkUrl = '';
+
   public firstUpdated(_changedProperties: PropertyValues<this>): void {
     this._editorContext?.registerFeature(this);
   }
@@ -75,7 +78,9 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
             <input
               type="text"
               placeholder="Enter link URL"
-              .value=${this._editorContext.editor?.state.selection.content().content ?? ''} />
+              .value=${this._linkUrl}
+              @input=${this.#handleLinkInput}
+              @keydown=${this.#handleLinkKeydown} />
           </forge-text-field>
         </div>
       </forge-popover>
@@ -85,12 +90,42 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
   #handlePopoverToggle(evt: CustomEvent<IPopoverToggleEventData>): void {
     if (evt.detail.newState === 'closed') {
       this._popoverAnchor = undefined;
+      this._linkUrl = '';
     }
+  }
+
+  #handleLinkInput(evt: Event): void {
+    this._linkUrl = (evt.target as HTMLInputElement).value;
+  }
+
+  #handleLinkKeydown(evt: KeyboardEvent): void {
+    if (evt.key === 'Enter') {
+      evt.preventDefault();
+      this.#applyLink();
+    } else if (evt.key === 'Escape') {
+      evt.preventDefault();
+      this._popoverAnchor = undefined;
+      this._linkUrl = '';
+    }
+  }
+
+  #applyLink(): void {
+    if (this._linkUrl) {
+      this._editorContext.editor?.chain().focus().setLink({ href: this._linkUrl }).run();
+    } else {
+      this._editorContext.editor?.chain().focus().unsetLink().run();
+    }
+    this._popoverAnchor = undefined;
+    this._linkUrl = '';
   }
 
   async #toggle(_evt: CustomEvent): Promise<void> {
     const { x, y, height, width } = this.#getSelectedTextCoordinates();
     this._popoverAnchor = new VirtualElement(x, y, width, height);
+
+    // Pre-fill with existing link URL if cursor is on a link
+    const { href } = this._editorContext.editor?.getAttributes('link') ?? {};
+    this._linkUrl = (href as string) ?? '';
   }
 
   #getSelectedTextCoordinates(): { x: number; y: number; width: number; height: number } {

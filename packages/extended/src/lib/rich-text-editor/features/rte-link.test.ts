@@ -296,6 +296,142 @@ async function createFixture(options: LinkFixtureOptions = {}): Promise<LinkFixt
       await linkFeature.updateComplete;
       // Give TipTap time to process
       await new Promise(resolve => setTimeout(resolve, 100));
-    }
+    },
+    getInput: () => linkFeature.shadowRoot!.querySelector('input')!
   };
 }
+
+describe('RTE Link - Keyboard navigation', () => {
+  it('should apply link when Enter is pressed in input field', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    // Set content and select it
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    // Click link button to open popover
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    // Get input field and set URL
+    const input = harness.getInput();
+    expect(input).to.be.ok;
+
+    input.value = 'https://example.com';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    // Simulate Enter key
+    const enterEvent = new KeyboardEvent('keydown', {
+      key: 'Enter',
+      bubbles: true,
+      cancelable: true
+    });
+    input.dispatchEvent(enterEvent);
+    await harness.waitForUpdate();
+
+    // Verify link was applied
+    const output = editor.getHTML();
+    expect(output).to.include('href="https://example.com"');
+    expect(output).to.include('test text');
+
+    // Verify popover closed (check the open property, not attribute)
+    await new Promise(resolve => setTimeout(resolve, 100));
+    const popover = harness.popover();
+    expect(popover.open).to.be.false;
+  });
+
+  it('should close popover when Escape is pressed in input field', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    // Set content and select it
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    // Click link button to open popover
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    // Get input field
+    const input = harness.getInput();
+    input.value = 'https://example.com';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    // Simulate Escape key
+    const escapeEvent = new KeyboardEvent('keydown', {
+      key: 'Escape',
+      bubbles: true,
+      cancelable: true
+    });
+    input.dispatchEvent(escapeEvent);
+    await harness.waitForUpdate();
+
+    // Verify link was NOT applied
+    const output = editor.getHTML();
+    expect(output).not.to.include('href="https://example.com"');
+
+    // Verify popover closed (check the open property, not attribute)
+    await new Promise(resolve => setTimeout(resolve, 100));
+    const popover = harness.popover();
+    expect(popover.open).to.be.false;
+  });
+
+  it('should remove link when Enter is pressed with empty URL', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    // Set content with a link
+    editor.commands.setContent('<p><a href="https://example.com">test text</a></p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    // Click link button to open popover
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    // Get input field and clear it
+    const input = harness.getInput();
+    input.value = '';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    // Simulate Enter key
+    const enterEvent = new KeyboardEvent('keydown', {
+      key: 'Enter',
+      bubbles: true,
+      cancelable: true
+    });
+    input.dispatchEvent(enterEvent);
+    await harness.waitForUpdate();
+
+    // Verify link was removed
+    const output = editor.getHTML();
+    expect(output).not.to.include('<a href=');
+    expect(output).to.include('test text');
+  });
+
+  it('should pre-fill input with existing link URL', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    // Set content with a link
+    editor.commands.setContent('<p><a href="https://existing.com">test text</a></p>');
+    // Position cursor within the link
+    editor.commands.focus();
+    editor.commands.setTextSelection(3);
+    await harness.waitForUpdate();
+
+    // Click link button to open popover
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    // Verify input is pre-filled
+    const input = harness.getInput();
+    expect(input.value).to.equal('https://existing.com');
+  });
+});
