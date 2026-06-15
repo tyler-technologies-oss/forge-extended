@@ -1,4 +1,6 @@
 @use 'prosemirror-view/style/prosemirror.css';
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
 
 :host {
   display: contents;
@@ -30,9 +32,165 @@
     box-sizing: border-box;
 
     * {
-      margin: 0;
-      padding: 0;
       box-sizing: border-box;
+    }
+
+    // Paragraph spacing
+    p {
+      margin-block-start: 0;
+      margin-block-end: var(--forge-spacing-medium);
+
+      &:last-child {
+        margin-block-end: 0;
+      }
+    }
+
+    // Heading styles using Forge typography tokens
+    h1 {
+      @include forge-typography.style(heading1);
+      margin-block-start: 0;
+      margin-block-end: var(--forge-spacing-medium);
+
+      &:not(:first-child) {
+        margin-block-start: var(--forge-spacing-large);
+      }
+    }
+
+    h2 {
+      @include forge-typography.style(heading2);
+      margin-block-start: 0;
+      margin-block-end: var(--forge-spacing-medium);
+
+      &:not(:first-child) {
+        margin-block-start: var(--forge-spacing-large);
+      }
+    }
+
+    h3 {
+      @include forge-typography.style(heading3);
+      margin-block-start: 0;
+      margin-block-end: var(--forge-spacing-small);
+
+      &:not(:first-child) {
+        margin-block-start: var(--forge-spacing-medium);
+      }
+    }
+
+    h4 {
+      @include forge-typography.style(heading4);
+      margin-block-start: 0;
+      margin-block-end: var(--forge-spacing-small);
+
+      &:not(:first-child) {
+        margin-block-start: var(--forge-spacing-medium);
+      }
+    }
+
+    h5,
+    h6 {
+      @include forge-typography.style(heading5);
+      margin-block-start: 0;
+      margin-block-end: var(--forge-spacing-small);
+
+      &:not(:first-child) {
+        margin-block-start: var(--forge-spacing-medium);
+      }
+    }
+
+    // List styles
+    ul,
+    ol {
+      margin-block-start: 0;
+      margin-block-end: var(--forge-spacing-medium);
+      padding-inline-start: var(--forge-spacing-large);
+
+      &:last-child {
+        margin-block-end: 0;
+      }
+    }
+
+    li {
+      margin-block-end: var(--forge-spacing-xsmall);
+
+      &:last-child {
+        margin-block-end: 0;
+      }
+    }
+
+    // Link styles
+    a {
+      color: var(--forge-theme-primary);
+      text-decoration: underline;
+      cursor: pointer;
+
+      &:hover {
+        color: var(--forge-theme-primary-hover);
+      }
+
+      &:focus-visible {
+        outline: var(--forge-border-medium) solid var(--forge-theme-primary);
+        outline-offset: 2px;
+        border-radius: var(--forge-shape-xsmall);
+      }
+    }
+
+    // Code styles
+    code {
+      background-color: var(--forge-theme-surface-container);
+      color: var(--forge-theme-on-surface);
+      padding: var(--forge-spacing-xxxsmall) var(--forge-spacing-xxsmall);
+      border-radius: var(--forge-shape-xsmall);
+      font-family: var(--forge-font-family-monospace);
+      font-size: 0.875em;
+    }
+
+    pre {
+      background-color: var(--forge-theme-surface-container);
+      color: var(--forge-theme-on-surface);
+      padding: var(--forge-spacing-small) var(--forge-spacing-medium);
+      border-radius: var(--forge-shape-small);
+      overflow-x: auto;
+      margin-block-start: 0;
+      margin-block-end: var(--forge-spacing-medium);
+
+      &:last-child {
+        margin-block-end: 0;
+      }
+
+      code {
+        background: none;
+        padding: 0;
+        font-size: inherit;
+      }
+    }
+
+    // Blockquote styles
+    blockquote {
+      padding-inline-start: var(--forge-spacing-medium);
+      border-inline-start: var(--forge-border-thick) solid var(--forge-theme-outline);
+      margin-block-start: 0;
+      margin-block-end: var(--forge-spacing-medium);
+      color: var(--forge-theme-text-medium);
+
+      &:last-child {
+        margin-block-end: 0;
+      }
+    }
+
+    // Horizontal rule
+    hr {
+      border: none;
+      border-block-start: var(--forge-border-thin) solid var(--forge-theme-outline);
+      margin-block-start: var(--forge-spacing-medium);
+      margin-block-end: var(--forge-spacing-medium);
+
+      &:first-child {
+        margin-block-start: 0;
+      }
+
+      &:last-child {
+        margin-block-end: 0;
+      }
     }
   }
 }
@@ -49,67 +207,15 @@
   border-width: 0;
 }
 
-// :host([disabled]) {
-//   opacity: 0.5;
-//   pointer-events: none;
-// }
+:host([disabled]) {
+  .editor-content-wrapper {
+    opacity: var(--forge-theme-disabled-opacity);
+    pointer-events: none;
+  }
+}
 
-// .editor-content {
-//   p {
-//     margin: 0 0 1em 0;
-//   }
-
-//   .ProseMirror {
-//     outline: none;
-//     word-break: break-word;
-
-//     > * + * {
-//       margin-top: 0.75em;
-//     }
-
-//     ul,
-//     ol {
-//       padding: 0 1rem;
-//     }
-
-//     h1,
-//     h2,
-//     h3,
-//     h4,
-//     h5,
-//     h6 {
-//       line-height: 1.1;
-//       font-weight: 600;
-//     }
-
-//     blockquote {
-//       padding-left: 1rem;
-//       border-left: 2px solid var(--forge-theme-outline);
-//     }
-
-//     code {
-//       background-color: var(--forge-scaffolding-color, forge-theme.$forge-scaffolding-color);
-//       padding: 0.2em 0.4em;
-//       border-radius: var(--forge-border-radius, forge-theme.$forge-border-radius);
-//       font-family: monospace;
-//     }
-
-//     pre {
-//       background-color: var(--forge-scaffolding-color, forge-theme.$forge-scaffolding-color);
-//       padding: 0.75rem 1rem;
-//       border-radius: var(--forge-border-radius, forge-theme.$forge-border-radius);
-//       overflow-x: auto;
-
-//       code {
-//         background: none;
-//         padding: 0;
-//       }
-//     }
-
-//     hr {
-//       border: none;
-//       border-top: 1px solid var(--forge-border-color, forge-theme.$forge-border-color);
-//       margin: 1rem 0;
-//     }
-//   }
-// }
+:host([readonly]) {
+  .tiptap {
+    cursor: default;
+  }
+}
