@@ -63,6 +63,10 @@ export class RteItalicComponent extends LitElement implements RichTextEditorFeat
   }
 
   private _toggle(_evt: CustomEvent<boolean>): void {
+    const wasActive = this._editorContext.isActive(Italic.name);
     this._editorContext.editor?.chain().focus().toggleItalic().run();
+
+    const message = wasActive ? 'Italic removed' : 'Italic applied';
+    this._editorContext.announce(message);
   }
 }

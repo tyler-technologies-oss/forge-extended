@@ -111,6 +111,10 @@ export class RichTextFeatureHeadingComponent extends LitElement implements RichT
   }
 
   private async _toggle(level: 1 | 2 | 3): Promise<void> {
+    const wasActive = this._editorContext.isActive('heading', { level });
     this._editorContext.editor?.chain().focus().toggleHeading({ level }).run();
+
+    const message = wasActive ? 'Paragraph style' : `Heading ${level}`;
+    this._editorContext.announce(message);
   }
 }

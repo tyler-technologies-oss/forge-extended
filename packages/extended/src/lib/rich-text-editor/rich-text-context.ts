@@ -75,6 +75,7 @@ export class RichTextContextComponent extends LitElement {
   #featureInstances: Set<RichTextEditorFeature> = new Set();
   #initFrame: number | undefined;
   #editorElement: HTMLElement | undefined;
+  #announcementCallback: ((message: string) => Promise<void>) | undefined;
 
   /**
    * Sets the editor element that the editor will be initialized against.
@@ -85,6 +86,26 @@ export class RichTextContextComponent extends LitElement {
    */
   #setEditorElement(element: HTMLElement): void {
     this.#editorElement = element;
+  }
+
+  /**
+   * Sets the callback for announcing messages to screen readers.
+   *
+   * @param callback The callback function to invoke when an announcement should be made.
+   */
+  #setAnnouncementCallback(callback: (message: string) => Promise<void>): void {
+    this.#announcementCallback = callback;
+  }
+
+  /**
+   * Announces a message to screen readers via ARIA live region.
+   *
+   * @param message The message to announce.
+   */
+  async #announce(message: string): Promise<void> {
+    if (this.#announcementCallback) {
+      await this.#announcementCallback(message);
+    }
   }
 
   /**
@@ -121,7 +142,9 @@ export class RichTextContextComponent extends LitElement {
       return !this.disabled && !this.readOnly && !!this.editor;
     },
     setEditorElement: this.#setEditorElement.bind(this),
-    registerFeature: this.#registerFeature.bind(this)
+    registerFeature: this.#registerFeature.bind(this),
+    setAnnouncementCallback: this.#setAnnouncementCallback.bind(this),
+    announce: this.#announce.bind(this)
   };
 
   public override disconnectedCallback(): void {
@@ -141,6 +164,16 @@ export class RichTextContextComponent extends LitElement {
         disabled: this.disabled,
         readOnly: this.readOnly
       };
+
+      // Announce state changes to screen readers
+      if (this.hasUpdated && changedProperties.has('disabled')) {
+        const message = this.disabled ? 'Editor disabled' : 'Editor enabled';
+        this.#announce(message);
+      }
+      if (this.hasUpdated && changedProperties.has('readOnly')) {
+        const message = this.readOnly ? 'Editor read-only' : 'Editor editable';
+        this.#announce(message);
+      }
     }
   }
 

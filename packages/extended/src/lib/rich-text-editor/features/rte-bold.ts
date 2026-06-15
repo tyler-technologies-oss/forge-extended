@@ -63,6 +63,11 @@ export class RichTextFeatureBoldComponent extends LitElement implements RichText
   }
 
   private async _toggle(_evt: CustomEvent): Promise<void> {
+    const wasActive = this._editorContext.isActive(Bold.name);
     this._editorContext.editor?.chain().focus().toggleBold().run();
+
+    // Announce state change to screen readers
+    const message = wasActive ? 'Bold removed' : 'Bold applied';
+    this._editorContext.announce(message);
   }
 }

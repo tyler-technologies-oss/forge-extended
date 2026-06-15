@@ -126,8 +126,10 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
   #applyLink(): void {
     if (this._linkUrl) {
       this._editorContext.editor?.chain().focus().setLink({ href: this._linkUrl }).run();
+      this._editorContext.announce('Link added');
     } else {
       this._editorContext.editor?.chain().focus().unsetLink().run();
+      this._editorContext.announce('Link removed');
     }
     this._popoverAnchor = undefined;
     this._linkUrl = '';

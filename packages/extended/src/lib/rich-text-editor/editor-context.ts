@@ -29,6 +29,12 @@ export interface EditorContext {
 
   /** Register a new feature (extension) with the editor */
   registerFeature: (feature: RichTextEditorFeature) => void;
+
+  /** Sets the callback for announcing messages to screen readers */
+  setAnnouncementCallback: (callback: (message: string) => Promise<void>) => void;
+
+  /** Announces a message to screen readers via ARIA live region */
+  announce: (message: string) => Promise<void>;
 }
 
 /**

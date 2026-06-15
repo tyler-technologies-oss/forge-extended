@@ -62,6 +62,10 @@ export class RteOrderedListComponent extends LitElement implements RichTextEdito
   }
 
   private _toggle(_evt: CustomEvent<boolean>): void {
+    const wasActive = this._editorContext.isActive(OrderedList.name);
     this._editorContext.editor?.chain().focus().toggleOrderedList().run();
+
+    const message = wasActive ? 'List removed' : 'Numbered list';
+    this._editorContext.announce(message);
   }
 }

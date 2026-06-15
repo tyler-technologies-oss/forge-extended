@@ -62,6 +62,10 @@ export class RichTextFeatureCodeComponent extends LitElement implements RichText
   }
 
   private async _toggle(_evt: CustomEvent): Promise<void> {
+    const wasActive = this._editorContext.isActive(Code.name);
     this._editorContext.editor?.chain().focus().toggleCode().run();
+
+    const message = wasActive ? 'Code removed' : 'Code applied';
+    this._editorContext.announce(message);
   }
 }

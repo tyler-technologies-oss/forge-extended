@@ -94,6 +94,7 @@ export class RichTextFeatureUndoRedoComponent extends LitElement implements Rich
 
   async #undo(): Promise<void> {
     this._editorContext.editor?.chain().undo().run();
+    this._editorContext.announce('Undo');
 
     await this.updateComplete;
 
@@ -108,6 +109,7 @@ export class RichTextFeatureUndoRedoComponent extends LitElement implements Rich
 
   async #redo(): Promise<void> {
     this._editorContext.editor?.chain().redo().run();
+    this._editorContext.announce('Redo');
 
     await this.updateComplete;
 
