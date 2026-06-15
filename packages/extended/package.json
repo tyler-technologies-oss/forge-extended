@@ -73,6 +73,7 @@
     "@lit/context": "^1.1.5",
     "@tiptap/core": "^3.0.7",
     "@tiptap/extension-bold": "^3.0.7",
+    "@tiptap/extension-character-count": "^3.26.1",
     "@tiptap/extension-code": "^3.0.7",
     "@tiptap/extension-document": "^3.0.7",
     "@tiptap/extension-heading": "^3.0.7",

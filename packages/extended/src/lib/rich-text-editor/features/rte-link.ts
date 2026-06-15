@@ -63,7 +63,7 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
 
   public override updated(changedProperties: PropertyValues<this>): void {
     // Auto-focus input when popover opens
-    if (changedProperties.has('_popoverAnchor')) {
+    if (changedProperties.has('_popoverAnchor' as keyof this)) {
       if (this._popoverAnchor) {
         // Use setTimeout to ensure popover is rendered
         setTimeout(() => {

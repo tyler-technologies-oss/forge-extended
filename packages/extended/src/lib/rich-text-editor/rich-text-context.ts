@@ -3,8 +3,10 @@ import { type AnyExtension, Editor as TipTapEditor } from '@tiptap/core';
 import { Document } from '@tiptap/extension-document';
 import { Text } from '@tiptap/extension-text';
 import { Paragraph } from '@tiptap/extension-paragraph';
+import CharacterCount from '@tiptap/extension-character-count';
 import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+import { when } from 'lit/directives/when.js';
 import { editorContext, EditorContext } from './editor-context';
 import { RichTextEditorFeature } from './features/rich-text-editor-feature';
 
@@ -36,19 +38,53 @@ const DEFAULT_EXTENSIONS: AnyExtension[] = [Document, Text, Paragraph];
  * @property {string} [content=''] - The HTML content of the editor.
  * @property {boolean} [disabled=false] - Whether the editor is disabled.
  * @property {boolean} [readOnly=false] - Whether the editor is in readonly mode.
+ * @property {number} [maxLength=0] - Maximum character length allowed. 0 means no limit.
+ * @property {string} [errorMessage=''] - Error message to display when validation fails.
+ * @property {boolean} [showCharacterCount=false] - Whether to show character count below the editor.
+ * @property {boolean} [showWordCount=false] - Whether to show word count below the editor.
  *
  * @attribute {string} editor-id - The ID of the element to instantiate the editor against.
  * @attribute {string} content - The HTML content of the editor.
  * @attribute {boolean} disabled - Whether the editor is disabled.
  * @attribute {boolean} readonly - Whether the editor is in readonly mode.
+ * @attribute {number} max-length - Maximum character length allowed. 0 means no limit.
+ * @attribute {string} error-message - Error message to display when validation fails.
+ * @attribute {boolean} show-character-count - Whether to show character count below the editor.
+ * @attribute {boolean} show-word-count - Whether to show word count below the editor.
  *
  * @event {CustomEvent<{ json: Record<string, any> }>} change - Fired when the content of the editor changes. The detail contains the editor content in JSON format.
+ * @event {CustomEvent<{ isValid: boolean; errors: string[] }>} validation - Fired when validation state changes. The detail contains validation status and error messages.
  */
 @customElement(RichTextContextComponentTagName)
 export class RichTextContextComponent extends LitElement {
   public static override styles = css`
     :host {
       display: contents;
+    }
+
+    .editor-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-block-start: var(--forge-spacing-small);
+      padding-inline: var(--forge-spacing-medium);
+      min-height: var(--forge-spacing-large);
+      gap: var(--forge-spacing-medium);
+    }
+
+    .editor-error {
+      color: var(--forge-theme-error);
+      font-size: var(--forge-typography-body-small-size);
+      font-weight: var(--forge-typography-body-small-weight);
+      line-height: var(--forge-typography-body-small-line-height);
+    }
+
+    .editor-counts {
+      color: var(--forge-theme-text-secondary);
+      font-size: var(--forge-typography-body-small-size);
+      font-weight: var(--forge-typography-body-small-weight);
+      line-height: var(--forge-typography-body-small-line-height);
+      margin-inline-start: auto;
     }
   `;
 
@@ -68,9 +104,41 @@ export class RichTextContextComponent extends LitElement {
   @property({ type: Boolean, attribute: 'readonly' })
   public readOnly = false;
 
+  /** Maximum character length allowed. 0 means no limit. */
+  @property({ type: Number, attribute: 'max-length' })
+  public maxLength = 0;
+
+  /** Error message to display when validation fails. */
+  @property({ type: String, attribute: 'error-message' })
+  public errorMessage = '';
+
+  /** Whether to show character count below the editor. */
+  @property({ type: Boolean, attribute: 'show-character-count' })
+  public showCharacterCount = false;
+
+  /** Whether to show word count below the editor. */
+  @property({ type: Boolean, attribute: 'show-word-count' })
+  public showWordCount = false;
+
   /** The TipTap editor instance */
   @state()
   private _editor: TipTapEditor | undefined = undefined;
+
+  /** Current character count */
+  @state()
+  private _characterCount = 0;
+
+  /** Current word count */
+  @state()
+  private _wordCount = 0;
+
+  /** Whether the content is valid */
+  @state()
+  private _isValid = true;
+
+  /** Validation error messages */
+  @state()
+  private _validationErrors: string[] = [];
 
   #featureInstances: Set<RichTextEditorFeature> = new Set();
   #initFrame: number | undefined;
@@ -136,7 +204,10 @@ export class RichTextContextComponent extends LitElement {
     readOnly: false,
     content: '',
     isActive(identifier: string | object, attributes?: object) {
-      return this.editor?.isActive(identifier, attributes) ?? false;
+      if (typeof identifier === 'string') {
+        return this.editor?.isActive(identifier, attributes) ?? false;
+      }
+      return this.editor?.isActive(identifier) ?? false;
     },
     isEditable() {
       return !this.disabled && !this.readOnly && !!this.editor;
@@ -178,7 +249,75 @@ export class RichTextContextComponent extends LitElement {
   }
 
   public override render(): TemplateResult {
-    return html`<slot></slot>`;
+    return html`
+      <slot></slot>
+      ${when(this.showCharacterCount || this.showWordCount || !this._isValid, () => this.#renderFooter())}
+    `;
+  }
+
+  #renderFooter(): TemplateResult {
+    return html`
+      <div class="editor-footer">
+        ${when(!this._isValid, () => this.#renderErrors())}
+        ${when(this.showCharacterCount || this.showWordCount, () => this.#renderCounts())}
+      </div>
+    `;
+  }
+
+  #renderErrors(): TemplateResult {
+    return html`
+      <div class="editor-error" role="alert" aria-live="polite">
+        ${this.errorMessage || this._validationErrors[0] || 'Validation error'}
+      </div>
+    `;
+  }
+
+  #renderCounts(): TemplateResult {
+    const counts: string[] = [];
+
+    if (this.showCharacterCount) {
+      const charText =
+        this.maxLength > 0
+          ? `${this._characterCount} / ${this.maxLength} characters`
+          : `${this._characterCount} characters`;
+      counts.push(charText);
+    }
+
+    if (this.showWordCount) {
+      counts.push(`${this._wordCount} words`);
+    }
+
+    return html`<div class="editor-counts" aria-live="polite" aria-atomic="true">${counts.join(' • ')}</div>`;
+  }
+
+  #validateContent(): void {
+    const errors: string[] = [];
+    let isValid = true;
+
+    // Check max length
+    if (this.maxLength > 0 && this._characterCount > this.maxLength) {
+      isValid = false;
+      errors.push(`Content exceeds maximum length of ${this.maxLength} characters`);
+    }
+
+    // Update validation state
+    const hasChanged = this._isValid !== isValid;
+    this._isValid = isValid;
+    this._validationErrors = errors;
+
+    // Dispatch validation event if state changed
+    if (hasChanged) {
+      this.dispatchEvent(
+        new CustomEvent('validation', {
+          detail: {
+            isValid,
+            errors
+          },
+          bubbles: true,
+          composed: true
+        })
+      );
+    }
   }
 
   public toJSON(): object | undefined {
@@ -190,7 +329,13 @@ export class RichTextContextComponent extends LitElement {
 
     // Features can contain duplicate extensions. Make sure to filter out any duplicates
     const featureExtensions = Array.from(this.#featureInstances).flatMap(feature => feature.extensions);
-    const extensions = [...DEFAULT_EXTENSIONS, ...featureExtensions].filter(
+
+    // Add CharacterCount extension if maxLength is set or if counts should be displayed
+    const characterCountExtension = CharacterCount.configure({
+      limit: this.maxLength > 0 ? this.maxLength : undefined
+    });
+
+    const extensions = [...DEFAULT_EXTENSIONS, characterCountExtension, ...featureExtensions].filter(
       (ext, index, self) => self.findIndex(e => e.name === ext.name) === index
     );
 
@@ -212,6 +357,15 @@ export class RichTextContextComponent extends LitElement {
       },
       onUpdate: ({ editor }) => {
         const json = editor.getJSON();
+
+        // Update character and word counts
+        const charCountStorage = editor.storage.characterCount;
+        this._characterCount = charCountStorage?.characters?.() ?? 0;
+        this._wordCount = charCountStorage?.words?.() ?? 0;
+
+        // Perform validation
+        this.#validateContent();
+
         this.dispatchEvent(
           new CustomEvent('change', {
             detail: { json },
@@ -226,6 +380,14 @@ export class RichTextContextComponent extends LitElement {
       ...this.editorContext,
       editor: this._editor
     };
+
+    // Initialize counts
+    const storage = this._editor.storage.characterCount;
+    this._characterCount = storage?.characters?.() ?? 0;
+    this._wordCount = storage?.words?.() ?? 0;
+
+    // Initial validation
+    this.#validateContent();
   }
 
   #destroyEditor(): void {

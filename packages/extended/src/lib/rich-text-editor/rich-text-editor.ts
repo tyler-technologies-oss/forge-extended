@@ -32,12 +32,21 @@ export const RichTextEditorComponentTagName: keyof HTMLElementTagNameMap = 'forg
  * @property {string} [content=''] - The HTML content of the editor.
  * @property {boolean} [disabled=false] - Whether the editor is disabled.
  * @property {boolean} [readOnly=false] - Whether the editor is in readonly mode.
+ * @property {number} [maxLength=0] - Maximum character length allowed. 0 means no limit.
+ * @property {string} [errorMessage=''] - Error message to display when validation fails.
+ * @property {boolean} [showCharacterCount=false] - Whether to show character count below the editor.
+ * @property {boolean} [showWordCount=false] - Whether to show word count below the editor.
  *
  * @attribute {string} content - The HTML content of the editor.
  * @attribute {boolean} disabled - Whether the editor is disabled.
  * @attribute {boolean} readonly - Whether the editor is in readonly mode.
+ * @attribute {number} max-length - Maximum character length allowed. 0 means no limit.
+ * @attribute {string} error-message - Error message to display when validation fails.
+ * @attribute {boolean} show-character-count - Whether to show character count below the editor.
+ * @attribute {boolean} show-word-count - Whether to show word count below the editor.
  *
  * @event {CustomEvent<{ json: Record<string, any> }>} change - Fired when the content of the editor changes. The detail contains the editor content in JSON format.
+ * @event {CustomEvent<{ isValid: boolean; errors: string[] }>} validation - Fired when validation state changes. The detail contains validation status and error messages.
  */
 @customElement(RichTextEditorComponentTagName)
 export class RichTextEditorComponent extends LitElement {
@@ -55,6 +64,22 @@ export class RichTextEditorComponent extends LitElement {
   @property({ type: Boolean, attribute: 'readonly' })
   public readOnly = false;
 
+  /** Maximum character length allowed. 0 means no limit. */
+  @property({ type: Number, attribute: 'max-length' })
+  public maxLength = 0;
+
+  /** Error message to display when validation fails. */
+  @property({ type: String, attribute: 'error-message' })
+  public errorMessage = '';
+
+  /** Whether to show character count below the editor. */
+  @property({ type: Boolean, attribute: 'show-character-count' })
+  public showCharacterCount = false;
+
+  /** Whether to show word count below the editor. */
+  @property({ type: Boolean, attribute: 'show-word-count' })
+  public showWordCount = false;
+
   constructor() {
     super();
     const contextRoot = new ContextRoot();
@@ -63,7 +88,14 @@ export class RichTextEditorComponent extends LitElement {
 
   public override render(): TemplateResult {
     return html`
-      <forge-rich-text-context .readOnly=${this.readOnly} .disabled=${this.disabled} .content=${this.content}>
+      <forge-rich-text-context
+        .readOnly=${this.readOnly}
+        .disabled=${this.disabled}
+        .content=${this.content}
+        .maxLength=${this.maxLength}
+        .errorMessage=${this.errorMessage}
+        .showCharacterCount=${this.showCharacterCount}
+        .showWordCount=${this.showWordCount}>
         <div class="forge-rich-text-editor">
           <div
             class="editor-toolbar"
