@@ -17,6 +17,7 @@ import {
 } from './editor-context';
 import { RichTextEditorFeature } from './features/rich-text-editor-feature';
 import { PasteHandler } from './extensions/paste-handler';
+import { MarkdownSerializer } from './extensions/markdown-serializer';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -71,6 +72,12 @@ const DEFAULT_EXTENSIONS: AnyExtension[] = [Document, Text, Paragraph];
  * @event {CustomEvent<void>} initialized - Fired when the editor has been successfully initialized.
  * @event {CustomEvent<RichTextEditorInitializationErrorEventDetail>} initialization-error - Fired when editor initialization fails. The detail contains the error message.
  * @event {CustomEvent<RichTextEditorErrorEventDetail>} error - Fired when a non-fatal error occurs during editor operation. The detail contains context and error message.
+ *
+ * @method toJSON() - Returns the editor content as JSON in ProseMirror format. Returns undefined if the editor is not initialized.
+ * @method toHTML() - Returns the editor content as an HTML string. Returns an empty string if the editor is not initialized.
+ * @method toMarkdown() - Returns the editor content as a Markdown string. Returns an empty string if the editor is not initialized.
+ * @method isInitialized - Getter that returns whether the editor has been successfully initialized.
+ * @method initializationError - Getter that returns the initialization error message, if any.
  */
 @customElement(RichTextContextComponentTagName)
 export class RichTextContextComponent extends LitElement {
@@ -447,6 +454,22 @@ export class RichTextContextComponent extends LitElement {
       return this._editor?.getHTML() ?? '';
     } catch (error) {
       this.#handleEditorError('Failed to get HTML content', error);
+      return '';
+    }
+  }
+
+  /**
+   * Returns the editor content as Markdown. Returns empty string if editor is not initialized or if an error occurs.
+   */
+  public toMarkdown(): string {
+    try {
+      const json = this._editor?.getJSON();
+      if (!json) {
+        return '';
+      }
+      return MarkdownSerializer.serialize(json);
+    } catch (error) {
+      this.#handleEditorError('Failed to get Markdown content', error);
       return '';
     }
   }

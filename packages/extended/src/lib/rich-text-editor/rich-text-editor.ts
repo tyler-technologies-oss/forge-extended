@@ -4,6 +4,7 @@ import { ContextRoot } from '@lit/context';
 
 import './rich-text-context';
 import './rich-text-content';
+import type { RichTextContextComponent } from './rich-text-context';
 
 import styles from './rich-text-editor.scss?inline';
 
@@ -59,6 +60,7 @@ export const RichTextEditorComponentTagName: keyof HTMLElementTagNameMap = 'forg
  *
  * @method toJSON() - Returns the editor content as JSON in ProseMirror format. Returns undefined if the editor is not initialized.
  * @method toHTML() - Returns the editor content as an HTML string. Returns an empty string if the editor is not initialized.
+ * @method toMarkdown() - Returns the editor content as a Markdown string. Returns an empty string if the editor is not initialized.
  * @method isInitialized - Getter that returns whether the editor has been successfully initialized.
  * @method initializationError - Getter that returns the initialization error message, if any.
  */
@@ -160,6 +162,17 @@ export class RichTextEditorComponent extends LitElement {
   public toHTML(): string {
     const contextElement = this.shadowRoot?.querySelector('forge-rich-text-context') as RichTextContextComponent;
     return contextElement?.toHTML() ?? '';
+  }
+
+  /**
+   * Returns the editor content as a Markdown string.
+   * Returns an empty string if the editor is not initialized or if an error occurs.
+   *
+   * @returns The editor content as Markdown.
+   */
+  public toMarkdown(): string {
+    const contextElement = this.shadowRoot?.querySelector('forge-rich-text-context') as RichTextContextComponent;
+    return contextElement?.toMarkdown() ?? '';
   }
 
   /**

@@ -483,6 +483,16 @@ export const OutputFormats: Story = {
       console.log('HTML Output:', htmlContent);
     };
 
+    const handleGetMarkdown = (e: Event) => {
+      const editor = (e.target as HTMLElement).parentElement?.previousElementSibling as any;
+      const markdown = editor.toMarkdown();
+      const output = document.getElementById('markdown-output');
+      if (output) {
+        output.textContent = markdown;
+      }
+      console.log('Markdown Output:', markdown);
+    };
+
     return html`
       <style>
         .output-demo {
@@ -496,7 +506,7 @@ export const OutputFormats: Story = {
         }
         .output-display {
           display: grid;
-          grid-template-columns: 1fr 1fr;
+          grid-template-columns: 1fr 1fr 1fr;
           gap: 16px;
         }
         .output-section {
@@ -530,6 +540,7 @@ export const OutputFormats: Story = {
         <div class="output-buttons">
           <button @click=${handleGetJSON}>Get JSON Output</button>
           <button @click=${handleGetHTML}>Get HTML Output</button>
+          <button @click=${handleGetMarkdown}>Get Markdown Output</button>
         </div>
 
         <div class="output-display">
@@ -542,6 +553,13 @@ export const OutputFormats: Story = {
             <h3>HTML Output</h3>
             <div class="output-content" id="html-output">Click "Get HTML Output" to see the editor content as HTML</div>
           </div>
+
+          <div class="output-section">
+            <h3>Markdown Output</h3>
+            <div class="output-content" id="markdown-output">
+              Click "Get Markdown Output" to see the editor content as Markdown
+            </div>
+          </div>
         </div>
       </div>
     `;
@@ -550,7 +568,7 @@ export const OutputFormats: Story = {
     docs: {
       description: {
         story:
-          'The rich text editor provides `toJSON()` and `toHTML()` methods to export content in different formats. Use `toJSON()` to get the ProseMirror document structure for storage or processing, and `toHTML()` to get a clean HTML string for display or further processing.'
+          'The rich text editor provides `toJSON()`, `toHTML()`, and `toMarkdown()` methods to export content in different formats. Use `toJSON()` to get the ProseMirror document structure for storage or processing, `toHTML()` to get a clean HTML string for display, and `toMarkdown()` to get a Markdown string for documentation or text-based workflows.'
       }
     }
   }
