@@ -1,20 +1,17 @@
 import React, { forwardRef, useRef, useEffect } from "react";
-import "@tylertech/forge-extended/multi-select-header";
+import "@tylertech/forge-extended/rich-text-editor/features/core";
 import { useEventListener } from "./react-utils.js";
 
-export const ForgeMultiSelectHeader = forwardRef((props, forwardedRef) => {
+export const ForgeRteToolButton = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
-  const { noBorder, text, ...filteredProps } = props;
+  const { disabled, active, label, icon, keyboardShortcut, ...filteredProps } =
+    props;
 
   /** Event listeners - run once */
-  useEventListener(
-    ref,
-    "forge-multi-select-header-select-all",
-    props.onForgeMultiSelectHeaderSelectAll,
-  );
+  useEventListener(ref, "forge-rte-tool-toggle", props.onForgeRteToolToggle);
 
   return React.createElement(
-    "forge-multi-select-header",
+    "forge-rte-tool-button",
     {
       ref: (node) => {
         ref.current = node;
@@ -25,13 +22,16 @@ export const ForgeMultiSelectHeader = forwardRef((props, forwardedRef) => {
         }
       },
       ...filteredProps,
-      text: props.text,
+      label: props.label,
+      icon: props.icon,
+      "keyboard-shortcut": props.keyboardShortcut || props["keyboard-shortcut"],
       class: props.className,
       exportparts: props.exportparts,
       for: props.htmlFor,
       part: props.part,
       tabindex: props.tabIndex,
-      "no-border": props.noBorder ? "" : undefined,
+      disabled: props.disabled ? "" : undefined,
+      active: props.active ? "" : undefined,
       style: { ...props.style },
     },
     props.children,

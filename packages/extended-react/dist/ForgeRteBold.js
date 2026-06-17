@@ -1,20 +1,19 @@
 import React, { forwardRef } from "react";
-import "@tylertech/forge-extended/count-card";
+import "@tylertech/forge-extended/rich-text-editor/features";
 
-export const ForgeCountCard = forwardRef((props, forwardedRef) => {
-  const { noBorder, theme, ...filteredProps } = props;
+export const ForgeRteBold = forwardRef((props, forwardedRef) => {
+  const { label, ...filteredProps } = props;
 
   return React.createElement(
-    "forge-count-card",
+    "forge-rte-bold",
     {
       ...filteredProps,
-      theme: props.theme,
+      label: props.label,
       class: props.className,
       exportparts: props.exportparts,
       for: props.htmlFor,
       part: props.part,
       tabindex: props.tabIndex,
-      "no-border": props.noBorder ? "" : undefined,
       style: { ...props.style },
     },
     props.children,
