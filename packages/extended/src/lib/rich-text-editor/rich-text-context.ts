@@ -1,5 +1,5 @@
 import { provide } from '@lit/context';
-import { type AnyExtension, Editor as TipTapEditor } from '@tiptap/core';
+import { type AnyExtension, type Content, Editor as TipTapEditor } from '@tiptap/core';
 import { Document } from '@tiptap/extension-document';
 import { Text } from '@tiptap/extension-text';
 import { Paragraph } from '@tiptap/extension-paragraph';
@@ -303,7 +303,7 @@ export class RichTextContextComponent extends LitElement {
   public override willUpdate(changedProperties: PropertyValues<this>): void {
     if (this.hasUpdated && changedProperties.has('content')) {
       try {
-        const sanitized = this.#sanitizeContent(this.content);
+        const sanitized = this.#sanitizeContent(this.content) as Content;
         this.editorContext.editor?.commands.setContent(sanitized);
       } catch (error) {
         this.#handleEditorError('Failed to set content', error);
@@ -485,6 +485,10 @@ export class RichTextContextComponent extends LitElement {
 
   #initEditor(): void {
     try {
+      if (this._editor) {
+        return;
+      }
+
       this.#destroyEditor();
 
       // Clear any previous initialization errors
@@ -515,10 +519,12 @@ export class RichTextContextComponent extends LitElement {
         throw new Error('Editor element is not set. Please set the editor element before initializing the editor.');
       }
 
+      const initialContent = this.#sanitizeContent(this.content) as Content;
+
       this._editor = new TipTapEditor({
         element: this.#editorElement,
         extensions,
-        content: this.editorContext.content,
+        content: initialContent,
         editable: !(this.editorContext.disabled || this.editorContext.readOnly),
         injectCSS: false,
         onTransaction: () => {
@@ -723,10 +729,18 @@ export class RichTextContextComponent extends LitElement {
 
   /**
    * Sanitizes HTML string input (same as paste handler).
+   * Uses DOMParser to avoid eager resource fetches (e.g. img src beacons).
    */
   #sanitizeHTMLString(htmlContent: string): string {
-    const temp = document.createElement('div');
-    temp.innerHTML = htmlContent;
+    const MAX_CONTENT_SIZE = 1_000_000; // 1MB limit
+    if (htmlContent.length > MAX_CONTENT_SIZE) {
+      const sizeMB = (htmlContent.length / 1024 / 1024).toFixed(2);
+      console.warn(`[RTE Security] Pasted content too large (${sizeMB}MB), truncating to 1MB`);
+      htmlContent = htmlContent.substring(0, MAX_CONTENT_SIZE);
+    }
+
+    const doc = new DOMParser().parseFromString(htmlContent, 'text/html');
+    const temp = doc.body;
 
     // Remove dangerous elements
     const dangerousElements = [
@@ -806,7 +820,7 @@ export class RichTextContextComponent extends LitElement {
           const dangerousProtocols = ['javascript:', 'data:', 'vbscript:', 'file:', 'about:', 'blob:'];
 
           for (const protocol of dangerousProtocols) {
-            if (href.startsWith(protocol) || href.includes(protocol)) {
+            if (href.startsWith(protocol)) {
               // Security: Always log warnings, never suppress
               console.warn('[RTE Security] Blocked dangerous protocol in link:', attrs.href);
               attrs.href = '#'; // Replace with safe default
@@ -844,7 +858,7 @@ export class RichTextContextComponent extends LitElement {
     };
 
     try {
-      return sanitize(json, 0);
+      return sanitize(structuredClone(json), 0);
     } catch (error) {
       // Security: Always log errors, never suppress
       console.error('[RTE Security] Content sanitization failed:', error);

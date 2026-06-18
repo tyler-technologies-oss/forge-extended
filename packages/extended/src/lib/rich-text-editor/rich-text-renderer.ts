@@ -125,11 +125,13 @@ export class RichTextRendererComponent extends LitElement {
       }
 
       try {
+        const initialContent = this.content ? this.#sanitizeContent(this.content) : undefined;
         this._editor = new TipTapEditor({
           element: this._contentElement,
           extensions: DEFAULT_EXTENSIONS,
           editable: false,
-          content: this.content
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          content: initialContent as any
         });
       } catch (error) {
         console.error('[RichTextRenderer] Failed to initialize editor:', error);
@@ -198,7 +200,7 @@ export class RichTextRendererComponent extends LitElement {
           const dangerousProtocols = ['javascript:', 'data:', 'vbscript:', 'file:', 'about:', 'blob:'];
 
           for (const protocol of dangerousProtocols) {
-            if (href.includes(protocol)) {
+            if (href.startsWith(protocol)) {
               console.warn('[RichTextRenderer] Blocked dangerous protocol:', attrs.href);
               attrs.href = '#';
               break;
@@ -219,7 +221,7 @@ export class RichTextRendererComponent extends LitElement {
     };
 
     try {
-      return sanitize(content, 0);
+      return sanitize(structuredClone(content), 0);
     } catch (error) {
       console.error('[RichTextRenderer] Content sanitization failed:', error);
       return { type: 'doc', content: [] }; // Return empty document on error

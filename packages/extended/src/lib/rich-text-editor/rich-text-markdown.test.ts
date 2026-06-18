@@ -693,6 +693,92 @@ describe('Rich Text Editor - Markdown Output', () => {
       });
     });
 
+    describe('escape() is called; body text and hrefs escaped', () => {
+      it('should escape Markdown special characters in body text', () => {
+        const json: JSONContent = {
+          type: 'doc',
+          content: [
+            {
+              type: 'paragraph',
+              content: [{ type: 'text', text: 'text with *asterisks* and _underscores_' }]
+            }
+          ]
+        };
+
+        const markdown = MarkdownSerializer.serialize(json);
+        expect(markdown).to.include('\\*asterisks\\*');
+        expect(markdown).to.include('\\_underscores\\_');
+      });
+
+      it('should escape ] and ) in link text to prevent injection', () => {
+        const json: JSONContent = {
+          type: 'doc',
+          content: [
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: 'click]here)',
+                  marks: [{ type: 'link', attrs: { href: 'https://example.com' } }]
+                }
+              ]
+            }
+          ]
+        };
+
+        const markdown = MarkdownSerializer.serialize(json);
+        // Must not produce [click]here)](https://example.com) — that breaks out of the link
+        expect(markdown).to.include('\\]');
+        expect(markdown).to.include('\\)');
+      });
+
+      it('should percent-encode parens in link href to prevent injection', () => {
+        const json: JSONContent = {
+          type: 'doc',
+          content: [
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: 'link',
+                  marks: [{ type: 'link', attrs: { href: 'https://example.com/path(1)' } }]
+                }
+              ]
+            }
+          ]
+        };
+
+        const markdown = MarkdownSerializer.serialize(json);
+        // Parens in href must be encoded so the link doesn't break
+        expect(markdown).to.include('https://example.com/path%281%29');
+        expect(markdown).to.not.include('(1)');
+      });
+
+      it('should not double-escape code spans', () => {
+        const json: JSONContent = {
+          type: 'doc',
+          content: [
+            {
+              type: 'paragraph',
+              content: [
+                {
+                  type: 'text',
+                  text: 'some *code*',
+                  marks: [{ type: 'code' }]
+                }
+              ]
+            }
+          ]
+        };
+
+        const markdown = MarkdownSerializer.serialize(json);
+        // Inside a code span, asterisks should be literal
+        expect(markdown).to.include('`some *code*`');
+      });
+    });
+
     describe('RichTextContextComponent', () => {
       it('should return markdown from context component', async () => {
         const element = await fixture<RichTextContextComponent>(testHtml`

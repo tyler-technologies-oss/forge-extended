@@ -144,7 +144,9 @@ export class MarkdownSerializer {
   }
 
   static #serializeText(node: JSONContent): string {
-    let text = node.text ?? '';
+    const hasCodeMark = node.marks?.some((m: MarkAttrs) => m.type === 'code');
+    // Escape raw text unless it will be wrapped in a code span (backtick context)
+    let text = hasCodeMark ? (node.text ?? '') : this.escape(node.text ?? '');
 
     // Apply marks in order: bold, italic, underline, strikethrough, code
     if (node.marks && node.marks.length > 0) {
@@ -171,8 +173,10 @@ export class MarkdownSerializer {
       case 'code':
         return `\`${text}\``;
       case 'link': {
-        const href = mark.attrs?.href ?? '';
-        return `[${text}](${href})`;
+        const href = String(mark.attrs?.href ?? '');
+        // Escape parens in href to avoid breaking Markdown link syntax
+        const safeHref = href.replace(/\(/g, '%28').replace(/\)/g, '%29');
+        return `[${text}](${safeHref})`;
       }
       default:
         return text;
@@ -187,6 +191,9 @@ export class MarkdownSerializer {
    * @returns The escaped text
    */
   public static escape(text: string): string {
+    // Only escape characters that break inline Markdown structure.
+    // Do NOT escape `.`, `-`, `+`, `!`, `#` — they are only special at line-start
+    // in block contexts, not inline, so escaping them here would corrupt normal text.
     return text
       .replace(/\\/g, '\\\\')
       .replace(/\*/g, '\\*')
@@ -196,11 +203,6 @@ export class MarkdownSerializer {
       .replace(/\]/g, '\\]')
       .replace(/\(/g, '\\(')
       .replace(/\)/g, '\\)')
-      .replace(/~/g, '\\~')
-      .replace(/#/g, '\\#')
-      .replace(/\+/g, '\\+')
-      .replace(/-/g, '\\-')
-      .replace(/\./g, '\\.')
-      .replace(/!/g, '\\!');
+      .replace(/~/g, '\\~');
   }
 }

@@ -71,6 +71,12 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
       font-size: 12px;
       margin-block-start: -8px;
     }
+
+    .warning-message {
+      color: var(--forge-theme-warning, #b45309);
+      font-size: 12px;
+      margin-block-start: -8px;
+    }
   `;
 
   /**
@@ -111,6 +117,9 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
 
   @state()
   private _validationError = '';
+
+  @state()
+  private _validationWarning = '';
 
   #focusTimeout: number | undefined;
 
@@ -173,7 +182,9 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
           </forge-text-field>
           ${this._validationError
             ? html`<div id="link-error" class="error-message" role="alert">${this._validationError}</div>`
-            : ''}
+            : this._validationWarning
+              ? html`<div id="link-error" class="warning-message" role="status">${this._validationWarning}</div>`
+              : ''}
           <div class="button-group">
             <forge-button variant="raised" @click=${this.#applyLink} ?disabled=${!!this._validationError}>
               ${isEditingExistingLink ? 'Update' : 'Apply'}
@@ -227,40 +238,14 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
       return;
     }
 
-    // SECURITY CHECK: Detect Unicode homograph attacks and internationalized domains
-    // eslint-disable-next-line no-control-regex
-    const hasNonASCII = /[^\x00-\x7F]/.test(this._linkUrl);
-    const hasPunycode = this._linkUrl.includes('xn--');
-
-    if (hasNonASCII) {
-      this._validationError =
-        'Warning: This URL contains non-English characters. Some characters may look similar to English letters but are different. Please verify carefully.';
-      return;
-    }
-
-    if (hasPunycode) {
-      this._validationError =
-        'Warning: This URL contains internationalized domain names (IDN). Verify the domain carefully to avoid phishing.';
-      return;
-    }
-
     // CRITICAL SECURITY CHECK: Block dangerous protocols FIRST
     const protocolBlocklist = ['javascript:', 'data:', 'vbscript:', 'file:', 'about:', 'blob:'];
 
     const lowerUrl = this._linkUrl.toLowerCase().trim();
 
-    // Check for direct protocol usage
     for (const protocol of protocolBlocklist) {
       if (lowerUrl.startsWith(protocol)) {
         this._validationError = 'Invalid protocol. Only http and https URLs are allowed.';
-        return;
-      }
-    }
-
-    // Check for protocol anywhere in string (catches obfuscation attempts)
-    for (const protocol of protocolBlocklist) {
-      if (lowerUrl.includes(protocol)) {
-        this._validationError = 'Invalid protocol detected. Only http and https URLs are allowed.';
         return;
       }
     }
@@ -269,7 +254,7 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
     try {
       const decoded = decodeURIComponent(lowerUrl);
       for (const protocol of protocolBlocklist) {
-        if (decoded.includes(protocol)) {
+        if (decoded.startsWith(protocol)) {
           this._validationError = 'Invalid protocol detected. Only http and https URLs are allowed.';
           return;
         }
@@ -278,6 +263,17 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
       // Malformed encoding - reject
       this._validationError = 'Invalid URL encoding';
       return;
+    }
+
+    // Non-blocking advisory warning for non-ASCII/IDN URLs — Apply stays enabled
+    // eslint-disable-next-line no-control-regex
+    const hasNonASCII = /[^\x00-\x7F]/.test(this._linkUrl);
+    const hasPunycode = this._linkUrl.includes('xn--');
+    if (hasNonASCII || hasPunycode) {
+      this._validationWarning =
+        'Warning: This URL contains international characters. Verify carefully to avoid phishing.';
+    } else {
+      this._validationWarning = '';
     }
 
     // Primary regex validation (existing)
@@ -370,6 +366,7 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
     this._popoverAnchor = undefined;
     this._linkUrl = '';
     this._validationError = '';
+    this._validationWarning = '';
   }
 
   async #toggle(_evt: CustomEvent): Promise<void> {

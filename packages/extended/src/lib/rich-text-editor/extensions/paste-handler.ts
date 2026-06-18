@@ -39,16 +39,26 @@ export const PasteHandler = Extension.create<PasteHandlerOptions>({
     return {
       // Ctrl+Shift+V / Cmd+Shift+V for plain text paste
       'Mod-Shift-v': () => {
-        const { state, view } = this.editor;
+        const { view } = this.editor;
 
-        // Read clipboard
+        // Read clipboard — rebuild transaction from current view.state inside .then()
+        // to avoid using stale selection positions captured before the async gap.
         navigator.clipboard
           .readText()
           .then(text => {
-            // Insert as plain text
-            const { tr } = state;
+            const { state } = view;
             const { from, to } = state.selection;
-            tr.replaceWith(from, to, state.schema.text(text));
+            const ccExt = this.editor.extensionManager.extensions.find(e => e.name === 'characterCount');
+            const maxLength = ccExt?.options?.limit as number | undefined;
+            if (maxLength) {
+              const currentChars = state.doc.textContent.length - (to - from);
+              const available = maxLength - currentChars;
+              if (available <= 0) {
+                return;
+              }
+              text = text.slice(0, available);
+            }
+            const tr = state.tr.replaceWith(from, to, state.schema.text(text));
             view.dispatch(tr);
           })
           .catch(err => {
@@ -80,9 +90,8 @@ export const PasteHandler = Extension.create<PasteHandlerOptions>({
 
             // If formatting not allowed, strip all HTML tags
             if (!options.allowPasteFormatting) {
-              const temp = document.createElement('div');
-              temp.innerHTML = html;
-              return temp.textContent || '';
+              const doc = new DOMParser().parseFromString(html, 'text/html');
+              return doc.body.textContent || '';
             }
 
             // Sanitize HTML to remove dangerous content
@@ -119,8 +128,8 @@ export const PasteHandler = Extension.create<PasteHandlerOptions>({
  * @returns Sanitized HTML
  */
 function sanitizeHTML(html: string, allowImages: boolean): string {
-  const temp = document.createElement('div');
-  temp.innerHTML = html;
+  const doc = new DOMParser().parseFromString(html, 'text/html');
+  const temp = doc.body;
 
   // Remove dangerous elements
   const dangerousSelectors = [
