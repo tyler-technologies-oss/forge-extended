@@ -39,7 +39,6 @@ export const RichTextEditorComponentTagName: keyof HTMLElementTagNameMap = 'forg
  * @property {boolean} [showWordCount=false] - Whether to show word count below the editor.
  * @property {boolean} [allowPasteFormatting=true] - Whether to allow pasted content to retain formatting. When false, all pasted content is treated as plain text.
  * @property {boolean} [allowPasteImages=false] - Whether to allow images to be pasted into the editor.
- * @property {boolean} [suppressErrors=false] - Whether to suppress error logging to console (useful for debugging).
  *
  * @attribute {string} content - The HTML content of the editor.
  * @attribute {boolean} disabled - Whether the editor is disabled.
@@ -50,7 +49,6 @@ export const RichTextEditorComponentTagName: keyof HTMLElementTagNameMap = 'forg
  * @attribute {boolean} show-word-count - Whether to show word count below the editor.
  * @attribute {boolean} allow-paste-formatting - Whether to allow pasted content to retain formatting.
  * @attribute {boolean} allow-paste-images - Whether to allow images to be pasted into the editor.
- * @attribute {boolean} suppress-errors - Whether to suppress error logging to console.
  *
  * @event {CustomEvent<RichTextEditorChangeEventDetail>} change - Fired when the content of the editor changes. The detail contains the editor content in ProseMirror JSON format.
  * @event {CustomEvent<RichTextEditorValidationEventDetail>} validation - Fired when validation state changes. The detail contains validation status and error messages.
@@ -104,10 +102,6 @@ export class RichTextEditorComponent extends LitElement {
   @property({ type: Boolean, attribute: 'allow-paste-images' })
   public allowPasteImages = false;
 
-  /** Whether to suppress error logging to console (useful for debugging). */
-  @property({ type: Boolean, attribute: 'suppress-errors' })
-  public suppressErrors = false;
-
   constructor() {
     super();
     const contextRoot = new ContextRoot();
@@ -125,8 +119,7 @@ export class RichTextEditorComponent extends LitElement {
         .showCharacterCount=${this.showCharacterCount}
         .showWordCount=${this.showWordCount}
         .allowPasteFormatting=${this.allowPasteFormatting}
-        .allowPasteImages=${this.allowPasteImages}
-        .suppressErrors=${this.suppressErrors}>
+        .allowPasteImages=${this.allowPasteImages}>
         <div class="forge-rich-text-editor">
           <div
             class="editor-toolbar"

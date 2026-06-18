@@ -455,10 +455,33 @@ describe('RTE Link - Keyboard navigation', () => {
 });
 
 describe('RTE Link - Validation', () => {
-  it('should validate URLs by default', async () => {
+  it('should not expose validateUrls property (security hardening)', async () => {
     const harness = await createFixture();
 
-    expect(harness.linkFeature.validateUrls).to.be.true;
+    // Property should not exist in the public API
+    expect(harness.linkFeature).to.not.have.property('validateUrls');
+  });
+
+  it('should always validate URLs (cannot be disabled)', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>test text</p>');
+    editor.commands.selectAll();
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    // Try to enter a javascript: URL - should be blocked
+    const input = harness.getInput();
+    input.value = 'javascript:alert(1)';
+    input.dispatchEvent(new Event('input', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const error = harness.getErrorMessage();
+    expect(error).to.exist;
+    expect(error?.textContent).to.include('Invalid protocol');
   });
 
   it('should show error for invalid URL', async () => {

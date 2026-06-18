@@ -53,7 +53,6 @@ const DEFAULT_EXTENSIONS: AnyExtension[] = [Document, Text, Paragraph];
  * @property {boolean} [showWordCount=false] - Whether to show word count below the editor.
  * @property {boolean} [allowPasteFormatting=true] - Whether to allow pasted content to retain formatting. When false, all pasted content is treated as plain text.
  * @property {boolean} [allowPasteImages=false] - Whether to allow images to be pasted into the editor.
- * @property {boolean} [suppressErrors=false] - Whether to suppress error logging to console (useful for debugging).
  *
  * @attribute {string} editor-id - The ID of the element to instantiate the editor against.
  * @attribute {string} content - The HTML content of the editor.
@@ -65,7 +64,6 @@ const DEFAULT_EXTENSIONS: AnyExtension[] = [Document, Text, Paragraph];
  * @attribute {boolean} show-word-count - Whether to show word count below the editor.
  * @attribute {boolean} allow-paste-formatting - Whether to allow pasted content to retain formatting.
  * @attribute {boolean} allow-paste-images - Whether to allow images to be pasted into the editor.
- * @attribute {boolean} suppress-errors - Whether to suppress error logging to console.
  *
  * @event {CustomEvent<RichTextEditorChangeEventDetail>} change - Fired when the content of the editor changes. The detail contains the editor content in ProseMirror JSON format.
  * @event {CustomEvent<RichTextEditorValidationEventDetail>} validation - Fired when validation state changes. The detail contains validation status and error messages.
@@ -164,10 +162,6 @@ export class RichTextContextComponent extends LitElement {
   /** Whether the editor is in readonly mode. */
   @property({ type: Boolean, attribute: 'readonly' })
   public readOnly = false;
-
-  /** Whether to suppress initialization errors (useful for debugging). */
-  @property({ type: Boolean, attribute: 'suppress-errors' })
-  public suppressErrors = false;
 
   /** Maximum character length allowed. 0 means no limit. */
   @property({ type: Number, attribute: 'max-length' })
@@ -309,7 +303,8 @@ export class RichTextContextComponent extends LitElement {
   public override willUpdate(changedProperties: PropertyValues<this>): void {
     if (this.hasUpdated && changedProperties.has('content')) {
       try {
-        this.editorContext.editor?.commands.setContent(this.content);
+        const sanitized = this.#sanitizeContent(this.content);
+        this.editorContext.editor?.commands.setContent(sanitized);
       } catch (error) {
         this.#handleEditorError('Failed to set content', error);
       }
@@ -428,9 +423,7 @@ export class RichTextContextComponent extends LitElement {
         );
       }
     } catch (error) {
-      if (!this.suppressErrors) {
-        console.error('[RichTextEditor] Validation error:', error);
-      }
+      console.error('[RichTextEditor] Validation error:', error);
     }
   }
 
@@ -448,10 +441,12 @@ export class RichTextContextComponent extends LitElement {
 
   /**
    * Returns the editor content as HTML. Returns empty string if editor is not initialized or if an error occurs.
+   * The output is sanitized to prevent XSS attacks.
    */
   public toHTML(): string {
     try {
-      return this._editor?.getHTML() ?? '';
+      const htmlContent = this._editor?.getHTML() ?? '';
+      return this.#sanitizeOutputHTML(htmlContent);
     } catch (error) {
       this.#handleEditorError('Failed to get HTML content', error);
       return '';
@@ -596,9 +591,8 @@ export class RichTextContextComponent extends LitElement {
 
     this._initializationError = errorMessage;
 
-    if (!this.suppressErrors) {
-      console.error('[RichTextEditor] Initialization failed:', error);
-    }
+    // Always log initialization errors (critical for debugging and security)
+    console.error('[RichTextEditor] Initialization failed:', error);
 
     this.dispatchEvent(
       new CustomEvent<RichTextEditorInitializationErrorEventDetail>('initialization-error', {
@@ -615,9 +609,8 @@ export class RichTextContextComponent extends LitElement {
   #handleEditorError(context: string, error: unknown): void {
     const errorMessage = error instanceof Error ? error.message : 'Unknown error';
 
-    if (!this.suppressErrors) {
-      console.error(`[RichTextEditor] ${context}:`, error);
-    }
+    // Always log errors (important for debugging and security)
+    console.error(`[RichTextEditor] ${context}:`, error);
 
     this.dispatchEvent(
       new CustomEvent<RichTextEditorErrorEventDetail>('error', {
@@ -631,5 +624,231 @@ export class RichTextContextComponent extends LitElement {
   #destroyEditor(): void {
     this._editor?.destroy();
     this._editor = undefined;
+  }
+
+  /**
+   * Sanitizes HTML output by ensuring all text content is properly escaped.
+   * Prevents XSS attacks where malicious content is injected via setContent().
+   */
+  #sanitizeOutputHTML(htmlContent: string): string {
+    if (!htmlContent) {
+      return '';
+    }
+
+    const temp = document.createElement('div');
+    temp.innerHTML = htmlContent;
+
+    // Recursively escape all text nodes
+    this.#escapeTextNodes(temp);
+
+    // Remove any remaining dangerous elements that might have been created
+    const dangerousElements = ['script', 'iframe', 'object', 'embed', 'style'];
+    dangerousElements.forEach(tag => {
+      temp.querySelectorAll(tag).forEach(el => el.remove());
+    });
+
+    // Remove event handler attributes
+    temp.querySelectorAll('*').forEach(el => {
+      Array.from(el.attributes).forEach(attr => {
+        if (attr.name.startsWith('on')) {
+          el.removeAttribute(attr.name);
+        }
+      });
+    });
+
+    return temp.innerHTML;
+  }
+
+  /**
+   * Recursively escapes text nodes by replacing them with properly encoded text.
+   */
+  #escapeTextNodes(element: Element): void {
+    // eslint-disable-next-line no-bitwise
+    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
+
+    const nodesToReplace: Array<{ node: Node; escapedText: string }> = [];
+
+    let currentNode = walker.currentNode;
+    while (currentNode) {
+      if (currentNode.nodeType === Node.TEXT_NODE) {
+        const text = currentNode.textContent || '';
+        // Only escape if the text contains HTML special characters
+        if (/<|>|&|"|'/.test(text)) {
+          const escaped = this.#escapeHTMLEntities(text);
+          nodesToReplace.push({ node: currentNode, escapedText: escaped });
+        }
+      }
+      currentNode = walker.nextNode();
+    }
+
+    // Replace nodes after walking to avoid iterator issues
+    nodesToReplace.forEach(({ node, escapedText }) => {
+      const textNode = document.createTextNode(escapedText);
+      if (node.parentNode) {
+        node.parentNode.replaceChild(textNode, node);
+      }
+    });
+  }
+
+  /**
+   * Escapes HTML entities in text content.
+   */
+  #escapeHTMLEntities(text: string): string {
+    return text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  /**
+   * Sanitizes content before passing to TipTap editor.
+   * Handles both HTML strings and ProseMirror JSON objects.
+   * Prevents XSS attacks via setContent() API.
+   */
+  #sanitizeContent(content: string | object): string | object | unknown {
+    // Handle HTML string
+    if (typeof content === 'string') {
+      return this.#sanitizeHTMLString(content);
+    }
+
+    // Handle JSON object
+    if (typeof content === 'object' && content !== null) {
+      return this.#sanitizeJSON(content);
+    }
+
+    return '';
+  }
+
+  /**
+   * Sanitizes HTML string input (same as paste handler).
+   */
+  #sanitizeHTMLString(htmlContent: string): string {
+    const temp = document.createElement('div');
+    temp.innerHTML = htmlContent;
+
+    // Remove dangerous elements
+    const dangerousElements = [
+      'script',
+      'iframe',
+      'embed',
+      'object',
+      'link',
+      'style',
+      'form',
+      'input',
+      'button',
+      'textarea',
+      'select',
+      'svg',
+      'math',
+      'audio',
+      'video'
+    ];
+
+    dangerousElements.forEach(tag => {
+      temp.querySelectorAll(tag).forEach(el => el.remove());
+    });
+
+    // Remove dangerous attributes
+    temp.querySelectorAll('*').forEach(el => {
+      Array.from(el.attributes).forEach(attr => {
+        if (attr.name.startsWith('on') || attr.name.startsWith('data-')) {
+          el.removeAttribute(attr.name);
+        }
+      });
+      el.removeAttribute('style');
+    });
+
+    return temp.innerHTML;
+  }
+
+  /**
+   * Sanitizes ProseMirror JSON object.
+   * - Validates structure depth and node count
+   * - Blocks dangerous protocols in link marks
+   * - Removes unknown/dangerous node types
+   */
+  #sanitizeJSON(json: unknown): unknown {
+    if (!json || typeof json !== 'object') {
+      return json;
+    }
+
+    const MAX_DEPTH = 50;
+    const MAX_NODES = 5000;
+    let nodeCount = 0;
+
+    const sanitize = (node: unknown, depth: number): unknown => {
+      // Prevent DoS via deep nesting
+      if (depth > MAX_DEPTH) {
+        throw new Error('Maximum nesting depth exceeded (limit: 50)');
+      }
+
+      // Prevent DoS via large structures
+      if (++nodeCount > MAX_NODES) {
+        throw new Error('Maximum node count exceeded (limit: 5000)');
+      }
+
+      if (!node || typeof node !== 'object') {
+        return node;
+      }
+
+      const n = node as Record<string, unknown>;
+
+      // Sanitize link marks (CRITICAL)
+      if (n.type === 'link' || (n.attrs && typeof n.attrs === 'object')) {
+        const attrs = n.attrs as Record<string, unknown>;
+        if (attrs.href && typeof attrs.href === 'string') {
+          const href = attrs.href.toLowerCase().trim();
+
+          // Block dangerous protocols
+          const dangerousProtocols = ['javascript:', 'data:', 'vbscript:', 'file:', 'about:', 'blob:'];
+
+          for (const protocol of dangerousProtocols) {
+            if (href.startsWith(protocol) || href.includes(protocol)) {
+              // Security: Always log warnings, never suppress
+              console.warn('[RTE Security] Blocked dangerous protocol in link:', attrs.href);
+              attrs.href = '#'; // Replace with safe default
+              break;
+            }
+          }
+
+          // Check URL-encoded variants
+          try {
+            const decoded = decodeURIComponent(href);
+            for (const protocol of dangerousProtocols) {
+              if (decoded.includes(protocol)) {
+                // Security: Always log warnings, never suppress
+                console.warn('[RTE Security] Blocked encoded dangerous protocol:', attrs.href);
+                attrs.href = '#';
+                break;
+              }
+            }
+          } catch {
+            // Invalid encoding - replace
+            attrs.href = '#';
+          }
+        }
+      }
+
+      // Recursively sanitize arrays
+      if (Array.isArray(n.content)) {
+        n.content = n.content.map(child => sanitize(child, depth + 1));
+      }
+      if (Array.isArray(n.marks)) {
+        n.marks = n.marks.map(mark => sanitize(mark, depth + 1));
+      }
+
+      return n;
+    };
+
+    try {
+      return sanitize(json, 0);
+    } catch (error) {
+      // Security: Always log errors, never suppress
+      console.error('[RTE Security] Content sanitization failed:', error);
+      throw error;
+    }
   }
 }

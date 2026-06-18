@@ -33,12 +33,12 @@ export const RichTextFeatureLinkComponentTagName: keyof HTMLElementTagNameMap = 
  * nofollow). The feature announces state changes to screen readers for accessibility.
  *
  * @property {string} [label='Link'] - The accessible label for the link button.
- * @property {boolean} [validateUrls=true] - Whether to validate URL format before applying. When enabled, shows error messages for invalid URLs.
  * @property {boolean} [autoProtocol=true] - Whether to automatically add https:// protocol if missing from the URL.
  *
  * @attribute {string} label - The accessible label for the link button.
- * @attribute {boolean} validate-urls - Whether to validate URL format before applying.
  * @attribute {boolean} auto-protocol - Whether to automatically add https:// protocol if missing.
+ *
+ * @note URL validation is always enabled for security and cannot be disabled.
  */
 @customElement(RichTextFeatureLinkComponentTagName)
 export class RichTextFeatureLinkComponent extends LitElement implements RichTextEditorFeature {
@@ -80,14 +80,6 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
    */
   @property({ type: String })
   public label = 'Link';
-
-  /**
-   * Whether to validate URLs before applying them.
-   * @default true
-   * @attribute
-   */
-  @property({ type: Boolean, attribute: 'validate-urls' })
-  public validateUrls = true;
 
   /**
    * Whether to automatically add https:// protocol if missing.
@@ -226,11 +218,45 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
       return; // Empty is valid - it removes the link
     }
 
-    if (!this.validateUrls) {
-      return; // Validation disabled
+    // Security: URL validation is always enabled
+
+    // CRITICAL SECURITY CHECK: Block dangerous protocols FIRST
+    const protocolBlocklist = ['javascript:', 'data:', 'vbscript:', 'file:', 'about:', 'blob:'];
+
+    const lowerUrl = this._linkUrl.toLowerCase().trim();
+
+    // Check for direct protocol usage
+    for (const protocol of protocolBlocklist) {
+      if (lowerUrl.startsWith(protocol)) {
+        this._validationError = 'Invalid protocol. Only http and https URLs are allowed.';
+        return;
+      }
     }
 
-    // Primary regex validation
+    // Check for protocol anywhere in string (catches obfuscation attempts)
+    for (const protocol of protocolBlocklist) {
+      if (lowerUrl.includes(protocol)) {
+        this._validationError = 'Invalid protocol detected. Only http and https URLs are allowed.';
+        return;
+      }
+    }
+
+    // Check for URL-encoded variants
+    try {
+      const decoded = decodeURIComponent(lowerUrl);
+      for (const protocol of protocolBlocklist) {
+        if (decoded.includes(protocol)) {
+          this._validationError = 'Invalid protocol detected. Only http and https URLs are allowed.';
+          return;
+        }
+      }
+    } catch {
+      // Malformed encoding - reject
+      this._validationError = 'Invalid URL encoding';
+      return;
+    }
+
+    // Primary regex validation (existing)
     const urlPattern = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(:\d+)?(\/[^\s]*)?$/;
 
     if (!urlPattern.test(this._linkUrl)) {
@@ -241,7 +267,13 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
     // Additional validation using URL constructor for enhanced security
     try {
       const normalizedUrl = this.#normalizeUrl(this._linkUrl);
-      new URL(normalizedUrl);
+      const parsed = new URL(normalizedUrl);
+
+      // Double-check protocol after normalization
+      if (parsed.protocol !== 'http:' && parsed.protocol !== 'https:') {
+        this._validationError = 'Invalid protocol. Only http and https URLs are allowed.';
+        return;
+      }
     } catch {
       this._validationError = 'Please enter a valid URL (e.g., https://example.com)';
     }

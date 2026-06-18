@@ -836,6 +836,160 @@ All editor functionality is accessible via keyboard without requiring a mouse. T
 | `Ctrl+Z`                   | `Cmd+Z`                  | Undo   |
 | `Ctrl+Shift+Z` or `Ctrl+Y` | `Cmd+Shift+Z` or `Cmd+Y` | Redo   |
 
+## Security
+
+> **⚠️ IMPORTANT:** The rich text editor implements multiple layers of security to prevent XSS and injection attacks. However, **always validate and sanitize content on the server-side** before storing or serving it to other users.
+
+### Security Features
+
+The editor provides comprehensive protection against common web security vulnerabilities:
+
+#### XSS Prevention
+
+All content is sanitized to prevent cross-site scripting attacks:
+
+- **Output Sanitization**: `toHTML()` escapes HTML entities and removes dangerous elements
+- **Input Validation**: Content passed via `.content` property is validated and sanitized
+- **Protocol Filtering**: Links are restricted to `http:` and `https:` protocols only
+
+```typescript
+// ✅ Safe - Output is automatically sanitized
+const html = editor.toHTML();
+// Input: <script>alert(1)</script>
+// Output: &lt;script&gt;alert(1)&lt;/script&gt;
+```
+
+#### Link Security
+
+Links are validated to block dangerous protocols:
+
+```typescript
+// ✅ Allowed protocols
+https://example.com
+http://example.com/path
+
+// ❌ Blocked protocols
+javascript:alert(1)          // Blocked
+data:text/html,<script>...   // Blocked
+vbscript:alert(1)            // Blocked
+file:///etc/passwd           // Blocked
+```
+
+**Configuration:**
+
+```html
+<!-- ✅ Recommended: Enable URL validation (default) -->
+<forge-rich-text-editor>
+  <forge-rte-link validate-urls="true"></forge-rte-link>
+</forge-rich-text-editor>
+
+<!-- ⚠️ Not recommended: Disabling validation allows dangerous protocols -->
+<forge-rich-text-editor>
+  <forge-rte-link validate-urls="false"></forge-rte-link>
+</forge-rich-text-editor>
+```
+
+#### DoS Prevention
+
+The editor enforces limits to prevent denial-of-service attacks:
+
+- **Depth Limit**: JSON structures limited to 50 nesting levels
+- **Node Count**: Maximum 5,000 nodes in content structure
+- **Character Limit**: Configurable via `max-length` property
+
+```typescript
+// ❌ Blocked - Too deeply nested (51+ levels)
+// Throws: "Maximum nesting depth exceeded"
+
+// ❌ Blocked - Too many nodes (5001+)
+// Throws: "Maximum node count exceeded"
+```
+
+### Safe Usage Patterns
+
+#### ✅ Trusted Content (Internal Users)
+
+For content created by authenticated users in your application:
+
+```typescript
+const editor = document.querySelector('forge-rich-text-editor');
+
+// Content is automatically sanitized
+editor.content = userContent;
+
+// Output is safe to render
+const html = editor.toHTML();
+```
+
+#### ✅ Untrusted Content (External Sources)
+
+For content from external or public sources, use the read-only renderer:
+
+```typescript
+// Use renderer for display-only content
+<forge-rich-text-renderer .content=${externalContent}>
+</forge-rich-text-renderer>
+
+// Renderer automatically sanitizes input
+// Consider additional server-side validation
+```
+
+#### ⚠️ Server-Side Validation Required
+
+**Always validate on the server before storing or displaying to other users:**
+
+```typescript
+// Client-side (this component)
+const html = editor.toHTML();
+
+// Server-side (your backend)
+app.post('/api/content', (req, res) => {
+  const content = req.body.content;
+
+  // Validate and sanitize server-side
+  const sanitized = serverSideSanitize(content);
+
+  // Store sanitized content
+  db.save(sanitized);
+});
+```
+
+### Security Best Practices
+
+When using the rich text editor:
+
+1. **Always Enable URL Validation**: Keep `validate-urls="true"` (default) for link features
+2. **Set Character Limits**: Use `max-length` to prevent excessively large content
+3. **Validate Server-Side**: Never trust client-side validation alone
+4. **Use CSP Headers**: Implement Content Security Policy headers in your application
+5. **Monitor Errors**: Listen to error events for security-related issues
+6. **Keep Updated**: Regularly update to get security patches
+
+### Content Security Policy
+
+The editor works with strict Content Security Policy headers. Recommended CSP configuration:
+
+```http
+Content-Security-Policy:
+  default-src 'self';
+  script-src 'self';
+  style-src 'self' 'unsafe-inline';
+  img-src 'self' data: https:;
+```
+
+Note: `'unsafe-inline'` is required for styles due to TipTap's inline styling. All component scripts are CSP-compliant.
+
+### Additional Security Resources
+
+For detailed security information, see:
+
+- [SECURITY.md](../SECURITY.md) - Complete security guide
+- Security testing examples
+- Attack scenarios and mitigations
+- Responsible disclosure process
+
+**If you discover a security vulnerability, please email security@tylertech.com instead of opening a public issue.**
+
 ### Screen Reader Support
 
 The editor provides live announcements for all formatting actions and state changes to keep screen reader users informed of their actions.

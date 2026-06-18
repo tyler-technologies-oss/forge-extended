@@ -109,23 +109,6 @@ describe('RichTextEditor - Error Handling', () => {
 
       consoleStub.restore();
     });
-
-    it('should suppress console errors when suppressErrors is true', async () => {
-      const consoleStub = sinon.stub(console, 'error');
-
-      const el = await fixture<RichTextContextComponent>(html`
-        <forge-rich-text-context suppress-errors>
-          <!-- No content element -->
-        </forge-rich-text-context>
-      `);
-
-      await new Promise(resolve => setTimeout(resolve, 150));
-
-      // Even if errors occur, they should be suppressed
-      expect(el).to.be.ok;
-
-      consoleStub.restore();
-    });
   });
 
   describe('Content Operations', () => {
@@ -282,23 +265,6 @@ describe('RichTextEditor - Error Handling', () => {
 
       const el = await fixture<RichTextEditorComponent>(html`
         <forge-rich-text-editor>
-          <forge-rte-standard-tools></forge-rte-standard-tools>
-        </forge-rich-text-editor>
-      `);
-
-      // Wait for initialization
-      await new Promise(resolve => setTimeout(resolve, 150));
-
-      expect(el).to.be.ok;
-
-      consoleStub.restore();
-    });
-
-    it('should suppress runtime error logging when suppressErrors is true', async () => {
-      const consoleStub = sinon.stub(console, 'error');
-
-      const el = await fixture<RichTextEditorComponent>(html`
-        <forge-rich-text-editor suppress-errors>
           <forge-rte-standard-tools></forge-rte-standard-tools>
         </forge-rich-text-editor>
       `);

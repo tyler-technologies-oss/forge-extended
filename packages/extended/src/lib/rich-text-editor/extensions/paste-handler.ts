@@ -125,7 +125,12 @@ function sanitizeHTML(html: string, allowImages: boolean): string {
     'input',
     'button',
     'textarea',
-    'select'
+    'select',
+    'svg', // SVG can contain scripts and event handlers
+    'math', // MathML can execute scripts
+    'audio', // Can load remote resources
+    'video', // Can load remote resources
+    'base' // Can hijack relative URLs
   ];
 
   if (!allowImages) {
