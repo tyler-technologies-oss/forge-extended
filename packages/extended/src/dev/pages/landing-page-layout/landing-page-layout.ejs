@@ -1,0 +1,40 @@
+<forge-landing-page-layout
+	slot="body"
+	id="layout"
+	image-url-small="https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcRnltfxyRHuEEUE4gIZp9fr77Q8goigP7mQ6Q&usqp=CAU"
+	image-url-large="https://i.pinimg.com/originals/63/1e/af/631eaf3fb0403f515c64d6bbf0b6d3cf.jpg">
+	<div slot="footer" style="height: 75px; display: flex; flex-direction: column; place-content: center; text-align: center;">
+		&commat; Tyler Technologies 2022
+	</div>
+
+	<h2 slot="main-title">Welcome, Friend</h2>
+	<h3 slot="secondary-title">Enjoy the site!</h3>
+
+	<forge-card slot="announcements" id="toggle-size" style="cursor: pointer; position: relative;" tabindex="0" role="button">
+		Click to toggle size
+		<forge-state-layer></forge-state-layer>
+		<forge-focus-indicator inward></forge-focus-indicator>
+	</forge-card>
+
+	<forge-card role="button" slot="announcements" id="toggle-top" style="cursor: pointer; position: relative;" tabindex="0">
+		Click to toggle top
+		<forge-state-layer></forge-state-layer>
+		<forge-focus-indicator inward></forge-focus-indicator>
+	</forge-card>
+
+	<div id="top" class="top" slot="top">Top Content</div>
+	<div slot="left" class="container">Left</div>
+	<div slot="center" class="container">Center</div>
+	<div slot="right" class="container">Right</div>
+
+	<forge-button slot="action" variant="raised" theme="primary" id="toggle-mode">
+		Toggle Mode: <span id="layout-mode-button"></span>
+	</forge-button>
+
+	<forge-button slot="action" variant="raised" theme="primary" id="toggle-align">
+		Toggle Align: <span id="layout-align-button"></span>
+	</forge-button>
+</forge-landing-page-layout>
+
+<script type="module" src="landing-page-layout.ts"></script>
+<!-- <style src="landing-page-layout.scss"></style> -->

@@ -13,19 +13,19 @@ export const LandingPageLayoutComponentTagName: keyof HTMLElementTagNameMap = 'f
 export class LandingPageLayoutComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   public mode: 'two-third' | 'equal' | 'three' | 'single' = 'two-third';
 
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   public alignment: 'left' | 'center' = 'center';
 
-  @property({ type: String })
+  @property({ type: String, reflect: true })
   public size: 'normal' | 'wide' = 'normal';
 
-  @property({ type: String })
+  @property({ type: String, attribute: 'image-url-small' })
   public imageUrlSmall = '';
 
-  @property({ type: String })
+  @property({ type: String, attribute: 'image-url-large' })
   public imageUrlLarge = '';
 
   #backgroundPicture?: HTMLPictureElement;
@@ -35,13 +35,37 @@ export class LandingPageLayoutComponent extends LitElement {
     this.#applyMode();
     this.#applyAlignment();
     this.#applySize();
-    this.#applyImageSources();
     this.#setupSlotListeners();
+  }
+
+  public override firstUpdated(): void {
+    this.#backgroundPicture = this.renderRoot.querySelector(
+      '.forge-landing-page-layout__header__background__picture'
+    ) as HTMLPictureElement;
+    if (this.imageUrlSmall || this.imageUrlLarge) {
+      this.#applyImageSources();
+    }
   }
 
   public override disconnectedCallback(): void {
     super.disconnectedCallback();
     this.#cleanupSlotListeners();
+  }
+
+  public override updated(changedProperties: Map<string, unknown>): void {
+    super.updated(changedProperties);
+    if (changedProperties.has('mode')) {
+      this.#applyMode();
+    }
+    if (changedProperties.has('alignment')) {
+      this.#applyAlignment();
+    }
+    if (changedProperties.has('size')) {
+      this.#applySize();
+    }
+    if (changedProperties.has('imageUrlSmall') || changedProperties.has('imageUrlLarge')) {
+      this.#applyImageSources();
+    }
   }
 
   #applyMode(): void {
@@ -63,19 +87,30 @@ export class LandingPageLayoutComponent extends LitElement {
   }
 
   #applySize(): void {
-    const root = this.renderRoot.querySelector('.forge-landing-page-layout__root');
-    if (!root) {
+    const container = this.renderRoot.querySelector('.forge-landing-page-layout');
+    if (!container) {
       return;
     }
-    root.classList.toggle('forge-landing-page-layout--wide', this.size === 'wide');
+    container.classList.toggle('forge-landing-page-layout--wide', this.size === 'wide');
   }
 
   #applyImageSources(): void {
     if (!this.#backgroundPicture) {
       return;
     }
+
+    if (!this.imageUrlSmall && !this.imageUrlLarge) {
+      return;
+    }
+
+    this.#backgroundPicture.innerHTML = '';
     this.#setSmallImageSource(this.imageUrlSmall);
     this.#setLargeImageSource(this.imageUrlLarge);
+
+    const img = document.createElement('img');
+    img.alt = '';
+    img.src = this.imageUrlLarge || this.imageUrlSmall;
+    this.#backgroundPicture.appendChild(img);
   }
 
   #setSmallImageSource(url: string): void {

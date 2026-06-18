@@ -1,0 +1,24 @@
+// Override the default card max-width to allow landing-page-layout to show its full width
+.content .card {
+  max-width: 100%;
+
+}
+
+.top {
+  display: flex;
+  flex-direction: row;
+  border: dashed 2px lightgray;
+  height: 200px;
+  text-align: center;
+  place-items: center;
+  place-content: center;
+}
+
+.container {
+  border: dashed 2px lightgray;
+  // height: 500px;
+  display: flex;
+  flex-direction: column;
+  place-content: center;
+  text-align: center;
+}
