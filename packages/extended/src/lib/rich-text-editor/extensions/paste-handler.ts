@@ -69,6 +69,15 @@ export const PasteHandler = Extension.create<PasteHandlerOptions>({
         props: {
           // Handle paste events
           transformPastedHTML: (html: string) => {
+            // SECURITY: Limit paste size to prevent DoS attacks
+            const MAX_PASTE_SIZE = 1_000_000; // 1MB limit
+
+            if (html.length > MAX_PASTE_SIZE) {
+              const sizeMB = (html.length / 1024 / 1024).toFixed(2);
+              console.warn(`[RTE Security] Pasted content too large (${sizeMB}MB), truncating to 1MB`);
+              html = html.substring(0, MAX_PASTE_SIZE);
+            }
+
             // If formatting not allowed, strip all HTML tags
             if (!options.allowPasteFormatting) {
               const temp = document.createElement('div');

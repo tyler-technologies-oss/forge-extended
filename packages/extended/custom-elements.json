@@ -4,6 +4,192 @@
   "modules": [
     {
       "kind": "javascript-module",
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AppLauncherComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-app-launcher'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AppLauncherComponent",
+          "slots": [
+            {
+              "description": "Title text for the related apps section",
+              "name": "related-apps-title"
+            },
+            {
+              "description": "Title text for the all apps view",
+              "name": "all-apps-title"
+            },
+            {
+              "description": "Text for the button that switches to all apps view",
+              "name": "view-all-apps-button-text"
+            },
+            {
+              "description": "Title text for the custom links section",
+              "name": "app-launcher-links-title"
+            },
+            {
+              "description": "Individual custom link items using forge-app-launcher-link",
+              "name": "app-launcher-link"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the dialog or popover is open.",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "relatedApps",
+              "type": {
+                "text": "AppLauncherOption[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "description": "An array of related apps for the related apps view."
+            },
+            {
+              "kind": "field",
+              "name": "allApps",
+              "type": {
+                "text": "AppLauncherOption[]"
+              },
+              "privacy": "public",
+              "default": "[]",
+              "description": "An array of all available apps for the all apps view."
+            },
+            {
+              "kind": "field",
+              "name": "launcherAriaLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Open app launcher'",
+              "description": "ARIA label for the app launcher trigger button",
+              "attribute": "launcher-aria-label"
+            },
+            {
+              "kind": "field",
+              "name": "backAriaLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Go back'",
+              "description": "ARIA label for the back button",
+              "attribute": "back-aria-label"
+            },
+            {
+              "kind": "field",
+              "name": "closeAriaLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Close app launcher'",
+              "description": "ARIA label for the close button",
+              "attribute": "close-aria-label"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the dialog or popover is open.",
+              "fieldName": "open"
+            },
+            {
+              "name": "launcher-aria-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Open app launcher'",
+              "description": "ARIA label for the app launcher trigger button",
+              "fieldName": "launcherAriaLabel"
+            },
+            {
+              "name": "back-aria-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Go back'",
+              "description": "ARIA label for the back button",
+              "fieldName": "backAriaLabel"
+            },
+            {
+              "name": "close-aria-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Close app launcher'",
+              "description": "ARIA label for the close button",
+              "fieldName": "closeAriaLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-app-launcher",
+          "customElement": true,
+          "states": [
+            {
+              "name": "small",
+              "description": "The component is displayed in mobile/small screen mode (dialog)"
+            },
+            {
+              "name": "large",
+              "description": "The component is displayed in desktop/large screen mode (popover)"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLauncherComponentTagName",
+          "declaration": {
+            "name": "AppLauncherComponentTagName",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLauncherComponent",
+          "declaration": {
+            "name": "AppLauncherComponent",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLauncherComponent",
+            "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/app-layout/app-layout.ts",
       "declarations": [
         {
@@ -292,192 +478,6 @@
           "declaration": {
             "name": "AppLayoutComponent",
             "module": "src/lib/app-layout/app-layout.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/app-launcher/app-launcher.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "AppLauncherComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-app-launcher'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AppLauncherComponent",
-          "slots": [
-            {
-              "description": "Title text for the related apps section",
-              "name": "related-apps-title"
-            },
-            {
-              "description": "Title text for the all apps view",
-              "name": "all-apps-title"
-            },
-            {
-              "description": "Text for the button that switches to all apps view",
-              "name": "view-all-apps-button-text"
-            },
-            {
-              "description": "Title text for the custom links section",
-              "name": "app-launcher-links-title"
-            },
-            {
-              "description": "Individual custom link items using forge-app-launcher-link",
-              "name": "app-launcher-link"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the dialog or popover is open.",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "relatedApps",
-              "type": {
-                "text": "AppLauncherOption[]"
-              },
-              "privacy": "public",
-              "default": "[]",
-              "description": "An array of related apps for the related apps view."
-            },
-            {
-              "kind": "field",
-              "name": "allApps",
-              "type": {
-                "text": "AppLauncherOption[]"
-              },
-              "privacy": "public",
-              "default": "[]",
-              "description": "An array of all available apps for the all apps view."
-            },
-            {
-              "kind": "field",
-              "name": "launcherAriaLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Open app launcher'",
-              "description": "ARIA label for the app launcher trigger button",
-              "attribute": "launcher-aria-label"
-            },
-            {
-              "kind": "field",
-              "name": "backAriaLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Go back'",
-              "description": "ARIA label for the back button",
-              "attribute": "back-aria-label"
-            },
-            {
-              "kind": "field",
-              "name": "closeAriaLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Close app launcher'",
-              "description": "ARIA label for the close button",
-              "attribute": "close-aria-label"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the dialog or popover is open.",
-              "fieldName": "open"
-            },
-            {
-              "name": "launcher-aria-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Open app launcher'",
-              "description": "ARIA label for the app launcher trigger button",
-              "fieldName": "launcherAriaLabel"
-            },
-            {
-              "name": "back-aria-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Go back'",
-              "description": "ARIA label for the back button",
-              "fieldName": "backAriaLabel"
-            },
-            {
-              "name": "close-aria-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Close app launcher'",
-              "description": "ARIA label for the close button",
-              "fieldName": "closeAriaLabel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-app-launcher",
-          "customElement": true,
-          "states": [
-            {
-              "name": "small",
-              "description": "The component is displayed in mobile/small screen mode (dialog)"
-            },
-            {
-              "name": "large",
-              "description": "The component is displayed in desktop/large screen mode (popover)"
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AppLauncherComponentTagName",
-          "declaration": {
-            "name": "AppLauncherComponentTagName",
-            "module": "src/lib/app-launcher/app-launcher.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AppLauncherComponent",
-          "declaration": {
-            "name": "AppLauncherComponent",
-            "module": "src/lib/app-launcher/app-launcher.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "AppLauncherComponent",
-            "module": "src/lib/app-launcher/app-launcher.ts"
           }
         }
       ]
@@ -778,202 +778,6 @@
           "declaration": {
             "name": "ContentScaffoldComponent",
             "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/count-card/count-card.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "CountCardComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-count-card'"
-        },
-        {
-          "kind": "class",
-          "description": "A card component for displaying a count or metric with an icon and label.",
-          "name": "CountCardComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the background color of the icon container. Defaults to Forge's surface-container color.",
-              "name": "--forge-count-card-icon-background"
-            },
-            {
-              "description": "Controls the color of the icon. Defaults to Forge's on-surface color.",
-              "name": "--forge-count-card-icon-color"
-            },
-            {
-              "description": "Controls the size of the icon container. Defaults to `32px`.",
-              "name": "--forge-count-card-icon-container-size"
-            },
-            {
-              "description": "Controls the size of the icon itself. Defaults to `24px`.",
-              "name": "--forge-count-card-icon-size"
-            },
-            {
-              "description": "Controls the text color of the label and count. Inherited from theme when a theme is applied.",
-              "name": "--forge-count-card-color"
-            }
-          ],
-          "slots": [
-            {
-              "description": "The icon displayed at the start of the card header.",
-              "name": "icon"
-            },
-            {
-              "description": "The label text displayed next to the icon.",
-              "name": "label"
-            },
-            {
-              "description": "Optional content at the end of the header, ideal for badges or small accessories.",
-              "name": "header-end"
-            },
-            {
-              "description": "Optional slot for a `forge-icon-button`. Use this instead of `header-end` for icon buttons, as it provides proper alignment for the 48x48 touch target.",
-              "name": "action"
-            },
-            {
-              "description": "The main count or value displayed prominently below the header.",
-              "name": "count"
-            },
-            {
-              "description": "Optional content displayed after the count, ideal for units or secondary values.",
-              "name": "count-end"
-            },
-            {
-              "description": "Optional content below the count for additional details or secondary information.",
-              "name": "body"
-            },
-            {
-              "description": "Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators.",
-              "name": "full-width"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "theme",
-              "type": {
-                "text": "CountCardTheme"
-              },
-              "privacy": "public",
-              "default": "'none'",
-              "description": "The theme variant applied to the card.",
-              "attribute": "theme"
-            },
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Whether to hide the card border.",
-              "attribute": "no-border"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "theme",
-              "type": {
-                "text": "CountCardTheme"
-              },
-              "default": "'none'",
-              "description": "The theme variant applied to the card.",
-              "fieldName": "theme"
-            },
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Whether to hide the card border.",
-              "fieldName": "noBorder"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-count-card",
-          "customElement": true,
-          "states": [
-            {
-              "name": "none",
-              "description": "Applied when the theme is set to `none`. Uses the default card styling."
-            },
-            {
-              "name": "primary",
-              "description": "Applied when the theme is set to `primary`."
-            },
-            {
-              "name": "secondary",
-              "description": "Applied when the theme is set to `secondary`."
-            },
-            {
-              "name": "tertiary",
-              "description": "Applied when the theme is set to `tertiary`."
-            },
-            {
-              "name": "success",
-              "description": "Applied when the theme is set to `success`."
-            },
-            {
-              "name": "error",
-              "description": "Applied when the theme is set to `error`."
-            },
-            {
-              "name": "warning",
-              "description": "Applied when the theme is set to `warning`."
-            },
-            {
-              "name": "info",
-              "description": "Applied when the theme is set to `info`."
-            },
-            {
-              "name": "info-secondary",
-              "description": "Applied when the theme is set to `info-secondary`. Provides a subtle tonal style."
-            },
-            {
-              "name": "no-border",
-              "description": "Applied when the `noBorder` property is `true`."
-            },
-            {
-              "name": "has-action",
-              "description": "Applied when content is slotted into the `action` slot."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "CountCardComponentTagName",
-          "declaration": {
-            "name": "CountCardComponentTagName",
-            "module": "src/lib/count-card/count-card.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "CountCardComponent",
-          "declaration": {
-            "name": "CountCardComponent",
-            "module": "src/lib/count-card/count-card.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "CountCardComponent",
-            "module": "src/lib/count-card/count-card.ts"
           }
         }
       ]
@@ -1416,6 +1220,202 @@
           "declaration": {
             "name": "MultiSelectHeaderComponent",
             "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/count-card/count-card.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "CountCardComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-count-card'"
+        },
+        {
+          "kind": "class",
+          "description": "A card component for displaying a count or metric with an icon and label.",
+          "name": "CountCardComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the background color of the icon container. Defaults to Forge's surface-container color.",
+              "name": "--forge-count-card-icon-background"
+            },
+            {
+              "description": "Controls the color of the icon. Defaults to Forge's on-surface color.",
+              "name": "--forge-count-card-icon-color"
+            },
+            {
+              "description": "Controls the size of the icon container. Defaults to `32px`.",
+              "name": "--forge-count-card-icon-container-size"
+            },
+            {
+              "description": "Controls the size of the icon itself. Defaults to `24px`.",
+              "name": "--forge-count-card-icon-size"
+            },
+            {
+              "description": "Controls the text color of the label and count. Inherited from theme when a theme is applied.",
+              "name": "--forge-count-card-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The icon displayed at the start of the card header.",
+              "name": "icon"
+            },
+            {
+              "description": "The label text displayed next to the icon.",
+              "name": "label"
+            },
+            {
+              "description": "Optional content at the end of the header, ideal for badges or small accessories.",
+              "name": "header-end"
+            },
+            {
+              "description": "Optional slot for a `forge-icon-button`. Use this instead of `header-end` for icon buttons, as it provides proper alignment for the 48x48 touch target.",
+              "name": "action"
+            },
+            {
+              "description": "The main count or value displayed prominently below the header.",
+              "name": "count"
+            },
+            {
+              "description": "Optional content displayed after the count, ideal for units or secondary values.",
+              "name": "count-end"
+            },
+            {
+              "description": "Optional content below the count for additional details or secondary information.",
+              "name": "body"
+            },
+            {
+              "description": "Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators.",
+              "name": "full-width"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "theme",
+              "type": {
+                "text": "CountCardTheme"
+              },
+              "privacy": "public",
+              "default": "'none'",
+              "description": "The theme variant applied to the card.",
+              "attribute": "theme"
+            },
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to hide the card border.",
+              "attribute": "no-border"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "theme",
+              "type": {
+                "text": "CountCardTheme"
+              },
+              "default": "'none'",
+              "description": "The theme variant applied to the card.",
+              "fieldName": "theme"
+            },
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to hide the card border.",
+              "fieldName": "noBorder"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-count-card",
+          "customElement": true,
+          "states": [
+            {
+              "name": "none",
+              "description": "Applied when the theme is set to `none`. Uses the default card styling."
+            },
+            {
+              "name": "primary",
+              "description": "Applied when the theme is set to `primary`."
+            },
+            {
+              "name": "secondary",
+              "description": "Applied when the theme is set to `secondary`."
+            },
+            {
+              "name": "tertiary",
+              "description": "Applied when the theme is set to `tertiary`."
+            },
+            {
+              "name": "success",
+              "description": "Applied when the theme is set to `success`."
+            },
+            {
+              "name": "error",
+              "description": "Applied when the theme is set to `error`."
+            },
+            {
+              "name": "warning",
+              "description": "Applied when the theme is set to `warning`."
+            },
+            {
+              "name": "info",
+              "description": "Applied when the theme is set to `info`."
+            },
+            {
+              "name": "info-secondary",
+              "description": "Applied when the theme is set to `info-secondary`. Provides a subtle tonal style."
+            },
+            {
+              "name": "no-border",
+              "description": "Applied when the `noBorder` property is `true`."
+            },
+            {
+              "name": "has-action",
+              "description": "Applied when content is slotted into the `action` slot."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "CountCardComponentTagName",
+          "declaration": {
+            "name": "CountCardComponentTagName",
+            "module": "src/lib/count-card/count-card.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "CountCardComponent",
+          "declaration": {
+            "name": "CountCardComponent",
+            "module": "src/lib/count-card/count-card.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "CountCardComponent",
+            "module": "src/lib/count-card/count-card.ts"
           }
         }
       ]
@@ -2790,6 +2790,92 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ThemeToggleComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-theme-toggle'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ThemeToggleComponent",
+          "slots": [
+            {
+              "description": "The title shown above the toggle buttons",
+              "name": "title"
+            }
+          ],
+          "members": [
+            {
+              "kind": "method",
+              "name": "setTheme",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "ThemeToggleTheme"
+                  }
+                }
+              ],
+              "description": "Sets the current theme."
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ThemeToggleThemeEventData>"
+              },
+              "description": "Fired when the theme is changed",
+              "name": "forge-theme-toggle-update"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-theme-toggle",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ThemeToggleComponentTagName",
+          "declaration": {
+            "name": "ThemeToggleComponentTagName",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ThemeToggleComponent",
+          "declaration": {
+            "name": "ThemeToggleComponent",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ThemeToggleComponent",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/user-profile/user-profile.ts",
       "declarations": [
         {
@@ -3007,92 +3093,6 @@
           "declaration": {
             "name": "UserProfileComponent",
             "module": "src/lib/user-profile/user-profile.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ThemeToggleComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-theme-toggle'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ThemeToggleComponent",
-          "slots": [
-            {
-              "description": "The title shown above the toggle buttons",
-              "name": "title"
-            }
-          ],
-          "members": [
-            {
-              "kind": "method",
-              "name": "setTheme",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "ThemeToggleTheme"
-                  }
-                }
-              ],
-              "description": "Sets the current theme."
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ThemeToggleThemeEventData>"
-              },
-              "description": "Fired when the theme is changed",
-              "name": "forge-theme-toggle-update"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-theme-toggle",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ThemeToggleComponentTagName",
-          "declaration": {
-            "name": "ThemeToggleComponentTagName",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ThemeToggleComponent",
-          "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
           }
         }
       ]
@@ -4730,6 +4730,18 @@
   ],
   "branchName": "feat",
   "forgeTypes": {
+    "AppLauncherOption": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 43
+    },
+    "AppView": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 50
+    },
+    "AppLauncherComponent": {
+      "path": "src/lib/app-launcher/app-launcher.ts",
+      "lineNumber": 67
+    },
     "AppLayoutBreakpoint": {
       "path": "src/lib/app-layout/app-layout.ts",
       "lineNumber": 30
@@ -4745,18 +4757,6 @@
     "AppLayoutComponent": {
       "path": "src/lib/app-layout/app-layout.ts",
       "lineNumber": 90
-    },
-    "AppLauncherOption": {
-      "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 43
-    },
-    "AppView": {
-      "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 50
-    },
-    "AppLauncherComponent": {
-      "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 67
     },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
@@ -4778,14 +4778,6 @@
       "path": "src/lib/content-scaffold/content-scaffold.ts",
       "lineNumber": 37
     },
-    "CountCardTheme": {
-      "path": "src/lib/count-card/count-card.ts",
-      "lineNumber": 16
-    },
-    "CountCardComponent": {
-      "path": "src/lib/count-card/count-card.ts",
-      "lineNumber": 71
-    },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 26
@@ -4805,6 +4797,14 @@
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
       "lineNumber": 28
+    },
+    "CountCardTheme": {
+      "path": "src/lib/count-card/count-card.ts",
+      "lineNumber": 16
+    },
+    "CountCardComponent": {
+      "path": "src/lib/count-card/count-card.ts",
+      "lineNumber": 71
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
@@ -4866,10 +4866,6 @@
       "path": "src/lib/structured-card/structured-card.ts",
       "lineNumber": 34
     },
-    "UserProfileComponent": {
-      "path": "src/lib/user-profile/user-profile.ts",
-      "lineNumber": 49
-    },
     "ThemeToggleTheme": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 28
@@ -4881,6 +4877,10 @@
     "ThemeToggleComponent": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 41
+    },
+    "UserProfileComponent": {
+      "path": "src/lib/user-profile/user-profile.ts",
+      "lineNumber": 49
     },
     "AppLauncherLink": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",

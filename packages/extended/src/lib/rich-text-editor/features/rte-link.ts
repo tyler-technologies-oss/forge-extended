@@ -220,6 +220,30 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
 
     // Security: URL validation is always enabled
 
+    // SECURITY CHECK: URL length limit (prevent DoS)
+    const MAX_URL_LENGTH = 2048; // RFC 2616 recommendation
+    if (this._linkUrl.length > MAX_URL_LENGTH) {
+      this._validationError = `URL too long (maximum ${MAX_URL_LENGTH} characters)`;
+      return;
+    }
+
+    // SECURITY CHECK: Detect Unicode homograph attacks and internationalized domains
+    // eslint-disable-next-line no-control-regex
+    const hasNonASCII = /[^\x00-\x7F]/.test(this._linkUrl);
+    const hasPunycode = this._linkUrl.includes('xn--');
+
+    if (hasNonASCII) {
+      this._validationError =
+        'Warning: This URL contains non-English characters. Some characters may look similar to English letters but are different. Please verify carefully.';
+      return;
+    }
+
+    if (hasPunycode) {
+      this._validationError =
+        'Warning: This URL contains internationalized domain names (IDN). Verify the domain carefully to avoid phishing.';
+      return;
+    }
+
     // CRITICAL SECURITY CHECK: Block dangerous protocols FIRST
     const protocolBlocklist = ['javascript:', 'data:', 'vbscript:', 'file:', 'about:', 'blob:'];
 

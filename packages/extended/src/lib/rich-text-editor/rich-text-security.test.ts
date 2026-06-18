@@ -1315,5 +1315,182 @@ describe('Security: XSS Prevention', () => {
         expect((el as any).unlimitedNesting).to.be.undefined;
       });
     });
+
+    describe('Security Finding #8 - Paste Size DoS Protection', () => {
+      it('should handle extremely large pasted content without hanging', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const warnSpy = sinon.spy(console, 'warn');
+
+        try {
+          // Create a 2MB HTML string
+          const huge = '<p>' + 'text '.repeat(400_000) + '</p>';
+          expect(huge.length).to.be.greaterThan(1_000_000);
+
+          // This should truncate and warn, not hang
+          el.content = huge;
+          await el.updateComplete;
+
+          // Should have logged a warning about truncation
+          expect(warnSpy.calledWith(sinon.match(/Pasted content too large/))).to.be.true;
+        } finally {
+          warnSpy.restore();
+        }
+      });
+
+      it('should allow content under 1MB without warning', async () => {
+        const el = await fixture<RichTextContextComponent>(html` <forge-rich-text-context></forge-rich-text-context> `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const warnSpy = sinon.spy(console, 'warn');
+
+        try {
+          // Create a 500KB HTML string (under limit)
+          const acceptable = '<p>' + 'text '.repeat(100_000) + '</p>';
+          expect(acceptable.length).to.be.lessThan(1_000_000);
+
+          el.content = acceptable;
+          await el.updateComplete;
+
+          // Should NOT warn about size
+          expect(warnSpy.calledWith(sinon.match(/Pasted content too large/))).to.be.false;
+        } finally {
+          warnSpy.restore();
+        }
+      });
+    });
+
+    describe('Unicode Homograph Attack Detection', () => {
+      it('should warn on Cyrillic characters in URL', async () => {
+        const el = await fixture<RichTextContextComponent>(html`
+          <forge-rich-text-context>
+            <forge-rte-link></forge-rte-link>
+          </forge-rich-text-context>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const link = el.querySelector('forge-rte-link') as RichTextFeatureLinkComponent;
+
+        // Use Cyrillic 'е' (U+0435) instead of Latin 'e' (U+0065)
+        (link as any)._linkUrl = 'https://еxample.com';
+        (link as any)._validateUrl();
+        await link.updateComplete;
+
+        expect((link as any)._validationError).to.include('non-English characters');
+      });
+
+      it('should warn on punycode (xn--) domains', async () => {
+        const el = await fixture<RichTextContextComponent>(html`
+          <forge-rich-text-context>
+            <forge-rte-link></forge-rte-link>
+          </forge-rich-text-context>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const link = el.querySelector('forge-rte-link') as RichTextFeatureLinkComponent;
+
+        (link as any)._linkUrl = 'https://xn--xample-9ua.com';
+        (link as any)._validateUrl();
+        await link.updateComplete;
+
+        expect((link as any)._validationError).to.include('internationalized domain names');
+      });
+
+      it('should allow ASCII URLs without warning', async () => {
+        const el = await fixture<RichTextContextComponent>(html`
+          <forge-rich-text-context>
+            <forge-rte-link></forge-rte-link>
+          </forge-rich-text-context>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const link = el.querySelector('forge-rte-link') as RichTextFeatureLinkComponent;
+
+        (link as any)._linkUrl = 'https://example.com';
+        (link as any)._validateUrl();
+        await link.updateComplete;
+
+        expect((link as any)._validationError).to.equal('');
+      });
+
+      it('should warn on mixed scripts (Greek, Arabic, etc)', async () => {
+        const el = await fixture<RichTextContextComponent>(html`
+          <forge-rich-text-context>
+            <forge-rte-link></forge-rte-link>
+          </forge-rich-text-context>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const link = el.querySelector('forge-rte-link') as RichTextFeatureLinkComponent;
+
+        // Greek letters that look like Latin
+        (link as any)._linkUrl = 'https://gοοgle.com'; // Greek omicron (ο)
+        (link as any)._validateUrl();
+        await link.updateComplete;
+
+        expect((link as any)._validationError).to.include('non-English characters');
+      });
+    });
+
+    describe('URL Length Validation', () => {
+      it('should reject extremely long URLs', async () => {
+        const el = await fixture<RichTextContextComponent>(html`
+          <forge-rich-text-context>
+            <forge-rte-link></forge-rte-link>
+          </forge-rich-text-context>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const link = el.querySelector('forge-rte-link') as RichTextFeatureLinkComponent;
+
+        // Create URL over 2048 characters
+        (link as any)._linkUrl = 'https://example.com/' + 'a'.repeat(2100);
+        (link as any)._validateUrl();
+        await link.updateComplete;
+
+        expect((link as any)._validationError).to.include('URL too long');
+        expect((link as any)._validationError).to.include('2048');
+      });
+
+      it('should allow URLs under the length limit', async () => {
+        const el = await fixture<RichTextContextComponent>(html`
+          <forge-rich-text-context>
+            <forge-rte-link></forge-rte-link>
+          </forge-rich-text-context>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const link = el.querySelector('forge-rte-link') as RichTextFeatureLinkComponent;
+
+        // Create URL under 2048 characters
+        (link as any)._linkUrl = 'https://example.com/' + 'a'.repeat(2000);
+        (link as any)._validateUrl();
+        await link.updateComplete;
+
+        expect((link as any)._validationError).to.equal('');
+      });
+
+      it('should reject URL exactly at 2049 characters', async () => {
+        const el = await fixture<RichTextContextComponent>(html`
+          <forge-rich-text-context>
+            <forge-rte-link></forge-rte-link>
+          </forge-rich-text-context>
+        `);
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        const link = el.querySelector('forge-rte-link') as RichTextFeatureLinkComponent;
+
+        // Create URL exactly at 2049 (1 over limit)
+        const url = 'https://example.com/' + 'a'.repeat(2029);
+        expect(url.length).to.equal(2049);
+
+        (link as any)._linkUrl = url;
+        (link as any)._validateUrl();
+        await link.updateComplete;
+
+        expect((link as any)._validationError).to.include('URL too long');
+      });
+    });
   });
 });
