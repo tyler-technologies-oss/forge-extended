@@ -1604,6 +1604,180 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/quantity-field/quantity-field.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "QuantityFieldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-quantity-field'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "QuantityFieldComponent",
+          "slots": [
+            {
+              "description": "Reserved for the `<input>` element.",
+              "name": ""
+            },
+            {
+              "description": "The label for the field.",
+              "name": "label"
+            },
+            {
+              "description": "The decrement button.",
+              "name": "decrement-button"
+            },
+            {
+              "description": "The icon for the decrement button.",
+              "name": "decrement-icon"
+            },
+            {
+              "description": "The increment button.",
+              "name": "increment-button"
+            },
+            {
+              "description": "The icon for the increment button.",
+              "name": "increment-icon"
+            },
+            {
+              "description": "The support text for the field.",
+              "name": "support-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the field is invalid.",
+              "attribute": "invalid"
+            },
+            {
+              "kind": "field",
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the field is required.",
+              "attribute": "required"
+            },
+            {
+              "kind": "field",
+              "name": "decrementLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Decrement'",
+              "description": "The accessible label for the decrement button.",
+              "attribute": "decrement-label"
+            },
+            {
+              "kind": "field",
+              "name": "incrementLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Increment'",
+              "description": "The accessible label for the increment button.",
+              "attribute": "increment-label"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "invalid",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the field is invalid.",
+              "fieldName": "invalid"
+            },
+            {
+              "name": "required",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the field is required.",
+              "fieldName": "required"
+            },
+            {
+              "name": "decrement-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Decrement'",
+              "description": "The accessible label for the decrement button.",
+              "fieldName": "decrementLabel"
+            },
+            {
+              "name": "increment-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Increment'",
+              "description": "The accessible label for the increment button.",
+              "fieldName": "incrementLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-quantity-field",
+          "customElement": true,
+          "states": [
+            {
+              "name": "required",
+              "description": "Indicates whether the field is in its required state."
+            },
+            {
+              "name": "invalid",
+              "description": "Indicates whether the field is in its invalid state."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "QuantityFieldComponentTagName",
+          "declaration": {
+            "name": "QuantityFieldComponentTagName",
+            "module": "src/lib/quantity-field/quantity-field.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "QuantityFieldComponent",
+          "declaration": {
+            "name": "QuantityFieldComponent",
+            "module": "src/lib/quantity-field/quantity-field.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "QuantityFieldComponent",
+            "module": "src/lib/quantity-field/quantity-field.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "declarations": [
         {
@@ -2262,6 +2436,221 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/footer/footer/footer.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "FooterComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-footer'"
+        },
+        {
+          "kind": "class",
+          "description": "A footer component for displaying navigation, copyright, and branding information at the bottom of a page.",
+          "name": "FooterComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the background color of the footer.",
+              "name": "--forge-footer-background"
+            },
+            {
+              "description": "Controls the text color of footer content.",
+              "name": "--forge-footer-on-background"
+            },
+            {
+              "description": "Controls the padding of the footer.",
+              "name": "--forge-footer-padding"
+            },
+            {
+              "description": "Controls the left padding of the footer.",
+              "name": "--forge-footer-padding-left"
+            },
+            {
+              "description": "Controls the right padding of the footer.",
+              "name": "--forge-footer-padding-right"
+            },
+            {
+              "description": "Controls the gap between footer content and graphic in standard layout.",
+              "name": "--forge-footer-gap"
+            },
+            {
+              "description": "Controls the gap between stacked elements in alternative layout.",
+              "name": "--forge-footer-alternative-gap"
+            },
+            {
+              "description": "Controls the margin around dividers between footer items.",
+              "name": "--forge-footer-divider-margin"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Slot for footer items or custom content.",
+              "name": ""
+            },
+            {
+              "description": "Slot for footer graphic, such as a logo.",
+              "name": "graphic"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "layout",
+              "type": {
+                "text": "FooterLayout"
+              },
+              "privacy": "public",
+              "default": "'auto'",
+              "description": "Defines the footer layout mode.",
+              "attribute": "layout"
+            },
+            {
+              "kind": "field",
+              "name": "layoutBreakpoint",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "900",
+              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
+              "attribute": "layout-breakpoint"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "layout",
+              "type": {
+                "text": "FooterLayout"
+              },
+              "default": "'auto'",
+              "description": "Defines the footer layout mode.",
+              "fieldName": "layout"
+            },
+            {
+              "name": "layout-breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "default": "900",
+              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
+              "fieldName": "layoutBreakpoint"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-footer",
+          "customElement": true,
+          "states": [
+            {
+              "name": "standard",
+              "description": "Applied when the layout is set to `standard` or when in `auto` mode above the breakpoint."
+            },
+            {
+              "name": "alternative",
+              "description": "Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint."
+            },
+            {
+              "name": "auto",
+              "description": "Applied when the layout is set to `auto`."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FooterComponentTagName",
+          "declaration": {
+            "name": "FooterComponentTagName",
+            "module": "src/lib/footer/footer/footer.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "FooterComponent",
+          "declaration": {
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer/footer.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer/footer.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/footer/footer-item/footer-item.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "FooterItemComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-footer-item'"
+        },
+        {
+          "kind": "class",
+          "description": "A footer item component for displaying individual items within a footer, such as links, text, or copyright information.",
+          "name": "FooterItemComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the text color of the footer item.",
+              "name": "--forge-footer-item-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Slot for footer item content (e.g., text, links, or icons).",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-footer-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FooterItemComponentTagName",
+          "declaration": {
+            "name": "FooterItemComponentTagName",
+            "module": "src/lib/footer/footer-item/footer-item.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "FooterItemComponent",
+          "declaration": {
+            "name": "FooterItemComponent",
+            "module": "src/lib/footer/footer-item/footer-item.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "FooterItemComponent",
+            "module": "src/lib/footer/footer-item/footer-item.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
@@ -2404,6 +2793,10 @@
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 35
     },
+    "QuantityFieldComponent": {
+      "path": "src/lib/quantity-field/quantity-field.ts",
+      "lineNumber": 35
+    },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 20
@@ -2443,6 +2836,18 @@
     "AppLauncherLinkComponent": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "lineNumber": 26
+    },
+    "FooterLayout": {
+      "path": "src/lib/footer/footer/footer.ts",
+      "lineNumber": 16
+    },
+    "FooterComponent": {
+      "path": "src/lib/footer/footer/footer.ts",
+      "lineNumber": 42
+    },
+    "FooterItemComponent": {
+      "path": "src/lib/footer/footer-item/footer-item.ts",
+      "lineNumber": 24
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",

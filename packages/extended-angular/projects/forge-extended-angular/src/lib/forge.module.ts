@@ -4,6 +4,8 @@ import { ForgeExtendedAppLayoutModule } from './app-layout';
 import { ForgeExtendedBusyIndicatorModule } from './busy-indicator/busy-indicator.module';
 import { ForgeExtendedConfirmationDialogModule } from './confirmation-dialog/confirmation-dialog.module';
 import { ForgeExtendedCountCardModule } from './count-card';
+import { ForgeExtendedFooterModule } from './footer';
+import { ForgeExtendedFooterItemModule } from './footer-item';
 import { ForgeExtendedMultiSelectHeaderModule } from './multi-select-header/multi-select-header.module';
 import { ForgeExtendedProfileLinkModule } from './profile-link/profile-link.module';
 import { ForgeExtendedQuantityFieldModule } from './quantity-field/quantity-field.module';
@@ -18,6 +20,8 @@ import { NgModule } from '@angular/core';
     ForgeExtendedAppLauncherModule,
     ForgeExtendedBusyIndicatorModule,
     ForgeExtendedConfirmationDialogModule,
+    ForgeExtendedFooterModule,
+    ForgeExtendedFooterItemModule,
     ForgeExtendedMultiSelectHeaderModule,
     ForgeExtendedProfileLinkModule,
     ForgeExtendedQuantityFieldModule,

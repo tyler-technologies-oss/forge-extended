@@ -38,7 +38,7 @@ class StructuredCardHarness {
   }
 
   public hasState(state: string): boolean {
-    return (this.el as any).matches(`:state(${state})`);
+    return this.el.matches(`:state(${state})`);
   }
 
   public get beforeTitleSlot(): HTMLSlotElement {
