@@ -71,11 +71,11 @@ export class RichTextEditorComponent extends LitElement {
   public content = '';
 
   /** Whether the editor is disabled. */
-  @property({ type: Boolean })
+  @property({ type: Boolean, reflect: true })
   public disabled = false;
 
   /** Whether the editor is in readonly mode. */
-  @property({ type: Boolean, attribute: 'readonly' })
+  @property({ type: Boolean, attribute: 'readonly', reflect: true })
   public readOnly = false;
 
   /** Maximum character length allowed. 0 means no limit. */

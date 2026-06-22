@@ -1,16 +1,74 @@
 import { html } from 'lit';
 import { fixture, expect } from '@open-wc/testing';
-import type { RichTextEditorComponent } from './rich-text-editor';
-import type { RichTextContextComponent } from './rich-text-context';
-import type { RichTextContentComponent } from './rich-text-content';
-import './rich-text-editor';
-import './features/rte-standard-tools';
+import type { RichTextEditorComponent } from '../rich-text-editor';
+import type { RichTextContextComponent } from '../rich-text-context';
+import type { RichTextContentComponent } from '../rich-text-content';
+import '../rich-text-editor';
+import '../features/rte-standard-tools';
+import '../features/rte-code';
+
+/**
+ * Find a feature element — first inside forge-rte-standard-tools shadow DOM,
+ * then in the editor's own light DOM (for standalone features added directly).
+ */
+function getFeature(el: RichTextEditorComponent, tagName: string): Element | null | undefined {
+  return el.querySelector('forge-rte-standard-tools')?.shadowRoot?.querySelector(tagName) ?? el.querySelector(tagName);
+}
+
+/**
+ * Trigger a tool button by dispatching forge-rte-tool-toggle on the forge-rte-tool-button element.
+ * This bypasses the 3-level shadow DOM chain (forge-rte-tool-button → forge-icon-button → button)
+ * and fires the event that feature components actually listen for.
+ */
+function triggerToolButton(feature: Element | null | undefined): void {
+  const toolButton = feature?.shadowRoot?.querySelector('forge-rte-tool-button');
+  toolButton?.dispatchEvent(new CustomEvent('forge-rte-tool-toggle', { detail: false, bubbles: true, composed: true }));
+}
+
+/**
+ * Trigger a forge-icon-button by dispatching click on the host element.
+ * Used for undo/redo which use forge-icon-button directly with @click.
+ */
+function triggerIconButton(iconButton: Element | null | undefined): void {
+  iconButton?.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true }));
+}
 
 async function waitForEditor(el: RichTextEditorComponent): Promise<RichTextContextComponent> {
-  await new Promise(resolve => setTimeout(resolve, 200));
-  const context = el.shadowRoot!.querySelector('forge-rich-text-context') as RichTextContextComponent;
-  await context?.updateComplete;
-  return context;
+  await el.updateComplete;
+
+  const getContext = (): RichTextContextComponent =>
+    el.shadowRoot!.querySelector('forge-rich-text-context') as RichTextContextComponent;
+
+  if (!getContext()?.isInitialized) {
+    await new Promise<void>(resolve => {
+      let resolved = false;
+      const done = (): void => {
+        if (!resolved) {
+          resolved = true;
+          resolve();
+        }
+      };
+
+      el.addEventListener('initialized', done, { once: true });
+
+      const interval = setInterval(() => {
+        if (getContext()?.isInitialized) {
+          clearInterval(interval);
+          el.removeEventListener('initialized', done);
+          done();
+        }
+      }, 50);
+
+      setTimeout(() => {
+        clearInterval(interval);
+        el.removeEventListener('initialized', done);
+        done();
+      }, 5000);
+    });
+  }
+
+  await getContext()?.updateComplete;
+  return getContext();
 }
 
 function getLiveRegion(el: RichTextEditorComponent): HTMLElement | null {
@@ -88,11 +146,8 @@ describe('RTE Screen Reader Support', () => {
       editor?.commands.setContent('<p>Test content</p>');
       editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
-      const boldFeature = el.querySelector('forge-rte-bold');
-      const button = boldFeature?.shadowRoot
-        ?.querySelector('forge-rte-tool-button')
-        ?.shadowRoot?.querySelector('button');
-      button?.click();
+      const boldFeature = getFeature(el, 'forge-rte-bold');
+      triggerToolButton(boldFeature);
 
       await waitForAnnouncement(el, 'Bold applied');
 
@@ -112,11 +167,8 @@ describe('RTE Screen Reader Support', () => {
       editor?.commands.setContent('<p><strong>Test</strong></p>');
       editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
-      const boldFeature = el.querySelector('forge-rte-bold');
-      const button = boldFeature?.shadowRoot
-        ?.querySelector('forge-rte-tool-button')
-        ?.shadowRoot?.querySelector('button');
-      button?.click();
+      const boldFeature = getFeature(el, 'forge-rte-bold');
+      triggerToolButton(boldFeature);
 
       await waitForAnnouncement(el, 'Bold removed');
 
@@ -136,11 +188,8 @@ describe('RTE Screen Reader Support', () => {
       editor?.commands.setContent('<p>Test content</p>');
       editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
-      const italicFeature = el.querySelector('forge-rte-italic');
-      const button = italicFeature?.shadowRoot
-        ?.querySelector('forge-rte-tool-button')
-        ?.shadowRoot?.querySelector('button');
-      button?.click();
+      const italicFeature = getFeature(el, 'forge-rte-italic');
+      triggerToolButton(italicFeature);
 
       await waitForAnnouncement(el, 'Italic applied');
 
@@ -160,11 +209,8 @@ describe('RTE Screen Reader Support', () => {
       editor?.commands.setContent('<p>Test content</p>');
       editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
-      const underlineFeature = el.querySelector('forge-rte-underline');
-      const button = underlineFeature?.shadowRoot
-        ?.querySelector('forge-rte-tool-button')
-        ?.shadowRoot?.querySelector('button');
-      button?.click();
+      const underlineFeature = getFeature(el, 'forge-rte-underline');
+      triggerToolButton(underlineFeature);
 
       await waitForAnnouncement(el, 'Underline applied');
 
@@ -184,11 +230,8 @@ describe('RTE Screen Reader Support', () => {
       editor?.commands.setContent('<p>Test content</p>');
       editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
-      const strikeFeature = el.querySelector('forge-rte-strike');
-      const button = strikeFeature?.shadowRoot
-        ?.querySelector('forge-rte-tool-button')
-        ?.shadowRoot?.querySelector('button');
-      button?.click();
+      const strikeFeature = getFeature(el, 'forge-rte-strike');
+      triggerToolButton(strikeFeature);
 
       await waitForAnnouncement(el, 'Strikethrough applied');
 
@@ -200,6 +243,7 @@ describe('RTE Screen Reader Support', () => {
       const el = await fixture<RichTextEditorComponent>(html`
         <forge-rich-text-editor>
           <forge-rte-standard-tools></forge-rte-standard-tools>
+          <forge-rte-code></forge-rte-code>
         </forge-rich-text-editor>
       `);
 
@@ -208,11 +252,8 @@ describe('RTE Screen Reader Support', () => {
       editor?.commands.setContent('<p>Test content</p>');
       editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
-      const codeFeature = el.querySelector('forge-rte-code');
-      const button = codeFeature?.shadowRoot
-        ?.querySelector('forge-rte-tool-button')
-        ?.shadowRoot?.querySelector('button');
-      button?.click();
+      const codeFeature = getFeature(el, 'forge-rte-code');
+      triggerToolButton(codeFeature);
 
       await waitForAnnouncement(el, 'Code applied');
 
@@ -234,10 +275,11 @@ describe('RTE Screen Reader Support', () => {
       editor?.commands.setContent('<p>Test content</p>');
       editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
-      const headingFeature = el.querySelector('forge-rte-heading');
-      const buttons = headingFeature?.shadowRoot?.querySelectorAll('forge-rte-tool-button');
-      const h1Button = buttons?.[0]?.shadowRoot?.querySelector('button');
-      h1Button?.click();
+      const headingFeature = getFeature(el, 'forge-rte-heading');
+      const headingToolButton = headingFeature?.shadowRoot?.querySelectorAll('forge-rte-tool-button')?.[0];
+      headingToolButton?.dispatchEvent(
+        new CustomEvent('forge-rte-tool-toggle', { detail: false, bubbles: true, composed: true })
+      );
 
       await waitForAnnouncement(el, 'Heading 1');
 
@@ -257,10 +299,11 @@ describe('RTE Screen Reader Support', () => {
       editor?.commands.setContent('<h1>Test heading</h1>');
       editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
-      const headingFeature = el.querySelector('forge-rte-heading');
-      const buttons = headingFeature?.shadowRoot?.querySelectorAll('forge-rte-tool-button');
-      const h1Button = buttons?.[0]?.shadowRoot?.querySelector('button');
-      h1Button?.click();
+      const headingFeature = getFeature(el, 'forge-rte-heading');
+      const headingToolButton = headingFeature?.shadowRoot?.querySelectorAll('forge-rte-tool-button')?.[0];
+      headingToolButton?.dispatchEvent(
+        new CustomEvent('forge-rte-tool-toggle', { detail: false, bubbles: true, composed: true })
+      );
 
       await waitForAnnouncement(el, 'Paragraph style');
 
@@ -282,11 +325,8 @@ describe('RTE Screen Reader Support', () => {
       editor?.commands.setContent('<p>Test content</p>');
       editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
-      const bulletListFeature = el.querySelector('forge-rte-bullet-list');
-      const button = bulletListFeature?.shadowRoot
-        ?.querySelector('forge-rte-tool-button')
-        ?.shadowRoot?.querySelector('button');
-      button?.click();
+      const bulletListFeature = getFeature(el, 'forge-rte-bullet-list');
+      triggerToolButton(bulletListFeature);
 
       await waitForAnnouncement(el, 'Bullet list');
 
@@ -306,11 +346,8 @@ describe('RTE Screen Reader Support', () => {
       editor?.commands.setContent('<p>Test content</p>');
       editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
-      const orderedListFeature = el.querySelector('forge-rte-ordered-list');
-      const button = orderedListFeature?.shadowRoot
-        ?.querySelector('forge-rte-tool-button')
-        ?.shadowRoot?.querySelector('button');
-      button?.click();
+      const orderedListFeature = getFeature(el, 'forge-rte-ordered-list');
+      triggerToolButton(orderedListFeature);
 
       await waitForAnnouncement(el, 'Numbered list');
 
@@ -330,11 +367,8 @@ describe('RTE Screen Reader Support', () => {
       editor?.commands.setContent('<ul><li>Test item</li></ul>');
       editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
-      const bulletListFeature = el.querySelector('forge-rte-bullet-list');
-      const button = bulletListFeature?.shadowRoot
-        ?.querySelector('forge-rte-tool-button')
-        ?.shadowRoot?.querySelector('button');
-      button?.click();
+      const bulletListFeature = getFeature(el, 'forge-rte-bullet-list');
+      triggerToolButton(bulletListFeature);
 
       await waitForAnnouncement(el, 'List removed');
 
@@ -356,10 +390,11 @@ describe('RTE Screen Reader Support', () => {
       editor?.commands.setContent('<p>Test content</p>');
       editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
-      const alignFeature = el.querySelector('forge-rte-align');
-      const buttons = alignFeature?.shadowRoot?.querySelectorAll('forge-rte-tool-button');
-      const centerButton = buttons?.[1]?.shadowRoot?.querySelector('button');
-      centerButton?.click();
+      const alignFeature = getFeature(el, 'forge-rte-align');
+      const centerToolButton = alignFeature?.shadowRoot?.querySelectorAll('forge-rte-tool-button')?.[1];
+      centerToolButton?.dispatchEvent(
+        new CustomEvent('forge-rte-tool-toggle', { detail: false, bubbles: true, composed: true })
+      );
 
       await waitForAnnouncement(el, 'Center aligned');
 
@@ -379,10 +414,11 @@ describe('RTE Screen Reader Support', () => {
       editor?.commands.setContent('<p>Test content</p>');
       editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
-      const alignFeature = el.querySelector('forge-rte-align');
-      const buttons = alignFeature?.shadowRoot?.querySelectorAll('forge-rte-tool-button');
-      const rightButton = buttons?.[2]?.shadowRoot?.querySelector('button');
-      rightButton?.click();
+      const alignFeature = getFeature(el, 'forge-rte-align');
+      const rightToolButton = alignFeature?.shadowRoot?.querySelectorAll('forge-rte-tool-button')?.[2];
+      rightToolButton?.dispatchEvent(
+        new CustomEvent('forge-rte-tool-toggle', { detail: false, bubbles: true, composed: true })
+      );
 
       await waitForAnnouncement(el, 'Right aligned');
 
@@ -407,10 +443,9 @@ describe('RTE Screen Reader Support', () => {
 
       await new Promise(resolve => setTimeout(resolve, 100));
 
-      const undoRedoFeature = el.querySelector('forge-rte-undo-redo');
-      const buttons = undoRedoFeature?.shadowRoot?.querySelectorAll('forge-icon-button');
-      const undoButton = buttons?.[0]?.shadowRoot?.querySelector('button');
-      undoButton?.click();
+      const undoRedoFeature = getFeature(el, 'forge-rte-undo-redo');
+      const undoIconButton = undoRedoFeature?.shadowRoot?.querySelectorAll('forge-icon-button')?.[0];
+      triggerIconButton(undoIconButton);
 
       await waitForAnnouncement(el, 'Undo');
 
@@ -434,10 +469,9 @@ describe('RTE Screen Reader Support', () => {
       editor?.chain().undo().run();
       await new Promise(resolve => setTimeout(resolve, 100));
 
-      const undoRedoFeature = el.querySelector('forge-rte-undo-redo');
-      const buttons = undoRedoFeature?.shadowRoot?.querySelectorAll('forge-icon-button');
-      const redoButton = buttons?.[1]?.shadowRoot?.querySelector('button');
-      redoButton?.click();
+      const undoRedoFeature = getFeature(el, 'forge-rte-undo-redo');
+      const redoIconButton = undoRedoFeature?.shadowRoot?.querySelectorAll('forge-icon-button')?.[1];
+      triggerIconButton(redoIconButton);
 
       await waitForAnnouncement(el, 'Redo');
 
@@ -525,11 +559,8 @@ describe('RTE Screen Reader Support', () => {
       editor?.commands.setContent('<p>Test content</p>');
       editor?.chain().focus().setTextSelection({ from: 1, to: 5 }).run();
 
-      const boldFeature = el.querySelector('forge-rte-bold');
-      const button = boldFeature?.shadowRoot
-        ?.querySelector('forge-rte-tool-button')
-        ?.shadowRoot?.querySelector('button');
-      button?.click();
+      const boldFeature = getFeature(el, 'forge-rte-bold');
+      triggerToolButton(boldFeature);
 
       await waitForAnnouncement(el, 'Bold applied');
 

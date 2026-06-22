@@ -1,11 +1,11 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
-import { RichTextEditorComponent } from './rich-text-editor';
+import { RichTextEditorComponent } from '../rich-text-editor';
 import type { Editor } from '@tiptap/core';
 
-import './rich-text-editor';
-import './features/rte-bold';
-import './features/rte-link';
+import '../rich-text-editor';
+import '../features/rte-bold';
+import '../features/rte-link';
 
 describe('RichTextEditor - Focus Management', () => {
   it('should have forge-focus-indicator component', async () => {

@@ -1,9 +1,10 @@
 import { expect, fixture, html } from '@open-wc/testing';
 import type { Editor } from '@tiptap/core';
-import type { RichTextEditorComponent } from './rich-text-editor';
+import type { RichTextEditorComponent } from '../rich-text-editor';
 
-import './rich-text-editor';
-import './features/rte-standard-tools';
+import '../rich-text-editor';
+import '../features/rte-standard-tools';
+import '../features/rte-link';
 
 describe('RTE Paste Handling', () => {
   it('should contain shadow root', async () => {
@@ -102,7 +103,7 @@ describe('RTE Paste Handling', () => {
       const extensions = editor.extensionManager.extensions;
       const pasteHandler = extensions.find(ext => ext.name === 'pasteHandler');
       expect(pasteHandler).to.exist;
-      expect((pasteHandler as any).options?.allowFormatting).to.be.false;
+      expect((pasteHandler as any).options?.allowPasteFormatting).to.be.false;
     });
 
     it('should handle plain text paste via keyboard shortcut', async () => {
@@ -235,13 +236,19 @@ async function createFixture(options: PasteFixtureOptions = {}): Promise<PasteFi
       .allowPasteFormatting=${options.allowPasteFormatting ?? true}
       .allowPasteImages=${options.allowPasteImages ?? false}>
       <forge-rte-standard-tools></forge-rte-standard-tools>
+      <forge-rte-link></forge-rte-link>
     </forge-rich-text-editor>
   `);
 
   const contextComponent = el.shadowRoot!.querySelector('forge-rich-text-context')!;
 
-  // Wait for editor to initialize
-  await new Promise(resolve => setTimeout(resolve, 100));
+  await new Promise(resolve => setTimeout(resolve, 200));
+  for (let i = 0; i < 60; i++) {
+    if ((contextComponent as any).isInitialized) {
+      break;
+    }
+    await new Promise(resolve => setTimeout(resolve, 50));
+  }
 
   return {
     el,

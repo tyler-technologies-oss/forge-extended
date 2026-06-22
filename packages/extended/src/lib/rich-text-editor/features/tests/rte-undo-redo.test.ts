@@ -1,11 +1,11 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html } from '@open-wc/testing';
 import type { Editor } from '@tiptap/core';
-import { RichTextEditorComponent } from '../rich-text-editor';
-import { RichTextFeatureUndoRedoComponent } from './rte-undo-redo';
+import { RichTextEditorComponent } from '../../rich-text-editor';
+import { RichTextFeatureUndoRedoComponent } from '../rte-undo-redo';
 
-import '../rich-text-editor';
-import './rte-undo-redo';
+import '../../rich-text-editor';
+import '../rte-undo-redo';
 
 describe('RTE Undo Redo Feature', () => {
   it('should contain shadow root', async () => {

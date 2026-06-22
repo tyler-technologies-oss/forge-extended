@@ -265,26 +265,27 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
       return;
     }
 
-    // Non-blocking advisory warning for non-ASCII/IDN URLs — Apply stays enabled
+    // Non-blocking advisory warning for non-ASCII/IDN URLs — Apply stays enabled (REDTEAM #7)
     // eslint-disable-next-line no-control-regex
     const hasNonASCII = /[^\x00-\x7F]/.test(this._linkUrl);
     const hasPunycode = this._linkUrl.includes('xn--');
     if (hasNonASCII || hasPunycode) {
       this._validationWarning =
         'Warning: This URL contains international characters. Verify carefully to avoid phishing.';
+      // IDN/non-ASCII URLs skip the ASCII regex and go straight to the URL constructor check
     } else {
       this._validationWarning = '';
+
+      // Primary regex validation — ASCII URLs only (query strings do not require a preceding /)
+      const urlPattern = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(:\d+)?(\/[^\s]*|[?#][^\s]*)?$/;
+
+      if (!urlPattern.test(this._linkUrl)) {
+        this._validationError = 'Please enter a valid URL (e.g., https://example.com)';
+        return;
+      }
     }
 
-    // Primary regex validation (existing)
-    const urlPattern = /^(https?:\/\/)?([\w-]+(\.[\w-]+)+)(:\d+)?(\/[^\s]*)?$/;
-
-    if (!urlPattern.test(this._linkUrl)) {
-      this._validationError = 'Please enter a valid URL (e.g., https://example.com)';
-      return;
-    }
-
-    // Additional validation using URL constructor for enhanced security
+    // Final validation via URL constructor — covers both ASCII and IDN paths
     try {
       const normalizedUrl = this.#normalizeUrl(this._linkUrl);
       const parsed = new URL(normalizedUrl);

@@ -160,8 +160,12 @@ export class MarkdownSerializer {
 
   static #applyMark(text: string, mark: MarkAttrs): string {
     switch (mark.type) {
-      case 'bold':
-        return `**${text}**`;
+      case 'bold': {
+        const trimmed = text.trim();
+        const leading = text.slice(0, text.length - text.trimStart().length);
+        const trailing = text.slice(text.trimEnd().length);
+        return `${leading}**${trimmed}**${trailing}`;
+      }
       case 'italic':
         return `*${text}*`;
       case 'underline': {

@@ -225,6 +225,14 @@ export class RichTextContextComponent extends LitElement {
    */
   #setEditorElement(element: HTMLElement): void {
     this.#editorElement = element;
+
+    // Trigger init whenever the editor element becomes available (with or without features).
+    if (!this._editor) {
+      if (this.#initFrame) {
+        window.cancelAnimationFrame(this.#initFrame);
+      }
+      this.#initFrame = window.requestAnimationFrame(() => this.#initEditor());
+    }
   }
 
   /**
@@ -497,7 +505,7 @@ export class RichTextContextComponent extends LitElement {
       // Features can contain duplicate extensions. Make sure to filter out any duplicates
       const featureExtensions = Array.from(this.#featureInstances).flatMap(feature => feature.extensions);
 
-      // Add CharacterCount extension if maxLength is set or if counts should be displayed
+      // CharacterCount enforces maxLength as a hard input limit via TipTap's filterTransaction
       const characterCountExtension = CharacterCount.configure({
         limit: this.maxLength > 0 ? this.maxLength : undefined
       });
@@ -516,7 +524,8 @@ export class RichTextContextComponent extends LitElement {
       ].filter((ext, index, self) => self.findIndex(e => e.name === ext.name) === index);
 
       if (!this.#editorElement) {
-        throw new Error('Editor element is not set. Please set the editor element before initializing the editor.');
+        // Content component hasn't called setEditorElement yet — it will re-trigger init when ready.
+        return;
       }
 
       const initialContent = this.#sanitizeContent(this.content) as Content;
@@ -644,9 +653,6 @@ export class RichTextContextComponent extends LitElement {
     const temp = document.createElement('div');
     temp.innerHTML = htmlContent;
 
-    // Recursively escape all text nodes
-    this.#escapeTextNodes(temp);
-
     // Remove any remaining dangerous elements that might have been created
     const dangerousElements = ['script', 'iframe', 'object', 'embed', 'style'];
     dangerousElements.forEach(tag => {
@@ -663,49 +669,6 @@ export class RichTextContextComponent extends LitElement {
     });
 
     return temp.innerHTML;
-  }
-
-  /**
-   * Recursively escapes text nodes by replacing them with properly encoded text.
-   */
-  #escapeTextNodes(element: Element): void {
-    // eslint-disable-next-line no-bitwise
-    const walker = document.createTreeWalker(element, NodeFilter.SHOW_TEXT | NodeFilter.SHOW_ELEMENT);
-
-    const nodesToReplace: Array<{ node: Node; escapedText: string }> = [];
-
-    let currentNode = walker.currentNode;
-    while (currentNode) {
-      if (currentNode.nodeType === Node.TEXT_NODE) {
-        const text = currentNode.textContent || '';
-        // Only escape if the text contains HTML special characters
-        if (/<|>|&|"|'/.test(text)) {
-          const escaped = this.#escapeHTMLEntities(text);
-          nodesToReplace.push({ node: currentNode, escapedText: escaped });
-        }
-      }
-      currentNode = walker.nextNode();
-    }
-
-    // Replace nodes after walking to avoid iterator issues
-    nodesToReplace.forEach(({ node, escapedText }) => {
-      const textNode = document.createTextNode(escapedText);
-      if (node.parentNode) {
-        node.parentNode.replaceChild(textNode, node);
-      }
-    });
-  }
-
-  /**
-   * Escapes HTML entities in text content.
-   */
-  #escapeHTMLEntities(text: string): string {
-    return text
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
   }
 
   /**

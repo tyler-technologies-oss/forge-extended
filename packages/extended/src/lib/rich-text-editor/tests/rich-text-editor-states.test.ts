@@ -1,19 +1,69 @@
 import { expect, fixture, html } from '@open-wc/testing';
 import type { IForgeIconButtonComponent } from '@tylertech/forge';
 
-import './rich-text-editor';
-import './features/rte-standard-tools';
-import type { RichTextEditorComponent } from './rich-text-editor';
-import type { RichTextContextComponent } from './rich-text-context';
+import '../rich-text-editor';
+import '../features/rte-standard-tools';
+import type { RichTextEditorComponent } from '../rich-text-editor';
+import type { RichTextContextComponent } from '../rich-text-context';
+
+/**
+ * Returns all forge-icon-button elements inside forge-rte-standard-tools by traversing
+ * the shadow DOM chain: standard-tools → feature shadow → tool-button shadow → icon-button.
+ */
+function getToolbarIconButtons(el: RichTextEditorComponent): IForgeIconButtonComponent[] {
+  const standardTools = el.querySelector('forge-rte-standard-tools');
+  if (!standardTools?.shadowRoot) {
+    return [];
+  }
+  // Standard-tools shadow contains feature elements (forge-rte-bold, etc.)
+  // Each feature shadow contains a forge-rte-tool-button
+  // Each tool-button shadow contains a forge-icon-button
+  return Array.from(standardTools.shadowRoot.querySelectorAll('*'))
+    .filter(node => node.shadowRoot)
+    .flatMap(featureEl => Array.from(featureEl.shadowRoot!.querySelectorAll('forge-rte-tool-button')))
+    .map(tb => tb.shadowRoot?.querySelector('forge-icon-button') as IForgeIconButtonComponent)
+    .filter(Boolean);
+}
 
 /**
  * Helper to wait for editor initialization and return the context component
  */
 async function waitForEditor(el: RichTextEditorComponent): Promise<RichTextContextComponent> {
-  await new Promise(resolve => setTimeout(resolve, 100));
-  const context = el.shadowRoot!.querySelector('forge-rich-text-context') as RichTextContextComponent;
-  await context?.updateComplete;
-  return context;
+  await el.updateComplete;
+
+  const getContext = (): RichTextContextComponent =>
+    el.shadowRoot!.querySelector('forge-rich-text-context') as RichTextContextComponent;
+
+  if (!getContext()?.isInitialized) {
+    await new Promise<void>(resolve => {
+      let resolved = false;
+      const done = (): void => {
+        if (!resolved) {
+          resolved = true;
+          resolve();
+        }
+      };
+
+      el.addEventListener('initialized', done, { once: true });
+
+      const interval = setInterval(() => {
+        if (getContext()?.isInitialized) {
+          clearInterval(interval);
+          el.removeEventListener('initialized', done);
+          done();
+        }
+      }, 50);
+
+      setTimeout(() => {
+        clearInterval(interval);
+        el.removeEventListener('initialized', done);
+        done();
+      }, 5000);
+    });
+  }
+
+  await getContext()?.updateComplete;
+  return getContext();
 }
 
 describe('Rich Text Editor - State Visual Indicators', () => {
@@ -45,8 +95,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
 
       await waitForEditor(el);
 
-      // Toolbar buttons are slotted content (light DOM)
-      const buttons = Array.from(el.querySelectorAll('forge-icon-button'));
+      const buttons = getToolbarIconButtons(el);
 
       expect(buttons.length).to.be.greaterThan(0);
       buttons.forEach(button => {
@@ -62,7 +111,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       `);
 
       const context = await waitForEditor(el);
-      expect(context.editor?.isEditable).to.be.false;
+      expect(context.editorContext.editor?.isEditable).to.be.false;
     });
   });
 
@@ -78,7 +127,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       await new Promise(resolve => setTimeout(resolve, 100));
 
       expect(el.hasAttribute('readonly')).to.be.true;
-      expect(el.readonly).to.be.true;
+      expect(el.readOnly).to.be.true;
     });
 
     it('should disable all toolbar buttons when editor is readonly', async () => {
@@ -90,8 +139,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
 
       await waitForEditor(el);
 
-      // Toolbar buttons are slotted content (light DOM)
-      const buttons = Array.from(el.querySelectorAll('forge-icon-button'));
+      const buttons = getToolbarIconButtons(el);
 
       expect(buttons.length).to.be.greaterThan(0);
       buttons.forEach(button => {
@@ -107,7 +155,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       `);
 
       const context = await waitForEditor(el);
-      expect(context.editor?.isEditable).to.be.false;
+      expect(context.editorContext.editor?.isEditable).to.be.false;
     });
   });
 
@@ -120,7 +168,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       `);
 
       const context = await waitForEditor(el);
-      const editor = context.editor;
+      const editor = context.editorContext.editor;
       if (!editor) {
         throw new Error('Editor not initialized');
       }
@@ -132,10 +180,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       await el.updateComplete;
       await new Promise(resolve => setTimeout(resolve, 100));
 
-      // Find bold button in light DOM (slotted content)
-      const boldButtons = Array.from(el.querySelectorAll('forge-icon-button')).filter(
-        btn => btn.getAttribute('aria-label')?.includes('Bold') || btn.querySelector('forge-icon[name*="format_bold"]')
-      );
+      const boldButtons = getToolbarIconButtons(el).filter(btn => btn.getAttribute('aria-label')?.includes('Bold'));
 
       expect(boldButtons.length).to.be.greaterThan(0);
       const boldButton = boldButtons[0] as IForgeIconButtonComponent;
@@ -150,7 +195,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       `);
 
       const context = await waitForEditor(el);
-      const editor = context.editor;
+      const editor = context.editorContext.editor;
       if (!editor) {
         throw new Error('Editor not initialized');
       }
@@ -162,8 +207,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       await el.updateComplete;
       await new Promise(resolve => setTimeout(resolve, 100));
 
-      // Find H1 button in light DOM (slotted content)
-      const h1Buttons = Array.from(el.querySelectorAll('forge-icon-button')).filter(
+      const h1Buttons = getToolbarIconButtons(el).filter(
         btn => btn.getAttribute('aria-label')?.includes('H1') || btn.getAttribute('aria-label')?.includes('Heading 1')
       );
 
@@ -182,8 +226,8 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       `);
 
       await el.updateComplete;
-      const root = el.shadowRoot as ShadowRoot;
-      const contentWrapper = root.querySelector('.editor-content-wrapper');
+      const contentComponent = el.shadowRoot?.querySelector('forge-rich-text-content');
+      const contentWrapper = contentComponent?.shadowRoot?.querySelector('.editor-content-wrapper');
       const focusIndicator = contentWrapper?.querySelector('forge-focus-indicator');
 
       expect(focusIndicator).to.exist;
@@ -198,8 +242,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
 
       await waitForEditor(el);
 
-      // Toolbar buttons are slotted content (light DOM)
-      const buttons = Array.from(el.querySelectorAll('forge-icon-button'));
+      const buttons = getToolbarIconButtons(el);
 
       expect(buttons.length).to.be.greaterThan(0);
 
@@ -224,7 +267,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
 
       // Initially enabled
       expect(el.disabled).to.be.false;
-      expect(context.editor?.isEditable).to.be.true;
+      expect(context.editorContext.editor?.isEditable).to.be.true;
 
       // Disable
       el.disabled = true;
@@ -232,7 +275,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       await new Promise(resolve => setTimeout(resolve, 100));
 
       expect(el.hasAttribute('disabled')).to.be.true;
-      expect(context.editor?.isEditable).to.be.false;
+      expect(context.editorContext.editor?.isEditable).to.be.false;
 
       // Re-enable
       el.disabled = false;
@@ -240,7 +283,7 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       await new Promise(resolve => setTimeout(resolve, 100));
 
       expect(el.hasAttribute('disabled')).to.be.false;
-      expect(context.editor?.isEditable).to.be.true;
+      expect(context.editorContext.editor?.isEditable).to.be.true;
     });
 
     it('should update visual state when toggling readonly', async () => {
@@ -253,24 +296,24 @@ describe('Rich Text Editor - State Visual Indicators', () => {
       const context = await waitForEditor(el);
 
       // Initially not readonly
-      expect(el.readonly).to.be.false;
-      expect(context.editor?.isEditable).to.be.true;
+      expect(el.readOnly).to.be.false;
+      expect(context.editorContext.editor?.isEditable).to.be.true;
 
       // Set readonly
-      el.readonly = true;
+      el.readOnly = true;
       await el.updateComplete;
       await new Promise(resolve => setTimeout(resolve, 100));
 
       expect(el.hasAttribute('readonly')).to.be.true;
-      expect(context.editor?.isEditable).to.be.false;
+      expect(context.editorContext.editor?.isEditable).to.be.false;
 
       // Unset readonly
-      el.readonly = false;
+      el.readOnly = false;
       await el.updateComplete;
       await new Promise(resolve => setTimeout(resolve, 100));
 
       expect(el.hasAttribute('readonly')).to.be.false;
-      expect(context.editor?.isEditable).to.be.true;
+      expect(context.editorContext.editor?.isEditable).to.be.true;
     });
   });
 });

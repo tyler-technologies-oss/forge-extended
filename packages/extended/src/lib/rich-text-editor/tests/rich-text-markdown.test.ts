@@ -1,10 +1,12 @@
 import { expect, fixture, html as testHtml } from '@open-wc/testing';
-import type { RichTextEditorComponent } from './rich-text-editor';
-import type { RichTextContextComponent } from './rich-text-context';
-import { MarkdownSerializer } from './extensions/markdown-serializer';
+import { RichTextEditorComponent } from '../rich-text-editor';
+import type { RichTextContextComponent } from '../rich-text-context';
+import { MarkdownSerializer } from '../extensions/markdown-serializer';
 import type { JSONContent } from '@tiptap/core';
 
-import './index';
+import '../index';
+import '../features/rte-standard-tools';
+import '../features/rte-link';
 
 /**
  * Test suite for Markdown output functionality in the rich text editor.
@@ -13,10 +15,52 @@ import './index';
  * conversion from ProseMirror JSON to Markdown format.
  */
 describe('Rich Text Editor - Markdown Output', () => {
-  // Helper: Wait for editor initialization and TipTap processing
   async function waitForEditor(element: RichTextEditorComponent | RichTextContextComponent): Promise<void> {
     await element.updateComplete;
-    await new Promise(resolve => setTimeout(resolve, 100)); // Wait for TipTap initialization
+
+    const isEditorTag = element.tagName.toLowerCase() === 'forge-rich-text-editor';
+
+    const getContext = (): RichTextContextComponent | null => {
+      if (isEditorTag) {
+        return (element.shadowRoot?.querySelector('forge-rich-text-context') as RichTextContextComponent) ?? null;
+      }
+      return element as RichTextContextComponent;
+    };
+
+    // Fast-path: already initialized
+    if (getContext()?.isInitialized) {
+      return;
+    }
+
+    // Wait via event OR polling fallback (in case the event was already dispatched)
+    await new Promise<void>(resolve => {
+      let resolved = false;
+      const done = (): void => {
+        if (!resolved) {
+          resolved = true;
+          resolve();
+        }
+      };
+
+      // Event-based: listen for 'initialized' on element (composed event from context)
+      element.addEventListener('initialized', done, { once: true });
+
+      // Poll fallback: in case the event was already dispatched before our listener
+      const interval = setInterval(() => {
+        if (getContext()?.isInitialized) {
+          clearInterval(interval);
+          element.removeEventListener('initialized', done);
+          done();
+        }
+      }, 50);
+
+      // Safety timeout: 5 seconds
+      setTimeout(() => {
+        clearInterval(interval);
+        element.removeEventListener('initialized', done);
+        done(); // resolve anyway so the test fails on the assertion, not with a timeout error
+      }, 3000);
+    });
   }
 
   describe('MarkdownSerializer', () => {
@@ -656,6 +700,7 @@ describe('Rich Text Editor - Markdown Output', () => {
         const element = await fixture<RichTextEditorComponent>(testHtml`
           <forge-rich-text-editor content='<p><a href="https://example.com">Click here</a></p>'>
             <forge-rte-standard-tools></forge-rte-standard-tools>
+            <forge-rte-link></forge-rte-link>
           </forge-rich-text-editor>
         `);
 
@@ -679,6 +724,7 @@ describe('Rich Text Editor - Markdown Output', () => {
         const element = await fixture<RichTextEditorComponent>(testHtml`
           <forge-rich-text-editor .content=${content}>
             <forge-rte-standard-tools></forge-rte-standard-tools>
+            <forge-rte-link></forge-rte-link>
           </forge-rich-text-editor>
         `);
 

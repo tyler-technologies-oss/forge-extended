@@ -1,15 +1,15 @@
 import { expect, fixture, html } from '@open-wc/testing';
-import type { RichTextEditorComponent } from './rich-text-editor';
-import type { RichTextContextComponent } from './rich-text-context';
+import type { RichTextEditorComponent } from '../rich-text-editor';
+import type { RichTextContextComponent } from '../rich-text-context';
 import type { Editor } from '@tiptap/core';
-import './rich-text-editor';
-import './features/rte-bold';
-import './features/rte-italic';
-import './features/rte-underline';
-import './features/rte-heading';
-import './features/rte-bullet-list';
-import './features/rte-ordered-list';
-import './features/rte-link';
+import '../rich-text-editor';
+import '../features/rte-bold';
+import '../features/rte-italic';
+import '../features/rte-underline';
+import '../features/rte-heading';
+import '../features/rte-bullet-list';
+import '../features/rte-ordered-list';
+import '../features/rte-link';
 
 async function getEditorContext(el: RichTextEditorComponent): Promise<RichTextContextComponent> {
   await el.updateComplete;

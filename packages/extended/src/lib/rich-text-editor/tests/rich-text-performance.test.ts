@@ -1,20 +1,19 @@
 import { expect, fixture, html } from '@open-wc/testing';
-import { RichTextEditorComponent } from './rich-text-editor';
-import type { RichTextContextComponent } from './rich-text-context';
-import './rich-text-editor';
+import { RichTextEditorComponent } from '../rich-text-editor';
+import type { RichTextContextComponent } from '../rich-text-context';
+import '../rich-text-editor';
+import '../features/rte-bold';
 
-/**
- * Helper to wait for editor initialization
- */
 async function waitForEditor(el: RichTextEditorComponent): Promise<void> {
   await new Promise(resolve => setTimeout(resolve, 200));
+
   const context = el.shadowRoot!.querySelector('forge-rich-text-context') as RichTextContextComponent;
-  await context?.updateComplete;
-  // Wait for editor to be fully initialized
-  let attempts = 0;
-  while (!el.isInitialized && attempts < 20) {
+
+  for (let i = 0; i < 60; i++) {
+    if (context?.isInitialized) {
+      return;
+    }
     await new Promise(resolve => setTimeout(resolve, 50));
-    attempts++;
   }
 }
 
@@ -410,7 +409,9 @@ describe('RTE Performance', () => {
   describe('Output Format Performance', () => {
     it('should generate JSON output efficiently for large documents', async () => {
       const el = await fixture<RichTextEditorComponent>(
-        html`<forge-rich-text-editor content="<p>Initial</p>"></forge-rich-text-editor>`
+        html`<forge-rich-text-editor content="<p>Initial</p>"
+          ><forge-rte-bold></forge-rte-bold
+        ></forge-rich-text-editor>`
       );
 
       await waitForEditor(el);
@@ -435,7 +436,9 @@ describe('RTE Performance', () => {
 
     it('should generate HTML output efficiently for large documents', async () => {
       const el = await fixture<RichTextEditorComponent>(
-        html`<forge-rich-text-editor content="<p>Initial</p>"></forge-rich-text-editor>`
+        html`<forge-rich-text-editor content="<p>Initial</p>"
+          ><forge-rte-bold></forge-rte-bold
+        ></forge-rich-text-editor>`
       );
 
       await waitForEditor(el);
@@ -462,7 +465,7 @@ describe('RTE Performance', () => {
   describe('Memory Usage', () => {
     it('should not leak memory with content changes', async () => {
       const el = await fixture<RichTextEditorComponent>(
-        html`<forge-rich-text-editor content="<p>Start</p>"></forge-rich-text-editor>`
+        html`<forge-rich-text-editor content="<p>Start</p>"><forge-rte-bold></forge-rte-bold></forge-rich-text-editor>`
       );
 
       await waitForEditor(el);
