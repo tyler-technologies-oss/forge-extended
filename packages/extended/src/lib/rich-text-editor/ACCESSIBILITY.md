@@ -158,8 +158,8 @@ The editor announces important state changes:
 
 - **Disabled State**: "Editor disabled" when the editor becomes disabled
 - **Enabled State**: "Editor enabled" when the editor is re-enabled
-- **Read-Only State**: "Editor is read-only" when set to readonly mode
-- **Editable State**: "Editor is editable" when readonly mode is removed
+- **Read-Only State**: "Editor read-only" when set to readonly mode
+- **Editable State**: "Editor editable" when readonly mode is removed
 
 ### Technical Implementation
 
@@ -626,6 +626,6 @@ The Rich Text Editor component meets **WCAG 2.1 Level AA** compliance standards 
 
 **Last Audit:** June 2026  
 **Audit Method:** Manual testing + Automated testing (axe-core)  
-**Test Coverage:** 711 tests including 43 accessibility-specific tests
+**Test Coverage:** 843 tests including 43 accessibility-specific tests
 
 For questions or accessibility concerns, please file an issue in the Tyler Forge Extended repository.

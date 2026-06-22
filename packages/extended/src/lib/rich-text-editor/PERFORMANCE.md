@@ -1,8 +1,8 @@
 # Rich Text Editor - Performance Characteristics
 
-**Last Updated:** 2026-06-15  
+**Last Updated:** 2026-06-22  
 **Component:** `forge-rich-text-editor`  
-**Based on:** TipTap v3.0.7
+**Based on:** TipTap v3.27.1
 
 ---
 
