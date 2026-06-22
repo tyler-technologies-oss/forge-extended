@@ -2,7 +2,7 @@
 
 **Component:** Tyler Forge Extended - Rich Text Editor  
 **Version:** 1.6.2+  
-**Last Updated:** 2026-06-17
+**Last Updated:** 2026-06-22
 
 ---
 
@@ -117,11 +117,14 @@ file:///etc/passwd
 
 **Features:**
 
-- Whitelist: Only `http:` and `https:` allowed
+- Allowlist: Only `http:` and `https:` allowed
 - Detects direct protocol usage
-- Detects obfuscated protocols in URL
-- Detects URL-encoded bypass attempts
+- Detects obfuscated protocols using `startsWith` (no false positives for `?next=about:blank`)
+- Detects URL-encoded bypass attempts (`java%09script:` etc.)
 - Validates after URL normalization
+- IDN/non-ASCII URLs produce a **non-blocking warning** — Apply remains enabled so
+  legitimate international URLs work, but users are alerted to verify carefully
+- URL validation is always enforced and cannot be disabled via attributes or properties
 
 ### 3. Input Sanitization
 
@@ -162,6 +165,9 @@ editor.content = {
 - URL-encoded protocol detection
 - Removal of dangerous HTML elements
 - Removal of dangerous attributes (on*, data-*, style)
+- Input parsed via `DOMParser` (inert — no eager `<img src>` beacon fetches)
+- **Non-mutating:** sanitization operates on a deep clone (`structuredClone`) so the
+  caller's original object is never modified
 
 ### 4. Paste Handler Security
 
@@ -204,9 +210,11 @@ Limits prevent resource exhaustion:
 
 **Features:**
 
-- Depth limit: 50 levels
-- Node count limit: 5000 nodes
-- Character limit: Configurable via `maxLength` property
+- Depth limit: 50 levels (JSON input)
+- Node count limit: 5000 nodes (JSON input)
+- HTML content size limit: 1 MB — HTML strings above this size are truncated with a console warning (`[RTE Security] HTML content too large`), applies to both paste and the `.content` property
+- Character limit: Configurable via `maxLength` property (enforced at input — TipTap
+  `filterTransaction` hard-blocks keystrokes beyond the limit, no overflow is possible)
 - Graceful error handling
 
 ---
@@ -242,27 +250,22 @@ const html = editor.toHTML();
 ### ⚠️ High-Risk Scenarios
 
 ```typescript
-// RISK: Disabling URL validation
-<forge-rich-text-editor
-  validate-urls="false">  <!-- ⚠️ Dangerous protocols allowed -->
-</forge-rich-text-editor>
+// RISK: Rendering toHTML() output as innerHTML
+element.innerHTML = editor.toHTML(); // Still sanitized, but prefer forge-rich-text-renderer
 
-// MITIGATION: Always validate on server-side before storing
+// MITIGATION: Use the renderer component, or sanitize server-side before storage
 const sanitized = serverSideSanitize(editor.toHTML());
 ```
 
 ### ❌ Unsafe Patterns to Avoid
 
 ```typescript
-// ❌ DON'T: Use innerHTML directly with editor output
-element.innerHTML = editor.toHTML(); // Prefer textContent or sanitize
-
-// ❌ DON'T: Trust JSON from untrusted sources without validation
+// ❌ DON'T: Trust JSON from untrusted sources without server-side validation
 editor.content = await fetch('/api/untrusted/content').then(r => r.json());
-// DO: Validate on server-side first
+// DO: Validate and sanitize on the server before passing to the editor
 
-// ❌ DON'T: Disable security features in production
-<forge-rich-text-editor suppress-errors="true"> <!-- Hides security warnings -->
+// ❌ DON'T: Attempt to suppress security warnings — there is no API to do so
+// Security logging is unconditional and cannot be disabled
 ```
 
 ---
@@ -384,19 +387,16 @@ const markdown = editor.toMarkdown();
 - ✅ Links still validated
 - ⚠️ Validate before rendering as HTML
 
-### Link Validation (`validateUrls`)
+### Link Validation
 
-**Security Level:** 🔴 High Risk if disabled
+**Security Level:** 🟢 Always enforced
 
-```typescript
-// ✅ SAFE: Default enabled
-<forge-rich-text-editor validate-urls="true">
+URL validation is unconditional — there is no property or attribute to disable it.
+The blocklist (`javascript:`, `data:`, `vbscript:`, `file:`, `about:`, `blob:`) is
+checked on every URL, decoded URL, and normalized URL before a link can be applied.
 
-// ❌ UNSAFE: Allows javascript: and data: protocols
-<forge-rich-text-editor validate-urls="false">
-```
-
-**Recommendation:** Never disable in production with untrusted content
+**Recommendation:** Rely on the built-in validation; add server-side URL allowlisting
+for stricter control over which domains users may link to.
 
 ---
 
@@ -423,7 +423,7 @@ pnpm update @tiptap/core @tiptap/extension-*
 Some security features depend on modern browser APIs:
 
 - `URL` constructor for validation
-- `TreeWalker` for HTML sanitization
+- `DOMParser` for inert HTML sanitization (no eager resource fetches)
 - `structuredClone` for deep copying (polyfilled)
 
 **Minimum Supported Browsers:**
@@ -568,8 +568,7 @@ editor.querySelector('forge-rte-link').linkUrl = encoded;
 
 ### For Developers
 
-- [ ] Always use `validate-urls="true"` (default)
-- [ ] Set appropriate `max-length` for your use case
+- [ ] Set appropriate `max-length` for your use case (URL validation is always on)
 - [ ] Validate content server-side before storage
 - [ ] Sanitize output before serving to other users
 - [ ] Keep dependencies updated (`pnpm update`)
@@ -612,9 +611,15 @@ pnpm run test:extended --files='**/rich-text-security.test.ts'
 editor.content = '<p><script>alert(1)</script></p>';
 console.assert(!editor.toHTML().includes('<script>'), 'Script tag not escaped');
 
-// Test 2: XSS via javascript: protocol
-editor.querySelector('forge-rte-link').linkUrl = 'javascript:alert(1)';
-console.assert(link.validationError.includes('protocol'), 'Protocol not blocked');
+// Test 2: XSS via javascript: protocol — drive via input event
+const link = editor.querySelector('forge-rte-link');
+const input = link.shadowRoot.querySelector('input');
+input.value = 'javascript:alert(1)';
+input.dispatchEvent(new Event('input', { bubbles: true }));
+await link.updateComplete;
+// Apply button should be disabled (validationError is set internally)
+const applyBtn = link.shadowRoot.querySelector('forge-button[variant="raised"]');
+console.assert(applyBtn.disabled, 'Apply should be disabled for dangerous protocol');
 
 // Test 3: XSS via JSON
 editor.content = {
@@ -692,10 +697,15 @@ If you discover a security vulnerability:
 **Security Fixes in This Version:**
 
 - ✅ HTML output sanitization (XSS prevention)
-- ✅ Protocol validation (javascript:, data: blocking)
-- ✅ JSON input sanitization (injection prevention)
-- ✅ DoS prevention (depth and node limits)
+- ✅ Protocol validation (javascript:, data:, vbscript:, file:, about:, blob: blocking)
+- ✅ Protocol blocklist uses `startsWith` — no over-blocking of valid URLs with protocols in query params
+- ✅ IDN/non-ASCII URLs produce a non-blocking warning instead of hard error (REDTEAM #7)
+- ✅ JSON input sanitization (injection prevention, non-mutating via `structuredClone`)
+- ✅ HTML input parsed via `DOMParser` — no eager beacon fetches (REDTEAM #5)
+- ✅ DoS prevention: depth (50) and node count (5000) limits for JSON; 1 MB size limit for HTML content (paste and `.content` property), logged as `[RTE Security] HTML content too large`
+- ✅ `maxLength` enforced as hard input block via TipTap `filterTransaction`
 - ✅ SVG paste blocking (script execution prevention)
+- ✅ URL validation is unconditional — cannot be disabled via attributes or properties
 
 ### Update Notifications
 
@@ -718,6 +728,6 @@ Security updates are announced via:
 
 ---
 
-**Document Version:** 1.0  
-**Last Reviewed:** 2026-06-17  
-**Next Review:** 2026-09-17 (Quarterly)
+**Document Version:** 1.1  
+**Last Reviewed:** 2026-06-22  
+**Next Review:** 2026-09-22 (Quarterly)

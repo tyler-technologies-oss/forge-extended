@@ -8,7 +8,7 @@
 
 ### Before Production Deployment
 
-- [ ] URL validation is enabled (`validate-urls="true"`)
+- [ ] URL validation is always enforced (no configuration needed — cannot be disabled)
 - [ ] Character limits are set (`max-length="..."`)
 - [ ] Server-side validation is implemented
 - [ ] CSP headers are configured
@@ -73,7 +73,6 @@
 
 ```typescript
 <forge-rich-text-editor
-  validate-urls="true"
   max-length="10000"
   @change=${this.handleChange}>
   <forge-rte-standard-tools></forge-rte-standard-tools>
@@ -81,7 +80,8 @@
 </forge-rich-text-editor>
 
 handleChange(e) {
-  const html = e.detail;
+  // e.detail.json is ProseMirror JSON — call toHTML() for HTML output
+  const html = this.editor.toHTML();
   // Safe to save - already sanitized
   this.saveContent(html);
 }
@@ -144,11 +144,12 @@ app.post('/api/content', (req, res) => {
 
 ## ⚠️ High-Risk Patterns (Avoid)
 
-### ❌ Disabling URL Validation
+### ❌ Attempting to Disable URL Validation
 
 ```typescript
-// UNSAFE - Allows javascript: and data: protocols
-<forge-rte-link validate-urls="false">
+// URL validation is unconditional — there is no validate-urls attribute.
+// Any attempt to bypass it (e.g. custom link marks injected directly) is
+// blocked by the JSON sanitizer before content reaches the editor.
 ```
 
 ### ❌ Using innerHTML Directly
@@ -265,13 +266,13 @@ pnpm run test:extended --files='**/rich-text-security.test.ts'
 
 ## 📊 Security Limits
 
-| Feature           | Limit             | Reason         |
-| ----------------- | ----------------- | -------------- |
-| JSON Depth        | 50 levels         | DoS prevention |
-| Node Count        | 5,000 nodes       | DoS prevention |
-| Character Count   | Configurable      | DoS prevention |
-| Allowed Protocols | http, https       | XSS prevention |
-| Paste Size        | 1MB (recommended) | DoS prevention |
+| Feature           | Limit          | Reason         |
+| ----------------- | -------------- | -------------- |
+| JSON Depth        | 50 levels      | DoS prevention |
+| Node Count        | 5,000 nodes    | DoS prevention |
+| Character Count   | Configurable   | DoS prevention |
+| Allowed Protocols | http, https    | XSS prevention |
+| HTML Content Size | 1MB (enforced) | DoS prevention |
 
 ---
 
@@ -313,5 +314,5 @@ TipTap requires inline styles for editor functionality. All component scripts ar
 
 ---
 
-**Last Updated:** 2026-06-17  
+**Last Updated:** 2026-06-22  
 **Version:** 1.6.2+
