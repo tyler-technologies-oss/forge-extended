@@ -1,5 +1,6 @@
-import { css, html, LitElement, TemplateResult } from 'lit';
+import { html, LitElement, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
+import { featureHostStyles } from './core/feature-styles';
 
 import './rte-bold';
 import './rte-italic';
@@ -39,11 +40,7 @@ export const RteStandardToolsComponentTagName: keyof HTMLElementTagNameMap = 'fo
  */
 @customElement(RteStandardToolsComponentTagName)
 export class RteStandardToolsComponent extends LitElement {
-  public static override styles = css`
-    :host {
-      display: contents;
-    }
-  `;
+  public static override styles = featureHostStyles;
 
   public override render(): TemplateResult {
     return html`

@@ -2,10 +2,11 @@ import { consume } from '@lit/context';
 import { Heading } from '@tiptap/extension-heading';
 import { IconRegistry } from '@tylertech/forge';
 import { tylIconFormatHeader1, tylIconFormatHeader2, tylIconFormatHeader3 } from '@tylertech/tyler-icons';
-import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
+import { html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { editorContext, EditorContext } from '../editor-context';
 import { RichTextEditorFeature } from './rich-text-editor-feature';
+import { featureHostStyles } from './core/feature-styles';
 
 import './core/rich-text-feature-button';
 
@@ -43,11 +44,7 @@ export class RichTextFeatureHeadingComponent extends LitElement implements RichT
     IconRegistry.define([tylIconFormatHeader1, tylIconFormatHeader2, tylIconFormatHeader3]);
   }
 
-  public static override styles = css`
-    :host {
-      display: contents;
-    }
-  `;
+  public static override styles = featureHostStyles;
 
   /**
    * The accessible label for the heading 1 button.

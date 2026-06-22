@@ -15,6 +15,7 @@ import { html, LitElement, TemplateResult, unsafeCSS } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 
 import styles from './rich-text-renderer.scss?inline';
+import { sanitizeJSON } from './extensions/sanitize-utils';
 
 /**
  * Type representing rich text content in TipTap's ProseMirror JSON format.
@@ -154,7 +155,8 @@ export class RichTextRendererComponent extends LitElement {
     try {
       if (this.content) {
         const sanitized = this.#sanitizeContent(this.content);
-        this._editor.commands.setContent(sanitized);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        this._editor.commands.setContent(sanitized as any);
       } else {
         this._editor.commands.clearContent();
       }
@@ -163,68 +165,12 @@ export class RichTextRendererComponent extends LitElement {
     }
   }
 
-  /**
-   * Sanitizes content before rendering.
-   * CRITICAL: Renderer displays content to ALL users, so untrusted content MUST be sanitized.
-   */
   #sanitizeContent(content: unknown): unknown {
-    if (!content || typeof content !== 'object') {
-      return content;
-    }
-
-    const MAX_DEPTH = 50;
-    const MAX_NODES = 5000;
-    let nodeCount = 0;
-
-    const sanitize = (node: unknown, depth: number): unknown => {
-      if (depth > MAX_DEPTH) {
-        throw new Error('Maximum nesting depth exceeded');
-      }
-
-      if (++nodeCount > MAX_NODES) {
-        throw new Error('Maximum node count exceeded');
-      }
-
-      if (!node || typeof node !== 'object') {
-        return node;
-      }
-
-      const n = node as Record<string, unknown>;
-
-      // Sanitize link marks
-      if (n.type === 'link' || (n.attrs && typeof n.attrs === 'object')) {
-        const attrs = n.attrs as Record<string, unknown>;
-        if (attrs.href && typeof attrs.href === 'string') {
-          const href = attrs.href.toLowerCase().trim();
-
-          const dangerousProtocols = ['javascript:', 'data:', 'vbscript:', 'file:', 'about:', 'blob:'];
-
-          for (const protocol of dangerousProtocols) {
-            if (href.startsWith(protocol)) {
-              console.warn('[RichTextRenderer] Blocked dangerous protocol:', attrs.href);
-              attrs.href = '#';
-              break;
-            }
-          }
-        }
-      }
-
-      // Recursively sanitize
-      if (Array.isArray(n.content)) {
-        n.content = n.content.map(child => sanitize(child, depth + 1));
-      }
-      if (Array.isArray(n.marks)) {
-        n.marks = n.marks.map(mark => sanitize(mark, depth + 1));
-      }
-
-      return n;
-    };
-
     try {
-      return sanitize(structuredClone(content), 0);
+      return sanitizeJSON(content);
     } catch (error) {
       console.error('[RichTextRenderer] Content sanitization failed:', error);
-      return { type: 'doc', content: [] }; // Return empty document on error
+      return { type: 'doc', content: [] };
     }
   }
 

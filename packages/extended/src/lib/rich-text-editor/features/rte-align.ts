@@ -8,10 +8,11 @@ import {
   tylIconFormatAlignLeft,
   tylIconFormatAlignRight
 } from '@tylertech/tyler-icons';
-import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
+import { html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { editorContext, EditorContext } from '../editor-context';
 import { RichTextEditorFeature } from './rich-text-editor-feature';
+import { featureHostStyles } from './core/feature-styles';
 
 import './core/rich-text-feature-button';
 
@@ -56,11 +57,7 @@ export class RichTextFeatureAlignComponent extends LitElement implements RichTex
     ]);
   }
 
-  public static override styles = css`
-    :host {
-      display: contents;
-    }
-  `;
+  public static override styles = featureHostStyles;
 
   /**
    * The accessible labels for the left align button.

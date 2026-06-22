@@ -4,8 +4,10 @@ import { Document } from '@tiptap/extension-document';
 import { Text } from '@tiptap/extension-text';
 import { Paragraph } from '@tiptap/extension-paragraph';
 import CharacterCount from '@tiptap/extension-character-count';
-import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
+import { html, LitElement, PropertyValues, TemplateResult, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
+
+import styles from './rich-text-context.scss?inline';
 import { when } from 'lit/directives/when.js';
 import {
   editorContext,
@@ -18,6 +20,7 @@ import {
 import { RichTextEditorFeature } from './features/rich-text-editor-feature';
 import { PasteHandler } from './extensions/paste-handler';
 import { MarkdownSerializer } from './extensions/markdown-serializer';
+import { sanitizeHTML, sanitizeJSON } from './extensions/sanitize-utils';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -79,73 +82,7 @@ const DEFAULT_EXTENSIONS: AnyExtension[] = [Document, Text, Paragraph];
  */
 @customElement(RichTextContextComponentTagName)
 export class RichTextContextComponent extends LitElement {
-  public static override styles = css`
-    :host {
-      display: contents;
-    }
-
-    .editor-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-block-start: var(--forge-spacing-small);
-      padding-inline: var(--forge-spacing-medium);
-      min-height: var(--forge-spacing-large);
-      gap: var(--forge-spacing-medium);
-    }
-
-    .editor-error {
-      color: var(--forge-theme-error);
-      font-size: var(--forge-typography-body-small-size);
-      font-weight: var(--forge-typography-body-small-weight);
-      line-height: var(--forge-typography-body-small-line-height);
-    }
-
-    .editor-counts {
-      color: var(--forge-theme-text-secondary);
-      font-size: var(--forge-typography-body-small-size);
-      font-weight: var(--forge-typography-body-small-weight);
-      line-height: var(--forge-typography-body-small-line-height);
-      margin-inline-start: auto;
-    }
-
-    .editor-initialization-error {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: var(--forge-spacing-large);
-      gap: var(--forge-spacing-medium);
-      background-color: var(--forge-theme-error-container);
-      color: var(--forge-theme-on-error-container);
-      border-radius: var(--forge-shape-medium);
-      margin: var(--forge-spacing-medium);
-      text-align: center;
-    }
-
-    .editor-initialization-error__title {
-      font-size: var(--forge-typography-title-medium-size);
-      font-weight: var(--forge-typography-title-medium-weight);
-      line-height: var(--forge-typography-title-medium-line-height);
-      margin: 0;
-    }
-
-    .editor-initialization-error__message {
-      font-size: var(--forge-typography-body-medium-size);
-      font-weight: var(--forge-typography-body-medium-weight);
-      line-height: var(--forge-typography-body-medium-line-height);
-      margin: 0;
-    }
-
-    .editor-initialization-error__details {
-      font-size: var(--forge-typography-body-small-size);
-      font-weight: var(--forge-typography-body-small-weight);
-      line-height: var(--forge-typography-body-small-line-height);
-      color: var(--forge-theme-text-secondary);
-      margin: 0;
-      max-width: 600px;
-    }
-  `;
+  public static override styles = unsafeCSS(styles);
 
   /** The ID of the element to instantiate the editor against. */
   @property({ type: String, attribute: 'editor-id' })
@@ -282,11 +219,9 @@ export class RichTextContextComponent extends LitElement {
     disabled: false,
     readOnly: false,
     content: '',
-    isActive(identifier: string | object, attributes?: object) {
-      if (typeof identifier === 'string') {
-        return this.editor?.isActive(identifier, attributes) ?? false;
-      }
-      return this.editor?.isActive(identifier) ?? false;
+    isActive(identifier: string | Record<string, unknown>, attributes?: Record<string, unknown>) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return this.editor?.isActive(identifier as any, attributes as any) ?? false;
     },
     isEditable() {
       return !this.disabled && !this.readOnly && !!this.editor;
@@ -674,158 +609,16 @@ export class RichTextContextComponent extends LitElement {
   /**
    * Sanitizes content before passing to TipTap editor.
    * Handles both HTML strings and ProseMirror JSON objects.
-   * Prevents XSS attacks via setContent() API.
    */
   #sanitizeContent(content: string | object): string | object | unknown {
-    // Handle HTML string
     if (typeof content === 'string') {
-      return this.#sanitizeHTMLString(content);
+      return sanitizeHTML(content, this.allowPasteImages);
     }
 
-    // Handle JSON object
     if (typeof content === 'object' && content !== null) {
-      return this.#sanitizeJSON(content);
+      return sanitizeJSON(content);
     }
 
     return '';
-  }
-
-  /**
-   * Sanitizes HTML string input (same as paste handler).
-   * Uses DOMParser to avoid eager resource fetches (e.g. img src beacons).
-   */
-  #sanitizeHTMLString(htmlContent: string): string {
-    const MAX_CONTENT_SIZE = 1_000_000; // 1MB limit
-    if (htmlContent.length > MAX_CONTENT_SIZE) {
-      const sizeMB = (htmlContent.length / 1024 / 1024).toFixed(2);
-      console.warn(`[RTE Security] Pasted content too large (${sizeMB}MB), truncating to 1MB`);
-      htmlContent = htmlContent.substring(0, MAX_CONTENT_SIZE);
-    }
-
-    const doc = new DOMParser().parseFromString(htmlContent, 'text/html');
-    const temp = doc.body;
-
-    // Remove dangerous elements
-    const dangerousElements = [
-      'script',
-      'iframe',
-      'embed',
-      'object',
-      'link',
-      'style',
-      'form',
-      'input',
-      'button',
-      'textarea',
-      'select',
-      'svg',
-      'math',
-      'audio',
-      'video'
-    ];
-
-    dangerousElements.forEach(tag => {
-      temp.querySelectorAll(tag).forEach(el => el.remove());
-    });
-
-    // Remove dangerous attributes
-    temp.querySelectorAll('*').forEach(el => {
-      Array.from(el.attributes).forEach(attr => {
-        if (attr.name.startsWith('on') || attr.name.startsWith('data-')) {
-          el.removeAttribute(attr.name);
-        }
-      });
-      el.removeAttribute('style');
-    });
-
-    return temp.innerHTML;
-  }
-
-  /**
-   * Sanitizes ProseMirror JSON object.
-   * - Validates structure depth and node count
-   * - Blocks dangerous protocols in link marks
-   * - Removes unknown/dangerous node types
-   */
-  #sanitizeJSON(json: unknown): unknown {
-    if (!json || typeof json !== 'object') {
-      return json;
-    }
-
-    const MAX_DEPTH = 50;
-    const MAX_NODES = 5000;
-    let nodeCount = 0;
-
-    const sanitize = (node: unknown, depth: number): unknown => {
-      // Prevent DoS via deep nesting
-      if (depth > MAX_DEPTH) {
-        throw new Error('Maximum nesting depth exceeded (limit: 50)');
-      }
-
-      // Prevent DoS via large structures
-      if (++nodeCount > MAX_NODES) {
-        throw new Error('Maximum node count exceeded (limit: 5000)');
-      }
-
-      if (!node || typeof node !== 'object') {
-        return node;
-      }
-
-      const n = node as Record<string, unknown>;
-
-      // Sanitize link marks (CRITICAL)
-      if (n.type === 'link' || (n.attrs && typeof n.attrs === 'object')) {
-        const attrs = n.attrs as Record<string, unknown>;
-        if (attrs.href && typeof attrs.href === 'string') {
-          const href = attrs.href.toLowerCase().trim();
-
-          // Block dangerous protocols
-          const dangerousProtocols = ['javascript:', 'data:', 'vbscript:', 'file:', 'about:', 'blob:'];
-
-          for (const protocol of dangerousProtocols) {
-            if (href.startsWith(protocol)) {
-              // Security: Always log warnings, never suppress
-              console.warn('[RTE Security] Blocked dangerous protocol in link:', attrs.href);
-              attrs.href = '#'; // Replace with safe default
-              break;
-            }
-          }
-
-          // Check URL-encoded variants
-          try {
-            const decoded = decodeURIComponent(href);
-            for (const protocol of dangerousProtocols) {
-              if (decoded.includes(protocol)) {
-                // Security: Always log warnings, never suppress
-                console.warn('[RTE Security] Blocked encoded dangerous protocol:', attrs.href);
-                attrs.href = '#';
-                break;
-              }
-            }
-          } catch {
-            // Invalid encoding - replace
-            attrs.href = '#';
-          }
-        }
-      }
-
-      // Recursively sanitize arrays
-      if (Array.isArray(n.content)) {
-        n.content = n.content.map(child => sanitize(child, depth + 1));
-      }
-      if (Array.isArray(n.marks)) {
-        n.marks = n.marks.map(mark => sanitize(mark, depth + 1));
-      }
-
-      return n;
-    };
-
-    try {
-      return sanitize(structuredClone(json), 0);
-    } catch (error) {
-      // Security: Always log errors, never suppress
-      console.error('[RTE Security] Content sanitization failed:', error);
-      throw error;
-    }
   }
 }

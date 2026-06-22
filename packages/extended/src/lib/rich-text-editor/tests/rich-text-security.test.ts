@@ -1375,7 +1375,7 @@ describe('Security: XSS Prevention', () => {
           await el.updateComplete;
 
           // Should have logged a warning about truncation
-          expect(warnSpy.calledWith(sinon.match(/Pasted content too large/))).to.be.true;
+          expect(warnSpy.calledWith(sinon.match(/HTML content too large/))).to.be.true;
         } finally {
           warnSpy.restore();
         }
@@ -1396,7 +1396,7 @@ describe('Security: XSS Prevention', () => {
           await el.updateComplete;
 
           // Should NOT warn about size
-          expect(warnSpy.calledWith(sinon.match(/Pasted content too large/))).to.be.false;
+          expect(warnSpy.calledWith(sinon.match(/HTML content too large/))).to.be.false;
         } finally {
           warnSpy.restore();
         }

@@ -135,6 +135,10 @@ export class RichTextEditorComponent extends LitElement {
     `;
   }
 
+  get #contextElement(): RichTextContextComponent | null {
+    return (this.shadowRoot?.querySelector('forge-rich-text-context') as RichTextContextComponent) ?? null;
+  }
+
   /**
    * Returns the editor content as JSON in ProseMirror format.
    * Returns undefined if the editor is not initialized or if an error occurs.
@@ -142,8 +146,7 @@ export class RichTextEditorComponent extends LitElement {
    * @returns The editor content as a JSON object, or undefined if unavailable.
    */
   public toJSON(): object | undefined {
-    const contextElement = this.shadowRoot?.querySelector('forge-rich-text-context') as RichTextContextComponent;
-    return contextElement?.toJSON();
+    return this.#contextElement?.toJSON();
   }
 
   /**
@@ -153,8 +156,7 @@ export class RichTextEditorComponent extends LitElement {
    * @returns The editor content as HTML.
    */
   public toHTML(): string {
-    const contextElement = this.shadowRoot?.querySelector('forge-rich-text-context') as RichTextContextComponent;
-    return contextElement?.toHTML() ?? '';
+    return this.#contextElement?.toHTML() ?? '';
   }
 
   /**
@@ -164,8 +166,7 @@ export class RichTextEditorComponent extends LitElement {
    * @returns The editor content as Markdown.
    */
   public toMarkdown(): string {
-    const contextElement = this.shadowRoot?.querySelector('forge-rich-text-context') as RichTextContextComponent;
-    return contextElement?.toMarkdown() ?? '';
+    return this.#contextElement?.toMarkdown() ?? '';
   }
 
   /**
@@ -174,8 +175,7 @@ export class RichTextEditorComponent extends LitElement {
    * @returns True if the editor is initialized, false otherwise.
    */
   public get isInitialized(): boolean {
-    const contextElement = this.shadowRoot?.querySelector('forge-rich-text-context') as RichTextContextComponent;
-    return contextElement?.isInitialized ?? false;
+    return this.#contextElement?.isInitialized ?? false;
   }
 
   /**
@@ -184,7 +184,6 @@ export class RichTextEditorComponent extends LitElement {
    * @returns The initialization error message, or null if no error occurred.
    */
   public get initializationError(): string | null {
-    const contextElement = this.shadowRoot?.querySelector('forge-rich-text-context') as RichTextContextComponent;
-    return contextElement?.initializationError ?? null;
+    return this.#contextElement?.initializationError ?? null;
   }
 }

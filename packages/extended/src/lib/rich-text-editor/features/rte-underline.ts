@@ -2,10 +2,11 @@ import { consume } from '@lit/context';
 import Underline from '@tiptap/extension-underline';
 import { IconRegistry } from '@tylertech/forge';
 import { tylIconFormatUnderlined } from '@tylertech/tyler-icons';
-import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
+import { html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { editorContext, EditorContext } from '../editor-context';
 import { RichTextEditorFeature } from './rich-text-editor-feature';
+import { featureHostStyles } from './core/feature-styles';
 
 import './core/rich-text-feature-button';
 
@@ -39,11 +40,7 @@ export class RteUnderlineComponent extends LitElement implements RichTextEditorF
     IconRegistry.define(tylIconFormatUnderlined);
   }
 
-  public static override styles = css`
-    :host {
-      display: contents;
-    }
-  `;
+  public static override styles = featureHostStyles;
 
   /**
    * The accessible label for the button.

@@ -2,10 +2,11 @@ import { consume } from '@lit/context';
 import { Bold } from '@tiptap/extension-bold';
 import { IconRegistry } from '@tylertech/forge';
 import { tylIconFormatBold } from '@tylertech/tyler-icons';
-import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
+import { html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { editorContext, EditorContext } from '../editor-context';
 import { RichTextEditorFeature } from './rich-text-editor-feature';
+import { featureHostStyles } from './core/feature-styles';
 
 import './core/rich-text-feature-button';
 
@@ -39,11 +40,7 @@ export class RichTextFeatureBoldComponent extends LitElement implements RichText
     IconRegistry.define(tylIconFormatBold);
   }
 
-  public static override styles = css`
-    :host {
-      display: contents;
-    }
-  `;
+  public static override styles = featureHostStyles;
 
   /**
    * The accessible label for the button.

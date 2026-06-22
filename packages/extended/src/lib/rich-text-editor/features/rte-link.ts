@@ -7,6 +7,8 @@ import { customElement, property, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { editorContext, EditorContext } from '../editor-context';
 import { RichTextEditorFeature } from './rich-text-editor-feature';
+import { featureHostStyles } from './core/feature-styles';
+import { DANGEROUS_PROTOCOLS } from '../extensions/sanitize-utils';
 import { VirtualElement } from '@tylertech/forge/esm/core/utils/position-utils';
 
 import './core/rich-text-feature-button';
@@ -47,37 +49,36 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
     defineButtonComponent();
   }
 
-  public static override styles = css`
-    :host {
-      display: contents;
-    }
+  public static override styles = [
+    featureHostStyles,
+    css`
+      .link-popover {
+        padding: var(--forge-spacing-medium);
+        display: flex;
+        flex-direction: column;
+        gap: var(--forge-spacing-small);
+        min-width: 320px;
+      }
 
-    .link-popover {
-      padding: 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      min-width: 320px;
-    }
+      .button-group {
+        display: flex;
+        gap: var(--forge-spacing-xsmall);
+        justify-content: flex-end;
+      }
 
-    .button-group {
-      display: flex;
-      gap: 8px;
-      justify-content: flex-end;
-    }
+      .error-message {
+        color: var(--forge-theme-error);
+        font-size: var(--forge-typography-body-small-size);
+        margin-block-start: calc(var(--forge-spacing-xsmall) * -1);
+      }
 
-    .error-message {
-      color: var(--forge-theme-error);
-      font-size: 12px;
-      margin-block-start: -8px;
-    }
-
-    .warning-message {
-      color: var(--forge-theme-warning, #b45309);
-      font-size: 12px;
-      margin-block-start: -8px;
-    }
-  `;
+      .warning-message {
+        color: var(--forge-theme-warning, #b45309);
+        font-size: var(--forge-typography-body-small-size);
+        margin-block-start: calc(var(--forge-spacing-xsmall) * -1);
+      }
+    `
+  ];
 
   /**
    * The accessible label for the button.
@@ -239,11 +240,9 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
     }
 
     // CRITICAL SECURITY CHECK: Block dangerous protocols FIRST
-    const protocolBlocklist = ['javascript:', 'data:', 'vbscript:', 'file:', 'about:', 'blob:'];
-
     const lowerUrl = this._linkUrl.toLowerCase().trim();
 
-    for (const protocol of protocolBlocklist) {
+    for (const protocol of DANGEROUS_PROTOCOLS) {
       if (lowerUrl.startsWith(protocol)) {
         this._validationError = 'Invalid protocol. Only http and https URLs are allowed.';
         return;
@@ -253,7 +252,7 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
     // Check for URL-encoded variants
     try {
       const decoded = decodeURIComponent(lowerUrl);
-      for (const protocol of protocolBlocklist) {
+      for (const protocol of DANGEROUS_PROTOCOLS) {
         if (decoded.startsWith(protocol)) {
           this._validationError = 'Invalid protocol detected. Only http and https URLs are allowed.';
           return;

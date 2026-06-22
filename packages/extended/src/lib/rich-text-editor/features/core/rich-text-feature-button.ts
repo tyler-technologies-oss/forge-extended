@@ -1,6 +1,7 @@
 import { defineIconButtonComponent } from '@tylertech/forge';
-import { css, html, LitElement, TemplateResult } from 'lit';
+import { html, LitElement, TemplateResult } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { featureHostStyles } from './feature-styles';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -47,11 +48,7 @@ export class RteToolButtonComponent extends LitElement {
     defineIconButtonComponent();
   }
 
-  public static override styles = css`
-    :host {
-      display: contents;
-    }
-  `;
+  public static override styles = featureHostStyles;
 
   /** The label for the bold button */
   @property({ type: String })

@@ -56,7 +56,8 @@ export interface EditorContext {
   readonly readOnly: boolean;
 
   /** Determines if a feature is active. */
-  isActive(identifier: string | object, attributes?: object): boolean;
+  isActive(name: string, attributes?: Record<string, unknown>): boolean;
+  isActive(attributes: Record<string, unknown>): boolean;
 
   /** Whether the editor is editable. */
   isEditable(): boolean;
