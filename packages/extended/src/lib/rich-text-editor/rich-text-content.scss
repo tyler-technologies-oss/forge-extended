@@ -106,7 +106,7 @@ img.ProseMirror-separator {
 
     // Heading styles using Forge typography tokens
     h1 {
-      @include forge-typography.style(heading1);
+      @include forge-typography.style(heading6);
       margin-block-start: 0;
       margin-block-end: var(--forge-spacing-medium);
 
@@ -116,7 +116,7 @@ img.ProseMirror-separator {
     }
 
     h2 {
-      @include forge-typography.style(heading2);
+      @include forge-typography.style(heading5);
       margin-block-start: 0;
       margin-block-end: var(--forge-spacing-medium);
 
@@ -126,16 +126,6 @@ img.ProseMirror-separator {
     }
 
     h3 {
-      @include forge-typography.style(heading3);
-      margin-block-start: 0;
-      margin-block-end: var(--forge-spacing-small);
-
-      &:not(:first-child) {
-        margin-block-start: var(--forge-spacing-medium);
-      }
-    }
-
-    h4 {
       @include forge-typography.style(heading4);
       margin-block-start: 0;
       margin-block-end: var(--forge-spacing-small);
@@ -145,9 +135,28 @@ img.ProseMirror-separator {
       }
     }
 
-    h5,
+    h4 {
+      @include forge-typography.style(heading3);
+      margin-block-start: 0;
+      margin-block-end: var(--forge-spacing-small);
+
+      &:not(:first-child) {
+        margin-block-start: var(--forge-spacing-medium);
+      }
+    }
+
+    h5 {
+      @include forge-typography.style(heading2);
+      margin-block-start: 0;
+      margin-block-end: var(--forge-spacing-small);
+
+      &:not(:first-child) {
+        margin-block-start: var(--forge-spacing-medium);
+      }
+    }
+
     h6 {
-      @include forge-typography.style(heading5);
+      @include forge-typography.style(heading1);
       margin-block-start: 0;
       margin-block-end: var(--forge-spacing-small);
 
