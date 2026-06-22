@@ -2,10 +2,11 @@ import { consume } from '@lit/context';
 import { Strike } from '@tiptap/extension-strike';
 import { IconRegistry } from '@tylertech/forge';
 import { tylIconFormatStrikethrough } from '@tylertech/tyler-icons';
-import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
+import { html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { editorContext, EditorContext } from '../editor-context';
 import { RichTextEditorFeature } from './rich-text-editor-feature';
+import { featureHostStyles } from './core/feature-styles';
 
 import './core/rich-text-feature-button';
 
@@ -19,6 +20,19 @@ export const RichTextFeatureStrikeComponentTagName: keyof HTMLElementTagNameMap 
 
 /**
  * @tag forge-rte-strike
+ *
+ * @summary
+ * Provides a strikethrough text formatting button for the rich text editor.
+ *
+ * @description
+ * The strikethrough feature component renders a toolbar button that allows users to apply or
+ * remove strikethrough formatting to selected text. The button shows an active state when the
+ * cursor is positioned within strikethrough text. The feature announces state changes to screen
+ * readers for accessibility.
+ *
+ * @property {string} [label='Strikethrough'] - The accessible label for the strikethrough button.
+ *
+ * @attribute {string} label - The accessible label for the strikethrough button.
  */
 @customElement(RichTextFeatureStrikeComponentTagName)
 export class RichTextFeatureStrikeComponent extends LitElement implements RichTextEditorFeature {
@@ -26,11 +40,7 @@ export class RichTextFeatureStrikeComponent extends LitElement implements RichTe
     IconRegistry.define(tylIconFormatStrikethrough);
   }
 
-  public static override styles = css`
-    :host {
-      display: contents;
-    }
-  `;
+  public static override styles = featureHostStyles;
 
   /**
    * The accessible label for the button.
@@ -62,6 +72,18 @@ export class RichTextFeatureStrikeComponent extends LitElement implements RichTe
   }
 
   private async _toggle(_evt: CustomEvent): Promise<void> {
-    this._editorContext.editor?.chain().focus().toggleStrike().run();
+    try {
+      const wasActive = this._editorContext.isActive(Strike.name);
+      const success = this._editorContext.editor?.chain().focus().toggleStrike().run();
+
+      if (success) {
+        const message = wasActive ? 'Strikethrough removed' : 'Strikethrough applied';
+        this._editorContext.announce(message);
+      } else {
+        console.warn('[RTE Strike] Command execution failed');
+      }
+    } catch (error) {
+      console.error('[RTE Strike] Error toggling strike:', error);
+    }
   }
 }

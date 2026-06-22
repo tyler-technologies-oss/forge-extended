@@ -2,10 +2,11 @@ import { consume } from '@lit/context';
 import { defineIconButtonComponent, IconRegistry } from '@tylertech/forge';
 import { UndoRedo } from '@tiptap/extensions';
 import { tylIconRedo, tylIconUndo } from '@tylertech/tyler-icons';
-import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
+import { html, LitElement, PropertyValues, TemplateResult } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { editorContext, EditorContext } from '../editor-context';
 import { RichTextEditorFeature } from './rich-text-editor-feature';
+import { featureHostStyles } from './core/feature-styles';
 import { createRef, ref } from 'lit/directives/ref.js';
 
 declare global {
@@ -18,6 +19,21 @@ export const RichTextFeatureUndoRedoComponentTagName: keyof HTMLElementTagNameMa
 
 /**
  * @tag forge-rte-undo-redo
+ *
+ * @summary
+ * Provides undo and redo buttons for the rich text editor history management.
+ *
+ * @description
+ * The undo/redo feature component renders two toolbar buttons that allow users to undo or redo
+ * changes to the editor content. The buttons are automatically disabled when there is no history
+ * to undo or redo. The feature announces actions to screen readers for accessibility. Keyboard
+ * shortcuts Control+Z (undo) and Control+Shift+Z (redo) are supported through TipTap.
+ *
+ * @property {string} [undoLabel='Undo'] - The accessible label for the undo button.
+ * @property {string} [redoLabel='Redo'] - The accessible label for the redo button.
+ *
+ * @attribute {string} undo-label - The accessible label for the undo button.
+ * @attribute {string} redo-label - The accessible label for the redo button.
  */
 @customElement(RichTextFeatureUndoRedoComponentTagName)
 export class RichTextFeatureUndoRedoComponent extends LitElement implements RichTextEditorFeature {
@@ -26,11 +42,7 @@ export class RichTextFeatureUndoRedoComponent extends LitElement implements Rich
     defineIconButtonComponent();
   }
 
-  public static override styles = css`
-    :host {
-      display: contents;
-    }
-  `;
+  public static override styles = featureHostStyles;
 
   /**
    * The accessible label for the undo button.
@@ -93,30 +105,50 @@ export class RichTextFeatureUndoRedoComponent extends LitElement implements Rich
   }
 
   async #undo(): Promise<void> {
-    this._editorContext.editor?.chain().undo().run();
+    try {
+      const success = this._editorContext.editor?.chain().undo().run();
 
-    await this.updateComplete;
+      if (success) {
+        this._editorContext.announce('Undo');
 
-    if (!this._editorContext.editor?.can().undo()) {
-      if (this._editorContext.editor?.can().redo()) {
-        this.#redoButtonRef.value?.focus();
+        await this.updateComplete;
+
+        if (!this._editorContext.editor?.can().undo()) {
+          if (this._editorContext.editor?.can().redo()) {
+            this.#redoButtonRef.value?.focus();
+          } else {
+            this._editorContext.editor?.chain().focus().run();
+          }
+        }
       } else {
-        this._editorContext.editor?.chain().focus().run();
+        console.warn('[RTE UndoRedo] Undo command execution failed');
       }
+    } catch (error) {
+      console.error('[RTE UndoRedo] Error executing undo:', error);
     }
   }
 
   async #redo(): Promise<void> {
-    this._editorContext.editor?.chain().redo().run();
+    try {
+      const success = this._editorContext.editor?.chain().redo().run();
 
-    await this.updateComplete;
+      if (success) {
+        this._editorContext.announce('Redo');
 
-    if (!this._editorContext.editor?.can().redo()) {
-      if (this._editorContext.editor?.can().undo()) {
-        this.#undoButtonRef.value?.focus();
+        await this.updateComplete;
+
+        if (!this._editorContext.editor?.can().redo()) {
+          if (this._editorContext.editor?.can().undo()) {
+            this.#undoButtonRef.value?.focus();
+          } else {
+            this._editorContext.editor?.chain().focus().run();
+          }
+        }
       } else {
-        this._editorContext.editor?.chain().focus().run();
+        console.warn('[RTE UndoRedo] Redo command execution failed');
       }
+    } catch (error) {
+      console.error('[RTE UndoRedo] Error executing redo:', error);
     }
   }
 }
