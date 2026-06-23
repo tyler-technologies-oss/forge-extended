@@ -14,7 +14,7 @@ export const ForgeCountCard = forwardRef((props, forwardedRef) => {
       for: props.htmlFor,
       part: props.part,
       tabindex: props.tabIndex,
-      "no-border": props.noBorder ? true : undefined,
+      "no-border": props.noBorder ? "" : undefined,
       style: { ...props.style },
     },
     props.children,
