@@ -821,129 +821,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ContentScaffoldComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-content-scaffold'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ContentScaffoldComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the height of the header section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-header-height"
-            },
-            {
-              "description": "Controls the background color of the header section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-header-background"
-            },
-            {
-              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-header-min-height"
-            },
-            {
-              "description": "Controls the height of the body section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-body-height"
-            },
-            {
-              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
-              "name": "--forge-content-scaffold-body-padding-inline"
-            },
-            {
-              "description": "Controls the height of the footer section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-footer-height"
-            },
-            {
-              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-footer-background"
-            },
-            {
-              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-footer-min-height"
-            },
-            {
-              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
-              "name": "--forge-content-scaffold-footer-full-padding"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
-              "name": "header"
-            },
-            {
-              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
-              "name": "before-header-start"
-            },
-            {
-              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-start"
-            },
-            {
-              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-end"
-            },
-            {
-              "description": "The main body content that expands to fill available space.",
-              "name": "body"
-            },
-            {
-              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
-              "name": "footer"
-            },
-            {
-              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-start"
-            },
-            {
-              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-end"
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-content-scaffold",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponentTagName",
-          "declaration": {
-            "name": "ContentScaffoldComponentTagName",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponent",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "declarations": [
         {
@@ -1311,6 +1188,129 @@
           "declaration": {
             "name": "CountCardComponent",
             "module": "src/lib/count-card/count-card.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ContentScaffoldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-content-scaffold'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ContentScaffoldComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the header section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-header-height"
+            },
+            {
+              "description": "Controls the background color of the header section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-header-background"
+            },
+            {
+              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-header-min-height"
+            },
+            {
+              "description": "Controls the height of the body section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-body-height"
+            },
+            {
+              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-body-padding-inline"
+            },
+            {
+              "description": "Controls the height of the footer section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-footer-height"
+            },
+            {
+              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-footer-background"
+            },
+            {
+              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-footer-min-height"
+            },
+            {
+              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
+              "name": "--forge-content-scaffold-footer-full-padding"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
+              "name": "header"
+            },
+            {
+              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
+              "name": "before-header-start"
+            },
+            {
+              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-start"
+            },
+            {
+              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-end"
+            },
+            {
+              "description": "The main body content that expands to fill available space.",
+              "name": "body"
+            },
+            {
+              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
+              "name": "footer"
+            },
+            {
+              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-start"
+            },
+            {
+              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-end"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-content-scaffold",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponentTagName",
+          "declaration": {
+            "name": "ContentScaffoldComponentTagName",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponent",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         }
       ]
@@ -2021,7 +2021,7 @@
                 "text": "EditorContext"
               },
               "privacy": "public",
-              "default": "{ editor: null, disabled: false, readOnly: false, content: '', isActive(identifier: string | Record<string, unknown>, attributes?: Record<string, unknown>) { // eslint-disable-next-line @typescript-eslint/no-explicit-any return this.editor?.isActive(identifier as any, attributes as any) ?? false; }, isEditable() { return !this.disabled && !this.readOnly && !!this.editor; }, setEditorElement: this.#setEditorElement.bind(this), registerFeature: this.#registerFeature.bind(this), announce: this.#announce.bind(this) }",
+              "default": "{ editor: null, disabled: false, readOnly: false, content: '', isActive(identifier: string | Record<string, unknown>, attributes?: Record<string, unknown>) { // eslint-disable-next-line @typescript-eslint/no-explicit-any return this.editor?.isActive(identifier as any, attributes as any) ?? false; }, isEditable() { return !this.disabled && !this.readOnly && !!this.editor; }, setEditorElement: this.#setEditorElement.bind(this), registerFeature: this.#registerFeature.bind(this), setAnnouncementCallback: this.#setAnnouncementCallback.bind(this), announce: this.#announce.bind(this) }",
               "description": "Provide the editor context to child components."
             },
             {
@@ -2581,6 +2581,79 @@
           "declaration": {
             "name": "RichTextEditorComponent",
             "module": "src/lib/rich-text-editor/rich-text-editor.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/rich-text-renderer.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextRendererComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rich-text-renderer'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextRendererComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "content",
+              "type": {
+                "text": "RichTextRendererContent"
+              },
+              "privacy": "public",
+              "description": "The content to render in ProseMirror JSON format.",
+              "attribute": "content"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "content",
+              "type": {
+                "text": "RichTextRendererContent"
+              },
+              "description": "The content to render in ProseMirror JSON format.",
+              "fieldName": "content"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rich-text-renderer",
+          "customElement": true,
+          "summary": "Renders rich text content in a read-only format for display purposes."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextRendererComponentTagName",
+          "declaration": {
+            "name": "RichTextRendererComponentTagName",
+            "module": "src/lib/rich-text-editor/rich-text-renderer.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextRendererComponent",
+          "declaration": {
+            "name": "RichTextRendererComponent",
+            "module": "src/lib/rich-text-editor/rich-text-renderer.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextRendererComponent",
+            "module": "src/lib/rich-text-editor/rich-text-renderer.ts"
           }
         }
       ]
@@ -3266,6 +3339,1266 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-align.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureAlignComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-align'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureAlignComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "leftLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Align Left'",
+              "description": "The accessible label for the left align button.",
+              "attribute": "leftLabel"
+            },
+            {
+              "kind": "field",
+              "name": "centerLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Align Center'",
+              "description": "The accessible label for the center align button.",
+              "attribute": "centerLabel"
+            },
+            {
+              "kind": "field",
+              "name": "rightLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Align Right'",
+              "description": "The accessible label for the right align button.",
+              "attribute": "rightLabel"
+            },
+            {
+              "kind": "field",
+              "name": "justifyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Justify'",
+              "description": "The accessible label for the justify button.",
+              "attribute": "justifyLabel"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[ TextAlign.configure({ types: ['heading', Paragraph.name] }) ]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "left-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Align Left'",
+              "description": "The accessible label for the left align button.",
+              "fieldName": "leftLabel"
+            },
+            {
+              "name": "center-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Align Center'",
+              "description": "The accessible label for the center align button.",
+              "fieldName": "centerLabel"
+            },
+            {
+              "name": "right-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Align Right'",
+              "description": "The accessible label for the right align button.",
+              "fieldName": "rightLabel"
+            },
+            {
+              "name": "justify-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Justify'",
+              "description": "The accessible label for the justify button.",
+              "fieldName": "justifyLabel"
+            },
+            {
+              "name": "leftLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Align Left'",
+              "description": "The accessible label for the left align button.",
+              "attribute": "left-label",
+              "fieldName": "leftLabel"
+            },
+            {
+              "name": "centerLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Align Center'",
+              "description": "The accessible label for the center align button.",
+              "attribute": "center-label",
+              "fieldName": "centerLabel"
+            },
+            {
+              "name": "rightLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Align Right'",
+              "description": "The accessible label for the right align button.",
+              "attribute": "right-label",
+              "fieldName": "rightLabel"
+            },
+            {
+              "name": "justifyLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Justify'",
+              "description": "The accessible label for the justify button.",
+              "attribute": "justify-label",
+              "fieldName": "justifyLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-align",
+          "customElement": true,
+          "summary": "Provides text alignment buttons (left, center, right, justify) for the rich text editor."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureAlignComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureAlignComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-align.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureAlignComponent",
+          "declaration": {
+            "name": "RichTextFeatureAlignComponent",
+            "module": "src/lib/rich-text-editor/features/rte-align.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureAlignComponent",
+            "module": "src/lib/rich-text-editor/features/rte-align.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-bold.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureBoldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-bold'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureBoldComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Bold'",
+              "description": "The accessible label for the bold button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[Bold]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Bold'",
+              "description": "The accessible label for the bold button.",
+              "fieldName": "label",
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-bold",
+          "customElement": true,
+          "summary": "Provides a bold text formatting button for the rich text editor."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureBoldComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureBoldComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-bold.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureBoldComponent",
+          "declaration": {
+            "name": "RichTextFeatureBoldComponent",
+            "module": "src/lib/rich-text-editor/features/rte-bold.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureBoldComponent",
+            "module": "src/lib/rich-text-editor/features/rte-bold.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-bullet-list.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RteBulletListComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-bullet-list'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RteBulletListComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Bullet List'",
+              "description": "The accessible label for the bullet list button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[BulletList, ListItem]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Bullet List'",
+              "description": "The accessible label for the bullet list button.",
+              "fieldName": "label",
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-bullet-list",
+          "customElement": true,
+          "summary": "Provides a bulleted (unordered) list button for the rich text editor."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RteBulletListComponentTagName",
+          "declaration": {
+            "name": "RteBulletListComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-bullet-list.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RteBulletListComponent",
+          "declaration": {
+            "name": "RteBulletListComponent",
+            "module": "src/lib/rich-text-editor/features/rte-bullet-list.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RteBulletListComponent",
+            "module": "src/lib/rich-text-editor/features/rte-bullet-list.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-code.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureCodeComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-code'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureCodeComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "privacy": "public",
+              "description": "The accessible label for the code button.",
+              "default": "'Code'",
+              "attribute": "label",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[Code]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "description": "The accessible label for the code button.",
+              "default": "'Code'",
+              "fieldName": "label",
+              "type": {
+                "text": "string"
+              },
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-code",
+          "customElement": true,
+          "summary": "Provides an inline code formatting button for the rich text editor."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureCodeComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureCodeComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-code.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureCodeComponent",
+          "declaration": {
+            "name": "RichTextFeatureCodeComponent",
+            "module": "src/lib/rich-text-editor/features/rte-code.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureCodeComponent",
+            "module": "src/lib/rich-text-editor/features/rte-code.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-feature-divider.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureDividerComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-feature-divider'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureDividerComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-feature-divider",
+          "customElement": true,
+          "summary": "A vertical divider for separating groups of buttons in the rich text editor toolbar."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureDividerComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureDividerComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-feature-divider.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureDividerComponent",
+          "declaration": {
+            "name": "RichTextFeatureDividerComponent",
+            "module": "src/lib/rich-text-editor/features/rte-feature-divider.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureDividerComponent",
+            "module": "src/lib/rich-text-editor/features/rte-feature-divider.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-heading.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureHeadingComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-heading'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureHeadingComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "h1Label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Heading 1'",
+              "description": "The accessible label for the heading 1 button.",
+              "attribute": "h1-label"
+            },
+            {
+              "kind": "field",
+              "name": "h2Label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Heading 2'",
+              "description": "The accessible label for the heading 2 button.",
+              "attribute": "h2-label"
+            },
+            {
+              "kind": "field",
+              "name": "h3Label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Heading 3'",
+              "description": "The accessible label for the heading 3 button.",
+              "attribute": "h3-label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[ Heading.configure({ levels: [1, 2, 3] }) ]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "h1-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Heading 1'",
+              "description": "The accessible label for the heading 1 button.",
+              "fieldName": "h1Label",
+              "attribute": "h1-label"
+            },
+            {
+              "name": "h2-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Heading 2'",
+              "description": "The accessible label for the heading 2 button.",
+              "fieldName": "h2Label",
+              "attribute": "h2-label"
+            },
+            {
+              "name": "h3-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Heading 3'",
+              "description": "The accessible label for the heading 3 button.",
+              "fieldName": "h3Label",
+              "attribute": "h3-label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-heading",
+          "customElement": true,
+          "summary": "Provides heading formatting buttons (H1, H2, H3) for the rich text editor."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureHeadingComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureHeadingComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-heading.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureHeadingComponent",
+          "declaration": {
+            "name": "RichTextFeatureHeadingComponent",
+            "module": "src/lib/rich-text-editor/features/rte-heading.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureHeadingComponent",
+            "module": "src/lib/rich-text-editor/features/rte-heading.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-italic.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RteItalicComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-italic'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RteItalicComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Italic'",
+              "description": "The accessible label for the italic button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[Italic]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Italic'",
+              "description": "The accessible label for the italic button.",
+              "fieldName": "label",
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-italic",
+          "customElement": true,
+          "summary": "Provides an italic text formatting button for the rich text editor."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RteItalicComponentTagName",
+          "declaration": {
+            "name": "RteItalicComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-italic.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RteItalicComponent",
+          "declaration": {
+            "name": "RteItalicComponent",
+            "module": "src/lib/rich-text-editor/features/rte-italic.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RteItalicComponent",
+            "module": "src/lib/rich-text-editor/features/rte-italic.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-link.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureLinkComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-link'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureLinkComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Link'",
+              "description": "The accessible label for the link button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "autoProtocol",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Whether to automatically add https:// protocol if missing from the URL.",
+              "attribute": "auto-protocol"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[ Link.configure({ openOnClick: false, HTMLAttributes: { target: '_blank', rel: 'noopener noreferrer nofollow' } }) ]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Link'",
+              "description": "The accessible label for the link button.",
+              "fieldName": "label",
+              "attribute": "label"
+            },
+            {
+              "name": "autoProtocol",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Whether to automatically add https:// protocol if missing.",
+              "fieldName": "autoProtocol"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether to automatically add https:// protocol if missing from the URL.",
+              "name": "auto-protocol",
+              "default": "true",
+              "attribute": "autoProtocol",
+              "fieldName": "autoProtocol"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-link",
+          "customElement": true,
+          "summary": "Provides a link creation and editing button for the rich text editor."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureLinkComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureLinkComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-link.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureLinkComponent",
+          "declaration": {
+            "name": "RichTextFeatureLinkComponent",
+            "module": "src/lib/rich-text-editor/features/rte-link.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureLinkComponent",
+            "module": "src/lib/rich-text-editor/features/rte-link.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-ordered-list.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RteOrderedListComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-ordered-list'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RteOrderedListComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Ordered List'",
+              "description": "The accessible label for the ordered list button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[OrderedList, ListItem]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Ordered List'",
+              "description": "The accessible label for the ordered list button.",
+              "fieldName": "label",
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-ordered-list",
+          "customElement": true,
+          "summary": "Provides a numbered (ordered) list button for the rich text editor."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RteOrderedListComponentTagName",
+          "declaration": {
+            "name": "RteOrderedListComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-ordered-list.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RteOrderedListComponent",
+          "declaration": {
+            "name": "RteOrderedListComponent",
+            "module": "src/lib/rich-text-editor/features/rte-ordered-list.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RteOrderedListComponent",
+            "module": "src/lib/rich-text-editor/features/rte-ordered-list.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-standard-tools.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RteStandardToolsComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-standard-tools'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RteStandardToolsComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-standard-tools",
+          "customElement": true,
+          "summary": "A convenience component that bundles common text formatting features into a single toolbar."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RteStandardToolsComponentTagName",
+          "declaration": {
+            "name": "RteStandardToolsComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-standard-tools.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RteStandardToolsComponent",
+          "declaration": {
+            "name": "RteStandardToolsComponent",
+            "module": "src/lib/rich-text-editor/features/rte-standard-tools.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RteStandardToolsComponent",
+            "module": "src/lib/rich-text-editor/features/rte-standard-tools.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-strike.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureStrikeComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-strike'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureStrikeComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Strikethrough'",
+              "description": "The accessible label for the strikethrough button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[Strike]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Strikethrough'",
+              "description": "The accessible label for the strikethrough button.",
+              "fieldName": "label",
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-strike",
+          "customElement": true,
+          "summary": "Provides a strikethrough text formatting button for the rich text editor."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureStrikeComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureStrikeComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-strike.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureStrikeComponent",
+          "declaration": {
+            "name": "RichTextFeatureStrikeComponent",
+            "module": "src/lib/rich-text-editor/features/rte-strike.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureStrikeComponent",
+            "module": "src/lib/rich-text-editor/features/rte-strike.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-underline.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RteUnderlineComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-underline'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RteUnderlineComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Underline'",
+              "description": "The accessible label for the underline button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[Underline]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Underline'",
+              "description": "The accessible label for the underline button.",
+              "fieldName": "label",
+              "attribute": "label"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-underline",
+          "customElement": true,
+          "summary": "Provides an underline text formatting button for the rich text editor."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RteUnderlineComponentTagName",
+          "declaration": {
+            "name": "RteUnderlineComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-underline.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RteUnderlineComponent",
+          "declaration": {
+            "name": "RteUnderlineComponent",
+            "module": "src/lib/rich-text-editor/features/rte-underline.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RteUnderlineComponent",
+            "module": "src/lib/rich-text-editor/features/rte-underline.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rte-undo-redo.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextFeatureUndoRedoComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-undo-redo'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextFeatureUndoRedoComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "undoLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Undo'",
+              "description": "The accessible label for the undo button.",
+              "attribute": "undoLabel"
+            },
+            {
+              "kind": "field",
+              "name": "redoLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Redo'",
+              "description": "The accessible label for the redo button.",
+              "attribute": "redoLabel"
+            },
+            {
+              "kind": "field",
+              "name": "extensions",
+              "type": {
+                "text": "array"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "default": "[UndoRedo]"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "undo-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Undo'",
+              "description": "The accessible label for the undo button.",
+              "fieldName": "undoLabel"
+            },
+            {
+              "name": "redo-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Redo'",
+              "description": "The accessible label for the redo button.",
+              "fieldName": "redoLabel"
+            },
+            {
+              "name": "undoLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Undo'",
+              "description": "The accessible label for the undo button.",
+              "attribute": "undo-label",
+              "fieldName": "undoLabel"
+            },
+            {
+              "name": "redoLabel",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Redo'",
+              "description": "The accessible label for the redo button.",
+              "attribute": "redo-label",
+              "fieldName": "redoLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-undo-redo",
+          "customElement": true,
+          "summary": "Provides undo and redo buttons for the rich text editor history management."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextFeatureUndoRedoComponentTagName",
+          "declaration": {
+            "name": "RichTextFeatureUndoRedoComponentTagName",
+            "module": "src/lib/rich-text-editor/features/rte-undo-redo.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextFeatureUndoRedoComponent",
+          "declaration": {
+            "name": "RichTextFeatureUndoRedoComponent",
+            "module": "src/lib/rich-text-editor/features/rte-undo-redo.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextFeatureUndoRedoComponent",
+            "module": "src/lib/rich-text-editor/features/rte-undo-redo.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
@@ -3556,10 +4889,6 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 40
     },
-    "ContentScaffoldComponent": {
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "lineNumber": 37
-    },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 28
@@ -3583,6 +4912,10 @@
     "CountCardComponent": {
       "path": "src/lib/count-card/count-card.ts",
       "lineNumber": 71
+    },
+    "ContentScaffoldComponent": {
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "lineNumber": 37
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
@@ -3630,11 +4963,19 @@
     },
     "RichTextContextComponent": {
       "path": "src/lib/rich-text-editor/rich-text-context.ts",
-      "lineNumber": 84
+      "lineNumber": 83
     },
     "RichTextEditorComponent": {
       "path": "src/lib/rich-text-editor/rich-text-editor.ts",
       "lineNumber": 65
+    },
+    "RichTextRendererContent": {
+      "path": "src/lib/rich-text-editor/rich-text-renderer.ts",
+      "lineNumber": 29
+    },
+    "RichTextRendererComponent": {
+      "path": "src/lib/rich-text-editor/rich-text-renderer.ts",
+      "lineNumber": 93
     },
     "StructuredCardComponent": {
       "path": "src/lib/structured-card/structured-card.ts",
@@ -3679,6 +5020,58 @@
     "RichTextEditorFeature": {
       "path": "src/lib/rich-text-editor/features/rich-text-editor-feature.ts",
       "lineNumber": 3
+    },
+    "RichTextFeatureAlignComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-align.ts",
+      "lineNumber": 49
+    },
+    "RichTextFeatureBoldComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-bold.ts",
+      "lineNumber": 37
+    },
+    "RteBulletListComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-bullet-list.ts",
+      "lineNumber": 38
+    },
+    "RichTextFeatureCodeComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-code.ts",
+      "lineNumber": 37
+    },
+    "RichTextFeatureDividerComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-feature-divider.ts",
+      "lineNumber": 25
+    },
+    "RichTextFeatureHeadingComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-heading.ts",
+      "lineNumber": 41
+    },
+    "RteItalicComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-italic.ts",
+      "lineNumber": 37
+    },
+    "RichTextFeatureLinkComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-link.ts",
+      "lineNumber": 45
+    },
+    "RteOrderedListComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-ordered-list.ts",
+      "lineNumber": 38
+    },
+    "RteStandardToolsComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-standard-tools.ts",
+      "lineNumber": 41
+    },
+    "RichTextFeatureStrikeComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-strike.ts",
+      "lineNumber": 37
+    },
+    "RteUnderlineComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-underline.ts",
+      "lineNumber": 37
+    },
+    "RichTextFeatureUndoRedoComponent": {
+      "path": "src/lib/rich-text-editor/features/rte-undo-redo.ts",
+      "lineNumber": 38
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
