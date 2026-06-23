@@ -12,3 +12,4 @@ export * from './rte-feature-divider';
 export * from './rte-heading';
 export * from './rte-align';
 export * from './rte-standard-tools';
+export * from './rte-link';
