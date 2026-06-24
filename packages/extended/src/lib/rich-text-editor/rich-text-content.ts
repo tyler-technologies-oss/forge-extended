@@ -5,7 +5,6 @@ import { createRef, ref } from 'lit/directives/ref.js';
 import { editorContext, EditorContext } from './editor-context';
 
 import styles from './rich-text-content.scss?inline';
-import prosemirrorStyles from 'prosemirror-view/style/prosemirror.css?inline';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -29,7 +28,7 @@ export const RichTextContentComponentTagName: keyof HTMLElementTagNameMap = 'for
  */
 @customElement(RichTextContentComponentTagName)
 export class RichTextContentComponent extends LitElement {
-  public static override styles = [unsafeCSS(prosemirrorStyles), unsafeCSS(styles)];
+  public static override styles = unsafeCSS(styles);
 
   @state()
   @consume({ context: editorContext, subscribe: true })
