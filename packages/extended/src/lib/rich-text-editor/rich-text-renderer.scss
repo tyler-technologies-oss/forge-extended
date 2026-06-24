@@ -1,5 +1,7 @@
 @use './core' as rte-core;
 
+@include rte-core.prosemirror-base();
+
 :host {
   display: block;
 }
