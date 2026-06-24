@@ -1,10 +1,11 @@
-<h2 class="forge-typography--heading4">Rich Text Editor</h2>
+<h2 class="forge-typography--heading4">Standalone</h2>
 <forge-rich-text-editor>
   <forge-rte-heading></forge-rte-heading>
   <forge-rte-align></forge-rte-align>
   <forge-rte-feature-divider></forge-rte-feature-divider>
   <forge-rte-standard-tools></forge-rte-standard-tools>
   <forge-rte-feature-divider></forge-rte-feature-divider>
+  <forge-rte-code></forge-rte-code>
   <forge-rte-link></forge-rte-link>
 </forge-rich-text-editor>
 
@@ -12,5 +13,19 @@
 <forge-card outlined>
   <forge-rich-text-renderer></forge-rich-text-renderer>
 </forge-card>
+
+<h2 class="forge-typography--heading4">Composed</h2>
+<forge-rich-text-context>
+  <forge-card class="toolbar" raised>
+    <div>
+      <forge-rte-standard-tools></forge-rte-standard-tools>
+    </div>
+  </forge-card>
+  <div class="content-container">
+    <forge-card class="content-card" raised>
+      <forge-rich-text-content></forge-rich-text-content>
+    </forge-card>
+  </div>
+</forge-rich-text-context>
 
 <script type="module" src="rich-text-editor.ts"></script>
