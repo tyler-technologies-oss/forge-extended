@@ -15,6 +15,7 @@ import { html, LitElement, TemplateResult, unsafeCSS } from 'lit';
 import { customElement, property, query } from 'lit/decorators.js';
 
 import styles from './rich-text-renderer.scss?inline';
+import prosemirrorStyles from 'prosemirror-view/style/prosemirror.css?inline';
 import { sanitizeJSON } from './extensions/sanitize-utils';
 
 /**
@@ -92,7 +93,7 @@ const DEFAULT_EXTENSIONS: AnyExtension[] = [
  */
 @customElement(RichTextRendererComponentTagName)
 export class RichTextRendererComponent extends LitElement {
-  public static override styles = unsafeCSS(styles);
+  public static override styles = [unsafeCSS(prosemirrorStyles), unsafeCSS(styles)];
 
   @property({ type: Object })
   public content?: RichTextRendererContent;
