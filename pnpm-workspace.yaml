@@ -14,7 +14,7 @@ catalog:
   '@tylertech/forge': 3.12.1
   '@tylertech/forge-core': 3.2.1
   '@tylertech/stylelint-rules': 5.1.2
-  '@tylertech/tyler-icons': 2.0.4
+  '@tylertech/tyler-icons': 2.2.0
   '@types/mocha': 10.0.10
   '@types/node': 22.15.33
   '@types/sinon': 17.0.4
