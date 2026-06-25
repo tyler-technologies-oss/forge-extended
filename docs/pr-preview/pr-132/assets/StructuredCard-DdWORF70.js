@@ -1,0 +1,22 @@
+import{j as t,M as s,T as a,C as r}from"./blocks-BvNAFdAc.js";import{useMDXComponents as n}from"./index-De36GQbW.js";import{C as d}from"./CustomArgTypes-yg2nsejI.js";import{S as p,D as m}from"./StructuredCard.stories-B6JdBOzG.js";import{WithTable as c}from"./WithTable.stories-Vrt4oujK.js";import{WithBeforeTitleSlot as l}from"./WithBeforeTitleSlot.stories-BsuwemJo.js";import{ScrollableBodyContent as h}from"./ScrollableBodyContent.stories-B3r1_-mG.js";import{HeaderIconButton as x}from"./HeaderIconButton.stories-BH1GdFrr.js";import{WithForm as u}from"./WithForm.stories-B7GjzeGL.js";import"./iframe-BMqNQSB3.js";import"./index-BFVZ7Xg9.js";import"./_commonjsHelpers-CqkleIqs.js";import"./utils-f94co6oG.js";import"./with-default-aria-B5Gz3KW5.js";import"./constants-dm9VtAl7.js";import"./structured-card-BgaEOa9w.js";import"./query-assigned-nodes-cwDSNLIu.js";import"./base-CShCMygk.js";import"./class-map-CcStgTUM.js";import"./directive-CJw_OlP2.js";import"./content-scaffold-lnWeY4Jg.js";import"./when-3fO0zp9C.js";import"./lit-utils-DbQLnnc2.js";import"./async-directive-Dvrkdtd5.js";import"./index-0bXiUZPH.js";import"./index-DPOpo1qh.js";import"./base-button-adapter-D0JgTV6I.js";import"./focus-indicator-D6542vgB.js";import"./icon-DAICiFsx.js";import"./index-CWn3kMdq.js";import"./icon-button-BTf7YIrf.js";import"./index-IEFNdL1O.js";import"./tooltip-CMC2NEER.js";import"./with-longpress-listener-5-WmNr5L.js";import"./dismissible-stack-D7F1XTx3.js";import"./select-Bx9cYvd2.js";import"./with-form-associated-VIzfTt_s.js";import"./field-gEmaKuw4.js";import"./list-dropdown-aware-core-D7OdZw8i.js";import"./linear-progress-constants-D450kTtT.js";import"./list-Bo2_4NQ0.js";import"./popover-BNpz9bzV.js";import"./skeleton-constants-YdiWnD24.js";import"./divider-Bb8e60s3.js";import"./circular-progress-KIQLY9R-.js";import"./scaffold-Cu2E0aCj.js";import"./toolbar-DBblKEzt.js";import"./index-BZg0-s7Y.js";import"./decorators-zuJ-IfTh.js";import"./index-Ld-TGTTf.js";import"./index-aFWCLlOq.js";import"./index-xVVZoKud.js";import"./index-mH9jHWiH.js";function i(e){const o={code:"code",h2:"h2",h4:"h4",p:"p",strong:"strong",...n(),...e.components};return t.jsxs(t.Fragment,{children:[t.jsx(s,{of:p}),`
+`,t.jsx(a,{}),`
+`,t.jsxs(o.p,{children:["🚧 ",t.jsx(o.strong,{children:"Experimental"})," 🚧"]}),`
+`,t.jsx(o.p,{children:"A pre-configured card layout optimized for common patterns in Tyler Cloud applications. Using a slot-based architecture, it provides designated areas for titles, actions, body content, and footer buttons—helping developers build consistent card UIs without manually configuring the same layout structure repeatedly. Ideal for table containers and self-contained content sections that require their own actions."}),`
+`,t.jsx(r,{of:m}),`
+`,t.jsx(o.h2,{id:"examples",children:"Examples"}),`
+`,t.jsx(o.h4,{id:"with-form",children:"With Form"}),`
+`,t.jsx(r,{of:u}),`
+`,t.jsx(o.h4,{id:"with-header-icon-button",children:"With Header Icon Button"}),`
+`,t.jsxs(o.p,{children:["Use the ",t.jsx(o.code,{children:"after-header-actions"})," slot for icon buttons that need to run up against the card edge, such as overflow menus or close buttons."]}),`
+`,t.jsx(r,{of:x}),`
+`,t.jsx(o.h4,{id:"detail-panel-with-back-navigation",children:"Detail Panel with Back Navigation"}),`
+`,t.jsxs(o.p,{children:["Use the ",t.jsx(o.code,{children:"before-title"})," slot for back buttons or navigation icons."]}),`
+`,t.jsx(r,{of:l}),`
+`,t.jsx(o.h4,{id:"data-table-with-pagination",children:"Data Table with Pagination"}),`
+`,t.jsxs(o.p,{children:["Use the ",t.jsx(o.code,{children:'body-spacing="none"'})," attribute (or ",t.jsx(o.code,{children:"bodySpacing"})," property) for full-width content like tables. This removes body padding, sets gap to ",t.jsx(o.code,{children:"0"}),", and removes footer bottom padding to ensure content extends edge-to-edge. The data table demo below demonstrates the ",t.jsx(o.code,{children:"bodySpacing"})," property in action."]}),`
+`,t.jsx(r,{of:c}),`
+`,t.jsx(o.h4,{id:"scrollable-content",children:"Scrollable Content"}),`
+`,t.jsxs(o.p,{children:["Set ",t.jsx(o.code,{children:"--forge-structured-card-body-height"})," to a fixed value to enable scrollable body content."]}),`
+`,t.jsx(r,{of:h}),`
+`,t.jsx(o.h2,{id:"api",children:"API"}),`
+`,t.jsx(d,{})]})}function ut(e={}){const{wrapper:o}={...n(),...e.components};return o?t.jsx(o,{...e,children:t.jsx(i,{...e})}):i(e)}export{ut as default};
