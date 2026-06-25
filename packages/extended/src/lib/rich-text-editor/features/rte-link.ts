@@ -126,6 +126,18 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
     this._editorContext?.registerFeature(this);
   }
 
+  public override updated(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('_popoverAnchor' as never) && this._popoverAnchor) {
+      this.updateComplete.then(() => {
+        requestAnimationFrame(() => {
+          const input = this.shadowRoot?.querySelector('input');
+          input?.focus();
+          input?.select();
+        });
+      });
+    }
+  }
+
   public override render(): TemplateResult {
     const isEditingExistingLink = !!this._popoverAnchor && this._editorContext.isActive(Link.name);
 
@@ -174,14 +186,6 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
   #handlePopoverToggle(evt: CustomEvent<IPopoverToggleEventData>): void {
     if (evt.detail.newState === 'closed') {
       this.#resetState();
-    } else if (evt.detail.newState === 'open') {
-      this.updateComplete.then(() => {
-        requestAnimationFrame(() => {
-          const input = this.shadowRoot?.querySelector('input');
-          input?.focus();
-          input?.select();
-        });
-      });
     }
   }
 
