@@ -87,7 +87,7 @@
     "@tiptap/extension-underline": "^3.27.1",
     "@tiptap/extensions": "^3.27.1",
     "@tylertech/forge-core": "catalog:",
-    "@tylertech/tyler-icons": "^2.2.0",
+    "@tylertech/tyler-icons": "catalog:",
     "lit": "catalog:"
   },
   "peerDependencies": {
