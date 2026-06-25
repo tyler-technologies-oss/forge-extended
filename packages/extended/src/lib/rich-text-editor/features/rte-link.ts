@@ -122,36 +122,19 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
   @state()
   private _validationWarning = '';
 
-  #focusTimeout: number | undefined;
-
   public firstUpdated(_changedProperties: PropertyValues<this>): void {
     this._editorContext?.registerFeature(this);
   }
 
-  public override disconnectedCallback(): void {
-    if (this.#focusTimeout) {
-      window.clearTimeout(this.#focusTimeout);
-      this.#focusTimeout = undefined;
-    }
-    super.disconnectedCallback();
-  }
-
   public override updated(changedProperties: PropertyValues<this>): void {
-    // Auto-focus input when popover opens
-    if (changedProperties.has('_popoverAnchor' as keyof this)) {
-      if (this._popoverAnchor) {
-        // Clear any existing timeout
-        if (this.#focusTimeout) {
-          window.clearTimeout(this.#focusTimeout);
-        }
-        // Use setTimeout to ensure popover is rendered
-        this.#focusTimeout = window.setTimeout(() => {
+    if (changedProperties.has('_popoverAnchor' as never) && this._popoverAnchor) {
+      this.updateComplete.then(() => {
+        requestAnimationFrame(() => {
           const input = this.shadowRoot?.querySelector('input');
           input?.focus();
-          input?.select(); // Select existing text for easy editing
-          this.#focusTimeout = undefined;
-        }, 50);
-      }
+          input?.select();
+        });
+      });
     }
   }
 
