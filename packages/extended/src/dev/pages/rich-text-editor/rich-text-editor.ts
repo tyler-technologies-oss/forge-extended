@@ -5,6 +5,7 @@ import '$lib/rich-text-editor/features/rte-heading';
 import '$lib/rich-text-editor/features/rte-align';
 import '$lib/rich-text-editor/features/rte-standard-tools';
 import '$lib/rich-text-editor/features/rte-feature-divider';
+import '$lib/rich-text-editor/features/rte-link';
 import { type RichTextEditorComponent } from '$lib/rich-text-editor';
 
 const richTextEditor = document.querySelector('forge-rich-text-editor') as RichTextEditorComponent;
