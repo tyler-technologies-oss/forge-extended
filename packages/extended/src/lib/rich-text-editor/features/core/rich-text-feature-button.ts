@@ -50,7 +50,7 @@ export class RteToolButtonComponent extends LitElement {
 
   public static override styles = featureHostStyles;
 
-  /** The label for the bold button */
+  /** The label for the button */
   @property({ type: String })
   public label = 'Tool';
 
