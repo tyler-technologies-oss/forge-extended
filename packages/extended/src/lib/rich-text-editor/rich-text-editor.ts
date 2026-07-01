@@ -67,7 +67,7 @@ export class RichTextEditorComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
   /** The content of the editor. */
-  @property({ type: String })
+  @property()
   public content = '';
 
   /** Whether the editor is disabled. */
@@ -83,7 +83,7 @@ export class RichTextEditorComponent extends LitElement {
   public maxLength = 0;
 
   /** Error message to display when validation fails. */
-  @property({ type: String, attribute: 'error-message' })
+  @property({ attribute: 'error-message' })
   public errorMessage = '';
 
   /** Whether to show character count below the editor. */

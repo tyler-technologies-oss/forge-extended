@@ -108,15 +108,15 @@ export class AppLauncherComponent extends LitElement {
   public allApps: AppLauncherOption[] = [];
 
   /** ARIA label for the app launcher trigger button */
-  @property({ type: String, attribute: 'launcher-aria-label' })
+  @property({ attribute: 'launcher-aria-label' })
   public launcherAriaLabel = 'Open app launcher';
 
   /** ARIA label for the back button */
-  @property({ type: String, attribute: 'back-aria-label' })
+  @property({ attribute: 'back-aria-label' })
   public backAriaLabel = 'Go back';
 
   /** ARIA label for the close button */
-  @property({ type: String, attribute: 'close-aria-label' })
+  @property({ attribute: 'close-aria-label' })
   public closeAriaLabel = 'Close app launcher';
 
   /** The current view of the app launcher, either 'related', 'all', or 'loading'. */

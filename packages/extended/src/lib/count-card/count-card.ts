@@ -90,7 +90,7 @@ export class CountCardComponent extends LitElement {
   }
 
   /** The theme variant applied to the card. */
-  @property({ type: String })
+  @property()
   public theme: CountCardTheme = 'none';
 
   /** Whether to hide the card border. */

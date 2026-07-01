@@ -53,7 +53,7 @@ export class BusyIndicatorComponent extends LitElement {
   public open = false;
 
   /** Whether the busy indicator is fullscreen or inline. */
-  @property({ type: String })
+  @property()
   public mode: BusyIndicatorMode = 'fullscreen';
 
   /** The title text to display. */

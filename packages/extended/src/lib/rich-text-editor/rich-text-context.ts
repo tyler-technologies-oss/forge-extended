@@ -86,11 +86,11 @@ export class RichTextContextComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
   /** The ID of the element to instantiate the editor against. */
-  @property({ type: String, attribute: 'editor-id' })
+  @property({ attribute: 'editor-id' })
   public editorId = 'editor';
 
   /** The content of the editor. */
-  @property({ type: String })
+  @property()
   public content = '';
 
   /** Whether the editor is disabled. */
@@ -106,7 +106,7 @@ export class RichTextContextComponent extends LitElement {
   public maxLength = 0;
 
   /** Error message to display when validation fails. */
-  @property({ type: String, attribute: 'error-message' })
+  @property({ attribute: 'error-message' })
   public errorMessage = '';
 
   /** Whether to show character count below the editor. */

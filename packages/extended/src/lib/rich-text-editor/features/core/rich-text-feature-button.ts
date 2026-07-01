@@ -51,11 +51,11 @@ export class RteToolButtonComponent extends LitElement {
   public static override styles = featureHostStyles;
 
   /** The label for the button */
-  @property({ type: String })
+  @property()
   public label = 'Tool';
 
   /** The icon name. */
-  @property({ type: String })
+  @property()
   public icon: string | undefined;
 
   /** The disabled state of the button. */
@@ -67,7 +67,7 @@ export class RteToolButtonComponent extends LitElement {
   public active = false;
 
   /** The keyboard shortcut for this tool (e.g., "Control+B" for bold). */
-  @property({ type: String, attribute: 'keyboard-shortcut' })
+  @property({ attribute: 'keyboard-shortcut' })
   public keyboardShortcut: string | undefined;
 
   public override render(): TemplateResult {
