@@ -1,5 +1,5 @@
 import React, { forwardRef, useRef, useEffect } from "react";
-import "@tylertech/forge-extended/rich-text-editor/features/core";
+import "@tylertech/forge-extended/rich-text-editor/features";
 import { useEventListener } from "./react-utils.js";
 
 export const ForgeRteToolButton = forwardRef((props, forwardedRef) => {
@@ -30,8 +30,8 @@ export const ForgeRteToolButton = forwardRef((props, forwardedRef) => {
       for: props.htmlFor,
       part: props.part,
       tabindex: props.tabIndex,
-      disabled: props.disabled ? "" : undefined,
-      active: props.active ? "" : undefined,
+      disabled: props.disabled ? true : undefined,
+      active: props.active ? true : undefined,
       style: { ...props.style },
     },
     props.children,

@@ -25,12 +25,6 @@ export interface ForgeRteUndoRedoProps
   /** The accessible label for the redo button. */
   redoLabel?: ForgeRteUndoRedoElement["redoLabel"];
 
-  /** The accessible label for the undo button. */
-  undoLabel?: ForgeRteUndoRedoElement["undoLabel"];
-
-  /** The accessible label for the redo button. */
-  redoLabel?: ForgeRteUndoRedoElement["redoLabel"];
-
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
 

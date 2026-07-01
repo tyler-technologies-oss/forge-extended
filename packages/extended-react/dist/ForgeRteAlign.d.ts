@@ -31,18 +31,6 @@ export interface ForgeRteAlignProps
   /** The accessible label for the justify button. */
   justifyLabel?: ForgeRteAlignElement["justifyLabel"];
 
-  /** The accessible label for the left align button. */
-  leftLabel?: ForgeRteAlignElement["leftLabel"];
-
-  /** The accessible label for the center align button. */
-  centerLabel?: ForgeRteAlignElement["centerLabel"];
-
-  /** The accessible label for the right align button. */
-  rightLabel?: ForgeRteAlignElement["rightLabel"];
-
-  /** The accessible label for the justify button. */
-  justifyLabel?: ForgeRteAlignElement["justifyLabel"];
-
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
 
