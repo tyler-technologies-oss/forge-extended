@@ -81,7 +81,7 @@ export class RichTextFeatureUndoRedoComponent extends LitElement implements Rich
         density="medium"
         @click=${this.#undo}
         @keydown=${this.#handleKeydown}
-        ?disabled=${this._editorContext.isEditable() && !this._editorContext.editor?.can().undo()}
+        ?disabled=${this._editorContext.isEditable() && !this.#canUndo()}
         aria-label=${this.undoLabel}>
         <forge-icon .name=${tylIconUndo.name}></forge-icon>
       </forge-icon-button>
@@ -91,11 +91,21 @@ export class RichTextFeatureUndoRedoComponent extends LitElement implements Rich
         density="medium"
         @click=${this.#redo}
         @keydown=${this.#handleKeydown}
-        ?disabled=${this._editorContext.isEditable() && !this._editorContext.editor?.can().redo()}
+        ?disabled=${this._editorContext.isEditable() && !this.#canRedo()}
         aria-label=${this.redoLabel}>
         <forge-icon .name=${tylIconRedo.name}></forge-icon>
       </forge-icon-button>
     `;
+  }
+
+  #canUndo(): boolean {
+    const editor = this._editorContext.editor;
+    return !!editor && !editor.isDestroyed && !!editor.can().undo();
+  }
+
+  #canRedo(): boolean {
+    const editor = this._editorContext.editor;
+    return !!editor && !editor.isDestroyed && !!editor.can().redo();
   }
 
   #handleKeydown(evt: KeyboardEvent): void {
@@ -113,8 +123,8 @@ export class RichTextFeatureUndoRedoComponent extends LitElement implements Rich
 
         await this.updateComplete;
 
-        if (!this._editorContext.editor?.can().undo()) {
-          if (this._editorContext.editor?.can().redo()) {
+        if (!this.#canUndo()) {
+          if (this.#canRedo()) {
             this.#redoButtonRef.value?.focus();
           } else {
             this._editorContext.editor?.chain().focus().run();
@@ -137,8 +147,8 @@ export class RichTextFeatureUndoRedoComponent extends LitElement implements Rich
 
         await this.updateComplete;
 
-        if (!this._editorContext.editor?.can().redo()) {
-          if (this._editorContext.editor?.can().undo()) {
+        if (!this.#canRedo()) {
+          if (this.#canUndo()) {
             this.#undoButtonRef.value?.focus();
           } else {
             this._editorContext.editor?.chain().focus().run();
