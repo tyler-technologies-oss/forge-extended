@@ -49,7 +49,7 @@ export class RichTextFeatureUndoRedoComponent extends LitElement implements Rich
    * @default 'Undo'
    * @attribute undo-label
    */
-  @property({ type: String })
+  @property({ type: String, attribute: 'undo-label' })
   public undoLabel = 'Undo';
 
   /**
@@ -57,7 +57,7 @@ export class RichTextFeatureUndoRedoComponent extends LitElement implements Rich
    * @default 'Redo'
    * @attribute redo-label
    */
-  @property({ type: String })
+  @property({ type: String, attribute: 'redo-label' })
   public redoLabel = 'Redo';
 
   public readonly extensions = [UndoRedo];

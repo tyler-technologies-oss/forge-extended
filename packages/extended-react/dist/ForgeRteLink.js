@@ -2,7 +2,7 @@ import React, { forwardRef } from "react";
 import "@tylertech/forge-extended/rich-text-editor/features";
 
 export const ForgeRteLink = forwardRef((props, forwardedRef) => {
-  const { autoProtocol, autoProtocol, label, ...filteredProps } = props;
+  const { autoProtocol, label, ...filteredProps } = props;
 
   return React.createElement(
     "forge-rte-link",
@@ -14,8 +14,7 @@ export const ForgeRteLink = forwardRef((props, forwardedRef) => {
       for: props.htmlFor,
       part: props.part,
       tabindex: props.tabIndex,
-      autoProtocol: props.autoProtocol ? "" : undefined,
-      "auto-protocol": props.autoProtocol ? "" : undefined,
+      "auto-protocol": props.autoProtocol ? true : undefined,
       style: { ...props.style },
     },
     props.children,

@@ -2,8 +2,7 @@ import React, { forwardRef } from "react";
 import "@tylertech/forge-extended/rich-text-editor/features";
 
 export const ForgeRteUndoRedo = forwardRef((props, forwardedRef) => {
-  const { undoLabel, redoLabel, undoLabel, redoLabel, ...filteredProps } =
-    props;
+  const { undoLabel, redoLabel, ...filteredProps } = props;
 
   return React.createElement(
     "forge-rte-undo-redo",
@@ -11,8 +10,6 @@ export const ForgeRteUndoRedo = forwardRef((props, forwardedRef) => {
       ...filteredProps,
       "undo-label": props.undoLabel || props["undo-label"],
       "redo-label": props.redoLabel || props["redo-label"],
-      undoLabel: props.undoLabel,
-      redoLabel: props.redoLabel,
       class: props.className,
       exportparts: props.exportparts,
       for: props.htmlFor,

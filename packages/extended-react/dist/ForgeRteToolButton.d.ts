@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeRteToolButton as ForgeRteToolButtonElement } from "@tylertech/forge-extended/rich-text-editor/features/core";
+import { ForgeRteToolButton as ForgeRteToolButtonElement } from "@tylertech/forge-extended/rich-text-editor/features";
 
 export type { ForgeRteToolButtonElement };
 

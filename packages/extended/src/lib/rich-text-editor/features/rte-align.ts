@@ -64,7 +64,7 @@ export class RichTextFeatureAlignComponent extends LitElement implements RichTex
    * @default 'Align Left'
    * @attribute left-label
    */
-  @property({ type: String })
+  @property({ type: String, attribute: 'left-label' })
   public leftLabel = 'Align Left';
 
   /**
@@ -72,7 +72,7 @@ export class RichTextFeatureAlignComponent extends LitElement implements RichTex
    * @default 'Align Center'
    * @attribute center-label
    */
-  @property({ type: String })
+  @property({ type: String, attribute: 'center-label' })
   public centerLabel = 'Align Center';
 
   /**
@@ -80,7 +80,7 @@ export class RichTextFeatureAlignComponent extends LitElement implements RichTex
    * @default 'Align Right'
    * @attribute right-label
    */
-  @property({ type: String })
+  @property({ type: String, attribute: 'right-label' })
   public rightLabel = 'Align Right';
 
   /**
@@ -88,7 +88,7 @@ export class RichTextFeatureAlignComponent extends LitElement implements RichTex
    * @default 'Justify'
    * @attribute justify-label
    */
-  @property({ type: String })
+  @property({ type: String, attribute: 'justify-label' })
   public justifyLabel = 'Justify';
 
   public readonly extensions = [

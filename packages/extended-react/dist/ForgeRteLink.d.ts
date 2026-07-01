@@ -19,9 +19,6 @@ export interface ForgeRteLinkProps
     | "onFocus"
     | "onBlur"
   > {
-  /** Whether to automatically add https:// protocol if missing. */
-  autoProtocol?: boolean;
-
   /** Whether to automatically add https:// protocol if missing from the URL. */
   autoProtocol?: boolean;
 
