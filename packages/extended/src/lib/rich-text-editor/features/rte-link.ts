@@ -91,7 +91,6 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
   /**
    * Whether to automatically add https:// protocol if missing.
    * @default true
-   * @attribute
    */
   @property({ type: Boolean, attribute: 'auto-protocol' })
   public autoProtocol = true;

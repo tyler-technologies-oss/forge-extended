@@ -1,3 +1,4 @@
+import { existsSync } from 'fs';
 import { generateReactWrappers } from 'custom-element-react-wrappers';
 import { pascalCase } from 'change-case';
 import manifest from '@tylertech/forge-extended/custom-elements.json' with { type: 'json' };
@@ -16,6 +17,13 @@ generateReactWrappers(manifest, {
   outdir: 'dist/',
   modulePath: (_className, tagName) => {
     const { path } = manifest.modules.find(m => m.declarations.some(d => d.tagName === tagName));
-    return path.replace(/^src\/lib\//, '@tylertech/forge-extended/').replace(/\/[^\/]+\.ts$/, '');
+    // Strip filename, then walk up until the resolved dist path has an index.mjs
+    let modulePath = path.replace(/^src\/lib\//, '').replace(/\/[^\/]+\.ts$/, '');
+    while (modulePath.includes('/')) {
+      const distPath = new URL(`../../../packages/extended/dist/${modulePath}/index.mjs`, import.meta.url);
+      if (existsSync(distPath.pathname)) break;
+      modulePath = modulePath.replace(/\/[^\/]+$/, '');
+    }
+    return `@tylertech/forge-extended/${modulePath}`;
   }
 });
