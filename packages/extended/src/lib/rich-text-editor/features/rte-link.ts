@@ -3,7 +3,7 @@ import { Link } from '@tiptap/extension-link';
 import { defineButtonComponent, IconRegistry, IPopoverToggleEventData } from '@tylertech/forge';
 import { tylIconLink } from '@tylertech/tyler-icons';
 import { css, html, LitElement, PropertyValues, TemplateResult } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import { ifDefined } from 'lit/directives/if-defined.js';
 import { editorContext, EditorContext } from '../editor-context';
 import { RichTextEditorFeature } from './rich-text-editor-feature';
@@ -66,16 +66,8 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
         justify-content: flex-end;
       }
 
-      .error-message {
-        color: var(--forge-theme-error);
-        font-size: var(--forge-typography-body-small-size);
-        margin-block-start: calc(var(--forge-spacing-xsmall) * -1);
-      }
-
       .warning-message {
         color: var(--forge-theme-warning, #b45309);
-        font-size: var(--forge-typography-body-small-size);
-        margin-block-start: calc(var(--forge-spacing-xsmall) * -1);
       }
     `
   ];
@@ -122,6 +114,20 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
   @state()
   private _validationWarning = '';
 
+  @state()
+  private _linkText = '';
+
+  @state()
+  private _urlTouched = false;
+
+  @query('#link-text', true)
+  private _linkTextInput!: HTMLInputElement;
+
+  @query('#link-url', true)
+  private _linkUrlInput!: HTMLInputElement;
+
+  #originalLinkText = '';
+
   public firstUpdated(_changedProperties: PropertyValues<this>): void {
     this._editorContext?.registerFeature(this);
   }
@@ -130,7 +136,7 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
     if (changedProperties.has('_popoverAnchor' as never) && this._popoverAnchor) {
       this.updateComplete.then(() => {
         requestAnimationFrame(() => {
-          const input = this.shadowRoot?.querySelector('input');
+          const input = this._linkText ? this._linkUrlInput : this._linkTextInput;
           input?.focus();
           input?.select();
         });
@@ -149,28 +155,42 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
         ?disabled=${!this._editorContext.isEditable()}
         ?active=${this._editorContext.isActive(Link.name)}></forge-rte-tool-button>
       <forge-popover
+        .arrow=${true}
         .open=${!!this._popoverAnchor}
         .anchorElement=${this._popoverAnchor}
         @forge-popover-toggle=${this.#handlePopoverToggle}>
         <div class="link-popover">
-          <forge-text-field density="small">
+          <forge-text-field density="small" label-position="block-start">
+            <label for="link-text">Text to display</label>
             <input
+              id="link-text"
+              type="text"
+              .value=${this._linkText}
+              @input=${this.#handleLinkTextInput}
+              @keydown=${this.#handleLinkKeydown} />
+          </forge-text-field>
+          <forge-text-field density="small" label-position="block-start" .invalid=${!!this._validationError}>
+            <label for="link-url">URL</label>
+            <input
+              id="link-url"
               type="url"
               placeholder="https://example.com"
               .value=${this._linkUrl}
               @input=${this.#handleLinkInput}
               @keydown=${this.#handleLinkKeydown}
-              aria-label="Link URL"
+              @blur=${this.#handleLinkBlur}
               aria-describedby=${ifDefined(this._validationError ? 'link-error' : undefined)}
               aria-invalid=${!!this._validationError} />
+            ${this._validationError
+              ? html`<div id="link-error" role="alert" slot="support-text">${this._validationError}</div>`
+              : this._validationWarning
+                ? html`<div id="link-error" class="warning-message" role="status" slot="support-text">
+                    ${this._validationWarning}
+                  </div>`
+                : ''}
           </forge-text-field>
-          ${this._validationError
-            ? html`<div id="link-error" class="error-message" role="alert">${this._validationError}</div>`
-            : this._validationWarning
-              ? html`<div id="link-error" class="warning-message" role="status">${this._validationWarning}</div>`
-              : ''}
           <div class="button-group">
-            <forge-button variant="raised" @click=${this.#applyLink} ?disabled=${!!this._validationError}>
+            <forge-button variant="tonal" @click=${this.#applyLink} ?disabled=${!!this._validationError}>
               ${isEditingExistingLink ? 'Update' : 'Apply'}
             </forge-button>
             ${isEditingExistingLink
@@ -194,6 +214,10 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
     this.#validateUrl();
   }
 
+  #handleLinkTextInput(evt: Event): void {
+    this._linkText = (evt.target as HTMLInputElement).value;
+  }
+
   #handleLinkKeydown(evt: KeyboardEvent): void {
     if (evt.key === 'Enter') {
       evt.preventDefault();
@@ -206,7 +230,15 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
     }
   }
 
+  #handleLinkBlur(): void {
+    this._urlTouched = true;
+  }
+
   #validateUrl(): void {
+    if (!this._urlTouched) {
+      return; // Only validate after the user has interacted with the input
+    }
+
     this._validationError = '';
 
     if (!this._linkUrl) {
@@ -298,21 +330,61 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
   }
 
   #applyLink(): void {
+    // Validate the URL in case the user hasn't blurred the input yet
+    this._urlTouched = true;
+    this.#validateUrl();
+
     if (this._validationError) {
       return;
     }
 
     try {
+      const editor = this._editorContext.editor;
+      if (!editor) {
+        return;
+      }
+
       if (this._linkUrl) {
         const normalizedUrl = this.#normalizeUrl(this._linkUrl);
-        const success = this._editorContext.editor?.chain().focus().setLink({ href: normalizedUrl }).run();
+        const isEditingExistingLink = editor.isActive('link');
+        const isLinkTextChanged = this._linkText !== this.#originalLinkText;
+        let chain = editor.chain().focus();
+        let success = false;
+
+        if (isEditingExistingLink) {
+          // Editing an existing link: update the entire link node's text and URL
+          const editorState = editor.state;
+          const { $head } = editorState.selection;
+          const linkNode = $head.node($head.depth);
+          if (isLinkTextChanged) {
+            chain = chain
+              .insertContentAt(
+                { from: $head.pos, to: $head.pos + linkNode.nodeSize },
+                this._linkText || normalizedUrl,
+                { updateSelection: true }
+              )
+              .setTextSelection({ from: $head.pos, to: $head.pos + (this._linkText || normalizedUrl).length });
+          }
+        } else {
+          // Creating a new link: update the selection text and apply the link
+          const editorState = editor.state;
+          const { from, to } = editorState.selection;
+          if (isLinkTextChanged) {
+            chain = chain
+              .insertContentAt({ from, to }, this._linkText || normalizedUrl, { updateSelection: true })
+              .setTextSelection({ from, to: from + (this._linkText || normalizedUrl).length });
+          }
+        }
+
+        success = chain.setLink({ href: normalizedUrl }).run();
+
         if (success) {
-          this._editorContext.announce('Link added');
+          this._editorContext.announce(isEditingExistingLink ? 'Link updated' : 'Link added');
         } else {
           console.warn('[RTE Link] Failed to apply link');
         }
       } else {
-        const success = this._editorContext.editor?.chain().focus().unsetLink().run();
+        const success = editor.chain().focus().unsetLink().run();
         if (success) {
           this._editorContext.announce('Link removed');
         } else {
@@ -350,15 +422,31 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
     this._linkUrl = '';
     this._validationError = '';
     this._validationWarning = '';
+    this._urlTouched = false;
   }
 
   async #toggle(_evt: CustomEvent): Promise<void> {
     const { x, y, height, width } = this.#getSelectedTextCoordinates();
     this._popoverAnchor = new VirtualElement(x, y, width, height);
 
+    const editor = this._editorContext.editor;
+    if (!editor) {
+      return;
+    }
+
     // Pre-fill with existing link URL if cursor is on a link
-    const { href } = this._editorContext.editor?.getAttributes('link') ?? {};
+    const { href } = editor?.getAttributes('link') ?? {};
     this._linkUrl = (href as string) ?? '';
+
+    // Pre-fill link text based on selection or existing link
+    const { from, to, $head } = editor.state.selection;
+    if (this._editorContext.isActive('link')) {
+      this._linkText = $head.parent.content.content.reduce((acc, node) => acc + node.textContent, '');
+    } else {
+      this._linkText = editor.state.doc.textBetween(from, to, ' ');
+    }
+
+    this.#originalLinkText = this._linkText;
   }
 
   #getSelectedTextCoordinates(): { x: number; y: number; width: number; height: number } {
