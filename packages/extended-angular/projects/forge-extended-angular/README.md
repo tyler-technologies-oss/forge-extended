@@ -18,7 +18,8 @@ Angular doesn't natively recognize custom elements without `CUSTOM_ELEMENTS_SCHE
 
 | `@tylertech/forge-extended-angular` | Angular              | `@tylertech/forge-extended` |
 | ----------------------------------- | -------------------- | --------------------------- |
-| `^2.0.0`                            | `>=20.0.0 < 23.0.0`  | `^1.2.1`                    |
+| `^3.0.0`                            | `>=20.0.0 < 23.0.0`  | `^1.6.3`                    |
+| `^2.0.0`                            | `>=20.0.0 < 22.0.0`  | `^1.2.1`                    |
 | `^1.0.0`                            | `>=19.0.0 < 21.0.0`  | `^1.0.0`                    |
 
 ## Installation
