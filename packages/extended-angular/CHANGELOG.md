@@ -1,5 +1,11 @@
 # @tylertech/forge-extended-angular
 
+## 3.0.0
+
+### Major Changes
+
+- 76995ae: feat: add Angular 22 support by widening the supported Angular peer dependency range to `>=20.0.0 < 23.0.0`
+
 ## 2.2.0
 
 ### Minor Changes
