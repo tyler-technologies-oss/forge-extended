@@ -20,7 +20,7 @@ function resolveTsconfigPaths(): Record<string, string> {
 export default defineConfig({
   build: {
     lib: {
-      entry: globSync(resolve('src/lib/**/index.ts')),
+      entry: globSync('src/lib/**/index.ts'),
       formats: ['es']
     },
     outDir: 'dist',
