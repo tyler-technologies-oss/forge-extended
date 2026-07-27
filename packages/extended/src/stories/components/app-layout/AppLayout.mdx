@@ -103,6 +103,23 @@ The component automatically adapts to screen size using a configurable breakpoin
 - Drawer automatically closes when screen size increases
 - Always uses a modal dialog drawer regardless of `use-mini-drawer` setting
 
+### Asymmetric Drawer Behavior
+
+The left and right drawers intentionally have different default behaviors:
+
+**Left Navigation Drawer:**
+
+- Auto-opens on large screens because it serves as primary navigation that should typically be visible on desktop
+- Auto-closes when transitioning to small screens
+
+**Right Content Drawer:**
+
+- Remains closed by default on all screen sizes
+- Contains contextual content (details panels, filters, etc.) that should be user-triggered
+- Must be explicitly opened via `openRightDrawer()` or by wiring up your own toggle button
+
+This asymmetry reflects the typical usage pattern where primary navigation should be readily accessible, while supplementary content panels are shown on demand.
+
 ### Auto-close on Navigation
 
 On small screens, you can automatically close the modal drawer when a user clicks on a navigation item by adding the `data-forge-app-layout-close` attribute to any element within the navigation slot. The attribute can be placed on a parent element (like `<forge-list>`) to close the drawer on any click within that element:
@@ -143,12 +160,22 @@ For more granular control, you can place the attribute on individual items:
 </forge-app-layout>
 ```
 
-You can also programmatically close the drawer using the `closeDrawer()` method:
+You can also programmatically control the left navigation drawer using these methods:
 
 ```javascript
 const appLayout = document.querySelector('forge-app-layout');
-appLayout.closeDrawer();
+
+// Open the left navigation drawer
+appLayout.openLeftDrawer();
+
+// Close the left navigation drawer
+appLayout.closeLeftDrawer();
+
+// Toggle the left navigation drawer
+appLayout.toggleLeftDrawer();
 ```
+
+> **Note:** These methods only have an effect on small screens where the drawer is modal. On large screens, the left navigation drawer is always visible.
 
 The `APP_LAYOUT_CLOSE_ATTRIBUTE` constant is exported for use in JavaScript/TypeScript:
 
@@ -173,6 +200,28 @@ You can customize the responsive breakpoint by setting the `breakpoint` property
   <!-- Navigation switches to drawer mode at 768px -->
 </forge-app-layout>
 ```
+
+### Independent Breakpoints for Left and Right Drawers
+
+You can set separate breakpoints for the left navigation drawer and right content drawer using `left-breakpoint` and `right-breakpoint`. This allows the drawers to respond independently to different screen sizes:
+
+```html
+<!-- Left drawer switches at 1200px, right drawer switches at 1400px -->
+<forge-app-layout app-title="Complex Layout" breakpoint="960" left-breakpoint="1200" right-breakpoint="1400">
+  <nav slot="navigation">Navigation</nav>
+  <main>Content</main>
+  <aside slot="body-right-content">Details Panel</aside>
+</forge-app-layout>
+```
+
+When using independent breakpoints:
+
+- The main `breakpoint` property remains as the default fallback
+- If `left-breakpoint` is set, the left navigation uses that breakpoint; otherwise it falls back to `breakpoint`
+- If `right-breakpoint` is set, the right content drawer uses that breakpoint; otherwise it falls back to `breakpoint`
+- The `isLargeScreen` property still reflects the main `breakpoint` for backwards compatibility
+
+This is useful when you want the navigation to remain visible at larger screen sizes but have the right panel collapse earlier, or vice versa.
 
 ## Navigation Content
 
@@ -289,6 +338,97 @@ Beyond the app bar and navigation, the component provides additional layout slot
     <p>&copy; 2024 Tyler Technologies. All rights reserved.</p>
   </footer>
 </forge-app-layout>
+```
+
+## Right Drawer Content
+
+Similar to the navigation drawer, the `body-right-content` slot provides responsive content that appears in a drawer on the right side. On large screens, it renders as a drawer in the body-right area. On small screens, it transforms into a modal dialog.
+
+### Basic Usage
+
+```html
+<forge-app-layout app-title="My Application">
+  <!-- Main content -->
+  <main>Your content here</main>
+
+  <!-- Right drawer content -->
+  <aside slot="body-right-content">
+    <h2>Details Panel</h2>
+    <p>Additional information displayed in the right drawer.</p>
+  </aside>
+</forge-app-layout>
+```
+
+### Toggling the Right Drawer
+
+Unlike the navigation drawer which has a built-in menu button, the right drawer requires you to wire up your own trigger element. Use the `toggleRightDrawer()`, `openRightDrawer()`, or `closeRightDrawer()` methods to control the drawer:
+
+```html
+<forge-app-layout id="app-layout" app-title="My Application">
+  <!-- App bar with toggle button -->
+  <forge-icon-button id="right-drawer-toggle" slot="app-bar-end" aria-label="Toggle details panel">
+    <forge-icon name="info"></forge-icon>
+  </forge-icon-button>
+
+  <!-- Main content -->
+  <main>Your content here</main>
+
+  <!-- Right drawer content -->
+  <aside slot="body-right-content">
+    <h2>Details Panel</h2>
+    <p>Additional information displayed in the right drawer.</p>
+  </aside>
+</forge-app-layout>
+
+<script>
+  const appLayout = document.getElementById('app-layout');
+  const toggleButton = document.getElementById('right-drawer-toggle');
+
+  toggleButton.addEventListener('click', () => {
+    appLayout.toggleRightDrawer();
+  });
+</script>
+```
+
+### Programmatic Control
+
+You can control the right drawer programmatically using the following methods:
+
+```javascript
+const appLayout = document.querySelector('forge-app-layout');
+
+// Open the right drawer
+appLayout.openRightDrawer();
+
+// Close the right drawer
+appLayout.closeRightDrawer();
+
+// Toggle the right drawer
+appLayout.toggleRightDrawer();
+```
+
+### Right Drawer Events
+
+The component emits a `forge-app-layout-right-drawer-change` event when the right drawer opens or closes:
+
+```javascript
+appLayout.addEventListener('forge-app-layout-right-drawer-change', event => {
+  console.log('Right drawer is now:', event.detail.open ? 'open' : 'closed');
+});
+```
+
+### Right Drawer CSS Custom Properties
+
+You can customize the right drawer dimensions using CSS custom properties:
+
+```css
+forge-app-layout {
+  /* Width of the right drawer on large screens */
+  --forge-app-layout-right-drawer-width: 400px;
+
+  /* Width of the right drawer dialog on small screens */
+  --forge-app-layout-right-dialog-width: 320px;
+}
 ```
 
 ## API

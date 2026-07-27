@@ -10,6 +10,8 @@
   --_drawer-width: var(--forge-app-layout-drawer-width, 320px);
   --_dialog-width: var(--forge-app-layout-dialog-width, 320px);
   --_mini-drawer-z-index: var(--forge-app-layout-mini-drawer-z-index, 3);
+  --_right-drawer-width: var(--forge-app-layout-right-drawer-width, 320px);
+  --_right-dialog-width: var(--forge-app-layout-right-dialog-width, 320px);
   display: block;
   height: 100%;
 }
@@ -46,4 +48,16 @@ forge-drawer {
 
 .left-sheet-dialog::part(surface) {
   display: block;
+}
+
+.right-sheet-dialog {
+  --forge-dialog-width: var(--_right-dialog-width);
+}
+
+.right-sheet-dialog::part(surface) {
+  display: block;
+}
+
+.right-drawer-container forge-drawer {
+  --forge-drawer-width: var(--_right-drawer-width);
 }

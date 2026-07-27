@@ -209,6 +209,14 @@
           "default": "'data-forge-app-layout-close'"
         },
         {
+          "kind": "variable",
+          "name": "APP_LAYOUT_RIGHT_TOGGLE_ATTRIBUTE",
+          "type": {
+            "text": "string"
+          },
+          "default": "'data-forge-app-layout-right'"
+        },
+        {
           "kind": "class",
           "description": "",
           "name": "AppLayoutComponent",
@@ -224,6 +232,14 @@
             {
               "description": "Controls the z-index of the mini drawer when using hover mode (default: 3)",
               "name": "--forge-app-layout-mini-drawer-z-index"
+            },
+            {
+              "description": "Controls the width of the right drawer (default: 320px)",
+              "name": "--forge-app-layout-right-drawer-width"
+            },
+            {
+              "description": "Controls the width of the right dialog on small screens (default: 320px)",
+              "name": "--forge-app-layout-right-dialog-width"
             }
           ],
           "slots": [
@@ -270,6 +286,10 @@
             {
               "description": "Responsive navigation content that renders in left slot (small screens) or body-left slot (large screens)",
               "name": "navigation"
+            },
+            {
+              "description": "Responsive content that renders in a dialog (small screens) or body-right drawer (large screens)",
+              "name": "body-right-content"
             },
             {
               "description": "Places content in the app bar logo slot",
@@ -364,6 +384,39 @@
                 }
               },
               "description": "Closes the navigation drawer. Only has effect on small screens where the drawer is modal."
+            },
+            {
+              "kind": "method",
+              "name": "openRightDrawer",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Opens the right drawer."
+            },
+            {
+              "kind": "method",
+              "name": "closeRightDrawer",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Closes the right drawer."
+            },
+            {
+              "kind": "method",
+              "name": "toggleRightDrawer",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Toggles the right drawer open/closed."
             }
           ],
           "events": [
@@ -380,6 +433,13 @@
               },
               "description": "Fired when the navigation drawer opens or closes",
               "name": "forge-app-layout-drawer-change"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<AppLayoutDrawerChangeEventData>"
+              },
+              "description": "Fired when the right drawer opens or closes",
+              "name": "forge-app-layout-right-drawer-change"
             }
           ],
           "attributes": [
@@ -452,6 +512,14 @@
             {
               "name": "drawer-closed",
               "description": "The navigation drawer is currently closed"
+            },
+            {
+              "name": "right-drawer-open",
+              "description": "The right drawer is currently open"
+            },
+            {
+              "name": "right-drawer-closed",
+              "description": "The right drawer is currently closed"
             }
           ]
         }
@@ -470,6 +538,14 @@
           "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
           "declaration": {
             "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "APP_LAYOUT_RIGHT_TOGGLE_ATTRIBUTE",
+          "declaration": {
+            "name": "APP_LAYOUT_RIGHT_TOGGLE_ATTRIBUTE",
             "module": "src/lib/app-layout/app-layout.ts"
           }
         },
@@ -663,6 +739,315 @@
           "declaration": {
             "name": "ConfirmationDialogComponent",
             "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/count-card/count-card.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "CountCardComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-count-card'"
+        },
+        {
+          "kind": "class",
+          "description": "A card component for displaying a count or metric with an icon and label.",
+          "name": "CountCardComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the background color of the icon container. Defaults to Forge's surface-container color.",
+              "name": "--forge-count-card-icon-background"
+            },
+            {
+              "description": "Controls the color of the icon. Defaults to Forge's on-surface color.",
+              "name": "--forge-count-card-icon-color"
+            },
+            {
+              "description": "Controls the size of the icon container. Defaults to `32px`.",
+              "name": "--forge-count-card-icon-container-size"
+            },
+            {
+              "description": "Controls the size of the icon itself. Defaults to `24px`.",
+              "name": "--forge-count-card-icon-size"
+            },
+            {
+              "description": "Controls the text color of the label and count. Inherited from theme when a theme is applied.",
+              "name": "--forge-count-card-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "The icon displayed at the start of the card header.",
+              "name": "icon"
+            },
+            {
+              "description": "The label text displayed next to the icon.",
+              "name": "label"
+            },
+            {
+              "description": "Optional content at the end of the header, ideal for badges or small accessories.",
+              "name": "header-end"
+            },
+            {
+              "description": "Optional slot for a `forge-icon-button`. Use this instead of `header-end` for icon buttons, as it provides proper alignment for the 48x48 touch target.",
+              "name": "action"
+            },
+            {
+              "description": "The main count or value displayed prominently below the header.",
+              "name": "count"
+            },
+            {
+              "description": "Optional content displayed after the count, ideal for units or secondary values.",
+              "name": "count-end"
+            },
+            {
+              "description": "Optional content below the count for additional details or secondary information.",
+              "name": "body"
+            },
+            {
+              "description": "Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators.",
+              "name": "full-width"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "theme",
+              "type": {
+                "text": "CountCardTheme"
+              },
+              "privacy": "public",
+              "default": "'none'",
+              "description": "The theme variant applied to the card.",
+              "attribute": "theme"
+            },
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to hide the card border.",
+              "attribute": "no-border"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "theme",
+              "type": {
+                "text": "CountCardTheme"
+              },
+              "default": "'none'",
+              "description": "The theme variant applied to the card.",
+              "fieldName": "theme"
+            },
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to hide the card border.",
+              "fieldName": "noBorder"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-count-card",
+          "customElement": true,
+          "states": [
+            {
+              "name": "none",
+              "description": "Applied when the theme is set to `none`. Uses the default card styling."
+            },
+            {
+              "name": "primary",
+              "description": "Applied when the theme is set to `primary`."
+            },
+            {
+              "name": "secondary",
+              "description": "Applied when the theme is set to `secondary`."
+            },
+            {
+              "name": "tertiary",
+              "description": "Applied when the theme is set to `tertiary`."
+            },
+            {
+              "name": "success",
+              "description": "Applied when the theme is set to `success`."
+            },
+            {
+              "name": "error",
+              "description": "Applied when the theme is set to `error`."
+            },
+            {
+              "name": "warning",
+              "description": "Applied when the theme is set to `warning`."
+            },
+            {
+              "name": "info",
+              "description": "Applied when the theme is set to `info`."
+            },
+            {
+              "name": "info-secondary",
+              "description": "Applied when the theme is set to `info-secondary`. Provides a subtle tonal style."
+            },
+            {
+              "name": "no-border",
+              "description": "Applied when the `noBorder` property is `true`."
+            },
+            {
+              "name": "has-action",
+              "description": "Applied when content is slotted into the `action` slot."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "CountCardComponentTagName",
+          "declaration": {
+            "name": "CountCardComponentTagName",
+            "module": "src/lib/count-card/count-card.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "CountCardComponent",
+          "declaration": {
+            "name": "CountCardComponent",
+            "module": "src/lib/count-card/count-card.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "CountCardComponent",
+            "module": "src/lib/count-card/count-card.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "MultiSelectHeaderComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-multi-select-header'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MultiSelectHeaderComponent",
+          "slots": [
+            {
+              "description": "Text content for the select-all button",
+              "name": "select-all-button-text"
+            },
+            {
+              "description": "Action buttons (maps to the toolbar end slot)",
+              "name": "actions"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "attribute": "text"
+            },
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Hides the bottom border",
+              "attribute": "no-border"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the select-all button is clicked",
+              "name": "forge-multi-select-header-select-all"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "fieldName": "text"
+            },
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Hides the bottom border",
+              "fieldName": "noBorder"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-multi-select-header",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MultiSelectHeaderComponentTagName",
+          "declaration": {
+            "name": "MultiSelectHeaderComponentTagName",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "MultiSelectHeaderComponent",
+          "declaration": {
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         }
       ]
@@ -998,202 +1383,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/count-card/count-card.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "CountCardComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-count-card'"
-        },
-        {
-          "kind": "class",
-          "description": "A card component for displaying a count or metric with an icon and label.",
-          "name": "CountCardComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the background color of the icon container. Defaults to Forge's surface-container color.",
-              "name": "--forge-count-card-icon-background"
-            },
-            {
-              "description": "Controls the color of the icon. Defaults to Forge's on-surface color.",
-              "name": "--forge-count-card-icon-color"
-            },
-            {
-              "description": "Controls the size of the icon container. Defaults to `32px`.",
-              "name": "--forge-count-card-icon-container-size"
-            },
-            {
-              "description": "Controls the size of the icon itself. Defaults to `24px`.",
-              "name": "--forge-count-card-icon-size"
-            },
-            {
-              "description": "Controls the text color of the label and count. Inherited from theme when a theme is applied.",
-              "name": "--forge-count-card-color"
-            }
-          ],
-          "slots": [
-            {
-              "description": "The icon displayed at the start of the card header.",
-              "name": "icon"
-            },
-            {
-              "description": "The label text displayed next to the icon.",
-              "name": "label"
-            },
-            {
-              "description": "Optional content at the end of the header, ideal for badges or small accessories.",
-              "name": "header-end"
-            },
-            {
-              "description": "Optional slot for a `forge-icon-button`. Use this instead of `header-end` for icon buttons, as it provides proper alignment for the 48x48 touch target.",
-              "name": "action"
-            },
-            {
-              "description": "The main count or value displayed prominently below the header.",
-              "name": "count"
-            },
-            {
-              "description": "Optional content displayed after the count, ideal for units or secondary values.",
-              "name": "count-end"
-            },
-            {
-              "description": "Optional content below the count for additional details or secondary information.",
-              "name": "body"
-            },
-            {
-              "description": "Optional full-width content below the primary card content, ideal for sparklines, meters, or progress indicators.",
-              "name": "full-width"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "theme",
-              "type": {
-                "text": "CountCardTheme"
-              },
-              "privacy": "public",
-              "default": "'none'",
-              "description": "The theme variant applied to the card.",
-              "attribute": "theme"
-            },
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Whether to hide the card border.",
-              "attribute": "no-border"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "theme",
-              "type": {
-                "text": "CountCardTheme"
-              },
-              "default": "'none'",
-              "description": "The theme variant applied to the card.",
-              "fieldName": "theme"
-            },
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Whether to hide the card border.",
-              "fieldName": "noBorder"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-count-card",
-          "customElement": true,
-          "states": [
-            {
-              "name": "none",
-              "description": "Applied when the theme is set to `none`. Uses the default card styling."
-            },
-            {
-              "name": "primary",
-              "description": "Applied when the theme is set to `primary`."
-            },
-            {
-              "name": "secondary",
-              "description": "Applied when the theme is set to `secondary`."
-            },
-            {
-              "name": "tertiary",
-              "description": "Applied when the theme is set to `tertiary`."
-            },
-            {
-              "name": "success",
-              "description": "Applied when the theme is set to `success`."
-            },
-            {
-              "name": "error",
-              "description": "Applied when the theme is set to `error`."
-            },
-            {
-              "name": "warning",
-              "description": "Applied when the theme is set to `warning`."
-            },
-            {
-              "name": "info",
-              "description": "Applied when the theme is set to `info`."
-            },
-            {
-              "name": "info-secondary",
-              "description": "Applied when the theme is set to `info-secondary`. Provides a subtle tonal style."
-            },
-            {
-              "name": "no-border",
-              "description": "Applied when the `noBorder` property is `true`."
-            },
-            {
-              "name": "has-action",
-              "description": "Applied when content is slotted into the `action` slot."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "CountCardComponentTagName",
-          "declaration": {
-            "name": "CountCardComponentTagName",
-            "module": "src/lib/count-card/count-card.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "CountCardComponent",
-          "declaration": {
-            "name": "CountCardComponent",
-            "module": "src/lib/count-card/count-card.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "CountCardComponent",
-            "module": "src/lib/count-card/count-card.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/content-scaffold/content-scaffold.ts",
       "declarations": [
         {
@@ -1311,119 +1500,6 @@
           "declaration": {
             "name": "ContentScaffoldComponent",
             "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "MultiSelectHeaderComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-multi-select-header'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MultiSelectHeaderComponent",
-          "slots": [
-            {
-              "description": "Text content for the select-all button",
-              "name": "select-all-button-text"
-            },
-            {
-              "description": "Action buttons (maps to the toolbar end slot)",
-              "name": "actions"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "attribute": "text"
-            },
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "true",
-              "description": "Hides the bottom border",
-              "attribute": "no-border"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Fired when the select-all button is clicked",
-              "name": "forge-multi-select-header-select-all"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "fieldName": "text"
-            },
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Hides the bottom border",
-              "fieldName": "noBorder"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-multi-select-header",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponentTagName",
-          "declaration": {
-            "name": "MultiSelectHeaderComponentTagName",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponent",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         }
       ]
@@ -2338,19 +2414,19 @@
     },
     "AppLayoutBreakpoint": {
       "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 30
+      "lineNumber": 31
     },
     "AppLayoutBreakpointChangeEventData": {
       "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 32
+      "lineNumber": 33
     },
     "AppLayoutDrawerChangeEventData": {
       "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 36
+      "lineNumber": 37
     },
     "AppLayoutComponent": {
       "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 92
+      "lineNumber": 103
     },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
@@ -2368,6 +2444,18 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
+    "CountCardTheme": {
+      "path": "src/lib/count-card/count-card.ts",
+      "lineNumber": 16
+    },
+    "CountCardComponent": {
+      "path": "src/lib/count-card/count-card.ts",
+      "lineNumber": 71
+    },
+    "MultiSelectHeaderComponent": {
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "lineNumber": 28
+    },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 26
@@ -2384,21 +2472,9 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 40
     },
-    "CountCardTheme": {
-      "path": "src/lib/count-card/count-card.ts",
-      "lineNumber": 16
-    },
-    "CountCardComponent": {
-      "path": "src/lib/count-card/count-card.ts",
-      "lineNumber": 71
-    },
     "ContentScaffoldComponent": {
       "path": "src/lib/content-scaffold/content-scaffold.ts",
       "lineNumber": 37
-    },
-    "MultiSelectHeaderComponent": {
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "lineNumber": 28
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
