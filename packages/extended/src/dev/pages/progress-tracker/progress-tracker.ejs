@@ -1,0 +1,33 @@
+<div class="demo-container">
+  <forge-card>
+    <forge-progress-tracker id="horizontal-tracker">
+      <h2 slot="title">Record Progress</h2>
+      <forge-button slot="actions" variant="text">Show Workflow</forge-button>
+    </forge-progress-tracker>
+  </forge-card>
+
+  <forge-card>
+    <forge-progress-tracker id="horizontal-themed-tracker">
+      <h2 slot="title">Record Progress (Color Coded)</h2>
+      <forge-button slot="actions" variant="text">Show Workflow</forge-button>
+    </forge-progress-tracker>
+  </forge-card>
+
+  <div class="demo-row">
+    <forge-card>
+      <forge-progress-tracker id="vertical-tracker" orientation="vertical">
+        <h2 slot="title">Record Progress (Vertical)</h2>
+        <forge-button slot="actions" variant="text">Show Workflow</forge-button>
+      </forge-progress-tracker>
+    </forge-card>
+
+    <forge-card>
+      <forge-progress-tracker id="vertical-themed-tracker" orientation="vertical">
+        <h2 slot="title">Record Progress (Vertical, Color Coded)</h2>
+        <forge-button slot="actions" variant="text">Show Workflow</forge-button>
+      </forge-progress-tracker>
+    </forge-card>
+  </div>
+</div>
+
+<script type="module" src="progress-tracker.ts"></script>

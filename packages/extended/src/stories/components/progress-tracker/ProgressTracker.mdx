@@ -1,0 +1,107 @@
+import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
+import CustomArgTypes from '../../blocks/CustomArgTypes';
+import * as ProgressTrackerStories from './ProgressTracker.stories';
+
+<Meta of={ProgressTrackerStories} />
+
+<Title />
+
+The Progress Tracker displays progress through a sequence of steps or milestones, visually distinguishing
+completed steps from incomplete steps. It renders whatever steps it is given, in the order provided, so
+consumers can safely reload step data at any time without assuming the steps or their order are unchanged.
+
+The connector between two steps is fully filled once the following step is completed, and partially filled
+after the most recently completed step to indicate progress toward the next step (configurable via the
+`--forge-progress-tracker-active-connector-fill` custom property). The component does not display or
+calculate a completion percentage.
+
+Optional `title` and `actions` slots render a header row above the steps — the `actions` slot is intended
+for one or two buttons (for example a "Show Workflow" action).
+
+<Canvas of={ProgressTrackerStories.Demo} />
+
+## Providing steps
+
+Steps are provided through the `steps` property. Each step supports the following fields:
+
+| Field         | Type                                                                                               | Description                                                                                                                          |
+| ------------- | -------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
+| `label`       | `string`                                                                                           | The label displayed for the step.                                                                                                    |
+| `completed`   | `boolean` (optional)                                                                               | Whether the step is completed. Completed steps render a check icon; incomplete steps render their step number.                       |
+| `description` | `string` (optional)                                                                                | Additional information about the step. When provided, the step becomes interactive and dispatches the step info event when selected. |
+| `theme`       | `'primary' \| 'secondary' \| 'tertiary' \| 'success' \| 'error' \| 'warning' \| 'info'` (optional) | Colors the step indicator and its trailing connector with the corresponding Forge theme color.                                       |
+
+```typescript
+const tracker = document.querySelector('forge-progress-tracker');
+tracker.steps = [
+  { label: 'Application Received', completed: true, description: 'Your application was received and logged.' },
+  { label: 'Fees Paid', completed: true },
+  { label: 'Internal Review', completed: true },
+  { label: 'Documents Approved' },
+  { label: 'Record Issued' }
+];
+```
+
+## Handling the step info event
+
+The component is purely presentational and does not render a dialog itself. Steps that include a
+`description` are rendered as buttons; selecting one dispatches the `forge-progress-tracker-step-info`
+event, and the consuming application presents the step's additional information however it chooses —
+typically in a dialog that it owns. Steps without a description are rendered as static content with no
+clickable affordance.
+
+```typescript
+tracker.addEventListener('forge-progress-tracker-step-info', evt => {
+  const { step, index } = evt.detail;
+  // Present step.description in an application-owned dialog
+});
+```
+
+The event bubbles and is composed, so it can be handled on the component itself or any ancestor.
+
+## Color-coded steps
+
+Each step may optionally specify a `theme` that colors its indicator and trailing connector using the
+corresponding Forge theme color. Steps without a theme use the default view, so the two modes can be mixed
+freely within the same tracker.
+
+<Canvas of={ProgressTrackerStories.ColorCodedSteps} />
+
+## Vertical
+
+Set `orientation="vertical"` to stack the steps vertically with labels beside each step indicator. All
+other behavior — completion states, per-step themes, partial connector fill, and the step info event — is
+identical in both orientations.
+
+<Canvas of={ProgressTrackerStories.Vertical} />
+
+<Canvas of={ProgressTrackerStories.VerticalColorCodedSteps} />
+
+## Responsive behavior
+
+In the horizontal orientation each step reserves a minimum width (`--forge-progress-tracker-step-min-width`,
+`96px` by default) and labels wrap at word boundaries. When the available width is smaller than the steps
+require, the steps scroll horizontally rather than overlapping or truncating step names.
+
+## Theming
+
+The component derives its colors from the Forge theme (primary, on-primary, outline, and text colors), so it
+automatically adapts to custom themes and both light and dark modes. Individual colors can be adjusted via
+the CSS custom properties listed below while maintaining accessible contrast.
+
+## API
+
+<CustomArgTypes />
+
+## Accessibility
+
+- Steps are rendered as an ordered list, and each step announces its completion state via visually hidden
+  text. The announcement text is localizable via the `completed-label` and `incomplete-label` attributes.
+- The first incomplete step is marked with `aria-current="step"`.
+- Interactive steps are rendered as native buttons with `aria-haspopup="dialog"` and are fully keyboard
+  accessible.
+- Step indicators and connectors are hidden from assistive technology (`aria-hidden`); all information they
+  convey visually is also available as text.
+- Because the information dialog is owned by the consuming application, the application is responsible for
+  its accessibility. Using `forge-dialog` provides focus management, `Escape` dismissal, and backdrop
+  light-dismiss behavior out of the box.
