@@ -6,6 +6,7 @@ import { ForgeExtendedConfirmationDialogModule } from './confirmation-dialog/con
 import { ForgeExtendedCountCardModule } from './count-card';
 import { ForgeExtendedMultiSelectHeaderModule } from './multi-select-header/multi-select-header.module';
 import { ForgeExtendedProfileLinkModule } from './profile-link/profile-link.module';
+import { ForgeExtendedProgressTrackerModule } from './progress-tracker';
 import { ForgeExtendedQuantityFieldModule } from './quantity-field/quantity-field.module';
 import { ForgeExtendedResponsiveToolbarModule } from './responsive-toolbar/responsive-toolbar.module';
 import { ForgeExtendedStructuredCardModule } from './structured-card';
@@ -25,7 +26,8 @@ import { NgModule } from '@angular/core';
     ForgeExtendedUserProfileModule,
     ForgeExtendedCountCardModule,
     ForgeExtendedAppLayoutModule,
-    ForgeExtendedStructuredCardModule
+    ForgeExtendedStructuredCardModule,
+    ForgeExtendedProgressTrackerModule
   ]
 })
 export class ForgeExtendedModule {}

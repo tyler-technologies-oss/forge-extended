@@ -12,4 +12,5 @@ export * from './structured-card';
 export * from './content-scaffold';
 export * from './app-layout';
 export * from './count-card';
+export * from './progress-tracker';
 // -- EXPORTS PLACEHOLDER (DO NOT REMOVE) --

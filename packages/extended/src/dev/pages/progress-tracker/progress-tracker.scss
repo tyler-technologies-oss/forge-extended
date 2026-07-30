@@ -1,0 +1,31 @@
+.demo-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.demo-row {
+  display: flex;
+  gap: 16px;
+
+  forge-card {
+    flex: 1;
+  }
+}
+
+.step-info-dialog {
+  display: flex;
+  flex-direction: column;
+  max-inline-size: 400px;
+  min-inline-size: 320px;
+
+  h2 {
+    margin: 0;
+  }
+}
+
+.step-info-dialog__description {
+  margin: 0;
+  padding-inline: 16px;
+  padding-block-end: 16px;
+}

@@ -1,0 +1,271 @@
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
+@use '../utils/mixins';
+
+//
+// Host
+//
+
+:host {
+  display: block;
+  --_progress-tracker-node-size: var(--forge-progress-tracker-node-size, 28px);
+  --_progress-tracker-connector-thickness: var(--forge-progress-tracker-connector-thickness, 4px);
+  --_progress-tracker-connector-track-thickness: var(--forge-progress-tracker-connector-track-thickness, 2px);
+  --_progress-tracker-completed-color: var(--forge-progress-tracker-completed-color, #{forge-theme.variable(primary)});
+  --_progress-tracker-completed-icon-color: var(
+    --forge-progress-tracker-completed-icon-color,
+    #{forge-theme.variable(on-primary)}
+  );
+  --_progress-tracker-incomplete-color: var(
+    --forge-progress-tracker-incomplete-color,
+    #{forge-theme.variable(primary)}
+  );
+  --_progress-tracker-connector-color: var(--forge-progress-tracker-connector-color, #{forge-theme.variable(outline)});
+  --_progress-tracker-active-connector-fill: var(--forge-progress-tracker-active-connector-fill, 50%);
+  --_progress-tracker-label-color: var(--forge-progress-tracker-label-color, #{forge-theme.variable(text-high)});
+  --_progress-tracker-vertical-connector-min-length: var(--forge-progress-tracker-vertical-connector-min-length, 24px);
+  --_progress-tracker-step-min-width: var(--forge-progress-tracker-step-min-width, 96px);
+}
+
+.sr-only {
+  @include mixins.sr-only;
+}
+
+//
+// Header
+//
+
+.header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: #{forge-spacing.variable(medium)};
+  margin-block-end: #{forge-spacing.variable(medium)};
+}
+
+.title {
+  @include forge-typography.style(heading4);
+
+  slot::slotted(*) {
+    @include forge-typography.style(heading4);
+
+    margin: 0;
+  }
+}
+
+.actions {
+  display: flex;
+  align-items: center;
+  gap: #{forge-spacing.variable(small)};
+}
+
+//
+// Steps
+//
+
+.steps {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow-x: auto;
+}
+
+.step {
+  position: relative;
+  flex: 1 1 0;
+  min-inline-size: var(--_progress-tracker-step-min-width);
+}
+
+.step-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: #{forge-spacing.variable(small)};
+  inline-size: 100%;
+}
+
+button.step-content {
+  background: none;
+  border: none;
+  margin: 0;
+  padding: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  border-radius: #{forge-shape.variable(medium)};
+
+  &:focus-visible {
+    outline: 2px solid #{forge-theme.variable(primary)};
+    outline-offset: 2px;
+  }
+
+  @media (hover: hover) {
+    &:hover .label {
+      text-decoration: underline;
+    }
+  }
+}
+
+//
+// Step node
+//
+
+.node {
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  inline-size: var(--_progress-tracker-node-size);
+  block-size: var(--_progress-tracker-node-size);
+  border: 2px solid var(--_progress-tracker-incomplete-color);
+  border-radius: 50%;
+  background-color: #{forge-theme.variable(surface)};
+  color: var(--_progress-tracker-incomplete-color);
+  z-index: 1;
+  --forge-icon-font-size: calc(var(--_progress-tracker-node-size) - 12px);
+
+  span {
+    @include forge-typography.style(label1);
+  }
+}
+
+.step.completed .node {
+  border-color: var(--_progress-tracker-completed-color);
+  background-color: var(--_progress-tracker-completed-color);
+  color: var(--_progress-tracker-completed-icon-color);
+}
+
+//
+// Step themes
+//
+
+$themes: primary, secondary, tertiary, success, error, warning, info;
+
+@each $theme in $themes {
+  .step.theme-#{$theme} {
+    --_progress-tracker-completed-color: #{forge-theme.variable(#{$theme})};
+    --_progress-tracker-completed-icon-color: #{forge-theme.variable(on-#{$theme})};
+    --_progress-tracker-incomplete-color: #{forge-theme.variable(#{$theme})};
+  }
+}
+
+//
+// Step label
+//
+
+.label {
+  @include forge-typography.style(body2);
+
+  color: var(--_progress-tracker-label-color);
+  text-align: center;
+  overflow-wrap: break-word;
+  padding-inline: #{forge-spacing.variable(xsmall)};
+}
+
+//
+// Connector
+//
+
+.connector {
+  position: absolute;
+  inset-block-start: calc(var(--_progress-tracker-node-size) / 2 - var(--_progress-tracker-connector-thickness) / 2);
+  inset-inline-start: calc(50% + var(--_progress-tracker-node-size) / 2);
+  inset-inline-end: calc(-50% + var(--_progress-tracker-node-size) / 2);
+  block-size: var(--_progress-tracker-connector-thickness);
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset-inline: 0;
+    inset-block-start: calc(50% - var(--_progress-tracker-connector-track-thickness) / 2);
+    block-size: var(--_progress-tracker-connector-track-thickness);
+    background-color: var(--_progress-tracker-connector-color);
+  }
+}
+
+.connector-fill {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inline-size: 0;
+  border-radius: calc(var(--_progress-tracker-connector-thickness) / 2);
+  background-color: var(--_progress-tracker-completed-color);
+}
+
+.connector.full .connector-fill {
+  inline-size: 100%;
+}
+
+.connector.partial .connector-fill {
+  inline-size: var(--_progress-tracker-active-connector-fill);
+}
+
+//
+// Vertical orientation
+//
+
+:host([orientation='vertical']) {
+  .steps {
+    flex-direction: column;
+    overflow-x: visible;
+  }
+
+  .step {
+    flex: none;
+    min-inline-size: 0;
+
+    &:not(:last-child) {
+      padding-block-end: var(--_progress-tracker-vertical-connector-min-length);
+    }
+  }
+
+  .step-content {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .label {
+    display: flex;
+    align-items: center;
+    min-block-size: var(--_progress-tracker-node-size);
+    text-align: start;
+  }
+
+  .connector {
+    inset-inline-start: calc(var(--_progress-tracker-node-size) / 2 - var(--_progress-tracker-connector-thickness) / 2);
+    inset-inline-end: auto;
+    inset-block-start: var(--_progress-tracker-node-size);
+    inset-block-end: 0;
+    inline-size: var(--_progress-tracker-connector-thickness);
+    block-size: auto;
+
+    &::before {
+      inset-block: 0;
+      inset-inline-start: calc(50% - var(--_progress-tracker-connector-track-thickness) / 2);
+      inline-size: var(--_progress-tracker-connector-track-thickness);
+      block-size: auto;
+    }
+  }
+
+  .connector-fill {
+    inset-inline: 0;
+    inset-block-start: 0;
+    inset-block-end: auto;
+    inline-size: auto;
+    block-size: 0;
+  }
+
+  .connector.full .connector-fill {
+    inline-size: auto;
+    block-size: 100%;
+  }
+
+  .connector.partial .connector-fill {
+    inline-size: auto;
+    block-size: var(--_progress-tracker-active-connector-fill);
+  }
+}
