@@ -95,6 +95,12 @@ const meta = {
         padding: var(--forge-spacing-medium);
       }
 
+      @media (max-width: 768px) {
+        .demo-conditions {
+          grid-template-columns: 1fr;
+        }
+      }
+
       .demo-condition {
         display: flex;
         flex-direction: column;
@@ -126,6 +132,13 @@ const meta = {
         grid-template-columns: 1fr 1fr 1fr;
         gap: var(--forge-spacing-xlarge);
         padding-block: var(--forge-spacing-large);
+      }
+
+      @media (max-width: 768px) {
+        .demo-footer-content {
+          grid-template-columns: 1fr;
+          gap: var(--forge-spacing-large);
+        }
       }
 
       .demo-footer-column-title {
