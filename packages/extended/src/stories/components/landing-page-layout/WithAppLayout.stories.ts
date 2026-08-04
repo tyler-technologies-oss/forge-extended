@@ -1,6 +1,7 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
 import {
+  defineAppBarComponent,
   defineBadgeComponent,
   defineButtonComponent,
   defineCardComponent,
@@ -43,6 +44,7 @@ defineIconComponent();
 defineIconButtonComponent();
 defineListComponent();
 defineListItemComponent();
+defineAppBarComponent();
 
 IconRegistry.define([
   tylIconCalendar,
