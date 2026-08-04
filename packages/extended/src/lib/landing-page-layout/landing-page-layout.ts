@@ -159,7 +159,7 @@ export class LandingPageLayoutComponent extends LitElement {
       <picture class="header-background-picture" part="header-background-picture">
         ${this.imageUrlSmall ? html`<source srcset=${this.imageUrlSmall} media="(max-width: 768px)" />` : nothing}
         ${this.imageUrlLarge ? html`<source srcset=${this.imageUrlLarge} media="(min-width: 769px)" />` : nothing}
-        <img alt="" />
+        <img src=${this.imageUrlLarge || this.imageUrlSmall} alt="" />
       </picture>
     `;
   }
