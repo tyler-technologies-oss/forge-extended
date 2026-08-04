@@ -425,10 +425,18 @@ describe('LandingPageLayoutComponent', () => {
       expect(picture!.querySelector('img')).to.be.ok;
     });
 
-    it('should render picture with a fallback img element', async () => {
+    it('should render picture with a fallback img element using imageUrlLarge as src', async () => {
       const harness = await createFixture({ imageUrlLarge: 'https://example.com/large.jpg' });
-      const picture = harness.pictureElement;
-      expect(picture!.querySelector('img')).to.be.ok;
+      const img = harness.pictureElement!.querySelector('img');
+      expect(img).to.be.ok;
+      expect(img!.getAttribute('src')).to.equal('https://example.com/large.jpg');
+    });
+
+    it('should fall back to imageUrlSmall as src when imageUrlLarge is not provided', async () => {
+      const harness = await createFixture({ imageUrlSmall: 'https://example.com/small.jpg' });
+      const img = harness.pictureElement!.querySelector('img');
+      expect(img).to.be.ok;
+      expect(img!.getAttribute('src')).to.equal('https://example.com/small.jpg');
     });
 
     it('should update picture when image URLs change', async () => {
