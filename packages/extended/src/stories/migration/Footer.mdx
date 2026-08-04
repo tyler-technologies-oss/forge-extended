@@ -1,0 +1,41 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Migration/Footer" />
+
+# Footer Migration
+
+Migrating from the `forge-internal` `<forge-footer>` to `@tylertech/forge-extended`.
+
+## Key Changes
+
+- **CSS custom properties renamed:**
+  - `--forge-footer-theme-background` → `--forge-footer-background`
+  - `--forge-footer-theme-on-background` → `--forge-footer-on-background`
+- **Default graphic removed:** the Tyler "Empowered by" logo no longer renders by default. Provide your own via the `graphic` slot.
+- **Dividers:** the `|` divider now only renders between `<forge-footer-item>` children. Wrap raw content in a `<forge-footer-item>`.
+- **Layout state:** replace `forge-footer[layout="alternative"]` selectors with `:state(alternative)`.
+
+## Before / After
+
+```html
+<!-- Before -->
+<forge-footer layout="auto">
+  <forge-footer-item><a href="/about">About</a></forge-footer-item>
+  <!-- Default Tyler logo rendered automatically -->
+</forge-footer>
+```
+
+```html
+<!-- After -->
+<forge-footer layout="auto">
+  <forge-footer-item><a href="/about">About</a></forge-footer-item>
+
+  <a slot="graphic" href="https://www.tylertech.com/" target="_blank">
+    <img
+      src="https://cdn.forge.tylertech.com/v1/images/branding/tyler/tyler-empowered-logo-white.svg"
+      alt="Empowered by Tyler Technologies" />
+  </a>
+</forge-footer>
+```
+
+See the [Footer docs](?path=/docs/components-footer--docs) for the full API.

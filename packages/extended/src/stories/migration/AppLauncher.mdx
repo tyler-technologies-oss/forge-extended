@@ -1,0 +1,46 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Migration/App Launcher" />
+
+# App Launcher Migration
+
+Migrating from the `forge-internal` `<forge-app-launcher>` to `@tylertech/forge-extended`.
+
+## Key Changes
+
+- **Data source:** `optionsCallback` is gone. Set `relatedApps` and `allApps` array properties directly.
+- **Trigger:** `<forge-app-launcher-button>` is removed. `<forge-app-launcher>` renders its own trigger.
+- **Icons:** the `icon` object is replaced by a single `iconName` string.
+- **Events:** the `forge-app-launcher-select` event is removed. Options are native `<a>` links.
+- **Default target:** now `_blank` (was `_self`).
+- **New:** `<forge-app-launcher-link>` for supplementary links, plus slots for headings/labels.
+
+## Option shape
+
+```diff
+- { label, uri, icon: { type, name, uri, color }, helpText, priority, target }
++ { label, uri, iconName, target }
+```
+
+## Before / After
+
+```html
+<!-- Before -->
+<forge-app-launcher id="launcher"></forge-app-launcher>
+<script>
+  launcher.optionsCallback = async () => ({
+    options: [{ label: 'Payments', uri: '/pay', icon: { type: 'font', name: 'payment' } }]
+  });
+</script>
+```
+
+```html
+<!-- After -->
+<forge-app-launcher id="launcher"></forge-app-launcher>
+<script>
+  launcher.relatedApps = [{ label: 'Payments', uri: '/pay', iconName: 'payment', target: '_blank' }];
+  launcher.allApps = [...];
+</script>
+```
+
+See the [App Launcher docs](?path=/docs/components-app-launcher--docs) for the full API.
