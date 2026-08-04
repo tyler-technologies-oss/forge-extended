@@ -21,7 +21,7 @@
   display: none;
 }
 
-footer {
+.container {
   background-color: var(--_footer-background);
   padding: var(--_footer-padding);
   padding-inline-start: var(--_footer-padding-left);
@@ -51,7 +51,7 @@ footer {
   }
 }
 
-:host(:state(alternative)) footer {
+:host(:state(alternative)) .container {
   gap: var(--_footer-alternative-gap);
   grid-template-columns: 1fr;
   grid-auto-flow: row;

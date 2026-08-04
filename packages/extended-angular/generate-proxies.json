@@ -8,7 +8,7 @@
   "useDefineFunction": true,
   "componentDependencies": {
     "forge-user-profile": ["forge-profile-link"],
-    "forge-app-launncher": ["forge-app-launcher-link"],
+    "forge-app-launcher": ["forge-app-launcher-link"],
     "forge-footer": ["forge-footer-item"]
   }
 }

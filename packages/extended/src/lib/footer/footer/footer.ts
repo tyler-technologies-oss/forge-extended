@@ -118,12 +118,12 @@ export class FooterComponent extends LitElement {
 
   public override render(): TemplateResult {
     return html`
-      <footer part="root">
+      <div class="container" part="root">
         <div role="list" class="list" part="content">
           <slot></slot>
         </div>
         <slot name="graphic"></slot>
-      </footer>
+      </div>
     `;
   }
 }

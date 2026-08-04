@@ -40,9 +40,7 @@ describe('FooterComponent', () => {
           ><forge-footer-item><a href="#">Link</a></forge-footer-item></forge-footer
         >`
       );
-      await expect(harness.el).shadowDom.to.be.accessible({
-        ignoredRules: ['landmark-contentinfo-is-top-level', 'landmark-no-duplicate-contentinfo', 'landmark-unique']
-      });
+      await expect(harness.el).shadowDom.to.be.accessible();
     });
   });
 
@@ -123,9 +121,9 @@ describe('FooterComponent', () => {
   });
 
   describe('Rendering', () => {
-    it('should render footer element', async () => {
+    it('should render container element', async () => {
       const harness = await createFixture();
-      expect(harness.footer).to.exist;
+      expect(harness.container).to.exist;
     });
 
     it('should render div with role="list"', async () => {
@@ -161,7 +159,6 @@ describe('FooterComponent', () => {
       const harness = await createFixture();
       const root = harness.el.shadowRoot!.querySelector('[part="root"]');
       expect(root).to.exist;
-      expect(root?.tagName.toLowerCase()).to.equal('footer');
     });
 
     it('should expose content part', async () => {
@@ -176,8 +173,8 @@ describe('FooterComponent', () => {
 class FooterHarness {
   constructor(public el: FooterComponent) {}
 
-  public get footer(): HTMLElement | null {
-    return this.el.shadowRoot!.querySelector('footer');
+  public get container(): HTMLElement | null {
+    return this.el.shadowRoot!.querySelector('.container');
   }
 
   public get listContainer(): HTMLDivElement | null {
