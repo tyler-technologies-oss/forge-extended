@@ -120,11 +120,13 @@ export class LandingPageLayoutComponent extends LitElement {
     this.#assignImageSlot();
   }
 
-  public override firstUpdated(): void {
+  public override firstUpdated(changedProperties: Map<string, unknown>): void {
+    super.firstUpdated(changedProperties);
     this.#updateStates();
   }
 
   public override updated(changedProperties: Map<string, unknown>): void {
+    super.updated(changedProperties);
     if (changedProperties.has('imageUrlLarge') || changedProperties.has('imageUrlSmall')) {
       this.#updateStates();
     }
