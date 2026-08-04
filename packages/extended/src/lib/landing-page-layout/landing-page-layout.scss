@@ -338,6 +338,16 @@
   .body {
     margin-block-start: 0;
   }
+
+  .body-top {
+    display: none;
+  }
+
+  .body-left,
+  .body-center,
+  .body-right {
+    grid-row: 1;
+  }
 }
 
 //
