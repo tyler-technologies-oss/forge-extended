@@ -26,9 +26,9 @@ Migrating from the `forge-internal` `<forge-landing-page-layout>` to `@tylertech
 
 ## Visual changes
 
-- **Header gradient:** the default header background is a fixed indigo/blue gradient rather than one derived from the current theme's tertiary and primary colors.
+- **Header gradient:** the default header background is a fixed blue/indigo gradient rather than one derived from the current theme's tertiary and primary colors. Override with the new `--forge-landing-page-layout-header-gradient-start` and `--forge-landing-page-layout-header-gradient-end` CSS custom properties to bring the theme-derived gradient (or any other pair of colors) back.
 - **Header text color:** header title and secondary title text renders in white by default (no longer derived from a theme token) so the light-on-dark treatment holds in every theme, including dark mode. Override with the new `--forge-landing-page-layout-header-color` CSS custom property when a different color is needed.
-- **Background image overlay:** when a background image is present, a darkening gradient overlay (denser at the top, lighter at the bottom) is layered over it instead of dimming the image itself. Header content contrast is preserved without washing out image detail.
+- **Background image overlay:** when a background image is present, a darkening gradient overlay (denser at the top, lighter at the bottom) is layered over it instead of dimming the image itself. Header content contrast is preserved without washing out image detail. Tune the top and bottom colors with the new `--forge-landing-page-layout-header-overlay-start` and `--forge-landing-page-layout-header-overlay-end` CSS custom properties.
 
 ## Before / After
 

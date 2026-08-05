@@ -53,6 +53,10 @@ export const LandingPageLayoutComponentTagName: keyof HTMLElementTagNameMap = 'f
  * @cssproperty --forge-landing-page-layout-actions-gap - Gap between action items in the header on large screens.
  * @cssproperty --forge-landing-page-layout-actions-gap-mobile - Gap between action items in the header on mobile screens.
  * @cssproperty --forge-landing-page-layout-header-color - Color of the header title and secondary title text. Defaults to white so the light-on-dark header treatment holds across themes.
+ * @cssproperty --forge-landing-page-layout-header-gradient-start - Start color of the header background gradient. Defaults to Forge blue-800.
+ * @cssproperty --forge-landing-page-layout-header-gradient-end - End color of the header background gradient. Defaults to Forge indigo-900.
+ * @cssproperty --forge-landing-page-layout-header-overlay-start - Top color of the darkening overlay layered over the header background image. Defaults to Forge black at 75% opacity.
+ * @cssproperty --forge-landing-page-layout-header-overlay-end - Bottom color of the darkening overlay layered over the header background image. Defaults to Forge black at 55% opacity.
  *
  * @state empty-announcements - The `announcements` slot has no content and the header content is centered across the full width.
  * @state body-only - No content is projected into the `top` slot, so the body area sits flush against the header.
