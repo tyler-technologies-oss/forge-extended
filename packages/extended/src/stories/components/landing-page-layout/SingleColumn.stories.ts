@@ -55,7 +55,10 @@ const meta = {
     return html`
       <forge-landing-page-layout mode="single" alignment="left">
         <span class="forge-typography--subheading7" slot="secondary-title">Article</span>
-        <h2 class="forge-typography--display6" slot="main-title" style="color: var(--forge-theme-text-high-inverse)">
+        <h2
+          class="forge-typography--display6"
+          slot="main-title"
+          style="color: var(--forge-landing-page-layout-header-color, #ffffff)">
           A single column, edge-aligned layout
         </h2>
         <forge-button slot="action" variant="filled">Read more</forge-button>

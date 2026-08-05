@@ -52,6 +52,7 @@ export const LandingPageLayoutComponentTagName: keyof HTMLElementTagNameMap = 'f
  * @cssproperty --forge-landing-page-layout-root-height - Height of the root container. Defaults to `100%`.
  * @cssproperty --forge-landing-page-layout-actions-gap - Gap between action items in the header on large screens.
  * @cssproperty --forge-landing-page-layout-actions-gap-mobile - Gap between action items in the header on mobile screens.
+ * @cssproperty --forge-landing-page-layout-header-color - Color of the header title and secondary title text. Defaults to white so the light-on-dark header treatment holds across themes.
  *
  * @state empty-announcements - The `announcements` slot has no content and the header content is centered across the full width.
  * @state body-only - No content is projected into the `top` slot, so the body area sits flush against the header.
@@ -171,10 +172,7 @@ export class LandingPageLayoutComponent extends LitElement {
   }
 
   #assignImageSlot(): void {
-    const img = this.querySelector(':scope > img:not([slot])') as HTMLImageElement | null;
-    if (img) {
-      img.setAttribute('slot', 'image');
-    }
+    this.querySelector<HTMLImageElement>(':scope > img:not([slot])')?.setAttribute('slot', 'image');
   }
 
   #handleSlotChange = (evt: Event): void => {

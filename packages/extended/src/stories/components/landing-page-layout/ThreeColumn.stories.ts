@@ -55,7 +55,10 @@ const meta = {
     return html`
       <forge-landing-page-layout mode="three">
         <span class="forge-typography--subheading7" slot="secondary-title">Dashboard</span>
-        <h2 class="forge-typography--display6" slot="main-title" style="color: var(--forge-theme-text-high-inverse)">
+        <h2
+          class="forge-typography--display6"
+          slot="main-title"
+          style="color: var(--forge-landing-page-layout-header-color, #ffffff)">
           Three-column overview
         </h2>
         <forge-button slot="action" variant="filled">Take action</forge-button>
