@@ -128,25 +128,20 @@
   display: block;
   margin: 0 0 #{forge-spacing.variable(large)};
 
-  // Force white text on projected titles regardless of any outer-document
-  // heading resets (e.g. Storybook's sbdocs styles apply
-  // `color: var(--forge-theme-text-high)` to h1-h6 at specificity 0,1,1 which
-  // ties with `::slotted([slot='main-title'])` — !important guarantees the
-  // component's inverse-surface header treatment always wins).
   ::slotted(*) {
     display: block;
     margin: 0;
-    color: #{forge-theme.variable(text-high-inverse)} !important;
+    color: #{forge-theme.variable(text-high-inverse)};
   }
 
   ::slotted([slot='secondary-title']) {
-    color: #{forge-theme.variable(text-high-inverse)} !important;
+    color: #{forge-theme.variable(text-high-inverse)};
     @include forge-typography.style(subheading7);
   }
 
   ::slotted([slot='main-title']) {
     margin-block-start: #{forge-spacing.variable(medium)};
-    color: #{forge-theme.variable(text-high-inverse)} !important;
+    color: #{forge-theme.variable(text-high-inverse)};
     @include forge-typography.style(display6);
   }
 }
@@ -211,14 +206,14 @@
 // Width variants
 //
 
-:host(:not([size='wide'])) {
+:host(:not(:state(size-wide))) {
   .header-body,
   .body {
     max-width: var(--_landing-page-layout-content-width);
   }
 }
 
-:host([size='wide']) {
+:host(:state(size-wide)) {
   .header-body,
   .body {
     max-width: var(--_landing-page-layout-content-width-wide);
@@ -229,7 +224,7 @@
 // Alignment variants
 //
 
-:host([alignment='left']) {
+:host(:state(alignment-left)) {
   .header-body,
   .body {
     margin-inline: unset;
@@ -244,7 +239,7 @@
 // Mode variants
 //
 
-:host([mode='single']) {
+:host(:state(mode-single)) {
   .body-left {
     grid-row: 2;
     grid-column: 1 / span 6;
@@ -257,8 +252,7 @@
   }
 }
 
-:host([mode='two-third']),
-:host(:not([mode])) {
+:host(:state(mode-two-third)) {
   .body-left {
     grid-row: 2;
     grid-column: 1 / span 4;
@@ -275,7 +269,7 @@
   }
 }
 
-:host([mode='equal']) {
+:host(:state(mode-equal)) {
   .body-left {
     grid-row: 2;
     grid-column: 1 / span 3;
@@ -292,7 +286,7 @@
   }
 }
 
-:host([mode='three']) {
+:host(:state(mode-three)) {
   .body-left {
     grid-row: 2;
     grid-column: 1 / span 2;
@@ -324,7 +318,7 @@
   }
 }
 
-:host([alignment='left']:state(empty-announcements)) {
+:host(:state(alignment-left):state(empty-announcements)) {
   .header-body-left {
     text-align: left;
   }
@@ -382,9 +376,8 @@
     }
   }
 
-  :host([mode='two-third']),
-  :host(:not([mode])),
-  :host([mode='equal']) {
+  :host(:state(mode-two-third)),
+  :host(:state(mode-equal)) {
     .body-top {
       grid-column: 1 / span 4;
     }
@@ -398,7 +391,7 @@
     }
   }
 
-  :host([mode='equal']) {
+  :host(:state(mode-equal)) {
     .body-left {
       grid-column: 1 / span 2;
     }
@@ -408,14 +401,14 @@
     }
   }
 
-  :host([mode='single']) {
+  :host(:state(mode-single)) {
     .body-left {
       grid-row: 2;
       grid-column: 1 / span 4;
     }
   }
 
-  :host([mode='three']) {
+  :host(:state(mode-three)) {
     .body {
       display: block;
       margin: auto;
@@ -506,7 +499,7 @@
     grid-column: 1 / span 2;
   }
 
-  :host([mode='single']) {
+  :host(:state(mode-single)) {
     .body-left {
       grid-row: 2;
       grid-column: 1 / span 1;

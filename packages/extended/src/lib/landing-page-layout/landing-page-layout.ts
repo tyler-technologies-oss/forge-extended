@@ -1,4 +1,4 @@
-import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
 import { toggleState } from '@tylertech/forge';
 
@@ -56,6 +56,14 @@ export const LandingPageLayoutComponentTagName: keyof HTMLElementTagNameMap = 'f
  * @state empty-announcements - The `announcements` slot has no content and the header content is centered across the full width.
  * @state body-only - No content is projected into the `top` slot, so the body area sits flush against the header.
  * @state has-image - A background image is present (via `image-url-large`/`image-url-small` or the `image` slot). A darkening overlay is applied over the image to improve header text contrast.
+ * @state mode-two-third - The `mode` property is `two-third` (default).
+ * @state mode-equal - The `mode` property is `equal`.
+ * @state mode-three - The `mode` property is `three`.
+ * @state mode-single - The `mode` property is `single`.
+ * @state alignment-center - The `alignment` property is `center` (default).
+ * @state alignment-left - The `alignment` property is `left`.
+ * @state size-normal - The `size` property is `normal` (default).
+ * @state size-wide - The `size` property is `wide`.
  *
  * @csspart root - The outermost container element.
  * @csspart container - The main wrapper that holds the header and body.
@@ -91,23 +99,23 @@ export class LandingPageLayoutComponent extends LitElement {
   private _imageNodes!: Node[];
 
   /** Controls the body column layout. */
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   public mode: LandingPageLayoutMode = 'two-third';
 
   /** Controls the horizontal alignment of the header content. */
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   public alignment: LandingPageLayoutAlignment = 'center';
 
   /** Controls the maximum width of the content area. */
-  @property({ type: String, reflect: true })
+  @property({ type: String })
   public size: LandingPageLayoutSize = 'normal';
 
   /** URL of the background image to use on large screens. */
-  @property({ type: String, attribute: 'image-url-large', reflect: true })
+  @property({ type: String, attribute: 'image-url-large' })
   public imageUrlLarge = '';
 
   /** URL of the background image to use on small screens. */
-  @property({ type: String, attribute: 'image-url-small', reflect: true })
+  @property({ type: String, attribute: 'image-url-small' })
   public imageUrlSmall = '';
 
   constructor() {
@@ -120,16 +128,46 @@ export class LandingPageLayoutComponent extends LitElement {
     this.#assignImageSlot();
   }
 
-  public override firstUpdated(changedProperties: Map<string, unknown>): void {
+  public override firstUpdated(changedProperties: PropertyValues<this>): void {
     super.firstUpdated(changedProperties);
-    this.#updateStates();
+    this.#updateSlotStates();
   }
 
-  public override updated(changedProperties: Map<string, unknown>): void {
-    super.updated(changedProperties);
-    if (changedProperties.has('imageUrlLarge') || changedProperties.has('imageUrlSmall')) {
-      this.#updateStates();
+  public override willUpdate(changedProperties: PropertyValues<this>): void {
+    if (changedProperties.has('mode')) {
+      this.#updateModeState();
     }
+    if (changedProperties.has('alignment')) {
+      this.#updateAlignmentState();
+    }
+    if (changedProperties.has('size')) {
+      this.#updateSizeState();
+    }
+    if (changedProperties.has('imageUrlLarge') || changedProperties.has('imageUrlSmall')) {
+      this.#updateHasImageState();
+    }
+  }
+
+  #updateModeState(): void {
+    toggleState(this.#internals, 'mode-two-third', this.mode === 'two-third');
+    toggleState(this.#internals, 'mode-equal', this.mode === 'equal');
+    toggleState(this.#internals, 'mode-three', this.mode === 'three');
+    toggleState(this.#internals, 'mode-single', this.mode === 'single');
+  }
+
+  #updateAlignmentState(): void {
+    toggleState(this.#internals, 'alignment-left', this.alignment === 'left');
+    toggleState(this.#internals, 'alignment-center', this.alignment === 'center');
+  }
+
+  #updateSizeState(): void {
+    toggleState(this.#internals, 'size-wide', this.size === 'wide');
+    toggleState(this.#internals, 'size-normal', this.size === 'normal');
+  }
+
+  #updateHasImageState(): void {
+    const hasImage = !!this.imageUrlLarge || !!this.imageUrlSmall || (this._imageNodes?.length ?? 0) > 0;
+    toggleState(this.#internals, 'has-image', hasImage);
   }
 
   #assignImageSlot(): void {
@@ -142,15 +180,14 @@ export class LandingPageLayoutComponent extends LitElement {
   #handleSlotChange = (evt: Event): void => {
     const slotName = (evt.target as HTMLSlotElement).name;
     if (['top', 'announcements', 'image'].includes(slotName)) {
-      this.#updateStates();
+      this.#updateSlotStates();
     }
   };
 
-  #updateStates(): void {
+  #updateSlotStates(): void {
     toggleState(this.#internals, 'empty-announcements', this._announcementsNodes.length === 0);
     toggleState(this.#internals, 'body-only', this._topNodes.length === 0);
-    const hasImage = !!this.imageUrlLarge || !!this.imageUrlSmall || (this._imageNodes?.length ?? 0) > 0;
-    toggleState(this.#internals, 'has-image', hasImage);
+    this.#updateHasImageState();
   }
 
   get #pictureTemplate(): TemplateResult | typeof nothing {

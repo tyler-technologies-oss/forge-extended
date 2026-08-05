@@ -55,7 +55,9 @@ const meta = {
     return html`
       <forge-landing-page-layout mode="three">
         <span class="forge-typography--subheading7" slot="secondary-title">Dashboard</span>
-        <h2 class="forge-typography--display6" slot="main-title">Three-column overview</h2>
+        <h2 class="forge-typography--display6" slot="main-title" style="color: var(--forge-theme-text-high-inverse)">
+          Three-column overview
+        </h2>
         <forge-button slot="action" variant="filled">Take action</forge-button>
 
         <div class="demo-area forge-typography--label1" slot="left">Left column</div>

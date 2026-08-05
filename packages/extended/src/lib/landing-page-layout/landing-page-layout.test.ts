@@ -154,13 +154,15 @@ describe('LandingPageLayoutComponent', () => {
       expect(el.imageUrlSmall).to.equal('');
     });
 
-    it('should reflect mode, alignment, and size to attributes', async () => {
+    it('should not reflect properties to attributes', async () => {
       const el = await fixture<LandingPageLayoutComponent>(
         html`<forge-landing-page-layout></forge-landing-page-layout>`
       );
-      expect(el.getAttribute('mode')).to.equal('two-third');
-      expect(el.getAttribute('alignment')).to.equal('center');
-      expect(el.getAttribute('size')).to.equal('normal');
+      expect(el.hasAttribute('mode')).to.be.false;
+      expect(el.hasAttribute('alignment')).to.be.false;
+      expect(el.hasAttribute('size')).to.be.false;
+      expect(el.hasAttribute('image-url-large')).to.be.false;
+      expect(el.hasAttribute('image-url-small')).to.be.false;
     });
   });
 
@@ -169,7 +171,7 @@ describe('LandingPageLayoutComponent', () => {
       const harness = await createFixture();
       harness.el.mode = 'equal';
       await harness.el.updateComplete;
-      expect(harness.el.getAttribute('mode')).to.equal('equal');
+      expect(harness.el.mode).to.equal('equal');
     });
 
     it('should set mode via attribute', async () => {
@@ -183,7 +185,7 @@ describe('LandingPageLayoutComponent', () => {
       const harness = await createFixture();
       harness.el.alignment = 'left';
       await harness.el.updateComplete;
-      expect(harness.el.getAttribute('alignment')).to.equal('left');
+      expect(harness.el.alignment).to.equal('left');
     });
 
     it('should set alignment via attribute', async () => {
@@ -197,7 +199,7 @@ describe('LandingPageLayoutComponent', () => {
       const harness = await createFixture();
       harness.el.size = 'wide';
       await harness.el.updateComplete;
-      expect(harness.el.getAttribute('size')).to.equal('wide');
+      expect(harness.el.size).to.equal('wide');
     });
 
     it('should set size via attribute', async () => {
@@ -211,14 +213,14 @@ describe('LandingPageLayoutComponent', () => {
       const harness = await createFixture();
       harness.el.imageUrlLarge = 'https://example.com/large.jpg';
       await harness.el.updateComplete;
-      expect(harness.el.getAttribute('image-url-large')).to.equal('https://example.com/large.jpg');
+      expect(harness.el.imageUrlLarge).to.equal('https://example.com/large.jpg');
     });
 
     it('should set imageUrlSmall via property', async () => {
       const harness = await createFixture();
       harness.el.imageUrlSmall = 'https://example.com/small.jpg';
       await harness.el.updateComplete;
-      expect(harness.el.getAttribute('image-url-small')).to.equal('https://example.com/small.jpg');
+      expect(harness.el.imageUrlSmall).to.equal('https://example.com/small.jpg');
     });
 
     it('should set imageUrlLarge via attribute', async () => {
@@ -387,6 +389,101 @@ describe('LandingPageLayoutComponent', () => {
       await harness.el.updateComplete;
 
       expect(harness.el.matches(':state(has-image)')).to.be.true;
+    });
+  });
+
+  describe('mode state', () => {
+    it('should apply mode-two-third state by default', async () => {
+      const el = await fixture<LandingPageLayoutComponent>(
+        html`<forge-landing-page-layout></forge-landing-page-layout>`
+      );
+      expect(el.matches(':state(mode-two-third)')).to.be.true;
+      expect(el.matches(':state(mode-equal)')).to.be.false;
+      expect(el.matches(':state(mode-three)')).to.be.false;
+      expect(el.matches(':state(mode-single)')).to.be.false;
+    });
+
+    it('should apply mode-equal state when mode is equal', async () => {
+      const harness = await createFixture({ mode: 'equal' });
+      expect(harness.el.matches(':state(mode-equal)')).to.be.true;
+      expect(harness.el.matches(':state(mode-two-third)')).to.be.false;
+    });
+
+    it('should apply mode-three state when mode is three', async () => {
+      const harness = await createFixture({ mode: 'three' });
+      expect(harness.el.matches(':state(mode-three)')).to.be.true;
+      expect(harness.el.matches(':state(mode-two-third)')).to.be.false;
+    });
+
+    it('should apply mode-single state when mode is single', async () => {
+      const harness = await createFixture({ mode: 'single' });
+      expect(harness.el.matches(':state(mode-single)')).to.be.true;
+      expect(harness.el.matches(':state(mode-two-third)')).to.be.false;
+    });
+
+    it('should update mode state when mode property changes', async () => {
+      const harness = await createFixture();
+      expect(harness.el.matches(':state(mode-two-third)')).to.be.true;
+
+      harness.el.mode = 'three';
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(mode-three)')).to.be.true;
+      expect(harness.el.matches(':state(mode-two-third)')).to.be.false;
+    });
+  });
+
+  describe('alignment state', () => {
+    it('should apply alignment-center state by default', async () => {
+      const el = await fixture<LandingPageLayoutComponent>(
+        html`<forge-landing-page-layout></forge-landing-page-layout>`
+      );
+      expect(el.matches(':state(alignment-center)')).to.be.true;
+      expect(el.matches(':state(alignment-left)')).to.be.false;
+    });
+
+    it('should apply alignment-left state when alignment is left', async () => {
+      const harness = await createFixture({ alignment: 'left' });
+      expect(harness.el.matches(':state(alignment-left)')).to.be.true;
+      expect(harness.el.matches(':state(alignment-center)')).to.be.false;
+    });
+
+    it('should update alignment state when alignment property changes', async () => {
+      const harness = await createFixture();
+      expect(harness.el.matches(':state(alignment-center)')).to.be.true;
+
+      harness.el.alignment = 'left';
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(alignment-left)')).to.be.true;
+      expect(harness.el.matches(':state(alignment-center)')).to.be.false;
+    });
+  });
+
+  describe('size state', () => {
+    it('should apply size-normal state by default', async () => {
+      const el = await fixture<LandingPageLayoutComponent>(
+        html`<forge-landing-page-layout></forge-landing-page-layout>`
+      );
+      expect(el.matches(':state(size-normal)')).to.be.true;
+      expect(el.matches(':state(size-wide)')).to.be.false;
+    });
+
+    it('should apply size-wide state when size is wide', async () => {
+      const harness = await createFixture({ size: 'wide' });
+      expect(harness.el.matches(':state(size-wide)')).to.be.true;
+      expect(harness.el.matches(':state(size-normal)')).to.be.false;
+    });
+
+    it('should update size state when size property changes', async () => {
+      const harness = await createFixture();
+      expect(harness.el.matches(':state(size-normal)')).to.be.true;
+
+      harness.el.size = 'wide';
+      await harness.el.updateComplete;
+
+      expect(harness.el.matches(':state(size-wide)')).to.be.true;
+      expect(harness.el.matches(':state(size-normal)')).to.be.false;
     });
   });
 
