@@ -229,7 +229,10 @@ export const WithAppLayout: Story = {
 
         <forge-landing-page-layout slot="body" image-url-large=${snowboardingBg} image-url-small=${snowboardingBg}>
           <span class="forge-typography--subheading7" slot="secondary-title">Winter is here</span>
-          <h2 class="forge-typography--display6" slot="main-title" style="color: var(--forge-theme-text-high-inverse)">
+          <h2
+            class="forge-typography--display6"
+            slot="main-title"
+            style="color: var(--forge-landing-page-layout-header-color, #ffffff)">
             Hit the slopes this season
           </h2>
           <forge-button class="on-image" slot="action" variant="filled">

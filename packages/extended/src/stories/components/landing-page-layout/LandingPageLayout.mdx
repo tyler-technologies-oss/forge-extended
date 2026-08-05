@@ -107,6 +107,16 @@ When you use a background image, the default Forge button colors (typically indi
 
 The utility is scoped to buttons projected into the `action` slot — it does not affect buttons elsewhere on the page.
 
+### Text color
+
+The header title and secondary title render in white by default so the light-on-dark treatment holds across every theme. Override `--forge-landing-page-layout-header-color` on the host if you need a different color for a bespoke background treatment:
+
+```css
+forge-landing-page-layout {
+  --forge-landing-page-layout-header-color: var(--forge-theme-primary-container-low);
+}
+```
+
 ## Top and body-footer content
 
 Two additional slots span the full width of the body:
