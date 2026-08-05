@@ -21,6 +21,22 @@
     #{forge-spacing.variable(large)}
   );
   --_landing-page-layout-header-color: var(--forge-landing-page-layout-header-color, #{forge-color-palette.$white});
+  --_landing-page-layout-header-gradient-start: var(
+    --forge-landing-page-layout-header-gradient-start,
+    #{forge-color-palette.$blue-800}
+  );
+  --_landing-page-layout-header-gradient-end: var(
+    --forge-landing-page-layout-header-gradient-end,
+    #{forge-color-palette.$indigo-900}
+  );
+  --_landing-page-layout-header-overlay-start: var(
+    --forge-landing-page-layout-header-overlay-start,
+    #{rgba(forge-color-palette.$black, 0.75)}
+  );
+  --_landing-page-layout-header-overlay-end: var(
+    --forge-landing-page-layout-header-overlay-end,
+    #{rgba(forge-color-palette.$black, 0.55)}
+  );
 
   display: block;
   box-sizing: border-box;
@@ -65,7 +81,11 @@
 
 .header-background {
   position: absolute;
-  background: linear-gradient(270deg, #{forge-color-palette.$blue-800}, #{forge-color-palette.$indigo-900});
+  background: linear-gradient(
+    270deg,
+    var(--_landing-page-layout-header-gradient-start),
+    var(--_landing-page-layout-header-gradient-end)
+  );
   height: calc(100% + 75px + var(--_landing-page-layout-body-padding));
   width: 100%;
   pointer-events: none;
@@ -94,8 +114,8 @@
   inset: 0;
   background: linear-gradient(
     180deg,
-    rgba(forge-color-palette.$black, 0.75) 0%,
-    rgba(forge-color-palette.$black, 0.55) 100%
+    var(--_landing-page-layout-header-overlay-start) 0%,
+    var(--_landing-page-layout-header-overlay-end) 100%
   );
   pointer-events: none;
 }
