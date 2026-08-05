@@ -76,7 +76,9 @@ const meta = {
     return html`
       <forge-landing-page-layout>
         <span class="forge-typography--subheading7" slot="secondary-title">Overview</span>
-        <h2 class="forge-typography--display6" slot="main-title">Featured highlights above the fold</h2>
+        <h2 class="forge-typography--display6" slot="main-title" style="color: var(--forge-theme-text-high-inverse)">
+          Featured highlights above the fold
+        </h2>
         <forge-button slot="action" variant="filled">Get started</forge-button>
 
         <div class="demo-callout" slot="top">
