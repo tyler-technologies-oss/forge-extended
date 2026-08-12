@@ -115,11 +115,6 @@ const meta = {
       description: 'Toggle the top slot',
       table: { category: 'Slots' }
     },
-    showCenter: {
-      control: 'boolean',
-      description: 'Toggle the center column (only used when mode is "three")',
-      table: { category: 'Slots' }
-    },
     showBodyFooter: {
       control: 'boolean',
       description: 'Toggle the body-footer slot',
@@ -139,7 +134,6 @@ const meta = {
     imageUrlSmall: '',
     showAnnouncements: true,
     showTop: false,
-    showCenter: false,
     showBodyFooter: false,
     showFooter: true
   }
@@ -171,7 +165,7 @@ export const Demo: Story = {
           : nothing}
 
         <div class="demo-area demo-area-tall forge-typography--label1" slot="left">left</div>
-        ${args.showCenter || args.mode === 'three'
+        ${args.mode === 'three'
           ? html`<div class="demo-area demo-area-tall forge-typography--label1" slot="center">center</div>`
           : nothing}
         <div class="demo-area demo-area-tall forge-typography--label1" slot="right">right</div>
