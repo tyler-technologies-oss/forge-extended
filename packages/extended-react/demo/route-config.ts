@@ -9,6 +9,7 @@ import { UserProfileDemo } from './demos/user-profile/UserProfileDemo';
 import { AppLauncherDemo } from './demos/app-launcher/AppLauncherDemo';
 import { StructuredCardDemo } from './demos/structured-card/StructuredCardDemo';
 import { CountCardDemo } from './demos/count-card/CountCardDemo';
+import { LandingPageLayoutDemo } from './demos/landing-page-layout/LandingPageLayoutDemo';
 
 export interface IAppRoute extends RouteProps {
   path: string;
@@ -28,6 +29,7 @@ const routes: IAppRoute[] = [
       { path: '/app-layout', component: AppLayoutDemo, text: 'App Layout' },
       { path: '/busy-indicator', component: BusyIndicatorDemo, text: 'Busy Indicator' },
       { path: '/count-card', component: CountCardDemo, text: 'Count Card' },
+      { path: '/landing-page-layout', component: LandingPageLayoutDemo, text: 'Landing Page Layout' },
       { path: '/multi-select-header', component: MultiSelectHeaderDemo, text: 'Multi Select Header' },
       { path: '/quantity-field', component: QuantityFieldDemo, text: 'Quantity Field' },
       { path: '/responsive-toolbar', component: ResponsiveToolbarDemo, text: 'Responsive Toolbar' },

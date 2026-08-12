@@ -54,6 +54,13 @@ const routes: Routes = [
     path: 'structured-card',
     loadChildren: () =>
       import('../../views/components/structured-card/structured-card.module').then(m => m.StructuredCardModule)
+  },
+  {
+    path: 'landing-page-layout',
+    loadChildren: () =>
+      import('../../views/components/landing-page-layout/landing-page-layout.module').then(
+        m => m.LandingPageLayoutModule
+      )
   }
 ];
 
