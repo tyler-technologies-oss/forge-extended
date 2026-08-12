@@ -1,0 +1,101 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Migration/Landing Page Layout" />
+
+# Landing Page Layout Migration
+
+Migrating from the `forge-internal` `<forge-landing-page-layout>` to `@tylertech/forge-extended`.
+
+## Key Changes
+
+- **CSS custom states replace attribute selectors:** external styles targeting `forge-landing-page-layout[mode="…"]`, `[alignment="…"]`, or `[size="…"]` must move to `:state(mode-…)`, `:state(alignment-…)`, and `:state(size-…)`.
+- **Background image slots:** the `image-small` and `image-large` slots have been removed. Use the `image-url-small` and `image-url-large` attributes for responsive sources, or slot a single `<img>` / `<picture>` into the `image` slot for full control. A direct-child `<img>` without a `slot` attribute is auto-assigned to the `image` slot as a convenience.
+- **`on-image` utility class:** apply `class="on-image"` to a `forge-button` in the `action` slot to make it legible over a background image (text/outlined buttons render white; filled buttons swap to a white background with a dark label).
+- **CSS parts renamed:**
+  - `header-background-container` → `header-background`
+  - `header-welcome-container` → `header-welcome`
+  - `header-actions-container` → `header-actions`
+  - `body-container` → `body`
+  - `body-topcontainer` → `body-top`
+  - `body-left-container` → `body-left`
+  - `body-center-container` → `body-center`
+  - `body-right-container` → `body-right`
+  - `body-footer-container` → `body-footer`
+  - `footer-container` → `footer`
+- **New states available on the host:** `:state(empty-announcements)`, `:state(body-only)`, `:state(has-image)`, `:state(mode-two-third | mode-equal | mode-three | mode-single)`, `:state(alignment-center | alignment-left)`, and `:state(size-normal | size-wide)`.
+
+## Visual changes
+
+- **Header gradient:** the default header background is a fixed blue/indigo gradient rather than one derived from the current theme's tertiary and primary colors. Override with the new `--forge-landing-page-layout-header-gradient-start` and `--forge-landing-page-layout-header-gradient-end` CSS custom properties to bring the theme-derived gradient (or any other pair of colors) back.
+- **Header text color:** header title and secondary title text renders in white by default (no longer derived from a theme token) so the light-on-dark treatment holds in every theme, including dark mode. Override with the new `--forge-landing-page-layout-header-color` CSS custom property when a different color is needed.
+- **Background image overlay:** when a background image is present, a darkening gradient overlay (denser at the top, lighter at the bottom) is layered over it instead of dimming the image itself. Header content contrast is preserved without washing out image detail. Tune the top and bottom colors with the new `--forge-landing-page-layout-header-overlay-start` and `--forge-landing-page-layout-header-overlay-end` CSS custom properties.
+
+## Before / After
+
+### Selecting a variant from outside the component
+
+```css
+/* Before — attribute selectors on the host */
+forge-landing-page-layout[mode='three'] { … }
+forge-landing-page-layout[alignment='left'] { … }
+forge-landing-page-layout[size='wide'] { … }
+```
+
+```css
+/* After — custom state selectors on the host */
+forge-landing-page-layout:state(mode-three) { … }
+forge-landing-page-layout:state(alignment-left) { … }
+forge-landing-page-layout:state(size-wide) { … }
+```
+
+### Providing a responsive background image
+
+```html
+<!-- Before — separate slots for small/large images -->
+<forge-landing-page-layout>
+  <img slot="image-small" src="/hero-small.jpg" alt="" />
+  <img slot="image-large" src="/hero-large.jpg" alt="" />
+</forge-landing-page-layout>
+```
+
+```html
+<!-- After — attributes drive an internal <picture> element -->
+<forge-landing-page-layout image-url-small="/hero-small.jpg" image-url-large="/hero-large.jpg">
+  <!-- header, body, and footer content -->
+</forge-landing-page-layout>
+
+<!-- Or, slot in a custom picture element when you need full control -->
+<forge-landing-page-layout>
+  <picture slot="image">
+    <source srcset="/hero-small.avif" media="(max-width: 768px)" />
+    <source srcset="/hero-large.avif" media="(min-width: 769px)" />
+    <img src="/hero-large.jpg" alt="" />
+  </picture>
+</forge-landing-page-layout>
+```
+
+### Buttons over a background image
+
+```html
+<!-- After — opt into the built-in on-image treatment -->
+<forge-landing-page-layout image-url-large="/hero.jpg" image-url-small="/hero.jpg">
+  <forge-button class="on-image" slot="action" variant="filled">Explore</forge-button>
+  <forge-button class="on-image" slot="action" variant="outlined">Buy a pass</forge-button>
+</forge-landing-page-layout>
+```
+
+### Targeting parts
+
+```css
+/* Before */
+forge-landing-page-layout::part(body-container) { … }
+forge-landing-page-layout::part(footer-container) { … }
+```
+
+```css
+/* After */
+forge-landing-page-layout::part(body) { … }
+forge-landing-page-layout::part(footer) { … }
+```
+
+See the [Landing Page Layout docs](?path=/docs/components-landing-page-layout--docs) for the full API.

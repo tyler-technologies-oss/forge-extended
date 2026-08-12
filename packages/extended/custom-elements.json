@@ -190,6 +190,308 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/app-layout/app-layout.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AppLayoutComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-app-layout'"
+        },
+        {
+          "kind": "variable",
+          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+          "type": {
+            "text": "string"
+          },
+          "default": "'data-forge-app-layout-close'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AppLayoutComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the width of the navigation drawer (default: 320px)",
+              "name": "--forge-app-layout-drawer-width"
+            },
+            {
+              "description": "Controls the width of the navigation dialog on small screens (default: 320px)",
+              "name": "--forge-app-layout-dialog-width"
+            },
+            {
+              "description": "Controls the z-index of the mini drawer when using hover mode (default: 3)",
+              "name": "--forge-app-layout-mini-drawer-z-index"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Default slot. Content without a slot attribute is placed in the body area.",
+              "name": ""
+            },
+            {
+              "description": "Explicit body slot. Alternative to using the default slot.",
+              "name": "body"
+            },
+            {
+              "description": "Places content in the header",
+              "name": "header"
+            },
+            {
+              "description": "Places content in the footer",
+              "name": "footer"
+            },
+            {
+              "description": "Places content to the left of all content",
+              "name": "left"
+            },
+            {
+              "description": "Places content to the right of all content",
+              "name": "right"
+            },
+            {
+              "description": "Places content in the header of the body",
+              "name": "body-header"
+            },
+            {
+              "description": "Places content in the footer of the body",
+              "name": "body-footer"
+            },
+            {
+              "description": "Places content to the left of the body content",
+              "name": "body-left"
+            },
+            {
+              "description": "Places content to the right of the body content",
+              "name": "body-right"
+            },
+            {
+              "description": "Responsive navigation content that renders in left slot (small screens) or body-left slot (large screens)",
+              "name": "navigation"
+            },
+            {
+              "description": "Places content in the app bar logo slot",
+              "name": "app-bar-logo"
+            },
+            {
+              "description": "Places content in the app bar start slot",
+              "name": "app-bar-start"
+            },
+            {
+              "description": "Places content in the app bar center slot",
+              "name": "app-bar-center"
+            },
+            {
+              "description": "Places content in the app bar end slot",
+              "name": "app-bar-end"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "appTitle",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The title text to display in the app bar",
+              "attribute": "app-title"
+            },
+            {
+              "kind": "field",
+              "name": "appTitleHref",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The URL that the app bar title links to",
+              "attribute": "app-title-href"
+            },
+            {
+              "kind": "field",
+              "name": "breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "960",
+              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
+              "attribute": "breakpoint"
+            },
+            {
+              "kind": "field",
+              "name": "useMiniDrawer",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
+              "attribute": "use-mini-drawer"
+            },
+            {
+              "kind": "field",
+              "name": "miniHover",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the mini drawer should expand on hover (default: false)",
+              "attribute": "mini-hover"
+            },
+            {
+              "kind": "field",
+              "name": "isLargeScreen",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "description": "Whether the current screen width is above the breakpoint (read-only)"
+            },
+            {
+              "kind": "method",
+              "name": "closeDrawer",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Closes the navigation drawer. Only has effect on small screens where the drawer is modal."
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<AppLayoutBreakpointChangeEventData>"
+              },
+              "description": "Fired when the screen size crosses the breakpoint threshold",
+              "name": "forge-app-layout-breakpoint-change"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<AppLayoutDrawerChangeEventData>"
+              },
+              "description": "Fired when the navigation drawer opens or closes",
+              "name": "forge-app-layout-drawer-change"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "app-title",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The title text to display in the app bar",
+              "fieldName": "appTitle"
+            },
+            {
+              "name": "app-title-href",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The URL that the app bar title links to",
+              "fieldName": "appTitleHref"
+            },
+            {
+              "name": "breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "default": "960",
+              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
+              "fieldName": "breakpoint"
+            },
+            {
+              "name": "use-mini-drawer",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
+              "fieldName": "useMiniDrawer"
+            },
+            {
+              "name": "mini-hover",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the mini drawer should expand on hover (default: false)",
+              "fieldName": "miniHover"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-app-layout",
+          "customElement": true,
+          "summary": "A responsive application layout component that provides an app bar with a navigation drawer.\nOn small screens, the navigation appears in a modal dialog. On large screens, it appears in a side drawer.",
+          "states": [
+            {
+              "name": "small",
+              "description": "Screen width is below 960px, navigation appears in modal drawer"
+            },
+            {
+              "name": "large",
+              "description": "Screen width is 960px or above, navigation appears in body-left drawer"
+            },
+            {
+              "name": "drawer-open",
+              "description": "The navigation drawer is currently open"
+            },
+            {
+              "name": "drawer-closed",
+              "description": "The navigation drawer is currently closed"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLayoutComponentTagName",
+          "declaration": {
+            "name": "AppLayoutComponentTagName",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+          "declaration": {
+            "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLayoutComponent",
+          "declaration": {
+            "name": "AppLayoutComponent",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLayoutComponent",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "declarations": [
         {
@@ -696,431 +998,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/app-layout/app-layout.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "AppLayoutComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-app-layout'"
-        },
-        {
-          "kind": "variable",
-          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
-          "type": {
-            "text": "string"
-          },
-          "default": "'data-forge-app-layout-close'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AppLayoutComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the width of the navigation drawer (default: 320px)",
-              "name": "--forge-app-layout-drawer-width"
-            },
-            {
-              "description": "Controls the width of the navigation dialog on small screens (default: 320px)",
-              "name": "--forge-app-layout-dialog-width"
-            },
-            {
-              "description": "Controls the z-index of the mini drawer when using hover mode (default: 3)",
-              "name": "--forge-app-layout-mini-drawer-z-index"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Default slot. Content without a slot attribute is placed in the body area.",
-              "name": ""
-            },
-            {
-              "description": "Explicit body slot. Alternative to using the default slot.",
-              "name": "body"
-            },
-            {
-              "description": "Places content in the header",
-              "name": "header"
-            },
-            {
-              "description": "Places content in the footer",
-              "name": "footer"
-            },
-            {
-              "description": "Places content to the left of all content",
-              "name": "left"
-            },
-            {
-              "description": "Places content to the right of all content",
-              "name": "right"
-            },
-            {
-              "description": "Places content in the header of the body",
-              "name": "body-header"
-            },
-            {
-              "description": "Places content in the footer of the body",
-              "name": "body-footer"
-            },
-            {
-              "description": "Places content to the left of the body content",
-              "name": "body-left"
-            },
-            {
-              "description": "Places content to the right of the body content",
-              "name": "body-right"
-            },
-            {
-              "description": "Responsive navigation content that renders in left slot (small screens) or body-left slot (large screens)",
-              "name": "navigation"
-            },
-            {
-              "description": "Places content in the app bar logo slot",
-              "name": "app-bar-logo"
-            },
-            {
-              "description": "Places content in the app bar start slot",
-              "name": "app-bar-start"
-            },
-            {
-              "description": "Places content in the app bar center slot",
-              "name": "app-bar-center"
-            },
-            {
-              "description": "Places content in the app bar end slot",
-              "name": "app-bar-end"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "appTitle",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The title text to display in the app bar",
-              "attribute": "app-title"
-            },
-            {
-              "kind": "field",
-              "name": "appTitleHref",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The URL that the app bar title links to",
-              "attribute": "app-title-href"
-            },
-            {
-              "kind": "field",
-              "name": "breakpoint",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "960",
-              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
-              "attribute": "breakpoint"
-            },
-            {
-              "kind": "field",
-              "name": "useMiniDrawer",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
-              "attribute": "use-mini-drawer"
-            },
-            {
-              "kind": "field",
-              "name": "miniHover",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Whether the mini drawer should expand on hover (default: false)",
-              "attribute": "mini-hover"
-            },
-            {
-              "kind": "field",
-              "name": "isLargeScreen",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "readonly": true,
-              "description": "Whether the current screen width is above the breakpoint (read-only)"
-            },
-            {
-              "kind": "method",
-              "name": "closeDrawer",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "description": "Closes the navigation drawer. Only has effect on small screens where the drawer is modal."
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<AppLayoutBreakpointChangeEventData>"
-              },
-              "description": "Fired when the screen size crosses the breakpoint threshold",
-              "name": "forge-app-layout-breakpoint-change"
-            },
-            {
-              "type": {
-                "text": "CustomEvent<AppLayoutDrawerChangeEventData>"
-              },
-              "description": "Fired when the navigation drawer opens or closes",
-              "name": "forge-app-layout-drawer-change"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "app-title",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The title text to display in the app bar",
-              "fieldName": "appTitle"
-            },
-            {
-              "name": "app-title-href",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The URL that the app bar title links to",
-              "fieldName": "appTitleHref"
-            },
-            {
-              "name": "breakpoint",
-              "type": {
-                "text": "number"
-              },
-              "default": "960",
-              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
-              "fieldName": "breakpoint"
-            },
-            {
-              "name": "use-mini-drawer",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
-              "fieldName": "useMiniDrawer"
-            },
-            {
-              "name": "mini-hover",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Whether the mini drawer should expand on hover (default: false)",
-              "fieldName": "miniHover"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-app-layout",
-          "customElement": true,
-          "summary": "A responsive application layout component that provides an app bar with a navigation drawer.\nOn small screens, the navigation appears in a modal dialog. On large screens, it appears in a side drawer.",
-          "states": [
-            {
-              "name": "small",
-              "description": "Screen width is below 960px, navigation appears in modal drawer"
-            },
-            {
-              "name": "large",
-              "description": "Screen width is 960px or above, navigation appears in body-left drawer"
-            },
-            {
-              "name": "drawer-open",
-              "description": "The navigation drawer is currently open"
-            },
-            {
-              "name": "drawer-closed",
-              "description": "The navigation drawer is currently closed"
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AppLayoutComponentTagName",
-          "declaration": {
-            "name": "AppLayoutComponentTagName",
-            "module": "src/lib/app-layout/app-layout.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
-          "declaration": {
-            "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
-            "module": "src/lib/app-layout/app-layout.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AppLayoutComponent",
-          "declaration": {
-            "name": "AppLayoutComponent",
-            "module": "src/lib/app-layout/app-layout.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "AppLayoutComponent",
-            "module": "src/lib/app-layout/app-layout.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ContentScaffoldComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-content-scaffold'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ContentScaffoldComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the height of the header section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-header-height"
-            },
-            {
-              "description": "Controls the background color of the header section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-header-background"
-            },
-            {
-              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-header-min-height"
-            },
-            {
-              "description": "Controls the height of the body section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-body-height"
-            },
-            {
-              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
-              "name": "--forge-content-scaffold-body-padding-inline"
-            },
-            {
-              "description": "Controls the height of the footer section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-footer-height"
-            },
-            {
-              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-footer-background"
-            },
-            {
-              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-footer-min-height"
-            },
-            {
-              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
-              "name": "--forge-content-scaffold-footer-full-padding"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
-              "name": "header"
-            },
-            {
-              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
-              "name": "before-header-start"
-            },
-            {
-              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-start"
-            },
-            {
-              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-end"
-            },
-            {
-              "description": "The main body content that expands to fill available space.",
-              "name": "body"
-            },
-            {
-              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
-              "name": "footer"
-            },
-            {
-              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-start"
-            },
-            {
-              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-end"
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-content-scaffold",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponentTagName",
-          "declaration": {
-            "name": "ContentScaffoldComponentTagName",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponent",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/count-card/count-card.ts",
       "declarations": [
         {
@@ -1311,6 +1188,500 @@
           "declaration": {
             "name": "CountCardComponent",
             "module": "src/lib/count-card/count-card.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ContentScaffoldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-content-scaffold'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ContentScaffoldComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the header section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-header-height"
+            },
+            {
+              "description": "Controls the background color of the header section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-header-background"
+            },
+            {
+              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-header-min-height"
+            },
+            {
+              "description": "Controls the height of the body section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-body-height"
+            },
+            {
+              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-body-padding-inline"
+            },
+            {
+              "description": "Controls the height of the footer section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-footer-height"
+            },
+            {
+              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-footer-background"
+            },
+            {
+              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-footer-min-height"
+            },
+            {
+              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
+              "name": "--forge-content-scaffold-footer-full-padding"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
+              "name": "header"
+            },
+            {
+              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
+              "name": "before-header-start"
+            },
+            {
+              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-start"
+            },
+            {
+              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-end"
+            },
+            {
+              "description": "The main body content that expands to fill available space.",
+              "name": "body"
+            },
+            {
+              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
+              "name": "footer"
+            },
+            {
+              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-start"
+            },
+            {
+              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-end"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-content-scaffold",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponentTagName",
+          "declaration": {
+            "name": "ContentScaffoldComponentTagName",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponent",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/landing-page-layout/landing-page-layout.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "LandingPageLayoutComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-landing-page-layout'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "LandingPageLayoutComponent",
+          "cssProperties": [
+            {
+              "description": "Maximum width of the content area when `size` is `normal`. Defaults to `1040px`.",
+              "name": "--forge-landing-page-layout-content-width"
+            },
+            {
+              "description": "Maximum width of the content area when `size` is `wide`. Defaults to `1280px`.",
+              "name": "--forge-landing-page-layout-content-width-wide"
+            },
+            {
+              "description": "Padding around the body content area. Defaults to `24px`.",
+              "name": "--forge-landing-page-layout-body-padding"
+            },
+            {
+              "description": "Padding around the body on mobile screens. Defaults to `8px`.",
+              "name": "--forge-landing-page-layout-body-padding-mobile"
+            },
+            {
+              "description": "Inline padding of the footer. Defaults to `70px`.",
+              "name": "--forge-landing-page-layout-footer-padding"
+            },
+            {
+              "description": "Height of the root container. Defaults to `100%`.",
+              "name": "--forge-landing-page-layout-root-height"
+            },
+            {
+              "description": "Gap between action items in the header on large screens.",
+              "name": "--forge-landing-page-layout-actions-gap"
+            },
+            {
+              "description": "Gap between action items in the header on mobile screens.",
+              "name": "--forge-landing-page-layout-actions-gap-mobile"
+            },
+            {
+              "description": "Color of the header title and secondary title text. Defaults to white so the light-on-dark header treatment holds across themes.",
+              "name": "--forge-landing-page-layout-header-color"
+            },
+            {
+              "description": "Start color of the header background gradient. Defaults to Forge blue-800.",
+              "name": "--forge-landing-page-layout-header-gradient-start"
+            },
+            {
+              "description": "End color of the header background gradient. Defaults to Forge indigo-900.",
+              "name": "--forge-landing-page-layout-header-gradient-end"
+            },
+            {
+              "description": "Top color of the darkening overlay layered over the header background image. Defaults to Forge black at 75% opacity.",
+              "name": "--forge-landing-page-layout-header-overlay-start"
+            },
+            {
+              "description": "Bottom color of the darkening overlay layered over the header background image. Defaults to Forge black at 55% opacity.",
+              "name": "--forge-landing-page-layout-header-overlay-end"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The outermost container element.",
+              "name": "root"
+            },
+            {
+              "description": "The main wrapper that holds the header and body.",
+              "name": "container"
+            },
+            {
+              "description": "The header region.",
+              "name": "header"
+            },
+            {
+              "description": "The header background image container.",
+              "name": "header-background"
+            },
+            {
+              "description": "The `<picture>` element used to render the responsive background image.",
+              "name": "header-background-picture"
+            },
+            {
+              "description": "The header body containing the title and announcements.",
+              "name": "header-body"
+            },
+            {
+              "description": "The left side of the header body (title and actions).",
+              "name": "header-body-left"
+            },
+            {
+              "description": "The right side of the header body (announcements).",
+              "name": "header-body-right"
+            },
+            {
+              "description": "The welcome title container.",
+              "name": "header-welcome"
+            },
+            {
+              "description": "The container that holds the action slot.",
+              "name": "header-actions"
+            },
+            {
+              "description": "The main body container.",
+              "name": "body"
+            },
+            {
+              "description": "The top area of the body.",
+              "name": "body-top"
+            },
+            {
+              "description": "The left column of the body.",
+              "name": "body-left"
+            },
+            {
+              "description": "The center column of the body.",
+              "name": "body-center"
+            },
+            {
+              "description": "The right column of the body.",
+              "name": "body-right"
+            },
+            {
+              "description": "The footer of the body.",
+              "name": "body-footer"
+            },
+            {
+              "description": "The page footer region.",
+              "name": "footer"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Slot for a custom background image element (typically an `<img>` or `<picture>`).",
+              "name": "image"
+            },
+            {
+              "description": "Small subheading text displayed above the main title in the header.",
+              "name": "secondary-title"
+            },
+            {
+              "description": "The main heading text of the header.",
+              "name": "main-title"
+            },
+            {
+              "description": "One or more calls to action displayed below the title in the header. Apply the `on-image` class to a slotted `forge-button` to make it legible over a background image (text/outlined buttons render white; filled buttons swap to a white background with a dark label).",
+              "name": "action"
+            },
+            {
+              "description": "Content displayed to the right of the header body (typically announcements or informational content).",
+              "name": "announcements"
+            },
+            {
+              "description": "Content displayed above the main body columns, spanning the full width.",
+              "name": "top"
+            },
+            {
+              "description": "Content for the left column of the body.",
+              "name": "left"
+            },
+            {
+              "description": "Content for the middle column (only shown when `mode` is `three`).",
+              "name": "center"
+            },
+            {
+              "description": "Content for the right column of the body.",
+              "name": "right"
+            },
+            {
+              "description": "Content displayed at the bottom of the body, spanning the full width.",
+              "name": "body-footer"
+            },
+            {
+              "description": "Content for the page footer (typically dark themed).",
+              "name": "footer"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "mode",
+              "type": {
+                "text": "LandingPageLayoutMode"
+              },
+              "privacy": "public",
+              "default": "'two-third'",
+              "description": "Controls the body column layout: `two-third` (default), `equal`, `three`, or `single`.",
+              "attribute": "mode"
+            },
+            {
+              "kind": "field",
+              "name": "alignment",
+              "type": {
+                "text": "LandingPageLayoutAlignment"
+              },
+              "privacy": "public",
+              "default": "'center'",
+              "description": "Controls the horizontal alignment of the header content: `center` (default) or `left`.",
+              "attribute": "alignment"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "LandingPageLayoutSize"
+              },
+              "privacy": "public",
+              "default": "'normal'",
+              "description": "Controls the maximum width of the content area: `normal` (default) or `wide`.",
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "imageUrlLarge",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "URL of the background image to use on large screens (>= 769px).",
+              "attribute": "image-url-large"
+            },
+            {
+              "kind": "field",
+              "name": "imageUrlSmall",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "URL of the background image to use on small screens (<= 768px).",
+              "attribute": "image-url-small"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "mode",
+              "type": {
+                "text": "LandingPageLayoutMode"
+              },
+              "default": "'two-third'",
+              "description": "Controls the body column layout: `two-third` (default), `equal`, `three`, or `single`.",
+              "fieldName": "mode"
+            },
+            {
+              "name": "alignment",
+              "type": {
+                "text": "LandingPageLayoutAlignment"
+              },
+              "default": "'center'",
+              "description": "Controls the horizontal alignment of the header content: `center` (default) or `left`.",
+              "fieldName": "alignment"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "LandingPageLayoutSize"
+              },
+              "default": "'normal'",
+              "description": "Controls the maximum width of the content area: `normal` (default) or `wide`.",
+              "fieldName": "size"
+            },
+            {
+              "name": "image-url-large",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "URL of the background image to use on large screens (>= 769px).",
+              "fieldName": "imageUrlLarge"
+            },
+            {
+              "name": "image-url-small",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "URL of the background image to use on small screens (<= 768px).",
+              "fieldName": "imageUrlSmall"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-landing-page-layout",
+          "customElement": true,
+          "summary": "A responsive structural layout utility for building citizen-facing application landing pages consistent with Tyler patterns.",
+          "states": [
+            {
+              "name": "empty-announcements",
+              "description": "The `announcements` slot has no content and the header content is centered across the full width."
+            },
+            {
+              "name": "body-only",
+              "description": "No content is projected into the `top` slot, so the body area sits flush against the header."
+            },
+            {
+              "name": "has-image",
+              "description": "A background image is present (via `image-url-large`/`image-url-small` or the `image` slot). A darkening overlay is applied over the image to improve header text contrast."
+            },
+            {
+              "name": "mode-two-third",
+              "description": "The `mode` property is `two-third` (default)."
+            },
+            {
+              "name": "mode-equal",
+              "description": "The `mode` property is `equal`."
+            },
+            {
+              "name": "mode-three",
+              "description": "The `mode` property is `three`."
+            },
+            {
+              "name": "mode-single",
+              "description": "The `mode` property is `single`."
+            },
+            {
+              "name": "alignment-center",
+              "description": "The `alignment` property is `center` (default)."
+            },
+            {
+              "name": "alignment-left",
+              "description": "The `alignment` property is `left`."
+            },
+            {
+              "name": "size-normal",
+              "description": "The `size` property is `normal` (default)."
+            },
+            {
+              "name": "size-wide",
+              "description": "The `size` property is `wide`."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "LandingPageLayoutComponentTagName",
+          "declaration": {
+            "name": "LandingPageLayoutComponentTagName",
+            "module": "src/lib/landing-page-layout/landing-page-layout.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "LandingPageLayoutComponent",
+          "declaration": {
+            "name": "LandingPageLayoutComponent",
+            "module": "src/lib/landing-page-layout/landing-page-layout.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "LandingPageLayoutComponent",
+            "module": "src/lib/landing-page-layout/landing-page-layout.ts"
           }
         }
       ]
@@ -2537,7 +2908,7 @@
       ]
     }
   ],
-  "branchName": "feat",
+  "branchName": "landing-page-layout-component",
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",
@@ -2550,6 +2921,22 @@
     "AppLauncherComponent": {
       "path": "src/lib/app-launcher/app-launcher.ts",
       "lineNumber": 67
+    },
+    "AppLayoutBreakpoint": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 30
+    },
+    "AppLayoutBreakpointChangeEventData": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 32
+    },
+    "AppLayoutDrawerChangeEventData": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 36
+    },
+    "AppLayoutComponent": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 92
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -2583,26 +2970,6 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
-    "AppLayoutBreakpoint": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 30
-    },
-    "AppLayoutBreakpointChangeEventData": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 32
-    },
-    "AppLayoutDrawerChangeEventData": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 36
-    },
-    "AppLayoutComponent": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 92
-    },
-    "ContentScaffoldComponent": {
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "lineNumber": 37
-    },
     "CountCardTheme": {
       "path": "src/lib/count-card/count-card.ts",
       "lineNumber": 16
@@ -2610,6 +2977,26 @@
     "CountCardComponent": {
       "path": "src/lib/count-card/count-card.ts",
       "lineNumber": 71
+    },
+    "ContentScaffoldComponent": {
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "lineNumber": 37
+    },
+    "LandingPageLayoutMode": {
+      "path": "src/lib/landing-page-layout/landing-page-layout.ts",
+      "lineNumber": 13
+    },
+    "LandingPageLayoutAlignment": {
+      "path": "src/lib/landing-page-layout/landing-page-layout.ts",
+      "lineNumber": 14
+    },
+    "LandingPageLayoutSize": {
+      "path": "src/lib/landing-page-layout/landing-page-layout.ts",
+      "lineNumber": 15
+    },
+    "LandingPageLayoutComponent": {
+      "path": "src/lib/landing-page-layout/landing-page-layout.ts",
+      "lineNumber": 91
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",

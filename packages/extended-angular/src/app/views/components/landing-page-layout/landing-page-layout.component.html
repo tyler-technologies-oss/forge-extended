@@ -1,0 +1,18 @@
+<app-demo-card headerText="Landing Page Layout" [fullWidth]="true">
+  <forge-landing-page-layout mode="two-third" alignment="center" size="normal">
+    <span slot="secondary-title">Welcome</span>
+    <h2 slot="main-title">Get started with your services</h2>
+    <forge-button slot="action" variant="filled">Primary action</forge-button>
+    <forge-button slot="action" variant="outlined">Secondary action</forge-button>
+
+    <forge-card slot="announcements">
+      <h3>Announcements</h3>
+      <p>Have any events or important updates? Highlight them here.</p>
+    </forge-card>
+
+    <div slot="left">Popular services</div>
+    <div slot="right">Recent activity</div>
+
+    <div slot="footer">© 2026 City Services</div>
+  </forge-landing-page-layout>
+</app-demo-card>

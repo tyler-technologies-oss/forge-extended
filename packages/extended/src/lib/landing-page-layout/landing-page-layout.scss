@@ -1,0 +1,519 @@
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/core/styles/elevation' as forge-elevation;
+@use '@tylertech/forge/sass/core/styles/typography' as forge-typography;
+@use '@tylertech/forge/sass/core/styles/tokens/color-palette' as forge-color-palette;
+
+//
+// Host
+//
+
+:host {
+  --_landing-page-layout-content-width: var(--forge-landing-page-layout-content-width, 1040px);
+  --_landing-page-layout-content-width-wide: var(--forge-landing-page-layout-content-width-wide, 1280px);
+  --_landing-page-layout-body-padding: var(--forge-landing-page-layout-body-padding, 24px);
+  --_landing-page-layout-body-padding-mobile: var(--forge-landing-page-layout-body-padding-mobile, 8px);
+  --_landing-page-layout-footer-padding: var(--forge-landing-page-layout-footer-padding, 70px);
+  --_landing-page-layout-root-height: var(--forge-landing-page-layout-root-height, 100%);
+  --_landing-page-layout-actions-gap: var(--forge-landing-page-layout-actions-gap, #{forge-spacing.variable(medium)});
+  --_landing-page-layout-actions-gap-mobile: var(
+    --forge-landing-page-layout-actions-gap-mobile,
+    #{forge-spacing.variable(large)}
+  );
+  --_landing-page-layout-header-color: var(--forge-landing-page-layout-header-color, #{forge-color-palette.$white});
+  --_landing-page-layout-header-gradient-start: var(
+    --forge-landing-page-layout-header-gradient-start,
+    #{forge-color-palette.$blue-800}
+  );
+  --_landing-page-layout-header-gradient-end: var(
+    --forge-landing-page-layout-header-gradient-end,
+    #{forge-color-palette.$indigo-900}
+  );
+  --_landing-page-layout-header-overlay-start: var(
+    --forge-landing-page-layout-header-overlay-start,
+    #{rgba(forge-color-palette.$black, 0.75)}
+  );
+  --_landing-page-layout-header-overlay-end: var(
+    --forge-landing-page-layout-header-overlay-end,
+    #{rgba(forge-color-palette.$black, 0.55)}
+  );
+
+  display: block;
+  box-sizing: border-box;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+//
+// Root
+//
+
+.root {
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: column;
+  height: var(--_landing-page-layout-root-height);
+}
+
+.container {
+  flex: 1 0 auto;
+}
+
+//
+// Footer
+//
+
+.footer {
+  background-color: #{forge-theme.variable(surface-inverse)};
+  color: #{forge-theme.variable(on-surface-inverse)};
+  padding: 0 var(--_landing-page-layout-footer-padding);
+}
+
+//
+// Header
+//
+
+.header {
+  position: relative;
+}
+
+.header-background {
+  position: absolute;
+  background: linear-gradient(
+    270deg,
+    var(--_landing-page-layout-header-gradient-start),
+    var(--_landing-page-layout-header-gradient-end)
+  );
+  height: calc(100% + 75px + var(--_landing-page-layout-body-padding));
+  width: 100%;
+  pointer-events: none;
+  min-height: 333px;
+
+  ::slotted([slot='image']) {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .header-background-picture img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+// Darkening overlay applied when a background image is present. Improves
+// text contrast against arbitrary image content without dimming the default
+// gradient treatment. Uses linear-gradient of Forge black at varying alphas
+// so the top of the header is more legible than the bottom.
+:host(:state(has-image)) .header-background::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    var(--_landing-page-layout-header-overlay-start) 0%,
+    var(--_landing-page-layout-header-overlay-end) 100%
+  );
+  pointer-events: none;
+}
+
+.header-body {
+  margin: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: var(--_landing-page-layout-body-padding);
+  align-items: center;
+  padding: var(--_landing-page-layout-body-padding);
+  padding-top: calc(var(--_landing-page-layout-body-padding) * 2);
+}
+
+.header-body-left {
+  @include forge-elevation.z-index(header);
+
+  margin-inline-start: calc(var(--_landing-page-layout-body-padding) * 2);
+  grid-column: 1 / span 4;
+  color: var(--_landing-page-layout-header-color);
+}
+
+.header-body-right {
+  @include forge-elevation.z-index(header);
+
+  height: 100%;
+  grid-column: 5 / span 2;
+}
+
+.header-welcome {
+  display: block;
+  margin: 0 0 #{forge-spacing.variable(large)};
+
+  ::slotted(*) {
+    display: block;
+    margin: 0;
+    color: var(--_landing-page-layout-header-color);
+  }
+
+  ::slotted([slot='secondary-title']) {
+    color: var(--_landing-page-layout-header-color);
+    @include forge-typography.style(subheading7);
+  }
+
+  ::slotted([slot='main-title']) {
+    margin-block-start: #{forge-spacing.variable(medium)};
+    color: var(--_landing-page-layout-header-color);
+    @include forge-typography.style(display6);
+  }
+}
+
+.header-actions {
+  display: inline-flex;
+
+  ::slotted(:not(:last-child)) {
+    margin-inline-end: var(--_landing-page-layout-actions-gap);
+  }
+
+  // Opt-in utility class for making forge-button legible over a background image.
+  // Applied by developers via `class="on-image"` on the slotted forge-button.
+  // Overrides button theme tokens so text/outlined buttons render white, and filled
+  // buttons swap to a white background with a dark label.
+  ::slotted(.on-image) {
+    --forge-button-primary-color: var(--_landing-page-layout-header-color);
+    --forge-button-filled-background: #{forge-color-palette.$white};
+    --forge-button-filled-color: #{forge-color-palette.$black};
+  }
+}
+
+//
+// Body
+//
+
+.body {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+  gap: var(--_landing-page-layout-body-padding);
+  padding: 0 var(--_landing-page-layout-body-padding);
+  margin: auto;
+  margin-block-start: #{forge-spacing.variable(large)};
+  position: relative;
+
+  > *,
+  ::slotted(*),
+  slot > * {
+    @include forge-elevation.z-index(header);
+  }
+}
+
+.body-top {
+  grid-row: 1;
+  grid-column: 1 / span 6;
+}
+
+.body-left,
+.body-center,
+.body-right {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--_landing-page-layout-body-padding);
+  height: fit-content;
+}
+
+.body-footer {
+  grid-column: 1 / span 6;
+}
+
+//
+// Width variants
+//
+
+:host(:not(:state(size-wide))) {
+  .header-body,
+  .body {
+    max-width: var(--_landing-page-layout-content-width);
+  }
+}
+
+:host(:state(size-wide)) {
+  .header-body,
+  .body {
+    max-width: var(--_landing-page-layout-content-width-wide);
+  }
+}
+
+//
+// Alignment variants
+//
+
+:host(:state(alignment-left)) {
+  .header-body,
+  .body {
+    margin-inline: unset;
+  }
+
+  .header-body-left {
+    text-align: left;
+  }
+}
+
+//
+// Mode variants
+//
+
+:host(:state(mode-single)) {
+  .body-left {
+    grid-row: 2;
+    grid-column: 1 / span 6;
+  }
+
+  .body-right,
+  .body-center {
+    display: none;
+    grid-column: none;
+  }
+}
+
+:host(:state(mode-two-third)) {
+  .body-left {
+    grid-row: 2;
+    grid-column: 1 / span 4;
+  }
+
+  .body-right {
+    grid-row: 2;
+    grid-column: 5 / span 2;
+  }
+
+  .body-center {
+    display: none;
+    grid-column: none;
+  }
+}
+
+:host(:state(mode-equal)) {
+  .body-left {
+    grid-row: 2;
+    grid-column: 1 / span 3;
+  }
+
+  .body-right {
+    grid-row: 2;
+    grid-column: 4 / span 3;
+  }
+
+  .body-center {
+    display: none;
+    grid-column: none;
+  }
+}
+
+:host(:state(mode-three)) {
+  .body-left {
+    grid-row: 2;
+    grid-column: 1 / span 2;
+  }
+
+  .body-center {
+    grid-row: 2;
+    grid-column: 3 / span 2;
+  }
+
+  .body-right {
+    grid-row: 2;
+    grid-column: 5 / span 2;
+  }
+}
+
+//
+// Empty announcements alignment
+//
+
+:host(:state(empty-announcements)) {
+  .header-body-left {
+    text-align: center;
+    grid-column: 1 / span 6;
+  }
+
+  .header-body-right {
+    display: none;
+  }
+}
+
+:host(:state(alignment-left):state(empty-announcements)) {
+  .header-body-left {
+    text-align: left;
+  }
+}
+
+//
+// Body-only (no top content)
+//
+
+:host(:state(body-only)) {
+  .body {
+    margin-block-start: 0;
+  }
+
+  .body-top {
+    display: none;
+  }
+
+  .body-left,
+  .body-center,
+  .body-right {
+    grid-row: 1;
+  }
+}
+
+//
+// Tablet breakpoint
+//
+
+@media (max-width: 900px) {
+  .header-body {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .header-body-left {
+    margin-inline-start: var(--_landing-page-layout-body-padding);
+    grid-column: 1 / span 2;
+  }
+
+  .header-body-right {
+    grid-column: 3 / span 2;
+  }
+
+  .body {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+
+  .body-footer {
+    grid-column: 1 / span 4;
+  }
+
+  :host(:state(empty-announcements)) {
+    .header-body-left {
+      grid-column: 1 / span 4;
+    }
+  }
+
+  :host(:state(mode-two-third)),
+  :host(:state(mode-equal)) {
+    .body-top {
+      grid-column: 1 / span 4;
+    }
+
+    .body-left {
+      grid-column: 1 / span 2;
+    }
+
+    .body-right {
+      grid-column: 3 / span 2;
+    }
+  }
+
+  :host(:state(mode-single)) {
+    .body-left {
+      grid-row: 2;
+      grid-column: 1 / span 4;
+    }
+  }
+
+  :host(:state(mode-three)) {
+    .body {
+      display: block;
+      margin: auto;
+      margin-block: var(--_landing-page-layout-body-padding);
+      padding: var(--_landing-page-layout-body-padding-mobile);
+    }
+
+    .body-top {
+      grid-column: 1 / span 4;
+      grid-row: 1;
+    }
+
+    .body-left {
+      grid-column: 1 / span 4;
+      grid-row: 2;
+    }
+
+    .body-center {
+      grid-column: 1 / span 4;
+      grid-row: 3;
+    }
+
+    .body-right {
+      grid-column: 1 / span 4;
+      grid-row: 4;
+    }
+  }
+}
+
+//
+// Mobile breakpoint
+//
+
+@media (max-width: 768px) {
+  .header-background {
+    height: calc(100% + 75px + #{forge-spacing.variable(medium)});
+  }
+
+  .header-body {
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    padding: var(--_landing-page-layout-body-padding-mobile);
+  }
+
+  .header-body-left {
+    margin: 48px #{forge-spacing.variable(medium)};
+    grid-column: 1 / span 2;
+    text-align: center;
+  }
+
+  .header-body-right {
+    padding: var(--_landing-page-layout-body-padding-mobile);
+    padding-block-end: calc(var(--_landing-page-layout-body-padding-mobile) * 3);
+    grid-column: 1 / span 2;
+  }
+
+  .header-welcome {
+    margin: 0 0 #{forge-spacing.variable(xlarge)};
+  }
+
+  .header-actions {
+    flex-direction: column;
+
+    ::slotted(:not(:last-child)) {
+      margin-inline-end: 0;
+      margin-block-end: var(--_landing-page-layout-actions-gap-mobile);
+    }
+  }
+
+  .body-left,
+  .body-center,
+  .body-right {
+    gap: var(--_landing-page-layout-body-padding-mobile);
+  }
+
+  .body {
+    display: block;
+    margin: var(--_landing-page-layout-body-padding-mobile);
+    margin-block-end: calc(var(--_landing-page-layout-body-padding-mobile) * 2);
+    padding: 0;
+  }
+
+  .body > *:not(:last-child) {
+    margin-block-end: var(--_landing-page-layout-body-padding-mobile);
+  }
+
+  .body-footer {
+    grid-column: 1 / span 2;
+  }
+
+  :host(:state(mode-single)) {
+    .body-left {
+      grid-row: 2;
+      grid-column: 1 / span 1;
+    }
+  }
+}

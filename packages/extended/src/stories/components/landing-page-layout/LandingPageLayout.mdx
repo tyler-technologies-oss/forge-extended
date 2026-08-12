@@ -1,0 +1,164 @@
+import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
+import CustomArgTypes from '../../blocks/CustomArgTypes';
+import * as LandingPageLayoutStories from './LandingPageLayout.stories';
+import * as WithBackgroundImageStories from './WithBackgroundImage.stories';
+import * as WithTopContentStories from './WithTopContent.stories';
+import * as ThreeColumnStories from './ThreeColumn.stories';
+import * as SingleColumnStories from './SingleColumn.stories';
+
+<Meta of={LandingPageLayoutStories} />
+
+<Title />
+
+The `<forge-landing-page-layout>` component is a structural layout utility for building citizen-facing landing pages that follow the patterns common across Tyler applications. It provides a themed header with a title, actions, and an optional announcements region, a body area that supports one, two, or three columns, and a page footer. The layout is fully responsive: columns collapse and paddings shrink at tablet and mobile breakpoints without any additional work on your part.
+
+<Canvas of={LandingPageLayoutStories.Demo} />
+
+## Usage
+
+Use `<forge-landing-page-layout>` when you need a consistent starting point for a landing page. The component handles the header background gradient, responsive image swapping, column layout, and footer styling for you, so you can focus on the content itself.
+
+```html
+<forge-landing-page-layout mode="two-third" alignment="center" size="normal">
+  <span slot="secondary-title">Welcome</span>
+  <h2 slot="main-title">Get started with your services</h2>
+  <forge-button slot="action" variant="filled">Primary action</forge-button>
+  <forge-button slot="action" variant="outlined">Secondary action</forge-button>
+
+  <forge-card slot="announcements">
+    <h3>Announcements</h3>
+    <p>Have any events or important updates? Highlight them here.</p>
+  </forge-card>
+
+  <div slot="left">Popular services</div>
+  <div slot="right">Recent activity</div>
+
+  <div slot="footer">© 2026 City Services</div>
+</forge-landing-page-layout>
+```
+
+> **Note:** This component accepts arbitrary content in its slots. Treat the examples on this page as starting points and tailor the projected content to your application.
+
+## Body layout modes
+
+Use the `mode` property to control the column layout of the body. The layout responds automatically to tablet and mobile widths, stacking columns as space becomes constrained.
+
+| Mode                  | Description                                                                                       |
+| :-------------------- | :------------------------------------------------------------------------------------------------ |
+| `two-third` (default) | A two-column layout where `left` occupies two thirds of the width and `right` occupies one third. |
+| `equal`               | A two-column layout where `left` and `right` each occupy half of the width.                       |
+| `three`               | A three-column layout using `left`, `center`, and `right`.                                        |
+| `single`              | A single-column layout that only renders the `left` slot.                                         |
+
+### Three-column mode
+
+<Canvas of={ThreeColumnStories.ThreeColumn} />
+
+### Single-column mode
+
+Combine `mode="single"` with `alignment="left"` for content-focused landing pages such as articles or long-form details.
+
+<Canvas of={SingleColumnStories.SingleColumn} />
+
+## Header content
+
+The header contains a two-part title, an actions region, and an optional announcements region. The header body left region (`secondary-title`, `main-title`, `action`) is centered by default. When the `announcements` slot has content, the layout switches to a two-column header with the announcements displayed on the right side. When the announcements slot is empty, the title and actions span the full width and remain centered.
+
+### Alignment
+
+Use the `alignment` property to switch between `center` (default) and `left` alignment for the header content.
+
+### Announcements
+
+Use the `announcements` slot to surface time-sensitive information — outages, holidays, promoted features — beside the header title. The layout automatically re-balances the header when the announcements slot has content.
+
+## Background image
+
+The header ships with a gradient background by default. To display an image behind the header, provide `image-url-large` and `image-url-small` attributes and the component will render a responsive `<picture>` element that swaps sources at the mobile breakpoint (768px). If you need full control over the picture element, you can instead slot in your own `<img>` or `<picture>` using the `image` slot. A direct-child `<img>` without a slot attribute is automatically assigned to the `image` slot as a convenience.
+
+When a background image is present, the component sets a `:state(has-image)` custom state on the host and layers a darkening gradient overlay on top of the image (denser at the top, lighter at the bottom) so the header title, actions, and announcements remain legible against arbitrary photo content. Tune the top and bottom colors of that overlay with `--forge-landing-page-layout-header-overlay-start` and `--forge-landing-page-layout-header-overlay-end` if the default treatment is too dark, too light, or you'd like a color-tinted overlay:
+
+```css
+forge-landing-page-layout {
+  --forge-landing-page-layout-header-overlay-start: rgba(0, 0, 0, 0.85);
+  --forge-landing-page-layout-header-overlay-end: rgba(0, 0, 0, 0.25);
+}
+```
+
+```html
+<forge-landing-page-layout
+  image-url-large="https://example.com/large.jpg"
+  image-url-small="https://example.com/small.jpg">
+  <!-- header, body, and footer content -->
+</forge-landing-page-layout>
+```
+
+<Canvas of={WithBackgroundImageStories.WithBackgroundImage} />
+
+### `on-image` button utility class
+
+When you use a background image, the default Forge button colors (typically indigo) may not have enough contrast against the image. Apply the `on-image` class to any `forge-button` in the `action` slot to opt into a light-on-image treatment:
+
+- **Text** buttons render with white label text.
+- **Outlined** buttons render with a white border and white label text.
+- **Filled** buttons swap to a white background with a dark label.
+
+```html
+<forge-landing-page-layout image-url-large="/hero.jpg" image-url-small="/hero.jpg">
+  <span slot="secondary-title">Winter is here</span>
+  <h2 slot="main-title">Hit the slopes this season</h2>
+  <forge-button class="on-image" slot="action" variant="filled">Explore trails</forge-button>
+  <forge-button class="on-image" slot="action" variant="outlined">Buy a pass</forge-button>
+</forge-landing-page-layout>
+```
+
+The utility is scoped to buttons projected into the `action` slot — it does not affect buttons elsewhere on the page.
+
+### Text color
+
+The header title and secondary title render in white by default so the light-on-dark treatment holds across every theme. Override `--forge-landing-page-layout-header-color` on the host if you need a different color for a bespoke background treatment:
+
+```css
+forge-landing-page-layout {
+  --forge-landing-page-layout-header-color: var(--forge-theme-primary-container-low);
+}
+```
+
+### Background gradient
+
+The default header background is a diagonal gradient from Forge blue-800 to indigo-900. Adjust either end of the gradient with `--forge-landing-page-layout-header-gradient-start` and `--forge-landing-page-layout-header-gradient-end` to match your app's theme:
+
+```css
+forge-landing-page-layout {
+  --forge-landing-page-layout-header-gradient-start: var(--forge-theme-primary);
+  --forge-landing-page-layout-header-gradient-end: var(--forge-theme-tertiary);
+}
+```
+
+## Top and body-footer content
+
+Two additional slots span the full width of the body:
+
+- `top` — Rendered above the body columns. Use it for callouts, stats rows, or featured cards.
+- `body-footer` — Rendered below the body columns. Use it for supporting content that should stay inside the body's max width.
+
+When the `top` slot is empty, the body area sits flush against the header. When it has content, additional spacing is applied so it separates cleanly from the header.
+
+<Canvas of={WithTopContentStories.WithTopContent} />
+
+## Size
+
+Use the `size` property to switch between the default `normal` content width (1040px) and `wide` (1280px) when you need more horizontal breathing room.
+
+## Responsive behavior
+
+The component ships with two responsive breakpoints out of the box:
+
+- **Tablet (max-width: 900px)** — The body switches to a four-column grid, and `three`-column mode collapses to a stacked single-column layout.
+- **Mobile (max-width: 768px)** — The header body switches to a stacked layout with centered content, action buttons stack vertically, and body columns are rendered in a single-column flow.
+
+You do not need to configure these breakpoints. The responsive behavior is applied automatically and works alongside the `mode`, `alignment`, and `size` properties.
+
+## API
+
+<CustomArgTypes />

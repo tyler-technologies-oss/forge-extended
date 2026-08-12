@@ -15,5 +15,6 @@ export * from './lib/app-launcher-link';
 export * from './lib/count-card';
 export * from './lib/app-layout';
 export * from './lib/structured-card';
+export * from './lib/landing-page-layout';
 
 export * from './lib/forge.module';
