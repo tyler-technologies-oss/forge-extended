@@ -3,12 +3,13 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { defineAppLauncherComponent } from '@tylertech/forge-extended';
 
+import { ForgeExtendedAppLauncherLinkModule } from '../app-launcher-link/app-launcher-link.module';
 import { AppLauncherComponent } from './app-launcher.component';
 
 @NgModule({
-  imports: [CommonModule],
+  imports: [CommonModule, ForgeExtendedAppLauncherLinkModule],
   declarations: [AppLauncherComponent],
-  exports: [AppLauncherComponent]
+  exports: [AppLauncherComponent, ForgeExtendedAppLauncherLinkModule]
 })
 export class ForgeExtendedAppLauncherModule {
   constructor() {
