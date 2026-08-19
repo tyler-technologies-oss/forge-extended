@@ -1,5 +1,20 @@
 # @tylertech/forge-extended-react
 
+## 1.6.0
+
+### Minor Changes
+
+- 50bb0c7: feat: added new footer component (migrated from legacy forge-internal lib)
+
+  Note for consumers migrating from the legacy `forge-internal` footer: the theming CSS custom properties have been renamed. Update any overrides accordingly:
+  - `--forge-footer-theme-background` → `--forge-footer-background`
+  - `--forge-footer-theme-on-background` → `--forge-footer-on-background`
+
+### Patch Changes
+
+- Updated dependencies [50bb0c7]
+  - @tylertech/forge-extended@1.7.0
+
 ## 1.5.1
 
 ### Patch Changes
