@@ -1,7 +1,6 @@
 import { LitElement, PropertyValues, TemplateResult, html, unsafeCSS } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
 import { toggleState } from '@tylertech/forge';
-import { setDefaultAria } from '@tylertech/forge/esm/core/utils/a11y-utils';
 
 import './footer-item/footer-item';
 
@@ -62,9 +61,8 @@ export class FooterComponent extends LitElement {
 
   public override connectedCallback(): void {
     super.connectedCallback();
-    setDefaultAria(this, this.#internals, {
-      role: 'contentinfo'
-    });
+    // TODO: use setDefaultAria once extended is merged into the mono repo
+    this.setAttribute('role', 'contentinfo');
     this.#applyLayout();
   }
 
