@@ -1,5 +1,4 @@
 ---
-'@tylertech/forge-extended-react': patch
 '@tylertech/forge-extended': patch
 ---
 
