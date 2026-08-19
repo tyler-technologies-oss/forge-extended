@@ -519,183 +519,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-confirmation-dialog'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ConfirmationDialogComponent",
-          "slots": [
-            {
-              "description": "The title of the dialog",
-              "name": "title"
-            },
-            {
-              "description": "The dialog message",
-              "name": "message"
-            },
-            {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
-            },
-            {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "isBusy",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
-            },
-            {
-              "kind": "field",
-              "name": "busyLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
-              },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "fieldName": "open"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog",
-              "fieldName": "description"
-            },
-            {
-              "name": "is-busy",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
-            },
-            {
-              "name": "busy-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-confirmation-dialog",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
-          "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponent",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/app-layout/app-layout.ts",
       "declarations": [
         {
@@ -998,123 +821,177 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "ContentScaffoldComponentTagName",
+          "name": "ConfirmationDialogComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-content-scaffold'"
+          "default": "'forge-confirmation-dialog'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "ContentScaffoldComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the height of the header section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-header-height"
-            },
-            {
-              "description": "Controls the background color of the header section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-header-background"
-            },
-            {
-              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-header-min-height"
-            },
-            {
-              "description": "Controls the height of the body section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-body-height"
-            },
-            {
-              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
-              "name": "--forge-content-scaffold-body-padding-inline"
-            },
-            {
-              "description": "Controls the height of the footer section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-footer-height"
-            },
-            {
-              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-footer-background"
-            },
-            {
-              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-footer-min-height"
-            },
-            {
-              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
-              "name": "--forge-content-scaffold-footer-full-padding"
-            }
-          ],
+          "name": "ConfirmationDialogComponent",
           "slots": [
             {
-              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
-              "name": "header"
+              "description": "The title of the dialog",
+              "name": "title"
             },
             {
-              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
-              "name": "before-header-start"
+              "description": "The dialog message",
+              "name": "message"
             },
             {
-              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-start"
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
             },
             {
-              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-end"
-            },
-            {
-              "description": "The main body content that expands to fill available space.",
-              "name": "body"
-            },
-            {
-              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
-              "name": "footer"
-            },
-            {
-              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-start"
-            },
-            {
-              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-end"
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
             }
           ],
-          "members": [],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
+            },
+            {
+              "kind": "field",
+              "name": "busyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+              },
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
+            },
+            {
+              "name": "busy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-content-scaffold",
+          "tagName": "forge-confirmation-dialog",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ContentScaffoldComponentTagName",
+          "name": "ConfirmationDialogComponentTagName",
           "declaration": {
-            "name": "ContentScaffoldComponentTagName",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         },
         {
           "kind": "js",
-          "name": "ContentScaffoldComponent",
+          "name": "ConfirmationDialogComponent",
           "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         }
       ]
@@ -1311,6 +1188,281 @@
           "declaration": {
             "name": "CountCardComponent",
             "module": "src/lib/count-card/count-card.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/footer/footer.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "FooterComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-footer'"
+        },
+        {
+          "kind": "class",
+          "description": "A footer component for displaying navigation, copyright, and branding information at the bottom of a page.",
+          "name": "FooterComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the background color of the footer.",
+              "name": "--forge-footer-background"
+            },
+            {
+              "description": "Controls the text color of footer content.",
+              "name": "--forge-footer-on-background"
+            },
+            {
+              "description": "Controls the padding of the footer.",
+              "name": "--forge-footer-padding"
+            },
+            {
+              "description": "Controls the left padding of the footer.",
+              "name": "--forge-footer-padding-left"
+            },
+            {
+              "description": "Controls the right padding of the footer.",
+              "name": "--forge-footer-padding-right"
+            },
+            {
+              "description": "Controls the gap between footer content and graphic in standard layout.",
+              "name": "--forge-footer-gap"
+            },
+            {
+              "description": "Controls the gap between stacked elements in alternative layout.",
+              "name": "--forge-footer-alternative-gap"
+            },
+            {
+              "description": "Controls the margin around dividers between footer items.",
+              "name": "--forge-footer-divider-margin"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Slot for footer items or custom content.",
+              "name": ""
+            },
+            {
+              "description": "Slot for footer graphic, such as a logo.",
+              "name": "graphic"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "layout",
+              "type": {
+                "text": "FooterLayout"
+              },
+              "privacy": "public",
+              "default": "'auto'",
+              "description": "Defines the footer layout mode.",
+              "attribute": "layout"
+            },
+            {
+              "kind": "field",
+              "name": "layoutBreakpoint",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "900",
+              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
+              "attribute": "layout-breakpoint"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "layout",
+              "type": {
+                "text": "FooterLayout"
+              },
+              "default": "'auto'",
+              "description": "Defines the footer layout mode.",
+              "fieldName": "layout"
+            },
+            {
+              "name": "layout-breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "default": "900",
+              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
+              "fieldName": "layoutBreakpoint"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-footer",
+          "customElement": true,
+          "states": [
+            {
+              "name": "standard",
+              "description": "Applied when the layout is set to `standard` or when in `auto` mode above the breakpoint."
+            },
+            {
+              "name": "alternative",
+              "description": "Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint."
+            },
+            {
+              "name": "auto",
+              "description": "Applied when the layout is set to `auto`."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FooterComponentTagName",
+          "declaration": {
+            "name": "FooterComponentTagName",
+            "module": "src/lib/footer/footer.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "FooterComponent",
+          "declaration": {
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ContentScaffoldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-content-scaffold'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ContentScaffoldComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the header section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-header-height"
+            },
+            {
+              "description": "Controls the background color of the header section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-header-background"
+            },
+            {
+              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-header-min-height"
+            },
+            {
+              "description": "Controls the height of the body section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-body-height"
+            },
+            {
+              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-body-padding-inline"
+            },
+            {
+              "description": "Controls the height of the footer section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-footer-height"
+            },
+            {
+              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-footer-background"
+            },
+            {
+              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-footer-min-height"
+            },
+            {
+              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
+              "name": "--forge-content-scaffold-footer-full-padding"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
+              "name": "header"
+            },
+            {
+              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
+              "name": "before-header-start"
+            },
+            {
+              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-start"
+            },
+            {
+              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-end"
+            },
+            {
+              "description": "The main body content that expands to fill available space.",
+              "name": "body"
+            },
+            {
+              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
+              "name": "footer"
+            },
+            {
+              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-start"
+            },
+            {
+              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-end"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-content-scaffold",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponentTagName",
+          "declaration": {
+            "name": "ContentScaffoldComponentTagName",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponent",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         }
       ]
@@ -2262,158 +2414,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/footer/footer/footer.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "FooterComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-footer'"
-        },
-        {
-          "kind": "class",
-          "description": "A footer component for displaying navigation, copyright, and branding information at the bottom of a page.",
-          "name": "FooterComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the background color of the footer.",
-              "name": "--forge-footer-background"
-            },
-            {
-              "description": "Controls the text color of footer content.",
-              "name": "--forge-footer-on-background"
-            },
-            {
-              "description": "Controls the padding of the footer.",
-              "name": "--forge-footer-padding"
-            },
-            {
-              "description": "Controls the left padding of the footer.",
-              "name": "--forge-footer-padding-left"
-            },
-            {
-              "description": "Controls the right padding of the footer.",
-              "name": "--forge-footer-padding-right"
-            },
-            {
-              "description": "Controls the gap between footer content and graphic in standard layout.",
-              "name": "--forge-footer-gap"
-            },
-            {
-              "description": "Controls the gap between stacked elements in alternative layout.",
-              "name": "--forge-footer-alternative-gap"
-            },
-            {
-              "description": "Controls the margin around dividers between footer items.",
-              "name": "--forge-footer-divider-margin"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Slot for footer items or custom content.",
-              "name": ""
-            },
-            {
-              "description": "Slot for footer graphic, such as a logo.",
-              "name": "graphic"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "layout",
-              "type": {
-                "text": "FooterLayout"
-              },
-              "privacy": "public",
-              "default": "'auto'",
-              "description": "Defines the footer layout mode.",
-              "attribute": "layout"
-            },
-            {
-              "kind": "field",
-              "name": "layoutBreakpoint",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "900",
-              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
-              "attribute": "layout-breakpoint"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "layout",
-              "type": {
-                "text": "FooterLayout"
-              },
-              "default": "'auto'",
-              "description": "Defines the footer layout mode.",
-              "fieldName": "layout"
-            },
-            {
-              "name": "layout-breakpoint",
-              "type": {
-                "text": "number"
-              },
-              "default": "900",
-              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
-              "fieldName": "layoutBreakpoint"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-footer",
-          "customElement": true,
-          "states": [
-            {
-              "name": "standard",
-              "description": "Applied when the layout is set to `standard` or when in `auto` mode above the breakpoint."
-            },
-            {
-              "name": "alternative",
-              "description": "Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint."
-            },
-            {
-              "name": "auto",
-              "description": "Applied when the layout is set to `auto`."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "FooterComponentTagName",
-          "declaration": {
-            "name": "FooterComponentTagName",
-            "module": "src/lib/footer/footer/footer.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "FooterComponent",
-          "declaration": {
-            "name": "FooterComponent",
-            "module": "src/lib/footer/footer/footer.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "FooterComponent",
-            "module": "src/lib/footer/footer/footer.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/footer/footer-item/footer-item.ts",
       "declarations": [
         {
@@ -2537,7 +2537,7 @@
       ]
     }
   ],
-  "branchName": "feat",
+  "branchName": "main",
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",
@@ -2567,22 +2567,6 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 40
     },
-    "ConfirmationDialogActionEventReason": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 28
-    },
-    "ConfirmationDialogActionEventData": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 30
-    },
-    "ConfirmationDialogProperties": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 35
-    },
-    "ConfirmationDialogComponent": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 55
-    },
     "AppLayoutBreakpoint": {
       "path": "src/lib/app-layout/app-layout.ts",
       "lineNumber": 30
@@ -2599,9 +2583,21 @@
       "path": "src/lib/app-layout/app-layout.ts",
       "lineNumber": 92
     },
-    "ContentScaffoldComponent": {
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "lineNumber": 37
+    "ConfirmationDialogActionEventReason": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 28
+    },
+    "ConfirmationDialogActionEventData": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 30
+    },
+    "ConfirmationDialogProperties": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 35
+    },
+    "ConfirmationDialogComponent": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 55
     },
     "CountCardTheme": {
       "path": "src/lib/count-card/count-card.ts",
@@ -2610,6 +2606,18 @@
     "CountCardComponent": {
       "path": "src/lib/count-card/count-card.ts",
       "lineNumber": 71
+    },
+    "FooterLayout": {
+      "path": "src/lib/footer/footer.ts",
+      "lineNumber": 16
+    },
+    "FooterComponent": {
+      "path": "src/lib/footer/footer.ts",
+      "lineNumber": 42
+    },
+    "ContentScaffoldComponent": {
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "lineNumber": 37
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
@@ -2658,14 +2666,6 @@
     "AppLauncherLinkComponent": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "lineNumber": 26
-    },
-    "FooterLayout": {
-      "path": "src/lib/footer/footer/footer.ts",
-      "lineNumber": 16
-    },
-    "FooterComponent": {
-      "path": "src/lib/footer/footer/footer.ts",
-      "lineNumber": 42
     },
     "FooterItemComponent": {
       "path": "src/lib/footer/footer-item/footer-item.ts",

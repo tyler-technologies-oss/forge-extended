@@ -3,7 +3,7 @@ import { customElement, property } from 'lit/decorators.js';
 import { toggleState } from '@tylertech/forge';
 import { setDefaultAria } from '@tylertech/forge/esm/core/utils/a11y-utils';
 
-import '../footer-item/footer-item';
+import './footer-item/footer-item';
 
 import styles from './footer.scss?inline';
 
