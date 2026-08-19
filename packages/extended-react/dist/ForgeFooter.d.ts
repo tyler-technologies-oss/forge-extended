@@ -1,5 +1,5 @@
 import React from "react";
-import { ForgeFooter as ForgeFooterElement } from "@tylertech/forge-extended/footer/footer";
+import { ForgeFooter as ForgeFooterElement } from "@tylertech/forge-extended/footer";
 
 export type { ForgeFooterElement };
 

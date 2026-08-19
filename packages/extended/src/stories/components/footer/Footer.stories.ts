@@ -1,9 +1,9 @@
 import { type Meta, type StoryObj } from '@storybook/web-components-vite';
 import { html } from 'lit';
-import { defineFooterComponent } from '$lib/footer/footer';
+import { defineFooterComponent } from '$lib/footer';
 import { defineFooterItemComponent } from '$lib/footer/footer-item';
 
-import '$lib/footer/footer';
+import '$lib/footer';
 import '$lib/footer/footer-item';
 
 const component = 'forge-footer';

@@ -1,5 +1,5 @@
 import React, { forwardRef } from "react";
-import "@tylertech/forge-extended/footer/footer";
+import "@tylertech/forge-extended/footer";
 
 export const ForgeFooter = forwardRef((props, forwardedRef) => {
   const { layout, layoutBreakpoint, ...filteredProps } = props;
