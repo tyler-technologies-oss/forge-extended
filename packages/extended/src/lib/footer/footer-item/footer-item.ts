@@ -1,7 +1,6 @@
 import { LitElement, html, unsafeCSS, TemplateResult } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import styles from './footer-item.scss?inline';
-import { setDefaultAria } from '@tylertech/forge/esm/core/utils/a11y-utils';
 
 declare global {
   interface HTMLElementTagNameMap {
@@ -25,18 +24,10 @@ export const FooterItemComponentTagName: keyof HTMLElementTagNameMap = 'forge-fo
 export class FooterItemComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
-  readonly #internals: ElementInternals;
-
-  constructor() {
-    super();
-    this.#internals = this.attachInternals();
-  }
-
   public connectedCallback(): void {
     super.connectedCallback();
-    setDefaultAria(this, this.#internals, {
-      role: 'listitem'
-    });
+    // TODO: use setDefaultAria once extended is merged into the mono repo
+    this.setAttribute('role', 'listitem');
   }
 
   public override render(): TemplateResult {
