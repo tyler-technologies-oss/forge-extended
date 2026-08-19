@@ -1,5 +1,11 @@
 # @tylertech/forge-extended
 
+## 1.7.2
+
+### Patch Changes
+
+- 5d822c1: fix(footer): set the default `contentinfo` role directly instead of via `setDefaultAria`
+
 ## 1.7.1
 
 ### Patch Changes
