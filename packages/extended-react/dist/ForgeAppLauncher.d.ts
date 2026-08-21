@@ -31,6 +31,9 @@ export interface ForgeAppLauncherProps
   /** ARIA label for the close button */
   closeAriaLabel?: ForgeAppLauncherElement["closeAriaLabel"];
 
+  /** Placeholder text for the search input in the all apps view */
+  searchPlaceholder?: ForgeAppLauncherElement["searchPlaceholder"];
+
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
 
@@ -65,10 +68,13 @@ export interface ForgeAppLauncherProps
  *
  *
  * ### **Slots:**
- *  - **related-apps-title** - Title text for the related apps section
+ *  - **header-title** - Title text for the app launcher header
+ * - **related-apps-title** - Title text for the related apps section
  * - **all-apps-title** - Title text for the all apps view
  * - **view-all-apps-button-text** - Text for the button that switches to all apps view
  * - **app-launcher-links-title** - Title text for the custom links section
  * - **app-launcher-link** - Individual custom link items using forge-app-launcher-link
+ * - **empty-state-text** - Text shown when no applications match the search filter
+ * - **loading-text** - Text shown while the app launcher is in the loading state
  */
 export const ForgeAppLauncher: React.ForwardRefExoticComponent<ForgeAppLauncherProps>;

@@ -9,6 +9,7 @@ export const ForgeAppLauncher = forwardRef((props, forwardedRef) => {
     launcherAriaLabel,
     backAriaLabel,
     closeAriaLabel,
+    searchPlaceholder,
     relatedApps,
     allApps,
     ...filteredProps
@@ -34,6 +35,8 @@ export const ForgeAppLauncher = forwardRef((props, forwardedRef) => {
         props.launcherAriaLabel || props["launcher-aria-label"],
       "back-aria-label": props.backAriaLabel || props["back-aria-label"],
       "close-aria-label": props.closeAriaLabel || props["close-aria-label"],
+      "search-placeholder":
+        props.searchPlaceholder || props["search-placeholder"],
       class: props.className,
       exportparts: props.exportparts,
       for: props.htmlFor,
