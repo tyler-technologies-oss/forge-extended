@@ -331,6 +331,107 @@ describe('AppLauncher', () => {
     });
   });
 
+  describe('Search placeholder property', () => {
+    it('should have default search placeholder value', async () => {
+      const harness = await createFixture({
+        relatedApps: [] // No related apps means it starts in all view
+      });
+
+      expect(harness.el.searchPlaceholder).to.equal('Search by product or app');
+      expect(harness.searchField?.getAttribute('placeholder')).to.equal('Search by product or app');
+    });
+
+    it('should set the placeholder of the search input to the searchPlaceholder property', async () => {
+      const harness = await createFixture({
+        relatedApps: [] // No related apps means it starts in all view
+      });
+
+      harness.el.searchPlaceholder = 'Find an app';
+      await nextFrame();
+
+      expect(harness.searchField?.getAttribute('placeholder')).to.equal('Find an app');
+    });
+
+    it('should set the placeholder of the search input via the search-placeholder attribute', async () => {
+      const harness = await createFixture({
+        relatedApps: [] // No related apps means it starts in all view
+      });
+
+      harness.el.setAttribute('search-placeholder', 'Look for a product');
+      await nextFrame();
+
+      expect(harness.searchField?.getAttribute('placeholder')).to.equal('Look for a product');
+    });
+  });
+
+  describe('Header title slot', () => {
+    it('should render default header title text', async () => {
+      const harness = await createFixture();
+
+      expect(harness.headerTitle?.textContent?.trim()).to.equal('App Launcher');
+    });
+
+    it('should render custom slotted header title text', async () => {
+      const harness = await createFixture();
+
+      const titleElement = document.createElement('span');
+      titleElement.slot = 'header-title';
+      titleElement.textContent = 'My Custom Launcher';
+      harness.el.appendChild(titleElement);
+      await nextFrame();
+
+      expect(harness.headerTitle?.assignedNodes({ flatten: true })[0]?.textContent).to.equal('My Custom Launcher');
+    });
+  });
+
+  describe('Empty state text slot', () => {
+    it('should render default empty state text', async () => {
+      const allApps: AppLauncherOption[] = [{ label: 'Payment System', iconName: 'payment', uri: 'http://test.com' }];
+      const harness = await createFixture({ relatedApps: [], allApps });
+
+      await harness.typeInSearchField('nonexistentapp');
+      await nextFrame();
+
+      expect(harness.emptyStateText?.textContent?.trim()).to.equal('No applications found');
+    });
+
+    it('should render custom slotted empty state text', async () => {
+      const allApps: AppLauncherOption[] = [{ label: 'Payment System', iconName: 'payment', uri: 'http://test.com' }];
+      const harness = await createFixture({ relatedApps: [], allApps });
+
+      const emptyStateElement = document.createElement('span');
+      emptyStateElement.slot = 'empty-state-text';
+      emptyStateElement.textContent = 'No results';
+      harness.el.appendChild(emptyStateElement);
+      await nextFrame();
+
+      await harness.typeInSearchField('nonexistentapp');
+      await nextFrame();
+
+      expect(harness.emptyStateText?.assignedNodes({ flatten: true })[0]?.textContent).to.equal('No results');
+    });
+  });
+
+  describe('Loading text slot', () => {
+    it('should render default loading text', async () => {
+      const harness = await createFixture({ relatedApps: [], allApps: [] });
+
+      expect(harness.loadingText?.textContent?.trim()).to.equal('Loading apps');
+    });
+
+    it('should render custom slotted loading text', async () => {
+      const harness = await createFixture({ relatedApps: [], allApps: [] });
+
+      const loadingElement = document.createElement('span');
+      loadingElement.slot = 'loading-text';
+      loadingElement.textContent = 'Fetching apps...';
+      harness.el.appendChild(loadingElement);
+      await nextFrame();
+
+      expect(harness.loadingText?.assignedNodes({ flatten: true })[0]?.textContent).to.equal('Fetching apps...');
+    });
+  });
+
   describe('State management', () => {
     it('should reset state when close button is clicked', async () => {
       const harness = await createFixture({
@@ -931,6 +1032,88 @@ describe('AppLauncher', () => {
       requestUpdateSpy.restore();
     });
 
+    it('should handle slotchange events for header-title slot', async () => {
+      const harness = await createFixture();
+
+      // Spy on requestUpdate
+      const requestUpdateSpy = sinon.spy(harness.el, 'requestUpdate');
+
+      // Get the header-title slot
+      const headerTitleSlot = harness.el.shadowRoot!.querySelector('slot[name="header-title"]') as HTMLSlotElement;
+      expect(headerTitleSlot).to.exist;
+
+      // Create and dispatch a slotchange event
+      const slotChangeEvent = new Event('slotchange', { bubbles: true });
+      Object.defineProperty(slotChangeEvent, 'target', {
+        value: headerTitleSlot,
+        enumerable: true
+      });
+
+      headerTitleSlot.dispatchEvent(slotChangeEvent);
+      await nextFrame();
+
+      // Verify requestUpdate was called
+      expect(requestUpdateSpy).to.have.been.called;
+
+      requestUpdateSpy.restore();
+    });
+
+    it('should handle slotchange events for empty-state-text slot', async () => {
+      const allApps: AppLauncherOption[] = [{ label: 'Payment System', iconName: 'payment', uri: 'http://test.com' }];
+      const harness = await createFixture({ relatedApps: [], allApps });
+
+      await harness.typeInSearchField('nonexistentapp');
+      await nextFrame();
+
+      // Spy on requestUpdate
+      const requestUpdateSpy = sinon.spy(harness.el, 'requestUpdate');
+
+      // Get the empty-state-text slot
+      const emptyStateSlot = harness.el.shadowRoot!.querySelector('slot[name="empty-state-text"]') as HTMLSlotElement;
+      expect(emptyStateSlot).to.exist;
+
+      // Create and dispatch a slotchange event
+      const slotChangeEvent = new Event('slotchange', { bubbles: true });
+      Object.defineProperty(slotChangeEvent, 'target', {
+        value: emptyStateSlot,
+        enumerable: true
+      });
+
+      emptyStateSlot.dispatchEvent(slotChangeEvent);
+      await nextFrame();
+
+      // Verify requestUpdate was called
+      expect(requestUpdateSpy).to.have.been.called;
+
+      requestUpdateSpy.restore();
+    });
+
+    it('should handle slotchange events for loading-text slot', async () => {
+      const harness = await createFixture({ relatedApps: [], allApps: [] });
+
+      // Spy on requestUpdate
+      const requestUpdateSpy = sinon.spy(harness.el, 'requestUpdate');
+
+      // Get the loading-text slot
+      const loadingTextSlot = harness.el.shadowRoot!.querySelector('slot[name="loading-text"]') as HTMLSlotElement;
+      expect(loadingTextSlot).to.exist;
+
+      // Create and dispatch a slotchange event
+      const slotChangeEvent = new Event('slotchange', { bubbles: true });
+      Object.defineProperty(slotChangeEvent, 'target', {
+        value: loadingTextSlot,
+        enumerable: true
+      });
+
+      loadingTextSlot.dispatchEvent(slotChangeEvent);
+      await nextFrame();
+
+      // Verify requestUpdate was called
+      expect(requestUpdateSpy).to.have.been.called;
+
+      requestUpdateSpy.restore();
+    });
+
     it('should not trigger update for non-monitored slot changes', async () => {
       const harness = await createFixture();
 
@@ -1146,6 +1329,18 @@ class AppLauncherHarness {
 
   public get allAppsTitle(): HTMLElement | null {
     return this.el.shadowRoot!.querySelector('#all-apps-title-slot') as HTMLElement;
+  }
+
+  public get headerTitle(): HTMLSlotElement | null {
+    return this.el.shadowRoot!.querySelector('#header-title-slot') as HTMLSlotElement;
+  }
+
+  public get emptyStateText(): HTMLSlotElement | null {
+    return this.el.shadowRoot!.querySelector('#empty-state-text-slot') as HTMLSlotElement;
+  }
+
+  public get loadingText(): HTMLSlotElement | null {
+    return this.el.shadowRoot!.querySelector('#loading-text-slot') as HTMLSlotElement;
   }
 
   public get viewAllAppsButton(): HTMLElement | null {

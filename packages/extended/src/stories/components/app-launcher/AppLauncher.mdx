@@ -147,3 +147,6 @@ The component automatically adapts to screen size using an internal media query 
 - The component supports standard dialog accessibility patterns with `role="dialog"` and `aria-modal="true"` when in mobile mode.
 - Custom links should include descriptive link text and appropriate `target` attributes for external resources.
 - Search functionality includes proper labeling with `placeholder` text and `autocomplete="off"` for optimal screen reader experience.
+- `launcherAriaLabel`, `backAriaLabel`, and `closeAriaLabel` allow the trigger, back, and close button labels to be localized.
+- `searchPlaceholder` allows the search input's `placeholder` text to be localized, since it can't be provided via a slot.
+- The `header-title`, `empty-state-text`, and `loading-text` slots allow the header title, empty search results message, and loading message to be localized or replaced with custom markup.

@@ -54,11 +54,14 @@ export const AppLauncherComponentTagName: keyof HTMLElementTagNameMap = 'forge-a
 /**
  * @tag forge-app-launcher
  *
+ * @slot header-title - Title text for the app launcher header
  * @slot related-apps-title - Title text for the related apps section
  * @slot all-apps-title - Title text for the all apps view
  * @slot view-all-apps-button-text - Text for the button that switches to all apps view
  * @slot app-launcher-links-title - Title text for the custom links section
  * @slot app-launcher-link - Individual custom link items using forge-app-launcher-link
+ * @slot empty-state-text - Text shown when no applications match the search filter
+ * @slot loading-text - Text shown while the app launcher is in the loading state
  *
  * @state small - The component is displayed in mobile/small screen mode (dialog)
  * @state large - The component is displayed in desktop/large screen mode (popover)
@@ -119,6 +122,10 @@ export class AppLauncherComponent extends LitElement {
   @property({ type: String, attribute: 'close-aria-label' })
   public closeAriaLabel = 'Close app launcher';
 
+  /** Placeholder text for the search input in the all apps view */
+  @property({ type: String, attribute: 'search-placeholder' })
+  public searchPlaceholder = 'Search by product or app';
+
   /** The current view of the app launcher, either 'related', 'all', or 'loading'. */
   @state()
   private _appView: AppView = 'related';
@@ -147,6 +154,14 @@ export class AppLauncherComponent extends LitElement {
     this.#internals = this.attachInternals();
   }
 
+  readonly #headerTitleSlot = html`<slot name="header-title" id="header-title-slot">App Launcher</slot>`;
+
+  readonly #emptyStateTextSlot = html`<slot name="empty-state-text" id="empty-state-text-slot"
+    >No applications found</slot
+  >`;
+
+  readonly #loadingTextSlot = html`<slot name="loading-text" id="loading-text-slot">Loading apps</slot>`;
+
   readonly #relatedAppsTitleSlot = html`<h2>
     <slot name="related-apps-title" id="related-apps-title-slot">Related apps</slot>
   </h2>`;
@@ -166,7 +181,7 @@ export class AppLauncherComponent extends LitElement {
   readonly #emptyState = html`
     <div class="empty-state">
       <forge-icon name="search"></forge-icon>
-      <p>No applications found</p>
+      <p>${this.#emptyStateTextSlot}</p>
     </div>
   `;
 
@@ -226,7 +241,7 @@ export class AppLauncherComponent extends LitElement {
   get #header(): TemplateResult | typeof nothing {
     return html`
       <forge-toolbar class="header" no-border>
-        <h1 slot="start">App Launcher</h1>
+        <h1 slot="start">${this.#headerTitleSlot}</h1>
         ${this.#backButton}
         <forge-icon-button
           aria-label=${this.closeAriaLabel}
@@ -262,7 +277,7 @@ export class AppLauncherComponent extends LitElement {
           <forge-icon name="search" slot="leading"></forge-icon>
           <input
             type="text"
-            placeholder="Search by product or app"
+            placeholder=${this.searchPlaceholder}
             @input=${this.#onInputChange}
             id="search-field"
             autocomplete="off" />
@@ -300,7 +315,7 @@ export class AppLauncherComponent extends LitElement {
             () => html`<forge-skeleton aria-hidden="true"></forge-skeleton>`
           )}
           <forge-skeleton class="button-skeleton" aria-hidden="true"></forge-skeleton>
-          <span class="loading-text">Loading apps</span>
+          <span class="loading-text">${this.#loadingTextSlot}</span>
         </div>
       `,
       () => nothing
@@ -520,7 +535,10 @@ export class AppLauncherComponent extends LitElement {
         'app-launcher-links-title',
         'related-apps-title',
         'view-all-apps-button-text',
-        'all-apps-title'
+        'all-apps-title',
+        'header-title',
+        'empty-state-text',
+        'loading-text'
       ].includes(slotName)
     ) {
       this.requestUpdate();

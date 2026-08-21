@@ -67,11 +67,18 @@ const meta = {
 
     return html`
       <forge-app-bar theme-mode="scoped" title-text="App Launcher">
-        <forge-app-launcher slot="end" .allApps=${currentAllApps} .relatedApps=${currentRelatedApps}>
+        <forge-app-launcher
+          slot="end"
+          .allApps=${currentAllApps}
+          .relatedApps=${currentRelatedApps}
+          search-placeholder=${args.searchPlaceholder}>
+          <span slot="header-title">${args.headerTitle}</span>
           <span slot="related-apps-title">${args.relatedAppsTitle}</span>
           <span slot="all-apps-title">${args.allAppsTitle}</span>
           <span slot="view-all-apps-button-text">${args.viewAllAppsButtonText}</span>
           <span slot="app-launcher-links-title">${args.appLauncherLinksTitle}</span>
+          <span slot="empty-state-text">${args.emptyStateText}</span>
+          <span slot="loading-text">${args.loadingText}</span>
           ${args.showAppLauncherLinks
             ? html`
                 <forge-app-launcher-link slot="app-launcher-link">
@@ -98,18 +105,26 @@ const meta = {
       control: 'boolean',
       description: 'Simulates loading state by removing all app data'
     },
+    headerTitle: { control: 'text' },
     relatedAppsTitle: { control: 'text' },
     allAppsTitle: { control: 'text' },
-    viewAllAppsButtonText: { control: 'text' }
+    viewAllAppsButtonText: { control: 'text' },
+    emptyStateText: { control: 'text' },
+    loadingText: { control: 'text' },
+    searchPlaceholder: { control: 'text' }
   },
   args: {
     showRelatedApps: true,
     showAppLauncherLinks: true,
     simulateLoading: false,
+    headerTitle: 'App Launcher',
     relatedAppsTitle: 'Related apps',
     allAppsTitle: 'All apps',
     viewAllAppsButtonText: 'View all apps',
-    appLauncherLinksTitle: 'Custom links'
+    appLauncherLinksTitle: 'Custom links',
+    emptyStateText: 'No applications found',
+    loadingText: 'Loading apps',
+    searchPlaceholder: 'Search by product or app'
   }
 } satisfies Meta;
 
