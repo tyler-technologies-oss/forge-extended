@@ -94,6 +94,17 @@ export class AppLauncherComponent {
     return this.nativeElement.closeAriaLabel;
   }
 
+  /** Placeholder text for the search input in the all apps view */
+  @Input()
+  public set searchPlaceholder(value: AppLauncherComponentCustomElement['searchPlaceholder']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.searchPlaceholder = value;
+    });
+  }
+  public get searchPlaceholder(): AppLauncherComponentCustomElement['searchPlaceholder'] {
+    return this.nativeElement.searchPlaceholder;
+  }
+
   constructor() {
     defineAppLauncherComponent();
     const changeDetectorRef = inject(ChangeDetectorRef);

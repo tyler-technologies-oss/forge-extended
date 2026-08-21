@@ -20,6 +20,10 @@
           "name": "AppLauncherComponent",
           "slots": [
             {
+              "description": "Title text for the app launcher header",
+              "name": "header-title"
+            },
+            {
               "description": "Title text for the related apps section",
               "name": "related-apps-title"
             },
@@ -38,6 +42,14 @@
             {
               "description": "Individual custom link items using forge-app-launcher-link",
               "name": "app-launcher-link"
+            },
+            {
+              "description": "Text shown when no applications match the search filter",
+              "name": "empty-state-text"
+            },
+            {
+              "description": "Text shown while the app launcher is in the loading state",
+              "name": "loading-text"
             }
           ],
           "members": [
@@ -104,6 +116,17 @@
               "default": "'Close app launcher'",
               "description": "ARIA label for the close button",
               "attribute": "close-aria-label"
+            },
+            {
+              "kind": "field",
+              "name": "searchPlaceholder",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Search by product or app'",
+              "description": "Placeholder text for the search input in the all apps view",
+              "attribute": "search-placeholder"
             }
           ],
           "attributes": [
@@ -142,6 +165,15 @@
               "default": "'Close app launcher'",
               "description": "ARIA label for the close button",
               "fieldName": "closeAriaLabel"
+            },
+            {
+              "name": "search-placeholder",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Search by product or app'",
+              "description": "Placeholder text for the search input in the all apps view",
+              "fieldName": "searchPlaceholder"
             }
           ],
           "superclass": {
@@ -184,6 +216,485 @@
           "declaration": {
             "name": "AppLauncherComponent",
             "module": "src/lib/app-launcher/app-launcher.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ConfirmationDialogComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-confirmation-dialog'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ConfirmationDialogComponent",
+          "slots": [
+            {
+              "description": "The title of the dialog",
+              "name": "title"
+            },
+            {
+              "description": "The dialog message",
+              "name": "message"
+            },
+            {
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
+            },
+            {
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
+            },
+            {
+              "kind": "field",
+              "name": "busyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+              },
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
+            },
+            {
+              "name": "busy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-confirmation-dialog",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponentTagName",
+          "declaration": {
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponent",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/app-layout/app-layout.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AppLayoutComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-app-layout'"
+        },
+        {
+          "kind": "variable",
+          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+          "type": {
+            "text": "string"
+          },
+          "default": "'data-forge-app-layout-close'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AppLayoutComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the width of the navigation drawer (default: 320px)",
+              "name": "--forge-app-layout-drawer-width"
+            },
+            {
+              "description": "Controls the width of the navigation dialog on small screens (default: 320px)",
+              "name": "--forge-app-layout-dialog-width"
+            },
+            {
+              "description": "Controls the z-index of the mini drawer when using hover mode (default: 3)",
+              "name": "--forge-app-layout-mini-drawer-z-index"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Default slot. Content without a slot attribute is placed in the body area.",
+              "name": ""
+            },
+            {
+              "description": "Explicit body slot. Alternative to using the default slot.",
+              "name": "body"
+            },
+            {
+              "description": "Places content in the header",
+              "name": "header"
+            },
+            {
+              "description": "Places content in the footer",
+              "name": "footer"
+            },
+            {
+              "description": "Places content to the left of all content",
+              "name": "left"
+            },
+            {
+              "description": "Places content to the right of all content",
+              "name": "right"
+            },
+            {
+              "description": "Places content in the header of the body",
+              "name": "body-header"
+            },
+            {
+              "description": "Places content in the footer of the body",
+              "name": "body-footer"
+            },
+            {
+              "description": "Places content to the left of the body content",
+              "name": "body-left"
+            },
+            {
+              "description": "Places content to the right of the body content",
+              "name": "body-right"
+            },
+            {
+              "description": "Responsive navigation content that renders in left slot (small screens) or body-left slot (large screens)",
+              "name": "navigation"
+            },
+            {
+              "description": "Places content in the app bar logo slot",
+              "name": "app-bar-logo"
+            },
+            {
+              "description": "Places content in the app bar start slot",
+              "name": "app-bar-start"
+            },
+            {
+              "description": "Places content in the app bar center slot",
+              "name": "app-bar-center"
+            },
+            {
+              "description": "Places content in the app bar end slot",
+              "name": "app-bar-end"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "appTitle",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The title text to display in the app bar",
+              "attribute": "app-title"
+            },
+            {
+              "kind": "field",
+              "name": "appTitleHref",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The URL that the app bar title links to",
+              "attribute": "app-title-href"
+            },
+            {
+              "kind": "field",
+              "name": "breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "960",
+              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
+              "attribute": "breakpoint"
+            },
+            {
+              "kind": "field",
+              "name": "useMiniDrawer",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
+              "attribute": "use-mini-drawer"
+            },
+            {
+              "kind": "field",
+              "name": "miniHover",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the mini drawer should expand on hover (default: false)",
+              "attribute": "mini-hover"
+            },
+            {
+              "kind": "field",
+              "name": "isLargeScreen",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "readonly": true,
+              "description": "Whether the current screen width is above the breakpoint (read-only)"
+            },
+            {
+              "kind": "method",
+              "name": "closeDrawer",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "description": "Closes the navigation drawer. Only has effect on small screens where the drawer is modal."
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<AppLayoutBreakpointChangeEventData>"
+              },
+              "description": "Fired when the screen size crosses the breakpoint threshold",
+              "name": "forge-app-layout-breakpoint-change"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<AppLayoutDrawerChangeEventData>"
+              },
+              "description": "Fired when the navigation drawer opens or closes",
+              "name": "forge-app-layout-drawer-change"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "app-title",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The title text to display in the app bar",
+              "fieldName": "appTitle"
+            },
+            {
+              "name": "app-title-href",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The URL that the app bar title links to",
+              "fieldName": "appTitleHref"
+            },
+            {
+              "name": "breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "default": "960",
+              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
+              "fieldName": "breakpoint"
+            },
+            {
+              "name": "use-mini-drawer",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
+              "fieldName": "useMiniDrawer"
+            },
+            {
+              "name": "mini-hover",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the mini drawer should expand on hover (default: false)",
+              "fieldName": "miniHover"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-app-layout",
+          "customElement": true,
+          "summary": "A responsive application layout component that provides an app bar with a navigation drawer.\nOn small screens, the navigation appears in a modal dialog. On large screens, it appears in a side drawer.",
+          "states": [
+            {
+              "name": "small",
+              "description": "Screen width is below 960px, navigation appears in modal drawer"
+            },
+            {
+              "name": "large",
+              "description": "Screen width is 960px or above, navigation appears in body-left drawer"
+            },
+            {
+              "name": "drawer-open",
+              "description": "The navigation drawer is currently open"
+            },
+            {
+              "name": "drawer-closed",
+              "description": "The navigation drawer is currently closed"
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLayoutComponentTagName",
+          "declaration": {
+            "name": "AppLayoutComponentTagName",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+          "declaration": {
+            "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLayoutComponent",
+          "declaration": {
+            "name": "AppLayoutComponent",
+            "module": "src/lib/app-layout/app-layout.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLayoutComponent",
+            "module": "src/lib/app-layout/app-layout.ts"
           }
         }
       ]
@@ -519,268 +1030,249 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/app-layout/app-layout.ts",
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "AppLayoutComponentTagName",
+          "name": "ContentScaffoldComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-app-layout'"
-        },
-        {
-          "kind": "variable",
-          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
-          "type": {
-            "text": "string"
-          },
-          "default": "'data-forge-app-layout-close'"
+          "default": "'forge-content-scaffold'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "AppLayoutComponent",
+          "name": "ContentScaffoldComponent",
           "cssProperties": [
             {
-              "description": "Controls the width of the navigation drawer (default: 320px)",
-              "name": "--forge-app-layout-drawer-width"
+              "description": "Controls the height of the header section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-header-height"
             },
             {
-              "description": "Controls the width of the navigation dialog on small screens (default: 320px)",
-              "name": "--forge-app-layout-dialog-width"
+              "description": "Controls the background color of the header section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-header-background"
             },
             {
-              "description": "Controls the z-index of the mini drawer when using hover mode (default: 3)",
-              "name": "--forge-app-layout-mini-drawer-z-index"
+              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-header-min-height"
+            },
+            {
+              "description": "Controls the height of the body section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-body-height"
+            },
+            {
+              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-body-padding-inline"
+            },
+            {
+              "description": "Controls the height of the footer section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-footer-height"
+            },
+            {
+              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-footer-background"
+            },
+            {
+              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-footer-min-height"
+            },
+            {
+              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
+              "name": "--forge-content-scaffold-footer-full-padding"
             }
           ],
           "slots": [
             {
-              "description": "Default slot. Content without a slot attribute is placed in the body area.",
-              "name": ""
-            },
-            {
-              "description": "Explicit body slot. Alternative to using the default slot.",
-              "name": "body"
-            },
-            {
-              "description": "Places content in the header",
+              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
               "name": "header"
             },
             {
-              "description": "Places content in the footer",
+              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
+              "name": "before-header-start"
+            },
+            {
+              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-start"
+            },
+            {
+              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-end"
+            },
+            {
+              "description": "The main body content that expands to fill available space.",
+              "name": "body"
+            },
+            {
+              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
               "name": "footer"
             },
             {
-              "description": "Places content to the left of all content",
-              "name": "left"
+              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-start"
             },
             {
-              "description": "Places content to the right of all content",
-              "name": "right"
+              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-end"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-content-scaffold",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponentTagName",
+          "declaration": {
+            "name": "ContentScaffoldComponentTagName",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponent",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/footer/footer.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "FooterComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-footer'"
+        },
+        {
+          "kind": "class",
+          "description": "A footer component for displaying navigation, copyright, and branding information at the bottom of a page.",
+          "name": "FooterComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the background color of the footer.",
+              "name": "--forge-footer-background"
             },
             {
-              "description": "Places content in the header of the body",
-              "name": "body-header"
+              "description": "Controls the text color of footer content.",
+              "name": "--forge-footer-on-background"
             },
             {
-              "description": "Places content in the footer of the body",
-              "name": "body-footer"
+              "description": "Controls the padding of the footer.",
+              "name": "--forge-footer-padding"
             },
             {
-              "description": "Places content to the left of the body content",
-              "name": "body-left"
+              "description": "Controls the left padding of the footer.",
+              "name": "--forge-footer-padding-left"
             },
             {
-              "description": "Places content to the right of the body content",
-              "name": "body-right"
+              "description": "Controls the right padding of the footer.",
+              "name": "--forge-footer-padding-right"
             },
             {
-              "description": "Responsive navigation content that renders in left slot (small screens) or body-left slot (large screens)",
-              "name": "navigation"
+              "description": "Controls the gap between footer content and graphic in standard layout.",
+              "name": "--forge-footer-gap"
             },
             {
-              "description": "Places content in the app bar logo slot",
-              "name": "app-bar-logo"
+              "description": "Controls the gap between stacked elements in alternative layout.",
+              "name": "--forge-footer-alternative-gap"
             },
             {
-              "description": "Places content in the app bar start slot",
-              "name": "app-bar-start"
+              "description": "Controls the margin around dividers between footer items.",
+              "name": "--forge-footer-divider-margin"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Slot for footer items or custom content.",
+              "name": ""
             },
             {
-              "description": "Places content in the app bar center slot",
-              "name": "app-bar-center"
-            },
-            {
-              "description": "Places content in the app bar end slot",
-              "name": "app-bar-end"
+              "description": "Slot for footer graphic, such as a logo.",
+              "name": "graphic"
             }
           ],
           "members": [
             {
               "kind": "field",
-              "name": "appTitle",
+              "name": "layout",
               "type": {
-                "text": "string"
+                "text": "FooterLayout"
               },
               "privacy": "public",
-              "default": "''",
-              "description": "The title text to display in the app bar",
-              "attribute": "app-title"
+              "default": "'auto'",
+              "description": "Defines the footer layout mode.",
+              "attribute": "layout"
             },
             {
               "kind": "field",
-              "name": "appTitleHref",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The URL that the app bar title links to",
-              "attribute": "app-title-href"
-            },
-            {
-              "kind": "field",
-              "name": "breakpoint",
+              "name": "layoutBreakpoint",
               "type": {
                 "text": "number"
               },
               "privacy": "public",
-              "default": "960",
-              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
-              "attribute": "breakpoint"
-            },
-            {
-              "kind": "field",
-              "name": "useMiniDrawer",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
-              "attribute": "use-mini-drawer"
-            },
-            {
-              "kind": "field",
-              "name": "miniHover",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Whether the mini drawer should expand on hover (default: false)",
-              "attribute": "mini-hover"
-            },
-            {
-              "kind": "field",
-              "name": "isLargeScreen",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "readonly": true,
-              "description": "Whether the current screen width is above the breakpoint (read-only)"
-            },
-            {
-              "kind": "method",
-              "name": "closeDrawer",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "description": "Closes the navigation drawer. Only has effect on small screens where the drawer is modal."
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<AppLayoutBreakpointChangeEventData>"
-              },
-              "description": "Fired when the screen size crosses the breakpoint threshold",
-              "name": "forge-app-layout-breakpoint-change"
-            },
-            {
-              "type": {
-                "text": "CustomEvent<AppLayoutDrawerChangeEventData>"
-              },
-              "description": "Fired when the navigation drawer opens or closes",
-              "name": "forge-app-layout-drawer-change"
+              "default": "900",
+              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
+              "attribute": "layout-breakpoint"
             }
           ],
           "attributes": [
             {
-              "name": "app-title",
+              "name": "layout",
               "type": {
-                "text": "string"
+                "text": "FooterLayout"
               },
-              "default": "''",
-              "description": "The title text to display in the app bar",
-              "fieldName": "appTitle"
+              "default": "'auto'",
+              "description": "Defines the footer layout mode.",
+              "fieldName": "layout"
             },
             {
-              "name": "app-title-href",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The URL that the app bar title links to",
-              "fieldName": "appTitleHref"
-            },
-            {
-              "name": "breakpoint",
+              "name": "layout-breakpoint",
               "type": {
                 "text": "number"
               },
-              "default": "960",
-              "description": "The screen width breakpoint in pixels for responsive behavior (default: 960)",
-              "fieldName": "breakpoint"
-            },
-            {
-              "name": "use-mini-drawer",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Whether to use forge-mini-drawer instead of forge-drawer for large screens (default: false)",
-              "fieldName": "useMiniDrawer"
-            },
-            {
-              "name": "mini-hover",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Whether the mini drawer should expand on hover (default: false)",
-              "fieldName": "miniHover"
+              "default": "900",
+              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
+              "fieldName": "layoutBreakpoint"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-app-layout",
+          "tagName": "forge-footer",
           "customElement": true,
-          "summary": "A responsive application layout component that provides an app bar with a navigation drawer.\nOn small screens, the navigation appears in a modal dialog. On large screens, it appears in a side drawer.",
           "states": [
             {
-              "name": "small",
-              "description": "Screen width is below 960px, navigation appears in modal drawer"
+              "name": "standard",
+              "description": "Applied when the layout is set to `standard` or when in `auto` mode above the breakpoint."
             },
             {
-              "name": "large",
-              "description": "Screen width is 960px or above, navigation appears in body-left drawer"
+              "name": "alternative",
+              "description": "Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint."
             },
             {
-              "name": "drawer-open",
-              "description": "The navigation drawer is currently open"
-            },
-            {
-              "name": "drawer-closed",
-              "description": "The navigation drawer is currently closed"
+              "name": "auto",
+              "description": "Applied when the layout is set to `auto`."
             }
           ]
         }
@@ -788,210 +1280,25 @@
       "exports": [
         {
           "kind": "js",
-          "name": "AppLayoutComponentTagName",
+          "name": "FooterComponentTagName",
           "declaration": {
-            "name": "AppLayoutComponentTagName",
-            "module": "src/lib/app-layout/app-layout.ts"
+            "name": "FooterComponentTagName",
+            "module": "src/lib/footer/footer.ts"
           }
         },
         {
           "kind": "js",
-          "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
+          "name": "FooterComponent",
           "declaration": {
-            "name": "APP_LAYOUT_CLOSE_ATTRIBUTE",
-            "module": "src/lib/app-layout/app-layout.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AppLayoutComponent",
-          "declaration": {
-            "name": "AppLayoutComponent",
-            "module": "src/lib/app-layout/app-layout.ts"
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "AppLayoutComponent",
-            "module": "src/lib/app-layout/app-layout.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-confirmation-dialog'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ConfirmationDialogComponent",
-          "slots": [
-            {
-              "description": "The title of the dialog",
-              "name": "title"
-            },
-            {
-              "description": "The dialog message",
-              "name": "message"
-            },
-            {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
-            },
-            {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "isBusy",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
-            },
-            {
-              "kind": "field",
-              "name": "busyLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
-              },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "fieldName": "open"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog",
-              "fieldName": "description"
-            },
-            {
-              "name": "is-busy",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
-            },
-            {
-              "name": "busy-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-confirmation-dialog",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
-          "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponent",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer.ts"
           }
         }
       ]
@@ -1188,281 +1495,6 @@
           "declaration": {
             "name": "CountCardComponent",
             "module": "src/lib/count-card/count-card.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/footer/footer.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "FooterComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-footer'"
-        },
-        {
-          "kind": "class",
-          "description": "A footer component for displaying navigation, copyright, and branding information at the bottom of a page.",
-          "name": "FooterComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the background color of the footer.",
-              "name": "--forge-footer-background"
-            },
-            {
-              "description": "Controls the text color of footer content.",
-              "name": "--forge-footer-on-background"
-            },
-            {
-              "description": "Controls the padding of the footer.",
-              "name": "--forge-footer-padding"
-            },
-            {
-              "description": "Controls the left padding of the footer.",
-              "name": "--forge-footer-padding-left"
-            },
-            {
-              "description": "Controls the right padding of the footer.",
-              "name": "--forge-footer-padding-right"
-            },
-            {
-              "description": "Controls the gap between footer content and graphic in standard layout.",
-              "name": "--forge-footer-gap"
-            },
-            {
-              "description": "Controls the gap between stacked elements in alternative layout.",
-              "name": "--forge-footer-alternative-gap"
-            },
-            {
-              "description": "Controls the margin around dividers between footer items.",
-              "name": "--forge-footer-divider-margin"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Slot for footer items or custom content.",
-              "name": ""
-            },
-            {
-              "description": "Slot for footer graphic, such as a logo.",
-              "name": "graphic"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "layout",
-              "type": {
-                "text": "FooterLayout"
-              },
-              "privacy": "public",
-              "default": "'auto'",
-              "description": "Defines the footer layout mode.",
-              "attribute": "layout"
-            },
-            {
-              "kind": "field",
-              "name": "layoutBreakpoint",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "900",
-              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
-              "attribute": "layout-breakpoint"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "layout",
-              "type": {
-                "text": "FooterLayout"
-              },
-              "default": "'auto'",
-              "description": "Defines the footer layout mode.",
-              "fieldName": "layout"
-            },
-            {
-              "name": "layout-breakpoint",
-              "type": {
-                "text": "number"
-              },
-              "default": "900",
-              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
-              "fieldName": "layoutBreakpoint"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-footer",
-          "customElement": true,
-          "states": [
-            {
-              "name": "standard",
-              "description": "Applied when the layout is set to `standard` or when in `auto` mode above the breakpoint."
-            },
-            {
-              "name": "alternative",
-              "description": "Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint."
-            },
-            {
-              "name": "auto",
-              "description": "Applied when the layout is set to `auto`."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "FooterComponentTagName",
-          "declaration": {
-            "name": "FooterComponentTagName",
-            "module": "src/lib/footer/footer.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "FooterComponent",
-          "declaration": {
-            "name": "FooterComponent",
-            "module": "src/lib/footer/footer.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "FooterComponent",
-            "module": "src/lib/footer/footer.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ContentScaffoldComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-content-scaffold'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ContentScaffoldComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the height of the header section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-header-height"
-            },
-            {
-              "description": "Controls the background color of the header section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-header-background"
-            },
-            {
-              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-header-min-height"
-            },
-            {
-              "description": "Controls the height of the body section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-body-height"
-            },
-            {
-              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
-              "name": "--forge-content-scaffold-body-padding-inline"
-            },
-            {
-              "description": "Controls the height of the footer section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-footer-height"
-            },
-            {
-              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-footer-background"
-            },
-            {
-              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-footer-min-height"
-            },
-            {
-              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
-              "name": "--forge-content-scaffold-footer-full-padding"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
-              "name": "header"
-            },
-            {
-              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
-              "name": "before-header-start"
-            },
-            {
-              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-start"
-            },
-            {
-              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-end"
-            },
-            {
-              "description": "The main body content that expands to fill available space.",
-              "name": "body"
-            },
-            {
-              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
-              "name": "footer"
-            },
-            {
-              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-start"
-            },
-            {
-              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-end"
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-content-scaffold",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponentTagName",
-          "declaration": {
-            "name": "ContentScaffoldComponentTagName",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponent",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         }
       ]
@@ -2537,7 +2569,7 @@
       ]
     }
   ],
-  "branchName": "main",
+  "branchName": "feat",
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",
@@ -2549,39 +2581,7 @@
     },
     "AppLauncherComponent": {
       "path": "src/lib/app-launcher/app-launcher.ts",
-      "lineNumber": 67
-    },
-    "BusyIndicatorMode": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 26
-    },
-    "BusyIndicatorVariant": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 27
-    },
-    "BusyIndicatorFocusMode": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 28
-    },
-    "BusyIndicatorComponent": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 40
-    },
-    "AppLayoutBreakpoint": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 30
-    },
-    "AppLayoutBreakpointChangeEventData": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 32
-    },
-    "AppLayoutDrawerChangeEventData": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 36
-    },
-    "AppLayoutComponent": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 92
+      "lineNumber": 70
     },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
@@ -2599,6 +2599,50 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
+    "AppLayoutBreakpoint": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 30
+    },
+    "AppLayoutBreakpointChangeEventData": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 32
+    },
+    "AppLayoutDrawerChangeEventData": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 36
+    },
+    "AppLayoutComponent": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 92
+    },
+    "BusyIndicatorMode": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 26
+    },
+    "BusyIndicatorVariant": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 27
+    },
+    "BusyIndicatorFocusMode": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 28
+    },
+    "BusyIndicatorComponent": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 40
+    },
+    "ContentScaffoldComponent": {
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "lineNumber": 37
+    },
+    "FooterLayout": {
+      "path": "src/lib/footer/footer.ts",
+      "lineNumber": 15
+    },
+    "FooterComponent": {
+      "path": "src/lib/footer/footer.ts",
+      "lineNumber": 41
+    },
     "CountCardTheme": {
       "path": "src/lib/count-card/count-card.ts",
       "lineNumber": 16
@@ -2606,18 +2650,6 @@
     "CountCardComponent": {
       "path": "src/lib/count-card/count-card.ts",
       "lineNumber": 71
-    },
-    "FooterLayout": {
-      "path": "src/lib/footer/footer.ts",
-      "lineNumber": 16
-    },
-    "FooterComponent": {
-      "path": "src/lib/footer/footer.ts",
-      "lineNumber": 42
-    },
-    "ContentScaffoldComponent": {
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "lineNumber": 37
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
@@ -2669,7 +2701,7 @@
     },
     "FooterItemComponent": {
       "path": "src/lib/footer/footer-item/footer-item.ts",
-      "lineNumber": 24
+      "lineNumber": 23
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",

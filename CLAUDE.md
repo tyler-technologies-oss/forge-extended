@@ -6,99 +6,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Tyler Forge™ Extended is a monorepo containing multiple packages of prebuilt web components that implement Tyler Forge™ design patterns. These components are typically larger, more complex, and encapsulate a larger pattern or design to help developers create user interfaces more efficiently. The main focus of these components is strict design and accessibility, and they are intended to offer limited volatility. The components in this library are intended to be used in conjunction with the core Tyler Forge library. The main package `@tylertech/forge-extended` builds on the core `@tylertech/forge` library (peer dependency) and provides higher-level composed components.
 
-## Architecture
-
-### Monorepo Structure
-
-- Uses **pnpm workspaces** with **Turborepo** for task orchestration
-- Main packages:
-  - `packages/extended/` - Core web components library (TypeScript + Lit)
-  - `packages/extended-angular/` - Angular wrapper components
-  - `packages/extended-react/` - React wrapper components
-
-### Component Architecture
-
-- **Lit-based web components** with TypeScript
-- Each component follows the pattern:
-  - `src/lib/[component-name]/[component-name].ts` - Main component class
-  - `src/lib/[component-name]/[component-name].scss` - Styles (inline imported)
-  - `src/lib/[component-name]/[component-name].test.ts` - Tests
-  - `src/lib/[component-name]/index.ts` - Export file
-- Components extend `LitElement` and use decorators (`@customElement`, `@property`)
-- Styles imported as `?inline` and applied with `unsafeCSS()`
-- Components define their own dependencies from `@tylertech/forge` in static blocks
-
-### Build System
-
-- **Vite** for building with custom config for library mode
-- Outputs ES modules with preserved directory structure
-- **TypeScript** definitions generated via `vite-plugin-dts`
-- **Custom Elements Manifest** generation for documentation and framework integrations
-
-### Testing
-
-- **Web Test Runner** with Playwright
-- Tests organized by component groups
-- Coverage thresholds: statements 98.5%, branches 95.5%, functions 96.5%, lines 98.5%
-- Sass files inlined during test runs
-
-## Common Development Commands
-
-### Development
-
-```bash
-# Run Storybook for component development
-pnpm storybook:extended
-
-# Run dev server with hot reload
-pnpm dev:extended
-
-# Run all workspace dev servers
-pnpm dev
-```
-
-### Building
-
-```bash
-# Build extended package only
-pnpm build:extended
-
-# Build all packages
-pnpm build
-```
-
-### Testing
-
-```bash
-# Run tests for extended package (watch mode with coverage)
-pnpm test:extended
-
-# Run focused tests during development
-pnpm test:extended:focus
-
-# Run all tests in CI mode
-pnpm test
-
-# Run tests for specific component group (e.g., "quantity-field")
-pnpm run --filter=@tylertech/forge-extended test --group=quantity-field
-```
-
-### Code Quality
-
-```bash
-# Lint all packages
-pnpm lint
-
-# Format all files
-pnpm format
-
-# Check formatting
-pnpm format:check
-
-# Generate custom elements manifest
-pnpm cem
-```
-
 ### Component Generation
 
 ```bash
@@ -271,3 +178,28 @@ get #conditionalContent(): TemplateResult | typeof nothing {
 - Anything where the presence of content should determine visibility
 
 **Example:** See `confirmation-dialog.ts` (secondary button) and `multi-select-header.ts` (select-all button)
+
+### Customizable Text Pattern (Localization & Accessibility)
+
+Static, human-readable text in a component must always be overridable by the consumer, for localization and accessibility. Which mechanism to use depends on **where the string ends up**:
+
+- **Renders as DOM content** (headings, button labels, messages) → use a named **`<slot>` with literal fallback text**.
+  - Naming convention: `*-title`, `*-button-text`, `*-text` (kebab-case).
+  - Example: `related-apps-title`, `all-apps-title`, `view-all-apps-button-text` in `app-launcher.ts`; `primary-button-text`/`secondary-button-text` in `confirmation-dialog.ts`.
+  - Always add the slot to the `@slot` JSDoc block and to `#handleSlotChange`'s watched slot-name list so the fallback re-renders when slotted content is added/removed.
+- **Must be an attribute value** (`aria-label`, `placeholder`, and similar — a `<slot>` cannot fill these) → use a **String `@property`**.
+  - Naming convention: property suffix `Label`/`Text` (e.g. `closeAriaLabel`, `searchPlaceholder`); attribute is the kebab-case equivalent, e.g. `close-aria-label`, `search-placeholder`.
+  - Example: `launcherAriaLabel`, `backAriaLabel`, `closeAriaLabel`, `searchPlaceholder` in `app-launcher.ts`.
+- **Hybrid** — a string that must both render as DOM content *and* be read by an ARIA attribute (since ARIA attributes can't reference slotted DOM) → use a property as the slot's fallback **and** as the ARIA attribute's value.
+  - Example: `titleText`/`message` in `busy-indicator.ts` — used inside `<slot>` for fallback rendering and directly in `aria-label`/`aria-description`.
+
+**When adding any new static text to a component:**
+
+1. Decide slot vs. property using the rule above.
+2. Add `@slot`/`@property` JSDoc.
+3. If it's a slot, update `#handleSlotChange` to watch it.
+4. Add a storybook control/arg for it and wire it into the story's render.
+5. Update the component's `.mdx` docs (e.g. an Accessibility section) to mention it.
+6. Write tests: default value/fallback text, consumer override (property set or slot content), and — for slots — the `slotchange` re-render behavior.
+
+**Example:** See `app-launcher.ts`'s `header-title`, `empty-state-text`, `loading-text` slots and `searchPlaceholder` property.
