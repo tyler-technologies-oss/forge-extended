@@ -9,3 +9,6 @@ export * from './rte-bullet-list';
 export * from './rte-ordered-list';
 export * from './rte-undo-redo';
 export * from './rte-feature-divider';
+export * from './rte-heading';
+export * from './rte-align';
+export * from './rte-standard-tools';
