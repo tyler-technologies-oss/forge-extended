@@ -492,183 +492,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-confirmation-dialog'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ConfirmationDialogComponent",
-          "slots": [
-            {
-              "description": "The title of the dialog",
-              "name": "title"
-            },
-            {
-              "description": "The dialog message",
-              "name": "message"
-            },
-            {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
-            },
-            {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "isBusy",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
-            },
-            {
-              "kind": "field",
-              "name": "busyLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
-              },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "fieldName": "open"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog",
-              "fieldName": "description"
-            },
-            {
-              "name": "is-busy",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
-            },
-            {
-              "name": "busy-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-confirmation-dialog",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
-          "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponent",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "declarations": [
         {
@@ -998,6 +821,306 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ContentScaffoldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-content-scaffold'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ContentScaffoldComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the header section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-header-height"
+            },
+            {
+              "description": "Controls the background color of the header section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-header-background"
+            },
+            {
+              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-header-min-height"
+            },
+            {
+              "description": "Controls the height of the body section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-body-height"
+            },
+            {
+              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-body-padding-inline"
+            },
+            {
+              "description": "Controls the height of the footer section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-footer-height"
+            },
+            {
+              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-footer-background"
+            },
+            {
+              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-footer-min-height"
+            },
+            {
+              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
+              "name": "--forge-content-scaffold-footer-full-padding"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
+              "name": "header"
+            },
+            {
+              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
+              "name": "before-header-start"
+            },
+            {
+              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-start"
+            },
+            {
+              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-end"
+            },
+            {
+              "description": "The main body content that expands to fill available space.",
+              "name": "body"
+            },
+            {
+              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
+              "name": "footer"
+            },
+            {
+              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-start"
+            },
+            {
+              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-end"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-content-scaffold",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponentTagName",
+          "declaration": {
+            "name": "ContentScaffoldComponentTagName",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponent",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ConfirmationDialogComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-confirmation-dialog'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ConfirmationDialogComponent",
+          "slots": [
+            {
+              "description": "The title of the dialog",
+              "name": "title"
+            },
+            {
+              "description": "The dialog message",
+              "name": "message"
+            },
+            {
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
+            },
+            {
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
+            },
+            {
+              "kind": "field",
+              "name": "busyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+              },
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
+            },
+            {
+              "name": "busy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-confirmation-dialog",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponentTagName",
+          "declaration": {
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponent",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/count-card/count-card.ts",
       "declarations": [
         {
@@ -1188,129 +1311,6 @@
           "declaration": {
             "name": "CountCardComponent",
             "module": "src/lib/count-card/count-card.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ContentScaffoldComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-content-scaffold'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ContentScaffoldComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the height of the header section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-header-height"
-            },
-            {
-              "description": "Controls the background color of the header section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-header-background"
-            },
-            {
-              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-header-min-height"
-            },
-            {
-              "description": "Controls the height of the body section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-body-height"
-            },
-            {
-              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
-              "name": "--forge-content-scaffold-body-padding-inline"
-            },
-            {
-              "description": "Controls the height of the footer section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-footer-height"
-            },
-            {
-              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-footer-background"
-            },
-            {
-              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-footer-min-height"
-            },
-            {
-              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
-              "name": "--forge-content-scaffold-footer-full-padding"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
-              "name": "header"
-            },
-            {
-              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
-              "name": "before-header-start"
-            },
-            {
-              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-start"
-            },
-            {
-              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-end"
-            },
-            {
-              "description": "The main body content that expands to fill available space.",
-              "name": "body"
-            },
-            {
-              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
-              "name": "footer"
-            },
-            {
-              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-start"
-            },
-            {
-              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-end"
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-content-scaffold",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponentTagName",
-          "declaration": {
-            "name": "ContentScaffoldComponentTagName",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponent",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         }
       ]
@@ -1750,6 +1750,837 @@
           "declaration": {
             "name": "ResponsiveToolbarComponent",
             "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/editor-context.ts",
+      "declarations": [
+        {
+          "kind": "function",
+          "name": "isEditorInitialized",
+          "return": {
+            "type": {
+              "text": ""
+            }
+          },
+          "parameters": [
+            {
+              "name": "editor",
+              "type": {
+                "text": "Editor | null | undefined"
+              },
+              "description": "The editor instance to check"
+            }
+          ],
+          "description": "Type guard to check if the editor is initialized and ready to use."
+        },
+        {
+          "kind": "function",
+          "name": "isEditorEditable",
+          "return": {
+            "type": {
+              "text": ""
+            }
+          },
+          "parameters": [
+            {
+              "name": "context",
+              "type": {
+                "text": "EditorContext"
+              },
+              "description": "The editor context to check"
+            }
+          ],
+          "description": "Type guard to check if the editor context is in an editable state."
+        },
+        {
+          "kind": "variable",
+          "name": "editorContext",
+          "description": "The Lit context that will be provided by the Rich Text Editor component\nand consumed by sub-components"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "isEditorInitialized",
+          "declaration": {
+            "name": "isEditorInitialized",
+            "module": "src/lib/rich-text-editor/editor-context.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isEditorEditable",
+          "declaration": {
+            "name": "isEditorEditable",
+            "module": "src/lib/rich-text-editor/editor-context.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "editorContext",
+          "declaration": {
+            "name": "editorContext",
+            "module": "src/lib/rich-text-editor/editor-context.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/rich-text-content.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextContentComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rich-text-content'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextContentComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rich-text-content",
+          "customElement": true,
+          "summary": "Renders the editable content area for composed rich text editor layouts."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextContentComponentTagName",
+          "declaration": {
+            "name": "RichTextContentComponentTagName",
+            "module": "src/lib/rich-text-editor/rich-text-content.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextContentComponent",
+          "declaration": {
+            "name": "RichTextContentComponent",
+            "module": "src/lib/rich-text-editor/rich-text-content.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextContentComponent",
+            "module": "src/lib/rich-text-editor/rich-text-content.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/rich-text-context.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextContextComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rich-text-context'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextContextComponent",
+          "slots": [
+            {
+              "description": "The default slot for toolbar components and forge-rich-text-content.",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "editorId",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'editor'",
+              "description": "The ID of the element to instantiate the editor against.",
+              "attribute": "editor-id"
+            },
+            {
+              "kind": "field",
+              "name": "content",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The HTML content of the editor.",
+              "attribute": "content"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the editor is disabled.",
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "readOnly",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the editor is in readonly mode.",
+              "attribute": "readonly"
+            },
+            {
+              "kind": "field",
+              "name": "maxLength",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "0",
+              "description": "Maximum character length allowed. 0 means no limit.",
+              "attribute": "max-length"
+            },
+            {
+              "kind": "field",
+              "name": "errorMessage",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "Error message to display when validation fails.",
+              "attribute": "error-message"
+            },
+            {
+              "kind": "field",
+              "name": "showCharacterCount",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to show character count below the editor.",
+              "attribute": "show-character-count"
+            },
+            {
+              "kind": "field",
+              "name": "showWordCount",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to show word count below the editor.",
+              "attribute": "show-word-count"
+            },
+            {
+              "kind": "field",
+              "name": "allowPasteFormatting",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Whether to allow pasted content to retain formatting. When false, all pasted content is treated as plain text.",
+              "attribute": "allow-paste-formatting"
+            },
+            {
+              "kind": "field",
+              "name": "allowPasteImages",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to allow images to be pasted into the editor.",
+              "attribute": "allow-paste-images"
+            },
+            {
+              "kind": "field",
+              "name": "editorContext",
+              "type": {
+                "text": "EditorContext"
+              },
+              "privacy": "public",
+              "default": "{ editor: null, disabled: false, readOnly: false, content: '', isActive(identifier: string | Record<string, unknown>, attributes?: Record<string, unknown>) { // eslint-disable-next-line @typescript-eslint/no-explicit-any return this.editor?.isActive(identifier as any, attributes as any) ?? false; }, isEditable() { return !this.disabled && !this.readOnly && !!this.editor; }, setEditorElement: this.#setEditorElement.bind(this), registerFeature: this.#registerFeature.bind(this), announce: this.#announce.bind(this) }",
+              "description": "Provide the editor context to child components."
+            },
+            {
+              "kind": "method",
+              "name": "toJSON",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "object | undefined"
+                }
+              },
+              "description": "Returns the editor content as JSON. Returns undefined if editor is not initialized or if an error occurs."
+            },
+            {
+              "kind": "method",
+              "name": "toHTML",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              },
+              "description": "Returns the editor content as HTML. Returns empty string if editor is not initialized or if an error occurs.\nThe output is sanitized to prevent XSS attacks."
+            },
+            {
+              "kind": "method",
+              "name": "toMarkdown",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "string"
+                }
+              },
+              "description": "Returns the editor content as Markdown. Returns empty string if editor is not initialized or if an error occurs."
+            },
+            {
+              "kind": "field",
+              "name": "isInitialized",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "description": "Returns whether the editor has been successfully initialized.",
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "initializationError",
+              "type": {
+                "text": "string | null"
+              },
+              "privacy": "public",
+              "description": "Returns the initialization error message, if any.",
+              "readonly": true
+            }
+          ],
+          "events": [
+            {
+              "name": "validation",
+              "type": {
+                "text": "CustomEvent<RichTextEditorValidationEventDetail>"
+              },
+              "description": "Fired when validation state changes. The detail contains validation status and error messages."
+            },
+            {
+              "name": "change",
+              "type": {
+                "text": "CustomEvent<RichTextEditorChangeEventDetail>"
+              },
+              "description": "Fired when the content of the editor changes. The detail contains the editor content in ProseMirror JSON format."
+            },
+            {
+              "name": "initialized",
+              "type": {
+                "text": "CustomEvent<void>"
+              },
+              "description": "Fired when the editor has been successfully initialized."
+            },
+            {
+              "name": "initialization-error",
+              "type": {
+                "text": "CustomEvent<RichTextEditorInitializationErrorEventDetail>"
+              },
+              "description": "Fired when editor initialization fails. The detail contains the error message."
+            },
+            {
+              "name": "error",
+              "type": {
+                "text": "CustomEvent<RichTextEditorErrorEventDetail>"
+              },
+              "description": "Fired when a non-fatal error occurs during editor operation. The detail contains context and error message."
+            }
+          ],
+          "attributes": [
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The ID of the element to instantiate the editor against.",
+              "name": "editor-id",
+              "default": "'editor'",
+              "fieldName": "editorId"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The HTML content of the editor.",
+              "name": "content",
+              "default": "''",
+              "fieldName": "content"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the editor is disabled.",
+              "name": "disabled",
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the editor is in readonly mode.",
+              "name": "readonly",
+              "default": "false",
+              "fieldName": "readOnly"
+            },
+            {
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum character length allowed. 0 means no limit.",
+              "name": "max-length",
+              "default": "0",
+              "fieldName": "maxLength"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Error message to display when validation fails.",
+              "name": "error-message",
+              "default": "''",
+              "fieldName": "errorMessage"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether to show character count below the editor.",
+              "name": "show-character-count",
+              "default": "false",
+              "fieldName": "showCharacterCount"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether to show word count below the editor.",
+              "name": "show-word-count",
+              "default": "false",
+              "fieldName": "showWordCount"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether to allow pasted content to retain formatting. When false, all pasted content is treated as plain text.",
+              "name": "allow-paste-formatting",
+              "default": "true",
+              "fieldName": "allowPasteFormatting"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether to allow images to be pasted into the editor.",
+              "name": "allow-paste-images",
+              "default": "false",
+              "fieldName": "allowPasteImages"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rich-text-context",
+          "customElement": true,
+          "summary": "Provides the editor context for composed rich text editor layouts where toolbar and content are separated."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextContextComponentTagName",
+          "declaration": {
+            "name": "RichTextContextComponentTagName",
+            "module": "src/lib/rich-text-editor/rich-text-context.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextContextComponent",
+          "declaration": {
+            "name": "RichTextContextComponent",
+            "module": "src/lib/rich-text-editor/rich-text-context.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextContextComponent",
+            "module": "src/lib/rich-text-editor/rich-text-context.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/rich-text-editor.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RichTextEditorComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rich-text-editor'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RichTextEditorComponent",
+          "slots": [
+            {
+              "description": "The default slot is reserved for feature components (toolbar buttons like forge-rte-standard-tools, forge-rte-code, forge-rte-link, etc.).",
+              "name": ""
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "content",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The HTML content of the editor.",
+              "attribute": "content"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the editor is disabled.",
+              "attribute": "disabled",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "readOnly",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the editor is in readonly mode.",
+              "attribute": "readonly",
+              "reflects": true
+            },
+            {
+              "kind": "field",
+              "name": "maxLength",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "0",
+              "description": "Maximum character length allowed. 0 means no limit.",
+              "attribute": "max-length"
+            },
+            {
+              "kind": "field",
+              "name": "errorMessage",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "Error message to display when validation fails.",
+              "attribute": "error-message"
+            },
+            {
+              "kind": "field",
+              "name": "showCharacterCount",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to show character count below the editor.",
+              "attribute": "show-character-count"
+            },
+            {
+              "kind": "field",
+              "name": "showWordCount",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to show word count below the editor.",
+              "attribute": "show-word-count"
+            },
+            {
+              "kind": "field",
+              "name": "allowPasteFormatting",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Whether to allow pasted content to retain formatting. When false, all pasted content is treated as plain text.",
+              "attribute": "allow-paste-formatting"
+            },
+            {
+              "kind": "field",
+              "name": "allowPasteImages",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether to allow images to be pasted into the editor.",
+              "attribute": "allow-paste-images"
+            },
+            {
+              "kind": "method",
+              "name": "toJSON",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "description": "Returns the editor content as JSON in ProseMirror format.\nReturns undefined if the editor is not initialized or if an error occurs."
+            },
+            {
+              "kind": "method",
+              "name": "toHTML",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "description": "Returns the editor content as an HTML string.\nReturns an empty string if the editor is not initialized or if an error occurs."
+            },
+            {
+              "kind": "method",
+              "name": "toMarkdown",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "description": "Returns the editor content as a Markdown string.\nReturns an empty string if the editor is not initialized or if an error occurs."
+            },
+            {
+              "kind": "field",
+              "name": "isInitialized",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "description": "Returns whether the editor has been successfully initialized.",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "readonly": true
+            },
+            {
+              "kind": "field",
+              "name": "initializationError",
+              "type": {
+                "text": "string | null"
+              },
+              "privacy": "public",
+              "description": "Returns the initialization error message, if any.",
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "readonly": true
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<RichTextEditorChangeEventDetail>"
+              },
+              "description": "Fired when the content of the editor changes. The detail contains the editor content in ProseMirror JSON format.",
+              "name": "change"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<RichTextEditorValidationEventDetail>"
+              },
+              "description": "Fired when validation state changes. The detail contains validation status and error messages.",
+              "name": "validation"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<void>"
+              },
+              "description": "Fired when the editor has been successfully initialized.",
+              "name": "initialized"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<RichTextEditorInitializationErrorEventDetail>"
+              },
+              "description": "Fired when editor initialization fails. The detail contains the error message.",
+              "name": "initialization-error"
+            },
+            {
+              "type": {
+                "text": "CustomEvent<RichTextEditorErrorEventDetail>"
+              },
+              "description": "Fired when a non-fatal error occurs during editor operation. The detail contains context and error message.",
+              "name": "error"
+            }
+          ],
+          "attributes": [
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The HTML content of the editor.",
+              "name": "content",
+              "default": "''",
+              "fieldName": "content"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the editor is disabled.",
+              "name": "disabled",
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the editor is in readonly mode.",
+              "name": "readonly",
+              "default": "false",
+              "fieldName": "readOnly"
+            },
+            {
+              "type": {
+                "text": "number"
+              },
+              "description": "Maximum character length allowed. 0 means no limit.",
+              "name": "max-length",
+              "default": "0",
+              "fieldName": "maxLength"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "Error message to display when validation fails.",
+              "name": "error-message",
+              "default": "''",
+              "fieldName": "errorMessage"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether to show character count below the editor.",
+              "name": "show-character-count",
+              "default": "false",
+              "fieldName": "showCharacterCount"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether to show word count below the editor.",
+              "name": "show-word-count",
+              "default": "false",
+              "fieldName": "showWordCount"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether to allow pasted content to retain formatting. When false, all pasted content is treated as plain text.",
+              "name": "allow-paste-formatting",
+              "default": "true",
+              "fieldName": "allowPasteFormatting"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether to allow images to be pasted into the editor.",
+              "name": "allow-paste-images",
+              "default": "false",
+              "fieldName": "allowPasteImages"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rich-text-editor",
+          "customElement": true,
+          "summary": "A rich text editor component powered by TipTap that provides a flexible, component-based\narchitecture for composing editing features."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RichTextEditorComponentTagName",
+          "declaration": {
+            "name": "RichTextEditorComponentTagName",
+            "module": "src/lib/rich-text-editor/rich-text-editor.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RichTextEditorComponent",
+          "declaration": {
+            "name": "RichTextEditorComponent",
+            "module": "src/lib/rich-text-editor/rich-text-editor.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RichTextEditorComponent",
+            "module": "src/lib/rich-text-editor/rich-text-editor.ts"
           }
         }
       ]
@@ -2262,6 +3093,179 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/extensions/markdown-serializer.ts",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Serializes ProseMirror JSON content to Markdown format.\n\nSupports all rich text editor features:\n- Text formatting: bold, italic, underline, strikethrough, code\n- Headings: H1, H2, H3\n- Lists: bullet lists, ordered lists\n- Links\n- Text alignment (converted to HTML comments for preservation)\n- Paragraphs and line breaks",
+          "name": "MarkdownSerializer",
+          "members": [
+            {
+              "kind": "method",
+              "name": "serialize",
+              "privacy": "public",
+              "static": true,
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "parameters": [
+                {
+                  "name": "json",
+                  "type": {
+                    "text": "JSONContent"
+                  },
+                  "description": "The ProseMirror JSON content from editor.getJSON()"
+                }
+              ],
+              "description": "Converts ProseMirror JSON content to Markdown string."
+            },
+            {
+              "kind": "method",
+              "name": "escape",
+              "privacy": "public",
+              "static": true,
+              "return": {
+                "type": {
+                  "text": ""
+                }
+              },
+              "parameters": [
+                {
+                  "name": "text",
+                  "type": {
+                    "text": "string"
+                  },
+                  "description": "The text to escape"
+                }
+              ],
+              "description": "Escapes special Markdown characters in text content.\nUsed for text that should not be interpreted as Markdown."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MarkdownSerializer",
+          "declaration": {
+            "name": "MarkdownSerializer",
+            "module": "src/lib/rich-text-editor/extensions/markdown-serializer.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/extensions/paste-handler.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "PasteHandler",
+          "description": "Extension that provides enhanced paste handling with sanitization and formatting options.\n\nFeatures:\n- Strip dangerous HTML (scripts, iframes, etc.)\n- Control whether formatting is preserved or stripped\n- Control whether images are allowed\n- Keyboard shortcut (Ctrl/Cmd+Shift+V) for plain text paste"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "PasteHandler",
+          "declaration": {
+            "name": "PasteHandler",
+            "module": "src/lib/rich-text-editor/extensions/paste-handler.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/extensions/sanitize-utils.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "DANGEROUS_PROTOCOLS",
+          "type": {
+            "text": "array"
+          },
+          "default": "['javascript:', 'data:', 'vbscript:', 'file:', 'about:', 'blob:']",
+          "description": "Shared sanitization utilities for the rich text editor.\nSingle source of truth for protocol blocklists, HTML sanitization, and JSON sanitization."
+        },
+        {
+          "kind": "function",
+          "name": "sanitizeHTML",
+          "return": {
+            "type": {
+              "text": "string"
+            }
+          },
+          "parameters": [
+            {
+              "name": "html",
+              "type": {
+                "text": "string"
+              }
+            },
+            {
+              "name": "allowImages",
+              "default": "false"
+            }
+          ]
+        },
+        {
+          "kind": "function",
+          "name": "sanitizeJSON",
+          "return": {
+            "type": {
+              "text": ""
+            }
+          },
+          "parameters": [
+            {
+              "name": "json",
+              "type": {
+                "text": "unknown"
+              },
+              "description": "The ProseMirror JSON content to sanitize"
+            }
+          ],
+          "description": "Sanitizes a ProseMirror JSON object.\n- Deep-clones before mutating so the caller's object is never corrupted.\n- Validates structure depth and node count to prevent DoS.\n- Blocks dangerous protocols in link marks (raw and URL-encoded variants)."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "DANGEROUS_PROTOCOLS",
+          "declaration": {
+            "name": "DANGEROUS_PROTOCOLS",
+            "module": "src/lib/rich-text-editor/extensions/sanitize-utils.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "sanitizeHTML",
+          "declaration": {
+            "name": "sanitizeHTML",
+            "module": "src/lib/rich-text-editor/extensions/sanitize-utils.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "sanitizeJSON",
+          "declaration": {
+            "name": "sanitizeJSON",
+            "module": "src/lib/rich-text-editor/extensions/sanitize-utils.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/rich-text-editor-feature.ts",
+      "declarations": [],
+      "exports": []
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
@@ -2320,9 +3324,193 @@
           }
         }
       ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/core/feature-styles.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "featureHostStyles",
+          "type": {
+            "text": "CSSResult"
+          },
+          "default": "css` :host { display: contents; } `"
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "featureHostStyles",
+          "declaration": {
+            "name": "featureHostStyles",
+            "module": "src/lib/rich-text-editor/features/core/feature-styles.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/rich-text-editor/features/core/rich-text-feature-button.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "RteToolButtonComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-rte-tool-button'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "RteToolButtonComponent",
+          "members": [
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Tool'",
+              "description": "The accessible label for the button.",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "icon",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "description": "The icon name from Tyler Icons to display.",
+              "attribute": "icon"
+            },
+            {
+              "kind": "field",
+              "name": "disabled",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the button is disabled.",
+              "attribute": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "active",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the button is in an active/pressed state.",
+              "attribute": "active"
+            },
+            {
+              "kind": "field",
+              "name": "keyboardShortcut",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "description": "The keyboard shortcut for this tool (e.g., \"Control+B\").",
+              "attribute": "keyboard-shortcut"
+            }
+          ],
+          "events": [
+            {
+              "name": "forge-rte-tool-toggle",
+              "type": {
+                "text": "CustomEvent<boolean>"
+              },
+              "description": "Fired when the button is clicked or activated. The detail contains the toggle state."
+            }
+          ],
+          "attributes": [
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The accessible label for the button.",
+              "name": "label",
+              "default": "'Tool'",
+              "fieldName": "label"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The icon name from Tyler Icons to display.",
+              "name": "icon",
+              "fieldName": "icon"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the button is disabled.",
+              "name": "disabled",
+              "default": "false",
+              "fieldName": "disabled"
+            },
+            {
+              "type": {
+                "text": "boolean"
+              },
+              "description": "Whether the button is in an active/pressed state.",
+              "name": "active",
+              "default": "false",
+              "fieldName": "active"
+            },
+            {
+              "type": {
+                "text": "string"
+              },
+              "description": "The keyboard shortcut for this tool (e.g., \"Control+B\").",
+              "name": "keyboard-shortcut",
+              "fieldName": "keyboardShortcut"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-rte-tool-button",
+          "customElement": true,
+          "summary": "An internal toolbar button component used by rich text editor feature components."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "RteToolButtonComponentTagName",
+          "declaration": {
+            "name": "RteToolButtonComponentTagName",
+            "module": "src/lib/rich-text-editor/features/core/rich-text-feature-button.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "RteToolButtonComponent",
+          "declaration": {
+            "name": "RteToolButtonComponent",
+            "module": "src/lib/rich-text-editor/features/core/rich-text-feature-button.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "RteToolButtonComponent",
+            "module": "src/lib/rich-text-editor/features/core/rich-text-feature-button.ts"
+          }
+        }
+      ]
     }
   ],
-  "branchName": "main",
+  "branchName": "feat",
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",
@@ -2352,22 +3540,6 @@
       "path": "src/lib/app-layout/app-layout.ts",
       "lineNumber": 92
     },
-    "ConfirmationDialogActionEventReason": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 28
-    },
-    "ConfirmationDialogActionEventData": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 30
-    },
-    "ConfirmationDialogProperties": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 35
-    },
-    "ConfirmationDialogComponent": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 55
-    },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 26
@@ -2384,6 +3556,26 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 40
     },
+    "ContentScaffoldComponent": {
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "lineNumber": 37
+    },
+    "ConfirmationDialogActionEventReason": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 28
+    },
+    "ConfirmationDialogActionEventData": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 30
+    },
+    "ConfirmationDialogProperties": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 35
+    },
+    "ConfirmationDialogComponent": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 55
+    },
     "CountCardTheme": {
       "path": "src/lib/count-card/count-card.ts",
       "lineNumber": 16
@@ -2391,10 +3583,6 @@
     "CountCardComponent": {
       "path": "src/lib/count-card/count-card.ts",
       "lineNumber": 71
-    },
-    "ContentScaffoldComponent": {
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "lineNumber": 37
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
@@ -2415,6 +3603,38 @@
     "ResponsiveToolbarComponent": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 48
+    },
+    "RichTextEditorChangeEventDetail": {
+      "path": "src/lib/rich-text-editor/editor-context.ts",
+      "lineNumber": 9
+    },
+    "RichTextEditorValidationEventDetail": {
+      "path": "src/lib/rich-text-editor/editor-context.ts",
+      "lineNumber": 18
+    },
+    "RichTextEditorInitializationErrorEventDetail": {
+      "path": "src/lib/rich-text-editor/editor-context.ts",
+      "lineNumber": 29
+    },
+    "RichTextEditorErrorEventDetail": {
+      "path": "src/lib/rich-text-editor/editor-context.ts",
+      "lineNumber": 38
+    },
+    "EditorContext": {
+      "path": "src/lib/rich-text-editor/editor-context.ts",
+      "lineNumber": 48
+    },
+    "RichTextContentComponent": {
+      "path": "src/lib/rich-text-editor/rich-text-content.ts",
+      "lineNumber": 29
+    },
+    "RichTextContextComponent": {
+      "path": "src/lib/rich-text-editor/rich-text-context.ts",
+      "lineNumber": 84
+    },
+    "RichTextEditorComponent": {
+      "path": "src/lib/rich-text-editor/rich-text-editor.ts",
+      "lineNumber": 65
     },
     "StructuredCardComponent": {
       "path": "src/lib/structured-card/structured-card.ts",
@@ -2444,9 +3664,29 @@
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "lineNumber": 26
     },
+    "MarkAttrs": {
+      "path": "src/lib/rich-text-editor/extensions/markdown-serializer.ts",
+      "lineNumber": 3
+    },
+    "MarkdownSerializer": {
+      "path": "src/lib/rich-text-editor/extensions/markdown-serializer.ts",
+      "lineNumber": 19
+    },
+    "PasteHandlerOptions": {
+      "path": "src/lib/rich-text-editor/extensions/paste-handler.ts",
+      "lineNumber": 6
+    },
+    "RichTextEditorFeature": {
+      "path": "src/lib/rich-text-editor/features/rich-text-editor-feature.ts",
+      "lineNumber": 3
+    },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "lineNumber": 21
+    },
+    "RteToolButtonComponent": {
+      "path": "src/lib/rich-text-editor/features/core/rich-text-feature-button.ts",
+      "lineNumber": 45
     }
   }
 }

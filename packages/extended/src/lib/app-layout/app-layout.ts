@@ -108,10 +108,10 @@ export class AppLayoutComponent extends LitElement {
   @queryAssignedNodes({ slot: 'navigation', flatten: true })
   private _navigationNodes!: Node[];
 
-  @property({ type: String, attribute: 'app-title' })
+  @property({ attribute: 'app-title' })
   public appTitle = '';
 
-  @property({ type: String, attribute: 'app-title-href' })
+  @property({ attribute: 'app-title-href' })
   public appTitleHref = '';
 
   @property({ type: Number })

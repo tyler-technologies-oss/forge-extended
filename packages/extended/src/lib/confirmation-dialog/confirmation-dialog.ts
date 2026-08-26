@@ -92,7 +92,7 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
   /**
    * ARIA label for the the busy indicator when loading
    */
-  @property({ type: String, attribute: 'busy-label' })
+  @property({ attribute: 'busy-label' })
   public busyLabel = 'Loading';
 
   @queryAssignedNodes({ slot: 'title', flatten: true })
