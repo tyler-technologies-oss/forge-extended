@@ -1,4 +1,5 @@
 import { provide } from '@lit/context';
+import { LiveAnnouncer } from '@tylertech/forge-core';
 import { type AnyExtension, type Content, Editor as TipTapEditor } from '@tiptap/core';
 import { Document } from '@tiptap/extension-document';
 import { Text } from '@tiptap/extension-text';
@@ -85,11 +86,11 @@ export class RichTextContextComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
   /** The ID of the element to instantiate the editor against. */
-  @property({ type: String, attribute: 'editor-id' })
+  @property({ attribute: 'editor-id' })
   public editorId = 'editor';
 
   /** The content of the editor. */
-  @property({ type: String })
+  @property()
   public content = '';
 
   /** Whether the editor is disabled. */
@@ -105,7 +106,7 @@ export class RichTextContextComponent extends LitElement {
   public maxLength = 0;
 
   /** Error message to display when validation fails. */
-  @property({ type: String, attribute: 'error-message' })
+  @property({ attribute: 'error-message' })
   public errorMessage = '';
 
   /** Whether to show character count below the editor. */
@@ -151,7 +152,6 @@ export class RichTextContextComponent extends LitElement {
   #featureInstances: Set<RichTextEditorFeature> = new Set();
   #initFrame: number | undefined;
   #editorElement: HTMLElement | undefined;
-  #announcementCallback: ((message: string) => Promise<void>) | undefined;
 
   /**
    * Sets the editor element that the editor will be initialized against.
@@ -172,24 +172,8 @@ export class RichTextContextComponent extends LitElement {
     }
   }
 
-  /**
-   * Sets the callback for announcing messages to screen readers.
-   *
-   * @param callback The callback function to invoke when an announcement should be made.
-   */
-  #setAnnouncementCallback(callback: (message: string) => Promise<void>): void {
-    this.#announcementCallback = callback;
-  }
-
-  /**
-   * Announces a message to screen readers via ARIA live region.
-   *
-   * @param message The message to announce.
-   */
-  async #announce(message: string): Promise<void> {
-    if (this.#announcementCallback) {
-      await this.#announcementCallback(message);
-    }
+  #announce(message: string): void {
+    LiveAnnouncer.instance.announce(message, 'polite');
   }
 
   /**
@@ -228,7 +212,6 @@ export class RichTextContextComponent extends LitElement {
     },
     setEditorElement: this.#setEditorElement.bind(this),
     registerFeature: this.#registerFeature.bind(this),
-    setAnnouncementCallback: this.#setAnnouncementCallback.bind(this),
     announce: this.#announce.bind(this)
   };
 
@@ -264,12 +247,10 @@ export class RichTextContextComponent extends LitElement {
 
         // Announce state changes to screen readers
         if (this.hasUpdated && changedProperties.has('disabled')) {
-          const message = this.disabled ? 'Editor disabled' : 'Editor enabled';
-          this.#announce(message);
+          this.#announce(this.disabled ? 'Editor disabled' : 'Editor enabled');
         }
         if (this.hasUpdated && changedProperties.has('readOnly')) {
-          const message = this.readOnly ? 'Editor read-only' : 'Editor editable';
-          this.#announce(message);
+          this.#announce(this.readOnly ? 'Editor read-only' : 'Editor editable');
         }
       } catch (error) {
         this.#handleEditorError('Failed to update editor state', error);

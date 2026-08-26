@@ -35,7 +35,7 @@ export class MultiSelectHeaderComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
   /** The text to display in the header (typically showing selection count) */
-  @property({ type: String })
+  @property()
   public text = '';
 
   /** Hides the bottom border */

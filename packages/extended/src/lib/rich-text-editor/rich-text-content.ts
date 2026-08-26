@@ -34,11 +34,7 @@ export class RichTextContentComponent extends LitElement {
   @consume({ context: editorContext, subscribe: true })
   private readonly _editorContext!: EditorContext;
 
-  @state()
-  private _announcement = '';
-
   readonly #editorElementRef = createRef<HTMLElement>();
-  #announcementTimeout: number | undefined;
 
   public firstUpdated(_changedProperties: PropertyValues<this>): void {
     const element = this.#editorElementRef.value;
@@ -47,36 +43,6 @@ export class RichTextContentComponent extends LitElement {
       return;
     }
     this._editorContext.setEditorElement(element as HTMLElement);
-    this._editorContext.setAnnouncementCallback(this.#announceToScreenReader.bind(this));
-  }
-
-  public override disconnectedCallback(): void {
-    if (this.#announcementTimeout) {
-      window.clearTimeout(this.#announcementTimeout);
-      this.#announcementTimeout = undefined;
-    }
-    super.disconnectedCallback();
-  }
-
-  /**
-   * Announces a message to screen readers via ARIA live region.
-   * The announcement is cleared after 1 second to prevent stale messages.
-   */
-  async #announceToScreenReader(message: string): Promise<void> {
-    if (this.#announcementTimeout) {
-      window.clearTimeout(this.#announcementTimeout);
-    }
-
-    this._announcement = message;
-    await this.requestUpdate();
-    await this.updateComplete;
-
-    this.#announcementTimeout = window.setTimeout(async () => {
-      this._announcement = '';
-      await this.requestUpdate();
-      await this.updateComplete;
-      this.#announcementTimeout = undefined;
-    }, 1000);
   }
 
   public override render(): TemplateResult {
@@ -94,7 +60,6 @@ export class RichTextContentComponent extends LitElement {
           aria-multiline="true"
           aria-readonly=${isReadonly ? 'true' : 'false'}
           aria-disabled=${isDisabled ? 'true' : 'false'}></div>
-        <div class="sr-only" role="status" aria-live="polite" aria-atomic="true">${this._announcement}</div>
         <forge-focus-indicator inward></forge-focus-indicator>
       </div>
     `;
