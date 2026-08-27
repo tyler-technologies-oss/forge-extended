@@ -284,7 +284,7 @@ async function createFixture(options: LinkFixtureOptions = {}): Promise<LinkFixt
     button: () =>
       linkFeature.shadowRoot!.querySelector('forge-rte-tool-button')!.shadowRoot!.querySelector('forge-icon-button')!,
     popover: () => linkFeature.shadowRoot!.querySelector('forge-popover')!,
-    getInput: () => linkFeature.shadowRoot!.querySelector('input')!,
+    getInput: () => linkFeature.shadowRoot!.querySelector('#link-url')!,
     getApplyButton: () => {
       const buttons = Array.from(linkFeature.shadowRoot!.querySelectorAll('forge-button'));
       return buttons.find(btn => btn.textContent?.includes('Apply') || btn.textContent?.includes('Update')) || null;
@@ -297,7 +297,7 @@ async function createFixture(options: LinkFixtureOptions = {}): Promise<LinkFixt
       const buttons = Array.from(linkFeature.shadowRoot!.querySelectorAll('forge-button'));
       return buttons.find(btn => btn.textContent?.includes('Cancel')) || null;
     },
-    getErrorMessage: () => linkFeature.shadowRoot!.querySelector('.error-message'),
+    getErrorMessage: () => linkFeature.shadowRoot!.querySelector('#link-error'),
     async clickButton() {
       this.button().click();
       await this.waitForUpdate();
@@ -333,19 +333,15 @@ describe('RTE Link - Keyboard navigation', () => {
   it.skip('should pre-fill input with existing link URL', async () => {});
 });
 
-// Helper: set _linkUrl directly on the component and wait for Lit to re-render.
-// This drives validation without opening the popover, avoiding the Forge 3.12.1 bug.
+// Helper: type a URL into the URL input and blur it, mirroring how a real user triggers
+// validation (validation is gated on blur - see #handleLinkBlur in rte-link.ts).
 async function setLinkUrl(linkFeature: RichTextFeatureLinkComponent, url: string): Promise<void> {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (linkFeature as any)._linkUrl = url;
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  (linkFeature as any)._validateUrl?.call(linkFeature) ?? (linkFeature as any)['#validateUrl']?.();
-  // Drive via the rendered input's input event so the component's own handler runs
   await linkFeature.updateComplete;
-  const input = linkFeature.shadowRoot?.querySelector('input');
+  const input = linkFeature.shadowRoot?.querySelector<HTMLInputElement>('#link-url');
   if (input) {
     input.value = url;
     input.dispatchEvent(new Event('input', { bubbles: true }));
+    input.dispatchEvent(new Event('blur', { bubbles: true }));
   }
   await linkFeature.updateComplete;
 }
@@ -487,6 +483,32 @@ describe('RTE Link - Validation', () => {
 
     expect(editor.getHTML()).not.to.include('href=');
   });
+
+  it('should keep the sr-only error live region mounted at all times', async () => {
+    const harness = await createFixture();
+
+    const alertRegion = harness.linkFeature.shadowRoot!.querySelector('.sr-only[role="alert"]');
+    expect(alertRegion, 'live region should exist before any validation error occurs').to.exist;
+
+    await setLinkUrl(harness.linkFeature, 'javascript:alert(1)');
+
+    // Same element instance is still in the DOM - only its content changed - so screen readers
+    // reliably pick up the mutation instead of missing a freshly-inserted alert node.
+    expect(harness.linkFeature.shadowRoot!.querySelector('.sr-only[role="alert"]')).to.equal(alertRegion);
+    expect(alertRegion!.textContent).to.include('Invalid protocol');
+  });
+
+  it('should announce non-ASCII warnings through a permanently mounted status region', async () => {
+    const harness = await createFixture();
+
+    const statusRegion = harness.linkFeature.shadowRoot!.querySelector('.sr-only[role="status"]');
+    expect(statusRegion).to.exist;
+
+    await setLinkUrl(harness.linkFeature, 'https://xn--exmple-cua.com');
+
+    expect(harness.linkFeature.shadowRoot!.querySelector('.sr-only[role="status"]')).to.equal(statusRegion);
+    expect(statusRegion!.textContent).to.include('international characters');
+  });
 });
 
 describe('RTE Link - Auto Protocol', () => {
@@ -593,5 +615,88 @@ describe('RTE Link - Security Attributes', () => {
     const linkExt = harness.linkFeature.extensions[0];
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect((linkExt.options as any).openOnClick).to.be.false;
+  });
+});
+
+// Helper: find the document position of the first occurrence of the given text.
+function findTextPosition(editor: Editor, text: string): number {
+  let pos = -1;
+  editor.state.doc.descendants((node, nodePos) => {
+    if (pos === -1 && node.isText && node.text === text) {
+      pos = nodePos + 1;
+    }
+  });
+  return pos;
+}
+
+describe('RTE Link - Editing link text within a paragraph', () => {
+  it('should pre-fill display text with only the linked run, not the whole paragraph', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>Click <a href="https://example.com">here</a> for more info</p>');
+    editor.commands.setTextSelection(findTextPosition(editor, 'here'));
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((harness.linkFeature as any)._linkText).to.equal('here');
+  });
+
+  it('should replace only the linked run when its display text is changed', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent('<p>Click <a href="https://example.com">here</a> for more info</p>');
+    editor.commands.setTextSelection(findTextPosition(editor, 'here'));
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (harness.linkFeature as any)._linkText = 'CHANGED';
+    await harness.linkFeature.updateComplete;
+
+    harness.getApplyButton()?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const output = editor.getHTML();
+    expect(output).to.include('Click ');
+    expect(output).to.include('for more info');
+    expect(output).to.include('>CHANGED<');
+    expect(output).not.to.include('>here<');
+  });
+
+  it('should only update the targeted link when multiple links share a paragraph', async () => {
+    const harness = await createFixture();
+    const editor = await harness.getEditor();
+
+    editor.commands.setContent(
+      '<p>See <a href="https://a.com">alpha</a> and <a href="https://b.com">bravo</a> here</p>'
+    );
+    editor.commands.setTextSelection(findTextPosition(editor, 'alpha'));
+    await harness.waitForUpdate();
+
+    await harness.clickButton();
+    await harness.waitForUpdate();
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const linkFeature = harness.linkFeature as any;
+    expect(linkFeature._linkText).to.equal('alpha');
+
+    linkFeature._linkText = 'ALPHA-CHANGED';
+    await harness.linkFeature.updateComplete;
+
+    harness.getApplyButton()?.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+    await harness.waitForUpdate();
+
+    const output = editor.getHTML();
+    expect(output).to.include('href="https://a.com"');
+    expect(output).to.include('>ALPHA-CHANGED<');
+    expect(output).to.include('href="https://b.com"');
+    expect(output).to.include('>bravo<');
   });
 });

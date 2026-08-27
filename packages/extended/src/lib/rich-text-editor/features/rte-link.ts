@@ -1,4 +1,5 @@
 import { consume } from '@lit/context';
+import { getMarkRange } from '@tiptap/core';
 import { Link } from '@tiptap/extension-link';
 import { defineButtonComponent, IconRegistry, IPopoverToggleEventData } from '@tylertech/forge';
 import { tylIconLink } from '@tylertech/tyler-icons';
@@ -69,6 +70,18 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
       .warning-message {
         color: var(--forge-theme-warning, #b45309);
       }
+
+      .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border-width: 0;
+      }
     `
   ];
 
@@ -127,6 +140,7 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
   private _linkUrlInput!: HTMLInputElement;
 
   #originalLinkText = '';
+  #originalHref = '';
 
   public firstUpdated(_changedProperties: PropertyValues<this>): void {
     this._editorContext?.registerFeature(this);
@@ -182,13 +196,16 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
               aria-describedby=${ifDefined(this._validationError ? 'link-error' : undefined)}
               aria-invalid=${!!this._validationError} />
             ${this._validationError
-              ? html`<div id="link-error" role="alert" slot="support-text">${this._validationError}</div>`
+              ? html`<div id="link-error" slot="support-text">${this._validationError}</div>`
               : this._validationWarning
-                ? html`<div id="link-error" class="warning-message" role="status" slot="support-text">
+                ? html`<div id="link-error" class="warning-message" slot="support-text">
                     ${this._validationWarning}
                   </div>`
                 : ''}
           </forge-text-field>
+          <!-- Kept permanently mounted so screen readers reliably announce content changes -->
+          <div class="sr-only" role="alert" aria-atomic="true">${this._validationError}</div>
+          <div class="sr-only" role="status" aria-atomic="true">${this._validationWarning}</div>
           <div class="button-group">
             <forge-button variant="tonal" @click=${this.#applyLink} ?disabled=${!!this._validationError}>
               ${isEditingExistingLink ? 'Update' : 'Apply'}
@@ -232,6 +249,7 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
 
   #handleLinkBlur(): void {
     this._urlTouched = true;
+    this.#validateUrl();
   }
 
   #validateUrl(): void {
@@ -352,18 +370,17 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
         let success = false;
 
         if (isEditingExistingLink) {
-          // Editing an existing link: update the entire link node's text and URL
-          const editorState = editor.state;
-          const { $head } = editorState.selection;
-          const linkNode = $head.node($head.depth);
-          if (isLinkTextChanged) {
+          // Editing an existing link: replace just the linked text run, not the whole block.
+          // getMarkRange scopes to the specific link mark under the cursor (matched by its
+          // original href), so it won't bleed into other links in the same paragraph.
+          const { $head } = editor.state.selection;
+          const linkType = editor.schema.marks[Link.name];
+          const range = getMarkRange($head, linkType, { href: this.#originalHref });
+          if (isLinkTextChanged && range) {
+            const newText = this._linkText || normalizedUrl;
             chain = chain
-              .insertContentAt(
-                { from: $head.pos, to: $head.pos + linkNode.nodeSize },
-                this._linkText || normalizedUrl,
-                { updateSelection: true }
-              )
-              .setTextSelection({ from: $head.pos, to: $head.pos + (this._linkText || normalizedUrl).length });
+              .insertContentAt(range, newText, { updateSelection: true })
+              .setTextSelection({ from: range.from, to: range.from + newText.length });
           }
         } else {
           // Creating a new link: update the selection text and apply the link
@@ -437,11 +454,16 @@ export class RichTextFeatureLinkComponent extends LitElement implements RichText
     // Pre-fill with existing link URL if cursor is on a link
     const { href } = editor?.getAttributes('link') ?? {};
     this._linkUrl = (href as string) ?? '';
+    this.#originalHref = this._linkUrl;
 
     // Pre-fill link text based on selection or existing link
     const { from, to, $head } = editor.state.selection;
     if (this._editorContext.isActive('link')) {
-      this._linkText = $head.parent.content.content.reduce((acc, node) => acc + node.textContent, '');
+      // Scope to the specific link mark under the cursor, not the whole paragraph -
+      // getMarkRange walks outward from $head only while sibling nodes carry a matching mark.
+      const linkType = editor.schema.marks[Link.name];
+      const range = getMarkRange($head, linkType, { href: this.#originalHref });
+      this._linkText = range ? editor.state.doc.textBetween(range.from, range.to, ' ') : '';
     } else {
       this._linkText = editor.state.doc.textBetween(from, to, ' ');
     }

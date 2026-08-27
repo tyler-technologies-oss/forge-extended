@@ -100,8 +100,9 @@ describe('RichTextEditor - Focus Management', () => {
 
     await new Promise(resolve => setTimeout(resolve, 150));
 
-    // Verify input is focused
-    const input = linkFeature!.shadowRoot!.querySelector('input');
+    // Verify the URL input is focused - the display text was already pre-filled from the
+    // selection, so focus moves to the URL field for the user to complete.
+    const input = linkFeature!.shadowRoot!.querySelector('#link-url');
     expect(document.activeElement?.shadowRoot?.activeElement).to.equal(input);
   });
 
