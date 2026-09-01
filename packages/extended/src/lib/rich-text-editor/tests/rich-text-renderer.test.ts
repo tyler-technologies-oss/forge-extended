@@ -15,16 +15,31 @@ describe('RichTextRendererComponent', () => {
       expect(container).to.exist;
     });
 
-    it('should have proper ARIA role', async () => {
+    it('should set the ARIA role on the host element', async () => {
       const el = await fixture<RichTextRendererComponent>(html`<forge-rich-text-renderer></forge-rich-text-renderer>`);
-      const container = el.shadowRoot?.querySelector('.renderer-content');
-      expect(container?.getAttribute('role')).to.equal('article');
+      expect(el.getAttribute('role')).to.equal('article');
     });
 
-    it('should have proper ARIA label', async () => {
+    it('should not override a consumer-provided role', async () => {
+      const el = await fixture<RichTextRendererComponent>(
+        html`<forge-rich-text-renderer role="region"></forge-rich-text-renderer>`
+      );
+      expect(el.getAttribute('role')).to.equal('region');
+    });
+
+    it('should not apply a hardcoded ARIA label', async () => {
       const el = await fixture<RichTextRendererComponent>(html`<forge-rich-text-renderer></forge-rich-text-renderer>`);
+      expect(el.hasAttribute('aria-label')).to.be.false;
+
       const container = el.shadowRoot?.querySelector('.renderer-content');
-      expect(container?.getAttribute('aria-label')).to.equal('Rich text content');
+      expect(container?.hasAttribute('aria-label')).to.be.false;
+    });
+
+    it('should allow the host to be labelled by the consumer', async () => {
+      const el = await fixture<RichTextRendererComponent>(
+        html`<forge-rich-text-renderer aria-label="Release notes"></forge-rich-text-renderer>`
+      );
+      expect(el.getAttribute('aria-label')).to.equal('Release notes');
     });
   });
 

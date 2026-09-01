@@ -88,22 +88,33 @@ const DEFAULT_EXTENSIONS: AnyExtension[] = [
  * - Text alignment (left, center, right, justify)
  * - Links (clickable with security attributes)
  *
+ * The host element receives `role="article"` unless a `role` is already set, so consumers can
+ * provide a meaningful accessible name via `aria-label` or `aria-labelledby`. This matters when
+ * more than one renderer appears on a page.
+ *
  * @property {RichTextRendererContent} content - The content to render in ProseMirror JSON format.
+ * Must be set as a property; it is not settable via attribute.
  */
 @customElement(RichTextRendererComponentTagName)
 export class RichTextRendererComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
-  @property({ type: Object })
+  @property({ attribute: false })
   public content?: RichTextRendererContent;
 
-  @query('.renderer-content')
-  private _contentElement?: HTMLElement;
+  @query('.renderer-content', true)
+  private _contentElement!: HTMLElement;
 
   private _editor?: TipTapEditor;
 
   public override connectedCallback(): void {
     super.connectedCallback();
+
+    // Applied to the host so consumers can label it with aria-label/aria-labelledby.
+    if (!this.hasAttribute('role')) {
+      this.setAttribute('role', 'article');
+    }
+
     this._initializeEditor();
   }
 
@@ -121,10 +132,6 @@ export class RichTextRendererComponent extends LitElement {
   private _initializeEditor(): void {
     // Wait for first render to get the content element
     this.updateComplete.then(() => {
-      if (!this._contentElement) {
-        return;
-      }
-
       try {
         const initialContent = this.content ? this.#sanitizeContent(this.content) : undefined;
         this._editor = new TipTapEditor({
@@ -175,6 +182,6 @@ export class RichTextRendererComponent extends LitElement {
   }
 
   public override render(): TemplateResult {
-    return html` <div class="renderer-content" role="article" aria-label="Rich text content"></div> `;
+    return html` <div class="renderer-content"></div> `;
   }
 }
