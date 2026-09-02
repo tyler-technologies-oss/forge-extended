@@ -19,8 +19,8 @@ export const RichTextFeatureDividerComponentTagName: keyof HTMLElementTagNameMap
  *
  * @description
  * The divider component provides visual separation between groups of related toolbar buttons.
- * It renders a vertical line with a maximum height of 24px. Use this component to organize
- * the toolbar into logical sections (e.g., separating text formatting from paragraph formatting).
+ * It renders a vertical line 24px tall. Use this component to organize the toolbar into logical
+ * sections (e.g., separating text formatting from paragraph formatting).
  */
 @customElement(RichTextFeatureDividerComponentTagName)
 export class RichTextFeatureDividerComponent extends LitElement {
@@ -32,7 +32,7 @@ export class RichTextFeatureDividerComponent extends LitElement {
     featureHostStyles,
     css`
       forge-divider {
-        max-height: 24px;
+        height: 24px;
       }
     `
   ];
