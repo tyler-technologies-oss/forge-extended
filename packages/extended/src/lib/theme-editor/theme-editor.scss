@@ -324,3 +324,60 @@
 
   color: #{forge-theme.variable(text-medium)};
 }
+
+//
+// Preview sandbox
+//
+
+.showcase-dialog {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  // Wide enough for the showcase to reach three columns, capped so it does not
+  // fill a large screen edge to edge.
+  inline-size: min(92vw, 960px);
+  max-block-size: 85dvh;
+}
+
+// The dialog's own chrome deliberately keeps the editor's theme, for the same
+// reason the editor does: it has to stay readable no matter how unreadable the
+// authored theme is. Sitting it on a container surface with a divider makes that
+// boundary read as a toolbar above content, rather than as a broken seam where
+// the sandbox starts.
+.showcase-dialog__header,
+.showcase-dialog__lede {
+  flex: 0 0 auto;
+  background-color: #{forge-theme.variable(surface-container-minimum)};
+}
+
+.showcase-dialog__header {
+  @include forge-toolbar.provide-theme(
+    (
+      background: none,
+      padding-inline: #{forge-spacing.variable(medium)},
+      padding-block: #{forge-spacing.variable(xsmall)}
+    )
+  );
+}
+
+.showcase-dialog__lede {
+  margin-block: 0;
+  padding-block-end: #{forge-spacing.variable(small)};
+  padding-inline: #{forge-spacing.variable(medium)};
+  border-block-end: 1px solid #{forge-theme.variable(outline)};
+}
+
+// The showcase lays out in CSS multi-column, so its block size has to be free
+// to grow — a fixed height makes the columns spill sideways instead of wrapping.
+// Hence scrolling here rather than on the showcase itself.
+.showcase-dialog__body {
+  flex: 1 1 auto;
+  // A hard edge where the sandbox begins, so the theme change is legible.
+  box-shadow: inset 0 1px 0 0 #{forge-theme.variable(outline)};
+  min-block-size: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: #{forge-spacing.variable(medium)};
+  background-color: #{forge-theme.variable(surface)};
+  color: #{forge-theme.variable(text-high)};
+}

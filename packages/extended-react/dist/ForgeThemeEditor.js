@@ -4,8 +4,14 @@ import { useEventListener, useProperties } from "./react-utils.js";
 
 export const ForgeThemeEditor = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
-  const { preview, exportFormat, theme, previewSelectors, ...filteredProps } =
-    props;
+  const {
+    preview,
+    immuneToPreview,
+    exportFormat,
+    theme,
+    previewSelectors,
+    ...filteredProps
+  } = props;
 
   /** Event listeners - run once */
   useEventListener(
@@ -47,6 +53,7 @@ export const ForgeThemeEditor = forwardRef((props, forwardedRef) => {
       part: props.part,
       tabindex: props.tabIndex,
       preview: props.preview ? true : undefined,
+      "immune-to-preview": props.immuneToPreview ? true : undefined,
       style: { ...props.style },
     },
     props.children,

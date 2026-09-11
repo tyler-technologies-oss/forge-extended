@@ -9,6 +9,7 @@ import {
   defineButtonToggleComponent,
   defineButtonToggleGroupComponent,
   defineCardComponent,
+  defineDialogComponent,
   defineDividerComponent,
   defineExpansionPanelComponent,
   defineFilePickerComponent,
@@ -31,6 +32,8 @@ import {
 import {
   tylIconAlertCircleOutline,
   tylIconAutorenew,
+  tylIconBrush,
+  tylIconClose,
   tylIconMoonWaningCrescent,
   tylIconWbSunny,
   tylIconCheckCircleOutline,
@@ -61,6 +64,7 @@ import {
   activeForgeThemeVariant,
   forgeStockTokens,
   regenerateForgeTheme,
+  resolveForgeThemeKnobs,
   setForgeThemePolarity,
   withForgeThemeVariant,
   type ForgeTheme,
@@ -77,6 +81,8 @@ import {
   type ForgeThemeTokenGroup,
   type ForgeThemeTokenMap
 } from './theme-tokens';
+
+import { defineThemeShowcaseComponent } from './theme-showcase';
 
 import styles from './theme-editor.scss?inline';
 
@@ -156,6 +162,7 @@ export class ThemeEditorComponent extends LitElement {
     defineButtonToggleComponent();
     defineButtonToggleGroupComponent();
     defineCardComponent();
+    defineDialogComponent();
     defineDividerComponent();
     defineExpansionPanelComponent();
     defineFilePickerComponent();
@@ -171,6 +178,7 @@ export class ThemeEditorComponent extends LitElement {
     defineTextFieldComponent();
     defineToolbarComponent();
     defineTooltipComponent();
+    defineThemeShowcaseComponent();
 
     IconRegistry.define([
       tylIconAlertCircleOutline,
@@ -184,7 +192,9 @@ export class ThemeEditorComponent extends LitElement {
       tylIconVisibility,
       tylIconVisibilityOff,
       tylIconMoonWaningCrescent,
-      tylIconWbSunny
+      tylIconWbSunny,
+      tylIconBrush,
+      tylIconClose
     ]);
   }
 
@@ -240,6 +250,9 @@ export class ThemeEditorComponent extends LitElement {
   @state()
   private _showAllContrast = false;
 
+  @state()
+  private _showcaseOpen = false;
+
   #styleElement: HTMLStyleElement | null = null;
   /** The page's own token values, sampled before the preview was injected. */
   #hostTokens: ForgeThemeTokenMap | null = null;
@@ -280,7 +293,59 @@ export class ThemeEditorComponent extends LitElement {
         </forge-tab-bar>
         <div class="view" role="region" aria-label=${this._view}>${this.#activeView}</div>
       </forge-card>
+      ${this.#showcaseDialog}
     `;
+  }
+
+  /**
+   * A sandbox: the authored theme applied to real Forge components inside a
+   * dialog, without touching the host application at all.
+   *
+   * This is the safe way to answer "what does my theme look like". `Apply to
+   * page` is the other, deliberately separate, option — it mutates the whole
+   * document and is the thing you turn off again.
+   */
+  get #showcaseDialog(): TemplateResult {
+    return html`
+      <forge-dialog
+        id="showcase-dialog"
+        label="Theme preview"
+        description="Your theme applied to a sample of Forge components."
+        ?open=${this._showcaseOpen}
+        @forge-dialog-close=${this.#onCloseShowcase}>
+        <div class="showcase-dialog">
+          <forge-toolbar class="showcase-dialog__header" no-border>
+            <h2 class="title" slot="start">Theme preview</h2>
+            <forge-icon-button slot="end" aria-label="Close preview" @click=${this.#onCloseShowcase}>
+              <forge-icon name="close"></forge-icon>
+            </forge-icon-button>
+          </forge-toolbar>
+          <p class="showcase-dialog__lede">
+            The ${this.theme.polarity} variant, on real components. Nothing outside this dialog is affected.
+          </p>
+          <!-- The tokens are scoped to this wrapper, so they reach the showcase
+               and stop there. Inline values win over anything inherited from the
+               editor host, including its preview immunity. -->
+          <div class="showcase-dialog__body" style=${styleMap(this.#sandboxProperties)}>
+            <forge-theme-showcase></forge-theme-showcase>
+          </div>
+        </div>
+      </forge-dialog>
+    `;
+  }
+
+  /**
+   * The complete set of custom properties the sandbox declares: the stock set
+   * for the active polarity, the authored overrides on top, and the global
+   * knobs. Always complete, regardless of the emit mode — a half-applied theme
+   * would tell you nothing about how the finished one looks.
+   */
+  get #sandboxProperties(): Record<string, string> {
+    const properties: Record<string, string> = {};
+    for (const [token, value] of Object.entries({ ...this.#baseTokens, ...this.#variant.tokens })) {
+      properties[`${FORGE_THEME_TOKEN_PREFIX}${token}`] = value;
+    }
+    return { ...properties, ...resolveForgeThemeKnobs(this.theme) };
   }
 
   //
@@ -410,13 +475,17 @@ export class ThemeEditorComponent extends LitElement {
       <forge-toolbar class="header" no-border>
         <h1 class="title" slot="start">${this.#titleSlot}</h1>
         <div class="header-actions" slot="end">
+          <forge-button id="showcase-button" variant="raised" @click=${this.#onOpenShowcase}>
+            <forge-icon slot="start" name="visibility"></forge-icon>
+            <span>Preview theme</span>
+          </forge-button>
           <forge-button
             id="preview-button"
-            variant=${this.preview ? 'raised' : 'outlined'}
+            variant="outlined"
             aria-pressed=${this.preview ? 'true' : 'false'}
             @click=${this.#onPreviewToggle}>
-            <forge-icon slot="start" name=${this.preview ? 'visibility_off' : 'visibility'}></forge-icon>
-            <span>${this.preview ? 'Stop preview' : 'Preview on page'}</span>
+            <forge-icon slot="start" name=${this.preview ? 'visibility_off' : 'brush'}></forge-icon>
+            <span>${this.preview ? 'Stop applying' : 'Apply to page'}</span>
           </forge-button>
         </div>
       </forge-toolbar>
@@ -982,6 +1051,14 @@ export class ThemeEditorComponent extends LitElement {
 
   #onPreviewToggle(): void {
     this.preview = !this.preview;
+  }
+
+  #onOpenShowcase(): void {
+    this._showcaseOpen = true;
+  }
+
+  #onCloseShowcase(): void {
+    this._showcaseOpen = false;
   }
 
   async #onCopy(): Promise<void> {

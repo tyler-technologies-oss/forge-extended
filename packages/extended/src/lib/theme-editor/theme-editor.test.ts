@@ -671,6 +671,90 @@ describe('ThemeEditor', () => {
   // Import and export
   //
 
+  //
+  // Preview sandbox
+  //
+
+  describe('preview sandbox', () => {
+    it('should stay closed until asked', async () => {
+      const harness = await createFixture();
+      expect(harness.showcaseDialog.hasAttribute('open')).to.be.false;
+    });
+
+    it('should open from the preview button', async () => {
+      const harness = await createFixture();
+
+      harness.showcaseButton.click();
+      await harness.el.updateComplete;
+
+      expect(harness.showcaseDialog.hasAttribute('open')).to.be.true;
+      expect(harness.root.querySelector('forge-theme-showcase')).to.not.be.null;
+    });
+
+    it('should scope a complete token set onto the sandbox', async () => {
+      const harness = await createFixture();
+      // Only the brand group is open by default, so go through the API here:
+      // this test is about what the sandbox scopes, not about the token rows.
+      harness.el.setToken('primary', '#ff0000');
+      await harness.el.updateComplete;
+      harness.showcaseButton.click();
+      await harness.el.updateComplete;
+
+      const body = harness.root.querySelector<HTMLElement>('.showcase-dialog__body')!;
+
+      // Complete regardless of the emit mode: a half-applied theme would tell
+      // you nothing about how the finished one looks.
+      expect(body.style.getPropertyValue('--forge-theme-primary')).to.equal('#ff0000');
+      expect(body.style.getPropertyValue('--forge-theme-surface')).to.equal(FORGE_THEME_LIGHT_TOKENS.surface);
+    });
+
+    it('should scope the dark variant when dark is being authored', async () => {
+      const harness = await createFixture();
+      await harness.selectView(VIEW.palette);
+      await harness.setPolarity('dark');
+
+      harness.showcaseButton.click();
+      await harness.el.updateComplete;
+
+      const body = harness.root.querySelector<HTMLElement>('.showcase-dialog__body')!;
+      expect(body.style.getPropertyValue('--forge-theme-surface')).to.equal(FORGE_THEME_DARK_TOKENS.surface);
+    });
+
+    it('should carry the global knobs into the sandbox', async () => {
+      const harness = await createTokensFixture();
+      await harness.openGroup(KNOBS_GROUP_KEY_TEST);
+      await harness.setKnob('shapeFactor', '3');
+
+      harness.showcaseButton.click();
+      await harness.el.updateComplete;
+
+      const body = harness.root.querySelector<HTMLElement>('.showcase-dialog__body')!;
+      expect(body.style.getPropertyValue('--forge-shape-factor')).to.equal('3');
+    });
+
+    it('should not touch the document', async () => {
+      const harness = await createFixture();
+
+      harness.showcaseButton.click();
+      await harness.el.updateComplete;
+
+      // The sandbox is the safe option; only `Apply to page` mutates the host.
+      expect(harness.el.preview).to.be.false;
+      expect(document.getElementById('forge-theme-editor-preview')).to.be.null;
+    });
+
+    it('should close again', async () => {
+      const harness = await createFixture();
+      harness.showcaseButton.click();
+      await harness.el.updateComplete;
+
+      harness.showcaseDialog.dispatchEvent(new CustomEvent('forge-dialog-close'));
+      await harness.el.updateComplete;
+
+      expect(harness.showcaseDialog.hasAttribute('open')).to.be.false;
+    });
+  });
+
   describe('contrast view', () => {
     it('should render a specimen of each pair', async () => {
       const harness = await createFixture();
@@ -1043,6 +1127,14 @@ class ThemeEditorHarness {
     return this.root.querySelector('#reset-all-button')!;
   }
 
+  public get showcaseButton(): HTMLElement {
+    return this.root.querySelector('#showcase-button')!;
+  }
+
+  public get showcaseDialog(): HTMLElement {
+    return this.root.querySelector('#showcase-dialog')!;
+  }
+
   public get generateButton(): HTMLElement {
     return this.root.querySelector('#generate-button')!;
   }
@@ -1234,6 +1326,9 @@ class ThemeEditorHarness {
  * The palette leads because that is where a theme starts.
  */
 const VIEW = { palette: 0, tokens: 1, contrast: 2, transfer: 3 } as const;
+
+/** The data-group key of the global-knobs section. */
+const KNOBS_GROUP_KEY_TEST = 'knobs';
 
 /** The variant currently being authored — light and dark are held separately. */
 function variantOf(el: ThemeEditorComponent): ForgeThemeVariant {

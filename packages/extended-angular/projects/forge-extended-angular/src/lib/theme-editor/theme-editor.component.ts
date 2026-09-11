@@ -64,6 +64,26 @@ export class ThemeEditorComponent {
     return this.nativeElement.previewSelectors;
   }
 
+  /**
+   * Keeps the editor's own chrome on the host application's theme while a live
+   * preview is applied to the page.
+   *
+   * A page-wide preview declares the authored tokens on `:root` and `body` with
+   * `!important`, and those inherit into this component like anything else — so
+   * authoring a low-contrast theme makes the tool you are authoring it with
+   * unreadable, and you cannot see well enough to fix it. On by default; turn it
+   * off to have the editor restyle along with the page.
+   */
+  @Input({ transform: booleanAttribute })
+  public set immuneToPreview(value: ThemeEditorComponentCustomElement['immuneToPreview']) {
+    this.zone.runOutsideAngular(() => {
+      this.nativeElement.immuneToPreview = value;
+    });
+  }
+  public get immuneToPreview(): ThemeEditorComponentCustomElement['immuneToPreview'] {
+    return this.nativeElement.immuneToPreview;
+  }
+
   /** The export format shown on the import/export view. */
   @Input()
   public set exportFormat(value: ThemeEditorComponentCustomElement['exportFormat']) {
@@ -144,7 +164,7 @@ export class ThemeEditorComponent {
     return this.zone.runOutsideAngular(() => this.nativeElement.resetToken(...args));
   }
 
-  /** Reverts every token to the Forge defaults for the theme's mode. */
+  /** Reverts every token in the active variant to the Forge defaults. */
   public resetAllTokens(
     ...args: Parameters<ThemeEditorComponentCustomElement['resetAllTokens']>
   ): ReturnType<ThemeEditorComponentCustomElement['resetAllTokens']> {

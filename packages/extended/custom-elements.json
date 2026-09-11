@@ -190,183 +190,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-confirmation-dialog'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ConfirmationDialogComponent",
-          "slots": [
-            {
-              "description": "The title of the dialog",
-              "name": "title"
-            },
-            {
-              "description": "The dialog message",
-              "name": "message"
-            },
-            {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
-            },
-            {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "isBusy",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
-            },
-            {
-              "kind": "field",
-              "name": "busyLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
-              },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "fieldName": "open"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog",
-              "fieldName": "description"
-            },
-            {
-              "name": "is-busy",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
-            },
-            {
-              "name": "busy-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-confirmation-dialog",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
-          "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponent",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/app-layout/app-layout.ts",
       "declarations": [
         {
@@ -1121,152 +944,177 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/footer/footer.ts",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "FooterComponentTagName",
+          "name": "ConfirmationDialogComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-footer'"
+          "default": "'forge-confirmation-dialog'"
         },
         {
           "kind": "class",
-          "description": "A footer component for displaying navigation, copyright, and branding information at the bottom of a page.",
-          "name": "FooterComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the background color of the footer.",
-              "name": "--forge-footer-background"
-            },
-            {
-              "description": "Controls the text color of footer content.",
-              "name": "--forge-footer-on-background"
-            },
-            {
-              "description": "Controls the padding of the footer.",
-              "name": "--forge-footer-padding"
-            },
-            {
-              "description": "Controls the left padding of the footer.",
-              "name": "--forge-footer-padding-left"
-            },
-            {
-              "description": "Controls the right padding of the footer.",
-              "name": "--forge-footer-padding-right"
-            },
-            {
-              "description": "Controls the gap between footer content and graphic in standard layout.",
-              "name": "--forge-footer-gap"
-            },
-            {
-              "description": "Controls the gap between stacked elements in alternative layout.",
-              "name": "--forge-footer-alternative-gap"
-            },
-            {
-              "description": "Controls the margin around dividers between footer items.",
-              "name": "--forge-footer-divider-margin"
-            }
-          ],
+          "description": "",
+          "name": "ConfirmationDialogComponent",
           "slots": [
             {
-              "description": "Slot for footer items or custom content.",
-              "name": ""
+              "description": "The title of the dialog",
+              "name": "title"
             },
             {
-              "description": "Slot for footer graphic, such as a logo.",
-              "name": "graphic"
+              "description": "The dialog message",
+              "name": "message"
+            },
+            {
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
+            },
+            {
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
             }
           ],
           "members": [
             {
               "kind": "field",
-              "name": "layout",
+              "name": "open",
               "type": {
-                "text": "FooterLayout"
+                "text": "boolean"
               },
               "privacy": "public",
-              "default": "'auto'",
-              "description": "Defines the footer layout mode.",
-              "attribute": "layout"
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
             },
             {
               "kind": "field",
-              "name": "layoutBreakpoint",
+              "name": "label",
               "type": {
-                "text": "number"
+                "text": "string | undefined"
               },
               "privacy": "public",
-              "default": "900",
-              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
-              "attribute": "layout-breakpoint"
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
+            },
+            {
+              "kind": "field",
+              "name": "busyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+              },
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
             }
           ],
           "attributes": [
             {
-              "name": "layout",
+              "name": "open",
               "type": {
-                "text": "FooterLayout"
+                "text": "boolean"
               },
-              "default": "'auto'",
-              "description": "Defines the footer layout mode.",
-              "fieldName": "layout"
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
             },
             {
-              "name": "layout-breakpoint",
+              "name": "label",
               "type": {
-                "text": "number"
+                "text": "string | undefined"
               },
-              "default": "900",
-              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
-              "fieldName": "layoutBreakpoint"
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
+            },
+            {
+              "name": "busy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-footer",
-          "customElement": true,
-          "states": [
-            {
-              "name": "standard",
-              "description": "Applied when the layout is set to `standard` or when in `auto` mode above the breakpoint."
-            },
-            {
-              "name": "alternative",
-              "description": "Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint."
-            },
-            {
-              "name": "auto",
-              "description": "Applied when the layout is set to `auto`."
-            }
-          ]
+          "tagName": "forge-confirmation-dialog",
+          "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "FooterComponentTagName",
+          "name": "ConfirmationDialogComponentTagName",
           "declaration": {
-            "name": "FooterComponentTagName",
-            "module": "src/lib/footer/footer.ts"
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         },
         {
           "kind": "js",
-          "name": "FooterComponent",
+          "name": "ConfirmationDialogComponent",
           "declaration": {
-            "name": "FooterComponent",
-            "module": "src/lib/footer/footer.ts"
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "FooterComponent",
-            "module": "src/lib/footer/footer.ts"
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         }
       ]
@@ -1463,6 +1311,158 @@
           "declaration": {
             "name": "CountCardComponent",
             "module": "src/lib/count-card/count-card.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/footer/footer.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "FooterComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-footer'"
+        },
+        {
+          "kind": "class",
+          "description": "A footer component for displaying navigation, copyright, and branding information at the bottom of a page.",
+          "name": "FooterComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the background color of the footer.",
+              "name": "--forge-footer-background"
+            },
+            {
+              "description": "Controls the text color of footer content.",
+              "name": "--forge-footer-on-background"
+            },
+            {
+              "description": "Controls the padding of the footer.",
+              "name": "--forge-footer-padding"
+            },
+            {
+              "description": "Controls the left padding of the footer.",
+              "name": "--forge-footer-padding-left"
+            },
+            {
+              "description": "Controls the right padding of the footer.",
+              "name": "--forge-footer-padding-right"
+            },
+            {
+              "description": "Controls the gap between footer content and graphic in standard layout.",
+              "name": "--forge-footer-gap"
+            },
+            {
+              "description": "Controls the gap between stacked elements in alternative layout.",
+              "name": "--forge-footer-alternative-gap"
+            },
+            {
+              "description": "Controls the margin around dividers between footer items.",
+              "name": "--forge-footer-divider-margin"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Slot for footer items or custom content.",
+              "name": ""
+            },
+            {
+              "description": "Slot for footer graphic, such as a logo.",
+              "name": "graphic"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "layout",
+              "type": {
+                "text": "FooterLayout"
+              },
+              "privacy": "public",
+              "default": "'auto'",
+              "description": "Defines the footer layout mode.",
+              "attribute": "layout"
+            },
+            {
+              "kind": "field",
+              "name": "layoutBreakpoint",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "900",
+              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
+              "attribute": "layout-breakpoint"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "layout",
+              "type": {
+                "text": "FooterLayout"
+              },
+              "default": "'auto'",
+              "description": "Defines the footer layout mode.",
+              "fieldName": "layout"
+            },
+            {
+              "name": "layout-breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "default": "900",
+              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
+              "fieldName": "layoutBreakpoint"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-footer",
+          "customElement": true,
+          "states": [
+            {
+              "name": "standard",
+              "description": "Applied when the layout is set to `standard` or when in `auto` mode above the breakpoint."
+            },
+            {
+              "name": "alternative",
+              "description": "Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint."
+            },
+            {
+              "name": "auto",
+              "description": "Applied when the layout is set to `auto`."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FooterComponentTagName",
+          "declaration": {
+            "name": "FooterComponentTagName",
+            "module": "src/lib/footer/footer.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "FooterComponent",
+          "declaration": {
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer.ts"
           }
         }
       ]
@@ -2042,92 +2042,6 @@
           "declaration": {
             "name": "StructuredCardComponent",
             "module": "src/lib/structured-card/structured-card.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ThemeToggleComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-theme-toggle'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ThemeToggleComponent",
-          "slots": [
-            {
-              "description": "The title shown above the toggle buttons",
-              "name": "title"
-            }
-          ],
-          "members": [
-            {
-              "kind": "method",
-              "name": "setTheme",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "ThemeToggleTheme"
-                  }
-                }
-              ],
-              "description": "Sets the current theme."
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ThemeToggleThemeEventData>"
-              },
-              "description": "Fired when the theme is changed",
-              "name": "forge-theme-toggle-update"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-theme-toggle",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ThemeToggleComponentTagName",
-          "declaration": {
-            "name": "ThemeToggleComponentTagName",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ThemeToggleComponent",
-          "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
           }
         }
       ]
@@ -2805,6 +2719,17 @@
             },
             {
               "kind": "field",
+              "name": "immuneToPreview",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Keeps the editor's own chrome on the host application's theme while a live\npreview is applied to the page.\n\nA page-wide preview declares the authored tokens on `:root` and `body` with\n`!important`, and those inherit into this component like anything else — so\nauthoring a low-contrast theme makes the tool you are authoring it with\nunreadable, and you cannot see well enough to fix it. On by default; turn it\noff to have the editor restyle along with the page.",
+              "attribute": "immune-to-preview"
+            },
+            {
+              "kind": "field",
               "name": "exportFormat",
               "type": {
                 "text": "ForgeThemeExportFormat"
@@ -2838,7 +2763,7 @@
                 {
                   "name": "theme",
                   "type": {
-                    "text": "Partial<ForgeTheme> | null | undefined"
+                    "text": "ForgeThemeInput | null | undefined"
                   },
                   "description": "The theme to load."
                 }
@@ -2985,7 +2910,7 @@
                   "text": "void"
                 }
               },
-              "description": "Reverts every token to the Forge defaults for the theme's mode."
+              "description": "Reverts every token in the active variant to the Forge defaults."
             },
             {
               "kind": "method",
@@ -3042,6 +2967,15 @@
               "default": "false",
               "description": "Indicates whether the theme is currently applied to the live document.",
               "fieldName": "preview"
+            },
+            {
+              "name": "immune-to-preview",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Keeps the editor's own chrome on the host application's theme while a live\npreview is applied to the page.\n\nA page-wide preview declares the authored tokens on `:root` and `body` with\n`!important`, and those inherit into this component like anything else — so\nauthoring a low-contrast theme makes the tool you are authoring it with\nunreadable, and you cannot see well enough to fix it. On by default; turn it\noff to have the editor restyle along with the page.",
+              "fieldName": "immuneToPreview"
             },
             {
               "name": "export-format",
@@ -3315,13 +3249,64 @@
         },
         {
           "kind": "function",
+          "name": "emptyForgeThemeVariant",
+          "return": {
+            "type": {
+              "text": "ForgeThemeVariant"
+            }
+          },
+          "description": "An untouched variant: no overrides, no seeds chosen yet."
+        },
+        {
+          "kind": "function",
           "name": "emptyForgeTheme",
           "return": {
             "type": {
               "text": "ForgeTheme"
             }
+          }
+        },
+        {
+          "kind": "function",
+          "name": "activeForgeThemeVariant",
+          "return": {
+            "type": {
+              "text": "ForgeThemeVariant"
+            }
           },
-          "description": "A theme with nothing set: the Forge defaults, untouched."
+          "parameters": [
+            {
+              "name": "theme",
+              "type": {
+                "text": "ForgeTheme"
+              }
+            }
+          ],
+          "description": "The variant currently being authored."
+        },
+        {
+          "kind": "function",
+          "name": "withForgeThemeVariant",
+          "return": {
+            "type": {
+              "text": "ForgeTheme"
+            }
+          },
+          "parameters": [
+            {
+              "name": "theme",
+              "type": {
+                "text": "ForgeTheme"
+              }
+            },
+            {
+              "name": "patch",
+              "type": {
+                "text": "Partial<ForgeThemeVariant>"
+              }
+            }
+          ],
+          "description": "Returns a copy of the theme with the *active* variant patched. Every edit goes\nthrough here, which is what keeps light and dark from leaking into each other."
         },
         {
           "kind": "function",
@@ -3336,7 +3321,7 @@
               "name": "overrides",
               "optional": true,
               "type": {
-                "text": "Partial<ForgeTheme> | null"
+                "text": "ForgeThemeInput | null"
               },
               "description": "Partial theme values to start from."
             }
@@ -3380,6 +3365,42 @@
             }
           ],
           "description": "Resolves a theme to the final token map that will be emitted: the mode's base\nset (for `light`/`dark`) with the theme's own overrides on top."
+        },
+        {
+          "kind": "function",
+          "name": "forgeStockTokens",
+          "return": {
+            "type": {
+              "text": "ForgeThemeTokenMap"
+            }
+          },
+          "parameters": [
+            {
+              "name": "polarity",
+              "type": {
+                "text": "ForgeThemePolarity"
+              }
+            }
+          ],
+          "description": "The stock Forge token set for a polarity."
+        },
+        {
+          "kind": "function",
+          "name": "forgeStockSeeds",
+          "return": {
+            "type": {
+              "text": "Required<ForgeThemeSeeds>"
+            }
+          },
+          "parameters": [
+            {
+              "name": "polarity",
+              "type": {
+                "text": "ForgeThemePolarity"
+              }
+            }
+          ],
+          "description": "The stock seed colors for a polarity."
         },
         {
           "kind": "function",
@@ -3572,13 +3593,13 @@
               }
             },
             {
-              "name": "mode",
+              "name": "polarity",
               "type": {
-                "text": "ThemeGeneratorMode"
+                "text": "ForgeThemePolarity"
               }
             }
           ],
-          "description": "Switches the palette between a light and a dark surface and regenerates.\n\nThe polarity belongs to the palette rather than to the emit mode: it decides\nhow the surface, container, text and outline ramps are derived, and a palette\nderived for one polarity is not meaningful under the other.\n\nSeeds still sitting on the outgoing polarity's stock values are swapped for the\nincoming polarity's, because Forge's own light and dark accents differ — the\nlight primary on a near-black surface would fail contrast on sight. Seeds the\nuser has actually chosen are left alone."
+          "description": "Switches which variant is being authored.\n\nLight and dark are independent designs, so this swaps the whole editing\nsurface rather than re-deriving anything: whatever was authored for the\noutgoing polarity is left exactly as it was, and returning to it restores it.\n\nA variant that has never been touched is seeded from that polarity's stock\ncolors, so switching to dark for the first time starts from Forge's dark\npalette rather than from light accents on a near-black surface."
         }
       ],
       "exports": [
@@ -3616,9 +3637,33 @@
         },
         {
           "kind": "js",
+          "name": "emptyForgeThemeVariant",
+          "declaration": {
+            "name": "emptyForgeThemeVariant",
+            "module": "src/lib/theme-editor/theme-model.ts"
+          }
+        },
+        {
+          "kind": "js",
           "name": "emptyForgeTheme",
           "declaration": {
             "name": "emptyForgeTheme",
+            "module": "src/lib/theme-editor/theme-model.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "activeForgeThemeVariant",
+          "declaration": {
+            "name": "activeForgeThemeVariant",
+            "module": "src/lib/theme-editor/theme-model.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "withForgeThemeVariant",
+          "declaration": {
+            "name": "withForgeThemeVariant",
             "module": "src/lib/theme-editor/theme-model.ts"
           }
         },
@@ -3643,6 +3688,22 @@
           "name": "resolveForgeThemeTokens",
           "declaration": {
             "name": "resolveForgeThemeTokens",
+            "module": "src/lib/theme-editor/theme-model.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "forgeStockTokens",
+          "declaration": {
+            "name": "forgeStockTokens",
+            "module": "src/lib/theme-editor/theme-model.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "forgeStockSeeds",
+          "declaration": {
+            "name": "forgeStockSeeds",
             "module": "src/lib/theme-editor/theme-model.ts"
           }
         },
@@ -3859,6 +3920,92 @@
           "declaration": {
             "name": "FORGE_THEME_TOKEN_NAMES",
             "module": "src/lib/theme-editor/theme-tokens.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ThemeToggleComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-theme-toggle'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ThemeToggleComponent",
+          "slots": [
+            {
+              "description": "The title shown above the toggle buttons",
+              "name": "title"
+            }
+          ],
+          "members": [
+            {
+              "kind": "method",
+              "name": "setTheme",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "ThemeToggleTheme"
+                  }
+                }
+              ],
+              "description": "Sets the current theme."
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ThemeToggleThemeEventData>"
+              },
+              "description": "Fired when the theme is changed",
+              "name": "forge-theme-toggle-update"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-theme-toggle",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ThemeToggleComponentTagName",
+          "declaration": {
+            "name": "ThemeToggleComponentTagName",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ThemeToggleComponent",
+          "declaration": {
+            "name": "ThemeToggleComponent",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ThemeToggleComponent",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
           }
         }
       ]
@@ -4208,6 +4355,72 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/theme-editor/theme-showcase/theme-showcase.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ThemeShowcaseComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-theme-showcase'"
+        },
+        {
+          "kind": "variable",
+          "name": "THEME_SHOWCASE_SECTIONS",
+          "default": "{ buttons: { id: 'buttons', title: 'Buttons', caption: 'Spends primary and on-primary. Check the label on the filled button, and that the disabled button still reads as unavailable rather than invisible.' }, formFields: { id: 'form-fields', title: 'Form fields', caption: 'Outline, label and support text. The invalid field should catch the eye without drowning the fields either side of it.' }, selectionControls: { id: 'selection-controls', title: 'Selection controls', caption: 'Checked, indeterminate and disabled marks all draw on primary against the field outline.' }, selectAndChips: { id: 'select-and-chips', title: 'Select and chips', caption: 'A selected chip and a closed select share the primary and container ramps.' }, status: { id: 'status', title: 'Status messaging', caption: 'The one place the info, success, warning and error ramps appear side by side.' }, surfaces: { id: 'surfaces', title: 'Surfaces', caption: 'Five nested levels. If any two of these look the same, the surface ramp has no separation to offer.' }, typography: { id: 'typography', title: 'Typography', caption: 'Three emphasis levels. If the low line is hard to read, placeholder and disabled text will be too.' }, progress: { id: 'progress', title: 'Progress', caption: 'Indicator against track. The pair has to stay distinguishable at the small sizes progress runs at.' } } as const satisfies Record<string, ThemeShowcaseSection>",
+          "description": "The sections, in reading order. Exported so a caller — or a test — can\nenumerate the coverage without scraping the template.\n\nThe captions say what to look *for* rather than what is on screen: a customer\ncan already see that there are four buttons, what they cannot see is which\ntoken each one spends."
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ThemeShowcaseComponent",
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-theme-showcase",
+          "customElement": true,
+          "summary": "Renders representative Forge components in representative states so a\ntheme can be judged on real UI."
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ThemeShowcaseComponentTagName",
+          "declaration": {
+            "name": "ThemeShowcaseComponentTagName",
+            "module": "src/lib/theme-editor/theme-showcase/theme-showcase.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "THEME_SHOWCASE_SECTIONS",
+          "declaration": {
+            "name": "THEME_SHOWCASE_SECTIONS",
+            "module": "src/lib/theme-editor/theme-showcase/theme-showcase.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ThemeShowcaseComponent",
+          "declaration": {
+            "name": "ThemeShowcaseComponent",
+            "module": "src/lib/theme-editor/theme-showcase/theme-showcase.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ThemeShowcaseComponent",
+            "module": "src/lib/theme-editor/theme-showcase/theme-showcase.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
@@ -4282,22 +4495,6 @@
       "path": "src/lib/app-launcher/app-launcher.ts",
       "lineNumber": 67
     },
-    "ConfirmationDialogActionEventReason": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 28
-    },
-    "ConfirmationDialogActionEventData": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 30
-    },
-    "ConfirmationDialogProperties": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 35
-    },
-    "ConfirmationDialogComponent": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 55
-    },
     "AppLayoutBreakpoint": {
       "path": "src/lib/app-layout/app-layout.ts",
       "lineNumber": 30
@@ -4334,13 +4531,21 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 40
     },
-    "FooterLayout": {
-      "path": "src/lib/footer/footer.ts",
-      "lineNumber": 15
+    "ConfirmationDialogActionEventReason": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 28
     },
-    "FooterComponent": {
-      "path": "src/lib/footer/footer.ts",
-      "lineNumber": 41
+    "ConfirmationDialogActionEventData": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 30
+    },
+    "ConfirmationDialogProperties": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 35
+    },
+    "ConfirmationDialogComponent": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 55
     },
     "CountCardTheme": {
       "path": "src/lib/count-card/count-card.ts",
@@ -4349,6 +4554,14 @@
     "CountCardComponent": {
       "path": "src/lib/count-card/count-card.ts",
       "lineNumber": 71
+    },
+    "FooterLayout": {
+      "path": "src/lib/footer/footer.ts",
+      "lineNumber": 15
+    },
+    "FooterComponent": {
+      "path": "src/lib/footer/footer.ts",
+      "lineNumber": 41
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
@@ -4374,18 +4587,6 @@
       "path": "src/lib/structured-card/structured-card.ts",
       "lineNumber": 34
     },
-    "ThemeToggleTheme": {
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 28
-    },
-    "ThemeToggleUpdateEventData": {
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 30
-    },
-    "ThemeToggleComponent": {
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 41
-    },
     "Rgba": {
       "path": "src/lib/theme-editor/theme-color.ts",
       "lineNumber": 15
@@ -4400,23 +4601,23 @@
     },
     "ThemeEditorView": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 93
+      "lineNumber": 104
     },
     "ThemeEditorChangeEventData": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 96
+      "lineNumber": 107
     },
     "ThemeEditorPreviewEventData": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 104
+      "lineNumber": 115
     },
     "ThemeEditorImportEventData": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 112
+      "lineNumber": 123
     },
     "ThemeEditorComponent": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 136
+      "lineNumber": 157
     },
     "ThemeGeneratorMode": {
       "path": "src/lib/theme-editor/theme-generator.ts",
@@ -4440,23 +4641,35 @@
     },
     "ForgeThemeMode": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 54
+      "lineNumber": 57
+    },
+    "ForgeThemePolarity": {
+      "path": "src/lib/theme-editor/theme-model.ts",
+      "lineNumber": 60
+    },
+    "ForgeThemeVariant": {
+      "path": "src/lib/theme-editor/theme-model.ts",
+      "lineNumber": 70
     },
     "ForgeThemeKnobs": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 57
+      "lineNumber": 78
     },
     "ForgeTheme": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 73
+      "lineNumber": 94
+    },
+    "ForgeThemeInput": {
+      "path": "src/lib/theme-editor/theme-model.ts",
+      "lineNumber": 120
     },
     "ForgeThemeImportResult": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 93
+      "lineNumber": 135
     },
     "ForgeThemeExportFormat": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 103
+      "lineNumber": 145
     },
     "ForgeThemeTokenKind": {
       "path": "src/lib/theme-editor/theme-tokens.ts",
@@ -4469,6 +4682,18 @@
     "ForgeThemeTokenGroup": {
       "path": "src/lib/theme-editor/theme-tokens.ts",
       "lineNumber": 25
+    },
+    "ThemeToggleTheme": {
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "lineNumber": 28
+    },
+    "ThemeToggleUpdateEventData": {
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "lineNumber": 30
+    },
+    "ThemeToggleComponent": {
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "lineNumber": 41
     },
     "UserProfileComponent": {
       "path": "src/lib/user-profile/user-profile.ts",
@@ -4485,6 +4710,14 @@
     "FooterItemComponent": {
       "path": "src/lib/footer/footer-item/footer-item.ts",
       "lineNumber": 23
+    },
+    "ThemeShowcaseSection": {
+      "path": "src/lib/theme-editor/theme-showcase/theme-showcase.ts",
+      "lineNumber": 43
+    },
+    "ThemeShowcaseComponent": {
+      "path": "src/lib/theme-editor/theme-showcase/theme-showcase.ts",
+      "lineNumber": 168
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
