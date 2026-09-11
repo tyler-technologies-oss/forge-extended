@@ -1,0 +1,396 @@
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/card' as forge-card;
+@use '@tylertech/forge/sass/toolbar' as forge-toolbar;
+@use '../utils/mixins';
+
+//
+// Host
+//
+
+:host {
+  display: block;
+
+  // Matches the small-density icon button so the swatch and the revert control
+  // read as a matched pair either side of the value.
+  --_forge-theme-editor-swatch-size: 24px;
+  --_forge-theme-editor-max-height: 80dvh;
+
+  // Token cells tile to this width. Narrow on purpose: the value is a hex code,
+  // not prose, so a full-width field just looks broken on a wide container.
+  --_forge-theme-editor-cell-min: 232px;
+
+  // Controls that hold short values should not grow to fill the toolbar.
+  --_forge-theme-editor-control-max: 220px;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+//
+// Base
+//
+
+.container {
+  @include forge-card.provide-theme(
+    (
+      padding: 0
+    )
+  );
+
+  display: flex;
+  flex-direction: column;
+  max-block-size: var(--_forge-theme-editor-max-height);
+  min-block-size: 0;
+  overflow: hidden;
+}
+
+// Continue the flex chain inside the card so `.view` gets a bounded height to
+// scroll within. Without this the card's root div is a plain block and
+// `overflow-y: auto` on `.view` has nothing to overflow.
+.container::part(root) {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  max-block-size: 100%;
+  overflow: hidden;
+}
+
+.header {
+  @include forge-toolbar.provide-theme(
+    (
+      background: none,
+      padding-inline: #{forge-spacing.variable(medium)},
+      padding-block: #{forge-spacing.variable(xsmall)}
+    )
+  );
+}
+
+.title {
+  @include forge-typography.style(heading3);
+
+  margin: 0;
+}
+
+.header-actions {
+  @include mixins.stack(#{forge-spacing.variable(xsmall)}, true);
+}
+
+.lede {
+  @include forge-typography.style(body2);
+
+  color: #{forge-theme.variable(text-medium)};
+  margin-block: 0 #{forge-spacing.variable(medium)};
+}
+
+.empty {
+  @include forge-typography.style(body1);
+
+  color: #{forge-theme.variable(text-medium)};
+  text-align: center;
+  padding-block: #{forge-spacing.variable(xlarge)};
+}
+
+.messages,
+.contrast-summary {
+  margin-inline: #{forge-spacing.variable(medium)};
+  margin-block-end: #{forge-spacing.variable(small)};
+}
+
+.messages ul {
+  margin: 0;
+  padding-inline-start: #{forge-spacing.variable(medium)};
+}
+
+.header,
+.views {
+  flex: 0 0 auto;
+}
+
+.views {
+  border-block-end: 1px solid #{forge-theme.variable(outline-low)};
+}
+
+.view {
+  flex: 1 1 auto;
+  min-block-size: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: #{forge-spacing.variable(medium)};
+}
+
+//
+// Tokens view
+//
+
+.tokens-toolbar,
+.transfer-toolbar,
+.generator-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: #{forge-spacing.variable(small)};
+  margin-block-end: #{forge-spacing.variable(medium)};
+}
+
+.filter {
+  flex: 1 1 200px;
+  max-inline-size: 320px;
+}
+
+.mode,
+.target-contrast,
+.export-format {
+  flex: 1 1 160px;
+  // A select sized to its shortest option leaves its floating label no room and
+  // the label ends up on top of the value, so give them all a real floor.
+  min-inline-size: 180px;
+  max-inline-size: var(--_forge-theme-editor-control-max);
+}
+
+.groups {
+  @include mixins.stack(#{forge-spacing.variable(xsmall)});
+}
+
+.group {
+  display: block;
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: #{forge-spacing.variable(xsmall)};
+}
+
+// Shows at a glance what a group is actually about: [swatch] Primary.
+.group-swatch {
+  inline-size: var(--_forge-theme-editor-swatch-size);
+  block-size: var(--_forge-theme-editor-swatch-size);
+  flex: none;
+  border: 1px solid #{forge-theme.variable(outline-low)};
+  border-radius: #{forge-shape.variable(small)};
+  background-color: var(--_forge-theme-editor-group-swatch, #{forge-theme.variable(surface-container-low)});
+}
+
+.group-label {
+  @include forge-typography.style(subheading2);
+}
+
+.rows,
+.knob-rows,
+.seeds {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--_forge-theme-editor-cell-min), 1fr));
+  gap: #{forge-spacing.variable(xsmall)} #{forge-spacing.variable(small)};
+  padding: #{forge-spacing.variable(small)};
+}
+
+.row {
+  display: grid;
+  grid-template-columns: var(--_forge-theme-editor-swatch-size) minmax(0, 1fr) auto;
+  // The field's label sits inside its own box, so centring the swatch and the
+  // revert control against the row centres them on the input.
+  align-items: center;
+  gap: #{forge-spacing.variable(xxsmall)};
+  min-inline-size: 0;
+}
+
+.seed-row {
+  grid-template-columns: var(--_forge-theme-editor-swatch-size) minmax(0, 1fr);
+}
+
+// Token names are long and the full custom property is on the row's title, so
+// let the label ellipsize rather than wrap a cell to two lines. The label is a
+// light-DOM child of the field, so it is reachable from here directly —
+// `forge-text-field` exposes no CSS parts.
+.value label {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.swatch,
+.swatch-placeholder {
+  inline-size: var(--_forge-theme-editor-swatch-size);
+  block-size: var(--_forge-theme-editor-swatch-size);
+  flex: none;
+  padding: 0;
+  border: 1px solid #{forge-theme.variable(outline-low)};
+  border-radius: #{forge-shape.variable(small)};
+  background-color: #{forge-theme.variable(surface-container-low)};
+}
+
+.swatch {
+  cursor: pointer;
+}
+
+// 101 permanently greyed-out undo arrows is just noise. Keep the column so rows
+// stay aligned, but only show the control on a token that actually has an
+// override to revert. A disabled button is not focusable, so nothing is lost.
+.revert[disabled] {
+  visibility: hidden;
+}
+
+.knob-rows {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+//
+// Contrast view
+//
+
+.contrast-list {
+  @include mixins.stack(#{forge-spacing.variable(xxsmall)});
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.contrast-entry {
+  display: flex;
+  max-inline-size: 72ch;
+  align-items: center;
+  gap: #{forge-spacing.variable(small)};
+  padding: #{forge-spacing.variable(xsmall)};
+  border-radius: #{forge-shape.variable(small)};
+  background-color: #{forge-theme.variable(surface-container-minimum)};
+}
+
+.contrast-pair {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+// An actual specimen of the pair. A ratio is a number; this is the thing the
+// number is about, and it is what makes the view legible at a glance.
+.contrast-sample {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: 48px;
+  block-size: 32px;
+  border: 1px solid #{forge-theme.variable(outline-low)};
+  border-radius: #{forge-shape.variable(small)};
+  background-color: var(--_forge-theme-editor-sample-background, #{forge-theme.variable(surface)});
+  color: var(--_forge-theme-editor-sample-foreground, #{forge-theme.variable(text-high)});
+  font-weight: 600;
+}
+
+//
+// Import and export view
+//
+
+.output-label {
+  @include forge-typography.style(label1);
+
+  display: block;
+  color: #{forge-theme.variable(text-medium)};
+  margin-block-end: #{forge-spacing.variable(xxsmall)};
+}
+
+.code {
+  inline-size: 100%;
+  max-inline-size: 80ch;
+  box-sizing: border-box;
+  font-family: monospace;
+  font-size: 12px;
+  color: #{forge-theme.variable(text-high)};
+  background-color: #{forge-theme.variable(surface-container-minimum)};
+  border: 1px solid #{forge-theme.variable(outline-low)};
+  border-radius: #{forge-shape.variable(small)};
+  padding: #{forge-spacing.variable(xsmall)};
+  margin-block-end: #{forge-spacing.variable(medium)};
+  resize: vertical;
+}
+
+//
+// Palette polarity
+//
+
+// The palette owns light/dark: it decides how the surface, container, text and
+// outline ramps derive. Grouped with a caption so it reads as a setting rather
+// than a stray control in the toolbar.
+.polarity {
+  display: flex;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(xxsmall)};
+}
+
+.polarity-label {
+  @include forge-typography.style(label2);
+
+  color: #{forge-theme.variable(text-medium)};
+}
+
+//
+// Preview sandbox
+//
+
+.showcase-dialog {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  // Wide enough for the showcase to reach three columns, capped so it does not
+  // fill a large screen edge to edge.
+  inline-size: min(92vw, 960px);
+  max-block-size: 85dvh;
+}
+
+// The dialog's own chrome deliberately keeps the editor's theme, for the same
+// reason the editor does: it has to stay readable no matter how unreadable the
+// authored theme is. Sitting it on a container surface with a divider makes that
+// boundary read as a toolbar above content, rather than as a broken seam where
+// the sandbox starts.
+.showcase-dialog__header,
+.showcase-dialog__lede {
+  flex: 0 0 auto;
+  background-color: #{forge-theme.variable(surface-container-minimum)};
+}
+
+.showcase-dialog__header {
+  @include forge-toolbar.provide-theme(
+    (
+      background: none,
+      padding-inline: #{forge-spacing.variable(medium)},
+      padding-block: #{forge-spacing.variable(xsmall)}
+    )
+  );
+}
+
+.showcase-dialog__lede {
+  margin-block: 0;
+  padding-block-end: #{forge-spacing.variable(small)};
+  padding-inline: #{forge-spacing.variable(medium)};
+  border-block-end: 1px solid #{forge-theme.variable(outline)};
+}
+
+// The showcase lays out in CSS multi-column, so its block size has to be free
+// to grow — a fixed height makes the columns spill sideways instead of wrapping.
+// Hence scrolling here rather than on the showcase itself.
+.showcase-dialog__body {
+  flex: 1 1 auto;
+  // A hard edge where the sandbox begins, so the theme change is legible.
+  box-shadow: inset 0 1px 0 0 #{forge-theme.variable(outline)};
+  min-block-size: 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: #{forge-spacing.variable(medium)};
+  background-color: #{forge-theme.variable(surface)};
+  color: #{forge-theme.variable(text-high)};
+}
+
+// A derived token's value belongs to its base, so the row is read-only while
+// relative colours are on. Dimming the swatch alone would look like a bug, so
+// the whole row reads as informational.
+.row--derived {
+  .swatch {
+    cursor: not-allowed;
+    opacity: #{forge-theme.emphasis(higher)};
+  }
+}

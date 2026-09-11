@@ -1,0 +1,316 @@
+import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
+import CustomArgTypes from '../../blocks/CustomArgTypes';
+import * as ThemeEditorStories from './ThemeEditor.stories';
+
+<Meta of={ThemeEditorStories} />
+
+<Title />
+
+A complete authoring surface for a Tyler Forge™ theme. It edits all 101 `--forge-theme-*` design tokens,
+derives a full palette from a handful of seed colors, reports the worst `on-*` contrast ratios, imports and
+exports the theme, and can apply the theme to the live page so a customer can see it on the real product.
+
+The component owns no persistence. It edits a theme object and emits it; the host application decides where
+that theme is stored and how it is delivered.
+
+<Canvas of={ThemeEditorStories.Demo} />
+
+## Usage
+
+```html
+<forge-theme-editor>
+  <span slot="title">Brand theme</span>
+</forge-theme-editor>
+```
+
+```ts
+const editor = document.querySelector('forge-theme-editor');
+
+editor.loadTheme(await fetchSavedTheme());
+editor.addEventListener('forge-theme-editor-change', ({ detail }) => save(detail.theme));
+```
+
+### Views
+
+The views are in authoring order, and the editor opens on **Palette** — seed a palette
+first, then fine-tune individual tokens, then check contrast, then take the theme away
+with you.
+
+- **Palette** — pick the nine seed colors and the editor derives the container ramps, the readable `on-`
+  inks, and the surface, text and outline scales. `Surface` chooses light or dark, and it is the palette
+  that owns that choice (see [Light and dark](#light-and-dark)). `Target contrast` is the WCAG ratio
+  derived inks aim for; turning off `Pure black/white accent inks` derives tinted inks instead of the pure
+  black and white that Forge's own tokens use. `Target contrast` offers the three ratios WCAG 2 actually
+  defines (3:1, 4.5:1, 7:1) rather than a free-form number.
+- **Tokens** — every token, grouped into cards (brand, primary, secondary, tertiary, surface, text,
+  success, error, warning, info, outline). Each group header carries a swatch of the color it is about, and
+  each row a color swatch and a text field. The filter narrows to matching token
+  names or group labels, and matched groups expand automatically. Each row has its own revert button, and
+  `Revert all` clears every override at once. A `Global knobs` panel exposes `--forge-shape-factor`,
+  a spacing multiplier, and the typography font family and size.
+- **Contrast** — Forge pairs every surface token with an `on-` token, and that is the color it draws text
+  and icons in on top of that surface. Each row **renders the pair for real** next to its ratio, so an
+  illegible combination is visible rather than inferred from a number. Body text needs 4.5:1 and large text
+  3:1 for WCAG 2 AA. Some targets are physically unreachable — nothing contrasts 7:1 with a mid-lightness
+  orange — so the report shows the shortfall rather than pretending it passed.
+- **Import & export** — export as JSON, as Sass built on Forge's own `theme.provide()` mixin, or as a plain
+  `:root` CSS block. Import accepts pasted JSON or a dropped file. Unknown token names are **rejected and
+  reported** rather than imported, because an invalid name emits a `--forge-theme-*` property that nothing
+  reads.
+
+### Light and dark
+
+A theme is **two independent designs**, not one design with a switch. An accent that
+reads well on white is usually wrong on near-black, so the editor keeps a separate
+variant per polarity — its own token overrides and its own seed colors:
+
+```ts
+theme.polarity; // 'light' | 'dark' — which variant is being authored
+theme.variants.light; // { tokens, seeds }
+theme.variants.dark; // { tokens, seeds }
+```
+
+Editing `primary` in light does not touch dark, and switching back finds your light
+work exactly as you left it. `Surface` on the **Palette** view switches variants; it
+derives nothing on its own. A variant you have never touched is seeded from that
+polarity's stock Forge colors, so starting a dark theme starts from Forge's dark
+palette rather than from light accents on a dark surface.
+
+`mode` is a separate question — what to _emit_, not what to design:
+
+| `mode`    | Emits                                                              |
+| --------- | ------------------------------------------------------------------ |
+| `patch`   | only the tokens you changed, so the host app's theme shows through |
+| `replace` | the stock set for the active polarity, then your changes on top    |
+
+Generating a palette sets `mode` to `replace`, because 101 tokens is a whole theme
+rather than a patch. Exported JSON always carries **both** variants, so one file is
+the complete light-and-dark design.
+
+### Sizing
+
+The token list tiles into as many columns as the container allows, because a token value is
+a hex code rather than prose. Three custom properties tune it:
+
+| Custom property                     | Default | Purpose                                        |
+| ----------------------------------- | ------- | ---------------------------------------------- |
+| `--_forge-theme-editor-cell-min`    | `232px` | Minimum width of a token cell before it wraps. |
+| `--_forge-theme-editor-max-height`  | `80dvh` | Height the editor scrolls within.              |
+| `--_forge-theme-editor-swatch-size` | `28px`  | Size of the color swatch button.               |
+
+The header and the tab bar stay put while the active view scrolls.
+
+### Seeing a theme
+
+**Preview theme** opens a dialog holding `forge-theme-showcase` — real Forge
+components in real states: buttons including disabled, a field that is actually
+invalid, checked and indeterminate checkboxes, chips, the four status ramps, five
+nested surface levels, the three text emphasis levels and progress.
+
+The theme is declared as custom properties on a wrapper inside the dialog, so it
+reaches the showcase and stops there. **The editor never writes to the document.**
+
+That wrapper also carries `forge-popover-host`, which is load-bearing rather than
+decorative. Forge portals overlays — select dropdowns, menus, tooltips — to the
+nearest ancestor matching `:is(forge-dialog,forge-popover,[forge-popover-host])`,
+falling back to `document.body`. Without the attribute that ancestor is the dialog
+itself, so opening a select appended its dropdown as a _sibling_ of the themed
+wrapper, outside the scope, and it rendered in the stock light theme. Anything that
+scopes a Forge theme to a subtree rather than to `:root` has to account for this.
+
+That is deliberate. The editor's job ends at producing a theme; applying one is the
+host application's job, and in the intended flow the theme is saved and the branding
+API applies it. A component that also restyled the live page would be doing someone
+else's work, and would need an escape hatch to stop the tool it lives in from being
+restyled by whatever half-finished theme is on screen.
+
+The showcase itself is deliberately dumb: no properties, no theming logic. It renders
+components and inherits whatever custom properties an ancestor declares, which makes
+it reusable as a specimen anywhere — give it a wrapper with `--forge-theme-*` set and
+it shows that theme.
+
+### Saving a theme
+
+There is no save button; persistence belongs to the host. Two ways to get the theme
+out:
+
+```ts
+// Every edit, as it happens.
+editor.addEventListener('forge-theme-editor-change', ({ detail }) => save(detail.theme));
+
+// Or on demand.
+const theme = editor.getTheme();
+const json = editor.exportTheme('json');
+```
+
+Exported JSON carries both variants, the polarity, the emit mode, the knobs and the
+generator options — everything needed to reopen the theme later or to hand it to
+something that applies it. `exportTheme('scss')` emits Sass built on Forge's own
+`theme.provide()` mixin and `exportTheme('css')` a plain `:root` block, for pasting
+into an application directly.
+
+### Use relative CSS
+
+The **Use relative CSS** checkbox sits with the generation controls on the **Palette**
+view, because it changes what generation produces. With it on, a derived ramp is
+stored as a
+[CSS relative color](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Colors/Using_relative_colors)
+of the token it came from rather than as a flat value:
+
+```css
+--forge-theme-primary: #b8f21a;
+--forge-theme-primary-container: oklch(
+  from var(--forge-theme-primary) calc(l + -0.3973) calc(c * 0.6079) calc(h + 5.304)
+);
+```
+
+That expression is the token's value — in the theme, in the editor, in the preview and
+in the export. The **browser** owns the derivation from then on, so changing
+`--forge-theme-primary` moves every primary container with it, with no regeneration
+anywhere. **40 of the 101 tokens** work this way: all 28 accent containers, the 8-step
+surface ramp and the 4 outline steps.
+
+The colors are computed first and then described, so an expression evaluates to
+exactly what the generator produced. Three forms are tried, most relative first —
+chroma and hue both relative to the base, then chroma fixed, then chroma and hue fixed
+with only lightness tracking. That last one exists because Forge's own surfaces are
+pure greys: a neutral base has no chroma to scale and no meaningful hue to offset
+from, but a surface ramp is a lightness ramp, which is the part worth keeping. **An
+expression is only stored if evaluating it reproduces the value**; otherwise the token
+keeps its flat value, so the representation can never disagree with the color.
+
+> **The inks do not track.** An `on-` color is the result of an iterative contrast
+> search, not a transform, so it cannot be expressed relatively and stays a flat value.
+> Change a base with relative colors on and the containers follow, but their `on-` inks
+> stay as they were — contrast can silently degrade. The **Contrast** view is where that
+> shows up; regenerate the palette to bring the inks back in line.
+
+Needs Chrome 119+, Safari 16.4+ or Firefox 128+. Older engines drop the declaration
+and fall back to the value Forge compiles into its own `var()` references, which is a
+**quiet** failure — leave the option off if that matters. The CSS and Sass exports
+carry the caveat in a comment when any token uses it.
+
+A derived token's value belongs to its base, so on the **Tokens** view those rows are
+**read-only** while the option is on — swatch, field and revert are all disabled, and
+the row is marked. Editing one would only replace the expression with a literal and cut
+the link, so turning the option off is the way to edit them directly. The `on-` inks
+are never relative, so they stay editable.
+
+Because swatches are `<input type="color">` and a contrast ratio is arithmetic, the
+editor evaluates expressions through a throwaway probe element when it needs a real
+color. The theme keeps the expression; only the UI sees the resolved value.
+
+### Saving a theme
+
+There is no save button; persistence belongs to the host. Two ways to get the theme
+out:
+
+```ts
+// Every edit, as it happens.
+editor.addEventListener('forge-theme-editor-change', ({ detail }) => save(detail.theme));
+
+// Or on demand.
+const theme = editor.getTheme();
+const json = editor.exportTheme('json');
+```
+
+Exported JSON carries both variants, the polarity, the emit mode, the knobs and the
+generator options — everything needed to reopen the theme later or to hand it to
+something that applies it. `exportTheme('scss')` emits Sass built on Forge's own
+`theme.provide()` mixin and `exportTheme('css')` a plain `:root` block, for pasting
+into an application directly.
+
+#### Use relative CSS
+
+The **Use relative CSS** checkbox on the import and export view, or the
+`relativeColors` property, switches the CSS and Sass exports over to expressing every
+derived ramp as a
+[CSS relative color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#relative_colors)
+of the token it came from, rather than freezing it at export time. Off by default, so
+the exports are literal values unless you ask otherwise; toggle it to compare.
+
+```css
+--forge-theme-primary: #b8f21a;
+--forge-theme-primary-container: oklch(
+  from var(--forge-theme-primary) calc(l + -0.3973) calc(c * 0.6079) calc(h + 5.304)
+);
+```
+
+Change `--forge-theme-primary` in an application and every primary container follows.
+**40 of the 101 tokens** derive this way: all 28 accent containers, the 8-step surface
+ramp and the 4 outline steps.
+
+It applies to the Sass export too — `theme.provide()` interpolates the value verbatim,
+so an expression passes straight through. JSON is unaffected, and the checkbox is
+disabled for it: JSON carries the theme itself, so there is nothing to express
+relatively.
+
+The coefficients are measured from the colors the generator produced, so a formula
+evaluates to exactly what the preview showed and then keeps tracking. Three forms are
+tried, most relative first — chroma and hue both relative to the base, then chroma
+fixed, then chroma and hue both fixed with only lightness tracking. That last one
+exists because Forge's own surfaces are pure greys: a neutral base has no chroma to
+scale and no meaningful hue to offset from, but a surface ramp is a lightness ramp,
+which is the part worth keeping. **A formula is only emitted if evaluating it
+reproduces the value**; otherwise the token falls back to a literal, so the export can
+never disagree with the preview.
+
+The remaining 61 tokens are literal because they are not transforms of anything: the
+43 `on-` inks are the result of an iterative contrast search, the 8 `text-` steps are
+pure black or white at a fixed alpha, and the rest are the seeds themselves plus
+`surface-bright-shadow`, which is a `box-shadow`.
+
+Needs Chrome 119+, Safari 16.4+ or Firefox 128+. Older engines drop the declaration
+and fall back to the value Forge compiles into its own `var()` references, which is a
+**quiet** failure — use the plain CSS export if that matters. The emitted stylesheet
+carries that caveat in a comment.
+
+One thing worth knowing for whoever applies these: **Forge has no machinery that
+turns a theme object into custom properties.** `forge-theme-toggle` only sets
+`data-forge-theme` on `<html>` and relies on the host application having written a
+rule for it — that attribute appears nowhere in Forge core. Applying a theme means
+emitting real CSS, and Forge ships its light set as `:root { … }` but its dark set
+only as a Sass mixin that host applications attach to a class. A custom property
+declared on `<body>` beats one inherited from `:root`, so an override that only
+targets `:root` loses on a page already in dark mode.
+
+### Properties
+
+| Name             | Type                        | Default            | Description                                                  |
+| ---------------- | --------------------------- | ------------------ | ------------------------------------------------------------ |
+| `theme`          | `ForgeTheme`                | an untouched theme | The theme being edited. Set as a property, not an attribute. |
+| `exportFormat`   | `'json' \| 'scss' \| 'css'` | `'json'`           | The export format shown on the import and export view.       |
+| `relativeColors` | `boolean`                   | `false`            | Express derived ramps as CSS relative colors when exporting. |
+| `theme.polarity` | `'light' \| 'dark'`         | `'light'`          | Which variant is being authored.                             |
+| `theme.mode`     | `'patch' \| 'replace'`      | `'patch'`          | Whether to emit only your changes or a complete theme.       |
+
+### Methods
+
+| Name                      | Description                                              |
+| ------------------------- | -------------------------------------------------------- |
+| `getTheme()`              | Returns the theme being edited.                          |
+| `loadTheme(theme)`        | Replaces the theme, filling in anything the value omits. |
+| `exportTheme(format?)`    | Emits the theme as JSON, Sass or CSS.                    |
+| `importTheme(text)`       | Imports theme JSON and returns the warnings raised.      |
+| `generatePalette(seeds?)` | Derives the full token set from seed colors.             |
+| `setToken(token, value)`  | Sets one token, or clears it when the value is empty.    |
+| `resetToken(token)`       | Reverts one token to the Forge default for the polarity. |
+| `resetAllTokens()`        | Reverts every token in the active variant.               |
+| `getContrastReport()`     | Returns every `on-*` pair and its ratio, worst first.    |
+
+### Events
+
+| Name                        | Detail                                         | Description                                                                                                |
+| --------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `forge-theme-editor-change` | `{ theme: ForgeTheme, token: string \| null }` | Fired when the theme is edited. `token` names the edited token, or is `null` when the whole theme changed. |
+| `forge-theme-editor-import` | `{ theme: ForgeTheme, warnings: string[] }`    | Fired when a theme is imported.                                                                            |
+
+Both events bubble, are composed and are cancelable.
+
+## Accessibility
+
+- Every color swatch and text field is labelled with the token it edits, and every revert button carries an
+  `aria-label` naming its token.
+- Each view is a labelled `region`, and the preview dialog is labelled and described.
+- The contrast view exists so that an authored theme can be checked against WCAG 2 AA before it ships. A
+  theme that fails there will be illegible for some users no matter how the editor is operated.

@@ -1,0 +1,248 @@
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/button' as forge-button;
+
+// The surface ramp, outermost first. Kept in step with THEME_SHOWCASE_SURFACES:
+// the template names the level, this emits the pair of tokens for it.
+$surface-levels:
+  surface, surface-container-minimum, surface-container-low, surface-container-medium, surface-container-high;
+
+// The text emphasis ramp, keyed by the `data-emphasis` value the template sets.
+$text-emphasis-levels: (
+  high: text-high,
+  medium: text-medium,
+  low: text-low
+);
+
+//
+// Host
+//
+
+:host {
+  display: block;
+
+  // Sections tile to this width. Wide enough for a field with an inset label and
+  // its support text, narrow enough that two columns fit a 600px dialog body.
+  --_forge-theme-showcase-column-min: 264px;
+
+  // Status messages carry a title and a line of copy, so they need more room
+  // than a field before they are worth putting side by side.
+  --_forge-theme-showcase-status-min: 240px;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+//
+// Base
+//
+
+// Multi-column rather than grid: the sections are wildly different heights, and
+// a grid row is as tall as its tallest cell, which leaves holes the size of the
+// buttons section. Columns pack them.
+//
+// This assumes the host's block size is free to grow — a scrollable dialog body,
+// which is what the showcase is for. Give the host a fixed height and the columns
+// will spill sideways instead.
+.showcase {
+  columns: var(--_forge-theme-showcase-column-min);
+  column-gap: #{forge-spacing.variable(medium)};
+}
+
+// No background: the showcase has to sit on whatever surface its container
+// provides, or the surface ramp below is being judged against the wrong backdrop.
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(xxsmall)};
+  min-inline-size: 0;
+  padding: #{forge-spacing.variable(small)};
+  border: 1px solid #{forge-theme.variable(outline-low)};
+  border-radius: #{forge-shape.variable(medium)};
+  // A section split down the middle of a checkbox is worse than a short column.
+  break-inside: avoid;
+  // Column layout ignores row-gap, so the separation has to be a margin.
+  margin-block-end: #{forge-spacing.variable(medium)};
+}
+
+.section:last-child {
+  margin-block-end: 0;
+}
+
+// Two ramps that can only be judged across their full width: four status
+// messages side by side, and five nested surface levels.
+.section[data-section='status'],
+.section[data-section='surfaces'] {
+  column-span: all;
+}
+
+.section-title {
+  @include forge-typography.style(subheading2);
+
+  color: #{forge-theme.variable(text-high)};
+  margin: 0;
+}
+
+.section-caption {
+  @include forge-typography.style(body1);
+
+  color: #{forge-theme.variable(text-medium)};
+  margin: 0;
+}
+
+.samples {
+  display: flex;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(small)};
+  min-inline-size: 0;
+  margin-block-start: #{forge-spacing.variable(xsmall)};
+}
+
+//
+// Buttons
+//
+
+.section[data-section='buttons'] .samples {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: #{forge-spacing.variable(xsmall)};
+}
+
+// The link variant has no height and no background, so beside a filled button it
+// reads as a caption that has come loose. Give it its own line at every width.
+.section[data-section='buttons'] forge-button[variant='link'] {
+  // The host stretches to the full line, so the label has to be told not to
+  // centre itself in it.
+  @include forge-button.provide-theme(
+    (
+      justify: start
+    )
+  );
+
+  flex-basis: 100%;
+}
+
+//
+// Form fields
+//
+
+// Support text sits below the field, so the fields need more than the default
+// gap between them or the error text reads as a label for the next field.
+.section[data-section='form-fields'] .samples {
+  gap: #{forge-spacing.variable(medium)};
+}
+
+//
+// Selection controls
+//
+
+.control-stack {
+  display: flex;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(xxsmall)};
+}
+
+//
+// Chips
+//
+
+.chip-sets {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: #{forge-spacing.variable(xsmall)};
+}
+
+//
+// Status messaging
+//
+
+// Four messages in a column is a lot of vertical space for a dialog, so tile
+// them as soon as the container can hold two.
+.section[data-section='status'] .samples {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--_forge-theme-showcase-status-min), 1fr));
+  gap: #{forge-spacing.variable(xsmall)};
+}
+
+//
+// Surfaces
+//
+
+.surface {
+  padding: #{forge-spacing.variable(small)};
+  border: 1px solid #{forge-theme.variable(outline-low)};
+  border-radius: #{forge-shape.variable(small)};
+}
+
+.surface .surface {
+  margin-block-start: #{forge-spacing.variable(xsmall)};
+}
+
+.surface-token {
+  @include forge-typography.style(label1);
+
+  display: block;
+}
+
+@each $level in $surface-levels {
+  .surface[data-surface='#{$level}'] {
+    background-color: #{forge-theme.variable($level)};
+    color: #{forge-theme.variable(on-#{$level})};
+  }
+}
+
+//
+// Typography
+//
+
+.text-sample {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+.text-sample-token {
+  @include forge-typography.style(label1);
+}
+
+.text-sample-copy {
+  @include forge-typography.style(body2);
+}
+
+@each $level, $token in $text-emphasis-levels {
+  .text-sample[data-emphasis='#{$level}'] {
+    color: #{forge-theme.variable($token)};
+  }
+}
+
+//
+// Progress
+//
+
+.progress-linear {
+  display: flex;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(xxsmall)};
+}
+
+.progress-circular {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: #{forge-spacing.variable(xsmall)};
+}
+
+.progress-label {
+  @include forge-typography.style(label1);
+
+  color: #{forge-theme.variable(text-medium)};
+}
+
+forge-linear-progress {
+  inline-size: 100%;
+}

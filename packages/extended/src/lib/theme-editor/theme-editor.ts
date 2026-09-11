@@ -1,0 +1,1231 @@
+import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
+import { customElement, property, state } from 'lit/decorators.js';
+import { when } from 'lit/directives/when.js';
+import { repeat } from 'lit/directives/repeat.js';
+import { styleMap } from 'lit/directives/style-map.js';
+import {
+  defineBadgeComponent,
+  defineButtonComponent,
+  defineButtonToggleComponent,
+  defineButtonToggleGroupComponent,
+  defineCardComponent,
+  defineCheckboxComponent,
+  defineDialogComponent,
+  defineDividerComponent,
+  defineExpansionPanelComponent,
+  defineFilePickerComponent,
+  defineIconButtonComponent,
+  defineIconComponent,
+  defineInlineMessageComponent,
+  defineLabelValueComponent,
+  defineOptionComponent,
+  defineSelectComponent,
+  defineSwitchComponent,
+  defineTabBarComponent,
+  defineTabComponent,
+  defineTextFieldComponent,
+  defineToolbarComponent,
+  defineTooltipComponent,
+  IconRegistry,
+  type IFilePickerChangeEventData,
+  type ITabBarChangeEventData
+} from '@tylertech/forge';
+import {
+  tylIconAlertCircleOutline,
+  tylIconAutorenew,
+  tylIconClose,
+  tylIconMoonWaningCrescent,
+  tylIconWbSunny,
+  tylIconCheckCircleOutline,
+  tylIconContentCopy,
+  tylIconDownload,
+  tylIconPalette,
+  tylIconSearch,
+  tylIconUndo,
+  tylIconVisibility
+} from '@tylertech/tyler-icons';
+
+import { isValidColor, parseColor, toHex } from './theme-color';
+import {
+  FORGE_THEME_SEED_KEYS,
+  auditForgeThemeContrast,
+  type ForgeThemeSeeds,
+  type ThemeContrastEntry
+} from './theme-generator';
+import {
+  createForgeTheme,
+  exportForgeTheme,
+  normalizeForgeTheme,
+  parseForgeThemeJson,
+  activeForgeThemeVariant,
+  forgeStockTokens,
+  hasRelativeColors,
+  isRelativeColor,
+  regenerateForgeTheme,
+  resolveForgeThemeKnobs,
+  setForgeThemePolarity,
+  withForgeThemeVariant,
+  type ForgeTheme,
+  type ForgeThemeVariant,
+  type ForgeThemeExportFormat,
+  type ForgeThemeInput,
+  type ForgeThemeMode
+} from './theme-model';
+import {
+  FORGE_THEME_TOKEN_GROUPS,
+  FORGE_THEME_TOKEN_KINDS,
+  FORGE_THEME_TOKEN_PREFIX,
+  type ForgeThemeTokenGroup,
+  type ForgeThemeTokenMap
+} from './theme-tokens';
+
+import { defineThemeShowcaseComponent } from './theme-showcase';
+
+import styles from './theme-editor.scss?inline';
+
+declare global {
+  interface HTMLElementTagNameMap {
+    'forge-theme-editor': ThemeEditorComponent;
+  }
+
+  interface HTMLElementEventMap {
+    'forge-theme-editor-change': CustomEvent<ThemeEditorChangeEventData>;
+    'forge-theme-editor-import': CustomEvent<ThemeEditorImportEventData>;
+  }
+}
+
+export const ThemeEditorComponentTagName: keyof HTMLElementTagNameMap = 'forge-theme-editor';
+
+/** The views the editor exposes. */
+export type ThemeEditorView = 'palette' | 'tokens' | 'contrast' | 'transfer';
+
+/** Emitted whenever the theme is edited. */
+export interface ThemeEditorChangeEventData {
+  /** The complete theme after the edit. */
+  theme: ForgeTheme;
+  /** The token that was edited, or `null` when the whole theme changed. */
+  token: string | null;
+}
+
+/** Emitted when a theme is imported. */
+export interface ThemeEditorImportEventData {
+  /** The imported theme. */
+  theme: ForgeTheme;
+  /** Non-fatal problems found while validating the import. */
+  warnings: string[];
+}
+
+// Order is the authoring order: seed a palette, then fine-tune individual tokens,
+// then check contrast, then take it away with you.
+/**
+ * The contrast ratios WCAG 2 actually defines, rather than a free-form number:
+ * 3:1 for large text and UI components, 4.5:1 for body text at AA, 7:1 at AAA.
+ */
+const CONTRAST_TARGETS: readonly { value: number; label: string }[] = [
+  { value: 3, label: '3:1 — AA large text' },
+  { value: 4.5, label: '4.5:1 — AA body text' },
+  { value: 7, label: '7:1 — AAA' }
+];
+
+const VIEWS: readonly ThemeEditorView[] = ['palette', 'tokens', 'contrast', 'transfer'];
+const KNOBS_GROUP_KEY = 'knobs';
+const CONTRAST_PREVIEW_COUNT = 12;
+const CONTRAST_AA_TEXT = 4.5;
+const CONTRAST_AA_LARGE = 3;
+
+/**
+ * Rewrites any CSS colour into sRGB by painting a single pixel and reading it
+ * back. Handles every notation the engine can emit, including the colour spaces
+ * a relative colour computes into.
+ */
+function toSrgb(context: CanvasRenderingContext2D, color: string): string | null {
+  if (!color) {
+    return null;
+  }
+  context.clearRect(0, 0, 1, 1);
+  context.fillStyle = '#000000';
+  context.fillStyle = color;
+  context.fillRect(0, 0, 1, 1);
+  const [red, green, blue, alpha] = context.getImageData(0, 0, 1, 1).data;
+  return alpha === 255
+    ? `#${[red, green, blue].map(channel => channel.toString(16).padStart(2, '0')).join('')}`
+    : `rgba(${red}, ${green}, ${blue}, ${+(alpha / 255).toFixed(4)})`;
+}
+
+/**
+ * @tag forge-theme-editor
+ *
+ * @slot title - The title shown in the editor header.
+ *
+ * @event {CustomEvent<ThemeEditorChangeEventData>} forge-theme-editor-change - Fired when the theme is edited.
+ * @event {CustomEvent<ThemeEditorImportEventData>} forge-theme-editor-import - Fired when a theme is imported.
+ */
+@customElement(ThemeEditorComponentTagName)
+export class ThemeEditorComponent extends LitElement {
+  static {
+    defineBadgeComponent();
+    defineButtonComponent();
+    defineButtonToggleComponent();
+    defineButtonToggleGroupComponent();
+    defineCardComponent();
+    defineCheckboxComponent();
+    defineDialogComponent();
+    defineDividerComponent();
+    defineExpansionPanelComponent();
+    defineFilePickerComponent();
+    defineIconButtonComponent();
+    defineIconComponent();
+    defineInlineMessageComponent();
+    defineLabelValueComponent();
+    defineOptionComponent();
+    defineSelectComponent();
+    defineSwitchComponent();
+    defineTabBarComponent();
+    defineTabComponent();
+    defineTextFieldComponent();
+    defineToolbarComponent();
+    defineTooltipComponent();
+    defineThemeShowcaseComponent();
+
+    IconRegistry.define([
+      tylIconAlertCircleOutline,
+      tylIconAutorenew,
+      tylIconCheckCircleOutline,
+      tylIconContentCopy,
+      tylIconDownload,
+      tylIconPalette,
+      tylIconSearch,
+      tylIconUndo,
+      tylIconVisibility,
+      tylIconMoonWaningCrescent,
+      tylIconWbSunny,
+      tylIconClose
+    ]);
+  }
+
+  public static override styles = unsafeCSS(styles);
+
+  /** The theme being edited. */
+  @property({ attribute: false })
+  public theme: ForgeTheme = createForgeTheme();
+
+  /** The export format shown on the import/export view. */
+  @property({ attribute: 'export-format' })
+  public exportFormat: ForgeThemeExportFormat = 'json';
+
+  @state()
+  private _view: ThemeEditorView = 'palette';
+
+  @state()
+  private _filter = '';
+
+  @state()
+  private _openGroups: string[] = ['brand'];
+
+  @state()
+  private _importText = '';
+
+  @state()
+  private _messages: string[] = [];
+
+  @state()
+  private _showAllContrast = false;
+
+  @state()
+  private _showcaseOpen = false;
+
+  #resolvedCache: ForgeThemeTokenMap | null = null;
+  #resolvedSignature: string | null = null;
+
+  public override render(): TemplateResult {
+    return html`
+      <forge-card class="container">
+        ${this.#header} ${this.#messageList}
+        <forge-tab-bar
+          class="views"
+          .activeTab=${VIEWS.indexOf(this._view)}
+          @forge-tab-bar-change=${this.#onViewChange}>
+          <forge-tab>Palette</forge-tab>
+          <forge-tab>Tokens</forge-tab>
+          <forge-tab>Contrast</forge-tab>
+          <forge-tab>Import &amp; export</forge-tab>
+        </forge-tab-bar>
+        <div class="view" role="region" aria-label=${this._view}>${this.#activeView}</div>
+      </forge-card>
+      ${this.#showcaseDialog}
+    `;
+  }
+
+  /**
+   * A sandbox: the authored theme applied to real Forge components inside a
+   * dialog, without touching the host application at all.
+   *
+   * This is the safe way to answer "what does my theme look like". `Apply to
+   * page` is the other, deliberately separate, option — it mutates the whole
+   * document and is the thing you turn off again.
+   */
+  get #showcaseDialog(): TemplateResult {
+    return html`
+      <forge-dialog
+        id="showcase-dialog"
+        label="Theme preview"
+        description="Your theme applied to a sample of Forge components."
+        ?open=${this._showcaseOpen}
+        @forge-dialog-close=${this.#onCloseShowcase}>
+        <div class="showcase-dialog">
+          <forge-toolbar class="showcase-dialog__header" no-border>
+            <h2 class="title" slot="start">Theme preview</h2>
+            <forge-icon-button slot="end" aria-label="Close preview" @click=${this.#onCloseShowcase}>
+              <forge-icon name="close"></forge-icon>
+            </forge-icon-button>
+          </forge-toolbar>
+          <p class="showcase-dialog__lede">
+            The ${this.theme.polarity} variant, on real components. Nothing outside this dialog is affected.
+          </p>
+          <!-- The tokens are scoped to this wrapper, so they reach the showcase
+               and stop there. The forge-popover-host attribute is load-bearing:
+               see the note on #sandboxProperties. -->
+          <div class="showcase-dialog__body" forge-popover-host style=${styleMap(this.#sandboxProperties)}>
+            <forge-theme-showcase></forge-theme-showcase>
+          </div>
+        </div>
+      </forge-dialog>
+    `;
+  }
+
+  /**
+   * The complete set of custom properties the sandbox declares: the stock set
+   * for the active polarity, the authored overrides on top, and the global
+   * knobs. Always complete, regardless of the emit mode — a half-applied theme
+   * would tell you nothing about how the finished one looks.
+   *
+   * These are declared on the sandbox wrapper, which also carries
+   * `forge-popover-host`. That attribute is load-bearing. Forge portals overlays
+   * — select dropdowns, menus, tooltips — to the nearest ancestor matching
+   * `:is(forge-dialog,forge-popover,[forge-popover-host])`, falling back to
+   * `document.body` (see `list-dropdown-adapter.ts`). Without it that ancestor is
+   * the dialog itself, so an opened select was appended as a *sibling* of the
+   * wrapper, outside the token scope, and rendered in the stock light theme.
+   * Marking the wrapper as a popover host makes it the nearest match, so overlays
+   * land inside the scope and inherit the authored theme like everything else.
+   */
+  get #sandboxProperties(): Record<string, string> {
+    const properties: Record<string, string> = {};
+    for (const [token, value] of Object.entries({ ...this.#baseTokens, ...this.#variant.tokens })) {
+      properties[`${FORGE_THEME_TOKEN_PREFIX}${token}`] = value;
+    }
+    return { ...properties, ...resolveForgeThemeKnobs(this.theme) };
+  }
+
+  //
+  // Public API
+  //
+
+  /** Returns the theme being edited. */
+  public getTheme(): ForgeTheme {
+    return this.theme;
+  }
+
+  /**
+   * Replaces the theme being edited. Anything the value omits is filled in with a
+   * default, so a partial theme or a bare token map is accepted.
+   * @param theme The theme to load.
+   */
+  public loadTheme(theme: ForgeThemeInput | null | undefined): void {
+    this.#setTheme(createForgeTheme(theme), null);
+  }
+
+  /**
+   * Emits the theme in the requested format.
+   * @param format The format to emit. Defaults to the `export-format` property.
+   */
+  public exportTheme(format: ForgeThemeExportFormat = this.exportFormat): string {
+    return exportForgeTheme(this.theme, format);
+  }
+
+  /**
+   * Imports theme JSON, dropping unknown token names rather than emitting dead
+   * custom properties.
+   * @param text The JSON text to import.
+   * @returns The warnings raised, or the fatal error as the only entry.
+   */
+  public importTheme(text: string): string[] {
+    const result = parseForgeThemeJson(text);
+    if (!result.theme) {
+      this._messages = [result.error ?? 'That theme could not be imported.'];
+      return this._messages;
+    }
+    this._messages = result.warnings;
+    this.theme = result.theme;
+    this.#emitChange(null);
+    this.dispatchEvent(
+      new CustomEvent<ThemeEditorImportEventData>('forge-theme-editor-import', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+        detail: { theme: result.theme, warnings: result.warnings }
+      })
+    );
+    return result.warnings;
+  }
+
+  /**
+   * Derives the full token set from seed colors.
+   * @param seeds The seed colors. Defaults to the theme's current seeds.
+   */
+  public generatePalette(seeds?: ForgeThemeSeeds | null): void {
+    this.#setTheme(regenerateForgeTheme(this.theme, seeds), null);
+  }
+
+  /**
+   * Sets one token, or clears it when the value is empty.
+   * @param token The bare token name.
+   * @param value The CSS value.
+   */
+  public setToken(token: string, value: string): void {
+    const tokens = { ...this.#variant.tokens };
+    if (value.trim()) {
+      tokens[token] = value.trim();
+    } else {
+      delete tokens[token];
+    }
+    this.#setTheme(withForgeThemeVariant(this.theme, { tokens }), token);
+  }
+
+  /**
+   * Reverts one token to the Forge default for the theme's mode.
+   * @param token The bare token name.
+   */
+  public resetToken(token: string): void {
+    if (!(token in this.#variant.tokens)) {
+      return;
+    }
+    const tokens = { ...this.#variant.tokens };
+    delete tokens[token];
+    this.#setTheme(withForgeThemeVariant(this.theme, { tokens }), token);
+  }
+
+  /** Reverts every token in the active variant to the Forge defaults. */
+  public resetAllTokens(): void {
+    this.#setTheme(withForgeThemeVariant(this.theme, { tokens: {} }), null);
+  }
+
+  /**
+   * Reports the contrast ratio of every `on-*` token against its background,
+   * worst first.
+   */
+  public getContrastReport(): ThemeContrastEntry[] {
+    // Resolved first, so a relative-colour palette is audited on the colours it
+    // actually renders rather than on expressions arithmetic cannot read.
+    return auditForgeThemeContrast(this.#resolvedTokens);
+  }
+
+  //
+  // Header
+  //
+
+  readonly #titleSlot = html`<slot name="title">Theme editor</slot>`;
+
+  get #header(): TemplateResult {
+    return html`
+      <forge-toolbar class="header" no-border>
+        <h1 class="title" slot="start">${this.#titleSlot}</h1>
+        <div class="header-actions" slot="end">
+          <forge-button id="showcase-button" variant="raised" @click=${this.#onOpenShowcase}>
+            <forge-icon slot="start" name="visibility"></forge-icon>
+            <span>Preview theme</span>
+          </forge-button>
+        </div>
+      </forge-toolbar>
+    `;
+  }
+
+  get #messageList(): TemplateResult | typeof nothing {
+    return when(
+      this._messages.length > 0,
+      () => html`
+        <forge-inline-message class="messages" theme="warning">
+          <span slot="title">Import notes</span>
+          <ul>
+            ${repeat(
+              this._messages,
+              message => message,
+              message => html`<li>${message}</li>`
+            )}
+          </ul>
+        </forge-inline-message>
+      `,
+      () => nothing
+    );
+  }
+
+  get #activeView(): TemplateResult {
+    switch (this._view) {
+      case 'palette':
+        return this.#paletteView;
+      case 'contrast':
+        return this.#contrastView;
+      case 'transfer':
+        return this.#transferView;
+      default:
+        return this.#tokensView;
+    }
+  }
+
+  //
+  // Tokens view
+  //
+
+  get #tokensView(): TemplateResult {
+    const groups = this.#visibleGroups;
+    return html`
+      <div class="tokens-toolbar">
+        <forge-text-field class="filter" density="small">
+          <label slot="label" for="token-filter">Filter tokens</label>
+          <forge-icon slot="leading" name="search"></forge-icon>
+          <input
+            id="token-filter"
+            type="text"
+            autocomplete="off"
+            .value=${this._filter}
+            @input=${this.#onFilterInput} />
+        </forge-text-field>
+        <forge-select
+          class="mode"
+          density="small"
+          label-position="block-start"
+          label="Emit"
+          .value=${this.theme.mode}
+          @change=${this.#onModeChange}>
+          <forge-option value="patch">Only my changes</forge-option>
+          <forge-option value="replace">Complete ${this.theme.polarity} theme</forge-option>
+        </forge-select>
+        <forge-button
+          id="reset-all-button"
+          variant="outlined"
+          ?disabled=${this.#overrideCount === 0}
+          @click=${this.#onResetAll}>
+          <forge-icon slot="start" name="undo"></forge-icon>
+          <span>Revert all (${this.#overrideCount})</span>
+        </forge-button>
+      </div>
+      ${when(
+        groups.length === 0,
+        () => html`<p class="empty">No tokens match "${this._filter}".</p>`,
+        () => html`
+          ${when(
+            hasRelativeColors(this.#variant.tokens),
+            () => html`
+              <forge-inline-message class="messages" theme="info">
+                <span slot="title">Some tokens are derived</span>
+                <span
+                  >Rows marked read-only hold a CSS relative color of their base, so the browser derives them. Turn off
+                  <em>Use relative CSS</em> on the Palette view to edit them directly.</span
+                >
+              </forge-inline-message>
+            `,
+            () => nothing
+          )}
+          <div class="groups">
+            ${repeat(
+              groups,
+              group => group.key,
+              group => this.#groupPanel(group)
+            )}
+          </div>
+        `
+      )}
+      ${this.#knobsPanel}
+    `;
+  }
+
+  #groupPanel(group: ForgeThemeTokenGroup): TemplateResult {
+    const tokens = this.#matchingTokens(group);
+    const open = this.#isGroupOpen(group.key);
+    return html`
+      <forge-card class="group" no-padding data-group=${group.key}>
+        <forge-expansion-panel
+          ?open=${open}
+          @forge-expansion-panel-toggle=${(evt: CustomEvent<boolean>) => this.#onGroupToggle(group.key, evt.detail)}>
+          <div class="group-header" slot="header">
+            <span
+              class="group-swatch"
+              aria-hidden="true"
+              style=${styleMap({
+                // The value is a runtime color, so it cannot live in the stylesheet.
+                // Set a custom property and let the SCSS own the actual styling.
+                // `confirmation-dialog` uses styleMap for computed values the same way.
+                '--_forge-theme-editor-group-swatch': this.#asColor(
+                  this.#valueFor(this.#groupSwatchToken(group)),
+                  this.#groupSwatchToken(group)
+                )
+              })}></span>
+            <span class="group-label">${group.label}</span>
+            <!-- A count is neutral information; the default badge theme reads as a warning. -->
+            <forge-badge theme="info-secondary">${tokens.length}</forge-badge>
+          </div>
+          ${when(
+            open,
+            () => html`
+              <div class="rows">
+                ${repeat(
+                  tokens,
+                  token => token,
+                  token => this.#tokenRow(token)
+                )}
+              </div>
+            `,
+            () => nothing
+          )}
+        </forge-expansion-panel>
+      </forge-card>
+    `;
+  }
+
+  /**
+   * The token whose color stands for a whole group. Most group keys are
+   * themselves a token (`primary`, `surface`); the ones that are not, such as
+   * `text`, fall back to their first token.
+   */
+  #groupSwatchToken(group: ForgeThemeTokenGroup): string {
+    return group.key in FORGE_THEME_TOKEN_KINDS ? group.key : group.tokens[0];
+  }
+
+  #tokenRow(token: string): TemplateResult {
+    const value = this.#valueFor(token);
+    const overridden = token in this.#variant.tokens;
+    const isColor = FORGE_THEME_TOKEN_KINDS[token] === 'color';
+    // A relative value is derived from its base, so editing it here would only
+    // replace the expression with a literal and cut the link.
+    const derived = isRelativeColor(value);
+    return html`
+      <div
+        class=${derived ? 'row row--derived' : 'row'}
+        data-token=${token}
+        title=${derived
+          ? `${FORGE_THEME_TOKEN_PREFIX}${token} is derived from its base with a relative color`
+          : `${FORGE_THEME_TOKEN_PREFIX}${token}`}>
+        ${when(
+          isColor,
+          () => html`
+            <input
+              class="swatch"
+              type="color"
+              data-token=${token}
+              aria-label=${`${token} color`}
+              ?disabled=${derived}
+              .value=${this.#hexFor(value, token)}
+              @input=${(evt: Event) => this.setToken(token, (evt.target as HTMLInputElement).value)} />
+          `,
+          () => html`<span class="swatch-placeholder" aria-hidden="true"></span>`
+        )}
+        <forge-text-field
+          class="value"
+          density="small"
+          ?disabled=${derived}
+          ?invalid=${!derived && isColor && !isValidColor(value)}>
+          <label slot="label" for=${`field-${token}`}>${token}</label>
+          <input
+            id=${`field-${token}`}
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            ?disabled=${derived}
+            ?readonly=${derived}
+            aria-label=${`${FORGE_THEME_TOKEN_PREFIX}${token}`}
+            .value=${value}
+            @change=${(evt: Event) => this.setToken(token, (evt.target as HTMLInputElement).value)} />
+        </forge-text-field>
+        <forge-icon-button
+          class="revert"
+          density="small"
+          data-token=${token}
+          aria-label=${`Revert ${token}`}
+          ?disabled=${!overridden || derived}
+          @click=${() => this.resetToken(token)}>
+          <forge-icon name="undo"></forge-icon>
+        </forge-icon-button>
+      </div>
+    `;
+  }
+
+  get #knobsPanel(): TemplateResult | typeof nothing {
+    return when(
+      this.#matchesFilter('global knobs shape spacing typography'),
+      () => html`
+        <forge-card class="group knobs" no-padding data-group=${KNOBS_GROUP_KEY}>
+          <forge-expansion-panel
+            ?open=${this.#isGroupOpen(KNOBS_GROUP_KEY)}
+            @forge-expansion-panel-toggle=${(evt: CustomEvent<boolean>) =>
+              this.#onGroupToggle(KNOBS_GROUP_KEY, evt.detail)}>
+            <div class="group-header" slot="header">
+              <span class="group-label">Global knobs</span>
+            </div>
+            ${when(
+              this.#isGroupOpen(KNOBS_GROUP_KEY),
+              () => html`
+                <div class="knob-rows">
+                  ${this.#knobField('shapeFactor', 'Shape factor', 'number', 'Rounds every corner in the app')}
+                  ${this.#knobField('spacingScale', 'Spacing scale', 'number', 'Multiplies every spacing step')}
+                  ${this.#knobField('fontFamily', 'Font family', 'text', '')}
+                  ${this.#knobField('fontSize', 'Font size', 'text', '')}
+                </div>
+              `,
+              () => nothing
+            )}
+          </forge-expansion-panel>
+        </forge-card>
+      `,
+      () => nothing
+    );
+  }
+
+  #knobField(
+    knob: 'shapeFactor' | 'spacingScale' | 'fontFamily' | 'fontSize',
+    label: string,
+    type: 'number' | 'text',
+    supportText: string
+  ): TemplateResult {
+    const value = this.theme.knobs[knob];
+    return html`
+      <forge-text-field class="knob" density="small">
+        <label slot="label" for=${`knob-${knob}`}>${label}</label>
+        <input
+          id=${`knob-${knob}`}
+          data-knob=${knob}
+          type=${type}
+          step="any"
+          autocomplete="off"
+          .value=${value === null ? '' : String(value)}
+          @change=${(evt: Event) => this.#onKnobChange(knob, (evt.target as HTMLInputElement).value)} />
+        ${when(
+          supportText !== '',
+          () => html`<span slot="support-text">${supportText}</span>`,
+          () => nothing
+        )}
+      </forge-text-field>
+    `;
+  }
+
+  //
+  // Palette view
+  //
+
+  get #paletteView(): TemplateResult {
+    const seeds = this.#resolvedSeeds;
+    return html`
+      <p class="lede">
+        Pick seed colors and the editor derives the full token set — container ramps, readable
+        <code>on-</code> inks, the surface and outline scales.
+      </p>
+      <div class="seeds">
+        ${repeat(
+          FORGE_THEME_SEED_KEYS,
+          key => key,
+          key => this.#seedRow(key, seeds[key] ?? '')
+        )}
+      </div>
+      <forge-divider></forge-divider>
+      <div class="generator-options">
+        <div class="polarity">
+          <span class="polarity-label" id="polarity-label">Surface</span>
+          <forge-button-toggle-group
+            aria-labelledby="polarity-label"
+            mandatory
+            .value=${this.theme.polarity}
+            @forge-button-toggle-group-change=${this.#onPolarityChange}>
+            <forge-button-toggle value="light">
+              <forge-icon slot="start" name="wb_sunny"></forge-icon>
+              <span>Light</span>
+            </forge-button-toggle>
+            <forge-button-toggle value="dark">
+              <forge-icon slot="start" name="moon_waning_crescent"></forge-icon>
+              <span>Dark</span>
+            </forge-button-toggle>
+          </forge-button-toggle-group>
+        </div>
+        <forge-select
+          class="target-contrast"
+          density="small"
+          label-position="block-start"
+          label="Target contrast"
+          .value=${String(this.theme.generator.targetContrast)}
+          @change=${this.#onTargetContrastChange}>
+          ${repeat(
+            CONTRAST_TARGETS,
+            target => target.value,
+            target => html`<forge-option value=${String(target.value)}>${target.label}</forge-option>`
+          )}
+        </forge-select>
+        <forge-switch
+          id="pure-on-colors"
+          .on=${this.theme.generator.pureOnColors}
+          @forge-switch-change=${this.#onPureOnColorsChange}
+          >Pure black/white accent inks</forge-switch
+        >
+        <forge-checkbox
+          id="relative-colors"
+          .checked=${this.theme.generator.relativeColors}
+          @change=${this.#onRelativeColorsChange}
+          >Use relative CSS</forge-checkbox
+        >
+        <forge-tooltip anchor="relative-colors">
+          Store each derived ramp as a CSS relative color of its base instead of a flat value, so the browser does the
+          derivation and the ramp tracks the base. Needs Chrome 119+, Safari 16.4+ or Firefox 128+.
+        </forge-tooltip>
+        <forge-button id="generate-button" variant="raised" @click=${this.#onGenerate}>
+          <forge-icon slot="start" name="autorenew"></forge-icon>
+          <span>Generate palette</span>
+        </forge-button>
+      </div>
+    `;
+  }
+
+  #seedRow(key: keyof ForgeThemeSeeds, value: string): TemplateResult {
+    return html`
+      <div class="row seed-row" data-seed=${key}>
+        <input
+          class="swatch"
+          type="color"
+          data-seed=${key}
+          aria-label=${`${key} seed color`}
+          .value=${this.#hexFor(value)}
+          @input=${(evt: Event) => this.#onSeedChange(key, (evt.target as HTMLInputElement).value)} />
+        <forge-text-field class="value" density="small" ?invalid=${!isValidColor(value)}>
+          <label slot="label" for=${`seed-${key}`}>${key}</label>
+          <input
+            id=${`seed-${key}`}
+            type="text"
+            autocomplete="off"
+            spellcheck="false"
+            .value=${value}
+            @change=${(evt: Event) => this.#onSeedChange(key, (evt.target as HTMLInputElement).value)} />
+        </forge-text-field>
+      </div>
+    `;
+  }
+
+  //
+  // Contrast view
+  //
+
+  get #contrastView(): TemplateResult {
+    const report = this.getContrastReport();
+    const failures = report.filter(entry => entry.ratio < CONTRAST_AA_TEXT);
+    const shown = this._showAllContrast ? report : report.slice(0, CONTRAST_PREVIEW_COUNT);
+    return html`
+      <p class="lede">
+        Forge pairs every surface token with an <code>on-</code> token, and that is the color it draws text and icons in
+        on top of that surface. Each row below renders one of those pairs for real, so you can see what the combination
+        will look like. Body text needs ${CONTRAST_AA_TEXT}:1 and large text ${CONTRAST_AA_LARGE}:1 to meet WCAG 2 AA;
+        anything lower is text a customer will struggle to read.
+      </p>
+      <forge-inline-message class="contrast-summary" theme=${failures.length > 0 ? 'warning' : 'success'}>
+        <forge-icon
+          slot="icon"
+          name=${failures.length > 0 ? 'alert_circle_outline' : 'check_circle_outline'}></forge-icon>
+        <span
+          >${failures.length > 0
+            ? `${failures.length} of ${report.length} pairs fall below ${CONTRAST_AA_TEXT}:1.`
+            : `All ${report.length} pairs meet ${CONTRAST_AA_TEXT}:1.`}</span
+        >
+      </forge-inline-message>
+      <ul class="contrast-list">
+        ${repeat(
+          shown,
+          entry => entry.foreground,
+          entry => html`
+            <li class="contrast-entry" data-token=${entry.foreground}>
+              <span
+                class="contrast-sample"
+                aria-hidden="true"
+                style=${styleMap({
+                  // Runtime colors, so they cannot live in the stylesheet.
+                  '--_forge-theme-editor-sample-background': this.#valueFor(entry.background),
+                  '--_forge-theme-editor-sample-foreground': this.#valueFor(entry.foreground)
+                })}
+                >Aa</span
+              >
+              <forge-label-value class="contrast-pair">
+                <span slot="label">${entry.background}</span>
+                <span slot="value">text drawn in <code>${entry.foreground}</code></span>
+              </forge-label-value>
+              <forge-badge theme=${this.#contrastTheme(entry.ratio)}>${entry.ratio.toFixed(2)}:1</forge-badge>
+            </li>
+          `
+        )}
+      </ul>
+      ${when(
+        report.length > CONTRAST_PREVIEW_COUNT,
+        () => html`
+          <forge-button id="contrast-toggle" variant="text" @click=${this.#onToggleAllContrast}>
+            <span>${this._showAllContrast ? 'Show worst only' : `Show all ${report.length}`}</span>
+          </forge-button>
+        `,
+        () => nothing
+      )}
+    `;
+  }
+
+  #contrastTheme(ratio: number): string {
+    if (ratio >= CONTRAST_AA_TEXT) {
+      return 'success';
+    }
+    return ratio >= CONTRAST_AA_LARGE ? 'warning' : 'error';
+  }
+
+  //
+  // Import and export view
+  //
+
+  get #transferView(): TemplateResult {
+    return html`
+      <div class="transfer-toolbar">
+        <forge-select
+          id="export-format"
+          class="export-format"
+          density="small"
+          label-position="block-start"
+          label="Export as"
+          .value=${this.exportFormat}
+          @change=${this.#onExportFormatChange}>
+          <forge-option value="json">JSON</forge-option>
+          <forge-option value="scss">Sass (theme.provide)</forge-option>
+          <forge-option value="css">CSS (:root)</forge-option>
+        </forge-select>
+        <forge-button id="copy-button" variant="outlined" @click=${this.#onCopy}>
+          <forge-icon slot="start" name="content_copy"></forge-icon>
+          <span>Copy</span>
+        </forge-button>
+        <forge-button id="download-button" variant="outlined" @click=${this.#onDownload}>
+          <forge-icon slot="start" name="download"></forge-icon>
+          <span>Download</span>
+        </forge-button>
+      </div>
+      <label class="output-label" for="export-output">Export output</label>
+      <textarea id="export-output" class="code" readonly rows="12" .value=${this.exportTheme()}></textarea>
+      <forge-divider></forge-divider>
+      <label class="output-label" for="import-input">Paste theme JSON</label>
+      <textarea
+        id="import-input"
+        class="code"
+        rows="6"
+        spellcheck="false"
+        .value=${this._importText}
+        @input=${this.#onImportInput}></textarea>
+      <div class="transfer-toolbar">
+        <forge-button
+          id="import-button"
+          variant="raised"
+          ?disabled=${!this._importText.trim()}
+          @click=${this.#onImport}>
+          <forge-icon slot="start" name="palette"></forge-icon>
+          <span>Import JSON</span>
+        </forge-button>
+        <forge-file-picker
+          id="import-file"
+          accept="application/json,.json"
+          compact
+          @forge-file-picker-change=${this.#onImportFile}>
+          <span>Drop a theme JSON file</span>
+        </forge-file-picker>
+      </div>
+    `;
+  }
+
+  //
+  // Event handlers
+  //
+
+  #onViewChange(evt: CustomEvent<ITabBarChangeEventData>): void {
+    this._view = VIEWS[evt.detail.index] ?? 'palette';
+  }
+
+  #onFilterInput(evt: Event): void {
+    this._filter = (evt.target as HTMLInputElement).value;
+  }
+
+  #onModeChange(evt: Event): void {
+    const mode = (evt.target as HTMLElement & { value: string }).value as ForgeThemeMode;
+    this.#setTheme({ ...this.theme, mode }, null);
+  }
+
+  #onResetAll(): void {
+    this.resetAllTokens();
+  }
+
+  #onGroupToggle(key: string, open: boolean): void {
+    const next = new Set(this._openGroups);
+    if (open) {
+      next.add(key);
+    } else {
+      next.delete(key);
+    }
+    this._openGroups = [...next];
+  }
+
+  #onKnobChange(knob: 'shapeFactor' | 'spacingScale' | 'fontFamily' | 'fontSize', value: string): void {
+    const knobs = { ...this.theme.knobs };
+    if (knob === 'shapeFactor' || knob === 'spacingScale') {
+      const parsed = Number(value);
+      knobs[knob] = value.trim() && Number.isFinite(parsed) ? parsed : null;
+    } else {
+      knobs[knob] = value;
+    }
+    this.#setTheme({ ...this.theme, knobs }, null);
+  }
+
+  #onSeedChange(key: keyof ForgeThemeSeeds, value: string): void {
+    const seeds = { ...this.#resolvedSeeds, [key]: value };
+    this.#setTheme(withForgeThemeVariant(this.theme, { seeds }), null);
+  }
+
+  #onTargetContrastChange(evt: Event): void {
+    const raw = Number((evt.target as HTMLElement & { value: string }).value);
+    const targetContrast = CONTRAST_TARGETS.some(target => target.value === raw) ? raw : 7;
+    this.#setTheme({ ...this.theme, generator: { ...this.theme.generator, targetContrast } }, null);
+  }
+
+  #onPureOnColorsChange(evt: CustomEvent<boolean>): void {
+    this.#setTheme({ ...this.theme, generator: { ...this.theme.generator, pureOnColors: evt.detail } }, null);
+  }
+
+  #onPolarityChange(evt: CustomEvent<string>): void {
+    const polarity = evt.detail === 'dark' ? 'dark' : 'light';
+    if (polarity === this.theme.polarity) {
+      return;
+    }
+    // Swaps which variant is being authored. Light and dark are separate
+    // designs, so nothing is re-derived and nothing is lost: whatever was
+    // authored for the other polarity is still there when you switch back.
+    this.#setTheme(setForgeThemePolarity(this.theme, polarity), null);
+  }
+
+  #onGenerate(): void {
+    this.generatePalette();
+  }
+
+  #onToggleAllContrast(): void {
+    this._showAllContrast = !this._showAllContrast;
+  }
+
+  #onRelativeColorsChange(evt: Event): void {
+    // `forge-checkbox` fires a plain `change` and carries its state on the
+    // element rather than in a detail payload.
+    const relativeColors = (evt.target as HTMLElement & { checked: boolean }).checked;
+    const theme = { ...this.theme, generator: { ...this.theme.generator, relativeColors } };
+    // Re-express the palette straight away so the effect is visible, but only
+    // when there is a generated palette to re-express.
+    this.#setTheme(activeForgeThemeVariant(theme).seeds ? regenerateForgeTheme(theme) : theme, null);
+  }
+
+  #onExportFormatChange(evt: Event): void {
+    this.exportFormat = (evt.target as HTMLElement & { value: string }).value as ForgeThemeExportFormat;
+  }
+
+  #onImportInput(evt: Event): void {
+    this._importText = (evt.target as HTMLTextAreaElement).value;
+  }
+
+  #onImport(): void {
+    this.importTheme(this._importText);
+  }
+
+  async #onImportFile(evt: CustomEvent<IFilePickerChangeEventData>): Promise<void> {
+    const file = evt.detail.legalFiles?.[0];
+    if (!file) {
+      this._messages = ['That file was rejected. Provide a JSON theme file.'];
+      return;
+    }
+    const text = await file.text();
+    this._importText = text;
+    this.importTheme(text);
+  }
+
+  #onOpenShowcase(): void {
+    this._showcaseOpen = true;
+  }
+
+  #onCloseShowcase(): void {
+    this._showcaseOpen = false;
+  }
+
+  async #onCopy(): Promise<void> {
+    const text = this.exportTheme();
+    try {
+      await navigator.clipboard.writeText(text);
+      this._messages = [];
+    } catch {
+      this._messages = ['Copying to the clipboard was blocked. Select the export text and copy it manually.'];
+    }
+  }
+
+  #onDownload(): void {
+    const extension = this.exportFormat === 'scss' ? 'scss' : this.exportFormat;
+    const blob = new Blob([this.exportTheme()], { type: 'text/plain' });
+    const url = URL.createObjectURL(blob);
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = `${this.#fileSafeName}.${extension}`;
+    anchor.click();
+    URL.revokeObjectURL(url);
+  }
+
+  //
+  // Internals
+  //
+
+  get #fileSafeName(): string {
+    return (
+      this.theme.name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '') || 'forge-theme'
+    );
+  }
+
+  /** The variant currently being authored. */
+  get #variant(): ForgeThemeVariant {
+    return activeForgeThemeVariant(this.theme);
+  }
+
+  get #baseTokens(): Readonly<ForgeThemeTokenMap> {
+    return forgeStockTokens(this.theme.polarity);
+  }
+
+  get #overrideCount(): number {
+    return Object.keys(this.#variant.tokens).length;
+  }
+
+  get #resolvedSeeds(): ForgeThemeSeeds {
+    if (this.#variant.seeds) {
+      return this.#variant.seeds;
+    }
+    const base = this.#baseTokens;
+    const seeds: ForgeThemeSeeds = {};
+    for (const key of FORGE_THEME_SEED_KEYS) {
+      seeds[key] = this.#variant.tokens[key] ?? base[key];
+    }
+    return seeds;
+  }
+
+  get #visibleGroups(): ForgeThemeTokenGroup[] {
+    return FORGE_THEME_TOKEN_GROUPS.filter(group => this.#matchingTokens(group).length > 0);
+  }
+
+  #matchingTokens(group: ForgeThemeTokenGroup): string[] {
+    if (!this._filter.trim()) {
+      return group.tokens;
+    }
+    if (this.#matchesFilter(group.label)) {
+      return group.tokens;
+    }
+    return group.tokens.filter(token => this.#matchesFilter(token));
+  }
+
+  #matchesFilter(subject: string): boolean {
+    const filter = this._filter.trim().toLowerCase();
+    return !filter || subject.toLowerCase().includes(filter);
+  }
+
+  #isGroupOpen(key: string): boolean {
+    // An active filter expands whatever it matched, so hits are never hidden.
+    return !!this._filter.trim() || this._openGroups.includes(key);
+  }
+
+  #valueFor(token: string): string {
+    return this.#variant.tokens[token] ?? this.#baseTokens[token] ?? '';
+  }
+
+  #hexFor(value: string, token?: string): string {
+    const parsed = parseColor(this.#asColor(value, token));
+    return parsed ? toHex(parsed) : '#000000';
+  }
+
+  /**
+   * A concrete color for a token value, evaluating a relative-color expression
+   * if that is what it holds.
+   *
+   * A swatch is an `<input type="color">` and a contrast ratio is arithmetic;
+   * neither can do anything with `oklch(from var(--forge-theme-primary) …)`. The
+   * browser is the only thing that can evaluate one.
+   */
+  #asColor(value: string, token?: string): string {
+    if (!token || !isRelativeColor(value)) {
+      return value;
+    }
+    return this.#resolvedTokens[token] ?? value;
+  }
+
+  /**
+   * The active token set with every relative-color expression evaluated.
+   *
+   * Memoised on the token set, because resolving touches the DOM and both the
+   * swatches and the contrast report ask for it on every render.
+   */
+  get #resolvedTokens(): ForgeThemeTokenMap {
+    const tokens = { ...this.#baseTokens, ...this.#variant.tokens };
+    if (!hasRelativeColors(tokens)) {
+      return tokens;
+    }
+    const signature = JSON.stringify(tokens);
+    if (this.#resolvedSignature === signature && this.#resolvedCache) {
+      return this.#resolvedCache;
+    }
+
+    // Declare the whole set on one element so `from var(…)` resolves, then read
+    // each value back off a probe inside it. Chains work too, because custom
+    // property substitution happens within the element's own declarations.
+    const host = document.createElement('div');
+    host.setAttribute('aria-hidden', 'true');
+    host.style.position = 'absolute';
+    host.style.visibility = 'hidden';
+    for (const [token, value] of Object.entries(tokens)) {
+      host.style.setProperty(`${FORGE_THEME_TOKEN_PREFIX}${token}`, value);
+    }
+    const probe = document.createElement('span');
+    host.appendChild(probe);
+    this.shadowRoot?.appendChild(host);
+
+    // Chrome reports a colour in whatever space it was written in, so an
+    // oklch() expression computes to `oklch(...)`. Normalise through a canvas
+    // rather than teaching the colour parser every notation CSS can produce.
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    const context = canvas.getContext('2d');
+
+    const resolved: ForgeThemeTokenMap = {};
+    for (const [token, value] of Object.entries(tokens)) {
+      if (!isRelativeColor(value)) {
+        resolved[token] = value;
+        continue;
+      }
+      probe.style.color = '';
+      probe.style.color = `var(${FORGE_THEME_TOKEN_PREFIX}${token})`;
+      const computed = getComputedStyle(probe).color;
+      resolved[token] = context ? (toSrgb(context, computed) ?? value) : computed || value;
+    }
+    host.remove();
+
+    this.#resolvedSignature = signature;
+    this.#resolvedCache = resolved;
+    return resolved;
+  }
+
+  #setTheme(theme: ForgeTheme, token: string | null): void {
+    this.theme = normalizeForgeTheme(theme) ?? createForgeTheme();
+    this.#emitChange(token);
+  }
+
+  #emitChange(token: string | null): void {
+    this.dispatchEvent(
+      new CustomEvent<ThemeEditorChangeEventData>('forge-theme-editor-change', {
+        bubbles: true,
+        composed: true,
+        cancelable: true,
+        detail: { theme: this.theme, token }
+      })
+    );
+  }
+}
