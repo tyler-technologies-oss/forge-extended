@@ -19,6 +19,15 @@ export interface ForgeThemeEditorProps
     | "onFocus"
     | "onBlur"
   > {
+  /** Whether the CSS and Sass exports express each derived ramp as a CSS relative
+color of the token it came from, so changing a base updates its ramp rather
+than leaving it frozen at export time.
+
+Off by default: a literal value works in every engine and every tool, and on
+an engine without relative color support the declaration is dropped silently
+rather than erroring. */
+  relativeColors?: boolean;
+
   /** The export format shown on the import/export view. */
   exportFormat?: ForgeThemeEditorElement["exportFormat"];
 

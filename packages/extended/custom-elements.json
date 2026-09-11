@@ -492,183 +492,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-confirmation-dialog'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ConfirmationDialogComponent",
-          "slots": [
-            {
-              "description": "The title of the dialog",
-              "name": "title"
-            },
-            {
-              "description": "The dialog message",
-              "name": "message"
-            },
-            {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
-            },
-            {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "isBusy",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
-            },
-            {
-              "kind": "field",
-              "name": "busyLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
-              },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "fieldName": "open"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog",
-              "fieldName": "description"
-            },
-            {
-              "name": "is-busy",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
-            },
-            {
-              "name": "busy-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-confirmation-dialog",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
-          "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ConfirmationDialogComponent",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "declarations": [
         {
@@ -992,6 +815,183 @@
           "declaration": {
             "name": "BusyIndicatorComponent",
             "module": "src/lib/busy-indicator/busy-indicator.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ConfirmationDialogComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-confirmation-dialog'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ConfirmationDialogComponent",
+          "slots": [
+            {
+              "description": "The title of the dialog",
+              "name": "title"
+            },
+            {
+              "description": "The dialog message",
+              "name": "message"
+            },
+            {
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
+            },
+            {
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
+            },
+            {
+              "kind": "field",
+              "name": "busyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+              },
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
+            },
+            {
+              "name": "busy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-confirmation-dialog",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponentTagName",
+          "declaration": {
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponent",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         }
       ]
@@ -2048,6 +2048,92 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ThemeToggleComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-theme-toggle'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ThemeToggleComponent",
+          "slots": [
+            {
+              "description": "The title shown above the toggle buttons",
+              "name": "title"
+            }
+          ],
+          "members": [
+            {
+              "kind": "method",
+              "name": "setTheme",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "ThemeToggleTheme"
+                  }
+                }
+              ],
+              "description": "Sets the current theme."
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ThemeToggleThemeEventData>"
+              },
+              "description": "Fired when the theme is changed",
+              "name": "forge-theme-toggle-update"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-theme-toggle",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ThemeToggleComponentTagName",
+          "declaration": {
+            "name": "ThemeToggleComponentTagName",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ThemeToggleComponent",
+          "declaration": {
+            "name": "ThemeToggleComponent",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ThemeToggleComponent",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/theme-editor/theme-color.ts",
       "declarations": [
         {
@@ -2707,6 +2793,17 @@
               "attribute": "export-format"
             },
             {
+              "kind": "field",
+              "name": "relativeColors",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Whether the CSS and Sass exports express each derived ramp as a CSS relative\ncolor of the token it came from, so changing a base updates its ramp rather\nthan leaving it frozen at export time.\n\nOff by default: a literal value works in every engine and every tool, and on\nan engine without relative color support the declaration is dropped silently\nrather than erroring.",
+              "attribute": "relative-colors"
+            },
+            {
               "kind": "method",
               "name": "getTheme",
               "privacy": "public",
@@ -2894,6 +2991,15 @@
               "default": "'json'",
               "description": "The export format shown on the import/export view.",
               "fieldName": "exportFormat"
+            },
+            {
+              "name": "relative-colors",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Whether the CSS and Sass exports express each derived ramp as a CSS relative\ncolor of the token it came from, so changing a base updates its ramp rather\nthan leaving it frozen at export time.\n\nOff by default: a literal value works in every engine and every tool, and on\nan engine without relative color support the declaration is dropped silently\nrather than erroring.",
+              "fieldName": "relativeColors"
             }
           ],
           "superclass": {
@@ -3327,27 +3433,16 @@
                 "text": "ForgeTheme"
               },
               "description": "The theme to emit."
-            }
-          ],
-          "description": "Emits a plain `:root` block, for pasting into an application's global stylesheet."
-        },
-        {
-          "kind": "function",
-          "name": "exportForgeThemeRelativeCss",
-          "return": {
-            "type": {
-              "text": "string"
-            }
-          },
-          "parameters": [
+            },
             {
-              "name": "theme",
+              "name": "options",
+              "optional": true,
               "type": {
-                "text": "ForgeTheme"
+                "text": "ForgeThemeExportOptions"
               }
             }
           ],
-          "description": "CSS using relative color syntax, so the derived ramps track their base token\ninstead of being frozen at export time: change `--forge-theme-primary` in an\napplication and every primary container follows.\n\nOnly the ramps are expressed this way. An `on-` ink is the result of an\niterative contrast search and the `text-` scale is pure black or white at a\nfixed alpha — neither is a transform of anything, so both stay literal.\n\nNeeds Chrome 119+, Safari 16.4+ or Firefox 128+. Older engines drop the\ndeclaration and fall back to the value Forge compiles into its own\n`var()` references, so the failure is quiet: use the plain CSS export if that\nmatters."
+          "description": "Emits a plain `:root` block, for pasting into an application's global stylesheet."
         },
         {
           "kind": "function",
@@ -3362,11 +3457,16 @@
               "name": "theme",
               "type": {
                 "text": "ForgeTheme"
-              },
-              "description": "The theme to emit."
+              }
+            },
+            {
+              "name": "options",
+              "optional": true,
+              "type": {
+                "text": "ForgeThemeExportOptions"
+              }
             }
-          ],
-          "description": "Emits Sass using Forge's own `theme.provide()` mixin, which validates every\ntoken name at compile time and emits the `--forge-theme-*` declarations."
+          ]
         },
         {
           "kind": "function",
@@ -3409,6 +3509,13 @@
                 "text": "ForgeThemeExportFormat"
               },
               "description": "The format to emit."
+            },
+            {
+              "name": "options",
+              "optional": true,
+              "type": {
+                "text": "ForgeThemeExportOptions"
+              }
             }
           ],
           "description": "Emits a theme in the requested format."
@@ -3586,14 +3693,6 @@
           "name": "exportForgeThemeCss",
           "declaration": {
             "name": "exportForgeThemeCss",
-            "module": "src/lib/theme-editor/theme-model.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "exportForgeThemeRelativeCss",
-          "declaration": {
-            "name": "exportForgeThemeRelativeCss",
             "module": "src/lib/theme-editor/theme-model.ts"
           }
         },
@@ -3786,92 +3885,6 @@
           "declaration": {
             "name": "FORGE_THEME_TOKEN_NAMES",
             "module": "src/lib/theme-editor/theme-tokens.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ThemeToggleComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-theme-toggle'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ThemeToggleComponent",
-          "slots": [
-            {
-              "description": "The title shown above the toggle buttons",
-              "name": "title"
-            }
-          ],
-          "members": [
-            {
-              "kind": "method",
-              "name": "setTheme",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "ThemeToggleTheme"
-                  }
-                }
-              ],
-              "description": "Sets the current theme."
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ThemeToggleThemeEventData>"
-              },
-              "description": "Fired when the theme is changed",
-              "name": "forge-theme-toggle-update"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-theme-toggle",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ThemeToggleComponentTagName",
-          "declaration": {
-            "name": "ThemeToggleComponentTagName",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ThemeToggleComponent",
-          "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
           }
         }
       ]
@@ -4377,22 +4390,6 @@
       "path": "src/lib/app-layout/app-layout.ts",
       "lineNumber": 92
     },
-    "ConfirmationDialogActionEventReason": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 28
-    },
-    "ConfirmationDialogActionEventData": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 30
-    },
-    "ConfirmationDialogProperties": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 35
-    },
-    "ConfirmationDialogComponent": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 55
-    },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 26
@@ -4408,6 +4405,22 @@
     "BusyIndicatorComponent": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 40
+    },
+    "ConfirmationDialogActionEventReason": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 28
+    },
+    "ConfirmationDialogActionEventData": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 30
+    },
+    "ConfirmationDialogProperties": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 35
+    },
+    "ConfirmationDialogComponent": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 55
     },
     "CountCardTheme": {
       "path": "src/lib/count-card/count-card.ts",
@@ -4453,6 +4466,18 @@
       "path": "src/lib/structured-card/structured-card.ts",
       "lineNumber": 34
     },
+    "ThemeToggleTheme": {
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "lineNumber": 28
+    },
+    "ThemeToggleUpdateEventData": {
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "lineNumber": 30
+    },
+    "ThemeToggleComponent": {
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "lineNumber": 41
+    },
     "Rgba": {
       "path": "src/lib/theme-editor/theme-color.ts",
       "lineNumber": 15
@@ -4467,19 +4492,19 @@
     },
     "ThemeEditorView": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 97
+      "lineNumber": 98
     },
     "ThemeEditorChangeEventData": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 100
+      "lineNumber": 101
     },
     "ThemeEditorImportEventData": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 108
+      "lineNumber": 109
     },
     "ThemeEditorComponent": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 141
+      "lineNumber": 142
     },
     "ThemeGeneratorMode": {
       "path": "src/lib/theme-editor/theme-generator.ts",
@@ -4533,6 +4558,10 @@
       "path": "src/lib/theme-editor/theme-model.ts",
       "lineNumber": 140
     },
+    "ForgeThemeExportOptions": {
+      "path": "src/lib/theme-editor/theme-model.ts",
+      "lineNumber": 143
+    },
     "ForgeThemeTokenKind": {
       "path": "src/lib/theme-editor/theme-tokens.ts",
       "lineNumber": 19
@@ -4544,18 +4573,6 @@
     "ForgeThemeTokenGroup": {
       "path": "src/lib/theme-editor/theme-tokens.ts",
       "lineNumber": 25
-    },
-    "ThemeToggleTheme": {
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 28
-    },
-    "ThemeToggleUpdateEventData": {
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 30
-    },
-    "ThemeToggleComponent": {
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 41
     },
     "UserProfileComponent": {
       "path": "src/lib/user-profile/user-profile.ts",

@@ -137,7 +137,17 @@ export interface ForgeThemeImportResult {
 }
 
 /** The export formats the editor produces. */
-export type ForgeThemeExportFormat = 'json' | 'scss' | 'css' | 'css-relative';
+export type ForgeThemeExportFormat = 'json' | 'scss' | 'css';
+
+/** Options shared by the CSS and Sass exports. */
+export interface ForgeThemeExportOptions {
+  /**
+   * Express each derived ramp as a CSS relative color of the token it came from,
+   * so changing a base updates its ramp instead of leaving it frozen at export
+   * time. Off by default: a literal value works in every engine and every tool.
+   */
+  relativeColors?: boolean;
+}
 
 /** The version marker written into exported JSON. */
 export const FORGE_THEME_EXPORT_VERSION = 1;
@@ -369,10 +379,10 @@ export function resolveForgeThemeKnobs(theme: ForgeTheme): Record<string, string
   return out;
 }
 
-function declarations(theme: ForgeTheme, important: boolean): string[] {
+function declarations(theme: ForgeTheme, important: boolean, options?: ForgeThemeExportOptions): string[] {
   const bang = important ? ' !important' : '';
   const lines: string[] = [];
-  for (const [token, value] of Object.entries(resolveForgeThemeTokens(theme))) {
+  for (const [token, value] of Object.entries(emittedTokenValues(theme, options).values)) {
     lines.push(`  ${FORGE_THEME_TOKEN_PREFIX}${token}: ${value}${bang};`);
   }
   for (const [name, value] of Object.entries(resolveForgeThemeKnobs(theme))) {
@@ -382,11 +392,58 @@ function declarations(theme: ForgeTheme, important: boolean): string[] {
 }
 
 /**
+ * The value to emit for each token: the literal color, or a relative-color
+ * expression when one reproduces it and `relativeColors` is on. The single seam
+ * both the CSS and the Sass export go through, so the toggle behaves the same
+ * in either.
+ */
+function emittedTokenValues(
+  theme: ForgeTheme,
+  options?: ForgeThemeExportOptions
+): { values: ForgeThemeTokenMap; derived: number; total: number } {
+  const tokens = resolveForgeThemeTokens(theme);
+  const total = Object.keys(tokens).length;
+  if (!options?.relativeColors) {
+    return { values: tokens, derived: 0, total };
+  }
+
+  const values: ForgeThemeTokenMap = {};
+  let derived = 0;
+  for (const [token, value] of Object.entries(tokens)) {
+    const baseToken = relativeBaseFor(token);
+    const expression =
+      baseToken && tokens[baseToken] ? relativeColorExpression(tokens[baseToken], value, baseToken) : null;
+    if (expression) {
+      derived++;
+      values[token] = expression;
+    } else {
+      values[token] = value;
+    }
+  }
+  return { values, derived, total };
+}
+
+/**
+ * The note that ships with a relative-color export. The failure mode on an older
+ * engine is quiet — the declaration is dropped and Forge's own compiled-in
+ * fallback applies — so the caveat travels with the stylesheet.
+ */
+function relativeColorsNote(derived: number, total: number): string {
+  return (
+    `/* ${derived} of ${total} tokens derive from their base with CSS relative colors,\n` +
+    `   so changing a base updates its ramp. Needs Chrome 119+, Safari 16.4+, Firefox 128+.\n` +
+    `   'on-' inks and the 'text-' scale are literal: a contrast search is not a transform. */\n`
+  );
+}
+
+/**
  * Emits a plain `:root` block, for pasting into an application's global stylesheet.
  * @param theme The theme to emit.
  */
-export function exportForgeThemeCss(theme: ForgeTheme): string {
-  return `:root {\n${declarations(theme, false).join('\n')}\n}\n`;
+export function exportForgeThemeCss(theme: ForgeTheme, options?: ForgeThemeExportOptions): string {
+  const { derived, total } = emittedTokenValues(theme, options);
+  const header = derived ? relativeColorsNote(derived, total) : '';
+  return `${header}:root {\n${declarations(theme, false, options).join('\n')}\n}\n`;
 }
 
 /**
@@ -493,61 +550,15 @@ function sameColor(a: readonly number[], b: readonly number[]): boolean {
   return Math.abs(a[0] - b[0]) <= 1 && Math.abs(a[1] - b[1]) <= 1 && Math.abs(a[2] - b[2]) <= 1;
 }
 
-/**
- * CSS using relative color syntax, so the derived ramps track their base token
- * instead of being frozen at export time: change `--forge-theme-primary` in an
- * application and every primary container follows.
- *
- * Only the ramps are expressed this way. An `on-` ink is the result of an
- * iterative contrast search and the `text-` scale is pure black or white at a
- * fixed alpha — neither is a transform of anything, so both stay literal.
- *
- * Needs Chrome 119+, Safari 16.4+ or Firefox 128+. Older engines drop the
- * declaration and fall back to the value Forge compiles into its own
- * `var()` references, so the failure is quiet: use the plain CSS export if that
- * matters.
- */
-export function exportForgeThemeRelativeCss(theme: ForgeTheme): string {
-  const tokens = resolveForgeThemeTokens(theme);
-  const lines: string[] = [];
-  let derived = 0;
-
-  for (const [token, value] of Object.entries(tokens)) {
-    const baseToken = relativeBaseFor(token);
-    const expression =
-      baseToken && tokens[baseToken] ? relativeColorExpression(tokens[baseToken], value, baseToken) : null;
-    if (expression) {
-      derived++;
-      lines.push(`  ${FORGE_THEME_TOKEN_PREFIX}${token}: ${expression};`);
-    } else {
-      lines.push(`  ${FORGE_THEME_TOKEN_PREFIX}${token}: ${value};`);
-    }
-  }
-  for (const [name, value] of Object.entries(resolveForgeThemeKnobs(theme))) {
-    lines.push(`  ${name}: ${value};`);
-  }
-
-  const header =
-    `/* ${derived} of ${Object.keys(tokens).length} tokens derive from their base with CSS relative colors,
-` +
-    `   so changing a base updates its ramp. Needs Chrome 119+, Safari 16.4+, Firefox 128+.
-` +
-    `   'on-' inks and the 'text-' scale are literal: a contrast search is not a transform. */
-`;
-  return `${header}:root {\n${lines.join('\n')}\n}\n`;
-}
-
-/**
- * Emits Sass using Forge's own `theme.provide()` mixin, which validates every
- * token name at compile time and emits the `--forge-theme-*` declarations.
- * @param theme The theme to emit.
- */
-export function exportForgeThemeScss(theme: ForgeTheme): string {
-  // `provide()` takes bare token names and interpolates the value verbatim.
-  const entries = Object.entries(resolveForgeThemeTokens(theme)).map(([token, value]) => `    ${token}: ${value}`);
+export function exportForgeThemeScss(theme: ForgeTheme, options?: ForgeThemeExportOptions): string {
+  // `provide()` takes bare token names and interpolates the value verbatim, so a
+  // relative-colour expression passes straight through it.
+  const { values, derived, total } = emittedTokenValues(theme, options);
+  const entries = Object.entries(values).map(([token, value]) => `    ${token}: ${value}`);
   const knobs = Object.entries(resolveForgeThemeKnobs(theme)).map(([name, value]) => `  ${name}: ${value};`);
 
-  let out = "@use '@tylertech/forge/sass/theme';\n\n:root {\n";
+  let out = derived ? relativeColorsNote(derived, total) : '';
+  out += "@use '@tylertech/forge/sass/theme';\n\n:root {\n";
   if (entries.length) {
     out += `  @include theme.provide(\n    (\n${entries.join(',\n')}\n    )\n  );\n`;
   }
@@ -571,15 +582,18 @@ export function exportForgeThemeJson(theme: ForgeTheme): string {
  * @param theme The theme to emit.
  * @param format The format to emit.
  */
-export function exportForgeTheme(theme: ForgeTheme, format: ForgeThemeExportFormat): string {
+export function exportForgeTheme(
+  theme: ForgeTheme,
+  format: ForgeThemeExportFormat,
+  options?: ForgeThemeExportOptions
+): string {
   switch (format) {
     case 'scss':
-      return exportForgeThemeScss(theme);
-    case 'css-relative':
-      return exportForgeThemeRelativeCss(theme);
+      return exportForgeThemeScss(theme, options);
     case 'css':
-      return exportForgeThemeCss(theme);
+      return exportForgeThemeCss(theme, options);
     default:
+      // JSON carries the theme itself, so there is nothing to express relatively.
       return exportForgeThemeJson(theme);
   }
 }

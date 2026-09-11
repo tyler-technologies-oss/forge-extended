@@ -149,11 +149,14 @@ something that applies it. `exportTheme('scss')` emits Sass built on Forge's own
 `theme.provide()` mixin and `exportTheme('css')` a plain `:root` block, for pasting
 into an application directly.
 
-#### CSS with relative colors
+#### Use relative CSS
 
-`exportTheme('css-relative')` emits the same theme, but expresses every derived ramp
-as a [CSS relative color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#relative_colors)
-of the token it came from, rather than freezing it at export time:
+The **Use relative CSS** checkbox on the import and export view, or the
+`relativeColors` property, switches the CSS and Sass exports over to expressing every
+derived ramp as a
+[CSS relative color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#relative_colors)
+of the token it came from, rather than freezing it at export time. Off by default, so
+the exports are literal values unless you ask otherwise; toggle it to compare.
 
 ```css
 --forge-theme-primary: #b8f21a;
@@ -165,6 +168,11 @@ of the token it came from, rather than freezing it at export time:
 Change `--forge-theme-primary` in an application and every primary container follows.
 **40 of the 101 tokens** derive this way: all 28 accent containers, the 8-step surface
 ramp and the 4 outline steps.
+
+It applies to the Sass export too — `theme.provide()` interpolates the value verbatim,
+so an expression passes straight through. JSON is unaffected, and the checkbox is
+disabled for it: JSON carries the theme itself, so there is nothing to express
+relatively.
 
 The coefficients are measured from the colors the generator produced, so a formula
 evaluates to exactly what the preview showed and then keeps tracking. Three forms are
@@ -201,22 +209,23 @@ targets `:root` loses on a page already in dark mode.
 | ---------------- | --------------------------- | ------------------ | ------------------------------------------------------------ |
 | `theme`          | `ForgeTheme`                | an untouched theme | The theme being edited. Set as a property, not an attribute. |
 | `exportFormat`   | `'json' \| 'scss' \| 'css'` | `'json'`           | The export format shown on the import and export view.       |
+| `relativeColors` | `boolean`                   | `false`            | Express derived ramps as CSS relative colors when exporting. |
 | `theme.polarity` | `'light' \| 'dark'`         | `'light'`          | Which variant is being authored.                             |
 | `theme.mode`     | `'patch' \| 'replace'`      | `'patch'`          | Whether to emit only your changes or a complete theme.       |
 
 ### Methods
 
-| Name                      | Description                                               |
-| ------------------------- | --------------------------------------------------------- |
-| `getTheme()`              | Returns the theme being edited.                           |
-| `loadTheme(theme)`        | Replaces the theme, filling in anything the value omits.  |
-| `exportTheme(format?)`    | Emits the theme as JSON, Sass, CSS or relative-color CSS. |
-| `importTheme(text)`       | Imports theme JSON and returns the warnings raised.       |
-| `generatePalette(seeds?)` | Derives the full token set from seed colors.              |
-| `setToken(token, value)`  | Sets one token, or clears it when the value is empty.     |
-| `resetToken(token)`       | Reverts one token to the Forge default for the polarity.  |
-| `resetAllTokens()`        | Reverts every token in the active variant.                |
-| `getContrastReport()`     | Returns every `on-*` pair and its ratio, worst first.     |
+| Name                      | Description                                                       |
+| ------------------------- | ----------------------------------------------------------------- |
+| `getTheme()`              | Returns the theme being edited.                                   |
+| `loadTheme(theme)`        | Replaces the theme, filling in anything the value omits.          |
+| `exportTheme(format?)`    | Emits the theme as JSON, Sass or CSS, honouring `relativeColors`. |
+| `importTheme(text)`       | Imports theme JSON and returns the warnings raised.               |
+| `generatePalette(seeds?)` | Derives the full token set from seed colors.                      |
+| `setToken(token, value)`  | Sets one token, or clears it when the value is empty.             |
+| `resetToken(token)`       | Reverts one token to the Forge default for the polarity.          |
+| `resetAllTokens()`        | Reverts every token in the active variant.                        |
+| `getContrastReport()`     | Returns every `on-*` pair and its ratio, worst first.             |
 
 ### Events
 

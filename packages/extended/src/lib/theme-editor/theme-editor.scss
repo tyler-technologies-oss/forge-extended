@@ -142,8 +142,12 @@
 }
 
 .mode,
-.target-contrast {
+.target-contrast,
+.export-format {
   flex: 1 1 160px;
+  // A select sized to its shortest option leaves its floating label no room and
+  // the label ends up on top of the value, so give them all a real floor.
+  min-inline-size: 180px;
   max-inline-size: var(--_forge-theme-editor-control-max);
 }
 

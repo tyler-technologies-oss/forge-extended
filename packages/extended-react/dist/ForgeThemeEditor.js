@@ -4,7 +4,7 @@ import { useEventListener, useProperties } from "./react-utils.js";
 
 export const ForgeThemeEditor = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
-  const { exportFormat, theme, ...filteredProps } = props;
+  const { relativeColors, exportFormat, theme, ...filteredProps } = props;
 
   /** Event listeners - run once */
   useEventListener(
@@ -39,6 +39,7 @@ export const ForgeThemeEditor = forwardRef((props, forwardedRef) => {
       for: props.htmlFor,
       part: props.part,
       tabindex: props.tabIndex,
+      "relative-colors": props.relativeColors ? true : undefined,
       style: { ...props.style },
     },
     props.children,

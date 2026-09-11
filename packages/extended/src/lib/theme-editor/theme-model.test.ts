@@ -7,7 +7,6 @@ import {
   exportForgeTheme,
   exportForgeThemeCss,
   exportForgeThemeJson,
-  exportForgeThemeRelativeCss,
   exportForgeThemeScss,
   normalizeForgeTheme,
   parseForgeThemeJson,
@@ -335,7 +334,8 @@ describe('ThemeEditor theme model', () => {
     });
   });
 
-  describe('exportForgeThemeRelativeCss', () => {
+  describe('relative colour exports', () => {
+    const relative = (theme: ForgeTheme): string => exportForgeThemeCss(theme, { relativeColors: true });
     const darkTheme = (): ForgeTheme =>
       regenerateForgeTheme(
         createForgeTheme({
@@ -347,24 +347,24 @@ describe('ThemeEditor theme model', () => {
       );
 
     it('should derive every container from its accent', () => {
-      const css = exportForgeThemeRelativeCss(darkTheme());
+      const css = relative(darkTheme());
 
       for (const level of ['minimum', 'low', '', 'high']) {
         const token = level ? `primary-container-${level}` : 'primary-container';
-        const line = css.split('\n').find(l => l.includes(`--forge-theme-${token}:`))!;
+        const line = css.split('\n').find((l: string) => l.includes(`--forge-theme-${token}:`))!;
         expect(line, token).to.include('oklch(from var(--forge-theme-primary)');
       }
     });
 
     it('should derive the surface and outline ramps from surface', () => {
-      const css = exportForgeThemeRelativeCss(darkTheme());
+      const css = relative(darkTheme());
 
       expect(css).to.match(/--forge-theme-surface-container:\s*oklch\(from var\(--forge-theme-surface\)/);
       expect(css).to.match(/--forge-theme-outline:\s*oklch\(from var\(--forge-theme-surface\)/);
     });
 
     it('should leave the inks literal', () => {
-      const css = exportForgeThemeRelativeCss(darkTheme());
+      const css = relative(darkTheme());
 
       // An `on-` colour is the result of an iterative contrast search and the
       // `text-` scale is pure ink at a fixed alpha. Neither is a transform.
@@ -376,7 +376,7 @@ describe('ThemeEditor theme model', () => {
     });
 
     it('should leave the seeds and the shadow literal', () => {
-      const css = exportForgeThemeRelativeCss(darkTheme());
+      const css = relative(darkTheme());
 
       expect(css).to.include('--forge-theme-primary: #b8f21a;');
       expect(css).to.not.match(/--forge-theme-surface-bright-shadow:\s*oklch/);
@@ -385,15 +385,42 @@ describe('ThemeEditor theme model', () => {
     it('should carry the global knobs', () => {
       const theme = { ...darkTheme(), knobs: { ...emptyForgeThemeKnobs(), shapeFactor: 3 } };
 
-      expect(exportForgeThemeRelativeCss(theme)).to.include('--forge-shape-factor: 3;');
+      expect(relative(theme)).to.include('--forge-shape-factor: 3;');
     });
 
     it('should say what it needs and what it did', () => {
-      const css = exportForgeThemeRelativeCss(darkTheme());
+      const css = relative(darkTheme());
 
       // The failure mode is silent on an old engine, so the caveat ships with it.
       expect(css).to.include('Chrome 119+');
       expect(css).to.match(/\d+ of \d+ tokens derive/);
+    });
+
+    it('should be off by default, emitting literals', () => {
+      const css = exportForgeThemeCss(darkTheme());
+
+      expect(css).to.not.include('oklch(from');
+      expect(css).to.not.include('tokens derive');
+      expect(css).to.include('--forge-theme-primary-container:');
+    });
+
+    it('should apply to the Sass export too', () => {
+      // provide() interpolates the value verbatim, so an expression passes through.
+      const scss = exportForgeThemeScss(darkTheme(), { relativeColors: true });
+
+      expect(scss).to.include('@include theme.provide(');
+      expect(scss).to.match(/primary-container:\s*oklch\(from var\(--forge-theme-primary\)/);
+      expect(scss).to.include('tokens derive');
+    });
+
+    it('should leave the Sass export literal when off', () => {
+      expect(exportForgeThemeScss(darkTheme())).to.not.include('oklch(from');
+    });
+
+    it('should not change the JSON export', () => {
+      // JSON carries the theme itself; there is nothing to express relatively.
+      const theme = darkTheme();
+      expect(exportForgeTheme(theme, 'json', { relativeColors: true })).to.equal(exportForgeTheme(theme, 'json'));
     });
 
     // The point of the whole format: every formula has to resolve to the colour
@@ -403,7 +430,7 @@ describe('ThemeEditor theme model', () => {
     it('should resolve to exactly the generated colors', () => {
       const theme = darkTheme();
       const flat = parseDeclarations(exportForgeThemeCss(theme));
-      const relative = parseDeclarations(exportForgeThemeRelativeCss(theme));
+      const derivedDecls = parseDeclarations(relative(theme));
 
       const canvas = document.createElement('canvas');
       canvas.width = 1;
@@ -429,7 +456,7 @@ describe('ThemeEditor theme model', () => {
         return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
       };
 
-      const formulas = Object.entries(relative).filter(([, value]) => value.startsWith('oklch(from'));
+      const formulas = Object.entries(derivedDecls).filter(([, value]) => value.startsWith('oklch(from'));
       const mismatches: string[] = [];
       for (const [token, expression] of formulas) {
         const got = pixel(expression);

@@ -617,6 +617,64 @@ describe('ThemeEditor', () => {
     });
   });
 
+  describe('relative CSS toggle', () => {
+    it('should be off by default', async () => {
+      const harness = await createFixture();
+
+      expect(harness.el.relativeColors).to.be.false;
+      expect(harness.el.exportTheme('css')).to.not.include('oklch(from');
+    });
+
+    it('should switch the export over from the checkbox', async () => {
+      const harness = await createFixture();
+      // A generated palette, so there are ramps to derive in the first place.
+      harness.el.generatePalette();
+      await harness.el.updateComplete;
+      await harness.selectView(VIEW.transfer);
+
+      harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: true }));
+      await harness.el.updateComplete;
+
+      expect(harness.el.relativeColors).to.be.true;
+      expect(harness.el.exportTheme('css')).to.include('oklch(from var(--forge-theme-primary)');
+    });
+
+    it('should show the switched output immediately', async () => {
+      const harness = await createFixture();
+      harness.el.generatePalette();
+      await harness.el.updateComplete;
+      await harness.selectView(VIEW.transfer);
+      await harness.setExportFormat('css');
+
+      harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: true }));
+      await harness.el.updateComplete;
+
+      expect(harness.exportOutput.value).to.include('oklch(from');
+    });
+
+    it('should go back to literals when unchecked', async () => {
+      const harness = await createFixture();
+      harness.el.generatePalette();
+      harness.el.relativeColors = true;
+      await harness.el.updateComplete;
+      await harness.selectView(VIEW.transfer);
+
+      harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: false }));
+      await harness.el.updateComplete;
+
+      expect(harness.el.relativeColors).to.be.false;
+      expect(harness.exportOutput.value).to.not.include('oklch(from');
+    });
+
+    it('should be disabled for JSON, which has nothing to express relatively', async () => {
+      const harness = await createFixture();
+      await harness.selectView(VIEW.transfer);
+      await harness.setExportFormat('json');
+
+      expect(harness.relativeColorsCheckbox.hasAttribute('disabled')).to.be.true;
+    });
+  });
+
   describe('contrast view', () => {
     it('should render a specimen of each pair', async () => {
       const harness = await createFixture();
@@ -922,6 +980,10 @@ class ThemeEditorHarness {
 
   public get resetAllButton(): HTMLElement {
     return this.root.querySelector('#reset-all-button')!;
+  }
+
+  public get relativeColorsCheckbox(): HTMLElement {
+    return this.root.querySelector('#relative-colors')!;
   }
 
   public get showcaseButton(): HTMLElement {

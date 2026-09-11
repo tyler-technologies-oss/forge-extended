@@ -9,6 +9,7 @@ import {
   defineButtonToggleComponent,
   defineButtonToggleGroupComponent,
   defineCardComponent,
+  defineCheckboxComponent,
   defineDialogComponent,
   defineDividerComponent,
   defineExpansionPanelComponent,
@@ -146,6 +147,7 @@ export class ThemeEditorComponent extends LitElement {
     defineButtonToggleComponent();
     defineButtonToggleGroupComponent();
     defineCardComponent();
+    defineCheckboxComponent();
     defineDialogComponent();
     defineDividerComponent();
     defineExpansionPanelComponent();
@@ -189,6 +191,18 @@ export class ThemeEditorComponent extends LitElement {
   /** The export format shown on the import/export view. */
   @property({ attribute: 'export-format' })
   public exportFormat: ForgeThemeExportFormat = 'json';
+
+  /**
+   * Whether the CSS and Sass exports express each derived ramp as a CSS relative
+   * color of the token it came from, so changing a base updates its ramp rather
+   * than leaving it frozen at export time.
+   *
+   * Off by default: a literal value works in every engine and every tool, and on
+   * an engine without relative color support the declaration is dropped silently
+   * rather than erroring.
+   */
+  @property({ type: Boolean, attribute: 'relative-colors' })
+  public relativeColors = false;
 
   @state()
   private _view: ThemeEditorView = 'palette';
@@ -314,7 +328,7 @@ export class ThemeEditorComponent extends LitElement {
    * @param format The format to emit. Defaults to the `export-format` property.
    */
   public exportTheme(format: ForgeThemeExportFormat = this.exportFormat): string {
-    return exportForgeTheme(this.theme, format);
+    return exportForgeTheme(this.theme, format, { relativeColors: this.relativeColors });
   }
 
   /**
@@ -462,7 +476,13 @@ export class ThemeEditorComponent extends LitElement {
             .value=${this._filter}
             @input=${this.#onFilterInput} />
         </forge-text-field>
-        <forge-select class="mode" density="small" label="Emit" .value=${this.theme.mode} @change=${this.#onModeChange}>
+        <forge-select
+          class="mode"
+          density="small"
+          label-position="block-start"
+          label="Emit"
+          .value=${this.theme.mode}
+          @change=${this.#onModeChange}>
           <forge-option value="patch">Only my changes</forge-option>
           <forge-option value="replace">Complete ${this.theme.polarity} theme</forge-option>
         </forge-select>
@@ -682,6 +702,7 @@ export class ThemeEditorComponent extends LitElement {
         <forge-select
           class="target-contrast"
           density="small"
+          label-position="block-start"
           label="Target contrast"
           .value=${String(this.theme.generator.targetContrast)}
           @change=${this.#onTargetContrastChange}>
@@ -807,15 +828,28 @@ export class ThemeEditorComponent extends LitElement {
       <div class="transfer-toolbar">
         <forge-select
           id="export-format"
+          class="export-format"
           density="small"
+          label-position="block-start"
           label="Export as"
           .value=${this.exportFormat}
           @change=${this.#onExportFormatChange}>
           <forge-option value="json">JSON</forge-option>
           <forge-option value="scss">Sass (theme.provide)</forge-option>
           <forge-option value="css">CSS (:root)</forge-option>
-          <forge-option value="css-relative">CSS (relative colors)</forge-option>
         </forge-select>
+        <forge-checkbox
+          id="relative-colors"
+          class="relative-colors"
+          .checked=${this.relativeColors}
+          ?disabled=${this.exportFormat === 'json'}
+          @forge-checkbox-change=${this.#onRelativeColorsChange}
+          >Use relative CSS</forge-checkbox
+        >
+        <forge-tooltip anchor="relative-colors">
+          Express each derived ramp as a CSS relative color of the token it came from, so changing a base updates its
+          ramp. Needs Chrome 119+, Safari 16.4+ or Firefox 128+.
+        </forge-tooltip>
         <forge-button id="copy-button" variant="outlined" @click=${this.#onCopy}>
           <forge-icon slot="start" name="content_copy"></forge-icon>
           <span>Copy</span>
@@ -930,6 +964,10 @@ export class ThemeEditorComponent extends LitElement {
 
   #onToggleAllContrast(): void {
     this._showAllContrast = !this._showAllContrast;
+  }
+
+  #onRelativeColorsChange(evt: CustomEvent<boolean>): void {
+    this.relativeColors = evt.detail;
   }
 
   #onExportFormatChange(evt: Event): void {
