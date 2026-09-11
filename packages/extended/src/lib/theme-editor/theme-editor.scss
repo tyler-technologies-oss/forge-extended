@@ -13,7 +13,9 @@
 :host {
   display: block;
 
-  --_forge-theme-editor-swatch-size: 28px;
+  // Matches the small-density icon button so the swatch and the revert control
+  // read as a matched pair either side of the value.
+  --_forge-theme-editor-swatch-size: 24px;
   --_forge-theme-editor-max-height: 80dvh;
 
   // Token cells tile to this width. Narrow on purpose: the value is a hex code,
@@ -213,6 +215,13 @@
   cursor: pointer;
 }
 
+// 101 permanently greyed-out undo arrows is just noise. Keep the column so rows
+// stay aligned, but only show the control on a token that actually has an
+// override to revert. A disabled button is not focusable, so nothing is lost.
+.revert[disabled] {
+  visibility: hidden;
+}
+
 .knob-rows {
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
@@ -265,4 +274,23 @@
   padding: #{forge-spacing.variable(xsmall)};
   margin-block-end: #{forge-spacing.variable(medium)};
   resize: vertical;
+}
+
+//
+// Palette polarity
+//
+
+// The palette owns light/dark: it decides how the surface, container, text and
+// outline ramps derive. Grouped with a caption so it reads as a setting rather
+// than a stray control in the toolbar.
+.polarity {
+  display: flex;
+  flex-direction: column;
+  gap: #{forge-spacing.variable(xxsmall)};
+}
+
+.polarity-label {
+  @include forge-typography.style(label2);
+
+  color: #{forge-theme.variable(text-medium)};
 }

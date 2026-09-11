@@ -37,9 +37,10 @@ first, then fine-tune individual tokens, then check contrast, then take the them
 with you.
 
 - **Palette** — pick the nine seed colors and the editor derives the container ramps, the readable `on-`
-  inks, and the surface, text and outline scales. `Target contrast` is the WCAG ratio derived inks aim for;
-  turning off `Pure black/white accent inks` derives tinted inks instead of the pure black and white that
-  Forge's own tokens use.
+  inks, and the surface, text and outline scales. `Surface` chooses light or dark, and it is the palette
+  that owns that choice (see [Light and dark](#light-and-dark)). `Target contrast` is the WCAG ratio
+  derived inks aim for; turning off `Pure black/white accent inks` derives tinted inks instead of the pure
+  black and white that Forge's own tokens use.
 - **Tokens** — every token, grouped (brand, primary, secondary, tertiary, surface, text, success, error,
   warning, info, outline), each with a color swatch and a text field. The filter narrows to matching token
   names or group labels, and matched groups expand automatically. Each row has its own revert button, and
@@ -52,6 +53,21 @@ with you.
   `:root` CSS block. Import accepts pasted JSON or a dropped file. Unknown token names are **rejected and
   reported** rather than imported, because an invalid name emits a `--forge-theme-*` property that nothing
   reads.
+
+### Light and dark
+
+Polarity belongs to the **palette**, not to the emit mode. It decides how the surface, container, text and
+outline ramps are derived, and a palette derived for one polarity is not meaningful under the other — so it
+sits next to the seed colors, on `theme.generator.mode`, rather than being a side effect of what gets
+emitted.
+
+Switching it re-derives immediately. Seeds still sitting on the outgoing polarity's stock values are
+swapped for the incoming polarity's, because Forge's own light and dark accents differ: keeping the light
+`primary` (`#3f51b5`) on a near-black surface would fail contrast on sight. Seeds you actually chose are
+left alone.
+
+Because generating produces all 101 tokens, it also sets `mode` to that polarity — a generated palette is a
+whole theme, not a patch on the host application's own.
 
 ### Sizing
 
@@ -108,12 +124,13 @@ Forge web component's shadow root too.
 
 ### Properties
 
-| Name               | Type                        | Default                         | Description                                                   |
-| ------------------ | --------------------------- | ------------------------------- | ------------------------------------------------------------- |
-| `theme`            | `ForgeTheme`                | an untouched theme              | The theme being edited. Set as a property, not an attribute.  |
-| `preview`          | `boolean`                   | `false`                         | Whether the theme is applied to the live document. Reflected. |
-| `previewSelectors` | `string[]`                  | the conventional theme carriers | The selectors the live preview declares its tokens on.        |
-| `exportFormat`     | `'json' \| 'scss' \| 'css'` | `'json'`                        | The export format shown on the import and export view.        |
+| Name                   | Type                        | Default                         | Description                                                   |
+| ---------------------- | --------------------------- | ------------------------------- | ------------------------------------------------------------- |
+| `theme`                | `ForgeTheme`                | an untouched theme              | The theme being edited. Set as a property, not an attribute.  |
+| `preview`              | `boolean`                   | `false`                         | Whether the theme is applied to the live document. Reflected. |
+| `previewSelectors`     | `string[]`                  | the conventional theme carriers | The selectors the live preview declares its tokens on.        |
+| `exportFormat`         | `'json' \| 'scss' \| 'css'` | `'json'`                        | The export format shown on the import and export view.        |
+| `theme.generator.mode` | `'light' \| 'dark'`         | `'light'`                       | The palette polarity the ramps are derived for.               |
 
 ### Methods
 

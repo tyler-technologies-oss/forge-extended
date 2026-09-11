@@ -5,6 +5,8 @@ import { repeat } from 'lit/directives/repeat.js';
 import {
   defineBadgeComponent,
   defineButtonComponent,
+  defineButtonToggleComponent,
+  defineButtonToggleGroupComponent,
   defineCardComponent,
   defineDividerComponent,
   defineExpansionPanelComponent,
@@ -28,6 +30,8 @@ import {
 import {
   tylIconAlertCircleOutline,
   tylIconAutorenew,
+  tylIconMoonWaningCrescent,
+  tylIconWbSunny,
   tylIconCheckCircleOutline,
   tylIconContentCopy,
   tylIconDownload,
@@ -54,6 +58,7 @@ import {
   normalizeForgeTheme,
   parseForgeThemeJson,
   regenerateForgeTheme,
+  setForgeThemePolarity,
   type ForgeTheme,
   type ForgeThemeExportFormat,
   type ForgeThemeMode
@@ -133,6 +138,8 @@ export class ThemeEditorComponent extends LitElement {
   static {
     defineBadgeComponent();
     defineButtonComponent();
+    defineButtonToggleComponent();
+    defineButtonToggleGroupComponent();
     defineCardComponent();
     defineDividerComponent();
     defineExpansionPanelComponent();
@@ -160,7 +167,9 @@ export class ThemeEditorComponent extends LitElement {
       tylIconSearch,
       tylIconUndo,
       tylIconVisibility,
-      tylIconVisibilityOff
+      tylIconVisibilityOff,
+      tylIconMoonWaningCrescent,
+      tylIconWbSunny
     ]);
   }
 
@@ -488,7 +497,8 @@ export class ThemeEditorComponent extends LitElement {
         @forge-expansion-panel-toggle=${(evt: CustomEvent<boolean>) => this.#onGroupToggle(group.key, evt.detail)}>
         <div class="group-header" slot="header">
           <span class="group-label">${group.label}</span>
-          <forge-badge>${tokens.length}</forge-badge>
+          <!-- A count is neutral information; the default badge theme reads as a warning. -->
+          <forge-badge theme="info-secondary">${tokens.length}</forge-badge>
         </div>
         ${when(
           open,
@@ -539,6 +549,7 @@ export class ThemeEditorComponent extends LitElement {
         </forge-text-field>
         <forge-icon-button
           class="revert"
+          density="small"
           data-token=${token}
           aria-label=${`Revert ${token}`}
           ?disabled=${!overridden}
@@ -627,6 +638,23 @@ export class ThemeEditorComponent extends LitElement {
       </div>
       <forge-divider></forge-divider>
       <div class="generator-options">
+        <div class="polarity">
+          <span class="polarity-label" id="polarity-label">Surface</span>
+          <forge-button-toggle-group
+            aria-labelledby="polarity-label"
+            mandatory
+            .value=${this.theme.generator.mode}
+            @forge-button-toggle-group-change=${this.#onPolarityChange}>
+            <forge-button-toggle value="light">
+              <forge-icon slot="start" name="wb_sunny"></forge-icon>
+              <span>Light</span>
+            </forge-button-toggle>
+            <forge-button-toggle value="dark">
+              <forge-icon slot="start" name="moon_waning_crescent"></forge-icon>
+              <span>Dark</span>
+            </forge-button-toggle>
+          </forge-button-toggle-group>
+        </div>
         <forge-text-field class="target-contrast" density="small">
           <label slot="label" for="target-contrast">Target contrast</label>
           <input
@@ -845,6 +873,16 @@ export class ThemeEditorComponent extends LitElement {
 
   #onPureOnColorsChange(evt: CustomEvent<boolean>): void {
     this.#setTheme({ ...this.theme, generator: { ...this.theme.generator, pureOnColors: evt.detail } }, null);
+  }
+
+  #onPolarityChange(evt: CustomEvent<string>): void {
+    const mode = evt.detail === 'dark' ? 'dark' : 'light';
+    if (mode === this.theme.generator.mode) {
+      return;
+    }
+    // Flipping the surface re-derives everything, which is the point: the palette
+    // is what decides whether this is a light or a dark theme.
+    this.#setTheme(setForgeThemePolarity(this.theme, mode), null);
   }
 
   #onGenerate(): void {

@@ -27,6 +27,9 @@
  */
 
 import {
+  FORGE_THEME_SEED_KEYS,
+  forgeDarkSeeds,
+  forgeLightSeeds,
   generateForgeTheme,
   type ForgeThemeSeeds,
   type ThemeGeneratorMode,
@@ -78,8 +81,12 @@ export interface ForgeTheme {
   knobs: ForgeThemeKnobs;
   /** The seed colors the palette was last generated from, when applicable. */
   seeds: ForgeThemeSeeds | null;
-  /** The options the palette was last generated with. */
-  generator: Required<Pick<ThemeGeneratorOptions, 'targetContrast' | 'pureOnColors'>>;
+  /**
+   * The options the palette is generated with. `mode` here is the *polarity* —
+   * whether the ramps are derived for a light or a dark surface — and is distinct
+   * from the theme's own `mode`, which only decides what gets emitted.
+   */
+  generator: Required<Pick<ThemeGeneratorOptions, 'mode' | 'targetContrast' | 'pureOnColors'>>;
 }
 
 /** The outcome of importing theme JSON. */
@@ -136,7 +143,7 @@ export function emptyForgeTheme(): ForgeTheme {
     tokens: {},
     knobs: emptyForgeThemeKnobs(),
     seeds: null,
-    generator: { targetContrast: 7, pureOnColors: true }
+    generator: { mode: 'light', targetContrast: 7, pureOnColors: true }
   };
 }
 
@@ -177,6 +184,9 @@ export function normalizeForgeTheme(theme: unknown): ForgeTheme | null {
     },
     seeds: normalizeSeeds(source.seeds),
     generator: {
+      // Themes saved before the palette owned the polarity have no generator
+      // mode, so fall back to the emit mode, which is where it used to live.
+      mode: generator.mode === 'dark' || (!generator.mode && source.mode === 'dark') ? 'dark' : 'light',
       targetContrast: Number(generator.targetContrast) || 7,
       pureOnColors: generator.pureOnColors !== false
     }
@@ -416,11 +426,41 @@ export function parseForgeThemeJson(text: string): ForgeThemeImportResult {
  */
 export function regenerateForgeTheme(theme: ForgeTheme, seeds?: ForgeThemeSeeds | null): ForgeTheme {
   const resolvedSeeds = seeds ?? theme.seeds;
-  const mode = theme.mode === 'dark' ? 'dark' : 'light';
+  // The palette's polarity is the driver. Generating produces all 101 tokens, so
+  // the emit mode follows it: a generated palette is a whole theme, not a patch.
+  const mode = theme.generator.mode === 'dark' ? 'dark' : 'light';
   return {
     ...theme,
     mode,
     seeds: resolvedSeeds ? { ...resolvedSeeds } : null,
     tokens: generateForgeTheme(resolvedSeeds, { ...theme.generator, mode })
   };
+}
+
+/**
+ * Switches the palette between a light and a dark surface and regenerates.
+ *
+ * The polarity belongs to the palette rather than to the emit mode: it decides
+ * how the surface, container, text and outline ramps are derived, and a palette
+ * derived for one polarity is not meaningful under the other.
+ *
+ * Seeds still sitting on the outgoing polarity's stock values are swapped for the
+ * incoming polarity's, because Forge's own light and dark accents differ — the
+ * light primary on a near-black surface would fail contrast on sight. Seeds the
+ * user has actually chosen are left alone.
+ */
+export function setForgeThemePolarity(theme: ForgeTheme, mode: ThemeGeneratorMode): ForgeTheme {
+  const stockOutgoing = theme.generator.mode === 'dark' ? forgeDarkSeeds() : forgeLightSeeds();
+  const stockIncoming = mode === 'dark' ? forgeDarkSeeds() : forgeLightSeeds();
+  const current = theme.seeds ?? stockOutgoing;
+
+  const seeds = { ...current } as ForgeThemeSeeds;
+  for (const key of FORGE_THEME_SEED_KEYS) {
+    const untouched = !current[key] || current[key]?.toLowerCase() === stockOutgoing[key].toLowerCase();
+    if (untouched) {
+      seeds[key] = stockIncoming[key];
+    }
+  }
+
+  return regenerateForgeTheme({ ...theme, generator: { ...theme.generator, mode } }, seeds);
 }

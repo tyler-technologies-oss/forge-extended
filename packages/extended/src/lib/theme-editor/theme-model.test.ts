@@ -14,8 +14,10 @@ import {
   parseForgeThemeJson,
   regenerateForgeTheme,
   resolveForgeThemeKnobs,
-  resolveForgeThemeTokens
+  resolveForgeThemeTokens,
+  setForgeThemePolarity
 } from './theme-model';
+import { forgeDarkSeeds, forgeLightSeeds } from './theme-generator';
 import { FORGE_THEME_DARK_TOKENS, FORGE_THEME_LIGHT_TOKENS } from './theme-tokens';
 
 describe('ThemeEditor theme model', () => {
@@ -27,7 +29,7 @@ describe('ThemeEditor theme model', () => {
       expect(theme.tokens).to.deep.equal({});
       expect(theme.knobs).to.deep.equal(emptyForgeThemeKnobs());
       expect(theme.seeds).to.be.null;
-      expect(theme.generator).to.deep.equal({ targetContrast: 7, pureOnColors: true });
+      expect(theme.generator).to.deep.equal({ mode: 'light', targetContrast: 7, pureOnColors: true });
     });
 
     it('should keep the overrides it is given', () => {
@@ -97,6 +99,7 @@ describe('ThemeEditor theme model', () => {
 
     it('should default the generator options', () => {
       expect(normalizeForgeTheme({ generator: { targetContrast: 'nope' } })!.generator).to.deep.equal({
+        mode: 'light',
         targetContrast: 7,
         pureOnColors: true
       });
@@ -339,10 +342,16 @@ describe('ThemeEditor theme model', () => {
       expect(regenerateForgeTheme(createForgeTheme()).mode).to.equal('light');
     });
 
-    it('should keep a dark theme dark', () => {
-      const regenerated = regenerateForgeTheme(createForgeTheme({ mode: 'dark' }));
-      expect(regenerated.mode).to.equal('dark');
+    it('should derive from the palette polarity, not the emit mode', () => {
+      // A patch theme whose palette is dark still derives dark ramps; generating
+      // then emits the whole set, because a generated palette is a whole theme.
+      const regenerated = regenerateForgeTheme(
+        createForgeTheme({ mode: 'patch', generator: { mode: 'dark' } } as never)
+      );
+
+      expect(regenerated.generator.mode).to.equal('dark');
       expect(regenerated.tokens.surface).to.equal(FORGE_THEME_DARK_TOKENS.surface);
+      expect(regenerated.mode).to.equal('dark');
     });
 
     it('should accept seeds passed in directly', () => {
@@ -355,6 +364,64 @@ describe('ThemeEditor theme model', () => {
       const regenerated = regenerateForgeTheme(createForgeTheme());
       expect(regenerated.seeds).to.be.null;
       expect(regenerated.tokens.primary).to.equal(FORGE_THEME_LIGHT_TOKENS.primary);
+    });
+  });
+
+  describe('setForgeThemePolarity', () => {
+    it('should default a new theme to the light surface', () => {
+      expect(createForgeTheme().generator.mode).to.equal('light');
+    });
+
+    it('should derive the dark ramps', () => {
+      const dark = setForgeThemePolarity(createForgeTheme(), 'dark');
+
+      expect(dark.generator.mode).to.equal('dark');
+      expect(dark.tokens.surface).to.equal(FORGE_THEME_DARK_TOKENS.surface);
+      expect(dark.mode).to.equal('dark');
+    });
+
+    it('should keep customised seeds and swap untouched ones', () => {
+      const seeded = { ...createForgeTheme(), seeds: { ...forgeLightSeeds(), primary: '#ff00ff' } };
+
+      const dark = setForgeThemePolarity(seeded, 'dark');
+
+      expect(dark.seeds!.primary).to.equal('#ff00ff');
+      expect(dark.seeds!.surface).to.equal(forgeDarkSeeds().surface);
+    });
+
+    it('should treat seed casing as equivalent when deciding what is untouched', () => {
+      const upper = { ...createForgeTheme(), seeds: { ...forgeLightSeeds(), surface: '#FFFFFF' } };
+
+      const dark = setForgeThemePolarity(upper, 'dark');
+
+      expect(dark.seeds!.surface).to.equal(forgeDarkSeeds().surface);
+    });
+
+    it('should round trip back to light', () => {
+      const light = setForgeThemePolarity(setForgeThemePolarity(createForgeTheme(), 'dark'), 'light');
+
+      expect(light.generator.mode).to.equal('light');
+      expect(light.tokens.surface).to.equal(FORGE_THEME_LIGHT_TOKENS.surface);
+    });
+
+    it('should migrate a theme saved before the palette owned the polarity', () => {
+      // The polarity used to be read off the emit mode, so an older dark theme
+      // has no generator.mode at all. This is the import path.
+      const legacy = normalizeForgeTheme({ mode: 'dark', generator: { targetContrast: 5 } })!;
+
+      expect(legacy.generator.mode).to.equal('dark');
+      expect(legacy.generator.targetContrast).to.equal(5);
+    });
+
+    it('should not infer a dark polarity for a light or patch theme', () => {
+      expect(normalizeForgeTheme({ mode: 'patch' })!.generator.mode).to.equal('light');
+      expect(normalizeForgeTheme({ mode: 'light' })!.generator.mode).to.equal('light');
+    });
+
+    it('should prefer an explicit polarity over the emit mode', () => {
+      const explicit = normalizeForgeTheme({ mode: 'dark', generator: { mode: 'light' } })!;
+
+      expect(explicit.generator.mode).to.equal('light');
     });
   });
 });

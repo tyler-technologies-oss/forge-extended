@@ -190,6 +190,183 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ConfirmationDialogComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-confirmation-dialog'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ConfirmationDialogComponent",
+          "slots": [
+            {
+              "description": "The title of the dialog",
+              "name": "title"
+            },
+            {
+              "description": "The dialog message",
+              "name": "message"
+            },
+            {
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
+            },
+            {
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
+            },
+            {
+              "kind": "field",
+              "name": "busyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+              },
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
+            },
+            {
+              "name": "busy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-confirmation-dialog",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponentTagName",
+          "declaration": {
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ConfirmationDialogComponent",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/app-layout/app-layout.ts",
       "declarations": [
         {
@@ -486,6 +663,129 @@
           "declaration": {
             "name": "AppLayoutComponent",
             "module": "src/lib/app-layout/app-layout.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ContentScaffoldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-content-scaffold'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ContentScaffoldComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the header section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-header-height"
+            },
+            {
+              "description": "Controls the background color of the header section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-header-background"
+            },
+            {
+              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-header-min-height"
+            },
+            {
+              "description": "Controls the height of the body section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-body-height"
+            },
+            {
+              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-body-padding-inline"
+            },
+            {
+              "description": "Controls the height of the footer section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-footer-height"
+            },
+            {
+              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-footer-background"
+            },
+            {
+              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-footer-min-height"
+            },
+            {
+              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
+              "name": "--forge-content-scaffold-footer-full-padding"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
+              "name": "header"
+            },
+            {
+              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
+              "name": "before-header-start"
+            },
+            {
+              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-start"
+            },
+            {
+              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-end"
+            },
+            {
+              "description": "The main body content that expands to fill available space.",
+              "name": "body"
+            },
+            {
+              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
+              "name": "footer"
+            },
+            {
+              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-start"
+            },
+            {
+              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-end"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-content-scaffold",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponentTagName",
+          "declaration": {
+            "name": "ContentScaffoldComponentTagName",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponent",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         }
       ]
@@ -821,300 +1121,152 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "path": "src/lib/footer/footer.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
+          "name": "FooterComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-confirmation-dialog'"
+          "default": "'forge-footer'"
         },
         {
           "kind": "class",
-          "description": "",
-          "name": "ConfirmationDialogComponent",
+          "description": "A footer component for displaying navigation, copyright, and branding information at the bottom of a page.",
+          "name": "FooterComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the background color of the footer.",
+              "name": "--forge-footer-background"
+            },
+            {
+              "description": "Controls the text color of footer content.",
+              "name": "--forge-footer-on-background"
+            },
+            {
+              "description": "Controls the padding of the footer.",
+              "name": "--forge-footer-padding"
+            },
+            {
+              "description": "Controls the left padding of the footer.",
+              "name": "--forge-footer-padding-left"
+            },
+            {
+              "description": "Controls the right padding of the footer.",
+              "name": "--forge-footer-padding-right"
+            },
+            {
+              "description": "Controls the gap between footer content and graphic in standard layout.",
+              "name": "--forge-footer-gap"
+            },
+            {
+              "description": "Controls the gap between stacked elements in alternative layout.",
+              "name": "--forge-footer-alternative-gap"
+            },
+            {
+              "description": "Controls the margin around dividers between footer items.",
+              "name": "--forge-footer-divider-margin"
+            }
+          ],
           "slots": [
             {
-              "description": "The title of the dialog",
-              "name": "title"
+              "description": "Slot for footer items or custom content.",
+              "name": ""
             },
             {
-              "description": "The dialog message",
-              "name": "message"
-            },
-            {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
-            },
-            {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
+              "description": "Slot for footer graphic, such as a logo.",
+              "name": "graphic"
             }
           ],
           "members": [
             {
               "kind": "field",
-              "name": "open",
+              "name": "layout",
               "type": {
-                "text": "boolean"
+                "text": "FooterLayout"
               },
               "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "attribute": "open"
+              "default": "'auto'",
+              "description": "Defines the footer layout mode.",
+              "attribute": "layout"
             },
             {
               "kind": "field",
-              "name": "label",
+              "name": "layoutBreakpoint",
               "type": {
-                "text": "string | undefined"
+                "text": "number"
               },
               "privacy": "public",
-              "description": "The accessible label for dialog",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "isBusy",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
-            },
-            {
-              "kind": "field",
-              "name": "busyLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
-              },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
+              "default": "900",
+              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
+              "attribute": "layout-breakpoint"
             }
           ],
           "attributes": [
             {
-              "name": "open",
+              "name": "layout",
               "type": {
-                "text": "boolean"
+                "text": "FooterLayout"
               },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "fieldName": "open"
+              "default": "'auto'",
+              "description": "Defines the footer layout mode.",
+              "fieldName": "layout"
             },
             {
-              "name": "label",
+              "name": "layout-breakpoint",
               "type": {
-                "text": "string | undefined"
+                "text": "number"
               },
-              "description": "The accessible label for dialog",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog",
-              "fieldName": "description"
-            },
-            {
-              "name": "is-busy",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
-            },
-            {
-              "name": "busy-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
+              "default": "900",
+              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
+              "fieldName": "layoutBreakpoint"
             }
           ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-confirmation-dialog",
-          "customElement": true
+          "tagName": "forge-footer",
+          "customElement": true,
+          "states": [
+            {
+              "name": "standard",
+              "description": "Applied when the layout is set to `standard` or when in `auto` mode above the breakpoint."
+            },
+            {
+              "name": "alternative",
+              "description": "Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint."
+            },
+            {
+              "name": "auto",
+              "description": "Applied when the layout is set to `auto`."
+            }
+          ]
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
+          "name": "FooterComponentTagName",
           "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+            "name": "FooterComponentTagName",
+            "module": "src/lib/footer/footer.ts"
           }
         },
         {
           "kind": "js",
-          "name": "ConfirmationDialogComponent",
+          "name": "FooterComponent",
           "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ContentScaffoldComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-content-scaffold'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ContentScaffoldComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the height of the header section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-header-height"
-            },
-            {
-              "description": "Controls the background color of the header section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-header-background"
-            },
-            {
-              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-header-min-height"
-            },
-            {
-              "description": "Controls the height of the body section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-body-height"
-            },
-            {
-              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
-              "name": "--forge-content-scaffold-body-padding-inline"
-            },
-            {
-              "description": "Controls the height of the footer section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-footer-height"
-            },
-            {
-              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-footer-background"
-            },
-            {
-              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-footer-min-height"
-            },
-            {
-              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
-              "name": "--forge-content-scaffold-footer-full-padding"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
-              "name": "header"
-            },
-            {
-              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
-              "name": "before-header-start"
-            },
-            {
-              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-start"
-            },
-            {
-              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-end"
-            },
-            {
-              "description": "The main body content that expands to fill available space.",
-              "name": "body"
-            },
-            {
-              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
-              "name": "footer"
-            },
-            {
-              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-start"
-            },
-            {
-              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-end"
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-content-scaffold",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponentTagName",
-          "declaration": {
-            "name": "ContentScaffoldComponentTagName",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponent",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer.ts"
           }
         }
       ]
@@ -1311,158 +1463,6 @@
           "declaration": {
             "name": "CountCardComponent",
             "module": "src/lib/count-card/count-card.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/footer/footer.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "FooterComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-footer'"
-        },
-        {
-          "kind": "class",
-          "description": "A footer component for displaying navigation, copyright, and branding information at the bottom of a page.",
-          "name": "FooterComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the background color of the footer.",
-              "name": "--forge-footer-background"
-            },
-            {
-              "description": "Controls the text color of footer content.",
-              "name": "--forge-footer-on-background"
-            },
-            {
-              "description": "Controls the padding of the footer.",
-              "name": "--forge-footer-padding"
-            },
-            {
-              "description": "Controls the left padding of the footer.",
-              "name": "--forge-footer-padding-left"
-            },
-            {
-              "description": "Controls the right padding of the footer.",
-              "name": "--forge-footer-padding-right"
-            },
-            {
-              "description": "Controls the gap between footer content and graphic in standard layout.",
-              "name": "--forge-footer-gap"
-            },
-            {
-              "description": "Controls the gap between stacked elements in alternative layout.",
-              "name": "--forge-footer-alternative-gap"
-            },
-            {
-              "description": "Controls the margin around dividers between footer items.",
-              "name": "--forge-footer-divider-margin"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Slot for footer items or custom content.",
-              "name": ""
-            },
-            {
-              "description": "Slot for footer graphic, such as a logo.",
-              "name": "graphic"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "layout",
-              "type": {
-                "text": "FooterLayout"
-              },
-              "privacy": "public",
-              "default": "'auto'",
-              "description": "Defines the footer layout mode.",
-              "attribute": "layout"
-            },
-            {
-              "kind": "field",
-              "name": "layoutBreakpoint",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "900",
-              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
-              "attribute": "layout-breakpoint"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "layout",
-              "type": {
-                "text": "FooterLayout"
-              },
-              "default": "'auto'",
-              "description": "Defines the footer layout mode.",
-              "fieldName": "layout"
-            },
-            {
-              "name": "layout-breakpoint",
-              "type": {
-                "text": "number"
-              },
-              "default": "900",
-              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
-              "fieldName": "layoutBreakpoint"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-footer",
-          "customElement": true,
-          "states": [
-            {
-              "name": "standard",
-              "description": "Applied when the layout is set to `standard` or when in `auto` mode above the breakpoint."
-            },
-            {
-              "name": "alternative",
-              "description": "Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint."
-            },
-            {
-              "name": "auto",
-              "description": "Applied when the layout is set to `auto`."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "FooterComponentTagName",
-          "declaration": {
-            "name": "FooterComponentTagName",
-            "module": "src/lib/footer/footer.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "FooterComponent",
-          "declaration": {
-            "name": "FooterComponent",
-            "module": "src/lib/footer/footer.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "FooterComponent",
-            "module": "src/lib/footer/footer.ts"
           }
         }
       ]
@@ -2128,349 +2128,6 @@
           "declaration": {
             "name": "ThemeToggleComponent",
             "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/user-profile/user-profile.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "UserProfileComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-user-profile'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "UserProfileComponent",
-          "slots": [
-            {
-              "description": "Slot for additional profile navigation links",
-              "name": "link"
-            },
-            {
-              "description": "Slot for the sign in button text",
-              "name": "sign-in-button-text"
-            },
-            {
-              "description": "Slot for the sign out button text",
-              "name": "sign-out-button-text"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "fullName",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The full name of the user",
-              "attribute": "full-name"
-            },
-            {
-              "kind": "field",
-              "name": "email",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The email address of the user",
-              "attribute": "email"
-            },
-            {
-              "kind": "field",
-              "name": "imageUrl",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The image URL for the user avatar",
-              "attribute": "image-url"
-            },
-            {
-              "kind": "field",
-              "name": "buttonLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Open user profile'",
-              "description": "ARIA label for the user profile avatar button",
-              "attribute": "button-label"
-            },
-            {
-              "kind": "field",
-              "name": "themeToggle",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the theme toggle is visible",
-              "attribute": "theme-toggle"
-            },
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Controls whether the user profile popover is open",
-              "attribute": "open"
-            },
-            {
-              "kind": "method",
-              "name": "setTheme",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "ThemeToggleTheme"
-                  }
-                }
-              ],
-              "description": "Sets the theme for the theme toggle."
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "Event"
-              },
-              "description": "Fired when the sign in button is clicked.",
-              "name": "forge-user-profile-sign-in"
-            },
-            {
-              "type": {
-                "text": "Event"
-              },
-              "description": "Fired when the sign out button is clicked.",
-              "name": "forge-user-profile-sign-out"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "full-name",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The full name of the user",
-              "fieldName": "fullName"
-            },
-            {
-              "name": "email",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The email address of the user",
-              "fieldName": "email"
-            },
-            {
-              "name": "image-url",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The image URL for the user avatar",
-              "fieldName": "imageUrl"
-            },
-            {
-              "name": "button-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Open user profile'",
-              "description": "ARIA label for the user profile avatar button",
-              "fieldName": "buttonLabel"
-            },
-            {
-              "name": "theme-toggle",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the theme toggle is visible",
-              "fieldName": "themeToggle"
-            },
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Controls whether the user profile popover is open",
-              "fieldName": "open"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-user-profile",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "UserProfileComponentTagName",
-          "declaration": {
-            "name": "UserProfileComponentTagName",
-            "module": "src/lib/user-profile/user-profile.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "UserProfileComponent",
-          "declaration": {
-            "name": "UserProfileComponent",
-            "module": "src/lib/user-profile/user-profile.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "UserProfileComponent",
-            "module": "src/lib/user-profile/user-profile.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "AppLauncherLinkComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-app-launcher-link'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AppLauncherLinkComponent",
-          "slots": [
-            {
-              "description": "The `<a>` element for the link.",
-              "name": ""
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-app-launcher-link",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AppLauncherLinkComponentTagName",
-          "declaration": {
-            "name": "AppLauncherLinkComponentTagName",
-            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AppLauncherLinkComponent",
-          "declaration": {
-            "name": "AppLauncherLinkComponent",
-            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "AppLauncherLinkComponent",
-            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/footer/footer-item/footer-item.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "FooterItemComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-footer-item'"
-        },
-        {
-          "kind": "class",
-          "description": "A footer item component for displaying individual items within a footer, such as links, text, or copyright information.",
-          "name": "FooterItemComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the text color of the footer item.",
-              "name": "--forge-footer-item-color"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Slot for footer item content (e.g., text, links, or icons).",
-              "name": ""
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-footer-item",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "FooterItemComponentTagName",
-          "declaration": {
-            "name": "FooterItemComponentTagName",
-            "module": "src/lib/footer/footer-item/footer-item.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "FooterItemComponent",
-          "declaration": {
-            "name": "FooterItemComponent",
-            "module": "src/lib/footer/footer-item/footer-item.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "FooterItemComponent",
-            "module": "src/lib/footer/footer-item/footer-item.ts"
           }
         }
       ]
@@ -3898,6 +3555,30 @@
             }
           ],
           "description": "Replaces a theme's tokens with a palette derived from its seeds."
+        },
+        {
+          "kind": "function",
+          "name": "setForgeThemePolarity",
+          "return": {
+            "type": {
+              "text": "ForgeTheme"
+            }
+          },
+          "parameters": [
+            {
+              "name": "theme",
+              "type": {
+                "text": "ForgeTheme"
+              }
+            },
+            {
+              "name": "mode",
+              "type": {
+                "text": "ThemeGeneratorMode"
+              }
+            }
+          ],
+          "description": "Switches the palette between a light and a dark surface and regenerates.\n\nThe polarity belongs to the palette rather than to the emit mode: it decides\nhow the surface, container, text and outline ramps are derived, and a palette\nderived for one polarity is not meaningful under the other.\n\nSeeds still sitting on the outgoing polarity's stock values are swapped for the\nincoming polarity's, because Forge's own light and dark accents differ — the\nlight primary on a near-black surface would fail contrast on sight. Seeds the\nuser has actually chosen are left alone."
         }
       ],
       "exports": [
@@ -4026,6 +3707,14 @@
           "name": "regenerateForgeTheme",
           "declaration": {
             "name": "regenerateForgeTheme",
+            "module": "src/lib/theme-editor/theme-model.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "setForgeThemePolarity",
+          "declaration": {
+            "name": "setForgeThemePolarity",
             "module": "src/lib/theme-editor/theme-model.ts"
           }
         }
@@ -4176,6 +3865,349 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/user-profile/user-profile.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "UserProfileComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-user-profile'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "UserProfileComponent",
+          "slots": [
+            {
+              "description": "Slot for additional profile navigation links",
+              "name": "link"
+            },
+            {
+              "description": "Slot for the sign in button text",
+              "name": "sign-in-button-text"
+            },
+            {
+              "description": "Slot for the sign out button text",
+              "name": "sign-out-button-text"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "fullName",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The full name of the user",
+              "attribute": "full-name"
+            },
+            {
+              "kind": "field",
+              "name": "email",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The email address of the user",
+              "attribute": "email"
+            },
+            {
+              "kind": "field",
+              "name": "imageUrl",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The image URL for the user avatar",
+              "attribute": "image-url"
+            },
+            {
+              "kind": "field",
+              "name": "buttonLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Open user profile'",
+              "description": "ARIA label for the user profile avatar button",
+              "attribute": "button-label"
+            },
+            {
+              "kind": "field",
+              "name": "themeToggle",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the theme toggle is visible",
+              "attribute": "theme-toggle"
+            },
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Controls whether the user profile popover is open",
+              "attribute": "open"
+            },
+            {
+              "kind": "method",
+              "name": "setTheme",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "ThemeToggleTheme"
+                  }
+                }
+              ],
+              "description": "Sets the theme for the theme toggle."
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "Event"
+              },
+              "description": "Fired when the sign in button is clicked.",
+              "name": "forge-user-profile-sign-in"
+            },
+            {
+              "type": {
+                "text": "Event"
+              },
+              "description": "Fired when the sign out button is clicked.",
+              "name": "forge-user-profile-sign-out"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "full-name",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The full name of the user",
+              "fieldName": "fullName"
+            },
+            {
+              "name": "email",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The email address of the user",
+              "fieldName": "email"
+            },
+            {
+              "name": "image-url",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The image URL for the user avatar",
+              "fieldName": "imageUrl"
+            },
+            {
+              "name": "button-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Open user profile'",
+              "description": "ARIA label for the user profile avatar button",
+              "fieldName": "buttonLabel"
+            },
+            {
+              "name": "theme-toggle",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the theme toggle is visible",
+              "fieldName": "themeToggle"
+            },
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Controls whether the user profile popover is open",
+              "fieldName": "open"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-user-profile",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "UserProfileComponentTagName",
+          "declaration": {
+            "name": "UserProfileComponentTagName",
+            "module": "src/lib/user-profile/user-profile.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "UserProfileComponent",
+          "declaration": {
+            "name": "UserProfileComponent",
+            "module": "src/lib/user-profile/user-profile.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "UserProfileComponent",
+            "module": "src/lib/user-profile/user-profile.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AppLauncherLinkComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-app-launcher-link'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AppLauncherLinkComponent",
+          "slots": [
+            {
+              "description": "The `<a>` element for the link.",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-app-launcher-link",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLauncherLinkComponentTagName",
+          "declaration": {
+            "name": "AppLauncherLinkComponentTagName",
+            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLauncherLinkComponent",
+          "declaration": {
+            "name": "AppLauncherLinkComponent",
+            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLauncherLinkComponent",
+            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/footer/footer-item/footer-item.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "FooterItemComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-footer-item'"
+        },
+        {
+          "kind": "class",
+          "description": "A footer item component for displaying individual items within a footer, such as links, text, or copyright information.",
+          "name": "FooterItemComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the text color of the footer item.",
+              "name": "--forge-footer-item-color"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Slot for footer item content (e.g., text, links, or icons).",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-footer-item",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FooterItemComponentTagName",
+          "declaration": {
+            "name": "FooterItemComponentTagName",
+            "module": "src/lib/footer/footer-item/footer-item.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "FooterItemComponent",
+          "declaration": {
+            "name": "FooterItemComponent",
+            "module": "src/lib/footer/footer-item/footer-item.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "FooterItemComponent",
+            "module": "src/lib/footer/footer-item/footer-item.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/user-profile/profile-link/profile-link.ts",
       "declarations": [
         {
@@ -4236,7 +4268,7 @@
       ]
     }
   ],
-  "branchName": "main",
+  "branchName": "feat",
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",
@@ -4249,38 +4281,6 @@
     "AppLauncherComponent": {
       "path": "src/lib/app-launcher/app-launcher.ts",
       "lineNumber": 67
-    },
-    "AppLayoutBreakpoint": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 30
-    },
-    "AppLayoutBreakpointChangeEventData": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 32
-    },
-    "AppLayoutDrawerChangeEventData": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 36
-    },
-    "AppLayoutComponent": {
-      "path": "src/lib/app-layout/app-layout.ts",
-      "lineNumber": 92
-    },
-    "BusyIndicatorMode": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 26
-    },
-    "BusyIndicatorVariant": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 27
-    },
-    "BusyIndicatorFocusMode": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 28
-    },
-    "BusyIndicatorComponent": {
-      "path": "src/lib/busy-indicator/busy-indicator.ts",
-      "lineNumber": 40
     },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
@@ -4298,17 +4298,41 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
+    "AppLayoutBreakpoint": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 30
+    },
+    "AppLayoutBreakpointChangeEventData": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 32
+    },
+    "AppLayoutDrawerChangeEventData": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 36
+    },
+    "AppLayoutComponent": {
+      "path": "src/lib/app-layout/app-layout.ts",
+      "lineNumber": 92
+    },
     "ContentScaffoldComponent": {
       "path": "src/lib/content-scaffold/content-scaffold.ts",
       "lineNumber": 37
     },
-    "CountCardTheme": {
-      "path": "src/lib/count-card/count-card.ts",
-      "lineNumber": 16
+    "BusyIndicatorMode": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 26
     },
-    "CountCardComponent": {
-      "path": "src/lib/count-card/count-card.ts",
-      "lineNumber": 71
+    "BusyIndicatorVariant": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 27
+    },
+    "BusyIndicatorFocusMode": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 28
+    },
+    "BusyIndicatorComponent": {
+      "path": "src/lib/busy-indicator/busy-indicator.ts",
+      "lineNumber": 40
     },
     "FooterLayout": {
       "path": "src/lib/footer/footer.ts",
@@ -4317,6 +4341,14 @@
     "FooterComponent": {
       "path": "src/lib/footer/footer.ts",
       "lineNumber": 41
+    },
+    "CountCardTheme": {
+      "path": "src/lib/count-card/count-card.ts",
+      "lineNumber": 16
+    },
+    "CountCardComponent": {
+      "path": "src/lib/count-card/count-card.ts",
+      "lineNumber": 71
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
@@ -4354,22 +4386,6 @@
       "path": "src/lib/theme-toggle/theme-toggle.ts",
       "lineNumber": 41
     },
-    "UserProfileComponent": {
-      "path": "src/lib/user-profile/user-profile.ts",
-      "lineNumber": 49
-    },
-    "AppLauncherLink": {
-      "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
-      "lineNumber": 16
-    },
-    "AppLauncherLinkComponent": {
-      "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
-      "lineNumber": 26
-    },
-    "FooterItemComponent": {
-      "path": "src/lib/footer/footer-item/footer-item.ts",
-      "lineNumber": 23
-    },
     "Rgba": {
       "path": "src/lib/theme-editor/theme-color.ts",
       "lineNumber": 15
@@ -4384,23 +4400,23 @@
     },
     "ThemeEditorView": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 88
+      "lineNumber": 93
     },
     "ThemeEditorChangeEventData": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 91
+      "lineNumber": 96
     },
     "ThemeEditorPreviewEventData": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 99
+      "lineNumber": 104
     },
     "ThemeEditorImportEventData": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 107
+      "lineNumber": 112
     },
     "ThemeEditorComponent": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 129
+      "lineNumber": 136
     },
     "ThemeGeneratorMode": {
       "path": "src/lib/theme-editor/theme-generator.ts",
@@ -4424,23 +4440,23 @@
     },
     "ForgeThemeMode": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 51
+      "lineNumber": 54
     },
     "ForgeThemeKnobs": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 54
+      "lineNumber": 57
     },
     "ForgeTheme": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 70
+      "lineNumber": 73
     },
     "ForgeThemeImportResult": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 86
+      "lineNumber": 93
     },
     "ForgeThemeExportFormat": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 96
+      "lineNumber": 103
     },
     "ForgeThemeTokenKind": {
       "path": "src/lib/theme-editor/theme-tokens.ts",
@@ -4453,6 +4469,22 @@
     "ForgeThemeTokenGroup": {
       "path": "src/lib/theme-editor/theme-tokens.ts",
       "lineNumber": 25
+    },
+    "UserProfileComponent": {
+      "path": "src/lib/user-profile/user-profile.ts",
+      "lineNumber": 49
+    },
+    "AppLauncherLink": {
+      "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
+      "lineNumber": 16
+    },
+    "AppLauncherLinkComponent": {
+      "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
+      "lineNumber": 26
+    },
+    "FooterItemComponent": {
+      "path": "src/lib/footer/footer-item/footer-item.ts",
+      "lineNumber": 23
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",

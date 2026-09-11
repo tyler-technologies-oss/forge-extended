@@ -3,7 +3,7 @@ import { fixture, html, nextFrame } from '@open-wc/testing';
 import sinon from 'sinon';
 import { ThemeEditorComponent } from './theme-editor';
 import { FORGE_THEME_PREVIEW_STYLE_ID, createForgeTheme, exportForgeThemeJson } from './theme-model';
-import { FORGE_THEME_LIGHT_TOKENS, FORGE_THEME_TOKEN_GROUPS } from './theme-tokens';
+import { FORGE_THEME_DARK_TOKENS, FORGE_THEME_LIGHT_TOKENS, FORGE_THEME_TOKEN_GROUPS } from './theme-tokens';
 
 import './theme-editor';
 
@@ -514,6 +514,88 @@ describe('ThemeEditor', () => {
 
       expect(harness.seedInput('brand').value).to.equal('#ff0000');
     });
+
+    // The palette owns light/dark. It decides how the surface, container, text and
+    // outline ramps derive, so it cannot be a side effect of the emit mode.
+    describe('polarity', () => {
+      it('should start on the light surface', async () => {
+        const harness = await createFixture();
+        await harness.selectView(VIEW.palette);
+
+        expect(harness.el.getTheme().generator.mode).to.equal('light');
+        expect((harness.polarityGroup as HTMLElement & { value: string }).value).to.equal('light');
+      });
+
+      it('should derive a dark theme when the surface is set to dark', async () => {
+        const harness = await createFixture();
+        await harness.selectView(VIEW.palette);
+
+        await harness.setPolarity('dark');
+
+        const theme = harness.el.getTheme();
+        expect(theme.generator.mode).to.equal('dark');
+        expect(theme.tokens.surface).to.equal(FORGE_THEME_DARK_TOKENS.surface);
+        expect(theme.tokens['text-high']).to.equal(FORGE_THEME_DARK_TOKENS['text-high']);
+      });
+
+      it('should emit the whole set once a palette is generated', async () => {
+        const harness = await createFixture();
+        await harness.selectView(VIEW.palette);
+
+        await harness.setPolarity('dark');
+
+        // A generated palette is a whole theme, not a patch on the page's own.
+        expect(harness.el.getTheme().mode).to.equal('dark');
+        expect(Object.keys(harness.el.getTheme().tokens)).to.have.lengthOf(101);
+      });
+
+      it('should swap untouched seeds to the incoming polarity', async () => {
+        const harness = await createFixture();
+        await harness.selectView(VIEW.palette);
+
+        await harness.setPolarity('dark');
+
+        // Forge's light and dark accents differ; keeping the light primary on a
+        // near-black surface would fail contrast on sight.
+        expect(harness.el.getTheme().seeds!.primary).to.equal(FORGE_THEME_DARK_TOKENS.primary);
+        expect(harness.el.getTheme().seeds!.surface).to.equal(FORGE_THEME_DARK_TOKENS.surface);
+      });
+
+      it('should keep a seed the user chose across a polarity change', async () => {
+        const harness = await createFixture();
+        await harness.selectView(VIEW.palette);
+        await harness.setSeedText('primary', '#ff00ff');
+
+        await harness.setPolarity('dark');
+
+        expect(harness.el.getTheme().seeds!.primary).to.equal('#ff00ff');
+        expect(harness.el.getTheme().seeds!.surface).to.equal(FORGE_THEME_DARK_TOKENS.surface);
+      });
+
+      it('should go back to a light theme', async () => {
+        const harness = await createFixture();
+        await harness.selectView(VIEW.palette);
+        await harness.setPolarity('dark');
+
+        await harness.setPolarity('light');
+
+        const theme = harness.el.getTheme();
+        expect(theme.generator.mode).to.equal('light');
+        expect(theme.tokens.surface).to.equal(FORGE_THEME_LIGHT_TOKENS.surface);
+        expect(theme.tokens['text-high']).to.equal(FORGE_THEME_LIGHT_TOKENS['text-high']);
+      });
+
+      it('should ignore a change to the polarity already set', async () => {
+        const harness = await createFixture();
+        await harness.selectView(VIEW.palette);
+        const spy = sinon.spy();
+        harness.el.addEventListener('forge-theme-editor-change', spy);
+
+        await harness.setPolarity('light');
+
+        expect(spy.called).to.be.false;
+      });
+    });
   });
 
   //
@@ -951,6 +1033,19 @@ class ThemeEditorHarness {
 
   public async setKnob(knob: string, value: string): Promise<void> {
     await this.#setNativeValue(this.root.querySelector(`[data-knob="${knob}"]`)!, value, 'change');
+  }
+
+  public get polarityGroup(): HTMLElement {
+    return this.root.querySelector('forge-button-toggle-group')!;
+  }
+
+  public async setPolarity(mode: 'light' | 'dark'): Promise<void> {
+    const toggle = [...this.root.querySelectorAll('forge-button-toggle')].find(
+      b => (b as HTMLElement & { value: string }).value === mode
+    ) as HTMLElement;
+    toggle.click();
+    await nextFrame();
+    await this.el.updateComplete;
   }
 
   public async setTargetContrast(value: string): Promise<void> {
