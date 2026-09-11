@@ -59,6 +59,8 @@ import {
   parseForgeThemeJson,
   activeForgeThemeVariant,
   forgeStockTokens,
+  hasRelativeColors,
+  isRelativeColor,
   regenerateForgeTheme,
   resolveForgeThemeKnobs,
   setForgeThemePolarity,
@@ -132,6 +134,25 @@ const CONTRAST_AA_TEXT = 4.5;
 const CONTRAST_AA_LARGE = 3;
 
 /**
+ * Rewrites any CSS colour into sRGB by painting a single pixel and reading it
+ * back. Handles every notation the engine can emit, including the colour spaces
+ * a relative colour computes into.
+ */
+function toSrgb(context: CanvasRenderingContext2D, color: string): string | null {
+  if (!color) {
+    return null;
+  }
+  context.clearRect(0, 0, 1, 1);
+  context.fillStyle = '#000000';
+  context.fillStyle = color;
+  context.fillRect(0, 0, 1, 1);
+  const [red, green, blue, alpha] = context.getImageData(0, 0, 1, 1).data;
+  return alpha === 255
+    ? `#${[red, green, blue].map(channel => channel.toString(16).padStart(2, '0')).join('')}`
+    : `rgba(${red}, ${green}, ${blue}, ${+(alpha / 255).toFixed(4)})`;
+}
+
+/**
  * @tag forge-theme-editor
  *
  * @slot title - The title shown in the editor header.
@@ -192,18 +213,6 @@ export class ThemeEditorComponent extends LitElement {
   @property({ attribute: 'export-format' })
   public exportFormat: ForgeThemeExportFormat = 'json';
 
-  /**
-   * Whether the CSS and Sass exports express each derived ramp as a CSS relative
-   * color of the token it came from, so changing a base updates its ramp rather
-   * than leaving it frozen at export time.
-   *
-   * Off by default: a literal value works in every engine and every tool, and on
-   * an engine without relative color support the declaration is dropped silently
-   * rather than erroring.
-   */
-  @property({ type: Boolean, attribute: 'relative-colors' })
-  public relativeColors = false;
-
   @state()
   private _view: ThemeEditorView = 'palette';
 
@@ -224,6 +233,9 @@ export class ThemeEditorComponent extends LitElement {
 
   @state()
   private _showcaseOpen = false;
+
+  #resolvedCache: ForgeThemeTokenMap | null = null;
+  #resolvedSignature: string | null = null;
 
   public override render(): TemplateResult {
     return html`
@@ -328,7 +340,7 @@ export class ThemeEditorComponent extends LitElement {
    * @param format The format to emit. Defaults to the `export-format` property.
    */
   public exportTheme(format: ForgeThemeExportFormat = this.exportFormat): string {
-    return exportForgeTheme(this.theme, format, { relativeColors: this.relativeColors });
+    return exportForgeTheme(this.theme, format);
   }
 
   /**
@@ -403,7 +415,9 @@ export class ThemeEditorComponent extends LitElement {
    * worst first.
    */
   public getContrastReport(): ThemeContrastEntry[] {
-    return auditForgeThemeContrast({ ...this.#baseTokens, ...this.#variant.tokens });
+    // Resolved first, so a relative-colour palette is audited on the colours it
+    // actually renders rather than on expressions arithmetic cannot read.
+    return auditForgeThemeContrast(this.#resolvedTokens);
   }
 
   //
@@ -528,7 +542,10 @@ export class ThemeEditorComponent extends LitElement {
                 // The value is a runtime color, so it cannot live in the stylesheet.
                 // Set a custom property and let the SCSS own the actual styling.
                 // `confirmation-dialog` uses styleMap for computed values the same way.
-                '--_forge-theme-editor-group-swatch': this.#valueFor(this.#groupSwatchToken(group))
+                '--_forge-theme-editor-group-swatch': this.#asColor(
+                  this.#valueFor(this.#groupSwatchToken(group)),
+                  this.#groupSwatchToken(group)
+                )
               })}></span>
             <span class="group-label">${group.label}</span>
             <!-- A count is neutral information; the default badge theme reads as a warning. -->
@@ -575,7 +592,7 @@ export class ThemeEditorComponent extends LitElement {
               type="color"
               data-token=${token}
               aria-label=${`${token} color`}
-              .value=${this.#hexFor(value)}
+              .value=${this.#hexFor(value, token)}
               @input=${(evt: Event) => this.setToken(token, (evt.target as HTMLInputElement).value)} />
           `,
           () => html`<span class="swatch-placeholder" aria-hidden="true"></span>`
@@ -718,6 +735,16 @@ export class ThemeEditorComponent extends LitElement {
           @forge-switch-change=${this.#onPureOnColorsChange}
           >Pure black/white accent inks</forge-switch
         >
+        <forge-checkbox
+          id="relative-colors"
+          .checked=${this.theme.generator.relativeColors}
+          @forge-checkbox-change=${this.#onRelativeColorsChange}
+          >Use relative CSS</forge-checkbox
+        >
+        <forge-tooltip anchor="relative-colors">
+          Store each derived ramp as a CSS relative color of its base instead of a flat value, so the browser does the
+          derivation and the ramp tracks the base. Needs Chrome 119+, Safari 16.4+ or Firefox 128+.
+        </forge-tooltip>
         <forge-button id="generate-button" variant="raised" @click=${this.#onGenerate}>
           <forge-icon slot="start" name="autorenew"></forge-icon>
           <span>Generate palette</span>
@@ -838,18 +865,6 @@ export class ThemeEditorComponent extends LitElement {
           <forge-option value="scss">Sass (theme.provide)</forge-option>
           <forge-option value="css">CSS (:root)</forge-option>
         </forge-select>
-        <forge-checkbox
-          id="relative-colors"
-          class="relative-colors"
-          .checked=${this.relativeColors}
-          ?disabled=${this.exportFormat === 'json'}
-          @forge-checkbox-change=${this.#onRelativeColorsChange}
-          >Use relative CSS</forge-checkbox
-        >
-        <forge-tooltip anchor="relative-colors">
-          Express each derived ramp as a CSS relative color of the token it came from, so changing a base updates its
-          ramp. Needs Chrome 119+, Safari 16.4+ or Firefox 128+.
-        </forge-tooltip>
         <forge-button id="copy-button" variant="outlined" @click=${this.#onCopy}>
           <forge-icon slot="start" name="content_copy"></forge-icon>
           <span>Copy</span>
@@ -967,7 +982,10 @@ export class ThemeEditorComponent extends LitElement {
   }
 
   #onRelativeColorsChange(evt: CustomEvent<boolean>): void {
-    this.relativeColors = evt.detail;
+    const theme = { ...this.theme, generator: { ...this.theme.generator, relativeColors: evt.detail } };
+    // Re-express the palette straight away so the effect is visible, but only
+    // when there is a generated palette to re-express.
+    this.#setTheme(activeForgeThemeVariant(theme).seeds ? regenerateForgeTheme(theme) : theme, null);
   }
 
   #onExportFormatChange(evt: Event): void {
@@ -1088,9 +1106,80 @@ export class ThemeEditorComponent extends LitElement {
     return this.#variant.tokens[token] ?? this.#baseTokens[token] ?? '';
   }
 
-  #hexFor(value: string): string {
-    const parsed = parseColor(value);
+  #hexFor(value: string, token?: string): string {
+    const parsed = parseColor(this.#asColor(value, token));
     return parsed ? toHex(parsed) : '#000000';
+  }
+
+  /**
+   * A concrete color for a token value, evaluating a relative-color expression
+   * if that is what it holds.
+   *
+   * A swatch is an `<input type="color">` and a contrast ratio is arithmetic;
+   * neither can do anything with `oklch(from var(--forge-theme-primary) …)`. The
+   * browser is the only thing that can evaluate one.
+   */
+  #asColor(value: string, token?: string): string {
+    if (!token || !isRelativeColor(value)) {
+      return value;
+    }
+    return this.#resolvedTokens[token] ?? value;
+  }
+
+  /**
+   * The active token set with every relative-color expression evaluated.
+   *
+   * Memoised on the token set, because resolving touches the DOM and both the
+   * swatches and the contrast report ask for it on every render.
+   */
+  get #resolvedTokens(): ForgeThemeTokenMap {
+    const tokens = { ...this.#baseTokens, ...this.#variant.tokens };
+    if (!hasRelativeColors(tokens)) {
+      return tokens;
+    }
+    const signature = JSON.stringify(tokens);
+    if (this.#resolvedSignature === signature && this.#resolvedCache) {
+      return this.#resolvedCache;
+    }
+
+    // Declare the whole set on one element so `from var(…)` resolves, then read
+    // each value back off a probe inside it. Chains work too, because custom
+    // property substitution happens within the element's own declarations.
+    const host = document.createElement('div');
+    host.setAttribute('aria-hidden', 'true');
+    host.style.position = 'absolute';
+    host.style.visibility = 'hidden';
+    for (const [token, value] of Object.entries(tokens)) {
+      host.style.setProperty(`${FORGE_THEME_TOKEN_PREFIX}${token}`, value);
+    }
+    const probe = document.createElement('span');
+    host.appendChild(probe);
+    this.shadowRoot?.appendChild(host);
+
+    // Chrome reports a colour in whatever space it was written in, so an
+    // oklch() expression computes to `oklch(...)`. Normalise through a canvas
+    // rather than teaching the colour parser every notation CSS can produce.
+    const canvas = document.createElement('canvas');
+    canvas.width = 1;
+    canvas.height = 1;
+    const context = canvas.getContext('2d');
+
+    const resolved: ForgeThemeTokenMap = {};
+    for (const [token, value] of Object.entries(tokens)) {
+      if (!isRelativeColor(value)) {
+        resolved[token] = value;
+        continue;
+      }
+      probe.style.color = '';
+      probe.style.color = `var(${FORGE_THEME_TOKEN_PREFIX}${token})`;
+      const computed = getComputedStyle(probe).color;
+      resolved[token] = context ? (toSrgb(context, computed) ?? value) : computed || value;
+    }
+    host.remove();
+
+    this.#resolvedSignature = signature;
+    this.#resolvedCache = resolved;
+    return resolved;
   }
 
   #setTheme(theme: ForgeTheme, token: string | null): void {

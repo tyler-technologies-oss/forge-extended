@@ -149,6 +149,71 @@ something that applies it. `exportTheme('scss')` emits Sass built on Forge's own
 `theme.provide()` mixin and `exportTheme('css')` a plain `:root` block, for pasting
 into an application directly.
 
+### Use relative CSS
+
+The **Use relative CSS** checkbox sits with the generation controls on the **Palette**
+view, because it changes what generation produces. With it on, a derived ramp is
+stored as a
+[CSS relative color](https://developer.mozilla.org/en-US/docs/Web/CSS/Guides/Colors/Using_relative_colors)
+of the token it came from rather than as a flat value:
+
+```css
+--forge-theme-primary: #b8f21a;
+--forge-theme-primary-container: oklch(
+  from var(--forge-theme-primary) calc(l + -0.3973) calc(c * 0.6079) calc(h + 5.304)
+);
+```
+
+That expression is the token's value — in the theme, in the editor, in the preview and
+in the export. The **browser** owns the derivation from then on, so changing
+`--forge-theme-primary` moves every primary container with it, with no regeneration
+anywhere. **40 of the 101 tokens** work this way: all 28 accent containers, the 8-step
+surface ramp and the 4 outline steps.
+
+The colors are computed first and then described, so an expression evaluates to
+exactly what the generator produced. Three forms are tried, most relative first —
+chroma and hue both relative to the base, then chroma fixed, then chroma and hue fixed
+with only lightness tracking. That last one exists because Forge's own surfaces are
+pure greys: a neutral base has no chroma to scale and no meaningful hue to offset
+from, but a surface ramp is a lightness ramp, which is the part worth keeping. **An
+expression is only stored if evaluating it reproduces the value**; otherwise the token
+keeps its flat value, so the representation can never disagree with the color.
+
+> **The inks do not track.** An `on-` color is the result of an iterative contrast
+> search, not a transform, so it cannot be expressed relatively and stays a flat value.
+> Change a base with relative colors on and the containers follow, but their `on-` inks
+> stay as they were — contrast can silently degrade. The **Contrast** view is where that
+> shows up; regenerate the palette to bring the inks back in line.
+
+Needs Chrome 119+, Safari 16.4+ or Firefox 128+. Older engines drop the declaration
+and fall back to the value Forge compiles into its own `var()` references, which is a
+**quiet** failure — leave the option off if that matters. The CSS and Sass exports
+carry the caveat in a comment when any token uses it.
+
+Because swatches are `<input type="color">` and a contrast ratio is arithmetic, the
+editor evaluates expressions through a throwaway probe element when it needs a real
+color. The theme keeps the expression; only the UI sees the resolved value.
+
+### Saving a theme
+
+There is no save button; persistence belongs to the host. Two ways to get the theme
+out:
+
+```ts
+// Every edit, as it happens.
+editor.addEventListener('forge-theme-editor-change', ({ detail }) => save(detail.theme));
+
+// Or on demand.
+const theme = editor.getTheme();
+const json = editor.exportTheme('json');
+```
+
+Exported JSON carries both variants, the polarity, the emit mode, the knobs and the
+generator options — everything needed to reopen the theme later or to hand it to
+something that applies it. `exportTheme('scss')` emits Sass built on Forge's own
+`theme.provide()` mixin and `exportTheme('css')` a plain `:root` block, for pasting
+into an application directly.
+
 #### Use relative CSS
 
 The **Use relative CSS** checkbox on the import and export view, or the
@@ -215,17 +280,17 @@ targets `:root` loses on a page already in dark mode.
 
 ### Methods
 
-| Name                      | Description                                                       |
-| ------------------------- | ----------------------------------------------------------------- |
-| `getTheme()`              | Returns the theme being edited.                                   |
-| `loadTheme(theme)`        | Replaces the theme, filling in anything the value omits.          |
-| `exportTheme(format?)`    | Emits the theme as JSON, Sass or CSS, honouring `relativeColors`. |
-| `importTheme(text)`       | Imports theme JSON and returns the warnings raised.               |
-| `generatePalette(seeds?)` | Derives the full token set from seed colors.                      |
-| `setToken(token, value)`  | Sets one token, or clears it when the value is empty.             |
-| `resetToken(token)`       | Reverts one token to the Forge default for the polarity.          |
-| `resetAllTokens()`        | Reverts every token in the active variant.                        |
-| `getContrastReport()`     | Returns every `on-*` pair and its ratio, worst first.             |
+| Name                      | Description                                              |
+| ------------------------- | -------------------------------------------------------- |
+| `getTheme()`              | Returns the theme being edited.                          |
+| `loadTheme(theme)`        | Replaces the theme, filling in anything the value omits. |
+| `exportTheme(format?)`    | Emits the theme as JSON, Sass or CSS.                    |
+| `importTheme(text)`       | Imports theme JSON and returns the warnings raised.      |
+| `generatePalette(seeds?)` | Derives the full token set from seed colors.             |
+| `setToken(token, value)`  | Sets one token, or clears it when the value is empty.    |
+| `resetToken(token)`       | Reverts one token to the Forge default for the polarity. |
+| `resetAllTokens()`        | Reverts every token in the active variant.               |
+| `getContrastReport()`     | Returns every `on-*` pair and its ratio, worst first.    |
 
 ### Events
 

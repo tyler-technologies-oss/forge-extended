@@ -621,57 +621,94 @@ describe('ThemeEditor', () => {
     it('should be off by default', async () => {
       const harness = await createFixture();
 
-      expect(harness.el.relativeColors).to.be.false;
-      expect(harness.el.exportTheme('css')).to.not.include('oklch(from');
+      expect(harness.el.getTheme().generator.relativeColors).to.be.false;
     });
 
-    it('should switch the export over from the checkbox', async () => {
+    it('should live with the generation controls', async () => {
       const harness = await createFixture();
-      // A generated palette, so there are ramps to derive in the first place.
-      harness.el.generatePalette();
+      await harness.selectView(VIEW.palette);
+
+      // It changes what generation produces, so it belongs beside the seeds
+      // rather than on the export view.
+      expect(harness.root.querySelector('.generator-options #relative-colors')).to.not.be.null;
+    });
+
+    it('should re-express the palette as relative colors', async () => {
+      const harness = await createFixture();
+      await harness.selectView(VIEW.palette);
+      harness.generateButton.click();
       await harness.el.updateComplete;
-      await harness.selectView(VIEW.transfer);
 
       harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: true }));
       await harness.el.updateComplete;
 
-      expect(harness.el.relativeColors).to.be.true;
-      expect(harness.el.exportTheme('css')).to.include('oklch(from var(--forge-theme-primary)');
+      // Stored in the theme, not just rendered at export time.
+      const tokens = variantOf(harness.el).tokens;
+      expect(harness.el.getTheme().generator.relativeColors).to.be.true;
+      expect(tokens['primary-container']).to.include('oklch(from var(--forge-theme-primary)');
+      expect(harness.el.exportTheme('css')).to.include('oklch(from');
     });
 
-    it('should show the switched output immediately', async () => {
+    it('should go back to flat values when unchecked', async () => {
       const harness = await createFixture();
-      harness.el.generatePalette();
+      await harness.selectView(VIEW.palette);
+      harness.generateButton.click();
       await harness.el.updateComplete;
-      await harness.selectView(VIEW.transfer);
-      await harness.setExportFormat('css');
-
       harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: true }));
       await harness.el.updateComplete;
-
-      expect(harness.exportOutput.value).to.include('oklch(from');
-    });
-
-    it('should go back to literals when unchecked', async () => {
-      const harness = await createFixture();
-      harness.el.generatePalette();
-      harness.el.relativeColors = true;
-      await harness.el.updateComplete;
-      await harness.selectView(VIEW.transfer);
 
       harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: false }));
       await harness.el.updateComplete;
 
-      expect(harness.el.relativeColors).to.be.false;
-      expect(harness.exportOutput.value).to.not.include('oklch(from');
+      expect(variantOf(harness.el).tokens['primary-container']).to.match(/^#[0-9a-f]{6}$/);
+      expect(harness.el.exportTheme('css')).to.not.include('oklch(from');
     });
 
-    it('should be disabled for JSON, which has nothing to express relatively', async () => {
+    it('should not generate a palette just to flip the flag', async () => {
       const harness = await createFixture();
-      await harness.selectView(VIEW.transfer);
-      await harness.setExportFormat('json');
+      await harness.selectView(VIEW.palette);
 
-      expect(harness.relativeColorsCheckbox.hasAttribute('disabled')).to.be.true;
+      // Nothing has been generated, so there is nothing to re-express.
+      harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: true }));
+      await harness.el.updateComplete;
+
+      expect(harness.el.getTheme().generator.relativeColors).to.be.true;
+      expect(variantOf(harness.el).tokens).to.deep.equal({});
+    });
+
+    // The swatches and the contrast report are arithmetic on colours, and an
+    // expression is not a colour until the browser evaluates it.
+    it('should still show a real color in the swatch', async () => {
+      const harness = await createTokensFixture();
+      await harness.selectView(VIEW.palette);
+      harness.generateButton.click();
+      await harness.el.updateComplete;
+      harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: true }));
+      await harness.el.updateComplete;
+      await harness.selectView(VIEW.tokens);
+      await harness.openGroup('primary');
+
+      const swatch = harness.root.querySelector<HTMLInputElement>('[data-token="primary-container"] .swatch')!;
+
+      expect(swatch.value).to.match(/^#[0-9a-f]{6}$/);
+      expect(swatch.value).to.not.equal('#000000');
+    });
+
+    it('should still audit contrast on the rendered colors', async () => {
+      const harness = await createFixture();
+      await harness.selectView(VIEW.palette);
+      harness.generateButton.click();
+      await harness.el.updateComplete;
+      harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: true }));
+      await harness.el.updateComplete;
+
+      const report = harness.el.getContrastReport();
+
+      expect(report.length).to.be.greaterThan(0);
+      // A ratio of 1 would mean the pair resolved to the same colour, which is
+      // what happens when an unevaluated expression is fed to the arithmetic.
+      expect(report.every(entry => entry.ratio > 1)).to.be.true;
+      expect(report.every(entry => Number.isFinite(entry.ratio))).to.be.true;
     });
   });
 

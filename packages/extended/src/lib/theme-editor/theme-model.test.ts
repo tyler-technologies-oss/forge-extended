@@ -11,6 +11,8 @@ import {
   normalizeForgeTheme,
   parseForgeThemeJson,
   activeForgeThemeVariant,
+  hasRelativeColors,
+  isRelativeColor,
   regenerateForgeTheme,
   resolveForgeThemeKnobs,
   resolveForgeThemeTokens,
@@ -35,7 +37,7 @@ describe('ThemeEditor theme model', () => {
       expect(theme.variants.dark).to.deep.equal({ tokens: {}, seeds: null });
       expect(theme.knobs).to.deep.equal(emptyForgeThemeKnobs());
       expect(theme.polarity).to.equal('light');
-      expect(theme.generator).to.deep.equal({ targetContrast: 7, pureOnColors: true });
+      expect(theme.generator).to.deep.equal({ targetContrast: 7, pureOnColors: true, relativeColors: false });
     });
 
     it('should keep the overrides it is given', () => {
@@ -108,7 +110,8 @@ describe('ThemeEditor theme model', () => {
     it('should default the generator options', () => {
       expect(normalizeForgeTheme({ generator: { targetContrast: 'nope' } })!.generator).to.deep.equal({
         targetContrast: 7,
-        pureOnColors: true
+        pureOnColors: true,
+        relativeColors: false
       });
       expect(normalizeForgeTheme({ generator: { pureOnColors: false } })!.generator.pureOnColors).to.be.false;
     });
@@ -334,17 +337,20 @@ describe('ThemeEditor theme model', () => {
     });
   });
 
-  describe('relative colour exports', () => {
-    const relative = (theme: ForgeTheme): string => exportForgeThemeCss(theme, { relativeColors: true });
-    const darkTheme = (): ForgeTheme =>
+  describe('relative colours', () => {
+    /** A generated palette, with or without the relative representation. */
+    const build = (relativeColors: boolean): ForgeTheme =>
       regenerateForgeTheme(
         createForgeTheme({
           polarity: 'dark',
+          generator: { targetContrast: 7, pureOnColors: true, relativeColors },
           // A vivid seed on purpose: scaling chroma in OkLCh can leave the sRGB
           // gamut, which is where a naive formula stops reproducing the value.
           variants: { dark: { seeds: { ...forgeDarkSeeds(), primary: '#b8f21a', secondary: '#ff2bd6' } } }
         })
       );
+    const darkTheme = (): ForgeTheme => build(true);
+    const relative = (theme: ForgeTheme): string => exportForgeThemeCss(theme);
 
     it('should derive every container from its accent', () => {
       const css = relative(darkTheme());
@@ -396,17 +402,29 @@ describe('ThemeEditor theme model', () => {
       expect(css).to.match(/\d+ of \d+ tokens derive/);
     });
 
-    it('should be off by default, emitting literals', () => {
-      const css = exportForgeThemeCss(darkTheme());
+    it('should store flat values when the option is off', () => {
+      const theme = build(false);
 
-      expect(css).to.not.include('oklch(from');
-      expect(css).to.not.include('tokens derive');
-      expect(css).to.include('--forge-theme-primary-container:');
+      expect(activeForgeThemeVariant(theme).tokens['primary-container']).to.match(/^#[0-9a-f]{6}$/);
+      expect(exportForgeThemeCss(theme)).to.not.include('oklch(from');
+      expect(exportForgeThemeCss(theme)).to.not.include('tokens derive');
+    });
+
+    it('should store the expression in the theme itself, not just the export', () => {
+      // The point: the browser owns the derivation, so the ramp tracks its base
+      // everywhere the theme is used - the editor, the preview and the export.
+      const tokens = activeForgeThemeVariant(darkTheme()).tokens;
+
+      expect(tokens['primary-container']).to.include('oklch(from var(--forge-theme-primary)');
+      expect(tokens['on-primary']).to.match(/^#[0-9a-f]{6}$/);
+      expect(hasRelativeColors(tokens)).to.be.true;
+      expect(isRelativeColor(tokens['primary-container'])).to.be.true;
+      expect(isRelativeColor(tokens['on-primary'])).to.be.false;
     });
 
     it('should apply to the Sass export too', () => {
       // provide() interpolates the value verbatim, so an expression passes through.
-      const scss = exportForgeThemeScss(darkTheme(), { relativeColors: true });
+      const scss = exportForgeThemeScss(darkTheme());
 
       expect(scss).to.include('@include theme.provide(');
       expect(scss).to.match(/primary-container:\s*oklch\(from var\(--forge-theme-primary\)/);
@@ -414,7 +432,7 @@ describe('ThemeEditor theme model', () => {
     });
 
     it('should leave the Sass export literal when off', () => {
-      expect(exportForgeThemeScss(darkTheme())).to.not.include('oklch(from');
+      expect(exportForgeThemeScss(build(false))).to.not.include('oklch(from');
     });
 
     it('should not change the JSON export', () => {
@@ -429,7 +447,7 @@ describe('ThemeEditor theme model', () => {
     // whether the browser echoed oklch() or rgb().
     it('should resolve to exactly the generated colors', () => {
       const theme = darkTheme();
-      const flat = parseDeclarations(exportForgeThemeCss(theme));
+      const flat = parseDeclarations(exportForgeThemeCss(build(false)));
       const derivedDecls = parseDeclarations(relative(theme));
 
       const canvas = document.createElement('canvas');

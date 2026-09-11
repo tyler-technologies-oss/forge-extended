@@ -821,6 +821,129 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ContentScaffoldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-content-scaffold'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ContentScaffoldComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the header section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-header-height"
+            },
+            {
+              "description": "Controls the background color of the header section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-header-background"
+            },
+            {
+              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-header-min-height"
+            },
+            {
+              "description": "Controls the height of the body section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-body-height"
+            },
+            {
+              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-body-padding-inline"
+            },
+            {
+              "description": "Controls the height of the footer section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-footer-height"
+            },
+            {
+              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-footer-background"
+            },
+            {
+              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-footer-min-height"
+            },
+            {
+              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
+              "name": "--forge-content-scaffold-footer-full-padding"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
+              "name": "header"
+            },
+            {
+              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
+              "name": "before-header-start"
+            },
+            {
+              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-start"
+            },
+            {
+              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-end"
+            },
+            {
+              "description": "The main body content that expands to fill available space.",
+              "name": "body"
+            },
+            {
+              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
+              "name": "footer"
+            },
+            {
+              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-start"
+            },
+            {
+              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-end"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-content-scaffold",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponentTagName",
+          "declaration": {
+            "name": "ContentScaffoldComponentTagName",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponent",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "declarations": [
         {
@@ -1340,129 +1463,6 @@
           "declaration": {
             "name": "FooterComponent",
             "module": "src/lib/footer/footer.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ContentScaffoldComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-content-scaffold'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ContentScaffoldComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the height of the header section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-header-height"
-            },
-            {
-              "description": "Controls the background color of the header section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-header-background"
-            },
-            {
-              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-header-min-height"
-            },
-            {
-              "description": "Controls the height of the body section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-body-height"
-            },
-            {
-              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
-              "name": "--forge-content-scaffold-body-padding-inline"
-            },
-            {
-              "description": "Controls the height of the footer section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-footer-height"
-            },
-            {
-              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-footer-background"
-            },
-            {
-              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-footer-min-height"
-            },
-            {
-              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
-              "name": "--forge-content-scaffold-footer-full-padding"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
-              "name": "header"
-            },
-            {
-              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
-              "name": "before-header-start"
-            },
-            {
-              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-start"
-            },
-            {
-              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-end"
-            },
-            {
-              "description": "The main body content that expands to fill available space.",
-              "name": "body"
-            },
-            {
-              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
-              "name": "footer"
-            },
-            {
-              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-start"
-            },
-            {
-              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-end"
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-content-scaffold",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponentTagName",
-          "declaration": {
-            "name": "ContentScaffoldComponentTagName",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponent",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         }
       ]
@@ -2042,92 +2042,6 @@
           "declaration": {
             "name": "StructuredCardComponent",
             "module": "src/lib/structured-card/structured-card.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ThemeToggleComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-theme-toggle'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ThemeToggleComponent",
-          "slots": [
-            {
-              "description": "The title shown above the toggle buttons",
-              "name": "title"
-            }
-          ],
-          "members": [
-            {
-              "kind": "method",
-              "name": "setTheme",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "parameters": [
-                {
-                  "name": "value",
-                  "type": {
-                    "text": "ThemeToggleTheme"
-                  }
-                }
-              ],
-              "description": "Sets the current theme."
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ThemeToggleThemeEventData>"
-              },
-              "description": "Fired when the theme is changed",
-              "name": "forge-theme-toggle-update"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-theme-toggle",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ThemeToggleComponentTagName",
-          "declaration": {
-            "name": "ThemeToggleComponentTagName",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ThemeToggleComponent",
-          "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ThemeToggleComponent",
-            "module": "src/lib/theme-toggle/theme-toggle.ts"
           }
         }
       ]
@@ -2793,17 +2707,6 @@
               "attribute": "export-format"
             },
             {
-              "kind": "field",
-              "name": "relativeColors",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Whether the CSS and Sass exports express each derived ramp as a CSS relative\ncolor of the token it came from, so changing a base updates its ramp rather\nthan leaving it frozen at export time.\n\nOff by default: a literal value works in every engine and every tool, and on\nan engine without relative color support the declaration is dropped silently\nrather than erroring.",
-              "attribute": "relative-colors"
-            },
-            {
               "kind": "method",
               "name": "getTheme",
               "privacy": "public",
@@ -2991,15 +2894,6 @@
               "default": "'json'",
               "description": "The export format shown on the import/export view.",
               "fieldName": "exportFormat"
-            },
-            {
-              "name": "relative-colors",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Whether the CSS and Sass exports express each derived ramp as a CSS relative\ncolor of the token it came from, so changing a base updates its ramp rather\nthan leaving it frozen at export time.\n\nOff by default: a literal value works in every engine and every tool, and on\nan engine without relative color support the declaration is dropped silently\nrather than erroring.",
-              "fieldName": "relativeColors"
             }
           ],
           "superclass": {
@@ -3433,13 +3327,6 @@
                 "text": "ForgeTheme"
               },
               "description": "The theme to emit."
-            },
-            {
-              "name": "options",
-              "optional": true,
-              "type": {
-                "text": "ForgeThemeExportOptions"
-              }
             }
           ],
           "description": "Emits a plain `:root` block, for pasting into an application's global stylesheet."
@@ -3457,13 +3344,6 @@
               "name": "theme",
               "type": {
                 "text": "ForgeTheme"
-              }
-            },
-            {
-              "name": "options",
-              "optional": true,
-              "type": {
-                "text": "ForgeThemeExportOptions"
               }
             }
           ]
@@ -3509,13 +3389,6 @@
                 "text": "ForgeThemeExportFormat"
               },
               "description": "The format to emit."
-            },
-            {
-              "name": "options",
-              "optional": true,
-              "type": {
-                "text": "ForgeThemeExportOptions"
-              }
             }
           ],
           "description": "Emits a theme in the requested format."
@@ -3565,6 +3438,60 @@
             }
           ],
           "description": "Replaces a theme's tokens with a palette derived from its seeds."
+        },
+        {
+          "kind": "function",
+          "name": "asRelativeColors",
+          "return": {
+            "type": {
+              "text": "ForgeThemeTokenMap"
+            }
+          },
+          "parameters": [
+            {
+              "name": "tokens",
+              "type": {
+                "text": "Readonly<ForgeThemeTokenMap>"
+              }
+            }
+          ],
+          "description": "Rewrites the derivable tokens of a generated set as CSS relative colors of the\ntoken they came from, leaving the rest as values.\n\nThe colors are computed first and then described, so an expression evaluates\nto exactly what the generator produced — and from then on the browser owns the\nderivation, so changing a base moves its whole ramp with no regeneration.\n\nOnly a transform can be described this way. An `on-` ink is the result of an\niterative contrast search and the `text-` scale is pure black or white at a\nfixed alpha; both stay values, as do the seeds themselves."
+        },
+        {
+          "kind": "function",
+          "name": "hasRelativeColors",
+          "return": {
+            "type": {
+              "text": "boolean"
+            }
+          },
+          "parameters": [
+            {
+              "name": "tokens",
+              "type": {
+                "text": "Readonly<ForgeThemeTokenMap>"
+              }
+            }
+          ],
+          "description": "Whether a token map holds any relative-color expression."
+        },
+        {
+          "kind": "function",
+          "name": "isRelativeColor",
+          "return": {
+            "type": {
+              "text": "boolean"
+            }
+          },
+          "parameters": [
+            {
+              "name": "value",
+              "type": {
+                "text": "string"
+              }
+            }
+          ],
+          "description": "Whether a single value is a relative-color expression rather than a literal."
         },
         {
           "kind": "function",
@@ -3738,6 +3665,30 @@
         },
         {
           "kind": "js",
+          "name": "asRelativeColors",
+          "declaration": {
+            "name": "asRelativeColors",
+            "module": "src/lib/theme-editor/theme-model.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "hasRelativeColors",
+          "declaration": {
+            "name": "hasRelativeColors",
+            "module": "src/lib/theme-editor/theme-model.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "isRelativeColor",
+          "declaration": {
+            "name": "isRelativeColor",
+            "module": "src/lib/theme-editor/theme-model.ts"
+          }
+        },
+        {
+          "kind": "js",
           "name": "setForgeThemePolarity",
           "declaration": {
             "name": "setForgeThemePolarity",
@@ -3885,6 +3836,149 @@
           "declaration": {
             "name": "FORGE_THEME_TOKEN_NAMES",
             "module": "src/lib/theme-editor/theme-tokens.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "AppLauncherLinkComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-app-launcher-link'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "AppLauncherLinkComponent",
+          "slots": [
+            {
+              "description": "The `<a>` element for the link.",
+              "name": ""
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-app-launcher-link",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "AppLauncherLinkComponentTagName",
+          "declaration": {
+            "name": "AppLauncherLinkComponentTagName",
+            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "AppLauncherLinkComponent",
+          "declaration": {
+            "name": "AppLauncherLinkComponent",
+            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "AppLauncherLinkComponent",
+            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ThemeToggleComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-theme-toggle'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ThemeToggleComponent",
+          "slots": [
+            {
+              "description": "The title shown above the toggle buttons",
+              "name": "title"
+            }
+          ],
+          "members": [
+            {
+              "kind": "method",
+              "name": "setTheme",
+              "privacy": "public",
+              "return": {
+                "type": {
+                  "text": "void"
+                }
+              },
+              "parameters": [
+                {
+                  "name": "value",
+                  "type": {
+                    "text": "ThemeToggleTheme"
+                  }
+                }
+              ],
+              "description": "Sets the current theme."
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ThemeToggleThemeEventData>"
+              },
+              "description": "Fired when the theme is changed",
+              "name": "forge-theme-toggle-update"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-theme-toggle",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ThemeToggleComponentTagName",
+          "declaration": {
+            "name": "ThemeToggleComponentTagName",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ThemeToggleComponent",
+          "declaration": {
+            "name": "ThemeToggleComponent",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ThemeToggleComponent",
+            "module": "src/lib/theme-toggle/theme-toggle.ts"
           }
         }
       ]
@@ -4108,63 +4202,6 @@
           "declaration": {
             "name": "UserProfileComponent",
             "module": "src/lib/user-profile/user-profile.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "AppLauncherLinkComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-app-launcher-link'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "AppLauncherLinkComponent",
-          "slots": [
-            {
-              "description": "The `<a>` element for the link.",
-              "name": ""
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-app-launcher-link",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "AppLauncherLinkComponentTagName",
-          "declaration": {
-            "name": "AppLauncherLinkComponentTagName",
-            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "AppLauncherLinkComponent",
-          "declaration": {
-            "name": "AppLauncherLinkComponent",
-            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "AppLauncherLinkComponent",
-            "module": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts"
           }
         }
       ]
@@ -4406,6 +4443,10 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 40
     },
+    "ContentScaffoldComponent": {
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "lineNumber": 37
+    },
     "ConfirmationDialogActionEventReason": {
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 28
@@ -4438,10 +4479,6 @@
       "path": "src/lib/footer/footer.ts",
       "lineNumber": 41
     },
-    "ContentScaffoldComponent": {
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "lineNumber": 37
-    },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
       "lineNumber": 28
@@ -4466,18 +4503,6 @@
       "path": "src/lib/structured-card/structured-card.ts",
       "lineNumber": 34
     },
-    "ThemeToggleTheme": {
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 28
-    },
-    "ThemeToggleUpdateEventData": {
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 30
-    },
-    "ThemeToggleComponent": {
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 41
-    },
     "Rgba": {
       "path": "src/lib/theme-editor/theme-color.ts",
       "lineNumber": 15
@@ -4492,19 +4517,19 @@
     },
     "ThemeEditorView": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 98
+      "lineNumber": 100
     },
     "ThemeEditorChangeEventData": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 101
+      "lineNumber": 103
     },
     "ThemeEditorImportEventData": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 109
+      "lineNumber": 111
     },
     "ThemeEditorComponent": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 142
+      "lineNumber": 163
     },
     "ThemeGeneratorMode": {
       "path": "src/lib/theme-editor/theme-generator.ts",
@@ -4548,19 +4573,15 @@
     },
     "ForgeThemeInput": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 115
+      "lineNumber": 123
     },
     "ForgeThemeImportResult": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 130
+      "lineNumber": 138
     },
     "ForgeThemeExportFormat": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 140
-    },
-    "ForgeThemeExportOptions": {
-      "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 143
+      "lineNumber": 148
     },
     "ForgeThemeTokenKind": {
       "path": "src/lib/theme-editor/theme-tokens.ts",
@@ -4574,10 +4595,6 @@
       "path": "src/lib/theme-editor/theme-tokens.ts",
       "lineNumber": 25
     },
-    "UserProfileComponent": {
-      "path": "src/lib/user-profile/user-profile.ts",
-      "lineNumber": 49
-    },
     "AppLauncherLink": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "lineNumber": 16
@@ -4585,6 +4602,22 @@
     "AppLauncherLinkComponent": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
       "lineNumber": 26
+    },
+    "ThemeToggleTheme": {
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "lineNumber": 28
+    },
+    "ThemeToggleUpdateEventData": {
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "lineNumber": 30
+    },
+    "ThemeToggleComponent": {
+      "path": "src/lib/theme-toggle/theme-toggle.ts",
+      "lineNumber": 41
+    },
+    "UserProfileComponent": {
+      "path": "src/lib/user-profile/user-profile.ts",
+      "lineNumber": 49
     },
     "FooterItemComponent": {
       "path": "src/lib/footer/footer-item/footer-item.ts",
