@@ -1,0 +1,7 @@
+import{x as o}from"./iframe-BMggY0Eq.js";import{I as t,n as r}from"./with-default-aria-NpWy7zUu.js";import"./multi-select-header-BSueKKVC.js";import{d as m}from"./index-DJgm2yXY.js";import{d as i}from"./index-CcueWhpz.js";import"./custom-element-FMdYT5yi.js";import"./constants-o7gsy-Mc.js";import"./utils-Ci8BKDzo.js";import"./query-assigned-nodes-cwDSNLIu.js";import"./base-CShCMygk.js";import"./when-3fO0zp9C.js";import"./index-BmpyAemi.js";import"./toolbar-CNb_cDVA.js";import"./index-B1v7lt4m.js";import"./base-button-adapter-CeJFAvB2.js";import"./focus-indicator-CZ8Q_jHJ.js";import"./icon-B7BdjdS-.js";import"./icon-button-TlXi4X8k.js";m();i();t.define([r]);const n="forge-multi-select-header",_={tags:["hidden"],title:"Components/Multi Select Header/Basic Implementation",render:()=>o`
+      <forge-multi-select-header text="3 items selected">
+        <forge-icon-button slot="actions" aria-label="Delete selected">
+          <forge-icon name="delete"></forge-icon>
+        </forge-icon-button>
+      </forge-multi-select-header>
+    `,component:n},e={};e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:"{}",...e.parameters?.docs?.source}}};const E=["Demo"];export{e as Demo,E as __namedExportsOrder,_ as default};
