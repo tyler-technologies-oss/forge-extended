@@ -384,3 +384,13 @@
   background-color: #{forge-theme.variable(surface)};
   color: #{forge-theme.variable(text-high)};
 }
+
+// A derived token's value belongs to its base, so the row is read-only while
+// relative colours are on. Dimming the swatch alone would look like a bug, so
+// the whole row reads as informational.
+.row--derived {
+  .swatch {
+    cursor: not-allowed;
+    opacity: #{forge-theme.emphasis(higher)};
+  }
+}

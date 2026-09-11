@@ -513,6 +513,19 @@ export class ThemeEditorComponent extends LitElement {
         groups.length === 0,
         () => html`<p class="empty">No tokens match "${this._filter}".</p>`,
         () => html`
+          ${when(
+            hasRelativeColors(this.#variant.tokens),
+            () => html`
+              <forge-inline-message class="messages" theme="info">
+                <span slot="title">Some tokens are derived</span>
+                <span
+                  >Rows marked read-only hold a CSS relative color of their base, so the browser derives them. Turn off
+                  <em>Use relative CSS</em> on the Palette view to edit them directly.</span
+                >
+              </forge-inline-message>
+            `,
+            () => nothing
+          )}
           <div class="groups">
             ${repeat(
               groups,
@@ -582,8 +595,16 @@ export class ThemeEditorComponent extends LitElement {
     const value = this.#valueFor(token);
     const overridden = token in this.#variant.tokens;
     const isColor = FORGE_THEME_TOKEN_KINDS[token] === 'color';
+    // A relative value is derived from its base, so editing it here would only
+    // replace the expression with a literal and cut the link.
+    const derived = isRelativeColor(value);
     return html`
-      <div class="row" data-token=${token} title=${`${FORGE_THEME_TOKEN_PREFIX}${token}`}>
+      <div
+        class=${derived ? 'row row--derived' : 'row'}
+        data-token=${token}
+        title=${derived
+          ? `${FORGE_THEME_TOKEN_PREFIX}${token} is derived from its base with a relative color`
+          : `${FORGE_THEME_TOKEN_PREFIX}${token}`}>
         ${when(
           isColor,
           () => html`
@@ -592,18 +613,25 @@ export class ThemeEditorComponent extends LitElement {
               type="color"
               data-token=${token}
               aria-label=${`${token} color`}
+              ?disabled=${derived}
               .value=${this.#hexFor(value, token)}
               @input=${(evt: Event) => this.setToken(token, (evt.target as HTMLInputElement).value)} />
           `,
           () => html`<span class="swatch-placeholder" aria-hidden="true"></span>`
         )}
-        <forge-text-field class="value" density="small" ?invalid=${isColor && !isValidColor(value)}>
+        <forge-text-field
+          class="value"
+          density="small"
+          ?disabled=${derived}
+          ?invalid=${!derived && isColor && !isValidColor(value)}>
           <label slot="label" for=${`field-${token}`}>${token}</label>
           <input
             id=${`field-${token}`}
             type="text"
             autocomplete="off"
             spellcheck="false"
+            ?disabled=${derived}
+            ?readonly=${derived}
             aria-label=${`${FORGE_THEME_TOKEN_PREFIX}${token}`}
             .value=${value}
             @change=${(evt: Event) => this.setToken(token, (evt.target as HTMLInputElement).value)} />
@@ -613,7 +641,7 @@ export class ThemeEditorComponent extends LitElement {
           density="small"
           data-token=${token}
           aria-label=${`Revert ${token}`}
-          ?disabled=${!overridden}
+          ?disabled=${!overridden || derived}
           @click=${() => this.resetToken(token)}>
           <forge-icon name="undo"></forge-icon>
         </forge-icon-button>
@@ -738,7 +766,7 @@ export class ThemeEditorComponent extends LitElement {
         <forge-checkbox
           id="relative-colors"
           .checked=${this.theme.generator.relativeColors}
-          @forge-checkbox-change=${this.#onRelativeColorsChange}
+          @change=${this.#onRelativeColorsChange}
           >Use relative CSS</forge-checkbox
         >
         <forge-tooltip anchor="relative-colors">
@@ -981,8 +1009,11 @@ export class ThemeEditorComponent extends LitElement {
     this._showAllContrast = !this._showAllContrast;
   }
 
-  #onRelativeColorsChange(evt: CustomEvent<boolean>): void {
-    const theme = { ...this.theme, generator: { ...this.theme.generator, relativeColors: evt.detail } };
+  #onRelativeColorsChange(evt: Event): void {
+    // `forge-checkbox` fires a plain `change` and carries its state on the
+    // element rather than in a detail payload.
+    const relativeColors = (evt.target as HTMLElement & { checked: boolean }).checked;
+    const theme = { ...this.theme, generator: { ...this.theme.generator, relativeColors } };
     // Re-express the palette straight away so the effect is visible, but only
     // when there is a generated palette to re-express.
     this.#setTheme(activeForgeThemeVariant(theme).seeds ? regenerateForgeTheme(theme) : theme, null);

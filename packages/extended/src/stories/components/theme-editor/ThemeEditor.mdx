@@ -190,6 +190,12 @@ and fall back to the value Forge compiles into its own `var()` references, which
 **quiet** failure — leave the option off if that matters. The CSS and Sass exports
 carry the caveat in a comment when any token uses it.
 
+A derived token's value belongs to its base, so on the **Tokens** view those rows are
+**read-only** while the option is on — swatch, field and revert are all disabled, and
+the row is marked. Editing one would only replace the expression with a literal and cut
+the link, so turning the option off is the way to edit them directly. The `on-` inks
+are never relative, so they stay editable.
+
 Because swatches are `<input type="color">` and a contrast ratio is arithmetic, the
 editor evaluates expressions through a throwaway probe element when it needs a real
 color. The theme keeps the expression; only the UI sees the resolved value.

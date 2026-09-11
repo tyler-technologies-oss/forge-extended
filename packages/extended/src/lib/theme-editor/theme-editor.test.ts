@@ -639,8 +639,7 @@ describe('ThemeEditor', () => {
       harness.generateButton.click();
       await harness.el.updateComplete;
 
-      harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: true }));
-      await harness.el.updateComplete;
+      await harness.setRelativeColors(true);
 
       // Stored in the theme, not just rendered at export time.
       const tokens = variantOf(harness.el).tokens;
@@ -654,11 +653,9 @@ describe('ThemeEditor', () => {
       await harness.selectView(VIEW.palette);
       harness.generateButton.click();
       await harness.el.updateComplete;
-      harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: true }));
-      await harness.el.updateComplete;
+      await harness.setRelativeColors(true);
 
-      harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: false }));
-      await harness.el.updateComplete;
+      await harness.setRelativeColors(false);
 
       expect(variantOf(harness.el).tokens['primary-container']).to.match(/^#[0-9a-f]{6}$/);
       expect(harness.el.exportTheme('css')).to.not.include('oklch(from');
@@ -669,8 +666,7 @@ describe('ThemeEditor', () => {
       await harness.selectView(VIEW.palette);
 
       // Nothing has been generated, so there is nothing to re-express.
-      harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: true }));
-      await harness.el.updateComplete;
+      await harness.setRelativeColors(true);
 
       expect(harness.el.getTheme().generator.relativeColors).to.be.true;
       expect(variantOf(harness.el).tokens).to.deep.equal({});
@@ -683,8 +679,7 @@ describe('ThemeEditor', () => {
       await harness.selectView(VIEW.palette);
       harness.generateButton.click();
       await harness.el.updateComplete;
-      harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: true }));
-      await harness.el.updateComplete;
+      await harness.setRelativeColors(true);
       await harness.selectView(VIEW.tokens);
       await harness.openGroup('primary');
 
@@ -694,13 +689,45 @@ describe('ThemeEditor', () => {
       expect(swatch.value).to.not.equal('#000000');
     });
 
+    it('should lock the derived rows', async () => {
+      const harness = await createTokensFixture();
+      await harness.selectView(VIEW.palette);
+      harness.generateButton.click();
+      await harness.el.updateComplete;
+      await harness.setRelativeColors(true);
+      await harness.selectView(VIEW.tokens);
+      await harness.openGroup('primary');
+
+      // The value belongs to the base; editing it here would only replace the
+      // expression with a literal and cut the link.
+      const row = harness.root.querySelector<HTMLElement>('[data-token="primary-container"]')!;
+      expect(row.classList.contains('row--derived')).to.be.true;
+      expect(row.querySelector<HTMLInputElement>('.swatch')!.disabled).to.be.true;
+      expect(row.querySelector<HTMLInputElement>('input[type="text"]')!.readOnly).to.be.true;
+      expect(row.querySelector('.revert')!.hasAttribute('disabled')).to.be.true;
+    });
+
+    it('should leave the inks editable', async () => {
+      const harness = await createTokensFixture();
+      await harness.selectView(VIEW.palette);
+      harness.generateButton.click();
+      await harness.el.updateComplete;
+      await harness.setRelativeColors(true);
+      await harness.selectView(VIEW.tokens);
+      await harness.openGroup('primary');
+
+      // `on-` inks are never relative, so they stay editable.
+      const row = harness.root.querySelector<HTMLElement>('[data-token="on-primary"]')!;
+      expect(row.classList.contains('row--derived')).to.be.false;
+      expect(row.querySelector<HTMLInputElement>('.swatch')!.disabled).to.be.false;
+    });
+
     it('should still audit contrast on the rendered colors', async () => {
       const harness = await createFixture();
       await harness.selectView(VIEW.palette);
       harness.generateButton.click();
       await harness.el.updateComplete;
-      harness.relativeColorsCheckbox.dispatchEvent(new CustomEvent('forge-checkbox-change', { detail: true }));
-      await harness.el.updateComplete;
+      await harness.setRelativeColors(true);
 
       const report = harness.el.getContrastReport();
 
@@ -1019,8 +1046,22 @@ class ThemeEditorHarness {
     return this.root.querySelector('#reset-all-button')!;
   }
 
-  public get relativeColorsCheckbox(): HTMLElement {
+  public get relativeColorsCheckbox(): HTMLElement & { checked: boolean } {
     return this.root.querySelector('#relative-colors')!;
+  }
+
+  /**
+   * Clicks the real checkbox rather than dispatching an event, so the test is
+   * bound to the component's actual contract. Synthesising
+   * `forge-checkbox-change` passed for a binding that never fired, because
+   * `forge-checkbox` emits a plain `change`.
+   */
+  public async setRelativeColors(on: boolean): Promise<void> {
+    if (this.relativeColorsCheckbox.checked !== on) {
+      this.relativeColorsCheckbox.click();
+    }
+    await nextFrame();
+    await this.el.updateComplete;
   }
 
   public get showcaseButton(): HTMLElement {
