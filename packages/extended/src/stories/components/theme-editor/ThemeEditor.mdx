@@ -110,6 +110,14 @@ nested surface levels, the three text emphasis levels and progress.
 The theme is declared as custom properties on a wrapper inside the dialog, so it
 reaches the showcase and stops there. **The editor never writes to the document.**
 
+That wrapper also carries `forge-popover-host`, which is load-bearing rather than
+decorative. Forge portals overlays — select dropdowns, menus, tooltips — to the
+nearest ancestor matching `:is(forge-dialog,forge-popover,[forge-popover-host])`,
+falling back to `document.body`. Without the attribute that ancestor is the dialog
+itself, so opening a select appended its dropdown as a _sibling_ of the themed
+wrapper, outside the scope, and it rendered in the stock light theme. Anything that
+scopes a Forge theme to a subtree rather than to `:root` has to account for this.
+
 That is deliberate. The editor's job ends at producing a theme; applying one is the
 host application's job, and in the intended flow the theme is saved and the branding
 API applies it. A component that also restyled the live page would be doing someone

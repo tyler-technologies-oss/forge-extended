@@ -587,6 +587,24 @@ describe('ThemeEditor', () => {
       expect(document.documentElement.style.getPropertyValue('--forge-theme-primary')).to.equal('');
     });
 
+    // Regression: Forge portals overlays to the nearest ancestor matching
+    // `:is(forge-dialog,forge-popover,[forge-popover-host])`, falling back to
+    // document.body. Without this attribute that ancestor was the dialog, so an
+    // opened select was appended as a sibling of the themed wrapper and rendered
+    // in the stock light theme. Do not remove it.
+    it('should be a popover host so overlays inherit the theme', async () => {
+      const harness = await createFixture();
+      harness.showcaseButton.click();
+      await harness.el.updateComplete;
+
+      const body = harness.root.querySelector<HTMLElement>('.showcase-dialog__body')!;
+
+      expect(body.hasAttribute('forge-popover-host')).to.be.true;
+      // The tokens and the popover host have to be the same element, or overlays
+      // land outside the scope again.
+      expect(body.style.getPropertyValue('--forge-theme-surface')).to.not.equal('');
+    });
+
     it('should close again', async () => {
       const harness = await createFixture();
       harness.showcaseButton.click();

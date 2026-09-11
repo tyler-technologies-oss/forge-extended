@@ -257,9 +257,9 @@ export class ThemeEditorComponent extends LitElement {
             The ${this.theme.polarity} variant, on real components. Nothing outside this dialog is affected.
           </p>
           <!-- The tokens are scoped to this wrapper, so they reach the showcase
-               and stop there. Inline values win over anything inherited from the
-               editor host, including its preview immunity. -->
-          <div class="showcase-dialog__body" style=${styleMap(this.#sandboxProperties)}>
+               and stop there. The forge-popover-host attribute is load-bearing:
+               see the note on #sandboxProperties. -->
+          <div class="showcase-dialog__body" forge-popover-host style=${styleMap(this.#sandboxProperties)}>
             <forge-theme-showcase></forge-theme-showcase>
           </div>
         </div>
@@ -272,6 +272,16 @@ export class ThemeEditorComponent extends LitElement {
    * for the active polarity, the authored overrides on top, and the global
    * knobs. Always complete, regardless of the emit mode — a half-applied theme
    * would tell you nothing about how the finished one looks.
+   *
+   * These are declared on the sandbox wrapper, which also carries
+   * `forge-popover-host`. That attribute is load-bearing. Forge portals overlays
+   * — select dropdowns, menus, tooltips — to the nearest ancestor matching
+   * `:is(forge-dialog,forge-popover,[forge-popover-host])`, falling back to
+   * `document.body` (see `list-dropdown-adapter.ts`). Without it that ancestor is
+   * the dialog itself, so an opened select was appended as a *sibling* of the
+   * wrapper, outside the token scope, and rendered in the stock light theme.
+   * Marking the wrapper as a popover host makes it the nearest match, so overlays
+   * land inside the scope and inherit the authored theme like everything else.
    */
   get #sandboxProperties(): Record<string, string> {
     const properties: Record<string, string> = {};
