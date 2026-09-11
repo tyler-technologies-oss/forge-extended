@@ -2,7 +2,7 @@ import { expect } from '@esm-bundle/chai';
 import { fixture, html, nextFrame } from '@open-wc/testing';
 import sinon from 'sinon';
 import { ThemeEditorComponent } from './theme-editor';
-import { FORGE_THEME_PREVIEW_STYLE_ID, createForgeTheme, exportForgeThemeJson } from './theme-model';
+import { createForgeTheme, exportForgeThemeJson } from './theme-model';
 import { FORGE_THEME_DARK_TOKENS, FORGE_THEME_LIGHT_TOKENS, FORGE_THEME_TOKEN_GROUPS } from './theme-tokens';
 import { activeForgeThemeVariant, type ForgeThemeVariant } from './theme-model';
 
@@ -11,7 +11,6 @@ import './theme-editor';
 describe('ThemeEditor', () => {
   afterEach(() => {
     sinon.restore();
-    document.getElementById(FORGE_THEME_PREVIEW_STYLE_ID)?.remove();
   });
 
   it('should contain shadow root', async () => {
@@ -24,7 +23,6 @@ describe('ThemeEditor', () => {
     const harness = await createFixture();
 
     expect(harness.el.getTheme()).to.deep.equal(createForgeTheme());
-    expect(harness.el.preview).to.be.false;
   });
 
   it('should render the title slot content', async () => {
@@ -263,161 +261,6 @@ describe('ThemeEditor', () => {
       await harness.setKnob('fontFamily', 'Inter');
 
       expect(harness.el.getTheme().knobs.fontFamily).to.equal('Inter');
-    });
-  });
-
-  //
-  // Preview
-  //
-
-  describe('preview', () => {
-    it('should inject a stylesheet when the preview is turned on', async () => {
-      const harness = await createTokensFixture();
-      await harness.setTokenText('brand', '#ff0000');
-
-      harness.previewButton.click();
-      await harness.el.updateComplete;
-
-      expect(harness.el.preview).to.be.true;
-      expect(harness.injectedCss).to.include('--forge-theme-brand: #ff0000 !important;');
-    });
-
-    it('should declare the preview on every conventional theme carrier', async () => {
-      const harness = await createTokensFixture();
-      await harness.setTokenText('brand', '#ff0000');
-
-      harness.el.applyPreview();
-      await harness.el.updateComplete;
-
-      expect(harness.injectedCss).to.include(':root');
-      expect(harness.injectedCss).to.include('body');
-      expect(harness.injectedCss).to.include('.dark-theme');
-      expect(harness.injectedCss).to.include('[data-forge-theme="light"]');
-    });
-
-    it('should reflect the preview state as an attribute', async () => {
-      const harness = await createTokensFixture();
-
-      harness.el.applyPreview();
-      await harness.el.updateComplete;
-
-      expect(harness.el.hasAttribute('preview')).to.be.true;
-    });
-
-    it('should remove the stylesheet when the preview is turned off', async () => {
-      const harness = await createTokensFixture();
-      harness.el.applyPreview();
-      await harness.el.updateComplete;
-
-      harness.el.removePreview();
-      await harness.el.updateComplete;
-
-      expect(harness.styleElement).to.be.null;
-    });
-
-    it('should toggle the preview back off from the button', async () => {
-      const harness = await createTokensFixture();
-      harness.previewButton.click();
-      await harness.el.updateComplete;
-
-      harness.previewButton.click();
-      await harness.el.updateComplete;
-
-      expect(harness.el.preview).to.be.false;
-      expect(harness.styleElement).to.be.null;
-    });
-
-    it('should dispatch a preview event when the preview is toggled', async () => {
-      const harness = await createTokensFixture();
-      await harness.setTokenText('brand', '#ff0000');
-      const spy = sinon.spy();
-      harness.el.addEventListener('forge-theme-editor-preview', spy);
-
-      harness.el.applyPreview();
-      await harness.el.updateComplete;
-
-      expect(spy.calledOnce).to.be.true;
-      expect(spy.firstCall.args[0].detail.preview).to.be.true;
-      expect(spy.firstCall.args[0].detail.css).to.include(':root');
-    });
-
-    it('should dispatch an empty stylesheet when the preview is removed', async () => {
-      const harness = await createTokensFixture();
-      harness.el.applyPreview();
-      await harness.el.updateComplete;
-      const spy = sinon.spy();
-      harness.el.addEventListener('forge-theme-editor-preview', spy);
-
-      harness.el.removePreview();
-      await harness.el.updateComplete;
-
-      expect(spy.firstCall.args[0].detail.preview).to.be.false;
-      expect(spy.firstCall.args[0].detail.css).to.equal('');
-    });
-
-    it('should not dispatch a preview event on first render', async () => {
-      const spy = sinon.spy();
-      const el = document.createElement('forge-theme-editor');
-      el.addEventListener('forge-theme-editor-preview', spy);
-      document.body.appendChild(el);
-      await el.updateComplete;
-      el.remove();
-
-      expect(spy.called).to.be.false;
-    });
-
-    it('should refresh the live stylesheet when the theme is edited', async () => {
-      const harness = await createTokensFixture();
-      harness.el.applyPreview();
-      await harness.el.updateComplete;
-
-      await harness.setTokenText('brand', '#123456');
-
-      expect(harness.injectedCss).to.include('--forge-theme-brand: #123456 !important;');
-    });
-
-    it('should honour a custom selector list', async () => {
-      const harness = await createTokensFixture();
-      await harness.setTokenText('brand', '#ff0000');
-
-      harness.el.previewSelectors = ['.my-app-theme'];
-      harness.el.applyPreview();
-      await harness.el.updateComplete;
-
-      expect(harness.injectedCss).to.include('.my-app-theme {');
-      expect(harness.injectedCss).to.not.include(':root');
-    });
-
-    it('should show and hide the live preview banner', async () => {
-      const harness = await createTokensFixture();
-      expect(harness.previewBanner).to.be.null;
-
-      harness.el.applyPreview();
-      await harness.el.updateComplete;
-      expect(harness.previewBanner).to.be.ok;
-
-      harness.el.removePreview();
-      await harness.el.updateComplete;
-      expect(harness.previewBanner).to.be.null;
-    });
-
-    it('should remove the stylesheet when the editor leaves the document', async () => {
-      const harness = await createTokensFixture();
-      harness.el.applyPreview();
-      await harness.el.updateComplete;
-
-      harness.el.remove();
-      await nextFrame();
-
-      expect(harness.styleElement).to.be.null;
-    });
-
-    it('should expose the preview css without applying it', async () => {
-      const harness = await createTokensFixture();
-      await harness.setTokenText('brand', '#ff0000');
-
-      expect(harness.el.getPreviewCss()).to.include('--forge-theme-brand: #ff0000 !important;');
-      expect(harness.styleElement).to.be.null;
     });
   });
 
@@ -738,9 +581,10 @@ describe('ThemeEditor', () => {
       harness.showcaseButton.click();
       await harness.el.updateComplete;
 
-      // The sandbox is the safe option; only `Apply to page` mutates the host.
-      expect(harness.el.preview).to.be.false;
-      expect(document.getElementById('forge-theme-editor-preview')).to.be.null;
+      // The sandbox is scoped to the dialog; the editor never writes to the
+      // document. Persisting a theme is the host application's job.
+      expect(document.querySelector('style[id*="theme"]')).to.be.null;
+      expect(document.documentElement.style.getPropertyValue('--forge-theme-primary')).to.equal('');
     });
 
     it('should close again', async () => {
@@ -1005,63 +849,6 @@ describe('ThemeEditor', () => {
   // Views
   //
 
-  //
-  // Preview immunity
-  //
-
-  describe('immunity to its own preview', () => {
-    it('should hold the page tokens on the host while previewing', async () => {
-      const harness = await createFixture();
-
-      harness.el.applyPreview();
-      await harness.el.updateComplete;
-
-      // The page-wide preview declares tokens on :root and body with
-      // !important. Re-declaring the page's own values inline on the host keeps
-      // the editor readable no matter how unreadable the authored theme is.
-      const held = harness.el.style.getPropertyValue('--forge-theme-surface');
-      expect(held).to.not.equal('');
-      expect(harness.el.style.getPropertyPriority('--forge-theme-surface')).to.equal('important');
-    });
-
-    it('should let go once the preview is removed', async () => {
-      const harness = await createFixture();
-      harness.el.applyPreview();
-      await harness.el.updateComplete;
-
-      harness.el.removePreview();
-      await harness.el.updateComplete;
-
-      expect(harness.el.style.getPropertyValue('--forge-theme-surface')).to.equal('');
-    });
-
-    it('should not hold anything when immunity is off', async () => {
-      const harness = await createFixture();
-      harness.el.immuneToPreview = false;
-
-      harness.el.applyPreview();
-      await harness.el.updateComplete;
-
-      expect(harness.el.style.getPropertyValue('--forge-theme-surface')).to.equal('');
-    });
-
-    it('should release immunity when it is turned off mid-preview', async () => {
-      const harness = await createFixture();
-      harness.el.applyPreview();
-      await harness.el.updateComplete;
-
-      harness.el.immuneToPreview = false;
-      await harness.el.updateComplete;
-
-      expect(harness.el.style.getPropertyValue('--forge-theme-surface')).to.equal('');
-    });
-
-    it('should be on by default', async () => {
-      const harness = await createFixture();
-      expect(harness.el.immuneToPreview).to.be.true;
-    });
-  });
-
   describe('views', () => {
     it('should open on the palette view', async () => {
       const harness = await createFixture();
@@ -1109,14 +896,6 @@ class ThemeEditorHarness {
 
   public get view(): HTMLElement {
     return this.root.querySelector('.view')!;
-  }
-
-  public get previewButton(): HTMLElement {
-    return this.root.querySelector('#preview-button')!;
-  }
-
-  public get previewBanner(): HTMLElement | null {
-    return this.root.querySelector('.preview-banner');
   }
 
   public get messages(): HTMLElement | null {
@@ -1185,14 +964,6 @@ class ThemeEditorHarness {
 
   public get rows(): HTMLElement[] {
     return [...this.root.querySelectorAll<HTMLElement>('.rows .row')];
-  }
-
-  public get styleElement(): HTMLStyleElement | null {
-    return document.getElementById(FORGE_THEME_PREVIEW_STYLE_ID) as HTMLStyleElement | null;
-  }
-
-  public get injectedCss(): string {
-    return this.styleElement?.textContent ?? '';
   }
 
   public row(token: string): HTMLElement {

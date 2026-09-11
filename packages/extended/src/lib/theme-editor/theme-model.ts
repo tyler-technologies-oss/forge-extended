@@ -144,28 +144,11 @@ export interface ForgeThemeImportResult {
 /** The export formats the editor produces. */
 export type ForgeThemeExportFormat = 'json' | 'scss' | 'css';
 
-/** The `id` given to the `<style>` element the live preview injects. */
-export const FORGE_THEME_PREVIEW_STYLE_ID = 'forge-theme-editor-preview';
-
 /** The version marker written into exported JSON. */
 export const FORGE_THEME_EXPORT_VERSION = 1;
 
-/**
- * The selectors the live preview declares its tokens on.
- *
- * `:root` alone is not enough — see the note at the top of this file.
- */
-export const FORGE_THEME_PREVIEW_SELECTORS: readonly string[] = [
-  ':root',
-  'body',
-  '.dark-theme',
-  '.light-theme',
-  '.app-theme-dark',
-  '.app-theme-light',
-  '[data-forge-theme="dark"]',
-  '[data-forge-theme="light"]'
-];
-
+// Forge multiplies the shape factor into every shape token, so one value rounds
+// every corner in the app.
 const SHAPE_FACTOR_PROPERTY = '--forge-shape-factor';
 const SPACING_PROPERTY_PREFIX = '--forge-spacing-';
 const FONT_FAMILY_PROPERTY = '--forge-typography-font-family';
@@ -401,23 +384,6 @@ function declarations(theme: ForgeTheme, important: boolean): string[] {
     lines.push(`  ${name}: ${value}${bang};`);
   }
   return lines;
-}
-
-/**
- * Builds the stylesheet the live preview injects into the document.
- *
- * @param theme The theme to emit.
- * @param selectors The selectors to declare on. Defaults to
- * {@link FORGE_THEME_PREVIEW_SELECTORS}.
- */
-export function buildForgeThemePreviewCss(theme: ForgeTheme, selectors?: readonly string[]): string {
-  const list = (selectors?.length ? selectors : FORGE_THEME_PREVIEW_SELECTORS).join(',\n');
-  const lines = declarations(theme, true);
-  let css = '/* forge-theme-editor preview */\n';
-  if (lines.length) {
-    css += `${list} {\n${lines.join('\n')}\n}\n`;
-  }
-  return css;
 }
 
 /**

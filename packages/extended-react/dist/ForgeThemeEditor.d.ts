@@ -19,19 +19,6 @@ export interface ForgeThemeEditorProps
     | "onFocus"
     | "onBlur"
   > {
-  /** Indicates whether the theme is currently applied to the live document. */
-  preview?: boolean;
-
-  /** Keeps the editor's own chrome on the host application's theme while a live
-preview is applied to the page.
-
-A page-wide preview declares the authored tokens on `:root` and `body` with
-`!important`, and those inherit into this component like anything else — so
-authoring a low-contrast theme makes the tool you are authoring it with
-unreadable, and you cannot see well enough to fix it. On by default; turn it
-off to have the editor restyle along with the page. */
-  immuneToPreview?: boolean;
-
   /** The export format shown on the import/export view. */
   exportFormat?: ForgeThemeEditorElement["exportFormat"];
 
@@ -59,10 +46,6 @@ off to have the editor restyle along with the page. */
   /** The theme being edited. */
   theme?: ForgeThemeEditorElement["theme"];
 
-  /** The selectors the live preview declares its tokens on. Defaults to the
-conventional Forge theme carriers. */
-  previewSelectors?: ForgeThemeEditorElement["previewSelectors"];
-
   /** Fired when a theme is imported. */
   onForgeThemeEditorImport?: (
     event: CustomEvent<CustomEvent<ThemeEditorImportEventData>>,
@@ -71,11 +54,6 @@ conventional Forge theme carriers. */
   /** Fired when the theme is edited. */
   onForgeThemeEditorChange?: (
     event: CustomEvent<CustomEvent<ThemeEditorChangeEventData>>,
-  ) => void;
-
-  /** Fired when the live preview is toggled. */
-  onForgeThemeEditorPreview?: (
-    event: CustomEvent<CustomEvent<ThemeEditorPreviewEventData>>,
   ) => void;
 }
 
@@ -87,14 +65,11 @@ conventional Forge theme carriers. */
  * ### **Events:**
  *  - **forge-theme-editor-import** - Fired when a theme is imported.
  * - **forge-theme-editor-change** - Fired when the theme is edited.
- * - **forge-theme-editor-preview** - Fired when the live preview is toggled.
  *
  * ### **Methods:**
  *  - **getTheme(): _ForgeTheme_** - Returns the theme being edited.
  * - **loadTheme(theme: _ForgeThemeInput | null | undefined_): _void_** - Replaces the theme being edited. Anything the value omits is filled in with a
  * default, so a partial theme or a bare token map is accepted.
- * - **applyPreview(): _void_** - Applies the theme to the live document.
- * - **removePreview(): _void_** - Removes the theme from the live document, restoring the page's own theme.
  * - **exportTheme(format: _ForgeThemeExportFormat_): _string_** - Emits the theme in the requested format.
  * - **importTheme(text: _string_): __** - Imports theme JSON, dropping unknown token names rather than emitting dead
  * custom properties.
@@ -104,7 +79,6 @@ conventional Forge theme carriers. */
  * - **resetAllTokens(): _void_** - Reverts every token in the active variant to the Forge defaults.
  * - **getContrastReport(): _ThemeContrastEntry[]_** - Reports the contrast ratio of every `on-*` token against its background,
  * worst first.
- * - **getPreviewCss(): _string_** - The CSS the live preview injects, whether or not the preview is applied.
  *
  * ### **Slots:**
  *  - **title** - The title shown in the editor header.

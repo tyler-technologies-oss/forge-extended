@@ -492,123 +492,177 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "ContentScaffoldComponentTagName",
+          "name": "ConfirmationDialogComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-content-scaffold'"
+          "default": "'forge-confirmation-dialog'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "ContentScaffoldComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the height of the header section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-header-height"
-            },
-            {
-              "description": "Controls the background color of the header section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-header-background"
-            },
-            {
-              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-header-min-height"
-            },
-            {
-              "description": "Controls the height of the body section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-body-height"
-            },
-            {
-              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
-              "name": "--forge-content-scaffold-body-padding-inline"
-            },
-            {
-              "description": "Controls the height of the footer section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-footer-height"
-            },
-            {
-              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-footer-background"
-            },
-            {
-              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-footer-min-height"
-            },
-            {
-              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
-              "name": "--forge-content-scaffold-footer-full-padding"
-            }
-          ],
+          "name": "ConfirmationDialogComponent",
           "slots": [
             {
-              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
-              "name": "header"
+              "description": "The title of the dialog",
+              "name": "title"
             },
             {
-              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
-              "name": "before-header-start"
+              "description": "The dialog message",
+              "name": "message"
             },
             {
-              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-start"
+              "description": "The text used in the secondary action button",
+              "name": "secondary-button-text"
             },
             {
-              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-end"
-            },
-            {
-              "description": "The main body content that expands to fill available space.",
-              "name": "body"
-            },
-            {
-              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
-              "name": "footer"
-            },
-            {
-              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-start"
-            },
-            {
-              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-end"
+              "description": "The text used in the primary action button",
+              "name": "primary-button-text"
             }
           ],
-          "members": [],
+          "members": [
+            {
+              "kind": "field",
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "attribute": "open"
+            },
+            {
+              "kind": "field",
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible label for dialog",
+              "attribute": "label"
+            },
+            {
+              "kind": "field",
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "privacy": "public",
+              "description": "The accessible description for dialog",
+              "attribute": "description"
+            },
+            {
+              "kind": "field",
+              "name": "isBusy",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "attribute": "is-busy"
+            },
+            {
+              "kind": "field",
+              "name": "busyLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "attribute": "busy-label"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent<ConfirmationDialogActionEventData>"
+              },
+              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
+              "name": "forge-confirmation-dialog-action"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "open",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is open",
+              "fieldName": "open"
+            },
+            {
+              "name": "label",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible label for dialog",
+              "fieldName": "label"
+            },
+            {
+              "name": "description",
+              "type": {
+                "text": "string | undefined"
+              },
+              "description": "The accessible description for dialog",
+              "fieldName": "description"
+            },
+            {
+              "name": "is-busy",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "false",
+              "description": "Indicates whether the confirmation dialog is in a busy state",
+              "fieldName": "isBusy"
+            },
+            {
+              "name": "busy-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Loading'",
+              "description": "ARIA label for the the busy indicator when loading",
+              "fieldName": "busyLabel"
+            }
+          ],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-content-scaffold",
+          "tagName": "forge-confirmation-dialog",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ContentScaffoldComponentTagName",
+          "name": "ConfirmationDialogComponentTagName",
           "declaration": {
-            "name": "ContentScaffoldComponentTagName",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
+            "name": "ConfirmationDialogComponentTagName",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         },
         {
           "kind": "js",
-          "name": "ContentScaffoldComponent",
+          "name": "ConfirmationDialogComponent",
           "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
+            "name": "ConfirmationDialogComponent",
+            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
           }
         }
       ]
@@ -944,177 +998,236 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
       "declarations": [
         {
           "kind": "variable",
-          "name": "ConfirmationDialogComponentTagName",
+          "name": "ContentScaffoldComponentTagName",
           "type": {
             "text": "keyof HTMLElementTagNameMap"
           },
-          "default": "'forge-confirmation-dialog'"
+          "default": "'forge-content-scaffold'"
         },
         {
           "kind": "class",
           "description": "",
-          "name": "ConfirmationDialogComponent",
+          "name": "ContentScaffoldComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the header section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-header-height"
+            },
+            {
+              "description": "Controls the background color of the header section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-header-background"
+            },
+            {
+              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-header-min-height"
+            },
+            {
+              "description": "Controls the height of the body section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-body-height"
+            },
+            {
+              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-body-padding-inline"
+            },
+            {
+              "description": "Controls the height of the footer section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-footer-height"
+            },
+            {
+              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-footer-background"
+            },
+            {
+              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-footer-min-height"
+            },
+            {
+              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
+              "name": "--forge-content-scaffold-footer-full-padding"
+            }
+          ],
           "slots": [
             {
-              "description": "The title of the dialog",
-              "name": "title"
+              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
+              "name": "header"
             },
             {
-              "description": "The dialog message",
-              "name": "message"
+              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
+              "name": "before-header-start"
             },
             {
-              "description": "The text used in the secondary action button",
-              "name": "secondary-button-text"
+              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-start"
             },
             {
-              "description": "The text used in the primary action button",
-              "name": "primary-button-text"
+              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-end"
+            },
+            {
+              "description": "The main body content that expands to fill available space.",
+              "name": "body"
+            },
+            {
+              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
+              "name": "footer"
+            },
+            {
+              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-start"
+            },
+            {
+              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-end"
             }
           ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "attribute": "open"
-            },
-            {
-              "kind": "field",
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible label for dialog",
-              "attribute": "label"
-            },
-            {
-              "kind": "field",
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "privacy": "public",
-              "description": "The accessible description for dialog",
-              "attribute": "description"
-            },
-            {
-              "kind": "field",
-              "name": "isBusy",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "attribute": "is-busy"
-            },
-            {
-              "kind": "field",
-              "name": "busyLabel",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "attribute": "busy-label"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent<ConfirmationDialogActionEventData>"
-              },
-              "description": "Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.",
-              "name": "forge-confirmation-dialog-action"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "open",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is open",
-              "fieldName": "open"
-            },
-            {
-              "name": "label",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible label for dialog",
-              "fieldName": "label"
-            },
-            {
-              "name": "description",
-              "type": {
-                "text": "string | undefined"
-              },
-              "description": "The accessible description for dialog",
-              "fieldName": "description"
-            },
-            {
-              "name": "is-busy",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the confirmation dialog is in a busy state",
-              "fieldName": "isBusy"
-            },
-            {
-              "name": "busy-label",
-              "type": {
-                "text": "string"
-              },
-              "default": "'Loading'",
-              "description": "ARIA label for the the busy indicator when loading",
-              "fieldName": "busyLabel"
-            }
-          ],
+          "members": [],
           "superclass": {
             "name": "LitElement",
             "package": "lit"
           },
-          "tagName": "forge-confirmation-dialog",
+          "tagName": "forge-content-scaffold",
           "customElement": true
         }
       ],
       "exports": [
         {
           "kind": "js",
-          "name": "ConfirmationDialogComponentTagName",
+          "name": "ContentScaffoldComponentTagName",
           "declaration": {
-            "name": "ConfirmationDialogComponentTagName",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+            "name": "ContentScaffoldComponentTagName",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         },
         {
           "kind": "js",
-          "name": "ConfirmationDialogComponent",
+          "name": "ContentScaffoldComponent",
           "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         },
         {
           "kind": "custom-element-definition",
           "declaration": {
-            "name": "ConfirmationDialogComponent",
-            "module": "src/lib/confirmation-dialog/confirmation-dialog.ts"
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "MultiSelectHeaderComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-multi-select-header'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MultiSelectHeaderComponent",
+          "slots": [
+            {
+              "description": "Text content for the select-all button",
+              "name": "select-all-button-text"
+            },
+            {
+              "description": "Action buttons (maps to the toolbar end slot)",
+              "name": "actions"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "attribute": "text"
+            },
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Hides the bottom border",
+              "attribute": "no-border"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the select-all button is clicked",
+              "name": "forge-multi-select-header-select-all"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "fieldName": "text"
+            },
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Hides the bottom border",
+              "fieldName": "noBorder"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-multi-select-header",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MultiSelectHeaderComponentTagName",
+          "declaration": {
+            "name": "MultiSelectHeaderComponentTagName",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "MultiSelectHeaderComponent",
+          "declaration": {
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         }
       ]
@@ -1463,119 +1576,6 @@
           "declaration": {
             "name": "FooterComponent",
             "module": "src/lib/footer/footer.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "MultiSelectHeaderComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-multi-select-header'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MultiSelectHeaderComponent",
-          "slots": [
-            {
-              "description": "Text content for the select-all button",
-              "name": "select-all-button-text"
-            },
-            {
-              "description": "Action buttons (maps to the toolbar end slot)",
-              "name": "actions"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "attribute": "text"
-            },
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "true",
-              "description": "Hides the bottom border",
-              "attribute": "no-border"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Fired when the select-all button is clicked",
-              "name": "forge-multi-select-header-select-all"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "fieldName": "text"
-            },
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Hides the bottom border",
-              "fieldName": "noBorder"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-multi-select-header",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponentTagName",
-          "declaration": {
-            "name": "MultiSelectHeaderComponentTagName",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponent",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
           }
         }
       ]
@@ -2697,39 +2697,6 @@
             },
             {
               "kind": "field",
-              "name": "preview",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "false",
-              "description": "Indicates whether the theme is currently applied to the live document.",
-              "attribute": "preview",
-              "reflects": true
-            },
-            {
-              "kind": "field",
-              "name": "previewSelectors",
-              "type": {
-                "text": "string[]"
-              },
-              "privacy": "public",
-              "default": "[...FORGE_THEME_PREVIEW_SELECTORS]",
-              "description": "The selectors the live preview declares its tokens on. Defaults to the\nconventional Forge theme carriers."
-            },
-            {
-              "kind": "field",
-              "name": "immuneToPreview",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "true",
-              "description": "Keeps the editor's own chrome on the host application's theme while a live\npreview is applied to the page.\n\nA page-wide preview declares the authored tokens on `:root` and `body` with\n`!important`, and those inherit into this component like anything else — so\nauthoring a low-contrast theme makes the tool you are authoring it with\nunreadable, and you cannot see well enough to fix it. On by default; turn it\noff to have the editor restyle along with the page.",
-              "attribute": "immune-to-preview"
-            },
-            {
-              "kind": "field",
               "name": "exportFormat",
               "type": {
                 "text": "ForgeThemeExportFormat"
@@ -2769,28 +2736,6 @@
                 }
               ],
               "description": "Replaces the theme being edited. Anything the value omits is filled in with a\ndefault, so a partial theme or a bare token map is accepted."
-            },
-            {
-              "kind": "method",
-              "name": "applyPreview",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "description": "Applies the theme to the live document."
-            },
-            {
-              "kind": "method",
-              "name": "removePreview",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "void"
-                }
-              },
-              "description": "Removes the theme from the live document, restoring the page's own theme."
             },
             {
               "kind": "method",
@@ -2922,17 +2867,6 @@
                 }
               },
               "description": "Reports the contrast ratio of every `on-*` token against its background,\nworst first."
-            },
-            {
-              "kind": "method",
-              "name": "getPreviewCss",
-              "privacy": "public",
-              "return": {
-                "type": {
-                  "text": "string"
-                }
-              },
-              "description": "The CSS the live preview injects, whether or not the preview is applied."
             }
           ],
           "events": [
@@ -2949,34 +2883,9 @@
                 "text": "CustomEvent<ThemeEditorChangeEventData>"
               },
               "description": "Fired when the theme is edited."
-            },
-            {
-              "name": "forge-theme-editor-preview",
-              "type": {
-                "text": "CustomEvent<ThemeEditorPreviewEventData>"
-              },
-              "description": "Fired when the live preview is toggled."
             }
           ],
           "attributes": [
-            {
-              "name": "preview",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "false",
-              "description": "Indicates whether the theme is currently applied to the live document.",
-              "fieldName": "preview"
-            },
-            {
-              "name": "immune-to-preview",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Keeps the editor's own chrome on the host application's theme while a live\npreview is applied to the page.\n\nA page-wide preview declares the authored tokens on `:root` and `body` with\n`!important`, and those inherit into this component like anything else — so\nauthoring a low-contrast theme makes the tool you are authoring it with\nunreadable, and you cannot see well enough to fix it. On by default; turn it\noff to have the editor restyle along with the page.",
-              "fieldName": "immuneToPreview"
-            },
             {
               "name": "export-format",
               "type": {
@@ -3212,30 +3121,12 @@
       "declarations": [
         {
           "kind": "variable",
-          "name": "FORGE_THEME_PREVIEW_STYLE_ID",
-          "type": {
-            "text": "string"
-          },
-          "default": "'forge-theme-editor-preview'",
-          "description": "The `id` given to the `<style>` element the live preview injects."
-        },
-        {
-          "kind": "variable",
           "name": "FORGE_THEME_EXPORT_VERSION",
           "type": {
             "text": "number"
           },
           "default": "1",
           "description": "The version marker written into exported JSON."
-        },
-        {
-          "kind": "variable",
-          "name": "FORGE_THEME_PREVIEW_SELECTORS",
-          "type": {
-            "text": "readonly string[]"
-          },
-          "default": "[ ':root', 'body', '.dark-theme', '.light-theme', '.app-theme-dark', '.app-theme-light', '[data-forge-theme=\"dark\"]', '[data-forge-theme=\"light\"]' ]",
-          "description": "The selectors the live preview declares its tokens on.\n\n`:root` alone is not enough — see the note at the top of this file."
         },
         {
           "kind": "function",
@@ -3423,33 +3314,6 @@
         },
         {
           "kind": "function",
-          "name": "buildForgeThemePreviewCss",
-          "return": {
-            "type": {
-              "text": "string"
-            }
-          },
-          "parameters": [
-            {
-              "name": "theme",
-              "type": {
-                "text": "ForgeTheme"
-              },
-              "description": "The theme to emit."
-            },
-            {
-              "name": "selectors",
-              "optional": true,
-              "type": {
-                "text": "readonly string[]"
-              },
-              "description": "The selectors to declare on. Defaults to\n * {@link FORGE_THEME_PREVIEW_SELECTORS}.\n "
-            }
-          ],
-          "description": "Builds the stylesheet the live preview injects into the document."
-        },
-        {
-          "kind": "function",
           "name": "exportForgeThemeCss",
           "return": {
             "type": {
@@ -3605,25 +3469,9 @@
       "exports": [
         {
           "kind": "js",
-          "name": "FORGE_THEME_PREVIEW_STYLE_ID",
-          "declaration": {
-            "name": "FORGE_THEME_PREVIEW_STYLE_ID",
-            "module": "src/lib/theme-editor/theme-model.ts"
-          }
-        },
-        {
-          "kind": "js",
           "name": "FORGE_THEME_EXPORT_VERSION",
           "declaration": {
             "name": "FORGE_THEME_EXPORT_VERSION",
-            "module": "src/lib/theme-editor/theme-model.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "FORGE_THEME_PREVIEW_SELECTORS",
-          "declaration": {
-            "name": "FORGE_THEME_PREVIEW_SELECTORS",
             "module": "src/lib/theme-editor/theme-model.ts"
           }
         },
@@ -3712,14 +3560,6 @@
           "name": "resolveForgeThemeKnobs",
           "declaration": {
             "name": "resolveForgeThemeKnobs",
-            "module": "src/lib/theme-editor/theme-model.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "buildForgeThemePreviewCss",
-          "declaration": {
-            "name": "buildForgeThemePreviewCss",
             "module": "src/lib/theme-editor/theme-model.ts"
           }
         },
@@ -4511,9 +4351,21 @@
       "path": "src/lib/app-layout/app-layout.ts",
       "lineNumber": 92
     },
-    "ContentScaffoldComponent": {
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "lineNumber": 37
+    "ConfirmationDialogActionEventReason": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 28
+    },
+    "ConfirmationDialogActionEventData": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 30
+    },
+    "ConfirmationDialogProperties": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 35
+    },
+    "ConfirmationDialogComponent": {
+      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+      "lineNumber": 55
     },
     "BusyIndicatorMode": {
       "path": "src/lib/busy-indicator/busy-indicator.ts",
@@ -4531,21 +4383,13 @@
       "path": "src/lib/busy-indicator/busy-indicator.ts",
       "lineNumber": 40
     },
-    "ConfirmationDialogActionEventReason": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
+    "ContentScaffoldComponent": {
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "lineNumber": 37
+    },
+    "MultiSelectHeaderComponent": {
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
       "lineNumber": 28
-    },
-    "ConfirmationDialogActionEventData": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 30
-    },
-    "ConfirmationDialogProperties": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 35
-    },
-    "ConfirmationDialogComponent": {
-      "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
-      "lineNumber": 55
     },
     "CountCardTheme": {
       "path": "src/lib/count-card/count-card.ts",
@@ -4562,10 +4406,6 @@
     "FooterComponent": {
       "path": "src/lib/footer/footer.ts",
       "lineNumber": 41
-    },
-    "MultiSelectHeaderComponent": {
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "lineNumber": 28
     },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
@@ -4601,23 +4441,19 @@
     },
     "ThemeEditorView": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 104
+      "lineNumber": 97
     },
     "ThemeEditorChangeEventData": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 107
-    },
-    "ThemeEditorPreviewEventData": {
-      "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 115
+      "lineNumber": 100
     },
     "ThemeEditorImportEventData": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 123
+      "lineNumber": 108
     },
     "ThemeEditorComponent": {
       "path": "src/lib/theme-editor/theme-editor.ts",
-      "lineNumber": 157
+      "lineNumber": 141
     },
     "ThemeGeneratorMode": {
       "path": "src/lib/theme-editor/theme-generator.ts",

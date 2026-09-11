@@ -87,18 +87,6 @@ Generating a palette sets `mode` to `replace`, because 101 tokens is a whole the
 rather than a patch. Exported JSON always carries **both** variants, so one file is
 the complete light-and-dark design.
 
-### Staying readable while previewing
-
-`immuneToPreview` (on by default) keeps the editor's own chrome on the host
-application's theme while a page-wide preview is applied.
-
-Without it the tool inherits the theme being authored — fine until you author
-something low-contrast, at which point you cannot see well enough to fix it. The
-component samples the page's own tokens before injecting the override and re-declares
-them on itself; an inline `!important` declaration outranks the preview's `!important`
-rule on `:root`/`body` for this element and its subtree. Set
-`immune-to-preview="false"` to have the editor restyle along with the page.
-
 ### Sizing
 
 The token list tiles into as many columns as the container allows, because a token value is
@@ -112,48 +100,92 @@ a hex code rather than prose. Three custom properties tune it:
 
 The header and the tab bar stay put while the active view scrolls.
 
-### Two ways to see a theme
+### Seeing a theme
 
-**Preview theme** opens a dialog holding `forge-theme-showcase` — a panel of real
-Forge components in real states: buttons including disabled, a field that is actually
+**Preview theme** opens a dialog holding `forge-theme-showcase` — real Forge
+components in real states: buttons including disabled, a field that is actually
 invalid, checked and indeterminate checkboxes, chips, the four status ramps, five
-nested surface levels and the three text emphasis levels. The theme is declared on a
-wrapper inside the dialog, so it reaches the showcase and stops there. **Nothing
-outside the dialog changes.** This is the one to reach for.
+nested surface levels, the three text emphasis levels and progress.
 
-The showcase is deliberately dumb: no properties, no theming logic. It renders
-components and inherits whatever custom properties its ancestor declares, which is
-what makes it reusable as a specimen anywhere.
+The theme is declared as custom properties on a wrapper inside the dialog, so it
+reaches the showcase and stops there. **The editor never writes to the document.**
 
-**Apply to page** is the other option, and it is a different thing: it declares the
-theme on the document and restyles the whole application until you turn it off.
-Useful for seeing a theme in situ; it is also why `immuneToPreview` exists.
+That is deliberate. The editor's job ends at producing a theme; applying one is the
+host application's job, and in the intended flow the theme is saved and the branding
+API applies it. A component that also restyled the live page would be doing someone
+else's work, and would need an escape hatch to stop the tool it lives in from being
+restyled by whatever half-finished theme is on screen.
 
-The dialog's own chrome keeps the editor's theme rather than the authored one, for the
-same reason the editor does — it has to stay readable no matter what you author.
+The showcase itself is deliberately dumb: no properties, no theming logic. It renders
+components and inherits whatever custom properties an ancestor declares, which makes
+it reusable as a specimen anywhere — give it a wrapper with `--forge-theme-*` set and
+it shows that theme.
 
-### The cascade the page-wide preview needs
+### Saving a theme
 
-The preview has to be written as real CSS, because there is no Forge machinery that
-turns a theme object into custom properties. `forge-theme-toggle` only sets
-`data-forge-theme` on `<html>` and relies on the host application having written a
-rule for it; that attribute appears nowhere in Forge core.
+There is no save button; persistence belongs to the host. Two ways to get the theme
+out:
 
-It also declares its tokens on a list of selectors with `!important`. Forge ships the
-light set as `:root { ... }` in `forge.css`, but the dark set only as a mixin that
-host applications attach to a class on `<body>`:
+```ts
+// Every edit, as it happens.
+editor.addEventListener('forge-theme-editor-change', ({ detail }) => save(detail.theme));
 
-```scss
-.dark-theme {
-  @include theme-dark.theme-properties;
-}
+// Or on demand.
+const theme = editor.getTheme();
+const json = editor.exportTheme('json');
 ```
 
-A custom property declared on `<body>` beats one inherited from `:root`, so declaring
-only on `:root` loses on any page already in dark mode. The default selector list
-covers `:root`, `body`, the `.dark-theme` / `.app-theme-dark` conventions, and
-`forge-theme-toggle`'s `data-forge-theme` attribute. Set `previewSelectors` to target
-a different carrier.
+Exported JSON carries both variants, the polarity, the emit mode, the knobs and the
+generator options — everything needed to reopen the theme later or to hand it to
+something that applies it. `exportTheme('scss')` emits Sass built on Forge's own
+`theme.provide()` mixin and `exportTheme('css')` a plain `:root` block, for pasting
+into an application directly.
 
-Custom properties inherit across shadow boundaries, so declaring them on `<body>`
-reaches inside every Forge component's shadow root.
+One thing worth knowing for whoever applies these: **Forge has no machinery that
+turns a theme object into custom properties.** `forge-theme-toggle` only sets
+`data-forge-theme` on `<html>` and relies on the host application having written a
+rule for it — that attribute appears nowhere in Forge core. Applying a theme means
+emitting real CSS, and Forge ships its light set as `:root { … }` but its dark set
+only as a Sass mixin that host applications attach to a class. A custom property
+declared on `<body>` beats one inherited from `:root`, so an override that only
+targets `:root` loses on a page already in dark mode.
+
+### Properties
+
+| Name             | Type                        | Default            | Description                                                  |
+| ---------------- | --------------------------- | ------------------ | ------------------------------------------------------------ |
+| `theme`          | `ForgeTheme`                | an untouched theme | The theme being edited. Set as a property, not an attribute. |
+| `exportFormat`   | `'json' \| 'scss' \| 'css'` | `'json'`           | The export format shown on the import and export view.       |
+| `theme.polarity` | `'light' \| 'dark'`         | `'light'`          | Which variant is being authored.                             |
+| `theme.mode`     | `'patch' \| 'replace'`      | `'patch'`          | Whether to emit only your changes or a complete theme.       |
+
+### Methods
+
+| Name                      | Description                                              |
+| ------------------------- | -------------------------------------------------------- |
+| `getTheme()`              | Returns the theme being edited.                          |
+| `loadTheme(theme)`        | Replaces the theme, filling in anything the value omits. |
+| `exportTheme(format?)`    | Emits the theme as JSON, Sass or CSS.                    |
+| `importTheme(text)`       | Imports theme JSON and returns the warnings raised.      |
+| `generatePalette(seeds?)` | Derives the full token set from seed colors.             |
+| `setToken(token, value)`  | Sets one token, or clears it when the value is empty.    |
+| `resetToken(token)`       | Reverts one token to the Forge default for the polarity. |
+| `resetAllTokens()`        | Reverts every token in the active variant.               |
+| `getContrastReport()`     | Returns every `on-*` pair and its ratio, worst first.    |
+
+### Events
+
+| Name                        | Detail                                         | Description                                                                                                |
+| --------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `forge-theme-editor-change` | `{ theme: ForgeTheme, token: string \| null }` | Fired when the theme is edited. `token` names the edited token, or is `null` when the whole theme changed. |
+| `forge-theme-editor-import` | `{ theme: ForgeTheme, warnings: string[] }`    | Fired when a theme is imported.                                                                            |
+
+Both events bubble, are composed and are cancelable.
+
+## Accessibility
+
+- Every color swatch and text field is labelled with the token it edits, and every revert button carries an
+  `aria-label` naming its token.
+- Each view is a labelled `region`, and the preview dialog is labelled and described.
+- The contrast view exists so that an authored theme can be checked against WCAG 2 AA before it ships. A
+  theme that fails there will be illegible for some users no matter how the editor is operated.

@@ -1,8 +1,6 @@
 import { expect } from '@esm-bundle/chai';
 import {
   FORGE_THEME_EXPORT_VERSION,
-  FORGE_THEME_PREVIEW_SELECTORS,
-  buildForgeThemePreviewCss,
   createForgeTheme,
   emptyForgeTheme,
   emptyForgeThemeKnobs,
@@ -154,47 +152,6 @@ describe('ThemeEditor theme model', () => {
       );
       expect(knobs['--forge-typography-font-family']).to.equal('Inter');
       expect(knobs['--forge-typography-font-size']).to.equal('15px');
-    });
-  });
-
-  describe('buildForgeThemePreviewCss', () => {
-    it('should declare on every conventional theme carrier', () => {
-      const css = buildForgeThemePreviewCss(createForgeTheme({ tokens: { primary: '#ff0000' } }));
-      for (const selector of FORGE_THEME_PREVIEW_SELECTORS) {
-        expect(css).to.include(selector);
-      }
-    });
-
-    it('should mark every declaration important', () => {
-      const css = buildForgeThemePreviewCss(createForgeTheme({ tokens: { primary: '#ff0000' } }));
-      expect(css).to.include('--forge-theme-primary: #ff0000 !important;');
-    });
-
-    it('should cover the theme toggle attribute as well as the class conventions', () => {
-      const css = buildForgeThemePreviewCss(createForgeTheme({ tokens: { primary: '#ff0000' } }));
-      expect(css).to.include('[data-forge-theme="dark"]');
-      expect(css).to.include('.dark-theme');
-    });
-
-    it('should honour a custom selector list', () => {
-      const css = buildForgeThemePreviewCss(createForgeTheme({ tokens: { primary: '#ff0000' } }), ['.host-theme']);
-      expect(css).to.include('.host-theme {');
-      expect(css).to.not.include(':root');
-    });
-
-    it('should fall back to the default selectors for an empty list', () => {
-      const css = buildForgeThemePreviewCss(createForgeTheme({ tokens: { primary: '#f00' } }), []);
-      expect(css).to.include(':root');
-    });
-
-    it('should emit no rule block when the theme sets nothing', () => {
-      const css = buildForgeThemePreviewCss(createForgeTheme());
-      expect(css).to.not.include('{');
-    });
-
-    it('should include the knob declarations', () => {
-      const css = buildForgeThemePreviewCss(createForgeTheme({ knobs: { ...emptyForgeThemeKnobs(), shapeFactor: 0 } }));
-      expect(css).to.include('--forge-shape-factor: 0 !important;');
     });
   });
 

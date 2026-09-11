@@ -4,14 +4,7 @@ import { useEventListener, useProperties } from "./react-utils.js";
 
 export const ForgeThemeEditor = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
-  const {
-    preview,
-    immuneToPreview,
-    exportFormat,
-    theme,
-    previewSelectors,
-    ...filteredProps
-  } = props;
+  const { exportFormat, theme, ...filteredProps } = props;
 
   /** Event listeners - run once */
   useEventListener(
@@ -24,15 +17,9 @@ export const ForgeThemeEditor = forwardRef((props, forwardedRef) => {
     "forge-theme-editor-change",
     props.onForgeThemeEditorChange,
   );
-  useEventListener(
-    ref,
-    "forge-theme-editor-preview",
-    props.onForgeThemeEditorPreview,
-  );
 
   /** Properties - run whenever a property has changed */
   useProperties(ref, "theme", props.theme);
-  useProperties(ref, "previewSelectors", props.previewSelectors);
 
   return React.createElement(
     "forge-theme-editor",
@@ -52,8 +39,6 @@ export const ForgeThemeEditor = forwardRef((props, forwardedRef) => {
       for: props.htmlFor,
       part: props.part,
       tabindex: props.tabIndex,
-      preview: props.preview ? true : undefined,
-      "immune-to-preview": props.immuneToPreview ? true : undefined,
       style: { ...props.style },
     },
     props.children,

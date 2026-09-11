@@ -1,4 +1,4 @@
-import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
+import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { repeat } from 'lit/directives/repeat.js';
@@ -32,7 +32,6 @@ import {
 import {
   tylIconAlertCircleOutline,
   tylIconAutorenew,
-  tylIconBrush,
   tylIconClose,
   tylIconMoonWaningCrescent,
   tylIconWbSunny,
@@ -42,8 +41,7 @@ import {
   tylIconPalette,
   tylIconSearch,
   tylIconUndo,
-  tylIconVisibility,
-  tylIconVisibilityOff
+  tylIconVisibility
 } from '@tylertech/tyler-icons';
 
 import { isValidColor, parseColor, toHex } from './theme-color';
@@ -54,9 +52,6 @@ import {
   type ThemeContrastEntry
 } from './theme-generator';
 import {
-  FORGE_THEME_PREVIEW_SELECTORS,
-  FORGE_THEME_PREVIEW_STYLE_ID,
-  buildForgeThemePreviewCss,
   createForgeTheme,
   exportForgeTheme,
   normalizeForgeTheme,
@@ -76,7 +71,6 @@ import {
 import {
   FORGE_THEME_TOKEN_GROUPS,
   FORGE_THEME_TOKEN_KINDS,
-  FORGE_THEME_TOKEN_NAMES,
   FORGE_THEME_TOKEN_PREFIX,
   type ForgeThemeTokenGroup,
   type ForgeThemeTokenMap
@@ -93,7 +87,6 @@ declare global {
 
   interface HTMLElementEventMap {
     'forge-theme-editor-change': CustomEvent<ThemeEditorChangeEventData>;
-    'forge-theme-editor-preview': CustomEvent<ThemeEditorPreviewEventData>;
     'forge-theme-editor-import': CustomEvent<ThemeEditorImportEventData>;
   }
 }
@@ -109,14 +102,6 @@ export interface ThemeEditorChangeEventData {
   theme: ForgeTheme;
   /** The token that was edited, or `null` when the whole theme changed. */
   token: string | null;
-}
-
-/** Emitted when the live preview is turned on or off. */
-export interface ThemeEditorPreviewEventData {
-  /** Whether the preview is now applied to the document. */
-  preview: boolean;
-  /** The CSS that was injected, or an empty string when the preview was removed. */
-  css: string;
 }
 
 /** Emitted when a theme is imported. */
@@ -151,7 +136,6 @@ const CONTRAST_AA_LARGE = 3;
  * @slot title - The title shown in the editor header.
  *
  * @event {CustomEvent<ThemeEditorChangeEventData>} forge-theme-editor-change - Fired when the theme is edited.
- * @event {CustomEvent<ThemeEditorPreviewEventData>} forge-theme-editor-preview - Fired when the live preview is toggled.
  * @event {CustomEvent<ThemeEditorImportEventData>} forge-theme-editor-import - Fired when a theme is imported.
  */
 @customElement(ThemeEditorComponentTagName)
@@ -190,10 +174,8 @@ export class ThemeEditorComponent extends LitElement {
       tylIconSearch,
       tylIconUndo,
       tylIconVisibility,
-      tylIconVisibilityOff,
       tylIconMoonWaningCrescent,
       tylIconWbSunny,
-      tylIconBrush,
       tylIconClose
     ]);
   }
@@ -203,30 +185,6 @@ export class ThemeEditorComponent extends LitElement {
   /** The theme being edited. */
   @property({ attribute: false })
   public theme: ForgeTheme = createForgeTheme();
-
-  /** Indicates whether the theme is currently applied to the live document. */
-  @property({ type: Boolean, reflect: true })
-  public preview = false;
-
-  /**
-   * The selectors the live preview declares its tokens on. Defaults to the
-   * conventional Forge theme carriers.
-   */
-  @property({ attribute: false })
-  public previewSelectors: string[] = [...FORGE_THEME_PREVIEW_SELECTORS];
-
-  /**
-   * Keeps the editor's own chrome on the host application's theme while a live
-   * preview is applied to the page.
-   *
-   * A page-wide preview declares the authored tokens on `:root` and `body` with
-   * `!important`, and those inherit into this component like anything else — so
-   * authoring a low-contrast theme makes the tool you are authoring it with
-   * unreadable, and you cannot see well enough to fix it. On by default; turn it
-   * off to have the editor restyle along with the page.
-   */
-  @property({ type: Boolean, attribute: 'immune-to-preview' })
-  public immuneToPreview = true;
 
   /** The export format shown on the import/export view. */
   @property({ attribute: 'export-format' })
@@ -253,35 +211,10 @@ export class ThemeEditorComponent extends LitElement {
   @state()
   private _showcaseOpen = false;
 
-  #styleElement: HTMLStyleElement | null = null;
-  /** The page's own token values, sampled before the preview was injected. */
-  #hostTokens: ForgeThemeTokenMap | null = null;
-  #hasSyncedPreview = false;
-
-  public override disconnectedCallback(): void {
-    super.disconnectedCallback();
-    // Never leave an orphaned override behind: the page must return to its own theme.
-    this.#removePreviewStyle();
-  }
-
-  public override updated(changedProperties: PropertyValues<this>): void {
-    const previewChanged = changedProperties.has('preview');
-    if (previewChanged || changedProperties.has('theme') || changedProperties.has('previewSelectors')) {
-      this.#syncPreviewStyle();
-    }
-    if (changedProperties.has('immuneToPreview') && this.preview) {
-      this.#syncImmunity();
-    }
-    if (previewChanged && this.#hasSyncedPreview) {
-      this.#emitPreview();
-    }
-    this.#hasSyncedPreview = true;
-  }
-
   public override render(): TemplateResult {
     return html`
       <forge-card class="container">
-        ${this.#header} ${this.#previewBanner} ${this.#messageList}
+        ${this.#header} ${this.#messageList}
         <forge-tab-bar
           class="views"
           .activeTab=${VIEWS.indexOf(this._view)}
@@ -364,16 +297,6 @@ export class ThemeEditorComponent extends LitElement {
    */
   public loadTheme(theme: ForgeThemeInput | null | undefined): void {
     this.#setTheme(createForgeTheme(theme), null);
-  }
-
-  /** Applies the theme to the live document. */
-  public applyPreview(): void {
-    this.preview = true;
-  }
-
-  /** Removes the theme from the live document, restoring the page's own theme. */
-  public removePreview(): void {
-    this.preview = false;
   }
 
   /**
@@ -459,11 +382,6 @@ export class ThemeEditorComponent extends LitElement {
     return auditForgeThemeContrast({ ...this.#baseTokens, ...this.#variant.tokens });
   }
 
-  /** The CSS the live preview injects, whether or not the preview is applied. */
-  public getPreviewCss(): string {
-    return buildForgeThemePreviewCss(this.theme, this.previewSelectors);
-  }
-
   //
   // Header
   //
@@ -479,32 +397,9 @@ export class ThemeEditorComponent extends LitElement {
             <forge-icon slot="start" name="visibility"></forge-icon>
             <span>Preview theme</span>
           </forge-button>
-          <forge-button
-            id="preview-button"
-            variant="outlined"
-            aria-pressed=${this.preview ? 'true' : 'false'}
-            @click=${this.#onPreviewToggle}>
-            <forge-icon slot="start" name=${this.preview ? 'visibility_off' : 'brush'}></forge-icon>
-            <span>${this.preview ? 'Stop applying' : 'Apply to page'}</span>
-          </forge-button>
         </div>
       </forge-toolbar>
     `;
-  }
-
-  get #previewBanner(): TemplateResult | typeof nothing {
-    return when(
-      this.preview,
-      () => html`
-        <forge-inline-message class="preview-banner" theme="info">
-          <span slot="title">Preview is live</span>
-          <span
-            >This theme is applied to the whole page. Turn the preview off to restore the application's own theme.</span
-          >
-        </forge-inline-message>
-      `,
-      () => nothing
-    );
   }
 
   get #messageList(): TemplateResult | typeof nothing {
@@ -1049,10 +944,6 @@ export class ThemeEditorComponent extends LitElement {
     this.importTheme(text);
   }
 
-  #onPreviewToggle(): void {
-    this.preview = !this.preview;
-  }
-
   #onOpenShowcase(): void {
     this._showcaseOpen = true;
   }
@@ -1158,80 +1049,6 @@ export class ThemeEditorComponent extends LitElement {
     this.#emitChange(token);
   }
 
-  #syncPreviewStyle(): void {
-    if (!this.preview) {
-      this.#removePreviewStyle();
-      return;
-    }
-    // Sample the page's own tokens before the override lands, or we would read
-    // our own values back and pin the editor to the theme being authored.
-    if (!this.#hostTokens) {
-      this.#hostTokens = this.#readHostTokens();
-    }
-    if (!this.#styleElement) {
-      this.#styleElement = document.createElement('style');
-      this.#styleElement.id = FORGE_THEME_PREVIEW_STYLE_ID;
-      document.head.appendChild(this.#styleElement);
-    }
-    this.#styleElement.textContent = this.getPreviewCss();
-    this.#syncImmunity();
-  }
-
-  #removePreviewStyle(): void {
-    this.#styleElement?.remove();
-    this.#styleElement = null;
-    this.#clearImmunity();
-    this.#hostTokens = null;
-  }
-
-  /**
-   * Reads the page's current value for every Forge theme token.
-   *
-   * A page that has not loaded Forge's theme stylesheet defines none of them and
-   * still renders correctly, because Forge compiles a hardcoded fallback into
-   * every reference (`var(--forge-theme-primary, #3f51b5)`) — and those
-   * fallbacks are the light values. So anything the page leaves undefined is
-   * filled from the stock light set: that is genuinely what the page is drawing
-   * with, and without it immunity would capture nothing and do nothing.
-   */
-  #readHostTokens(): ForgeThemeTokenMap {
-    const computed = getComputedStyle(document.documentElement);
-    const tokens: ForgeThemeTokenMap = {};
-    for (const token of FORGE_THEME_TOKEN_NAMES) {
-      const declared = computed.getPropertyValue(`${FORGE_THEME_TOKEN_PREFIX}${token}`).trim();
-      const value = declared || forgeStockTokens('light')[token];
-      if (value) {
-        tokens[token] = value;
-      }
-    }
-    return tokens;
-  }
-
-  /**
-   * Re-declares the page's own tokens on this element. An inline `!important`
-   * declaration outranks the preview's `!important` rule on `:root`/`body` for
-   * this element and everything inside it, so the editor keeps its own styling.
-   */
-  #syncImmunity(): void {
-    if (!this.immuneToPreview) {
-      this.#clearImmunity();
-      return;
-    }
-    const tokens = this.#hostTokens;
-    if (!tokens) {
-      return;
-    }
-    for (const [token, value] of Object.entries(tokens)) {
-      this.style.setProperty(`${FORGE_THEME_TOKEN_PREFIX}${token}`, value, 'important');
-    }
-  }
-
-  #clearImmunity(): void {
-    for (const token of FORGE_THEME_TOKEN_NAMES) {
-      this.style.removeProperty(`${FORGE_THEME_TOKEN_PREFIX}${token}`);
-    }
-  }
-
   #emitChange(token: string | null): void {
     this.dispatchEvent(
       new CustomEvent<ThemeEditorChangeEventData>('forge-theme-editor-change', {
@@ -1239,17 +1056,6 @@ export class ThemeEditorComponent extends LitElement {
         composed: true,
         cancelable: true,
         detail: { theme: this.theme, token }
-      })
-    );
-  }
-
-  #emitPreview(): void {
-    this.dispatchEvent(
-      new CustomEvent<ThemeEditorPreviewEventData>('forge-theme-editor-preview', {
-        bubbles: true,
-        composed: true,
-        cancelable: true,
-        detail: { preview: this.preview, css: this.preview ? this.getPreviewCss() : '' }
       })
     );
   }

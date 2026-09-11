@@ -11,17 +11,12 @@ const meta = {
   component,
   render: args => {
     return html`
-      <forge-theme-editor ?preview=${args.preview} export-format=${args.exportFormat} .theme=${args.theme}>
+      <forge-theme-editor export-format=${args.exportFormat} .theme=${args.theme}>
         <span slot="title">${args.titleText}</span>
       </forge-theme-editor>
     `;
   },
   argTypes: {
-    preview: {
-      control: 'boolean',
-      description: 'Whether the theme is applied to the live document',
-      table: { category: 'Properties' }
-    },
     exportFormat: {
       control: 'select',
       options: ['json', 'scss', 'css'],
@@ -40,7 +35,6 @@ const meta = {
     }
   },
   args: {
-    preview: false,
     exportFormat: 'json',
     theme: createForgeTheme({ name: 'My brand theme' }),
     titleText: 'Theme editor'
