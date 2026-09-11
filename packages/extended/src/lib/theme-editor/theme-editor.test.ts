@@ -4,6 +4,7 @@ import sinon from 'sinon';
 import { ThemeEditorComponent } from './theme-editor';
 import { FORGE_THEME_PREVIEW_STYLE_ID, createForgeTheme, exportForgeThemeJson } from './theme-model';
 import { FORGE_THEME_DARK_TOKENS, FORGE_THEME_LIGHT_TOKENS, FORGE_THEME_TOKEN_GROUPS } from './theme-tokens';
+import { activeForgeThemeVariant, type ForgeThemeVariant } from './theme-model';
 
 import './theme-editor';
 
@@ -66,7 +67,7 @@ describe('ThemeEditor', () => {
 
       await harness.setTokenText('brand', '#ff0000');
 
-      expect(harness.el.getTheme().tokens.brand).to.equal('#ff0000');
+      expect(variantOf(harness.el).tokens.brand).to.equal('#ff0000');
     });
 
     it('should set a token from the color swatch', async () => {
@@ -74,7 +75,7 @@ describe('ThemeEditor', () => {
 
       await harness.setTokenSwatch('brand', '#00ff00');
 
-      expect(harness.el.getTheme().tokens.brand).to.equal('#00ff00');
+      expect(variantOf(harness.el).tokens.brand).to.equal('#00ff00');
     });
 
     it('should dispatch a change event naming the edited token', async () => {
@@ -86,7 +87,7 @@ describe('ThemeEditor', () => {
 
       expect(spy.calledOnce).to.be.true;
       expect(spy.firstCall.args[0].detail.token).to.equal('brand');
-      expect(spy.firstCall.args[0].detail.theme.tokens.brand).to.equal('#ff0000');
+      expect(activeForgeThemeVariant(spy.firstCall.args[0].detail.theme).tokens.brand).to.equal('#ff0000');
     });
 
     it('should clear a token when the text field is emptied', async () => {
@@ -95,7 +96,7 @@ describe('ThemeEditor', () => {
       await harness.setTokenText('brand', '#ff0000');
       await harness.setTokenText('brand', '   ');
 
-      expect(harness.el.getTheme().tokens).to.not.have.property('brand');
+      expect(variantOf(harness.el).tokens).to.not.have.property('brand');
     });
 
     it('should flag a token whose value is not a color', async () => {
@@ -119,7 +120,7 @@ describe('ThemeEditor', () => {
       harness.revertButton('brand').click();
       await harness.el.updateComplete;
 
-      expect(harness.el.getTheme().tokens).to.not.have.property('brand');
+      expect(variantOf(harness.el).tokens).to.not.have.property('brand');
     });
 
     it('should ignore a revert for a token that was never edited', async () => {
@@ -140,7 +141,7 @@ describe('ThemeEditor', () => {
       harness.resetAllButton.click();
       await harness.el.updateComplete;
 
-      expect(harness.el.getTheme().tokens).to.deep.equal({});
+      expect(variantOf(harness.el).tokens).to.deep.equal({});
       expect(harness.resetAllButton.hasAttribute('disabled')).to.be.true;
     });
 
@@ -152,13 +153,16 @@ describe('ThemeEditor', () => {
       expect(harness.row('surface-bright-shadow').querySelector('.swatch-placeholder')).to.be.ok;
     });
 
-    it('should show dark defaults when the theme emits the dark set', async () => {
+    it('should show dark defaults when the dark variant is being authored', async () => {
       const harness = await createTokensFixture();
 
-      await harness.setMode('dark');
+      // Polarity, not the emit mode, decides which stock set shows through.
+      await harness.selectView(VIEW.palette);
+      await harness.setPolarity('dark');
+      await harness.selectView(VIEW.tokens);
 
-      expect(harness.el.getTheme().mode).to.equal('dark');
-      expect(harness.tokenInput('brand').value).to.not.equal(FORGE_THEME_LIGHT_TOKENS.brand);
+      expect(harness.el.getTheme().polarity).to.equal('dark');
+      expect(harness.tokenInput('brand').value).to.equal(FORGE_THEME_DARK_TOKENS.brand);
     });
 
     it('should collapse a group when it is toggled shut', async () => {
@@ -435,7 +439,7 @@ describe('ThemeEditor', () => {
 
       await harness.setSeedText('primary', '#ff0000');
 
-      expect(harness.el.getTheme().seeds!.primary).to.equal('#ff0000');
+      expect(variantOf(harness.el).seeds!.primary).to.equal('#ff0000');
     });
 
     it('should set a seed from the color swatch', async () => {
@@ -444,7 +448,7 @@ describe('ThemeEditor', () => {
 
       await harness.setSeedSwatch('primary', '#00ff00');
 
-      expect(harness.el.getTheme().seeds!.primary).to.equal('#00ff00');
+      expect(variantOf(harness.el).seeds!.primary).to.equal('#00ff00');
     });
 
     it('should flag a seed whose value is not a color', async () => {
@@ -465,9 +469,9 @@ describe('ThemeEditor', () => {
       await harness.el.updateComplete;
 
       const theme = harness.el.getTheme();
-      expect(Object.keys(theme.tokens)).to.have.lengthOf(101);
-      expect(theme.tokens.primary).to.equal('#ff0000');
-      expect(theme.mode).to.equal('light');
+      expect(Object.keys(activeForgeThemeVariant(theme).tokens)).to.have.lengthOf(101);
+      expect(activeForgeThemeVariant(theme).tokens.primary).to.equal('#ff0000');
+      expect(theme.mode).to.equal('replace');
     });
 
     it('should generate from the public method', async () => {
@@ -476,7 +480,7 @@ describe('ThemeEditor', () => {
       harness.el.generatePalette({ primary: '#0000ff' });
       await harness.el.updateComplete;
 
-      expect(harness.el.getTheme().tokens.primary).to.equal('#0000ff');
+      expect(variantOf(harness.el).tokens.primary).to.equal('#0000ff');
     });
 
     it('should change the target contrast', async () => {
@@ -522,67 +526,69 @@ describe('ThemeEditor', () => {
         const harness = await createFixture();
         await harness.selectView(VIEW.palette);
 
-        expect(harness.el.getTheme().generator.mode).to.equal('light');
+        expect(harness.el.getTheme().polarity).to.equal('light');
         expect((harness.polarityGroup as HTMLElement & { value: string }).value).to.equal('light');
       });
 
-      it('should derive a dark theme when the surface is set to dark', async () => {
+      it('should seed an untouched dark variant from the Forge dark palette', async () => {
         const harness = await createFixture();
         await harness.selectView(VIEW.palette);
 
         await harness.setPolarity('dark');
 
-        const theme = harness.el.getTheme();
-        expect(theme.generator.mode).to.equal('dark');
-        expect(theme.tokens.surface).to.equal(FORGE_THEME_DARK_TOKENS.surface);
-        expect(theme.tokens['text-high']).to.equal(FORGE_THEME_DARK_TOKENS['text-high']);
+        // Switching does not derive anything on its own — it hands you the dark
+        // starting point and waits. Forge's light accents on a near-black
+        // surface would fail contrast, so the seeds come from the dark stock.
+        expect(harness.el.getTheme().polarity).to.equal('dark');
+        expect(variantOf(harness.el).seeds!.surface).to.equal(FORGE_THEME_DARK_TOKENS.surface);
+        expect(variantOf(harness.el).seeds!.primary).to.equal(FORGE_THEME_DARK_TOKENS.primary);
       });
 
       it('should emit the whole set once a palette is generated', async () => {
         const harness = await createFixture();
         await harness.selectView(VIEW.palette);
-
         await harness.setPolarity('dark');
 
-        // A generated palette is a whole theme, not a patch on the page's own.
-        expect(harness.el.getTheme().mode).to.equal('dark');
-        expect(Object.keys(harness.el.getTheme().tokens)).to.have.lengthOf(101);
+        harness.generateButton.click();
+        await harness.el.updateComplete;
+
+        expect(harness.el.getTheme().mode).to.equal('replace');
+        expect(Object.keys(variantOf(harness.el).tokens)).to.have.lengthOf(101);
+        expect(variantOf(harness.el).tokens.surface).to.equal(FORGE_THEME_DARK_TOKENS.surface);
       });
 
-      it('should swap untouched seeds to the incoming polarity', async () => {
-        const harness = await createFixture();
-        await harness.selectView(VIEW.palette);
-
-        await harness.setPolarity('dark');
-
-        // Forge's light and dark accents differ; keeping the light primary on a
-        // near-black surface would fail contrast on sight.
-        expect(harness.el.getTheme().seeds!.primary).to.equal(FORGE_THEME_DARK_TOKENS.primary);
-        expect(harness.el.getTheme().seeds!.surface).to.equal(FORGE_THEME_DARK_TOKENS.surface);
-      });
-
-      it('should keep a seed the user chose across a polarity change', async () => {
+      // The headline requirement: the two polarities are separate designs.
+      it('should keep light and dark edits independent', async () => {
         const harness = await createFixture();
         await harness.selectView(VIEW.palette);
         await harness.setSeedText('primary', '#ff00ff');
 
         await harness.setPolarity('dark');
 
-        expect(harness.el.getTheme().seeds!.primary).to.equal('#ff00ff');
-        expect(harness.el.getTheme().seeds!.surface).to.equal(FORGE_THEME_DARK_TOKENS.surface);
+        // The dark variant has its own seeds and has not inherited the light edit.
+        expect(variantOf(harness.el).seeds!.primary).to.equal(FORGE_THEME_DARK_TOKENS.primary);
+
+        await harness.setSeedText('primary', '#00ffcc');
+        expect(variantOf(harness.el).seeds!.primary).to.equal('#00ffcc');
+
+        // And going back finds the light edit exactly as it was left.
+        await harness.setPolarity('light');
+        expect(variantOf(harness.el).seeds!.primary).to.equal('#ff00ff');
+
+        // Both are held at once, not recomputed on switch.
+        expect(harness.el.getTheme().variants.light.seeds!.primary).to.equal('#ff00ff');
+        expect(harness.el.getTheme().variants.dark.seeds!.primary).to.equal('#00ffcc');
       });
 
-      it('should go back to a light theme', async () => {
-        const harness = await createFixture();
+      it('should not disturb a token edited in the other polarity', async () => {
+        const harness = await createTokensFixture();
+        await harness.setTokenText('brand', '#ff0000');
+
         await harness.selectView(VIEW.palette);
         await harness.setPolarity('dark');
 
-        await harness.setPolarity('light');
-
-        const theme = harness.el.getTheme();
-        expect(theme.generator.mode).to.equal('light');
-        expect(theme.tokens.surface).to.equal(FORGE_THEME_LIGHT_TOKENS.surface);
-        expect(theme.tokens['text-high']).to.equal(FORGE_THEME_LIGHT_TOKENS['text-high']);
+        expect(variantOf(harness.el).tokens).to.not.have.property('brand');
+        expect(harness.el.getTheme().variants.light.tokens.brand).to.equal('#ff0000');
       });
 
       it('should ignore a change to the polarity already set', async () => {
@@ -665,6 +671,50 @@ describe('ThemeEditor', () => {
   // Import and export
   //
 
+  describe('contrast view', () => {
+    it('should render a specimen of each pair', async () => {
+      const harness = await createFixture();
+      await harness.selectView(VIEW.contrast);
+
+      // A ratio is a number; the specimen is the thing the number is about, and
+      // it is what makes the view readable at a glance.
+      const sample = harness.root.querySelector<HTMLElement>('.contrast-sample')!;
+      expect(sample).to.not.be.null;
+      expect(sample.style.getPropertyValue('--_forge-theme-editor-sample-background')).to.not.equal('');
+      expect(sample.style.getPropertyValue('--_forge-theme-editor-sample-foreground')).to.not.equal('');
+    });
+
+    it('should name the background token and the ink drawn on it', async () => {
+      const harness = await createFixture();
+      await harness.selectView(VIEW.contrast);
+
+      const entry = harness.root.querySelector<HTMLElement>('.contrast-entry')!;
+      const background = entry.querySelector('[slot="label"]')!.textContent!.trim();
+      expect(entry.dataset.token).to.equal(`on-${background}`);
+    });
+  });
+
+  describe('group headers', () => {
+    it('should show the color a group is about', async () => {
+      const harness = await createTokensFixture();
+
+      const swatch = harness.root.querySelector<HTMLElement>('[data-group="primary"] .group-swatch')!;
+      expect(swatch.style.getPropertyValue('--_forge-theme-editor-group-swatch')).to.equal(
+        FORGE_THEME_LIGHT_TOKENS.primary
+      );
+    });
+
+    it("should fall back to a group's first token when the key is not one", async () => {
+      const harness = await createTokensFixture();
+
+      // `text` is a group name, not a token, so the swatch uses `text-high`.
+      const swatch = harness.root.querySelector<HTMLElement>('[data-group="text"] .group-swatch')!;
+      expect(swatch.style.getPropertyValue('--_forge-theme-editor-group-swatch')).to.equal(
+        FORGE_THEME_LIGHT_TOKENS['text-high']
+      );
+    });
+  });
+
   describe('import and export', () => {
     it('should export json by default', async () => {
       const harness = await createTokensFixture();
@@ -672,7 +722,12 @@ describe('ThemeEditor', () => {
       await harness.selectView(VIEW.transfer);
 
       expect(harness.exportOutput.value).to.equal(harness.el.exportTheme());
-      expect(JSON.parse(harness.exportOutput.value).tokens.brand).to.equal('#ff0000');
+      // Exported JSON carries both variants, so an app gets the light and the
+      // dark design in one file.
+      const exported = JSON.parse(harness.exportOutput.value);
+      expect(exported.variants.light.tokens.brand).to.equal('#ff0000');
+      expect(exported.variants.dark).to.deep.equal({ tokens: {}, seeds: null });
+      expect(exported.polarity).to.equal('light');
     });
 
     it('should export sass using the Forge provide mixin', async () => {
@@ -774,7 +829,7 @@ describe('ThemeEditor', () => {
       await harness.el.updateComplete;
 
       expect(harness.el.getTheme().name).to.equal('Imported');
-      expect(harness.el.getTheme().tokens.brand).to.equal('#ff0000');
+      expect(variantOf(harness.el).tokens.brand).to.equal('#ff0000');
     });
 
     it('should dispatch an import event', async () => {
@@ -797,7 +852,7 @@ describe('ThemeEditor', () => {
       await harness.el.updateComplete;
 
       expect(warnings[0]).to.include('Dropped 1 unknown token name');
-      expect(harness.el.getTheme().tokens).to.deep.equal({ brand: '#ff0000' });
+      expect(variantOf(harness.el).tokens).to.deep.equal({ brand: '#ff0000' });
       expect(harness.messages!.textContent).to.include('made-up-token');
     });
 
@@ -811,7 +866,7 @@ describe('ThemeEditor', () => {
 
       expect(messages[0]).to.include('Not valid JSON');
       expect(spy.called).to.be.false;
-      expect(harness.el.getTheme().tokens).to.deep.equal({});
+      expect(variantOf(harness.el).tokens).to.deep.equal({});
     });
 
     it('should report json that holds no theme', async () => {
@@ -848,8 +903,8 @@ describe('ThemeEditor', () => {
       harness.el.loadTheme({ mode: 'dark', tokens: { brand: '#ff0000' } });
       await harness.el.updateComplete;
 
-      expect(harness.el.getTheme().mode).to.equal('dark');
-      expect(harness.el.getTheme().tokens.brand).to.equal('#ff0000');
+      expect(harness.el.getTheme().mode).to.equal('replace');
+      expect(variantOf(harness.el).tokens.brand).to.equal('#ff0000');
     });
 
     it('should fill in the gaps of a partial theme', async () => {
@@ -865,6 +920,63 @@ describe('ThemeEditor', () => {
   //
   // Views
   //
+
+  //
+  // Preview immunity
+  //
+
+  describe('immunity to its own preview', () => {
+    it('should hold the page tokens on the host while previewing', async () => {
+      const harness = await createFixture();
+
+      harness.el.applyPreview();
+      await harness.el.updateComplete;
+
+      // The page-wide preview declares tokens on :root and body with
+      // !important. Re-declaring the page's own values inline on the host keeps
+      // the editor readable no matter how unreadable the authored theme is.
+      const held = harness.el.style.getPropertyValue('--forge-theme-surface');
+      expect(held).to.not.equal('');
+      expect(harness.el.style.getPropertyPriority('--forge-theme-surface')).to.equal('important');
+    });
+
+    it('should let go once the preview is removed', async () => {
+      const harness = await createFixture();
+      harness.el.applyPreview();
+      await harness.el.updateComplete;
+
+      harness.el.removePreview();
+      await harness.el.updateComplete;
+
+      expect(harness.el.style.getPropertyValue('--forge-theme-surface')).to.equal('');
+    });
+
+    it('should not hold anything when immunity is off', async () => {
+      const harness = await createFixture();
+      harness.el.immuneToPreview = false;
+
+      harness.el.applyPreview();
+      await harness.el.updateComplete;
+
+      expect(harness.el.style.getPropertyValue('--forge-theme-surface')).to.equal('');
+    });
+
+    it('should release immunity when it is turned off mid-preview', async () => {
+      const harness = await createFixture();
+      harness.el.applyPreview();
+      await harness.el.updateComplete;
+
+      harness.el.immuneToPreview = false;
+      await harness.el.updateComplete;
+
+      expect(harness.el.style.getPropertyValue('--forge-theme-surface')).to.equal('');
+    });
+
+    it('should be on by default', async () => {
+      const harness = await createFixture();
+      expect(harness.el.immuneToPreview).to.be.true;
+    });
+  });
 
   describe('views', () => {
     it('should open on the palette view', async () => {
@@ -1049,7 +1161,11 @@ class ThemeEditorHarness {
   }
 
   public async setTargetContrast(value: string): Promise<void> {
-    await this.#setNativeValue(this.root.querySelector('#target-contrast')!, value, 'change');
+    const select = this.root.querySelector<HTMLElement & { value: string }>('.target-contrast')!;
+    select.value = value;
+    select.dispatchEvent(new Event('change', { bubbles: true }));
+    await nextFrame();
+    await this.el.updateComplete;
   }
 
   public async setImportText(value: string): Promise<void> {
@@ -1075,7 +1191,7 @@ class ThemeEditorHarness {
 
   public async toggleGroup(key: string, open: boolean): Promise<void> {
     this.root
-      .querySelector(`[data-group="${key}"]`)!
+      .querySelector(`[data-group="${key}"] forge-expansion-panel`)!
       .dispatchEvent(new CustomEvent('forge-expansion-panel-toggle', { detail: open }));
     await this.el.updateComplete;
   }
@@ -1118,6 +1234,11 @@ class ThemeEditorHarness {
  * The palette leads because that is where a theme starts.
  */
 const VIEW = { palette: 0, tokens: 1, contrast: 2, transfer: 3 } as const;
+
+/** The variant currently being authored — light and dark are held separately. */
+function variantOf(el: ThemeEditorComponent): ForgeThemeVariant {
+  return activeForgeThemeVariant(el.getTheme());
+}
 
 async function createFixture(): Promise<ThemeEditorHarness> {
   const el = await fixture<ThemeEditorComponent>(html`

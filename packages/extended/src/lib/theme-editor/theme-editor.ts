@@ -2,6 +2,7 @@ import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } 
 import { customElement, property, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { repeat } from 'lit/directives/repeat.js';
+import { styleMap } from 'lit/directives/style-map.js';
 import {
   defineBadgeComponent,
   defineButtonComponent,
@@ -57,17 +58,21 @@ import {
   exportForgeTheme,
   normalizeForgeTheme,
   parseForgeThemeJson,
+  activeForgeThemeVariant,
+  forgeStockTokens,
   regenerateForgeTheme,
   setForgeThemePolarity,
+  withForgeThemeVariant,
   type ForgeTheme,
+  type ForgeThemeVariant,
   type ForgeThemeExportFormat,
+  type ForgeThemeInput,
   type ForgeThemeMode
 } from './theme-model';
 import {
-  FORGE_THEME_DARK_TOKENS,
-  FORGE_THEME_LIGHT_TOKENS,
   FORGE_THEME_TOKEN_GROUPS,
   FORGE_THEME_TOKEN_KINDS,
+  FORGE_THEME_TOKEN_NAMES,
   FORGE_THEME_TOKEN_PREFIX,
   type ForgeThemeTokenGroup,
   type ForgeThemeTokenMap
@@ -118,6 +123,16 @@ export interface ThemeEditorImportEventData {
 
 // Order is the authoring order: seed a palette, then fine-tune individual tokens,
 // then check contrast, then take it away with you.
+/**
+ * The contrast ratios WCAG 2 actually defines, rather than a free-form number:
+ * 3:1 for large text and UI components, 4.5:1 for body text at AA, 7:1 at AAA.
+ */
+const CONTRAST_TARGETS: readonly { value: number; label: string }[] = [
+  { value: 3, label: '3:1 — AA large text' },
+  { value: 4.5, label: '4.5:1 — AA body text' },
+  { value: 7, label: '7:1 — AAA' }
+];
+
 const VIEWS: readonly ThemeEditorView[] = ['palette', 'tokens', 'contrast', 'transfer'];
 const KNOBS_GROUP_KEY = 'knobs';
 const CONTRAST_PREVIEW_COUNT = 12;
@@ -190,6 +205,19 @@ export class ThemeEditorComponent extends LitElement {
   @property({ attribute: false })
   public previewSelectors: string[] = [...FORGE_THEME_PREVIEW_SELECTORS];
 
+  /**
+   * Keeps the editor's own chrome on the host application's theme while a live
+   * preview is applied to the page.
+   *
+   * A page-wide preview declares the authored tokens on `:root` and `body` with
+   * `!important`, and those inherit into this component like anything else — so
+   * authoring a low-contrast theme makes the tool you are authoring it with
+   * unreadable, and you cannot see well enough to fix it. On by default; turn it
+   * off to have the editor restyle along with the page.
+   */
+  @property({ type: Boolean, attribute: 'immune-to-preview' })
+  public immuneToPreview = true;
+
   /** The export format shown on the import/export view. */
   @property({ attribute: 'export-format' })
   public exportFormat: ForgeThemeExportFormat = 'json';
@@ -213,6 +241,8 @@ export class ThemeEditorComponent extends LitElement {
   private _showAllContrast = false;
 
   #styleElement: HTMLStyleElement | null = null;
+  /** The page's own token values, sampled before the preview was injected. */
+  #hostTokens: ForgeThemeTokenMap | null = null;
   #hasSyncedPreview = false;
 
   public override disconnectedCallback(): void {
@@ -225,6 +255,9 @@ export class ThemeEditorComponent extends LitElement {
     const previewChanged = changedProperties.has('preview');
     if (previewChanged || changedProperties.has('theme') || changedProperties.has('previewSelectors')) {
       this.#syncPreviewStyle();
+    }
+    if (changedProperties.has('immuneToPreview') && this.preview) {
+      this.#syncImmunity();
     }
     if (previewChanged && this.#hasSyncedPreview) {
       this.#emitPreview();
@@ -264,7 +297,7 @@ export class ThemeEditorComponent extends LitElement {
    * default, so a partial theme or a bare token map is accepted.
    * @param theme The theme to load.
    */
-  public loadTheme(theme: Partial<ForgeTheme> | null | undefined): void {
+  public loadTheme(theme: ForgeThemeInput | null | undefined): void {
     this.#setTheme(createForgeTheme(theme), null);
   }
 
@@ -326,13 +359,13 @@ export class ThemeEditorComponent extends LitElement {
    * @param value The CSS value.
    */
   public setToken(token: string, value: string): void {
-    const tokens = { ...this.theme.tokens };
+    const tokens = { ...this.#variant.tokens };
     if (value.trim()) {
       tokens[token] = value.trim();
     } else {
       delete tokens[token];
     }
-    this.#setTheme({ ...this.theme, tokens }, token);
+    this.#setTheme(withForgeThemeVariant(this.theme, { tokens }), token);
   }
 
   /**
@@ -340,17 +373,17 @@ export class ThemeEditorComponent extends LitElement {
    * @param token The bare token name.
    */
   public resetToken(token: string): void {
-    if (!(token in this.theme.tokens)) {
+    if (!(token in this.#variant.tokens)) {
       return;
     }
-    const tokens = { ...this.theme.tokens };
+    const tokens = { ...this.#variant.tokens };
     delete tokens[token];
-    this.#setTheme({ ...this.theme, tokens }, token);
+    this.#setTheme(withForgeThemeVariant(this.theme, { tokens }), token);
   }
 
-  /** Reverts every token to the Forge defaults for the theme's mode. */
+  /** Reverts every token in the active variant to the Forge defaults. */
   public resetAllTokens(): void {
-    this.#setTheme({ ...this.theme, tokens: {} }, null);
+    this.#setTheme(withForgeThemeVariant(this.theme, { tokens: {} }), null);
   }
 
   /**
@@ -358,7 +391,7 @@ export class ThemeEditorComponent extends LitElement {
    * worst first.
    */
   public getContrastReport(): ThemeContrastEntry[] {
-    return auditForgeThemeContrast({ ...this.#baseTokens, ...this.theme.tokens });
+    return auditForgeThemeContrast({ ...this.#baseTokens, ...this.#variant.tokens });
   }
 
   /** The CSS the live preview injects, whether or not the preview is applied. */
@@ -456,9 +489,8 @@ export class ThemeEditorComponent extends LitElement {
             @input=${this.#onFilterInput} />
         </forge-text-field>
         <forge-select class="mode" density="small" label="Emit" .value=${this.theme.mode} @change=${this.#onModeChange}>
-          <forge-option value="patch">Only edited tokens</forge-option>
-          <forge-option value="light">Full light set</forge-option>
-          <forge-option value="dark">Full dark set</forge-option>
+          <forge-option value="patch">Only my changes</forge-option>
+          <forge-option value="replace">Complete ${this.theme.polarity} theme</forge-option>
         </forge-select>
         <forge-button
           id="reset-all-button"
@@ -490,36 +522,54 @@ export class ThemeEditorComponent extends LitElement {
     const tokens = this.#matchingTokens(group);
     const open = this.#isGroupOpen(group.key);
     return html`
-      <forge-expansion-panel
-        class="group"
-        data-group=${group.key}
-        ?open=${open}
-        @forge-expansion-panel-toggle=${(evt: CustomEvent<boolean>) => this.#onGroupToggle(group.key, evt.detail)}>
-        <div class="group-header" slot="header">
-          <span class="group-label">${group.label}</span>
-          <!-- A count is neutral information; the default badge theme reads as a warning. -->
-          <forge-badge theme="info-secondary">${tokens.length}</forge-badge>
-        </div>
-        ${when(
-          open,
-          () => html`
-            <div class="rows">
-              ${repeat(
-                tokens,
-                token => token,
-                token => this.#tokenRow(token)
-              )}
-            </div>
-          `,
-          () => nothing
-        )}
-      </forge-expansion-panel>
+      <forge-card class="group" no-padding data-group=${group.key}>
+        <forge-expansion-panel
+          ?open=${open}
+          @forge-expansion-panel-toggle=${(evt: CustomEvent<boolean>) => this.#onGroupToggle(group.key, evt.detail)}>
+          <div class="group-header" slot="header">
+            <span
+              class="group-swatch"
+              aria-hidden="true"
+              style=${styleMap({
+                // The value is a runtime color, so it cannot live in the stylesheet.
+                // Set a custom property and let the SCSS own the actual styling.
+                // `confirmation-dialog` uses styleMap for computed values the same way.
+                '--_forge-theme-editor-group-swatch': this.#valueFor(this.#groupSwatchToken(group))
+              })}></span>
+            <span class="group-label">${group.label}</span>
+            <!-- A count is neutral information; the default badge theme reads as a warning. -->
+            <forge-badge theme="info-secondary">${tokens.length}</forge-badge>
+          </div>
+          ${when(
+            open,
+            () => html`
+              <div class="rows">
+                ${repeat(
+                  tokens,
+                  token => token,
+                  token => this.#tokenRow(token)
+                )}
+              </div>
+            `,
+            () => nothing
+          )}
+        </forge-expansion-panel>
+      </forge-card>
     `;
+  }
+
+  /**
+   * The token whose color stands for a whole group. Most group keys are
+   * themselves a token (`primary`, `surface`); the ones that are not, such as
+   * `text`, fall back to their first token.
+   */
+  #groupSwatchToken(group: ForgeThemeTokenGroup): string {
+    return group.key in FORGE_THEME_TOKEN_KINDS ? group.key : group.tokens[0];
   }
 
   #tokenRow(token: string): TemplateResult {
     const value = this.#valueFor(token);
-    const overridden = token in this.theme.tokens;
+    const overridden = token in this.#variant.tokens;
     const isColor = FORGE_THEME_TOKEN_KINDS[token] === 'color';
     return html`
       <div class="row" data-token=${token} title=${`${FORGE_THEME_TOKEN_PREFIX}${token}`}>
@@ -564,28 +614,28 @@ export class ThemeEditorComponent extends LitElement {
     return when(
       this.#matchesFilter('global knobs shape spacing typography'),
       () => html`
-        <forge-expansion-panel
-          class="group knobs"
-          data-group=${KNOBS_GROUP_KEY}
-          ?open=${this.#isGroupOpen(KNOBS_GROUP_KEY)}
-          @forge-expansion-panel-toggle=${(evt: CustomEvent<boolean>) =>
-            this.#onGroupToggle(KNOBS_GROUP_KEY, evt.detail)}>
-          <div class="group-header" slot="header">
-            <span class="group-label">Global knobs</span>
-          </div>
-          ${when(
-            this.#isGroupOpen(KNOBS_GROUP_KEY),
-            () => html`
-              <div class="knob-rows">
-                ${this.#knobField('shapeFactor', 'Shape factor', 'number', 'Rounds every corner in the app')}
-                ${this.#knobField('spacingScale', 'Spacing scale', 'number', 'Multiplies every spacing step')}
-                ${this.#knobField('fontFamily', 'Font family', 'text', '')}
-                ${this.#knobField('fontSize', 'Font size', 'text', '')}
-              </div>
-            `,
-            () => nothing
-          )}
-        </forge-expansion-panel>
+        <forge-card class="group knobs" no-padding data-group=${KNOBS_GROUP_KEY}>
+          <forge-expansion-panel
+            ?open=${this.#isGroupOpen(KNOBS_GROUP_KEY)}
+            @forge-expansion-panel-toggle=${(evt: CustomEvent<boolean>) =>
+              this.#onGroupToggle(KNOBS_GROUP_KEY, evt.detail)}>
+            <div class="group-header" slot="header">
+              <span class="group-label">Global knobs</span>
+            </div>
+            ${when(
+              this.#isGroupOpen(KNOBS_GROUP_KEY),
+              () => html`
+                <div class="knob-rows">
+                  ${this.#knobField('shapeFactor', 'Shape factor', 'number', 'Rounds every corner in the app')}
+                  ${this.#knobField('spacingScale', 'Spacing scale', 'number', 'Multiplies every spacing step')}
+                  ${this.#knobField('fontFamily', 'Font family', 'text', '')}
+                  ${this.#knobField('fontSize', 'Font size', 'text', '')}
+                </div>
+              `,
+              () => nothing
+            )}
+          </forge-expansion-panel>
+        </forge-card>
       `,
       () => nothing
     );
@@ -643,7 +693,7 @@ export class ThemeEditorComponent extends LitElement {
           <forge-button-toggle-group
             aria-labelledby="polarity-label"
             mandatory
-            .value=${this.theme.generator.mode}
+            .value=${this.theme.polarity}
             @forge-button-toggle-group-change=${this.#onPolarityChange}>
             <forge-button-toggle value="light">
               <forge-icon slot="start" name="wb_sunny"></forge-icon>
@@ -655,18 +705,18 @@ export class ThemeEditorComponent extends LitElement {
             </forge-button-toggle>
           </forge-button-toggle-group>
         </div>
-        <forge-text-field class="target-contrast" density="small">
-          <label slot="label" for="target-contrast">Target contrast</label>
-          <input
-            id="target-contrast"
-            type="number"
-            min="1"
-            max="21"
-            step="0.1"
-            .value=${String(this.theme.generator.targetContrast)}
-            @change=${this.#onTargetContrastChange} />
-          <span slot="support-text">Desired WCAG ratio for derived inks</span>
-        </forge-text-field>
+        <forge-select
+          class="target-contrast"
+          density="small"
+          label="Target contrast"
+          .value=${String(this.theme.generator.targetContrast)}
+          @change=${this.#onTargetContrastChange}>
+          ${repeat(
+            CONTRAST_TARGETS,
+            target => target.value,
+            target => html`<forge-option value=${String(target.value)}>${target.label}</forge-option>`
+          )}
+        </forge-select>
         <forge-switch
           id="pure-on-colors"
           .on=${this.theme.generator.pureOnColors}
@@ -715,8 +765,10 @@ export class ThemeEditorComponent extends LitElement {
     const shown = this._showAllContrast ? report : report.slice(0, CONTRAST_PREVIEW_COUNT);
     return html`
       <p class="lede">
-        Every <code>on-</code> token measured against the background it names, worst first. Body text needs
-        ${CONTRAST_AA_TEXT}:1 and large text ${CONTRAST_AA_LARGE}:1 to meet WCAG 2 AA.
+        Forge pairs every surface token with an <code>on-</code> token, and that is the color it draws text and icons in
+        on top of that surface. Each row below renders one of those pairs for real, so you can see what the combination
+        will look like. Body text needs ${CONTRAST_AA_TEXT}:1 and large text ${CONTRAST_AA_LARGE}:1 to meet WCAG 2 AA;
+        anything lower is text a customer will struggle to read.
       </p>
       <forge-inline-message class="contrast-summary" theme=${failures.length > 0 ? 'warning' : 'success'}>
         <forge-icon
@@ -734,9 +786,19 @@ export class ThemeEditorComponent extends LitElement {
           entry => entry.foreground,
           entry => html`
             <li class="contrast-entry" data-token=${entry.foreground}>
-              <forge-label-value>
-                <span slot="label">${entry.foreground}</span>
-                <span slot="value">on ${entry.background}</span>
+              <span
+                class="contrast-sample"
+                aria-hidden="true"
+                style=${styleMap({
+                  // Runtime colors, so they cannot live in the stylesheet.
+                  '--_forge-theme-editor-sample-background': this.#valueFor(entry.background),
+                  '--_forge-theme-editor-sample-foreground': this.#valueFor(entry.foreground)
+                })}
+                >Aa</span
+              >
+              <forge-label-value class="contrast-pair">
+                <span slot="label">${entry.background}</span>
+                <span slot="value">text drawn in <code>${entry.foreground}</code></span>
               </forge-label-value>
               <forge-badge theme=${this.#contrastTheme(entry.ratio)}>${entry.ratio.toFixed(2)}:1</forge-badge>
             </li>
@@ -863,11 +925,12 @@ export class ThemeEditorComponent extends LitElement {
 
   #onSeedChange(key: keyof ForgeThemeSeeds, value: string): void {
     const seeds = { ...this.#resolvedSeeds, [key]: value };
-    this.#setTheme({ ...this.theme, seeds }, null);
+    this.#setTheme(withForgeThemeVariant(this.theme, { seeds }), null);
   }
 
   #onTargetContrastChange(evt: Event): void {
-    const targetContrast = Number((evt.target as HTMLInputElement).value) || 7;
+    const raw = Number((evt.target as HTMLElement & { value: string }).value);
+    const targetContrast = CONTRAST_TARGETS.some(target => target.value === raw) ? raw : 7;
     this.#setTheme({ ...this.theme, generator: { ...this.theme.generator, targetContrast } }, null);
   }
 
@@ -876,13 +939,14 @@ export class ThemeEditorComponent extends LitElement {
   }
 
   #onPolarityChange(evt: CustomEvent<string>): void {
-    const mode = evt.detail === 'dark' ? 'dark' : 'light';
-    if (mode === this.theme.generator.mode) {
+    const polarity = evt.detail === 'dark' ? 'dark' : 'light';
+    if (polarity === this.theme.polarity) {
       return;
     }
-    // Flipping the surface re-derives everything, which is the point: the palette
-    // is what decides whether this is a light or a dark theme.
-    this.#setTheme(setForgeThemePolarity(this.theme, mode), null);
+    // Swaps which variant is being authored. Light and dark are separate
+    // designs, so nothing is re-derived and nothing is lost: whatever was
+    // authored for the other polarity is still there when you switch back.
+    this.#setTheme(setForgeThemePolarity(this.theme, polarity), null);
   }
 
   #onGenerate(): void {
@@ -954,22 +1018,27 @@ export class ThemeEditorComponent extends LitElement {
     );
   }
 
+  /** The variant currently being authored. */
+  get #variant(): ForgeThemeVariant {
+    return activeForgeThemeVariant(this.theme);
+  }
+
   get #baseTokens(): Readonly<ForgeThemeTokenMap> {
-    return this.theme.mode === 'dark' ? FORGE_THEME_DARK_TOKENS : FORGE_THEME_LIGHT_TOKENS;
+    return forgeStockTokens(this.theme.polarity);
   }
 
   get #overrideCount(): number {
-    return Object.keys(this.theme.tokens).length;
+    return Object.keys(this.#variant.tokens).length;
   }
 
   get #resolvedSeeds(): ForgeThemeSeeds {
-    if (this.theme.seeds) {
-      return this.theme.seeds;
+    if (this.#variant.seeds) {
+      return this.#variant.seeds;
     }
     const base = this.#baseTokens;
     const seeds: ForgeThemeSeeds = {};
     for (const key of FORGE_THEME_SEED_KEYS) {
-      seeds[key] = this.theme.tokens[key] ?? base[key];
+      seeds[key] = this.#variant.tokens[key] ?? base[key];
     }
     return seeds;
   }
@@ -999,7 +1068,7 @@ export class ThemeEditorComponent extends LitElement {
   }
 
   #valueFor(token: string): string {
-    return this.theme.tokens[token] ?? this.#baseTokens[token] ?? '';
+    return this.#variant.tokens[token] ?? this.#baseTokens[token] ?? '';
   }
 
   #hexFor(value: string): string {
@@ -1017,17 +1086,73 @@ export class ThemeEditorComponent extends LitElement {
       this.#removePreviewStyle();
       return;
     }
+    // Sample the page's own tokens before the override lands, or we would read
+    // our own values back and pin the editor to the theme being authored.
+    if (!this.#hostTokens) {
+      this.#hostTokens = this.#readHostTokens();
+    }
     if (!this.#styleElement) {
       this.#styleElement = document.createElement('style');
       this.#styleElement.id = FORGE_THEME_PREVIEW_STYLE_ID;
       document.head.appendChild(this.#styleElement);
     }
     this.#styleElement.textContent = this.getPreviewCss();
+    this.#syncImmunity();
   }
 
   #removePreviewStyle(): void {
     this.#styleElement?.remove();
     this.#styleElement = null;
+    this.#clearImmunity();
+    this.#hostTokens = null;
+  }
+
+  /**
+   * Reads the page's current value for every Forge theme token.
+   *
+   * A page that has not loaded Forge's theme stylesheet defines none of them and
+   * still renders correctly, because Forge compiles a hardcoded fallback into
+   * every reference (`var(--forge-theme-primary, #3f51b5)`) — and those
+   * fallbacks are the light values. So anything the page leaves undefined is
+   * filled from the stock light set: that is genuinely what the page is drawing
+   * with, and without it immunity would capture nothing and do nothing.
+   */
+  #readHostTokens(): ForgeThemeTokenMap {
+    const computed = getComputedStyle(document.documentElement);
+    const tokens: ForgeThemeTokenMap = {};
+    for (const token of FORGE_THEME_TOKEN_NAMES) {
+      const declared = computed.getPropertyValue(`${FORGE_THEME_TOKEN_PREFIX}${token}`).trim();
+      const value = declared || forgeStockTokens('light')[token];
+      if (value) {
+        tokens[token] = value;
+      }
+    }
+    return tokens;
+  }
+
+  /**
+   * Re-declares the page's own tokens on this element. An inline `!important`
+   * declaration outranks the preview's `!important` rule on `:root`/`body` for
+   * this element and everything inside it, so the editor keeps its own styling.
+   */
+  #syncImmunity(): void {
+    if (!this.immuneToPreview) {
+      this.#clearImmunity();
+      return;
+    }
+    const tokens = this.#hostTokens;
+    if (!tokens) {
+      return;
+    }
+    for (const [token, value] of Object.entries(tokens)) {
+      this.style.setProperty(`${FORGE_THEME_TOKEN_PREFIX}${token}`, value, 'important');
+    }
+  }
+
+  #clearImmunity(): void {
+    for (const token of FORGE_THEME_TOKEN_NAMES) {
+      this.style.removeProperty(`${FORGE_THEME_TOKEN_PREFIX}${token}`);
+    }
   }
 
   #emitChange(token: string | null): void {

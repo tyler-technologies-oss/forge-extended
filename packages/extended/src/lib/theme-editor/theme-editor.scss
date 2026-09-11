@@ -62,7 +62,9 @@
 .header {
   @include forge-toolbar.provide-theme(
     (
-      background: none
+      background: none,
+      padding-inline: #{forge-spacing.variable(medium)},
+      padding-block: #{forge-spacing.variable(xsmall)}
     )
   );
 }
@@ -147,19 +149,27 @@
 }
 
 .groups {
-  @include mixins.stack(#{forge-spacing.variable(xxsmall)});
+  @include mixins.stack(#{forge-spacing.variable(xsmall)});
 }
 
 .group {
-  border: 1px solid #{forge-theme.variable(outline-low)};
-  border-radius: #{forge-shape.variable(medium)};
-  background-color: #{forge-theme.variable(surface-container-minimum)};
+  display: block;
 }
 
 .group-header {
   display: flex;
   align-items: center;
   gap: #{forge-spacing.variable(xsmall)};
+}
+
+// Shows at a glance what a group is actually about: [swatch] Primary.
+.group-swatch {
+  inline-size: var(--_forge-theme-editor-swatch-size);
+  block-size: var(--_forge-theme-editor-swatch-size);
+  flex: none;
+  border: 1px solid #{forge-theme.variable(outline-low)};
+  border-radius: #{forge-shape.variable(small)};
+  background-color: var(--_forge-theme-editor-group-swatch, #{forge-theme.variable(surface-container-low)});
 }
 
 .group-label {
@@ -178,9 +188,9 @@
 .row {
   display: grid;
   grid-template-columns: var(--_forge-theme-editor-swatch-size) minmax(0, 1fr) auto;
-  // The label sits above the input, so align to the bottom edge or the swatch
-  // and revert button float away from the field they belong to.
-  align-items: end;
+  // The field's label sits inside its own box, so centring the swatch and the
+  // revert control against the row centres them on the input.
+  align-items: center;
   gap: #{forge-spacing.variable(xxsmall)};
   min-inline-size: 0;
 }
@@ -240,13 +250,33 @@
 
 .contrast-entry {
   display: flex;
-  max-inline-size: 60ch;
+  max-inline-size: 72ch;
   align-items: center;
-  justify-content: space-between;
   gap: #{forge-spacing.variable(small)};
   padding: #{forge-spacing.variable(xsmall)};
   border-radius: #{forge-shape.variable(small)};
   background-color: #{forge-theme.variable(surface-container-minimum)};
+}
+
+.contrast-pair {
+  flex: 1 1 auto;
+  min-inline-size: 0;
+}
+
+// An actual specimen of the pair. A ratio is a number; this is the thing the
+// number is about, and it is what makes the view legible at a glance.
+.contrast-sample {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  inline-size: 48px;
+  block-size: 32px;
+  border: 1px solid #{forge-theme.variable(outline-low)};
+  border-radius: #{forge-shape.variable(small)};
+  background-color: var(--_forge-theme-editor-sample-background, #{forge-theme.variable(surface)});
+  color: var(--_forge-theme-editor-sample-foreground, #{forge-theme.variable(text-high)});
+  font-weight: 600;
 }
 
 //

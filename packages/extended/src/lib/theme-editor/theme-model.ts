@@ -27,7 +27,6 @@
  */
 
 import {
-  FORGE_THEME_SEED_KEYS,
   forgeDarkSeeds,
   forgeLightSeeds,
   generateForgeTheme,
@@ -46,12 +45,34 @@ import {
 /**
  * How a theme emits its tokens.
  *
- * - `patch` emits only the tokens explicitly set, leaving the page's own
- *   light/dark theme in place and nudging individual tokens.
- * - `light` emits the full Forge light set, then the overrides on top.
- * - `dark` emits the full Forge dark set, then the overrides on top.
+ * - `patch` emits only the tokens explicitly set, leaving the host application's
+ *   own light/dark theme in place and nudging individual tokens.
+ * - `replace` emits the stock set for the active polarity, then the overrides on
+ *   top, so the page is forced onto this theme entirely.
+ *
+ * Which stock set `replace` starts from is decided by the theme's `polarity`,
+ * not by this. The two were conflated before, which meant the emit mode silently
+ * decided whether a generated palette came out light or dark.
  */
-export type ForgeThemeMode = 'patch' | ThemeGeneratorMode;
+export type ForgeThemeMode = 'patch' | 'replace';
+
+/** Which surface a variant is authored against. */
+export type ForgeThemePolarity = ThemeGeneratorMode;
+
+/**
+ * One polarity's independently authored state.
+ *
+ * Light and dark are separate variants because they are separate designs: an
+ * accent that reads well on white is usually wrong on near-black. Editing
+ * `primary` in light must not touch dark, so each keeps its own overrides and
+ * its own seeds.
+ */
+export interface ForgeThemeVariant {
+  /** Token overrides, keyed by bare token name (no `--forge-theme-` prefix). */
+  tokens: ForgeThemeTokenMap;
+  /** The seed colors this variant's palette was last generated from. */
+  seeds: ForgeThemeSeeds | null;
+}
 
 /** Global non-color knobs a theme can set alongside its color tokens. */
 export interface ForgeThemeKnobs {
@@ -69,24 +90,45 @@ export interface ForgeThemeKnobs {
   fontSize: string;
 }
 
-/** A complete, editable Forge theme. */
+/** A complete, editable Forge theme: a light variant and a dark one. */
 export interface ForgeTheme {
   /** A human readable name, carried through export and import. */
   name: string;
   /** How the theme emits its tokens. */
   mode: ForgeThemeMode;
-  /** Token overrides, keyed by bare token name (no `--forge-theme-` prefix). */
-  tokens: ForgeThemeTokenMap;
-  /** Global non-color knobs. */
-  knobs: ForgeThemeKnobs;
-  /** The seed colors the palette was last generated from, when applicable. */
-  seeds: ForgeThemeSeeds | null;
+  /** Which variant is currently being authored and previewed. */
+  polarity: ForgeThemePolarity;
+  /** The two independently authored variants. */
+  variants: Record<ForgeThemePolarity, ForgeThemeVariant>;
   /**
-   * The options the palette is generated with. `mode` here is the *polarity* —
-   * whether the ramps are derived for a light or a dark surface — and is distinct
-   * from the theme's own `mode`, which only decides what gets emitted.
+   * Global non-color knobs. Shared across polarities: corner roundness, density
+   * and type are properties of the design, not of the surface.
    */
-  generator: Required<Pick<ThemeGeneratorOptions, 'mode' | 'targetContrast' | 'pureOnColors'>>;
+  knobs: ForgeThemeKnobs;
+  /** The derivation options, shared across polarities. */
+  generator: Required<Pick<ThemeGeneratorOptions, 'targetContrast' | 'pureOnColors'>>;
+}
+
+/**
+ * What `createForgeTheme` and `loadTheme` accept.
+ *
+ * Deliberately more tolerant than `ForgeTheme`: partial, and it still takes the
+ * flat pre-variant shape (`tokens`/`seeds` at the top level, `mode: 'light'`),
+ * which is both the import-migration path and a convenient shorthand for
+ * "a theme with these tokens". Output is always a strict `ForgeTheme`.
+ */
+export interface ForgeThemeInput {
+  name?: string;
+  /** `'light'`/`'dark'` are accepted for the pre-variant shape and mean `replace`. */
+  mode?: ForgeThemeMode | ForgeThemePolarity;
+  polarity?: ForgeThemePolarity;
+  variants?: Partial<Record<ForgeThemePolarity, Partial<ForgeThemeVariant>>>;
+  knobs?: Partial<ForgeThemeKnobs>;
+  generator?: Partial<ThemeGeneratorOptions>;
+  /** Pre-variant shape, or shorthand for the active polarity's overrides. */
+  tokens?: ForgeThemeTokenMap;
+  /** Pre-variant shape, or shorthand for the active polarity's seeds. */
+  seeds?: ForgeThemeSeeds | null;
 }
 
 /** The outcome of importing theme JSON. */
@@ -128,7 +170,6 @@ const SHAPE_FACTOR_PROPERTY = '--forge-shape-factor';
 const SPACING_PROPERTY_PREFIX = '--forge-spacing-';
 const FONT_FAMILY_PROPERTY = '--forge-typography-font-family';
 const FONT_SIZE_PROPERTY = '--forge-typography-font-size';
-const MODES: readonly ForgeThemeMode[] = ['patch', 'light', 'dark'];
 
 /** Knobs with nothing set. */
 export function emptyForgeThemeKnobs(): ForgeThemeKnobs {
@@ -136,14 +177,38 @@ export function emptyForgeThemeKnobs(): ForgeThemeKnobs {
 }
 
 /** A theme with nothing set: the Forge defaults, untouched. */
+/** An untouched variant: no overrides, no seeds chosen yet. */
+export function emptyForgeThemeVariant(): ForgeThemeVariant {
+  return { tokens: {}, seeds: null };
+}
+
 export function emptyForgeTheme(): ForgeTheme {
   return {
     name: 'Untitled theme',
     mode: 'patch',
-    tokens: {},
+    polarity: 'light',
+    variants: { light: emptyForgeThemeVariant(), dark: emptyForgeThemeVariant() },
     knobs: emptyForgeThemeKnobs(),
-    seeds: null,
-    generator: { mode: 'light', targetContrast: 7, pureOnColors: true }
+    generator: { targetContrast: 7, pureOnColors: true }
+  };
+}
+
+/** The variant currently being authored. */
+export function activeForgeThemeVariant(theme: ForgeTheme): ForgeThemeVariant {
+  return theme.variants[theme.polarity];
+}
+
+/**
+ * Returns a copy of the theme with the *active* variant patched. Every edit goes
+ * through here, which is what keeps light and dark from leaking into each other.
+ */
+export function withForgeThemeVariant(theme: ForgeTheme, patch: Partial<ForgeThemeVariant>): ForgeTheme {
+  return {
+    ...theme,
+    variants: {
+      ...theme.variants,
+      [theme.polarity]: { ...activeForgeThemeVariant(theme), ...patch }
+    }
   };
 }
 
@@ -151,8 +216,11 @@ export function emptyForgeTheme(): ForgeTheme {
  * Creates a theme, filling in every field that was not supplied.
  * @param overrides Partial theme values to start from.
  */
-export function createForgeTheme(overrides?: Partial<ForgeTheme> | null): ForgeTheme {
-  return normalizeForgeTheme({ ...emptyForgeTheme(), ...(overrides ?? {}) }) ?? emptyForgeTheme();
+export function createForgeTheme(overrides?: ForgeThemeInput | null): ForgeTheme {
+  // Normalizing does all the defaulting, so there is no need to spread an empty
+  // theme in first — and doing so would hand `normalizeVariants` a populated
+  // `variants`, defeating the flat-shape fallback.
+  return normalizeForgeTheme(overrides ?? {}) ?? emptyForgeTheme();
 }
 
 /**
@@ -172,25 +240,65 @@ export function normalizeForgeTheme(theme: unknown): ForgeTheme | null {
   const generator = (source.generator ?? {}) as Partial<ThemeGeneratorOptions>;
   const name = typeof source.name === 'string' && source.name.trim() ? source.name.trim() : 'Untitled theme';
 
+  // `mode` used to be 'patch' | 'light' | 'dark', conflating what to emit with
+  // which surface to derive for. Split them: a legacy 'light'/'dark' meant
+  // "replace, with that polarity".
+  const legacyMode = source.mode as unknown;
+  const legacyPolarity = legacyMode === 'dark' ? 'dark' : legacyMode === 'light' ? 'light' : null;
+  const mode: ForgeThemeMode = legacyMode === 'replace' || legacyPolarity ? 'replace' : 'patch';
+  // Most explicit wins: an actual `polarity`, then the generator mode it briefly
+  // lived on, then the legacy emit mode it lived on before that.
+  const generatorMode = (generator as { mode?: unknown }).mode;
+  const generatorPolarity: ForgeThemePolarity | null =
+    generatorMode === 'dark' || generatorMode === 'light' ? generatorMode : null;
+  const declaredPolarity: ForgeThemePolarity | null =
+    source.polarity === 'dark' || source.polarity === 'light' ? source.polarity : null;
+  const polarity: ForgeThemePolarity = declaredPolarity ?? generatorPolarity ?? legacyPolarity ?? 'light';
+
   return {
     name,
-    mode: MODES.includes(source.mode as ForgeThemeMode) ? (source.mode as ForgeThemeMode) : 'patch',
-    tokens: normalizeTokenMap(source.tokens),
+    mode,
+    polarity,
+    variants: normalizeVariants(source, polarity),
     knobs: {
       shapeFactor: toFiniteNumber(knobs.shapeFactor),
       spacingScale: toFiniteNumber(knobs.spacingScale),
       fontFamily: typeof knobs.fontFamily === 'string' ? knobs.fontFamily : '',
       fontSize: typeof knobs.fontSize === 'string' ? knobs.fontSize : ''
     },
-    seeds: normalizeSeeds(source.seeds),
     generator: {
-      // Themes saved before the palette owned the polarity have no generator
-      // mode, so fall back to the emit mode, which is where it used to live.
-      mode: generator.mode === 'dark' || (!generator.mode && source.mode === 'dark') ? 'dark' : 'light',
       targetContrast: Number(generator.targetContrast) || 7,
       pureOnColors: generator.pureOnColors !== false
     }
   };
+}
+
+/**
+ * Reads both variants, accepting the flat pre-variant shape as well: a theme
+ * exported before light and dark were separate has one token map, which belongs
+ * to whichever polarity it was authored against.
+ */
+function normalizeVariants(
+  source: Record<string, unknown>,
+  polarity: ForgeThemePolarity
+): Record<ForgeThemePolarity, ForgeThemeVariant> {
+  const variants = (source.variants ?? {}) as Record<string, unknown>;
+  const read = (key: ForgeThemePolarity): ForgeThemeVariant => {
+    const variant = (variants[key] ?? {}) as Record<string, unknown>;
+    return {
+      tokens: normalizeTokenMap(variant.tokens),
+      seeds: normalizeSeeds(variant.seeds)
+    };
+  };
+
+  const result = { light: read('light'), dark: read('dark') };
+  if (!variants.light && !variants.dark) {
+    result[polarity] = {
+      tokens: normalizeTokenMap(source.tokens),
+      seeds: normalizeSeeds(source.seeds)
+    };
+  }
+  return result;
 }
 
 function toFiniteNumber(value: unknown): number | null {
@@ -233,15 +341,26 @@ function normalizeSeeds(seeds: unknown): ForgeThemeSeeds | null {
  * @param theme The theme to resolve.
  */
 export function resolveForgeThemeTokens(theme: ForgeTheme): ForgeThemeTokenMap {
-  const base =
-    theme.mode === 'light' ? FORGE_THEME_LIGHT_TOKENS : theme.mode === 'dark' ? FORGE_THEME_DARK_TOKENS : null;
+  // `replace` starts from the stock set for the polarity being authored; `patch`
+  // starts from nothing so the host application's own theme shows through.
+  const base = theme.mode === 'replace' ? forgeStockTokens(theme.polarity) : null;
   const resolved: ForgeThemeTokenMap = base ? { ...base } : {};
-  for (const [token, value] of Object.entries(theme.tokens)) {
+  for (const [token, value] of Object.entries(activeForgeThemeVariant(theme).tokens)) {
     if (value) {
       resolved[token] = value;
     }
   }
   return resolved;
+}
+
+/** The stock Forge token set for a polarity. */
+export function forgeStockTokens(polarity: ForgeThemePolarity): ForgeThemeTokenMap {
+  return polarity === 'dark' ? FORGE_THEME_DARK_TOKENS : FORGE_THEME_LIGHT_TOKENS;
+}
+
+/** The stock seed colors for a polarity. */
+export function forgeStockSeeds(polarity: ForgeThemePolarity): Required<ForgeThemeSeeds> {
+  return polarity === 'dark' ? forgeDarkSeeds() : forgeLightSeeds();
 }
 
 /**
@@ -403,17 +522,27 @@ export function parseForgeThemeJson(text: string): ForgeThemeImportResult {
     return { theme: null, warnings, error: 'No theme found in that JSON.' };
   }
 
-  const unknown = Object.keys(theme.tokens).filter(token => !(token in FORGE_THEME_LIGHT_TOKENS));
-  for (const token of unknown) {
-    delete theme.tokens[token];
+  // Both variants are validated: a file can carry a dark palette the editor is
+  // not currently showing, and importing garbage into it would surface later as
+  // a mysterious dead property.
+  const unknown = new Set<string>();
+  for (const variant of Object.values(theme.variants)) {
+    for (const token of Object.keys(variant.tokens)) {
+      if (!(token in FORGE_THEME_LIGHT_TOKENS)) {
+        unknown.add(token);
+        delete variant.tokens[token];
+      }
+    }
   }
-  if (unknown.length) {
-    const shown = unknown.slice(0, 3).join(', ');
+  if (unknown.size) {
+    const names = [...unknown];
+    const shown = names.slice(0, 3).join(', ');
     warnings.push(
-      `Dropped ${unknown.length} unknown token name${unknown.length > 1 ? 's' : ''} (${shown}${unknown.length > 3 ? ', …' : ''}).`
+      `Dropped ${names.length} unknown token name${names.length > 1 ? 's' : ''} (${shown}${names.length > 3 ? ', …' : ''}).`
     );
   }
-  if (!Object.keys(theme.tokens).length && theme.mode === 'patch') {
+  const authored = Object.values(theme.variants).some(variant => Object.keys(variant.tokens).length);
+  if (!authored && theme.mode === 'patch') {
     warnings.push('That theme set no tokens.');
   }
   return { theme, warnings, error: null };
@@ -425,42 +554,39 @@ export function parseForgeThemeJson(text: string): ForgeThemeImportResult {
  * @param seeds The seed colors to derive from. Defaults to the theme's own seeds.
  */
 export function regenerateForgeTheme(theme: ForgeTheme, seeds?: ForgeThemeSeeds | null): ForgeTheme {
-  const resolvedSeeds = seeds ?? theme.seeds;
-  // The palette's polarity is the driver. Generating produces all 101 tokens, so
-  // the emit mode follows it: a generated palette is a whole theme, not a patch.
-  const mode = theme.generator.mode === 'dark' ? 'dark' : 'light';
-  return {
-    ...theme,
-    mode,
-    seeds: resolvedSeeds ? { ...resolvedSeeds } : null,
-    tokens: generateForgeTheme(resolvedSeeds, { ...theme.generator, mode })
-  };
+  const active = activeForgeThemeVariant(theme);
+  const resolvedSeeds = seeds ?? active.seeds ?? forgeStockSeeds(theme.polarity);
+  const generated = generateForgeTheme(resolvedSeeds, { ...theme.generator, mode: theme.polarity });
+
+  // Only the active variant is regenerated. Generating produces all 101 tokens,
+  // so the emit mode becomes `replace`: a generated palette is a whole theme.
+  return withForgeThemeVariant(
+    { ...theme, mode: 'replace' },
+    {
+      seeds: { ...resolvedSeeds },
+      tokens: generated
+    }
+  );
 }
 
 /**
- * Switches the palette between a light and a dark surface and regenerates.
+ * Switches which variant is being authored.
  *
- * The polarity belongs to the palette rather than to the emit mode: it decides
- * how the surface, container, text and outline ramps are derived, and a palette
- * derived for one polarity is not meaningful under the other.
+ * Light and dark are independent designs, so this swaps the whole editing
+ * surface rather than re-deriving anything: whatever was authored for the
+ * outgoing polarity is left exactly as it was, and returning to it restores it.
  *
- * Seeds still sitting on the outgoing polarity's stock values are swapped for the
- * incoming polarity's, because Forge's own light and dark accents differ — the
- * light primary on a near-black surface would fail contrast on sight. Seeds the
- * user has actually chosen are left alone.
+ * A variant that has never been touched is seeded from that polarity's stock
+ * colors, so switching to dark for the first time starts from Forge's dark
+ * palette rather than from light accents on a near-black surface.
  */
-export function setForgeThemePolarity(theme: ForgeTheme, mode: ThemeGeneratorMode): ForgeTheme {
-  const stockOutgoing = theme.generator.mode === 'dark' ? forgeDarkSeeds() : forgeLightSeeds();
-  const stockIncoming = mode === 'dark' ? forgeDarkSeeds() : forgeLightSeeds();
-  const current = theme.seeds ?? stockOutgoing;
-
-  const seeds = { ...current } as ForgeThemeSeeds;
-  for (const key of FORGE_THEME_SEED_KEYS) {
-    const untouched = !current[key] || current[key]?.toLowerCase() === stockOutgoing[key].toLowerCase();
-    if (untouched) {
-      seeds[key] = stockIncoming[key];
-    }
+export function setForgeThemePolarity(theme: ForgeTheme, polarity: ForgeThemePolarity): ForgeTheme {
+  if (polarity === theme.polarity) {
+    return theme;
   }
+  const switched: ForgeTheme = { ...theme, polarity };
+  const incoming = switched.variants[polarity];
+  const untouched = !incoming.seeds && !Object.keys(incoming.tokens).length;
 
-  return regenerateForgeTheme({ ...theme, generator: { ...theme.generator, mode } }, seeds);
+  return untouched ? withForgeThemeVariant(switched, { seeds: forgeStockSeeds(polarity) }) : switched;
 }

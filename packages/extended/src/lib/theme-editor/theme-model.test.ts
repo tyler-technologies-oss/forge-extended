@@ -12,6 +12,7 @@ import {
   exportForgeThemeScss,
   normalizeForgeTheme,
   parseForgeThemeJson,
+  activeForgeThemeVariant,
   regenerateForgeTheme,
   resolveForgeThemeKnobs,
   resolveForgeThemeTokens,
@@ -26,17 +27,18 @@ describe('ThemeEditor theme model', () => {
       const theme = createForgeTheme();
       expect(theme.name).to.equal('Untitled theme');
       expect(theme.mode).to.equal('patch');
-      expect(theme.tokens).to.deep.equal({});
+      expect(theme.variants.light).to.deep.equal({ tokens: {}, seeds: null });
+      expect(theme.variants.dark).to.deep.equal({ tokens: {}, seeds: null });
       expect(theme.knobs).to.deep.equal(emptyForgeThemeKnobs());
-      expect(theme.seeds).to.be.null;
-      expect(theme.generator).to.deep.equal({ mode: 'light', targetContrast: 7, pureOnColors: true });
+      expect(theme.polarity).to.equal('light');
+      expect(theme.generator).to.deep.equal({ targetContrast: 7, pureOnColors: true });
     });
 
     it('should keep the overrides it is given', () => {
       const theme = createForgeTheme({ name: 'Brandy', mode: 'dark', tokens: { primary: '#ff0000' } });
       expect(theme.name).to.equal('Brandy');
-      expect(theme.mode).to.equal('dark');
-      expect(theme.tokens).to.deep.equal({ primary: '#ff0000' });
+      expect(theme.mode).to.equal('replace');
+      expect(activeForgeThemeVariant(theme).tokens).to.deep.equal({ primary: '#ff0000' });
     });
 
     it('should accept a null override', () => {
@@ -59,19 +61,19 @@ describe('ThemeEditor theme model', () => {
 
     it('should fall back on an unknown mode', () => {
       expect(normalizeForgeTheme({ mode: 'neon' })!.mode).to.equal('patch');
-      expect(normalizeForgeTheme({ mode: 'light' })!.mode).to.equal('light');
+      expect(normalizeForgeTheme({ mode: 'light' })!.mode).to.equal('replace');
     });
 
     it('should drop token values that are not non-empty strings', () => {
       const theme = normalizeForgeTheme({
         tokens: { primary: '  #ff0000  ', secondary: '', tertiary: 12, brand: null }
       })!;
-      expect(theme.tokens).to.deep.equal({ primary: '#ff0000' });
+      expect(activeForgeThemeVariant(theme).tokens).to.deep.equal({ primary: '#ff0000' });
     });
 
     it('should tolerate a tokens value that is not an object', () => {
-      expect(normalizeForgeTheme({ tokens: 'nope' })!.tokens).to.deep.equal({});
-      expect(normalizeForgeTheme({ tokens: null })!.tokens).to.deep.equal({});
+      expect(activeForgeThemeVariant(normalizeForgeTheme({ tokens: 'nope' })!).tokens).to.deep.equal({});
+      expect(activeForgeThemeVariant(normalizeForgeTheme({ tokens: null })!).tokens).to.deep.equal({});
     });
 
     it('should coerce numeric knobs and blank out the rest', () => {
@@ -89,17 +91,18 @@ describe('ThemeEditor theme model', () => {
     });
 
     it('should keep only string seeds and drop an empty seed map', () => {
-      expect(normalizeForgeTheme({ seeds: { primary: ' #f00 ', secondary: 9 } })!.seeds).to.deep.equal({
+      expect(
+        activeForgeThemeVariant(normalizeForgeTheme({ seeds: { primary: ' #f00 ', secondary: 9 } })!).seeds
+      ).to.deep.equal({
         primary: '#f00'
       });
-      expect(normalizeForgeTheme({ seeds: {} })!.seeds).to.be.null;
-      expect(normalizeForgeTheme({ seeds: [] })!.seeds).to.be.null;
-      expect(normalizeForgeTheme({ seeds: 'red' })!.seeds).to.be.null;
+      expect(activeForgeThemeVariant(normalizeForgeTheme({ seeds: {} })!).seeds).to.be.null;
+      expect(activeForgeThemeVariant(normalizeForgeTheme({ seeds: [] })!).seeds).to.be.null;
+      expect(activeForgeThemeVariant(normalizeForgeTheme({ seeds: 'red' })!).seeds).to.be.null;
     });
 
     it('should default the generator options', () => {
       expect(normalizeForgeTheme({ generator: { targetContrast: 'nope' } })!.generator).to.deep.equal({
-        mode: 'light',
         targetContrast: 7,
         pureOnColors: true
       });
@@ -278,7 +281,7 @@ describe('ThemeEditor theme model', () => {
     it('should accept a theme object', () => {
       const result = parseForgeThemeJson('{"name":"Brandy","tokens":{"primary":"#ff0000"}}');
       expect(result.theme!.name).to.equal('Brandy');
-      expect(result.theme!.tokens.primary).to.equal('#ff0000');
+      expect(activeForgeThemeVariant(result.theme!).tokens.primary).to.equal('#ff0000');
       expect(result.warnings).to.be.empty;
     });
 
@@ -300,14 +303,14 @@ describe('ThemeEditor theme model', () => {
 
     it('should accept a bare token map', () => {
       const result = parseForgeThemeJson('{"primary":"#ff0000","surface":"#ffffff"}');
-      expect(result.theme!.tokens).to.deep.equal({ primary: '#ff0000', surface: '#ffffff' });
+      expect(activeForgeThemeVariant(result.theme!).tokens).to.deep.equal({ primary: '#ff0000', surface: '#ffffff' });
     });
 
     it('should drop unknown token names rather than emitting dead properties', () => {
       const result = parseForgeThemeJson(
         '{"tokens":{"primary":"#ff0000","made-up":"#000","also-made-up":"#000","third":"#000","fourth":"#000"}}'
       );
-      expect(result.theme!.tokens).to.deep.equal({ primary: '#ff0000' });
+      expect(activeForgeThemeVariant(result.theme!).tokens).to.deep.equal({ primary: '#ff0000' });
       expect(result.warnings[0]).to.include('Dropped 4 unknown token names');
       expect(result.warnings[0]).to.include('…');
     });
@@ -333,13 +336,13 @@ describe('ThemeEditor theme model', () => {
     it('should derive the full token set from the theme seeds', () => {
       const theme = createForgeTheme({ seeds: { primary: '#ff0000' } });
       const regenerated = regenerateForgeTheme(theme);
-      expect(Object.keys(regenerated.tokens)).to.have.lengthOf(101);
-      expect(regenerated.tokens.primary).to.equal('#ff0000');
-      expect(regenerated.seeds).to.deep.equal({ primary: '#ff0000' });
+      expect(Object.keys(activeForgeThemeVariant(regenerated).tokens)).to.have.lengthOf(101);
+      expect(activeForgeThemeVariant(regenerated).tokens.primary).to.equal('#ff0000');
+      expect(activeForgeThemeVariant(regenerated).seeds).to.deep.equal({ primary: '#ff0000' });
     });
 
     it('should move a patch theme onto a full light set', () => {
-      expect(regenerateForgeTheme(createForgeTheme()).mode).to.equal('light');
+      expect(regenerateForgeTheme(createForgeTheme()).mode).to.equal('replace');
     });
 
     it('should derive from the palette polarity, not the emit mode', () => {
@@ -349,59 +352,71 @@ describe('ThemeEditor theme model', () => {
         createForgeTheme({ mode: 'patch', generator: { mode: 'dark' } } as never)
       );
 
-      expect(regenerated.generator.mode).to.equal('dark');
-      expect(regenerated.tokens.surface).to.equal(FORGE_THEME_DARK_TOKENS.surface);
-      expect(regenerated.mode).to.equal('dark');
+      expect(regenerated.polarity).to.equal('dark');
+      expect(activeForgeThemeVariant(regenerated).tokens.surface).to.equal(FORGE_THEME_DARK_TOKENS.surface);
+      expect(regenerated.mode).to.equal('replace');
     });
 
     it('should accept seeds passed in directly', () => {
       const regenerated = regenerateForgeTheme(createForgeTheme(), { primary: '#00ff00' });
-      expect(regenerated.tokens.primary).to.equal('#00ff00');
-      expect(regenerated.seeds).to.deep.equal({ primary: '#00ff00' });
+      expect(activeForgeThemeVariant(regenerated).tokens.primary).to.equal('#00ff00');
+      expect(activeForgeThemeVariant(regenerated).seeds).to.deep.equal({ primary: '#00ff00' });
     });
 
     it('should generate the stock palette when there are no seeds', () => {
       const regenerated = regenerateForgeTheme(createForgeTheme());
-      expect(regenerated.seeds).to.be.null;
-      expect(regenerated.tokens.primary).to.equal(FORGE_THEME_LIGHT_TOKENS.primary);
+      // Regenerating records what it derived from, so the palette view can show it.
+      expect(activeForgeThemeVariant(regenerated).seeds).to.deep.equal(forgeLightSeeds());
+      expect(activeForgeThemeVariant(regenerated).tokens.primary).to.equal(FORGE_THEME_LIGHT_TOKENS.primary);
     });
   });
 
   describe('setForgeThemePolarity', () => {
     it('should default a new theme to the light surface', () => {
-      expect(createForgeTheme().generator.mode).to.equal('light');
+      expect(createForgeTheme().polarity).to.equal('light');
     });
 
-    it('should derive the dark ramps', () => {
+    it('should swap which variant is active without deriving anything', () => {
       const dark = setForgeThemePolarity(createForgeTheme(), 'dark');
 
-      expect(dark.generator.mode).to.equal('dark');
-      expect(dark.tokens.surface).to.equal(FORGE_THEME_DARK_TOKENS.surface);
-      expect(dark.mode).to.equal('dark');
+      expect(dark.polarity).to.equal('dark');
+      expect(dark.mode).to.equal('patch');
+      // Nothing derived: it hands over the dark starting point and waits.
+      expect(activeForgeThemeVariant(dark).tokens).to.deep.equal({});
+      expect(activeForgeThemeVariant(dark).seeds).to.deep.equal(forgeDarkSeeds());
     });
 
-    it('should keep customised seeds and swap untouched ones', () => {
-      const seeded = { ...createForgeTheme(), seeds: { ...forgeLightSeeds(), primary: '#ff00ff' } };
+    it('should leave each variant alone', () => {
+      const light = createForgeTheme({ tokens: { primary: '#ff00ff' }, seeds: { primary: '#ff00ff' } });
 
-      const dark = setForgeThemePolarity(seeded, 'dark');
+      const dark = setForgeThemePolarity(light, 'dark');
 
-      expect(dark.seeds!.primary).to.equal('#ff00ff');
-      expect(dark.seeds!.surface).to.equal(forgeDarkSeeds().surface);
+      expect(dark.variants.light.tokens.primary).to.equal('#ff00ff');
+      expect(dark.variants.dark.tokens).to.deep.equal({});
+      expect(activeForgeThemeVariant(dark).seeds!.primary).to.equal(forgeDarkSeeds().primary);
     });
 
-    it('should treat seed casing as equivalent when deciding what is untouched', () => {
-      const upper = { ...createForgeTheme(), seeds: { ...forgeLightSeeds(), surface: '#FFFFFF' } };
+    it('should not re-seed a variant that has already been authored', () => {
+      const authored = setForgeThemePolarity(
+        createForgeTheme({ variants: { dark: { seeds: { primary: '#00ffcc' } } } }),
+        'dark'
+      );
 
-      const dark = setForgeThemePolarity(upper, 'dark');
-
-      expect(dark.seeds!.surface).to.equal(forgeDarkSeeds().surface);
+      expect(activeForgeThemeVariant(authored).seeds!.primary).to.equal('#00ffcc');
     });
 
-    it('should round trip back to light', () => {
-      const light = setForgeThemePolarity(setForgeThemePolarity(createForgeTheme(), 'dark'), 'light');
+    it('should round trip, restoring what each side held', () => {
+      const authored = createForgeTheme({ seeds: { primary: '#ff00ff' } });
+      const dark = setForgeThemePolarity(authored, 'dark');
+      const back = setForgeThemePolarity(dark, 'light');
 
-      expect(light.generator.mode).to.equal('light');
-      expect(light.tokens.surface).to.equal(FORGE_THEME_LIGHT_TOKENS.surface);
+      expect(back.polarity).to.equal('light');
+      expect(activeForgeThemeVariant(back).seeds!.primary).to.equal('#ff00ff');
+    });
+
+    it('should be a no-op for the polarity already active', () => {
+      const theme = createForgeTheme();
+      expect(setForgeThemePolarity(theme, 'light')).to.equal(theme);
     });
 
     it('should migrate a theme saved before the palette owned the polarity', () => {
@@ -409,19 +424,19 @@ describe('ThemeEditor theme model', () => {
       // has no generator.mode at all. This is the import path.
       const legacy = normalizeForgeTheme({ mode: 'dark', generator: { targetContrast: 5 } })!;
 
-      expect(legacy.generator.mode).to.equal('dark');
+      expect(legacy.polarity).to.equal('dark');
       expect(legacy.generator.targetContrast).to.equal(5);
     });
 
     it('should not infer a dark polarity for a light or patch theme', () => {
-      expect(normalizeForgeTheme({ mode: 'patch' })!.generator.mode).to.equal('light');
-      expect(normalizeForgeTheme({ mode: 'light' })!.generator.mode).to.equal('light');
+      expect(normalizeForgeTheme({ mode: 'patch' })!.polarity).to.equal('light');
+      expect(normalizeForgeTheme({ mode: 'light' })!.polarity).to.equal('light');
     });
 
     it('should prefer an explicit polarity over the emit mode', () => {
       const explicit = normalizeForgeTheme({ mode: 'dark', generator: { mode: 'light' } })!;
 
-      expect(explicit.generator.mode).to.equal('light');
+      expect(explicit.polarity).to.equal('light');
     });
   });
 });
