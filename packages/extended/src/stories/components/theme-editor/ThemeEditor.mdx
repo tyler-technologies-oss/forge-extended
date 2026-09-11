@@ -32,15 +32,19 @@ editor.addEventListener('forge-theme-editor-change', ({ detail }) => save(detail
 
 ### Views
 
+The views are in authoring order, and the editor opens on **Palette** — seed a palette
+first, then fine-tune individual tokens, then check contrast, then take the theme away
+with you.
+
+- **Palette** — pick the nine seed colors and the editor derives the container ramps, the readable `on-`
+  inks, and the surface, text and outline scales. `Target contrast` is the WCAG ratio derived inks aim for;
+  turning off `Pure black/white accent inks` derives tinted inks instead of the pure black and white that
+  Forge's own tokens use.
 - **Tokens** — every token, grouped (brand, primary, secondary, tertiary, surface, text, success, error,
   warning, info, outline), each with a color swatch and a text field. The filter narrows to matching token
   names or group labels, and matched groups expand automatically. Each row has its own revert button, and
   `Revert all` clears every override at once. A `Global knobs` panel exposes `--forge-shape-factor`,
   a spacing multiplier, and the typography font family and size.
-- **Palette** — pick the nine seed colors and the editor derives the container ramps, the readable `on-`
-  inks, and the surface, text and outline scales. `Target contrast` is the WCAG ratio derived inks aim for;
-  turning off `Pure black/white accent inks` derives tinted inks instead of the pure black and white that
-  Forge's own tokens use.
 - **Contrast** — every `on-*` token measured against the background token it names, worst first. Body text
   needs 4.5:1 and large text 3:1 for WCAG 2 AA. Some targets are physically unreachable — nothing contrasts
   7:1 with a mid-lightness orange — so the report shows the shortfall rather than pretending it passed.
@@ -48,6 +52,19 @@ editor.addEventListener('forge-theme-editor-change', ({ detail }) => save(detail
   `:root` CSS block. Import accepts pasted JSON or a dropped file. Unknown token names are **rejected and
   reported** rather than imported, because an invalid name emits a `--forge-theme-*` property that nothing
   reads.
+
+### Sizing
+
+The token list tiles into as many columns as the container allows, because a token value is
+a hex code rather than prose. Three custom properties tune it:
+
+| Custom property                     | Default | Purpose                                        |
+| ----------------------------------- | ------- | ---------------------------------------------- |
+| `--_forge-theme-editor-cell-min`    | `232px` | Minimum width of a token cell before it wraps. |
+| `--_forge-theme-editor-max-height`  | `80dvh` | Height the editor scrolls within.              |
+| `--_forge-theme-editor-swatch-size` | `28px`  | Size of the color swatch button.               |
+
+The header and the tab bar stay put while the active view scrolls.
 
 ### The live preview
 

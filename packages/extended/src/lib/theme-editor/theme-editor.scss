@@ -13,8 +13,15 @@
 :host {
   display: block;
 
-  --_forge-theme-editor-swatch-size: 32px;
+  --_forge-theme-editor-swatch-size: 28px;
   --_forge-theme-editor-max-height: 80dvh;
+
+  // Token cells tile to this width. Narrow on purpose: the value is a hex code,
+  // not prose, so a full-width field just looks broken on a wide container.
+  --_forge-theme-editor-cell-min: 232px;
+
+  // Controls that hold short values should not grow to fill the toolbar.
+  --_forge-theme-editor-control-max: 220px;
 }
 
 :host([hidden]) {
@@ -34,8 +41,19 @@
 
   display: flex;
   flex-direction: column;
-  max-height: var(--_forge-theme-editor-max-height);
-  min-height: 0;
+  max-block-size: var(--_forge-theme-editor-max-height);
+  min-block-size: 0;
+  overflow: hidden;
+}
+
+// Continue the flex chain inside the card so `.view` gets a bounded height to
+// scroll within. Without this the card's root div is a plain block and
+// `overflow-y: auto` on `.view` has nothing to overflow.
+.container::part(root) {
+  display: flex;
+  flex-direction: column;
+  min-block-size: 0;
+  max-block-size: 100%;
   overflow: hidden;
 }
 
@@ -84,14 +102,20 @@
   padding-inline-start: #{forge-spacing.variable(medium)};
 }
 
+.header,
 .views {
   flex: 0 0 auto;
 }
 
+.views {
+  border-block-end: 1px solid #{forge-theme.variable(outline-low)};
+}
+
 .view {
   flex: 1 1 auto;
-  min-height: 0;
+  min-block-size: 0;
   overflow-y: auto;
+  overscroll-behavior: contain;
   padding: #{forge-spacing.variable(medium)};
 }
 
@@ -109,9 +133,15 @@
   margin-block-end: #{forge-spacing.variable(medium)};
 }
 
-.filter,
-.mode {
-  flex: 1 1 180px;
+.filter {
+  flex: 1 1 200px;
+  max-inline-size: 320px;
+}
+
+.mode,
+.target-contrast {
+  flex: 1 1 160px;
+  max-inline-size: var(--_forge-theme-editor-control-max);
 }
 
 .groups {
@@ -138,25 +168,41 @@
 .knob-rows,
 .seeds {
   display: grid;
-  gap: #{forge-spacing.variable(small)};
+  grid-template-columns: repeat(auto-fill, minmax(var(--_forge-theme-editor-cell-min), 1fr));
+  gap: #{forge-spacing.variable(xsmall)} #{forge-spacing.variable(small)};
   padding: #{forge-spacing.variable(small)};
 }
 
 .row {
   display: grid;
-  grid-template-columns: var(--_forge-theme-editor-swatch-size) 1fr auto;
-  align-items: center;
-  gap: #{forge-spacing.variable(xsmall)};
+  grid-template-columns: var(--_forge-theme-editor-swatch-size) minmax(0, 1fr) auto;
+  // The label sits above the input, so align to the bottom edge or the swatch
+  // and revert button float away from the field they belong to.
+  align-items: end;
+  gap: #{forge-spacing.variable(xxsmall)};
+  min-inline-size: 0;
 }
 
 .seed-row {
-  grid-template-columns: var(--_forge-theme-editor-swatch-size) 1fr;
+  grid-template-columns: var(--_forge-theme-editor-swatch-size) minmax(0, 1fr);
+}
+
+// Token names are long and the full custom property is on the row's title, so
+// let the label ellipsize rather than wrap a cell to two lines. The label is a
+// light-DOM child of the field, so it is reachable from here directly —
+// `forge-text-field` exposes no CSS parts.
+.value label {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .swatch,
 .swatch-placeholder {
   inline-size: var(--_forge-theme-editor-swatch-size);
   block-size: var(--_forge-theme-editor-swatch-size);
+  flex: none;
   padding: 0;
   border: 1px solid #{forge-theme.variable(outline-low)};
   border-radius: #{forge-shape.variable(small)};
@@ -168,7 +214,7 @@
 }
 
 .knob-rows {
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
 //
@@ -185,6 +231,7 @@
 
 .contrast-entry {
   display: flex;
+  max-inline-size: 60ch;
   align-items: center;
   justify-content: space-between;
   gap: #{forge-spacing.variable(small)};
@@ -207,6 +254,7 @@
 
 .code {
   inline-size: 100%;
+  max-inline-size: 80ch;
   box-sizing: border-box;
   font-family: monospace;
   font-size: 12px;

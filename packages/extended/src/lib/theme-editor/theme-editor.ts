@@ -85,7 +85,7 @@ declare global {
 export const ThemeEditorComponentTagName: keyof HTMLElementTagNameMap = 'forge-theme-editor';
 
 /** The views the editor exposes. */
-export type ThemeEditorView = 'tokens' | 'palette' | 'contrast' | 'transfer';
+export type ThemeEditorView = 'palette' | 'tokens' | 'contrast' | 'transfer';
 
 /** Emitted whenever the theme is edited. */
 export interface ThemeEditorChangeEventData {
@@ -111,7 +111,9 @@ export interface ThemeEditorImportEventData {
   warnings: string[];
 }
 
-const VIEWS: readonly ThemeEditorView[] = ['tokens', 'palette', 'contrast', 'transfer'];
+// Order is the authoring order: seed a palette, then fine-tune individual tokens,
+// then check contrast, then take it away with you.
+const VIEWS: readonly ThemeEditorView[] = ['palette', 'tokens', 'contrast', 'transfer'];
 const KNOBS_GROUP_KEY = 'knobs';
 const CONTRAST_PREVIEW_COUNT = 12;
 const CONTRAST_AA_TEXT = 4.5;
@@ -184,7 +186,7 @@ export class ThemeEditorComponent extends LitElement {
   public exportFormat: ForgeThemeExportFormat = 'json';
 
   @state()
-  private _view: ThemeEditorView = 'tokens';
+  private _view: ThemeEditorView = 'palette';
 
   @state()
   private _filter = '';
@@ -229,8 +231,8 @@ export class ThemeEditorComponent extends LitElement {
           class="views"
           .activeTab=${VIEWS.indexOf(this._view)}
           @forge-tab-bar-change=${this.#onViewChange}>
-          <forge-tab>Tokens</forge-tab>
           <forge-tab>Palette</forge-tab>
+          <forge-tab>Tokens</forge-tab>
           <forge-tab>Contrast</forge-tab>
           <forge-tab>Import &amp; export</forge-tab>
         </forge-tab-bar>
@@ -510,7 +512,7 @@ export class ThemeEditorComponent extends LitElement {
     const overridden = token in this.theme.tokens;
     const isColor = FORGE_THEME_TOKEN_KINDS[token] === 'color';
     return html`
-      <div class="row" data-token=${token}>
+      <div class="row" data-token=${token} title=${`${FORGE_THEME_TOKEN_PREFIX}${token}`}>
         ${when(
           isColor,
           () => html`
@@ -525,12 +527,13 @@ export class ThemeEditorComponent extends LitElement {
           () => html`<span class="swatch-placeholder" aria-hidden="true"></span>`
         )}
         <forge-text-field class="value" density="small" ?invalid=${isColor && !isValidColor(value)}>
-          <label slot="label" for=${`field-${token}`}>${FORGE_THEME_TOKEN_PREFIX}${token}</label>
+          <label slot="label" for=${`field-${token}`}>${token}</label>
           <input
             id=${`field-${token}`}
             type="text"
             autocomplete="off"
             spellcheck="false"
+            aria-label=${`${FORGE_THEME_TOKEN_PREFIX}${token}`}
             .value=${value}
             @change=${(evt: Event) => this.setToken(token, (evt.target as HTMLInputElement).value)} />
         </forge-text-field>
@@ -793,7 +796,7 @@ export class ThemeEditorComponent extends LitElement {
   //
 
   #onViewChange(evt: CustomEvent<ITabBarChangeEventData>): void {
-    this._view = VIEWS[evt.detail.index] ?? 'tokens';
+    this._view = VIEWS[evt.detail.index] ?? 'palette';
   }
 
   #onFilterInput(evt: Event): void {

@@ -44,25 +44,25 @@ describe('ThemeEditor', () => {
 
   describe('token editing', () => {
     it('should render a group panel for every token group', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       expect(harness.groupPanels).to.have.lengthOf(FORGE_THEME_TOKEN_GROUPS.length);
     });
 
     it('should render a row per token in an open group', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       expect(harness.rows).to.have.lengthOf(FORGE_THEME_TOKEN_GROUPS[0].tokens.length);
     });
 
     it('should show the Forge default as the value of an unedited token', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       expect(harness.tokenInput('brand').value).to.equal(FORGE_THEME_LIGHT_TOKENS.brand);
     });
 
     it('should set a token from the text field', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       await harness.setTokenText('brand', '#ff0000');
 
@@ -70,7 +70,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should set a token from the color swatch', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       await harness.setTokenSwatch('brand', '#00ff00');
 
@@ -78,7 +78,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should dispatch a change event naming the edited token', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       const spy = sinon.spy();
       harness.el.addEventListener('forge-theme-editor-change', spy);
 
@@ -90,7 +90,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should clear a token when the text field is emptied', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       await harness.setTokenText('brand', '#ff0000');
       await harness.setTokenText('brand', '   ');
@@ -99,7 +99,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should flag a token whose value is not a color', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       await harness.setTokenText('brand', 'not-a-color');
 
@@ -107,13 +107,13 @@ describe('ThemeEditor', () => {
     });
 
     it('should disable the revert button for an unedited token', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       expect(harness.revertButton('brand').hasAttribute('disabled')).to.be.true;
     });
 
     it('should revert a single token', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.setTokenText('brand', '#ff0000');
 
       harness.revertButton('brand').click();
@@ -123,7 +123,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should ignore a revert for a token that was never edited', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       const spy = sinon.spy();
       harness.el.addEventListener('forge-theme-editor-change', spy);
 
@@ -133,7 +133,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should revert every token at once', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.setTokenText('brand', '#ff0000');
       await harness.setTokenText('on-brand', '#000000');
 
@@ -145,7 +145,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should render a placeholder instead of a swatch for the shadow token', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.openGroup('surface');
 
       expect(harness.row('surface-bright-shadow').querySelector('.swatch')).to.be.null;
@@ -153,7 +153,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should show dark defaults when the theme emits the dark set', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       await harness.setMode('dark');
 
@@ -162,7 +162,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should collapse a group when it is toggled shut', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       await harness.toggleGroup('brand', false);
 
@@ -176,7 +176,7 @@ describe('ThemeEditor', () => {
 
   describe('filtering', () => {
     it('should narrow the groups to those with a matching token', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       await harness.filter('outline');
 
@@ -184,7 +184,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should keep the whole group when the group label matches', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       await harness.filter('Success');
 
@@ -192,7 +192,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should expand matching groups so hits are never hidden', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       await harness.filter('warning-container-high');
 
@@ -203,7 +203,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should report when nothing matches', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       await harness.filter('zzzzzz');
 
@@ -212,7 +212,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should hide the global knobs when the filter does not match them', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       await harness.filter('outline');
 
@@ -220,7 +220,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should keep the global knobs when the filter matches them', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       await harness.filter('spacing');
 
@@ -234,7 +234,7 @@ describe('ThemeEditor', () => {
 
   describe('global knobs', () => {
     it('should set a numeric knob', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.openGroup('knobs');
 
       await harness.setKnob('shapeFactor', '2');
@@ -243,7 +243,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should clear a numeric knob that is not a number', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.openGroup('knobs');
       await harness.setKnob('spacingScale', '1.5');
 
@@ -253,7 +253,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should set a text knob', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.openGroup('knobs');
 
       await harness.setKnob('fontFamily', 'Inter');
@@ -268,7 +268,7 @@ describe('ThemeEditor', () => {
 
   describe('preview', () => {
     it('should inject a stylesheet when the preview is turned on', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.setTokenText('brand', '#ff0000');
 
       harness.previewButton.click();
@@ -279,7 +279,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should declare the preview on every conventional theme carrier', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.setTokenText('brand', '#ff0000');
 
       harness.el.applyPreview();
@@ -292,7 +292,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should reflect the preview state as an attribute', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       harness.el.applyPreview();
       await harness.el.updateComplete;
@@ -301,7 +301,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should remove the stylesheet when the preview is turned off', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       harness.el.applyPreview();
       await harness.el.updateComplete;
 
@@ -312,7 +312,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should toggle the preview back off from the button', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       harness.previewButton.click();
       await harness.el.updateComplete;
 
@@ -324,7 +324,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should dispatch a preview event when the preview is toggled', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.setTokenText('brand', '#ff0000');
       const spy = sinon.spy();
       harness.el.addEventListener('forge-theme-editor-preview', spy);
@@ -338,7 +338,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should dispatch an empty stylesheet when the preview is removed', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       harness.el.applyPreview();
       await harness.el.updateComplete;
       const spy = sinon.spy();
@@ -363,7 +363,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should refresh the live stylesheet when the theme is edited', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       harness.el.applyPreview();
       await harness.el.updateComplete;
 
@@ -373,7 +373,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should honour a custom selector list', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.setTokenText('brand', '#ff0000');
 
       harness.el.previewSelectors = ['.my-app-theme'];
@@ -385,7 +385,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should show and hide the live preview banner', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       expect(harness.previewBanner).to.be.null;
 
       harness.el.applyPreview();
@@ -398,7 +398,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should remove the stylesheet when the editor leaves the document', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       harness.el.applyPreview();
       await harness.el.updateComplete;
 
@@ -409,7 +409,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should expose the preview css without applying it', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.setTokenText('brand', '#ff0000');
 
       expect(harness.el.getPreviewCss()).to.include('--forge-theme-brand: #ff0000 !important;');
@@ -424,14 +424,14 @@ describe('ThemeEditor', () => {
   describe('palette generation', () => {
     it('should seed from the current theme values', async () => {
       const harness = await createFixture();
-      await harness.selectView(1);
+      await harness.selectView(VIEW.palette);
 
       expect(harness.seedInput('primary').value).to.equal(FORGE_THEME_LIGHT_TOKENS.primary);
     });
 
     it('should set a seed from the text field', async () => {
       const harness = await createFixture();
-      await harness.selectView(1);
+      await harness.selectView(VIEW.palette);
 
       await harness.setSeedText('primary', '#ff0000');
 
@@ -440,7 +440,7 @@ describe('ThemeEditor', () => {
 
     it('should set a seed from the color swatch', async () => {
       const harness = await createFixture();
-      await harness.selectView(1);
+      await harness.selectView(VIEW.palette);
 
       await harness.setSeedSwatch('primary', '#00ff00');
 
@@ -449,7 +449,7 @@ describe('ThemeEditor', () => {
 
     it('should flag a seed whose value is not a color', async () => {
       const harness = await createFixture();
-      await harness.selectView(1);
+      await harness.selectView(VIEW.palette);
 
       await harness.setSeedText('primary', 'nope');
 
@@ -458,7 +458,7 @@ describe('ThemeEditor', () => {
 
     it('should derive the full token set from the seeds', async () => {
       const harness = await createFixture();
-      await harness.selectView(1);
+      await harness.selectView(VIEW.palette);
       await harness.setSeedText('primary', '#ff0000');
 
       harness.generateButton.click();
@@ -481,7 +481,7 @@ describe('ThemeEditor', () => {
 
     it('should change the target contrast', async () => {
       const harness = await createFixture();
-      await harness.selectView(1);
+      await harness.selectView(VIEW.palette);
 
       await harness.setTargetContrast('4.5');
 
@@ -490,7 +490,7 @@ describe('ThemeEditor', () => {
 
     it('should fall back to a target contrast of seven', async () => {
       const harness = await createFixture();
-      await harness.selectView(1);
+      await harness.selectView(VIEW.palette);
 
       await harness.setTargetContrast('');
 
@@ -499,7 +499,7 @@ describe('ThemeEditor', () => {
 
     it('should turn off pure accent inks', async () => {
       const harness = await createFixture();
-      await harness.selectView(1);
+      await harness.selectView(VIEW.palette);
 
       harness.pureOnColorsSwitch.dispatchEvent(new CustomEvent('forge-switch-change', { detail: false }));
       await harness.el.updateComplete;
@@ -508,9 +508,9 @@ describe('ThemeEditor', () => {
     });
 
     it('should seed from a token override rather than the Forge default', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.setTokenText('brand', '#ff0000');
-      await harness.selectView(1);
+      await harness.selectView(VIEW.palette);
 
       expect(harness.seedInput('brand').value).to.equal('#ff0000');
     });
@@ -532,7 +532,7 @@ describe('ThemeEditor', () => {
 
     it('should render the worst pairs only until asked for all', async () => {
       const harness = await createFixture();
-      await harness.selectView(2);
+      await harness.selectView(VIEW.contrast);
       const total = harness.el.getContrastReport().length;
       expect(harness.contrastEntries).to.have.lengthOf(12);
 
@@ -548,7 +548,7 @@ describe('ThemeEditor', () => {
     it('should warn when a pair falls below the AA text ratio', async () => {
       const harness = await createFixture();
       harness.el.loadTheme({ tokens: { primary: '#ffffff', 'on-primary': '#fefefe' } });
-      await harness.selectView(2);
+      await harness.selectView(VIEW.contrast);
 
       expect(harness.contrastSummary.getAttribute('theme')).to.equal('warning');
       expect(harness.contrastSummary.textContent).to.include('fall below 4.5:1');
@@ -559,7 +559,7 @@ describe('ThemeEditor', () => {
       harness.el.loadTheme({
         tokens: { primary: '#ffffff', 'on-primary': '#fefefe', secondary: '#949494', 'on-secondary': '#ffffff' }
       });
-      await harness.selectView(2);
+      await harness.selectView(VIEW.contrast);
       harness.contrastToggle.click();
       await harness.el.updateComplete;
 
@@ -572,7 +572,7 @@ describe('ThemeEditor', () => {
     it('should confirm when every pair passes', async () => {
       const harness = await createFixture();
       harness.el.loadTheme({ tokens: { primary: '#ffffff', 'on-primary': '#000000' }, mode: 'patch' });
-      await harness.selectView(2);
+      await harness.selectView(VIEW.contrast);
 
       expect(harness.contrastSummary.getAttribute('theme')).to.equal('success');
       expect(harness.contrastSummary.textContent).to.include('meet 4.5:1');
@@ -585,18 +585,18 @@ describe('ThemeEditor', () => {
 
   describe('import and export', () => {
     it('should export json by default', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.setTokenText('brand', '#ff0000');
-      await harness.selectView(3);
+      await harness.selectView(VIEW.transfer);
 
       expect(harness.exportOutput.value).to.equal(harness.el.exportTheme());
       expect(JSON.parse(harness.exportOutput.value).tokens.brand).to.equal('#ff0000');
     });
 
     it('should export sass using the Forge provide mixin', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.setTokenText('brand', '#ff0000');
-      await harness.selectView(3);
+      await harness.selectView(VIEW.transfer);
 
       await harness.setExportFormat('scss');
 
@@ -605,9 +605,9 @@ describe('ThemeEditor', () => {
     });
 
     it('should export a plain root css block', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       await harness.setTokenText('brand', '#ff0000');
-      await harness.selectView(3);
+      await harness.selectView(VIEW.transfer);
 
       await harness.setExportFormat('css');
 
@@ -616,14 +616,14 @@ describe('ThemeEditor', () => {
     });
 
     it('should export the format asked for directly', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       expect(harness.el.exportTheme('css')).to.include(':root {');
     });
 
     it('should copy the export to the clipboard', async () => {
-      const harness = await createFixture();
-      await harness.selectView(3);
+      const harness = await createTokensFixture();
+      await harness.selectView(VIEW.transfer);
       const writeText = sinon.stub(navigator.clipboard, 'writeText').resolves();
 
       harness.copyButton.click();
@@ -633,8 +633,8 @@ describe('ThemeEditor', () => {
     });
 
     it('should report a blocked clipboard', async () => {
-      const harness = await createFixture();
-      await harness.selectView(3);
+      const harness = await createTokensFixture();
+      await harness.selectView(VIEW.transfer);
       sinon.stub(navigator.clipboard, 'writeText').rejects(new Error('denied'));
 
       harness.copyButton.click();
@@ -645,9 +645,9 @@ describe('ThemeEditor', () => {
     });
 
     it('should download the export under a file safe name', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       harness.el.loadTheme({ name: 'Brandy McBrand' });
-      await harness.selectView(3);
+      await harness.selectView(VIEW.transfer);
       const click = sinon.stub(HTMLAnchorElement.prototype, 'click');
 
       harness.downloadButton.click();
@@ -658,9 +658,9 @@ describe('ThemeEditor', () => {
     });
 
     it('should fall back to a generic download name', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       harness.el.loadTheme({ name: '###' });
-      await harness.selectView(3);
+      await harness.selectView(VIEW.transfer);
       await harness.setExportFormat('scss');
       const click = sinon.stub(HTMLAnchorElement.prototype, 'click');
 
@@ -671,8 +671,8 @@ describe('ThemeEditor', () => {
     });
 
     it('should disable the import button until there is something to import', async () => {
-      const harness = await createFixture();
-      await harness.selectView(3);
+      const harness = await createTokensFixture();
+      await harness.selectView(VIEW.transfer);
 
       expect(harness.importButton.hasAttribute('disabled')).to.be.true;
 
@@ -682,8 +682,8 @@ describe('ThemeEditor', () => {
     });
 
     it('should import pasted json', async () => {
-      const harness = await createFixture();
-      await harness.selectView(3);
+      const harness = await createTokensFixture();
+      await harness.selectView(VIEW.transfer);
       await harness.setImportText(
         exportForgeThemeJson(createForgeTheme({ name: 'Imported', tokens: { brand: '#ff0000' } }))
       );
@@ -696,7 +696,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should dispatch an import event', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       const spy = sinon.spy();
       harness.el.addEventListener('forge-theme-editor-import', spy);
 
@@ -709,7 +709,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should reject unknown token names and report them', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       const warnings = harness.el.importTheme('{"tokens":{"brand":"#ff0000","made-up-token":"#000000"}}');
       await harness.el.updateComplete;
@@ -720,7 +720,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should report json it cannot parse and leave the theme alone', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
       const spy = sinon.spy();
       harness.el.addEventListener('forge-theme-editor-import', spy);
 
@@ -733,14 +733,14 @@ describe('ThemeEditor', () => {
     });
 
     it('should report json that holds no theme', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       expect(harness.el.importTheme('"a string"')[0]).to.equal('No theme found in that JSON.');
     });
 
     it('should import a dropped json file', async () => {
-      const harness = await createFixture();
-      await harness.selectView(3);
+      const harness = await createTokensFixture();
+      await harness.selectView(VIEW.transfer);
       const file = new File(['{"name":"From file","tokens":{"brand":"#ff0000"}}'], 'theme.json', {
         type: 'application/json'
       });
@@ -752,8 +752,8 @@ describe('ThemeEditor', () => {
     });
 
     it('should report a rejected file', async () => {
-      const harness = await createFixture();
-      await harness.selectView(3);
+      const harness = await createTokensFixture();
+      await harness.selectView(VIEW.transfer);
 
       await harness.dropFile([]);
 
@@ -761,7 +761,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should load a theme from the public method', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       harness.el.loadTheme({ mode: 'dark', tokens: { brand: '#ff0000' } });
       await harness.el.updateComplete;
@@ -771,7 +771,7 @@ describe('ThemeEditor', () => {
     });
 
     it('should fill in the gaps of a partial theme', async () => {
-      const harness = await createFixture();
+      const harness = await createTokensFixture();
 
       harness.el.loadTheme(null);
       await harness.el.updateComplete;
@@ -785,28 +785,35 @@ describe('ThemeEditor', () => {
   //
 
   describe('views', () => {
+    it('should open on the palette view', async () => {
+      const harness = await createFixture();
+
+      // The palette is where a theme starts; the token list is the fine-tuning pass.
+      expect(harness.view.getAttribute('aria-label')).to.equal('palette');
+    });
+
     it('should switch between the four views', async () => {
       const harness = await createFixture();
 
-      await harness.selectView(1);
-      expect(harness.view.getAttribute('aria-label')).to.equal('palette');
+      await harness.selectView(VIEW.tokens);
+      expect(harness.view.getAttribute('aria-label')).to.equal('tokens');
 
-      await harness.selectView(2);
+      await harness.selectView(VIEW.contrast);
       expect(harness.view.getAttribute('aria-label')).to.equal('contrast');
 
-      await harness.selectView(3);
+      await harness.selectView(VIEW.transfer);
       expect(harness.view.getAttribute('aria-label')).to.equal('transfer');
 
-      await harness.selectView(0);
-      expect(harness.view.getAttribute('aria-label')).to.equal('tokens');
+      await harness.selectView(VIEW.palette);
+      expect(harness.view.getAttribute('aria-label')).to.equal('palette');
     });
 
-    it('should fall back to the token view for an unknown tab index', async () => {
+    it('should fall back to the palette view for an unknown tab index', async () => {
       const harness = await createFixture();
 
       await harness.selectView(99);
 
-      expect(harness.view.getAttribute('aria-label')).to.equal('tokens');
+      expect(harness.view.getAttribute('aria-label')).to.equal('palette');
     });
   });
 });
@@ -983,9 +990,17 @@ class ThemeEditorHarness {
   }
 
   public async dropFile(files: File[]): Promise<void> {
+    // The handler awaits `file.text()` before importing, so counting frames is a
+    // race. Wait for the import event, with a bounded fallback because a rejected
+    // file never imports at all.
+    const settled = new Promise<void>(resolve => {
+      this.el.addEventListener('forge-theme-editor-import', () => resolve(), { once: true });
+      setTimeout(resolve, 200);
+    });
     this.root
       .querySelector('#import-file')!
       .dispatchEvent(new CustomEvent('forge-file-picker-change', { detail: { legalFiles: files } }));
+    await settled;
     await nextFrame();
     await this.el.updateComplete;
   }
@@ -1003,6 +1018,12 @@ class ThemeEditorHarness {
   }
 }
 
+/**
+ * Tab indices, so a reorder of the views does not mean re-counting call sites.
+ * The palette leads because that is where a theme starts.
+ */
+const VIEW = { palette: 0, tokens: 1, contrast: 2, transfer: 3 } as const;
+
 async function createFixture(): Promise<ThemeEditorHarness> {
   const el = await fixture<ThemeEditorComponent>(html`
     <forge-theme-editor>
@@ -1010,4 +1031,11 @@ async function createFixture(): Promise<ThemeEditorHarness> {
     </forge-theme-editor>
   `);
   return new ThemeEditorHarness(el);
+}
+
+/** A fixture already switched to the token list, which is not the default view. */
+async function createTokensFixture(): Promise<ThemeEditorHarness> {
+  const harness = await createFixture();
+  await harness.selectView(VIEW.tokens);
+  return harness;
 }
