@@ -3333,6 +3333,24 @@
         },
         {
           "kind": "function",
+          "name": "exportForgeThemeRelativeCss",
+          "return": {
+            "type": {
+              "text": "string"
+            }
+          },
+          "parameters": [
+            {
+              "name": "theme",
+              "type": {
+                "text": "ForgeTheme"
+              }
+            }
+          ],
+          "description": "CSS using relative color syntax, so the derived ramps track their base token\ninstead of being frozen at export time: change `--forge-theme-primary` in an\napplication and every primary container follows.\n\nOnly the ramps are expressed this way. An `on-` ink is the result of an\niterative contrast search and the `text-` scale is pure black or white at a\nfixed alpha — neither is a transform of anything, so both stay literal.\n\nNeeds Chrome 119+, Safari 16.4+ or Firefox 128+. Older engines drop the\ndeclaration and fall back to the value Forge compiles into its own\n`var()` references, so the failure is quiet: use the plain CSS export if that\nmatters."
+        },
+        {
+          "kind": "function",
           "name": "exportForgeThemeScss",
           "return": {
             "type": {
@@ -3568,6 +3586,14 @@
           "name": "exportForgeThemeCss",
           "declaration": {
             "name": "exportForgeThemeCss",
+            "module": "src/lib/theme-editor/theme-model.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "exportForgeThemeRelativeCss",
+          "declaration": {
+            "name": "exportForgeThemeRelativeCss",
             "module": "src/lib/theme-editor/theme-model.ts"
           }
         },
@@ -4477,35 +4503,35 @@
     },
     "ForgeThemeMode": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 57
+      "lineNumber": 52
     },
     "ForgeThemePolarity": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 60
+      "lineNumber": 55
     },
     "ForgeThemeVariant": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 70
+      "lineNumber": 65
     },
     "ForgeThemeKnobs": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 78
+      "lineNumber": 73
     },
     "ForgeTheme": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 94
+      "lineNumber": 89
     },
     "ForgeThemeInput": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 120
+      "lineNumber": 115
     },
     "ForgeThemeImportResult": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 135
+      "lineNumber": 130
     },
     "ForgeThemeExportFormat": {
       "path": "src/lib/theme-editor/theme-model.ts",
-      "lineNumber": 145
+      "lineNumber": 140
     },
     "ForgeThemeTokenKind": {
       "path": "src/lib/theme-editor/theme-tokens.ts",

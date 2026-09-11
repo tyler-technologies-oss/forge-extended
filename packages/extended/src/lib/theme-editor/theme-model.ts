@@ -1,31 +1,26 @@
 /**
- * The theme model, live-preview CSS generation, and the export/import formats.
+ * The theme model and the export/import formats.
  *
- * ## Why the selector list and `!important` matter
+ * A theme is two independent variants, light and dark, because they are two
+ * designs rather than one design with a switch: an accent that reads on white is
+ * usually wrong on near-black. `polarity` says which one is being authored;
+ * `mode` says whether to emit only the authored overrides or a complete set.
  *
- * Forge declares its light tokens with `:root { ... }` (via `forge.css`) but host
- * applications apply the dark set by attaching the `theme-dark.theme-properties`
- * mixin to a *class*, and then putting that class on `<body>`:
+ * The editor does not apply themes. It produces one, and the host application
+ * persists and applies it — in the intended flow the branding API does. Two
+ * things are worth knowing for whoever writes that applier:
  *
- * ```scss
- * .dark-theme { @include theme-dark.theme-properties; }
- * ```
- * ```ts
- * document.body.classList.toggle('dark-theme', isDark);
- * ```
- *
- * A custom property declared on `<body>` wins over one inherited from `:root` for
- * `<body>` and everything beneath it, so declaring the preview at `:root` alone
- * loses on a page that is already in dark mode. The preview therefore declares on
- * the conventional theme carriers too and marks every declaration `!important`,
- * which beats any non-important author rule on the same element regardless of
- * specificity. `forge-theme-toggle`'s `data-forge-theme` attribute is covered the
- * same way.
- *
- * Custom properties inherit through shadow boundaries, so overriding them on
- * `<body>` reaches inside every Forge web component's shadow root as well.
+ * - Forge has no machinery that turns a theme object into custom properties.
+ *   `forge-theme-toggle` only sets `data-forge-theme` on `<html>` and relies on
+ *   the host having authored a rule for it; that attribute appears nowhere in
+ *   Forge core. Applying a theme means emitting real CSS.
+ * - Forge ships its light set as `:root { ... }` (via `forge.css`) but its dark
+ *   set only as a Sass mixin that applications attach to a class on `<body>`.
+ *   A custom property declared on `<body>` beats one inherited from `:root`, so
+ *   an override that targets only `:root` loses on a page already in dark mode.
  */
 
+import { oklchToRgb, parseColor, rgbToOklch } from './theme-color';
 import {
   forgeDarkSeeds,
   forgeLightSeeds,
@@ -142,7 +137,7 @@ export interface ForgeThemeImportResult {
 }
 
 /** The export formats the editor produces. */
-export type ForgeThemeExportFormat = 'json' | 'scss' | 'css';
+export type ForgeThemeExportFormat = 'json' | 'scss' | 'css' | 'css-relative';
 
 /** The version marker written into exported JSON. */
 export const FORGE_THEME_EXPORT_VERSION = 1;
@@ -395,6 +390,154 @@ export function exportForgeThemeCss(theme: ForgeTheme): string {
 }
 
 /**
+ * Which token a derived token is derived *from*. Accent ramps hang off their
+ * accent; the surface, text and outline scales hang off `surface`.
+ */
+function relativeBaseFor(token: string): string | null {
+  if (token.startsWith('on-') || token.startsWith('text-') || token === 'surface-bright-shadow') {
+    return null; // inks come from a contrast search, not a transform
+  }
+  if (token === 'surface' || token === 'brand') {
+    return null; // seeds
+  }
+  if (token.startsWith('surface-') || token.startsWith('outline')) {
+    return token === 'outline' || token.startsWith('outline-') || token.startsWith('surface-') ? 'surface' : null;
+  }
+  const accent = ACCENT_TOKENS.find(name => token.startsWith(`${name}-`));
+  return accent ?? null;
+}
+
+const ACCENT_TOKENS = ['primary', 'secondary', 'tertiary', 'success', 'error', 'warning', 'info'];
+
+/**
+ * Expresses a token as a CSS relative color derived from its base, when that
+ * expression actually reproduces the value.
+ *
+ * The coefficients come from the colors the generator produced, so the emitted
+ * formula evaluates to exactly what the editor showed — and then keeps tracking
+ * the base if an application changes it later, which is the point.
+ *
+ * Returns null when a transform cannot express the value: a neutral base has no
+ * chroma to scale, so a multiplier cannot reach a tinted derivative.
+ */
+function relativeColorExpression(baseValue: string, targetValue: string, baseToken: string): string | null {
+  const base = parseColor(baseValue);
+  const target = parseColor(targetValue);
+  if (!base || !target || (base[3] ?? 1) < 1 || (target[3] ?? 1) < 1) {
+    return null;
+  }
+
+  const [baseL, baseC, baseH] = rgbToOklch(base);
+  const [targetL, targetC, targetH] = rgbToOklch(target);
+  const deltaL = round(targetL - baseL, 4);
+  const lightness = deltaL === 0 ? 'l' : `calc(l + ${deltaL})`;
+  const reference = `var(${FORGE_THEME_TOKEN_PREFIX}${baseToken})`;
+
+  // The ramp is interpolated in OkLCh between two endpoints whose hues differ a
+  // little, so a derived colour is rarely exactly the base's hue. Carry the
+  // difference as a delta rather than forcing `h` and missing the value.
+  const neutralBase = Number.isNaN(baseH) || baseC < 1e-4;
+  const deltaH = neutralBase || Number.isNaN(targetH) ? 0 : round(shortestHueDelta(baseH, targetH), 3);
+  const hue = deltaH === 0 ? 'h' : `calc(h + ${deltaH})`;
+  const hueValue = baseH + deltaH;
+
+  // Only emit a formula that evaluates back to the value — otherwise the export
+  // would not match what was previewed. Two forms, most relative first:
+  //
+  //  1. chroma as a multiple of the base's. Fully relative, so a base swapped
+  //     for a more or less saturated colour carries the whole ramp with it.
+  //  2. chroma fixed, lightness and hue still tracking. Needed because scaling
+  //     chroma in OkLCh can leave the sRGB gamut, and the clipping that follows
+  //     is not what a plain multiply predicts — common with vivid seeds.
+  const chromaScale = baseC < 1e-4 ? null : round(targetC / baseC, 4);
+  if (chromaScale !== null && sameColor(oklchToRgb([baseL + deltaL, baseC * chromaScale, hueValue]), target)) {
+    const chroma = chromaScale === 1 ? 'c' : `calc(c * ${chromaScale})`;
+    return `oklch(from ${reference} ${lightness} ${chroma} ${hue})`;
+  }
+
+  const fixedChroma = round(targetC, 4);
+  if (!neutralBase && sameColor(oklchToRgb([baseL + deltaL, fixedChroma, hueValue]), target)) {
+    return `oklch(from ${reference} ${lightness} ${fixedChroma} ${hue})`;
+  }
+
+  //  3. chroma and hue both absolute, lightness still tracking. A neutral base -
+  //     Forge's own surfaces are pure greys - has no chroma to scale and no
+  //     meaningful hue to offset from, but the surface ramp is a lightness ramp:
+  //     this keeps it following the surface, which is the part that matters.
+  const fixedHue = Number.isNaN(targetH) ? 0 : round(targetH, 3);
+  if (sameColor(oklchToRgb([baseL + deltaL, fixedChroma, Number.isNaN(targetH) ? NaN : fixedHue]), target)) {
+    return `oklch(from ${reference} ${lightness} ${fixedChroma} ${fixedHue})`;
+  }
+
+  return null;
+}
+
+/** The signed hue difference in degrees, taking the short way round. */
+function shortestHueDelta(from: number, to: number): number {
+  let delta = (to - from) % 360;
+  if (delta > 180) {
+    delta -= 360;
+  }
+  if (delta < -180) {
+    delta += 360;
+  }
+  return delta;
+}
+
+function round(value: number, places: number): number {
+  const factor = 10 ** places;
+  return Math.round(value * factor) / factor;
+}
+
+function sameColor(a: readonly number[], b: readonly number[]): boolean {
+  return Math.abs(a[0] - b[0]) <= 1 && Math.abs(a[1] - b[1]) <= 1 && Math.abs(a[2] - b[2]) <= 1;
+}
+
+/**
+ * CSS using relative color syntax, so the derived ramps track their base token
+ * instead of being frozen at export time: change `--forge-theme-primary` in an
+ * application and every primary container follows.
+ *
+ * Only the ramps are expressed this way. An `on-` ink is the result of an
+ * iterative contrast search and the `text-` scale is pure black or white at a
+ * fixed alpha — neither is a transform of anything, so both stay literal.
+ *
+ * Needs Chrome 119+, Safari 16.4+ or Firefox 128+. Older engines drop the
+ * declaration and fall back to the value Forge compiles into its own
+ * `var()` references, so the failure is quiet: use the plain CSS export if that
+ * matters.
+ */
+export function exportForgeThemeRelativeCss(theme: ForgeTheme): string {
+  const tokens = resolveForgeThemeTokens(theme);
+  const lines: string[] = [];
+  let derived = 0;
+
+  for (const [token, value] of Object.entries(tokens)) {
+    const baseToken = relativeBaseFor(token);
+    const expression =
+      baseToken && tokens[baseToken] ? relativeColorExpression(tokens[baseToken], value, baseToken) : null;
+    if (expression) {
+      derived++;
+      lines.push(`  ${FORGE_THEME_TOKEN_PREFIX}${token}: ${expression};`);
+    } else {
+      lines.push(`  ${FORGE_THEME_TOKEN_PREFIX}${token}: ${value};`);
+    }
+  }
+  for (const [name, value] of Object.entries(resolveForgeThemeKnobs(theme))) {
+    lines.push(`  ${name}: ${value};`);
+  }
+
+  const header =
+    `/* ${derived} of ${Object.keys(tokens).length} tokens derive from their base with CSS relative colors,
+` +
+    `   so changing a base updates its ramp. Needs Chrome 119+, Safari 16.4+, Firefox 128+.
+` +
+    `   'on-' inks and the 'text-' scale are literal: a contrast search is not a transform. */
+`;
+  return `${header}:root {\n${lines.join('\n')}\n}\n`;
+}
+
+/**
  * Emits Sass using Forge's own `theme.provide()` mixin, which validates every
  * token name at compile time and emits the `--forge-theme-*` declarations.
  * @param theme The theme to emit.
@@ -432,6 +575,8 @@ export function exportForgeTheme(theme: ForgeTheme, format: ForgeThemeExportForm
   switch (format) {
     case 'scss':
       return exportForgeThemeScss(theme);
+    case 'css-relative':
+      return exportForgeThemeRelativeCss(theme);
     case 'css':
       return exportForgeThemeCss(theme);
     default:

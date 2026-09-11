@@ -149,6 +149,43 @@ something that applies it. `exportTheme('scss')` emits Sass built on Forge's own
 `theme.provide()` mixin and `exportTheme('css')` a plain `:root` block, for pasting
 into an application directly.
 
+#### CSS with relative colors
+
+`exportTheme('css-relative')` emits the same theme, but expresses every derived ramp
+as a [CSS relative color](https://developer.mozilla.org/en-US/docs/Web/CSS/color_value#relative_colors)
+of the token it came from, rather than freezing it at export time:
+
+```css
+--forge-theme-primary: #b8f21a;
+--forge-theme-primary-container: oklch(
+  from var(--forge-theme-primary) calc(l + -0.3973) calc(c * 0.6079) calc(h + 5.304)
+);
+```
+
+Change `--forge-theme-primary` in an application and every primary container follows.
+**40 of the 101 tokens** derive this way: all 28 accent containers, the 8-step surface
+ramp and the 4 outline steps.
+
+The coefficients are measured from the colors the generator produced, so a formula
+evaluates to exactly what the preview showed and then keeps tracking. Three forms are
+tried, most relative first — chroma and hue both relative to the base, then chroma
+fixed, then chroma and hue both fixed with only lightness tracking. That last one
+exists because Forge's own surfaces are pure greys: a neutral base has no chroma to
+scale and no meaningful hue to offset from, but a surface ramp is a lightness ramp,
+which is the part worth keeping. **A formula is only emitted if evaluating it
+reproduces the value**; otherwise the token falls back to a literal, so the export can
+never disagree with the preview.
+
+The remaining 61 tokens are literal because they are not transforms of anything: the
+43 `on-` inks are the result of an iterative contrast search, the 8 `text-` steps are
+pure black or white at a fixed alpha, and the rest are the seeds themselves plus
+`surface-bright-shadow`, which is a `box-shadow`.
+
+Needs Chrome 119+, Safari 16.4+ or Firefox 128+. Older engines drop the declaration
+and fall back to the value Forge compiles into its own `var()` references, which is a
+**quiet** failure — use the plain CSS export if that matters. The emitted stylesheet
+carries that caveat in a comment.
+
 One thing worth knowing for whoever applies these: **Forge has no machinery that
 turns a theme object into custom properties.** `forge-theme-toggle` only sets
 `data-forge-theme` on `<html>` and relies on the host application having written a
@@ -169,17 +206,17 @@ targets `:root` loses on a page already in dark mode.
 
 ### Methods
 
-| Name                      | Description                                              |
-| ------------------------- | -------------------------------------------------------- |
-| `getTheme()`              | Returns the theme being edited.                          |
-| `loadTheme(theme)`        | Replaces the theme, filling in anything the value omits. |
-| `exportTheme(format?)`    | Emits the theme as JSON, Sass or CSS.                    |
-| `importTheme(text)`       | Imports theme JSON and returns the warnings raised.      |
-| `generatePalette(seeds?)` | Derives the full token set from seed colors.             |
-| `setToken(token, value)`  | Sets one token, or clears it when the value is empty.    |
-| `resetToken(token)`       | Reverts one token to the Forge default for the polarity. |
-| `resetAllTokens()`        | Reverts every token in the active variant.               |
-| `getContrastReport()`     | Returns every `on-*` pair and its ratio, worst first.    |
+| Name                      | Description                                               |
+| ------------------------- | --------------------------------------------------------- |
+| `getTheme()`              | Returns the theme being edited.                           |
+| `loadTheme(theme)`        | Replaces the theme, filling in anything the value omits.  |
+| `exportTheme(format?)`    | Emits the theme as JSON, Sass, CSS or relative-color CSS. |
+| `importTheme(text)`       | Imports theme JSON and returns the warnings raised.       |
+| `generatePalette(seeds?)` | Derives the full token set from seed colors.              |
+| `setToken(token, value)`  | Sets one token, or clears it when the value is empty.     |
+| `resetToken(token)`       | Reverts one token to the Forge default for the polarity.  |
+| `resetAllTokens()`        | Reverts every token in the active variant.                |
+| `getContrastReport()`     | Returns every `on-*` pair and its ratio, worst first.     |
 
 ### Events
 

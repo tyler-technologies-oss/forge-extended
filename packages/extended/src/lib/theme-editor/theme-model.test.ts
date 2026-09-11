@@ -7,6 +7,7 @@ import {
   exportForgeTheme,
   exportForgeThemeCss,
   exportForgeThemeJson,
+  exportForgeThemeRelativeCss,
   exportForgeThemeScss,
   normalizeForgeTheme,
   parseForgeThemeJson,
@@ -14,10 +15,16 @@ import {
   regenerateForgeTheme,
   resolveForgeThemeKnobs,
   resolveForgeThemeTokens,
-  setForgeThemePolarity
+  setForgeThemePolarity,
+  type ForgeTheme
 } from './theme-model';
 import { forgeDarkSeeds, forgeLightSeeds } from './theme-generator';
 import { FORGE_THEME_DARK_TOKENS, FORGE_THEME_LIGHT_TOKENS } from './theme-tokens';
+
+/** Pulls `--name: value` pairs out of an emitted stylesheet. */
+function parseDeclarations(css: string): Record<string, string> {
+  return Object.fromEntries([...css.matchAll(/^\s*(--[a-z0-9-]+):\s*(.+);$/gm)].map(match => [match[1], match[2]]));
+}
 
 describe('ThemeEditor theme model', () => {
   describe('createForgeTheme', () => {
@@ -325,6 +332,116 @@ describe('ThemeEditor theme model', () => {
       // Regenerating records what it derived from, so the palette view can show it.
       expect(activeForgeThemeVariant(regenerated).seeds).to.deep.equal(forgeLightSeeds());
       expect(activeForgeThemeVariant(regenerated).tokens.primary).to.equal(FORGE_THEME_LIGHT_TOKENS.primary);
+    });
+  });
+
+  describe('exportForgeThemeRelativeCss', () => {
+    const darkTheme = (): ForgeTheme =>
+      regenerateForgeTheme(
+        createForgeTheme({
+          polarity: 'dark',
+          // A vivid seed on purpose: scaling chroma in OkLCh can leave the sRGB
+          // gamut, which is where a naive formula stops reproducing the value.
+          variants: { dark: { seeds: { ...forgeDarkSeeds(), primary: '#b8f21a', secondary: '#ff2bd6' } } }
+        })
+      );
+
+    it('should derive every container from its accent', () => {
+      const css = exportForgeThemeRelativeCss(darkTheme());
+
+      for (const level of ['minimum', 'low', '', 'high']) {
+        const token = level ? `primary-container-${level}` : 'primary-container';
+        const line = css.split('\n').find(l => l.includes(`--forge-theme-${token}:`))!;
+        expect(line, token).to.include('oklch(from var(--forge-theme-primary)');
+      }
+    });
+
+    it('should derive the surface and outline ramps from surface', () => {
+      const css = exportForgeThemeRelativeCss(darkTheme());
+
+      expect(css).to.match(/--forge-theme-surface-container:\s*oklch\(from var\(--forge-theme-surface\)/);
+      expect(css).to.match(/--forge-theme-outline:\s*oklch\(from var\(--forge-theme-surface\)/);
+    });
+
+    it('should leave the inks literal', () => {
+      const css = exportForgeThemeRelativeCss(darkTheme());
+
+      // An `on-` colour is the result of an iterative contrast search and the
+      // `text-` scale is pure ink at a fixed alpha. Neither is a transform.
+      for (const line of css.split('\n')) {
+        if (/--forge-theme-(on-|text-)/.test(line)) {
+          expect(line, line).to.not.include('oklch(from');
+        }
+      }
+    });
+
+    it('should leave the seeds and the shadow literal', () => {
+      const css = exportForgeThemeRelativeCss(darkTheme());
+
+      expect(css).to.include('--forge-theme-primary: #b8f21a;');
+      expect(css).to.not.match(/--forge-theme-surface-bright-shadow:\s*oklch/);
+    });
+
+    it('should carry the global knobs', () => {
+      const theme = { ...darkTheme(), knobs: { ...emptyForgeThemeKnobs(), shapeFactor: 3 } };
+
+      expect(exportForgeThemeRelativeCss(theme)).to.include('--forge-shape-factor: 3;');
+    });
+
+    it('should say what it needs and what it did', () => {
+      const css = exportForgeThemeRelativeCss(darkTheme());
+
+      // The failure mode is silent on an old engine, so the caveat ships with it.
+      expect(css).to.include('Chrome 119+');
+      expect(css).to.match(/\d+ of \d+ tokens derive/);
+    });
+
+    // The point of the whole format: every formula has to resolve to the colour
+    // the generator produced, or the export is lying about what was previewed.
+    // Compared through a canvas so the comparison is on colour rather than on
+    // whether the browser echoed oklch() or rgb().
+    it('should resolve to exactly the generated colors', () => {
+      const theme = darkTheme();
+      const flat = parseDeclarations(exportForgeThemeCss(theme));
+      const relative = parseDeclarations(exportForgeThemeRelativeCss(theme));
+
+      const canvas = document.createElement('canvas');
+      canvas.width = 1;
+      canvas.height = 1;
+      const context = canvas.getContext('2d')!;
+      const host = document.createElement('div');
+      host.setAttribute(
+        'style',
+        Object.entries(flat)
+          .map(([k, v]) => `${k}:${v}`)
+          .join(';')
+      );
+      document.body.appendChild(host);
+      const probe = document.createElement('div');
+      host.appendChild(probe);
+
+      const pixel = (color: string): number[] => {
+        probe.style.color = '';
+        probe.style.color = color;
+        context.clearRect(0, 0, 1, 1);
+        context.fillStyle = getComputedStyle(probe).color;
+        context.fillRect(0, 0, 1, 1);
+        return [...context.getImageData(0, 0, 1, 1).data].slice(0, 3);
+      };
+
+      const formulas = Object.entries(relative).filter(([, value]) => value.startsWith('oklch(from'));
+      const mismatches: string[] = [];
+      for (const [token, expression] of formulas) {
+        const got = pixel(expression);
+        const want = pixel(flat[token]);
+        if (got.some((channel, i) => Math.abs(channel - want[i]) > 1)) {
+          mismatches.push(`${token}: ${got} vs ${want}`);
+        }
+      }
+      host.remove();
+
+      expect(formulas.length, 'nothing was derived, so nothing was proven').to.be.greaterThan(30);
+      expect(mismatches, mismatches.join('; ')).to.be.empty;
     });
   });
 

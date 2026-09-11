@@ -814,6 +814,7 @@ export class ThemeEditorComponent extends LitElement {
           <forge-option value="json">JSON</forge-option>
           <forge-option value="scss">Sass (theme.provide)</forge-option>
           <forge-option value="css">CSS (:root)</forge-option>
+          <forge-option value="css-relative">CSS (relative colors)</forge-option>
         </forge-select>
         <forge-button id="copy-button" variant="outlined" @click=${this.#onCopy}>
           <forge-icon slot="start" name="content_copy"></forge-icon>
