@@ -1,0 +1,136 @@
+import { Meta, Title, Canvas } from '@storybook/addon-docs/blocks';
+import CustomArgTypes from '../../blocks/CustomArgTypes';
+import * as ThemeEditorStories from './ThemeEditor.stories';
+
+<Meta of={ThemeEditorStories} />
+
+<Title />
+
+A complete authoring surface for a Tyler Forge™ theme. It edits all 101 `--forge-theme-*` design tokens,
+derives a full palette from a handful of seed colors, reports the worst `on-*` contrast ratios, imports and
+exports the theme, and can apply the theme to the live page so a customer can see it on the real product.
+
+The component owns no persistence. It edits a theme object and emits it; the host application decides where
+that theme is stored and how it is delivered.
+
+<Canvas of={ThemeEditorStories.Demo} />
+
+## Usage
+
+```html
+<forge-theme-editor>
+  <span slot="title">Brand theme</span>
+</forge-theme-editor>
+```
+
+```ts
+const editor = document.querySelector('forge-theme-editor');
+
+editor.loadTheme(await fetchSavedTheme());
+editor.addEventListener('forge-theme-editor-change', ({ detail }) => save(detail.theme));
+```
+
+### Views
+
+- **Tokens** — every token, grouped (brand, primary, secondary, tertiary, surface, text, success, error,
+  warning, info, outline), each with a color swatch and a text field. The filter narrows to matching token
+  names or group labels, and matched groups expand automatically. Each row has its own revert button, and
+  `Revert all` clears every override at once. A `Global knobs` panel exposes `--forge-shape-factor`,
+  a spacing multiplier, and the typography font family and size.
+- **Palette** — pick the nine seed colors and the editor derives the container ramps, the readable `on-`
+  inks, and the surface, text and outline scales. `Target contrast` is the WCAG ratio derived inks aim for;
+  turning off `Pure black/white accent inks` derives tinted inks instead of the pure black and white that
+  Forge's own tokens use.
+- **Contrast** — every `on-*` token measured against the background token it names, worst first. Body text
+  needs 4.5:1 and large text 3:1 for WCAG 2 AA. Some targets are physically unreachable — nothing contrasts
+  7:1 with a mid-lightness orange — so the report shows the shortfall rather than pretending it passed.
+- **Import & export** — export as JSON, as Sass built on Forge's own `theme.provide()` mixin, or as a plain
+  `:root` CSS block. Import accepts pasted JSON or a dropped file. Unknown token names are **rejected and
+  reported** rather than imported, because an invalid name emits a `--forge-theme-*` property that nothing
+  reads.
+
+### The live preview
+
+`Preview on page` applies the theme to the whole document, and the button, a banner, and the reflected
+`preview` attribute all make the live state obvious. Toggling it off removes the injected stylesheet and the
+application returns to its own theme.
+
+The preview has to be written as real CSS, because there is no Forge machinery that turns a theme object into
+custom properties: Forge emits the light set from `forge.css` as `:root { @include theme.properties; }`, and
+the dark set ships only as the `theme-dark.theme-properties` mixin, which host applications attach to a
+selector themselves.
+
+That is also why the preview declares its tokens on a list of selectors with `!important`:
+
+```css
+:root,
+body,
+.dark-theme,
+.light-theme,
+.app-theme-dark,
+.app-theme-light,
+[data-forge-theme='dark'],
+[data-forge-theme='light'] {
+  --forge-theme-primary: #b3001b !important;
+}
+```
+
+Host applications conventionally declare the dark set on a class on `<body>`, and a custom property declared
+on `<body>` beats one inherited from `:root`. Declaring at `:root` alone therefore loses on any page already
+in dark mode. Declaring on the conventional carriers as well, with `!important`, beats any non-important
+author rule on the same element regardless of specificity, and interoperates with both the class convention
+and `forge-theme-toggle`'s `data-forge-theme` attribute. Set `previewSelectors` to target a different carrier
+instead.
+
+Custom properties inherit through shadow boundaries, so overriding them on `<body>` reaches inside every
+Forge web component's shadow root too.
+
+## API
+
+<CustomArgTypes />
+
+### Properties
+
+| Name               | Type                        | Default                         | Description                                                   |
+| ------------------ | --------------------------- | ------------------------------- | ------------------------------------------------------------- |
+| `theme`            | `ForgeTheme`                | an untouched theme              | The theme being edited. Set as a property, not an attribute.  |
+| `preview`          | `boolean`                   | `false`                         | Whether the theme is applied to the live document. Reflected. |
+| `previewSelectors` | `string[]`                  | the conventional theme carriers | The selectors the live preview declares its tokens on.        |
+| `exportFormat`     | `'json' \| 'scss' \| 'css'` | `'json'`                        | The export format shown on the import and export view.        |
+
+### Methods
+
+| Name                      | Description                                                                 |
+| ------------------------- | --------------------------------------------------------------------------- |
+| `getTheme()`              | Returns the theme being edited.                                             |
+| `loadTheme(theme)`        | Replaces the theme, filling in anything the value omits.                    |
+| `applyPreview()`          | Applies the theme to the live document.                                     |
+| `removePreview()`         | Removes the theme from the live document.                                   |
+| `getPreviewCss()`         | Returns the CSS the preview injects, whether or not the preview is applied. |
+| `exportTheme(format?)`    | Emits the theme as JSON, Sass or CSS.                                       |
+| `importTheme(text)`       | Imports theme JSON and returns the warnings raised.                         |
+| `generatePalette(seeds?)` | Derives the full token set from seed colors.                                |
+| `setToken(token, value)`  | Sets one token, or clears it when the value is empty.                       |
+| `resetToken(token)`       | Reverts one token to the Forge default for the theme's mode.                |
+| `resetAllTokens()`        | Reverts every token.                                                        |
+| `getContrastReport()`     | Returns every `on-*` pair and its contrast ratio, worst first.              |
+
+### Events
+
+| Name                         | Detail                                         | Description                                                                                                      |
+| ---------------------------- | ---------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `forge-theme-editor-change`  | `{ theme: ForgeTheme, token: string \| null }` | Fired when the theme is edited. `token` names the edited token, or is `null` when the whole theme changed.       |
+| `forge-theme-editor-preview` | `{ preview: boolean, css: string }`            | Fired when the live preview is toggled. `css` is the injected stylesheet, or empty when the preview was removed. |
+| `forge-theme-editor-import`  | `{ theme: ForgeTheme, warnings: string[] }`    | Fired when a theme is imported.                                                                                  |
+
+All three events bubble, are composed and are cancelable.
+
+## Accessibility
+
+- Every color swatch and text field is labelled with the token it edits, and every revert button carries an
+  `aria-label` naming its token.
+- The preview button reports its state with `aria-pressed`, and the live preview is also announced by a
+  banner inside the editor.
+- Each view is a labelled `region`.
+- The contrast view exists so that an authored theme can be checked against WCAG 2 AA before it ships. A
+  theme that fails there will be illegible for some users no matter how the editor is operated.

@@ -5,5 +5,6 @@
   { "label": "Theme Toggle", "path": "/pages/theme-toggle/theme-toggle.html" },
   { "label": "User Profile", "path": "/pages/user-profile/user-profile.html" },
   { "label": "Multi Select Header", "path": "/pages/multi-select-header/multi-select-header.html" },
-  { "label": "Footer", "path": "/pages/footer/footer.html" }
+  { "label": "Footer", "path": "/pages/footer/footer.html" },
+  { "label": "Theme Editor", "path": "/pages/theme-editor/theme-editor.html", "tags": ["theme", "tokens", "color"] }
 ]

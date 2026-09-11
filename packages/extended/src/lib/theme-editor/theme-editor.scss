@@ -1,0 +1,220 @@
+@use '@tylertech/forge/sass/core/styles/theme' as forge-theme;
+@use '@tylertech/forge/sass/core/styles/spacing' as forge-spacing;
+@use '@tylertech/forge/sass/core/styles/shape' as forge-shape;
+@use '@tylertech/forge/sass/typography' as forge-typography;
+@use '@tylertech/forge/sass/card' as forge-card;
+@use '@tylertech/forge/sass/toolbar' as forge-toolbar;
+@use '../utils/mixins';
+
+//
+// Host
+//
+
+:host {
+  display: block;
+
+  --_forge-theme-editor-swatch-size: 32px;
+  --_forge-theme-editor-max-height: 80dvh;
+}
+
+:host([hidden]) {
+  display: none;
+}
+
+//
+// Base
+//
+
+.container {
+  @include forge-card.provide-theme(
+    (
+      padding: 0
+    )
+  );
+
+  display: flex;
+  flex-direction: column;
+  max-height: var(--_forge-theme-editor-max-height);
+  min-height: 0;
+  overflow: hidden;
+}
+
+.header {
+  @include forge-toolbar.provide-theme(
+    (
+      background: none
+    )
+  );
+}
+
+.title {
+  @include forge-typography.style(heading3);
+
+  margin: 0;
+}
+
+.header-actions {
+  @include mixins.stack(#{forge-spacing.variable(xsmall)}, true);
+}
+
+.lede {
+  @include forge-typography.style(body2);
+
+  color: #{forge-theme.variable(text-medium)};
+  margin-block: 0 #{forge-spacing.variable(medium)};
+}
+
+.empty {
+  @include forge-typography.style(body1);
+
+  color: #{forge-theme.variable(text-medium)};
+  text-align: center;
+  padding-block: #{forge-spacing.variable(xlarge)};
+}
+
+.preview-banner,
+.messages,
+.contrast-summary {
+  margin-inline: #{forge-spacing.variable(medium)};
+  margin-block-end: #{forge-spacing.variable(small)};
+}
+
+.messages ul {
+  margin: 0;
+  padding-inline-start: #{forge-spacing.variable(medium)};
+}
+
+.views {
+  flex: 0 0 auto;
+}
+
+.view {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: #{forge-spacing.variable(medium)};
+}
+
+//
+// Tokens view
+//
+
+.tokens-toolbar,
+.transfer-toolbar,
+.generator-options {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: #{forge-spacing.variable(small)};
+  margin-block-end: #{forge-spacing.variable(medium)};
+}
+
+.filter,
+.mode {
+  flex: 1 1 180px;
+}
+
+.groups {
+  @include mixins.stack(#{forge-spacing.variable(xxsmall)});
+}
+
+.group {
+  border: 1px solid #{forge-theme.variable(outline-low)};
+  border-radius: #{forge-shape.variable(medium)};
+  background-color: #{forge-theme.variable(surface-container-minimum)};
+}
+
+.group-header {
+  display: flex;
+  align-items: center;
+  gap: #{forge-spacing.variable(xsmall)};
+}
+
+.group-label {
+  @include forge-typography.style(subheading2);
+}
+
+.rows,
+.knob-rows,
+.seeds {
+  display: grid;
+  gap: #{forge-spacing.variable(small)};
+  padding: #{forge-spacing.variable(small)};
+}
+
+.row {
+  display: grid;
+  grid-template-columns: var(--_forge-theme-editor-swatch-size) 1fr auto;
+  align-items: center;
+  gap: #{forge-spacing.variable(xsmall)};
+}
+
+.seed-row {
+  grid-template-columns: var(--_forge-theme-editor-swatch-size) 1fr;
+}
+
+.swatch,
+.swatch-placeholder {
+  inline-size: var(--_forge-theme-editor-swatch-size);
+  block-size: var(--_forge-theme-editor-swatch-size);
+  padding: 0;
+  border: 1px solid #{forge-theme.variable(outline-low)};
+  border-radius: #{forge-shape.variable(small)};
+  background-color: #{forge-theme.variable(surface-container-low)};
+}
+
+.swatch {
+  cursor: pointer;
+}
+
+.knob-rows {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+//
+// Contrast view
+//
+
+.contrast-list {
+  @include mixins.stack(#{forge-spacing.variable(xxsmall)});
+
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.contrast-entry {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: #{forge-spacing.variable(small)};
+  padding: #{forge-spacing.variable(xsmall)};
+  border-radius: #{forge-shape.variable(small)};
+  background-color: #{forge-theme.variable(surface-container-minimum)};
+}
+
+//
+// Import and export view
+//
+
+.output-label {
+  @include forge-typography.style(label1);
+
+  display: block;
+  color: #{forge-theme.variable(text-medium)};
+  margin-block-end: #{forge-spacing.variable(xxsmall)};
+}
+
+.code {
+  inline-size: 100%;
+  box-sizing: border-box;
+  font-family: monospace;
+  font-size: 12px;
+  color: #{forge-theme.variable(text-high)};
+  background-color: #{forge-theme.variable(surface-container-minimum)};
+  border: 1px solid #{forge-theme.variable(outline-low)};
+  border-radius: #{forge-shape.variable(small)};
+  padding: #{forge-spacing.variable(xsmall)};
+  margin-block-end: #{forge-spacing.variable(medium)};
+  resize: vertical;
+}
