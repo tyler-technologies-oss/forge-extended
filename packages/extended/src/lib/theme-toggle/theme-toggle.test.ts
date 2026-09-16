@@ -36,7 +36,9 @@ describe('ThemeToggle', () => {
     expect(spy).to.have.been.called;
   });
 
-  it('should dispatch update event when theme changes to system', async () => {
+  it('should dispatch update event with the resolved light/dark theme when theme changes to system', async () => {
+    await emulateMedia({ colorScheme: 'dark' });
+
     const harness = await createFixture();
     const spy = sinon.spy();
 
@@ -45,6 +47,9 @@ describe('ThemeToggle', () => {
     await nextFrame();
 
     expect(spy).to.have.been.called;
+    const event = spy.firstCall.args[0] as CustomEvent;
+    expect(event.detail.theme).to.equal('system');
+    expect(event.detail.resolvedTheme).to.equal('dark');
   });
 
   it('should update the HTML element with the appropriate data attribute value when theme changes to light', async () => {
@@ -165,6 +170,17 @@ describe('ThemeToggle', () => {
     expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('light');
   });
 
+  it('should fall back to system when local storage contains an invalid theme value', async () => {
+    localStorage.setItem('.forge-theme', 'garbage');
+    await emulateMedia({ colorScheme: 'dark' });
+
+    const harness = await createFixture();
+    await nextFrame();
+
+    expect(harness.systemButton.getAttribute('selected')).to.exist;
+    expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('dark');
+  });
+
   it('should update the theme automatically when the OS color scheme preference changes while theme is system', async () => {
     localStorage.setItem('.forge-theme', 'system');
     await emulateMedia({ colorScheme: 'light' });
@@ -174,11 +190,19 @@ describe('ThemeToggle', () => {
 
     expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('light');
 
+    const spy = sinon.spy();
+    harness.el.addEventListener('forge-theme-toggle-update', spy);
+
     await emulateMedia({ colorScheme: 'dark' });
     await nextFrame();
 
     expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('dark');
     expect(harness.systemButton.getAttribute('selected')).to.exist;
+
+    expect(spy).to.have.been.called;
+    const event = spy.firstCall.args[0] as CustomEvent;
+    expect(event.detail.theme).to.equal('system');
+    expect(event.detail.resolvedTheme).to.equal('dark');
   });
 
   it('should not react to OS color scheme preference changes when a theme has been explicitly selected', async () => {

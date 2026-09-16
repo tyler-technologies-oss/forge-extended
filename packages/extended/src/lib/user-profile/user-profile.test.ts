@@ -1,5 +1,6 @@
 import { expect } from '@esm-bundle/chai';
 import { fixture, html, nextFrame } from '@open-wc/testing';
+import { ifDefined } from 'lit/directives/if-defined.js';
 import { UserProfileComponent } from './user-profile';
 
 import './user-profile';
@@ -489,7 +490,7 @@ async function createFixture({
       .email=${email}
       .imageUrl=${imageUrl || ''}
       .open=${open}
-      .themeToggleAriaLabel=${themeToggleAriaLabel ?? 'Select a theme'}>
+      theme-toggle-aria-label=${ifDefined(themeToggleAriaLabel)}>
       ${profileLinkTitle
         ? html`<forge-profile-link slot="link">
             <forge-icon slot="icon" name=${profileLinkIcon} external></forge-icon>

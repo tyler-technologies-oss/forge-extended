@@ -1,14 +1,16 @@
 const LOCAL_STORAGE_KEY = '.forge-theme';
 const THEME_ATTRIBUTE = 'data-forge-theme';
+const VALID_THEMES: ThemeToggleTheme[] = ['light', 'dark', 'system'];
 
 export type ThemeToggleTheme = 'light' | 'dark' | 'system';
 
 /**
- * Reads the persisted theme preference from local storage, defaulting to `system` when unset.
+ * Reads the persisted theme preference from local storage, defaulting to `system` when unset or invalid.
  * @returns The persisted theme preference.
  */
 export function getStoredTheme(): ThemeToggleTheme {
-  return (window.localStorage.getItem(LOCAL_STORAGE_KEY) as ThemeToggleTheme) ?? 'system';
+  const storedTheme = window.localStorage.getItem(LOCAL_STORAGE_KEY);
+  return VALID_THEMES.includes(storedTheme as ThemeToggleTheme) ? (storedTheme as ThemeToggleTheme) : 'system';
 }
 
 /**

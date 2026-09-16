@@ -221,9 +221,10 @@ export class UserProfileComponent extends LitElement {
 
   /** Sets the current theme. Applies immediately even if the theme toggle is not rendered. */
   public setTheme(value: ThemeToggleTheme): void {
-    applyTheme(value);
     if (this.#themeToggleRef.value) {
       this.#themeToggleRef.value.setTheme(value);
+    } else {
+      applyTheme(value);
     }
   }
 

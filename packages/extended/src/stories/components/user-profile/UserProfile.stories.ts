@@ -32,14 +32,8 @@ const meta = {
     const userProfileRef = createRef<UserProfileComponent>();
 
     function handleThemeChange(evt: CustomEvent<ThemeToggleUpdateEventData>) {
-      const mode =
-        evt.detail.theme === 'system'
-          ? window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'dark'
-            : 'light'
-          : evt.detail.theme;
       lastThemeToggleChange = evt.detail.theme as ThemeToggleTheme;
-      channel.emit(UPDATE_DARK_MODE_EVENT_NAME, mode);
+      channel.emit(UPDATE_DARK_MODE_EVENT_NAME, evt.detail.resolvedTheme);
     }
 
     function handleStorybookThemeUpdate(isDark: boolean) {

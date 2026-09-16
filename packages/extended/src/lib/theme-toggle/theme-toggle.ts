@@ -25,7 +25,10 @@ declare global {
 export const ThemeToggleComponentTagName: keyof HTMLElementTagNameMap = 'forge-theme-toggle';
 
 export interface ThemeToggleUpdateEventData {
+  /** The selected theme mode, as chosen by the user or set programmatically. */
   theme: ThemeToggleTheme;
+  /** The actual light/dark theme applied, resolving `system` to the current OS color scheme preference. */
+  resolvedTheme: 'light' | 'dark';
 }
 
 /**
@@ -36,7 +39,10 @@ export interface ThemeToggleUpdateEventData {
  * @slot dark-label - The text label for the dark theme option
  * @slot system-label - The text label for the system theme option
  *
- * @event {CustomEvent<ThemeToggleThemeEventData>} forge-theme-toggle-update - Fired when the theme is changed
+ * @event {CustomEvent<ThemeToggleUpdateEventData>} forge-theme-toggle-update - Fired when the theme changes, either
+ * from a user selection or, when `system` is selected, the OS color scheme preference changing. `detail.theme` is
+ * the selected mode and is unchanged for OS-driven updates while `system` remains selected; `detail.resolvedTheme`
+ * is the actual light/dark theme applied and is always the actionable value.
  */
 @customElement(ThemeToggleComponentTagName)
 export class ThemeToggleComponent extends LitElement {
@@ -145,11 +151,12 @@ export class ThemeToggleComponent extends LitElement {
   }
 
   #emitThemeChange(theme: ThemeToggleTheme): void {
+    const resolvedTheme = theme === 'system' ? detectPrefersColorScheme() : theme;
     const event = new CustomEvent<ThemeToggleUpdateEventData>('forge-theme-toggle-update', {
       bubbles: true,
       composed: true,
       cancelable: true,
-      detail: { theme }
+      detail: { theme, resolvedTheme }
     });
     this.dispatchEvent(event);
   }
