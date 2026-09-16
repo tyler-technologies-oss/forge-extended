@@ -270,14 +270,17 @@ describe('UserProfile', () => {
     }
   });
 
-  it('should handle setTheme gracefully when theme toggle is not present', async () => {
+  it('should still apply the theme when the theme toggle is not rendered', async () => {
     const harness = await createFixture({ themeToggle: false });
     await nextFrame();
 
-    // Should not throw error when theme toggle is not present
+    expect(harness.themeToggleContainerEl).to.not.exist;
+
     expect(() => harness.el.setTheme('light')).to.not.throw();
+    expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('light');
+
     expect(() => harness.el.setTheme('dark')).to.not.throw();
-    expect(() => harness.el.setTheme('system')).to.not.throw();
+    expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('dark');
   });
 
   it('should pass the default aria label through to the theme toggle and use default slotted labels', async () => {

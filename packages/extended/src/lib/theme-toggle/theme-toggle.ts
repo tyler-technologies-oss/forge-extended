@@ -8,6 +8,7 @@ import {
   toggleState
 } from '@tylertech/forge';
 import { tylIconWbSunny, tylIconTonality, tylIconMoonWaningCrescent } from '@tylertech/tyler-icons';
+import { applyTheme, detectPrefersColorScheme, getStoredTheme, ThemeToggleTheme } from '../utils/theme-utils';
 
 import styles from './theme-toggle.scss?inline';
 
@@ -21,11 +22,9 @@ declare global {
   }
 }
 
-const LOCAL_STORAGE_KEY = '.forge-theme';
-const THEME_ATTRIBUTE = 'data-forge-theme';
 export const ThemeToggleComponentTagName: keyof HTMLElementTagNameMap = 'forge-theme-toggle';
 
-export type ThemeToggleTheme = 'light' | 'dark' | 'system';
+export type { ThemeToggleTheme };
 
 export interface ThemeToggleUpdateEventData {
   theme: ThemeToggleTheme;
@@ -66,11 +65,8 @@ export class ThemeToggleComponent extends LitElement {
   constructor() {
     super();
     this.#internals = this.attachInternals();
-    this._theme = (window.localStorage.getItem(LOCAL_STORAGE_KEY) as ThemeToggleTheme) ?? 'system';
-    if (this._theme === 'system') {
-      this.#setThemeLocalStorage(this._theme);
-    }
-    this.#setAttributeOnHtmlEl();
+    this._theme = getStoredTheme();
+    applyTheme(this._theme);
     this.#setCssState();
   }
 
@@ -116,9 +112,8 @@ export class ThemeToggleComponent extends LitElement {
   /** Sets the current theme. */
   public setTheme(value: ThemeToggleTheme): void {
     this._theme = value;
-    this.#setAttributeOnHtmlEl();
+    applyTheme(this._theme);
     this.#setCssState();
-    this.#setThemeLocalStorage(this._theme);
   }
 
   #handleThemeChange(evt: CustomEvent<ThemeToggleTheme>): void {
@@ -127,19 +122,9 @@ export class ThemeToggleComponent extends LitElement {
   }
 
   #setTheme(): void {
-    this.#setAttributeOnHtmlEl();
+    applyTheme(this._theme);
     this.#setCssState();
-    this.#setThemeLocalStorage(this._theme);
     this.#emitThemeChange(this._theme);
-  }
-
-  #setAttributeOnHtmlEl(): void {
-    const htmlEl = document.documentElement;
-    if (this._theme === 'system') {
-      htmlEl.setAttribute(THEME_ATTRIBUTE, this.#detectPrefersColorScheme());
-      return;
-    }
-    htmlEl.setAttribute(THEME_ATTRIBUTE, this._theme);
   }
 
   #setCssState(): void {
@@ -153,16 +138,12 @@ export class ThemeToggleComponent extends LitElement {
         toggleState(this.#internals, 'light', false);
         break;
       case 'system': {
-        const themeTest = this.#detectPrefersColorScheme();
+        const themeTest = detectPrefersColorScheme();
         toggleState(this.#internals, 'light', themeTest === 'light');
         toggleState(this.#internals, 'dark', themeTest === 'dark');
         break;
       }
     }
-  }
-
-  #setThemeLocalStorage(theme: string): void {
-    window.localStorage.setItem(LOCAL_STORAGE_KEY, theme);
   }
 
   #emitThemeChange(theme: ThemeToggleTheme): void {
@@ -173,10 +154,6 @@ export class ThemeToggleComponent extends LitElement {
       detail: { theme }
     });
     this.dispatchEvent(event);
-  }
-
-  #detectPrefersColorScheme(): ThemeToggleTheme {
-    return this.#mediaQuery.matches ? 'dark' : 'light';
   }
 
   #handleSystemPreferenceChange = (): void => {

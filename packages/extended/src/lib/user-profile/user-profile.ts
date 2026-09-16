@@ -15,6 +15,7 @@ import {
   toggleState
 } from '@tylertech/forge';
 import { ThemeToggleComponent, ThemeToggleTheme } from '../theme-toggle/theme-toggle';
+import { applyTheme } from '../utils/theme-utils';
 import { createRef, ref } from 'lit/directives/ref.js';
 
 import '../theme-toggle/theme-toggle';
@@ -217,8 +218,9 @@ export class UserProfileComponent extends LitElement {
     `;
   }
 
-  /** Sets the theme for the theme toggle. */
+  /** Sets the current theme. Applies immediately even if the theme toggle is not rendered. */
   public setTheme(value: ThemeToggleTheme): void {
+    applyTheme(value);
     if (this.#themeToggleRef.value) {
       this.#themeToggleRef.value.setTheme(value);
     }
