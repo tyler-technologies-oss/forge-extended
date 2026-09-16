@@ -283,14 +283,18 @@ describe('UserProfile', () => {
     expect(harness.htmlElement.getAttribute('data-forge-theme')).to.equal('dark');
   });
 
-  it('should pass the default aria label through to the theme toggle and use default slotted labels', async () => {
+  it('should pass the default aria label through to the theme toggle and render default labels when nothing is slotted', async () => {
     const harness = await createFixture({ themeToggle: true });
 
     expect(harness.themeToggle?.groupAriaLabel).to.equal('Select a theme');
-    expect(harness.themeToggleTitleSlot?.assignedNodes({ flatten: true }).length).to.equal(0);
-    expect(harness.themeToggleLightLabelSlot?.assignedNodes({ flatten: true }).length).to.equal(0);
-    expect(harness.themeToggleDarkLabelSlot?.assignedNodes({ flatten: true }).length).to.equal(0);
-    expect(harness.themeToggleSystemLabelSlot?.assignedNodes({ flatten: true }).length).to.equal(0);
+    expect(harness.themeToggleTitleSlot?.assignedNodes({ flatten: true })[0]?.textContent?.trim()).to.equal('Theme');
+    expect(harness.themeToggleLightLabelSlot?.assignedNodes({ flatten: true })[0]?.textContent?.trim()).to.equal(
+      'Light'
+    );
+    expect(harness.themeToggleDarkLabelSlot?.assignedNodes({ flatten: true })[0]?.textContent?.trim()).to.equal('Dark');
+    expect(harness.themeToggleSystemLabelSlot?.assignedNodes({ flatten: true })[0]?.textContent?.trim()).to.equal(
+      'System'
+    );
   });
 
   it('should pass a custom aria label through to the theme toggle and project custom label content', async () => {

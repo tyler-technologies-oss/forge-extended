@@ -106,10 +106,11 @@ export class UserProfileComponent extends LitElement {
   readonly #linkSlot = html`<slot name="link" id="link-slot"></slot>`;
   readonly #signInButtonSlot = html`<slot name="sign-in-button-text" id="sign-in-button-slot">Sign in</slot>`;
   readonly #signOutButtonSlot = html`<slot name="sign-out-button-text" id="sign-out-button-slot">Sign Out</slot>`;
-  readonly #themeToggleTitleSlot = html`<slot name="theme-toggle-title" slot="title"></slot>`;
-  readonly #themeToggleLightLabelSlot = html`<slot name="theme-toggle-light-label" slot="light-label"></slot>`;
-  readonly #themeToggleDarkLabelSlot = html`<slot name="theme-toggle-dark-label" slot="dark-label"></slot>`;
-  readonly #themeToggleSystemLabelSlot = html`<slot name="theme-toggle-system-label" slot="system-label"></slot>`;
+  readonly #themeToggleTitleSlot = html`<slot name="theme-toggle-title" slot="title">Theme</slot>`;
+  readonly #themeToggleLightLabelSlot = html`<slot name="theme-toggle-light-label" slot="light-label">Light</slot>`;
+  readonly #themeToggleDarkLabelSlot = html`<slot name="theme-toggle-dark-label" slot="dark-label">Dark</slot>`;
+  readonly #themeToggleSystemLabelSlot = html`<slot name="theme-toggle-system-label" slot="system-label">System</slot>`;
+
   readonly #themeToggleRef = createRef<ThemeToggleComponent>();
 
   constructor() {
