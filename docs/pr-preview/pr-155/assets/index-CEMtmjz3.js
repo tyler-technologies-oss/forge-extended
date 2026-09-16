@@ -1,5 +1,0 @@
-import{d as o}from"./custom-element-DA12Qcjc.js";import"./iframe-B0AtGDgb.js";import{a as t}from"./list-QiFvwS9W.js";/**
- * @license
- * Copyright Tyler Technologies, Inc. 
- * License: Apache-2.0
- */function i(){o(t)}export{i as d};
