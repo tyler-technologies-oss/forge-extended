@@ -1,5 +1,5 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import {
   defineButtonToggleGroupComponent,
   defineIconButtonComponent,
@@ -35,6 +35,9 @@ export interface ThemeToggleUpdateEventData {
  * @tag forge-theme-toggle
  *
  * @slot title - The title shown above the toggle buttons
+ * @slot light-label - The text label for the light theme option
+ * @slot dark-label - The text label for the dark theme option
+ * @slot system-label - The text label for the system theme option
  *
  * @event {CustomEvent<ThemeToggleThemeEventData>} forge-theme-toggle-update - Fired when the theme is changed
  */
@@ -50,10 +53,15 @@ export class ThemeToggleComponent extends LitElement {
 
   public static override styles = unsafeCSS(styles);
 
+  /** ARIA label for the theme toggle button group */
+  @property({ attribute: 'group-aria-label' })
+  public groupAriaLabel = 'Select a theme';
+
   @state()
   private _theme: ThemeToggleTheme = 'system';
 
   readonly #internals: ElementInternals;
+  readonly #mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
 
   constructor() {
     super();
@@ -66,27 +74,40 @@ export class ThemeToggleComponent extends LitElement {
     this.#setCssState();
   }
 
+  public override connectedCallback(): void {
+    super.connectedCallback();
+    this.#mediaQuery.addEventListener('change', this.#handleSystemPreferenceChange);
+  }
+
+  public override disconnectedCallback(): void {
+    super.disconnectedCallback();
+    this.#mediaQuery.removeEventListener('change', this.#handleSystemPreferenceChange);
+  }
+
   readonly #titleSlot = html`<slot name="title" id="theme-toggle-title">Theme</slot> `;
+  readonly #lightLabelSlot = html`<slot name="light-label" id="light-label-slot">Light</slot>`;
+  readonly #darkLabelSlot = html`<slot name="dark-label" id="dark-label-slot">Dark</slot>`;
+  readonly #systemLabelSlot = html`<slot name="system-label" id="system-label-slot">System</slot>`;
 
   public override render(): TemplateResult {
     return html`
       <div class="title">${this.#titleSlot}</div>
       <forge-button-toggle-group
-        aria-label="Select a theme"
+        aria-label="${this.groupAriaLabel}"
         .value=${this._theme}
         mandatory
         @forge-button-toggle-group-change=${this.#handleThemeChange}>
         <forge-button-toggle value="light" id="light-button">
           <forge-icon slot="start" name="wb_sunny"></forge-icon>
-          <span>Light</span>
+          <span>${this.#lightLabelSlot}</span>
         </forge-button-toggle>
         <forge-button-toggle value="dark" id="dark-button">
           <forge-icon slot="start" name="moon_waning_crescent"></forge-icon>
-          <span>Dark</span>
+          <span>${this.#darkLabelSlot}</span>
         </forge-button-toggle>
         <forge-button-toggle value="system" id="system-button">
           <forge-icon slot="start" name="tonality"></forge-icon>
-          <span>System</span>
+          <span>${this.#systemLabelSlot}</span>
         </forge-button-toggle>
       </forge-button-toggle-group>
     `;
@@ -155,6 +176,12 @@ export class ThemeToggleComponent extends LitElement {
   }
 
   #detectPrefersColorScheme(): ThemeToggleTheme {
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    return this.#mediaQuery.matches ? 'dark' : 'light';
   }
+
+  #handleSystemPreferenceChange = (): void => {
+    if (this._theme === 'system') {
+      this.#setTheme();
+    }
+  };
 }

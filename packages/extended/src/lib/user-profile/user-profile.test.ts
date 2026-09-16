@@ -280,6 +280,41 @@ describe('UserProfile', () => {
     expect(() => harness.el.setTheme('system')).to.not.throw();
   });
 
+  it('should pass the default aria label through to the theme toggle and use default slotted labels', async () => {
+    const harness = await createFixture({ themeToggle: true });
+
+    expect(harness.themeToggle?.groupAriaLabel).to.equal('Select a theme');
+    expect(harness.themeToggleTitleSlot?.assignedNodes({ flatten: true }).length).to.equal(0);
+    expect(harness.themeToggleLightLabelSlot?.assignedNodes({ flatten: true }).length).to.equal(0);
+    expect(harness.themeToggleDarkLabelSlot?.assignedNodes({ flatten: true }).length).to.equal(0);
+    expect(harness.themeToggleSystemLabelSlot?.assignedNodes({ flatten: true }).length).to.equal(0);
+  });
+
+  it('should pass a custom aria label through to the theme toggle and project custom label content', async () => {
+    const harness = await createFixture({
+      themeToggle: true,
+      themeToggleAriaLabel: 'Choose a theme',
+      themeToggleTitle: 'Appearance',
+      themeToggleLightLabel: 'Bright',
+      themeToggleDarkLabel: 'Night',
+      themeToggleSystemLabel: 'Auto'
+    });
+
+    expect(harness.themeToggle?.groupAriaLabel).to.equal('Choose a theme');
+    expect(harness.themeToggleTitleSlot?.assignedNodes({ flatten: true })[0]?.textContent?.trim()).to.equal(
+      'Appearance'
+    );
+    expect(harness.themeToggleLightLabelSlot?.assignedNodes({ flatten: true })[0]?.textContent?.trim()).to.equal(
+      'Bright'
+    );
+    expect(harness.themeToggleDarkLabelSlot?.assignedNodes({ flatten: true })[0]?.textContent?.trim()).to.equal(
+      'Night'
+    );
+    expect(harness.themeToggleSystemLabelSlot?.assignedNodes({ flatten: true })[0]?.textContent?.trim()).to.equal(
+      'Auto'
+    );
+  });
+
   it('should show sign in button when fullName is not provided (user not logged in)', async () => {
     const harness = await createFixture({ fullName: '' });
 
@@ -359,6 +394,22 @@ class UserProfileHarness {
     return this.el.shadowRoot!.querySelector('forge-theme-toggle');
   }
 
+  public get themeToggleTitleSlot(): HTMLSlotElement | undefined {
+    return this.themeToggle?.shadowRoot?.querySelector('slot[name="title"]') as HTMLSlotElement | undefined;
+  }
+
+  public get themeToggleLightLabelSlot(): HTMLSlotElement | undefined {
+    return this.themeToggle?.shadowRoot?.querySelector('slot[name="light-label"]') as HTMLSlotElement | undefined;
+  }
+
+  public get themeToggleDarkLabelSlot(): HTMLSlotElement | undefined {
+    return this.themeToggle?.shadowRoot?.querySelector('slot[name="dark-label"]') as HTMLSlotElement | undefined;
+  }
+
+  public get themeToggleSystemLabelSlot(): HTMLSlotElement | undefined {
+    return this.themeToggle?.shadowRoot?.querySelector('slot[name="system-label"]') as HTMLSlotElement | undefined;
+  }
+
   public get signInButton(): ButtonComponent {
     return this.el.shadowRoot!.querySelector('.sign-in-button') as ButtonComponent;
   }
@@ -400,6 +451,11 @@ interface UserProfileFixtureConfig {
   profileLinkIcon?: string;
   signOutButtonText?: string;
   open?: boolean;
+  themeToggleAriaLabel?: string;
+  themeToggleTitle?: string;
+  themeToggleLightLabel?: string;
+  themeToggleDarkLabel?: string;
+  themeToggleSystemLabel?: string;
 }
 
 async function createFixture({
@@ -411,7 +467,12 @@ async function createFixture({
   profileLinkTitle = 'Profile Link',
   profileLinkIcon = 'settings',
   signOutButtonText,
-  open = false
+  open = false,
+  themeToggleAriaLabel,
+  themeToggleTitle,
+  themeToggleLightLabel,
+  themeToggleDarkLabel,
+  themeToggleSystemLabel
 }: UserProfileFixtureConfig = {}): Promise<UserProfileHarness> {
   const el = await fixture<UserProfileComponent>(html`
     <forge-user-profile
@@ -420,7 +481,8 @@ async function createFixture({
       .fullName=${fullName}
       .email=${email}
       .imageUrl=${imageUrl || ''}
-      .open=${open}>
+      .open=${open}
+      .themeToggleAriaLabel=${themeToggleAriaLabel ?? 'Select a theme'}>
       ${profileLinkTitle
         ? html`<forge-profile-link slot="link">
             <forge-icon slot="icon" name=${profileLinkIcon} external></forge-icon>
@@ -428,6 +490,10 @@ async function createFixture({
           </forge-profile-link>`
         : ''}
       ${signOutButtonText ? html`<span slot="sign-out-button-text">${signOutButtonText}</span>` : null}
+      ${themeToggleTitle ? html`<span slot="theme-toggle-title">${themeToggleTitle}</span>` : null}
+      ${themeToggleLightLabel ? html`<span slot="theme-toggle-light-label">${themeToggleLightLabel}</span>` : null}
+      ${themeToggleDarkLabel ? html`<span slot="theme-toggle-dark-label">${themeToggleDarkLabel}</span>` : null}
+      ${themeToggleSystemLabel ? html`<span slot="theme-toggle-system-label">${themeToggleSystemLabel}</span>` : null}
     </forge-user-profile>
   `);
 

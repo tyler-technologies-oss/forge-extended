@@ -9,9 +9,30 @@ const meta = {
   tags: ['hidden'],
   title: 'Components/User Profile/Theme Toggle',
   render: args => {
-    return html` <forge-theme-toggle></forge-theme-toggle> `;
+    return html`
+      <forge-theme-toggle group-aria-label="${args.groupAriaLabel}">
+        <span slot="title">${args.title}</span>
+        <span slot="light-label">${args['light-label']}</span>
+        <span slot="dark-label">${args['dark-label']}</span>
+        <span slot="system-label">${args['system-label']}</span>
+      </forge-theme-toggle>
+    `;
   },
-  component
+  component,
+  argTypes: {
+    groupAriaLabel: { control: 'text' },
+    title: { control: 'text' },
+    'light-label': { control: 'text' },
+    'dark-label': { control: 'text' },
+    'system-label': { control: 'text' }
+  },
+  args: {
+    groupAriaLabel: 'Select a theme',
+    title: 'Theme',
+    'light-label': 'Light',
+    'dark-label': 'Dark',
+    'system-label': 'System'
+  }
 } satisfies Meta;
 
 export default meta;
