@@ -14,8 +14,8 @@ import {
   IPopoverToggleEventData,
   toggleState
 } from '@tylertech/forge';
-import { ThemeToggleComponent, ThemeToggleTheme } from '../theme-toggle/theme-toggle';
-import { applyTheme } from '../utils/theme-utils';
+import { ThemeToggleComponent } from '../theme-toggle/theme-toggle';
+import { applyTheme, ThemeToggleTheme } from '../utils/theme-utils';
 import { createRef, ref } from 'lit/directives/ref.js';
 
 import '../theme-toggle/theme-toggle';

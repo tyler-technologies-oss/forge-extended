@@ -24,8 +24,6 @@ declare global {
 
 export const ThemeToggleComponentTagName: keyof HTMLElementTagNameMap = 'forge-theme-toggle';
 
-export type { ThemeToggleTheme };
-
 export interface ThemeToggleUpdateEventData {
   theme: ThemeToggleTheme;
 }

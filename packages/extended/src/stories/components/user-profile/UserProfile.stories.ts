@@ -6,7 +6,8 @@ import { tylIconSettings, tylIconAccount } from '@tylertech/tyler-icons';
 import { action } from 'storybook/actions';
 import { UPDATE_DARK_MODE_EVENT_NAME, DARK_MODE_EVENT_NAME } from '@vueless/storybook-dark-mode';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { ThemeToggleTheme, type ThemeToggleUpdateEventData } from '$lib/theme-toggle';
+import { type ThemeToggleUpdateEventData } from '$lib/theme-toggle';
+import { ThemeToggleTheme } from '$lib/utils/theme-utils';
 import { type UserProfileComponent } from '$lib/user-profile';
 
 import '$lib/user-profile';
