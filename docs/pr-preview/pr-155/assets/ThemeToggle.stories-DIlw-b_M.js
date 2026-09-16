@@ -1,8 +1,0 @@
-import{x as o}from"./iframe-CEaEySpr.js";import"./theme-toggle-sabeByIL.js";import"./custom-element-B0HNckU6.js";import"./utils-DtyNcxMd.js";import"./state-CgEwcDA1.js";import"./with-default-aria-C4n4_au4.js";import"./constants-CTXNzd9R.js";import"./index-DnaM4FFE.js";import"./icon-button-DTo5oUvJ.js";import"./base-button-adapter-jVdNcW1L.js";import"./focus-indicator-DQbw7lnq.js";import"./icon-Conhr7Vm.js";import"./index-CgsVRZDe.js";import"./popover-BAVW41HB.js";import"./with-longpress-listener-n-apoziF.js";import"./dismissible-stack-GVLFeEfG.js";import"./with-form-associated-DfwofVco.js";const r="forge-theme-toggle",$={tags:["hidden"],title:"Components/User Profile/Theme Toggle",render:t=>o`
-      <forge-theme-toggle group-aria-label="${t.groupAriaLabel}">
-        <span slot="title">${t.title}</span>
-        <span slot="light-label">${t["light-label"]}</span>
-        <span slot="dark-label">${t["dark-label"]}</span>
-        <span slot="system-label">${t["system-label"]}</span>
-      </forge-theme-toggle>
-    `,component:r,argTypes:{groupAriaLabel:{control:"text"},title:{control:"text"},"light-label":{control:"text"},"dark-label":{control:"text"},"system-label":{control:"text"}},args:{groupAriaLabel:"Select a theme",title:"Theme","light-label":"Light","dark-label":"Dark","system-label":"System"}},e={};e.parameters={...e.parameters,docs:{...e.parameters?.docs,source:{originalSource:"{}",...e.parameters?.docs?.source}}};const L=["Demo"];export{e as Demo,L as __namedExportsOrder,$ as default};
