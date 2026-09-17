@@ -1,5 +1,13 @@
 # @tylertech/forge-extended-react
 
+## 1.6.2
+
+### Patch Changes
+
+- 01a4a96: Added i18n slots/labels to `forge-theme-toggle` and synced its state with OS `prefers-color-scheme` changes. Fixed `forge-user-profile` to show default theme toggle labels instead of blank text. Regenerated the Angular and React wrappers to expose the new `groupAriaLabel`/`themeToggleAriaLabel` inputs.
+- Updated dependencies [01a4a96]
+  - @tylertech/forge-extended@1.8.0
+
 ## 1.6.1
 
 ### Patch Changes
