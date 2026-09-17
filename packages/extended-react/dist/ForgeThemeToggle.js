@@ -4,6 +4,7 @@ import { useEventListener } from "./react-utils.js";
 
 export const ForgeThemeToggle = forwardRef((props, forwardedRef) => {
   const ref = useRef(null);
+  const { groupAriaLabel, ...filteredProps } = props;
 
   /** Event listeners - run once */
   useEventListener(
@@ -23,7 +24,8 @@ export const ForgeThemeToggle = forwardRef((props, forwardedRef) => {
           forwardedRef.current = node;
         }
       },
-      ...props,
+      ...filteredProps,
+      "group-aria-label": props.groupAriaLabel || props["group-aria-label"],
       class: props.className,
       exportparts: props.exportparts,
       for: props.htmlFor,

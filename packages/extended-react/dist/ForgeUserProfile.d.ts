@@ -40,6 +40,9 @@ export interface ForgeUserProfileProps
   /** ARIA label for the user profile avatar button */
   buttonLabel?: ForgeUserProfileElement["buttonLabel"];
 
+  /** ARIA label for the theme toggle button group */
+  themeToggleAriaLabel?: ForgeUserProfileElement["themeToggleAriaLabel"];
+
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
 
@@ -78,11 +81,15 @@ export interface ForgeUserProfileProps
  * - **forge-user-profile-sign-out** - Fired when the sign out button is clicked.
  *
  * ### **Methods:**
- *  - **setTheme(value: _ThemeToggleTheme_): _void_** - Sets the theme for the theme toggle.
+ *  - **setTheme(value: _ThemeToggleTheme_): _void_** - Sets the current theme. Applies immediately even if the theme toggle is not rendered.
  *
  * ### **Slots:**
  *  - **link** - Slot for additional profile navigation links
  * - **sign-in-button-text** - Slot for the sign in button text
  * - **sign-out-button-text** - Slot for the sign out button text
+ * - **theme-toggle-title** - Slot for the theme toggle's title text
+ * - **theme-toggle-light-label** - Slot for the theme toggle's light theme option text
+ * - **theme-toggle-dark-label** - Slot for the theme toggle's dark theme option text
+ * - **theme-toggle-system-label** - Slot for the theme toggle's system theme option text
  */
 export const ForgeUserProfile: React.ForwardRefExoticComponent<ForgeUserProfileProps>;

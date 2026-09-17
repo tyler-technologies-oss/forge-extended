@@ -19,6 +19,9 @@ export interface ForgeThemeToggleProps
     | "onFocus"
     | "onBlur"
   > {
+  /** ARIA label for the theme toggle button group */
+  groupAriaLabel?: ForgeThemeToggleElement["groupAriaLabel"];
+
   /** A space-separated list of the classes of the element. Classes allows CSS and JavaScript to select and access specific elements via the class selectors or functions like the method `Document.getElementsByClassName()`. */
   className?: string;
 
@@ -40,9 +43,9 @@ export interface ForgeThemeToggleProps
   /** Allows developers to make HTML elements focusable, allow or prevent them from being sequentially focusable (usually with the `Tab` key, hence the name) and determine their relative ordering for sequential focus navigation. */
   tabIndex?: number;
 
-  /** Fired when the theme is changed */
+  /** Fired when the theme changes, either from a user selection or, when `system` is selected, the OS color scheme preference changing. `detail.theme` is the selected mode and is unchanged for OS-driven updates while `system` remains selected; `detail.resolvedTheme` is the actual light/dark theme applied and is always the actionable value. */
   onForgeThemeToggleUpdate?: (
-    event: CustomEvent<CustomEvent<ThemeToggleThemeEventData>>,
+    event: CustomEvent<CustomEvent<ThemeToggleUpdateEventData>>,
   ) => void;
 }
 
@@ -52,12 +55,15 @@ export interface ForgeThemeToggleProps
  *
  *
  * ### **Events:**
- *  - **forge-theme-toggle-update** - Fired when the theme is changed
+ *  - **forge-theme-toggle-update** - Fired when the theme changes, either from a user selection or, when `system` is selected, the OS color scheme preference changing. `detail.theme` is the selected mode and is unchanged for OS-driven updates while `system` remains selected; `detail.resolvedTheme` is the actual light/dark theme applied and is always the actionable value.
  *
  * ### **Methods:**
  *  - **setTheme(value: _ThemeToggleTheme_): _void_** - Sets the current theme.
  *
  * ### **Slots:**
  *  - **title** - The title shown above the toggle buttons
+ * - **light-label** - The text label for the light theme option
+ * - **dark-label** - The text label for the dark theme option
+ * - **system-label** - The text label for the system theme option
  */
 export const ForgeThemeToggle: React.ForwardRefExoticComponent<ForgeThemeToggleProps>;
