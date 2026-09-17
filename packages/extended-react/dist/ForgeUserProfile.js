@@ -11,6 +11,7 @@ export const ForgeUserProfile = forwardRef((props, forwardedRef) => {
     email,
     imageUrl,
     buttonLabel,
+    themeToggleAriaLabel,
     ...filteredProps
   } = props;
 
@@ -42,6 +43,8 @@ export const ForgeUserProfile = forwardRef((props, forwardedRef) => {
       email: props.email,
       "image-url": props.imageUrl || props["image-url"],
       "button-label": props.buttonLabel || props["button-label"],
+      "theme-toggle-aria-label":
+        props.themeToggleAriaLabel || props["theme-toggle-aria-label"],
       class: props.className,
       exportparts: props.exportparts,
       for: props.htmlFor,

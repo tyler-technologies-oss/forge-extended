@@ -998,6 +998,281 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "ContentScaffoldComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-content-scaffold'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "ContentScaffoldComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the header section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-header-height"
+            },
+            {
+              "description": "Controls the background color of the header section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-header-background"
+            },
+            {
+              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-header-min-height"
+            },
+            {
+              "description": "Controls the height of the body section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-body-height"
+            },
+            {
+              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
+              "name": "--forge-content-scaffold-body-padding-inline"
+            },
+            {
+              "description": "Controls the height of the footer section. Defaults to `auto`.",
+              "name": "--forge-content-scaffold-footer-height"
+            },
+            {
+              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
+              "name": "--forge-content-scaffold-footer-background"
+            },
+            {
+              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
+              "name": "--forge-content-scaffold-footer-min-height"
+            },
+            {
+              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
+              "name": "--forge-content-scaffold-footer-full-padding"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
+              "name": "header"
+            },
+            {
+              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
+              "name": "before-header-start"
+            },
+            {
+              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-start"
+            },
+            {
+              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
+              "name": "header-end"
+            },
+            {
+              "description": "The main body content that expands to fill available space.",
+              "name": "body"
+            },
+            {
+              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
+              "name": "footer"
+            },
+            {
+              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-start"
+            },
+            {
+              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
+              "name": "footer-end"
+            }
+          ],
+          "members": [],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-content-scaffold",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponentTagName",
+          "declaration": {
+            "name": "ContentScaffoldComponentTagName",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "ContentScaffoldComponent",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "ContentScaffoldComponent",
+            "module": "src/lib/content-scaffold/content-scaffold.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/footer/footer.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "FooterComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-footer'"
+        },
+        {
+          "kind": "class",
+          "description": "A footer component for displaying navigation, copyright, and branding information at the bottom of a page.",
+          "name": "FooterComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the background color of the footer.",
+              "name": "--forge-footer-background"
+            },
+            {
+              "description": "Controls the text color of footer content.",
+              "name": "--forge-footer-on-background"
+            },
+            {
+              "description": "Controls the padding of the footer.",
+              "name": "--forge-footer-padding"
+            },
+            {
+              "description": "Controls the left padding of the footer.",
+              "name": "--forge-footer-padding-left"
+            },
+            {
+              "description": "Controls the right padding of the footer.",
+              "name": "--forge-footer-padding-right"
+            },
+            {
+              "description": "Controls the gap between footer content and graphic in standard layout.",
+              "name": "--forge-footer-gap"
+            },
+            {
+              "description": "Controls the gap between stacked elements in alternative layout.",
+              "name": "--forge-footer-alternative-gap"
+            },
+            {
+              "description": "Controls the margin around dividers between footer items.",
+              "name": "--forge-footer-divider-margin"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Slot for footer items or custom content.",
+              "name": ""
+            },
+            {
+              "description": "Slot for footer graphic, such as a logo.",
+              "name": "graphic"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "layout",
+              "type": {
+                "text": "FooterLayout"
+              },
+              "privacy": "public",
+              "default": "'auto'",
+              "description": "Defines the footer layout mode.",
+              "attribute": "layout"
+            },
+            {
+              "kind": "field",
+              "name": "layoutBreakpoint",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "900",
+              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
+              "attribute": "layout-breakpoint"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "layout",
+              "type": {
+                "text": "FooterLayout"
+              },
+              "default": "'auto'",
+              "description": "Defines the footer layout mode.",
+              "fieldName": "layout"
+            },
+            {
+              "name": "layout-breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "default": "900",
+              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
+              "fieldName": "layoutBreakpoint"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-footer",
+          "customElement": true,
+          "states": [
+            {
+              "name": "standard",
+              "description": "Applied when the layout is set to `standard` or when in `auto` mode above the breakpoint."
+            },
+            {
+              "name": "alternative",
+              "description": "Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint."
+            },
+            {
+              "name": "auto",
+              "description": "Applied when the layout is set to `auto`."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FooterComponentTagName",
+          "declaration": {
+            "name": "FooterComponentTagName",
+            "module": "src/lib/footer/footer.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "FooterComponent",
+          "declaration": {
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer.ts"
+          }
+        },
+        {
+          "kind": "custom-element-definition",
+          "declaration": {
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/count-card/count-card.ts",
       "declarations": [
         {
@@ -1188,281 +1463,6 @@
           "declaration": {
             "name": "CountCardComponent",
             "module": "src/lib/count-card/count-card.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/footer/footer.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "FooterComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-footer'"
-        },
-        {
-          "kind": "class",
-          "description": "A footer component for displaying navigation, copyright, and branding information at the bottom of a page.",
-          "name": "FooterComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the background color of the footer.",
-              "name": "--forge-footer-background"
-            },
-            {
-              "description": "Controls the text color of footer content.",
-              "name": "--forge-footer-on-background"
-            },
-            {
-              "description": "Controls the padding of the footer.",
-              "name": "--forge-footer-padding"
-            },
-            {
-              "description": "Controls the left padding of the footer.",
-              "name": "--forge-footer-padding-left"
-            },
-            {
-              "description": "Controls the right padding of the footer.",
-              "name": "--forge-footer-padding-right"
-            },
-            {
-              "description": "Controls the gap between footer content and graphic in standard layout.",
-              "name": "--forge-footer-gap"
-            },
-            {
-              "description": "Controls the gap between stacked elements in alternative layout.",
-              "name": "--forge-footer-alternative-gap"
-            },
-            {
-              "description": "Controls the margin around dividers between footer items.",
-              "name": "--forge-footer-divider-margin"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Slot for footer items or custom content.",
-              "name": ""
-            },
-            {
-              "description": "Slot for footer graphic, such as a logo.",
-              "name": "graphic"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "layout",
-              "type": {
-                "text": "FooterLayout"
-              },
-              "privacy": "public",
-              "default": "'auto'",
-              "description": "Defines the footer layout mode.",
-              "attribute": "layout"
-            },
-            {
-              "kind": "field",
-              "name": "layoutBreakpoint",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "900",
-              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
-              "attribute": "layout-breakpoint"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "layout",
-              "type": {
-                "text": "FooterLayout"
-              },
-              "default": "'auto'",
-              "description": "Defines the footer layout mode.",
-              "fieldName": "layout"
-            },
-            {
-              "name": "layout-breakpoint",
-              "type": {
-                "text": "number"
-              },
-              "default": "900",
-              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
-              "fieldName": "layoutBreakpoint"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-footer",
-          "customElement": true,
-          "states": [
-            {
-              "name": "standard",
-              "description": "Applied when the layout is set to `standard` or when in `auto` mode above the breakpoint."
-            },
-            {
-              "name": "alternative",
-              "description": "Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint."
-            },
-            {
-              "name": "auto",
-              "description": "Applied when the layout is set to `auto`."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "FooterComponentTagName",
-          "declaration": {
-            "name": "FooterComponentTagName",
-            "module": "src/lib/footer/footer.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "FooterComponent",
-          "declaration": {
-            "name": "FooterComponent",
-            "module": "src/lib/footer/footer.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "FooterComponent",
-            "module": "src/lib/footer/footer.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "ContentScaffoldComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-content-scaffold'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "ContentScaffoldComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the height of the header section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-header-height"
-            },
-            {
-              "description": "Controls the background color of the header section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-header-background"
-            },
-            {
-              "description": "Controls the minimum height of the header section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-header-min-height"
-            },
-            {
-              "description": "Controls the height of the body section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-body-height"
-            },
-            {
-              "description": "Controls the inline-padding applied to the body section. Defaults to Forge's medium spacing token.",
-              "name": "--forge-content-scaffold-body-padding-inline"
-            },
-            {
-              "description": "Controls the height of the footer section. Defaults to `auto`.",
-              "name": "--forge-content-scaffold-footer-height"
-            },
-            {
-              "description": "Controls the background color of the footer section. Defaults to `transparent`.",
-              "name": "--forge-content-scaffold-footer-background"
-            },
-            {
-              "description": "Controls the minimum height of the footer section. Defaults to `48px`.",
-              "name": "--forge-content-scaffold-footer-min-height"
-            },
-            {
-              "description": "Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.",
-              "name": "--forge-content-scaffold-footer-full-padding"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Full-width header content. When used, the multi-slot header layout (header-start, header-end, before-header-start) will be hidden.",
-              "name": "header"
-            },
-            {
-              "description": "Content displayed before the header start slot. Only shown when the `header` slot is empty.",
-              "name": "before-header-start"
-            },
-            {
-              "description": "Content displayed at the start of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-start"
-            },
-            {
-              "description": "Content displayed at the end of the header section. Only shown when the `header` slot is empty.",
-              "name": "header-end"
-            },
-            {
-              "description": "The main body content that expands to fill available space.",
-              "name": "body"
-            },
-            {
-              "description": "Full-width footer content. When used, the multi-slot footer layout (footer-start, footer-end) will be hidden.",
-              "name": "footer"
-            },
-            {
-              "description": "Content displayed at the start of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-start"
-            },
-            {
-              "description": "Content displayed at the end of the footer section. Only shown when the `footer` slot is empty.",
-              "name": "footer-end"
-            }
-          ],
-          "members": [],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-content-scaffold",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponentTagName",
-          "declaration": {
-            "name": "ContentScaffoldComponentTagName",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "ContentScaffoldComponent",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
-          }
-        },
-        {
-          "kind": "custom-element-definition",
-          "declaration": {
-            "name": "ContentScaffoldComponent",
-            "module": "src/lib/content-scaffold/content-scaffold.ts"
           }
         }
       ]
@@ -2066,9 +2066,32 @@
             {
               "description": "The title shown above the toggle buttons",
               "name": "title"
+            },
+            {
+              "description": "The text label for the light theme option",
+              "name": "light-label"
+            },
+            {
+              "description": "The text label for the dark theme option",
+              "name": "dark-label"
+            },
+            {
+              "description": "The text label for the system theme option",
+              "name": "system-label"
             }
           ],
           "members": [
+            {
+              "kind": "field",
+              "name": "groupAriaLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Select a theme'",
+              "description": "ARIA label for the theme toggle button group",
+              "attribute": "group-aria-label"
+            },
             {
               "kind": "method",
               "name": "setTheme",
@@ -2092,10 +2115,21 @@
           "events": [
             {
               "type": {
-                "text": "CustomEvent<ThemeToggleThemeEventData>"
+                "text": "CustomEvent<ThemeToggleUpdateEventData>"
               },
-              "description": "Fired when the theme is changed",
+              "description": "Fired when the theme changes, either from a user selection or, when `system` is selected, the OS color scheme preference changing. `detail.theme` is the selected mode and is unchanged for OS-driven updates while `system` remains selected; `detail.resolvedTheme` is the actual light/dark theme applied and is always the actionable value.",
               "name": "forge-theme-toggle-update"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "group-aria-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Select a theme'",
+              "description": "ARIA label for the theme toggle button group",
+              "fieldName": "groupAriaLabel"
             }
           ],
           "superclass": {
@@ -2160,6 +2194,22 @@
             {
               "description": "Slot for the sign out button text",
               "name": "sign-out-button-text"
+            },
+            {
+              "description": "Slot for the theme toggle's title text",
+              "name": "theme-toggle-title"
+            },
+            {
+              "description": "Slot for the theme toggle's light theme option text",
+              "name": "theme-toggle-light-label"
+            },
+            {
+              "description": "Slot for the theme toggle's dark theme option text",
+              "name": "theme-toggle-dark-label"
+            },
+            {
+              "description": "Slot for the theme toggle's system theme option text",
+              "name": "theme-toggle-system-label"
             }
           ],
           "members": [
@@ -2220,6 +2270,17 @@
             },
             {
               "kind": "field",
+              "name": "themeToggleAriaLabel",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "'Select a theme'",
+              "description": "ARIA label for the theme toggle button group",
+              "attribute": "theme-toggle-aria-label"
+            },
+            {
+              "kind": "field",
               "name": "open",
               "type": {
                 "text": "boolean"
@@ -2246,7 +2307,7 @@
                   }
                 }
               ],
-              "description": "Sets the theme for the theme toggle."
+              "description": "Sets the current theme. Applies immediately even if the theme toggle is not rendered."
             }
           ],
           "events": [
@@ -2310,6 +2371,15 @@
               "default": "false",
               "description": "Indicates whether the theme toggle is visible",
               "fieldName": "themeToggle"
+            },
+            {
+              "name": "theme-toggle-aria-label",
+              "type": {
+                "text": "string"
+              },
+              "default": "'Select a theme'",
+              "description": "ARIA label for the theme toggle button group",
+              "fieldName": "themeToggleAriaLabel"
             },
             {
               "name": "open",
@@ -2537,7 +2607,7 @@
       ]
     }
   ],
-  "branchName": "main",
+  "branchName": "feat",
   "forgeTypes": {
     "AppLauncherOption": {
       "path": "src/lib/app-launcher/app-launcher.ts",
@@ -2599,6 +2669,18 @@
       "path": "src/lib/confirmation-dialog/confirmation-dialog.ts",
       "lineNumber": 55
     },
+    "ContentScaffoldComponent": {
+      "path": "src/lib/content-scaffold/content-scaffold.ts",
+      "lineNumber": 37
+    },
+    "FooterLayout": {
+      "path": "src/lib/footer/footer.ts",
+      "lineNumber": 15
+    },
+    "FooterComponent": {
+      "path": "src/lib/footer/footer.ts",
+      "lineNumber": 41
+    },
     "CountCardTheme": {
       "path": "src/lib/count-card/count-card.ts",
       "lineNumber": 16
@@ -2606,18 +2688,6 @@
     "CountCardComponent": {
       "path": "src/lib/count-card/count-card.ts",
       "lineNumber": 71
-    },
-    "FooterLayout": {
-      "path": "src/lib/footer/footer.ts",
-      "lineNumber": 16
-    },
-    "FooterComponent": {
-      "path": "src/lib/footer/footer.ts",
-      "lineNumber": 42
-    },
-    "ContentScaffoldComponent": {
-      "path": "src/lib/content-scaffold/content-scaffold.ts",
-      "lineNumber": 37
     },
     "MultiSelectHeaderComponent": {
       "path": "src/lib/multi-select-header/multi-select-header.ts",
@@ -2643,21 +2713,17 @@
       "path": "src/lib/structured-card/structured-card.ts",
       "lineNumber": 34
     },
-    "ThemeToggleTheme": {
-      "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 28
-    },
     "ThemeToggleUpdateEventData": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 30
+      "lineNumber": 27
     },
     "ThemeToggleComponent": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
-      "lineNumber": 41
+      "lineNumber": 47
     },
     "UserProfileComponent": {
       "path": "src/lib/user-profile/user-profile.ts",
-      "lineNumber": 49
+      "lineNumber": 54
     },
     "AppLauncherLink": {
       "path": "src/lib/app-launcher/app-launcher-link/app-launcher-link.ts",
@@ -2669,7 +2735,7 @@
     },
     "FooterItemComponent": {
       "path": "src/lib/footer/footer-item/footer-item.ts",
-      "lineNumber": 24
+      "lineNumber": 23
     },
     "ProfileLinkComponent": {
       "path": "src/lib/user-profile/profile-link/profile-link.ts",

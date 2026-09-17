@@ -6,7 +6,8 @@ import { tylIconSettings, tylIconAccount } from '@tylertech/tyler-icons';
 import { action } from 'storybook/actions';
 import { UPDATE_DARK_MODE_EVENT_NAME, DARK_MODE_EVENT_NAME } from '@vueless/storybook-dark-mode';
 import { createRef, ref } from 'lit/directives/ref.js';
-import { ThemeToggleTheme, type ThemeToggleUpdateEventData } from '$lib/theme-toggle';
+import { type ThemeToggleUpdateEventData } from '$lib/theme-toggle';
+import { ThemeToggleTheme } from '$lib/utils/theme-utils';
 import { type UserProfileComponent } from '$lib/user-profile';
 
 import '$lib/user-profile';
@@ -31,14 +32,8 @@ const meta = {
     const userProfileRef = createRef<UserProfileComponent>();
 
     function handleThemeChange(evt: CustomEvent<ThemeToggleUpdateEventData>) {
-      const mode =
-        evt.detail.theme === 'system'
-          ? window.matchMedia('(prefers-color-scheme: dark)').matches
-            ? 'dark'
-            : 'light'
-          : evt.detail.theme;
       lastThemeToggleChange = evt.detail.theme as ThemeToggleTheme;
-      channel.emit(UPDATE_DARK_MODE_EVENT_NAME, mode);
+      channel.emit(UPDATE_DARK_MODE_EVENT_NAME, evt.detail.resolvedTheme);
     }
 
     function handleStorybookThemeUpdate(isDark: boolean) {
@@ -71,7 +66,8 @@ const meta = {
         ?theme-toggle=${args.showThemeToggle}
         image-url="${args.imageUrl}"
         full-name="${args.fullName}"
-        email="first.last@tylertech.com">
+        email="first.last@tylertech.com"
+        theme-toggle-aria-label="${args.themeToggleAriaLabel}">
         ${args.showSlottedLinks ? html`<forge-profile-link slot="link">
           <forge-icon slot="icon" name="settings"></forge-icon>
           <a href="http://www.google.com" target="_blank">Settings</a>
@@ -81,8 +77,12 @@ const meta = {
           <a href="http://www.google.com" target="_blank">Profile</a>
         </forge-profile-link>
         ` : nothing}
-        ${args.signInButtonText.length ? html`<span slot="sign-in-button-text">${args.signInButtonText}</span>` : ''}
-        ${args.signOutButtonText.length ? html`<span slot="sign-out-button-text">${args.signOutButtonText}</span>` : ''}
+        ${args['sign-in-button-text'].length ? html`<span slot="sign-in-button-text">${args['sign-in-button-text']}</span>` : ''}
+        ${args['sign-out-button-text'].length ? html`<span slot="sign-out-button-text">${args['sign-out-button-text']}</span>` : ''}
+        ${args['theme-toggle-title'].length ? html`<span slot="theme-toggle-title">${args['theme-toggle-title']}</span>` : ''}
+        ${args['theme-toggle-light-label'].length ? html`<span slot="theme-toggle-light-label">${args['theme-toggle-light-label']}</span>` : ''}
+        ${args['theme-toggle-dark-label'].length ? html`<span slot="theme-toggle-dark-label">${args['theme-toggle-dark-label']}</span>` : ''}
+        ${args['theme-toggle-system-label'].length ? html`<span slot="theme-toggle-system-label">${args['theme-toggle-system-label']}</span>` : ''}
       </forge-user-profile>
     </forge-app-bar>`;
   },
@@ -92,21 +92,31 @@ const meta = {
   },
   argTypes: {
     fullName: { control: 'text' },
-    signInButtonText: { control: 'text' },
-    signOutButtonText: { control: 'text' },
+    'sign-in-button-text': { control: 'text' },
+    'sign-out-button-text': { control: 'text' },
     buttonAriaLabel: { control: 'text' },
     imageUrl: { control: 'text' },
     showSlottedLinks: { control: 'boolean' },
-    showThemeToggle: { control: 'boolean' }
+    showThemeToggle: { control: 'boolean' },
+    themeToggleAriaLabel: { control: 'text' },
+    'theme-toggle-title': { control: 'text' },
+    'theme-toggle-light-label': { control: 'text' },
+    'theme-toggle-dark-label': { control: 'text' },
+    'theme-toggle-system-label': { control: 'text' }
   },
   args: {
     fullName: 'First Last',
-    signInButtonText: 'Sign in',
-    signOutButtonText: 'Sign Out',
+    'sign-in-button-text': 'Sign in',
+    'sign-out-button-text': 'Sign Out',
     buttonAriaLabel: 'Open the incredibly awesome profile menu',
     imageUrl: '',
     showSlottedLinks: true,
-    showThemeToggle: true
+    showThemeToggle: true,
+    themeToggleAriaLabel: 'Select a theme',
+    'theme-toggle-title': 'Theme',
+    'theme-toggle-light-label': 'Light',
+    'theme-toggle-dark-label': 'Dark',
+    'theme-toggle-system-label': 'System'
   }
 } satisfies Meta;
 
