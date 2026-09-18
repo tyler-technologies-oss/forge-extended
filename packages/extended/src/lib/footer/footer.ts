@@ -1,6 +1,7 @@
 import { LitElement, PropertyValues, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 import { toggleState } from '@tylertech/forge';
+import { tryDefine } from '@tylertech/forge-core';
 
 import './footer-item/footer-item';
 
@@ -37,8 +38,6 @@ export const FooterComponentTagName: keyof HTMLElementTagNameMap = 'forge-footer
  * @state alternative - Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint.
  * @state auto - Applied when the layout is set to `auto`.
  */
-
-@customElement(FooterComponentTagName)
 export class FooterComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
@@ -125,3 +124,5 @@ export class FooterComponent extends LitElement {
     `;
   }
 }
+
+tryDefine(FooterComponentTagName, FooterComponent);

@@ -1,5 +1,5 @@
 import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property, query, queryAssignedNodes } from 'lit/decorators.js';
+import { property, query, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { styleMap } from 'lit/directives/style-map.js';
 import styles from './confirmation-dialog.scss?inline';
@@ -12,6 +12,7 @@ import {
   IconRegistry,
   IDialogBeforeCloseEventData
 } from '@tylertech/forge';
+import { tryDefine } from '@tylertech/forge-core';
 import { tylIconClose } from '@tylertech/tyler-icons';
 import { composeSlottedTextContent } from '../utils/slot-utils';
 
@@ -52,7 +53,6 @@ export const ConfirmationDialogComponentTagName: keyof HTMLElementTagNameMap = '
  *
  * @event {CustomEvent<ConfirmationDialogActionEventData>} forge-confirmation-dialog-action - Fired when an action button is clicked. Will contain `false` if the secondary button is clicked, `true` if the primary button is clicked.
  */
-@customElement(ConfirmationDialogComponentTagName)
 export class ConfirmationDialogComponent extends LitElement implements ConfirmationDialogProperties {
   static {
     defineButtonComponent();
@@ -239,3 +239,5 @@ export class ConfirmationDialogComponent extends LitElement implements Confirmat
     }
   }
 }
+
+tryDefine(ConfirmationDialogComponentTagName, ConfirmationDialogComponent);

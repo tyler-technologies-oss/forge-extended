@@ -1,6 +1,7 @@
 import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
+import { property, queryAssignedNodes } from 'lit/decorators.js';
 import { defineCardComponent, defineTooltipComponent, toggleState } from '@tylertech/forge';
+import { tryDefine } from '@tylertech/forge-core';
 import styles from './count-card.scss?inline';
 import { hideWhenEmpty } from '../utils/lit-utils';
 import { SlotTextController } from '../utils/slot-utils';
@@ -68,7 +69,6 @@ const THEME_STATES: CountCardTheme[] = [
  * @state no-border - Applied when the `noBorder` property is `true`.
  * @state has-action - Applied when content is slotted into the `action` slot.
  */
-@customElement(CountCardComponentTagName)
 export class CountCardComponent extends LitElement {
   static {
     defineCardComponent();
@@ -157,3 +157,5 @@ export class CountCardComponent extends LitElement {
     `;
   }
 }
+
+tryDefine(CountCardComponentTagName, CountCardComponent);

@@ -1,7 +1,8 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
+import { property, queryAssignedNodes } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { defineCardComponent, toggleState } from '@tylertech/forge';
+import { tryDefine } from '@tylertech/forge-core';
 import '../content-scaffold/content-scaffold.js';
 import { hideWhenEmpty } from '../utils/lit-utils.js';
 import styles from './structured-card.scss?inline';
@@ -31,7 +32,6 @@ export const StructuredCardComponentTagName: keyof HTMLElementTagNameMap = 'forg
  *
  * @state body-spacing-none - Applied when the `bodySpacing` property is set to `none`. Used to remove default body padding for full-width content.
  */
-@customElement(StructuredCardComponentTagName)
 export class StructuredCardComponent extends LitElement {
   static {
     defineCardComponent();
@@ -111,3 +111,5 @@ export class StructuredCardComponent extends LitElement {
     `;
   }
 }
+
+tryDefine(StructuredCardComponentTagName, StructuredCardComponent);

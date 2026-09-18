@@ -1,8 +1,8 @@
 import { ResizeController } from '@lit-labs/observers/resize-controller.js';
 import { defineToolbarComponent, toggleState } from '@tylertech/forge';
-import { throttle } from '@tylertech/forge-core';
+import { throttle, tryDefine } from '@tylertech/forge-core';
 import { LitElement, PropertyValues, TemplateResult, html, unsafeCSS, type CSSResult } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { property } from 'lit/decorators.js';
 import { createRef, ref, type Ref } from 'lit/directives/ref.js';
 
 import styles from './responsive-toolbar.scss?inline';
@@ -45,7 +45,6 @@ export const ResponsiveToolbarComponentTagName: keyof HTMLElementTagNameMap = 'f
  *
  * @event {CustomEvent<ResponsiveToolbarUpdateEventData>} forge-responsive-toolbar-update - Dispatched when the overflow state changes.
  */
-@customElement(ResponsiveToolbarComponentTagName)
 export class ResponsiveToolbarComponent extends LitElement {
   static {
     defineToolbarComponent();
@@ -152,3 +151,5 @@ export class ResponsiveToolbarComponent extends LitElement {
     `;
   }
 }
+
+tryDefine(ResponsiveToolbarComponentTagName, ResponsiveToolbarComponent);

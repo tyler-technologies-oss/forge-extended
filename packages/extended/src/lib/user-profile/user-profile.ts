@@ -1,5 +1,5 @@
 import { LitElement, TemplateResult, html, nothing, unsafeCSS, PropertyValues } from 'lit';
-import { customElement, property, queryAssignedNodes, state } from 'lit/decorators.js';
+import { property, queryAssignedNodes, state } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { tylIconAccountOutline, tylIconLogout } from '@tylertech/tyler-icons';
 import {
@@ -14,6 +14,7 @@ import {
   IPopoverToggleEventData,
   toggleState
 } from '@tylertech/forge';
+import { tryDefine } from '@tylertech/forge-core';
 import { ThemeToggleComponent } from '../theme-toggle/theme-toggle';
 import { applyTheme, ThemeToggleTheme } from '../utils/theme-utils';
 import { createRef, ref } from 'lit/directives/ref.js';
@@ -50,8 +51,6 @@ export const UserProfileComponentTagName: keyof HTMLElementTagNameMap = 'forge-u
  * @event {Event} forge-user-profile-sign-in - Fired when the sign in button is clicked.
  * @event {Event} forge-user-profile-sign-out - Fired when the sign out button is clicked.
  */
-
-@customElement(UserProfileComponentTagName)
 export class UserProfileComponent extends LitElement {
   static {
     defineAvatarComponent();
@@ -255,3 +254,5 @@ export class UserProfileComponent extends LitElement {
     }
   }
 }
+
+tryDefine(UserProfileComponentTagName, UserProfileComponent);

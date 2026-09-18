@@ -1,7 +1,8 @@
 import { LitElement, TemplateResult, html, unsafeCSS, nothing } from 'lit';
-import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
+import { property, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { defineToolbarComponent, defineButtonComponent } from '@tylertech/forge';
+import { tryDefine } from '@tylertech/forge-core';
 
 import styles from './multi-select-header.scss?inline';
 
@@ -25,7 +26,6 @@ export const MultiSelectHeaderComponentTagName: keyof HTMLElementTagNameMap = 'f
  *
  * @event {CustomEvent} forge-multi-select-header-select-all - Fired when the select-all button is clicked
  */
-@customElement(MultiSelectHeaderComponentTagName)
 export class MultiSelectHeaderComponent extends LitElement {
   static {
     defineToolbarComponent();
@@ -86,3 +86,5 @@ export class MultiSelectHeaderComponent extends LitElement {
     this.dispatchEvent(event);
   }
 }
+
+tryDefine(MultiSelectHeaderComponentTagName, MultiSelectHeaderComponent);

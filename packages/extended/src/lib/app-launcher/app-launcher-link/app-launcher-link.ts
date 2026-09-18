@@ -1,6 +1,6 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
 import { defineListComponent, IconRegistry } from '@tylertech/forge';
+import { tryDefine } from '@tylertech/forge-core';
 
 import styles from './app-launcher-link.scss?inline';
 import { tylIconOpenInNew } from '@tylertech/tyler-icons';
@@ -23,7 +23,6 @@ export interface AppLauncherLink {
  *
  * @slot - The `<a>` element for the link.
  */
-@customElement(AppLauncherLinkComponentTagName)
 export class AppLauncherLinkComponent extends LitElement {
   static {
     defineListComponent();
@@ -42,3 +41,5 @@ export class AppLauncherLinkComponent extends LitElement {
     `;
   }
 }
+
+tryDefine(AppLauncherLinkComponentTagName, AppLauncherLinkComponent);
