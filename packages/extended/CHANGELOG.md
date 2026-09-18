@@ -1,5 +1,11 @@
 # @tylertech/forge-extended
 
+## 1.8.1
+
+### Patch Changes
+
+- beb93bd: Replaced Lit's `@customElement` decorator with the `tryDefine()` helper from `@tylertech/forge-core` when registering custom elements. This guards against `customElements.define()` throwing when a consuming application bundles multiple copies of `forge-extended`, matching the fix applied to core Forge components.
+
 ## 1.8.0
 
 ### Minor Changes
