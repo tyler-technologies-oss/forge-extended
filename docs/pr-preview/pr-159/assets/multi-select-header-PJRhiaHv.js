@@ -1,0 +1,15 @@
+var b=e=>{throw TypeError(e)};var g=(e,o,t)=>o.has(e)||b("Cannot "+t);var i=(e,o,t)=>(g(e,o,"read from private field"),t?t.call(e):o.get(e)),p=(e,o,t)=>o.has(e)?b("Cannot add the same private member more than once"):o instanceof WeakSet?o.add(e):o.set(e,t),u=(e,o,t,l)=>(g(e,o,"write to private field"),l?l.call(e,t):o.set(e,t),t),h=(e,o,t)=>(g(e,o,"access private method"),t);import{i as B,x as f,r as w}from"./iframe-CSr27Gi9.js";import{n as v}from"./utils-CaDkb-CY.js";import{n as z}from"./query-assigned-nodes-cwDSNLIu.js";import{n as C}from"./when-3fO0zp9C.js";import{t as S}from"./component-utils-DDaW1mI9.js";import{d as k}from"./index-7VsvyswD.js";import{d as _}from"./index-C0ZwjHuE.js";const N=`/**
+ * @license
+ * Copyright Tyler Technologies, Inc. 
+ * License: Apache-2.0
+ */:host{display:block}:host forge-toolbar{--forge-toolbar-background: var(--forge-theme-primary-container-low, #e8eaf6)}.start-container{display:flex;align-items:center;gap:var(--forge-spacing-medium, 16px)}.selected-text{-moz-osx-font-smoothing:grayscale;-webkit-font-smoothing:antialiased;font-family:var(--forge-typography-body1-font-family, var(--forge-typography-font-family, "Roboto", sans-serif));font-size:var(--forge-typography-body1-font-size, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-body-font-size-scale, .875)));font-weight:var(--forge-typography-body1-font-weight, 400);line-height:var(--forge-typography-body1-line-height, calc(var(--forge-typography-font-size, 1rem) * var(--forge-typography-body-line-height-scale, 1.125)));letter-spacing:var(--forge-typography-body1-letter-spacing, .0357142857em);text-transform:var(--forge-typography-body1-text-transform, inherit);text-decoration:var(--forge-typography-body1-text-decoration, inherit)}`;var T=Object.defineProperty,y=(e,o,t,l)=>{for(var s=void 0,c=e.length-1,m;c>=0;c--)(m=e[c])&&(s=m(o,t,s)||s);return s&&T(o,t,s),s};const E="forge-multi-select-header";var a,r,x,$,A;const d=class d extends B{constructor(){super(...arguments);p(this,r);p(this,a);this.text="",this.noBorder=!0,u(this,a,f`<slot name="select-all-button-text"></slot>`)}render(){return f`
+      <forge-toolbar ?no-border=${this.noBorder} @slotchange=${h(this,r,$)}>
+        <div slot="start" class="start-container">
+          <span class="selected-text">${this.text}</span>
+          ${i(this,r,x)}
+        </div>
+        <slot name="actions" slot="end"></slot>
+      </forge-toolbar>
+    `}};a=new WeakMap,r=new WeakSet,x=function(){const t=this._slottedSelectAllNodes.length>0;return C(t,()=>f` <forge-button id="select-all-button" @click=${h(this,r,A)}>
+          ${i(this,a)}
+        </forge-button>`,()=>f`${i(this,a)}`)},$=function(t){const l=t.target.name;["select-all-button-text","actions"].includes(l)&&this.requestUpdate()},A=function(){const t=new CustomEvent("forge-multi-select-header-select-all",{bubbles:!0,composed:!0});this.dispatchEvent(t)},k(),_(),d.styles=w(N);let n=d;y([v({type:String})],n.prototype,"text");y([v({type:Boolean,attribute:"no-border"})],n.prototype,"noBorder");y([z({slot:"select-all-button-text",flatten:!0})],n.prototype,"_slottedSelectAllNodes");S(E,n);
