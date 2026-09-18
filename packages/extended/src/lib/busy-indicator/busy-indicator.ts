@@ -5,9 +5,10 @@ import {
   defineLinearProgressComponent
 } from '@tylertech/forge';
 import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
+import { property, queryAssignedNodes } from 'lit/decorators.js';
 import { classMap } from 'lit/directives/class-map.js';
 import { when } from 'lit/directives/when.js';
+import { tryDefine } from '@tylertech/forge-core';
 import { composeSlottedTextContent } from '../utils/slot-utils';
 
 import styles from './busy-indicator.scss?inline';
@@ -37,7 +38,6 @@ export const BusyIndicatorComponentTagName: keyof HTMLElementTagNameMap = 'forge
  *
  * @event {CustomEvent<void>} forge-busy-indicator-cancel - Fired when the cancel button is clicked.
  */
-@customElement(BusyIndicatorComponentTagName)
 export class BusyIndicatorComponent extends LitElement {
   static {
     defineDialogComponent();
@@ -244,3 +244,5 @@ export class BusyIndicatorComponent extends LitElement {
     }
   }
 }
+
+tryDefine(BusyIndicatorComponentTagName, BusyIndicatorComponent);

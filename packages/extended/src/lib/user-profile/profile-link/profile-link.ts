@@ -1,6 +1,6 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement } from 'lit/decorators.js';
 import { defineListComponent } from '@tylertech/forge';
+import { tryDefine } from '@tylertech/forge-core';
 
 import styles from './profile-link.scss?inline';
 
@@ -18,7 +18,6 @@ export const ProfileLinkComponentTagName: keyof HTMLElementTagNameMap = 'forge-p
  * @slot icon - The icon to display in the profile link.
  * @slot - The `<a>` element for the link.
  */
-@customElement(ProfileLinkComponentTagName)
 export class ProfileLinkComponent extends LitElement {
   static {
     defineListComponent();
@@ -35,3 +34,5 @@ export class ProfileLinkComponent extends LitElement {
     `;
   }
 }
+
+tryDefine(ProfileLinkComponentTagName, ProfileLinkComponent);

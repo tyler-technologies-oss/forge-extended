@@ -1,5 +1,5 @@
 import { LitElement, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { property, state } from 'lit/decorators.js';
 import {
   defineButtonToggleGroupComponent,
   defineIconButtonComponent,
@@ -7,6 +7,7 @@ import {
   IconRegistry,
   toggleState
 } from '@tylertech/forge';
+import { tryDefine } from '@tylertech/forge-core';
 import { tylIconWbSunny, tylIconTonality, tylIconMoonWaningCrescent } from '@tylertech/tyler-icons';
 import { applyTheme, detectPrefersColorScheme, getStoredTheme, ThemeToggleTheme } from '../utils/theme-utils';
 
@@ -44,7 +45,6 @@ export interface ThemeToggleUpdateEventData {
  * the selected mode and is unchanged for OS-driven updates while `system` remains selected; `detail.resolvedTheme`
  * is the actual light/dark theme applied and is always the actionable value.
  */
-@customElement(ThemeToggleComponentTagName)
 export class ThemeToggleComponent extends LitElement {
   static {
     defineIconButtonComponent();
@@ -167,3 +167,5 @@ export class ThemeToggleComponent extends LitElement {
     }
   };
 }
+
+tryDefine(ThemeToggleComponentTagName, ThemeToggleComponent);

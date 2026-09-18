@@ -1,11 +1,12 @@
 import { LitElement, PropertyValues, TemplateResult, html, unsafeCSS } from 'lit';
-import { customElement, property, queryAssignedElements } from 'lit/decorators.js';
+import { property, queryAssignedElements } from 'lit/decorators.js';
 import {
   defineTextFieldComponent,
   defineIconButtonComponent,
   defineIconComponent,
   IconRegistry
 } from '@tylertech/forge';
+import { tryDefine } from '@tylertech/forge-core';
 import { tylIconPlus, tylIconMinus } from '@tylertech/tyler-icons';
 
 import styles from './quantity-field.scss?inline';
@@ -32,7 +33,6 @@ export const QuantityFieldComponentTagName: keyof HTMLElementTagNameMap = 'forge
  * @state required - Indicates whether the field is in its required state.
  * @state invalid - Indicates whether the field is in its invalid state.
  */
-@customElement(QuantityFieldComponentTagName)
 export class QuantityFieldComponent extends LitElement {
   static {
     defineTextFieldComponent();
@@ -134,3 +134,5 @@ export class QuantityFieldComponent extends LitElement {
     input?.dispatchEvent(new Event('change', { bubbles: true, composed: true }));
   }
 }
+
+tryDefine(QuantityFieldComponentTagName, QuantityFieldComponent);

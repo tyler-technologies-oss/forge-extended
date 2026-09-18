@@ -1,8 +1,9 @@
 import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property, state, queryAssignedNodes } from 'lit/decorators.js';
+import { property, state, queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
 import { cache } from 'lit/directives/cache.js';
 import { query } from 'lit/decorators/query.js';
+import { tryDefine } from '@tylertech/forge-core';
 
 import {
   defineAvatarComponent,
@@ -64,7 +65,6 @@ export const AppLauncherComponentTagName: keyof HTMLElementTagNameMap = 'forge-a
  * @state large - The component is displayed in desktop/large screen mode (popover)
  *
  */
-@customElement(AppLauncherComponentTagName)
 export class AppLauncherComponent extends LitElement {
   static {
     defineAvatarComponent();
@@ -527,3 +527,5 @@ export class AppLauncherComponent extends LitElement {
     }
   }
 }
+
+tryDefine(AppLauncherComponentTagName, AppLauncherComponent);

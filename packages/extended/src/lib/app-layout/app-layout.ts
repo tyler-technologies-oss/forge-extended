@@ -1,6 +1,6 @@
 import { LitElement, TemplateResult, html, unsafeCSS, PropertyValues } from 'lit';
 import { when } from 'lit/directives/when.js';
-import { customElement, property, state, queryAssignedNodes } from 'lit/decorators.js';
+import { property, state, queryAssignedNodes } from 'lit/decorators.js';
 import {
   defineScaffoldComponent,
   defineDialogComponent,
@@ -12,6 +12,7 @@ import {
   defineMiniDrawerComponent,
   defineAppBarMenuButtonComponent
 } from '@tylertech/forge';
+import { tryDefine } from '@tylertech/forge-core';
 import { tylIconArrowBack, tylIconClose, tylIconTylerTalkingTLogo } from '@tylertech/tyler-icons';
 
 import styles from './app-layout.scss?inline';
@@ -88,8 +89,6 @@ export const APP_LAYOUT_CLOSE_ATTRIBUTE = 'data-forge-app-layout-close';
  * @event {CustomEvent<AppLayoutBreakpointChangeEventData>} forge-app-layout-breakpoint-change - Fired when the screen size crosses the breakpoint threshold
  * @event {CustomEvent<AppLayoutDrawerChangeEventData>} forge-app-layout-drawer-change - Fired when the navigation drawer opens or closes
  */
-
-@customElement(AppLayoutComponentTagName)
 export class AppLayoutComponent extends LitElement {
   static {
     defineScaffoldComponent();
@@ -391,3 +390,5 @@ export class AppLayoutComponent extends LitElement {
     `;
   }
 }
+
+tryDefine(AppLayoutComponentTagName, AppLayoutComponent);

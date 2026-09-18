@@ -1,5 +1,5 @@
 import { LitElement, html, unsafeCSS, TemplateResult } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { tryDefine } from '@tylertech/forge-core';
 import styles from './footer-item.scss?inline';
 
 declare global {
@@ -19,8 +19,6 @@ export const FooterItemComponentTagName: keyof HTMLElementTagNameMap = 'forge-fo
  *
  * @cssprop --forge-footer-item-color - Controls the text color of the footer item.
  */
-
-@customElement(FooterItemComponentTagName)
 export class FooterItemComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
@@ -34,3 +32,5 @@ export class FooterItemComponent extends LitElement {
     return html`<div class="footer-item" part="root"><slot></slot></div>`;
   }
 }
+
+tryDefine(FooterItemComponentTagName, FooterItemComponent);

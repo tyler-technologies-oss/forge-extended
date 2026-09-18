@@ -1,6 +1,7 @@
 import { LitElement, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, queryAssignedNodes } from 'lit/decorators.js';
+import { queryAssignedNodes } from 'lit/decorators.js';
 import { when } from 'lit/directives/when.js';
+import { tryDefine } from '@tylertech/forge-core';
 import styles from './content-scaffold.scss?inline';
 import { hideWhenEmpty } from '../utils/lit-utils.js';
 
@@ -34,7 +35,6 @@ export const ContentScaffoldComponentTagName: keyof HTMLElementTagNameMap = 'for
  * @cssprop --forge-content-scaffold-footer-min-height - Controls the minimum height of the footer section. Defaults to `48px`.
  * @cssprop --forge-content-scaffold-footer-full-padding - Controls the padding applied to full-width footer content. Defaults to Forge's small spacing token.
  */
-@customElement(ContentScaffoldComponentTagName)
 export class ContentScaffoldComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
@@ -114,3 +114,5 @@ export class ContentScaffoldComponent extends LitElement {
     `;
   }
 }
+
+tryDefine(ContentScaffoldComponentTagName, ContentScaffoldComponent);
