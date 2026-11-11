@@ -1,0 +1,208 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Migrating to Forge Core" />
+
+# Migrating to Tyler Forge™
+
+Every component in `@tylertech/forge-extended` has moved into the core [Tyler Forge™](https://forge.tylerdev.io/forge/v3/) library,
+starting with `@tylertech/forge@3.17.0`. The extended packages are deprecated and are in a **90-day deprecation period that ends
+on January 10, 2027**. After that date they will no longer be maintained, so complete your migration before the deprecation period
+ends. If you have any concerns about this timeline, please let us know in the <a href="https://teams.microsoft.com/l/channel/19%3A1gCw-wLjrS56X_iAY0mpHpk4PyWOi08JiMM7Kc1xvho1%40thread.tacv2/Support?groupId=2bb1b8ea-cd12-4df5-a4ab-0c895bfcda5c&amp;tenantId=7cc5f0f9-ee5b-4106-a62d-1b9f7be46118" target="_blank" rel="noopener noreferrer">Forge Support Teams channel</a>.
+
+The migrated components keep the same tag names, attributes, properties, events, slots, CSS custom properties, and CSS parts, so
+in most applications migrating only requires changing dependencies and import paths, and a codemod can make most of those changes
+for you. A few components gained new features in Forge (see [What's new](#whats-new)).
+
+| Package          | Minimum version                  |
+| ---------------- | -------------------------------- |
+| Web components   | `@tylertech/forge@3.17.0`        |
+| Angular wrappers | `@tylertech/forge-angular@9.2.0` |
+| React wrappers   | `@tylertech/forge-react@3.5.0`   |
+
+## Automated migration (recommended)
+
+The [Tyler Forge™ upgrade utility](https://github.com/tyler-technologies-oss/forge-upgrade) includes a
+`forge-extended-migration` configuration that performs most of this migration for you. Run it from the root of your project (the directory containing your
+`package.json`):
+
+```bash
+npx @tylertech/forge-upgrade@latest --configuration forge-extended-migration
+```
+
+The codemod:
+
+- Replaces the `@tylertech/forge-extended`, `@tylertech/forge-extended-angular`, and `@tylertech/forge-extended-react` entries in
+  `package.json` with `@tylertech/forge`, `@tylertech/forge-angular`, and `@tylertech/forge-react`.
+- Rewrites `@tylertech/forge-extended` imports to the matching `@tylertech/forge/<component>` subpath import, and removes the
+  `defineXComponent()` calls that are no longer needed.
+- Rewrites `@tylertech/forge-extended-angular` imports to `@tylertech/forge-angular`, renaming each `ForgeExtendedXModule` to
+  `ForgeXModule`.
+- Rewrites `@tylertech/forge-extended-react` imports to `@tylertech/forge-react`.
+
+Add `--dry-run` to preview the changes without modifying any files.
+
+> **Check your dependency versions.** The codemod renames each package but keeps its existing version range. For example,
+> `"@tylertech/forge-extended": "^1.8.1"` becomes `"@tylertech/forge": "^1.8.1"`, which points to an old 1.x release of Forge. After running it, update each
+> package to at least the [minimum version](#migrating-to-tyler-forge) above. If your project already depends on
+> `@tylertech/forge`, the codemod removes the extended entry and keeps your existing version, so confirm it's 3.17.0 or later.
+
+Anything the codemod can't map with certainty, such as the
+Angular `*ProxyModule` classes and `ForgeExtendedModule`, is left unchanged and reported with a console warning. Update those
+manually (see [Update framework wrappers](#3-update-framework-wrappers)).
+
+> Always review the changes after running the codemod. If you use a code formatter such as Prettier, run it afterward. Then
+> reinstall your dependencies and complete [step 4](#4-remove-tylertechforge-extended-completely).
+
+The steps below describe the same changes if you prefer to migrate by hand.
+
+## 1. Update your dependencies
+
+Remove the extended packages and install at least the minimum versions listed above.
+
+```bash
+# Web components
+npm uninstall @tylertech/forge-extended
+npm install @tylertech/forge@^3.17.0
+
+# Angular
+npm uninstall @tylertech/forge-extended-angular
+npm install @tylertech/forge-angular@^9.2.0
+
+# React
+npm uninstall @tylertech/forge-extended-react
+npm install @tylertech/forge-react@^3.5.0
+```
+
+## 2. Update your imports
+
+Replace `@tylertech/forge-extended` with `@tylertech/forge` in every side-effect import. Each component registers itself when its
+subpath is imported.
+
+```javascript
+// Before
+import '@tylertech/forge-extended/quantity-field';
+
+// After
+import '@tylertech/forge/quantity-field';
+```
+
+> **Important:** These components are **not** registered by `defineComponents()` or by importing the root `@tylertech/forge`
+> package. You must import each component's subpath. The `defineXComponent()` functions are also deprecated in Forge; use the
+> side-effect imports instead.
+
+| Component                                           | Before                                          | After                                  |
+| --------------------------------------------------- | ----------------------------------------------- | -------------------------------------- |
+| `<forge-app-launcher>`, `<forge-app-launcher-link>` | `@tylertech/forge-extended/app-launcher`        | `@tylertech/forge/app-launcher`        |
+| `<forge-app-layout>`                                | `@tylertech/forge-extended/app-layout`          | `@tylertech/forge/app-layout`          |
+| `<forge-busy-indicator>`                            | `@tylertech/forge-extended/busy-indicator`      | `@tylertech/forge/busy-indicator`      |
+| `<forge-confirmation-dialog>`                       | `@tylertech/forge-extended/confirmation-dialog` | `@tylertech/forge/confirmation-dialog` |
+| `<forge-content-scaffold>`                          | `@tylertech/forge-extended/content-scaffold`    | `@tylertech/forge/content-scaffold`    |
+| `<forge-count-card>`                                | `@tylertech/forge-extended/count-card`          | `@tylertech/forge/count-card`          |
+| `<forge-footer>`, `<forge-footer-item>`             | `@tylertech/forge-extended/footer`              | `@tylertech/forge/footer`              |
+| `<forge-multi-select-header>`                       | `@tylertech/forge-extended/multi-select-header` | `@tylertech/forge/multi-select-header` |
+| `<forge-quantity-field>`                            | `@tylertech/forge-extended/quantity-field`      | `@tylertech/forge/quantity-field`      |
+| `<forge-responsive-toolbar>`                        | `@tylertech/forge-extended/responsive-toolbar`  | `@tylertech/forge/responsive-toolbar`  |
+| `<forge-structured-card>`                           | `@tylertech/forge-extended/structured-card`     | `@tylertech/forge/structured-card`     |
+| `<forge-theme-toggle>`                              | `@tylertech/forge-extended/theme-toggle`        | `@tylertech/forge/theme-toggle`        |
+| `<forge-user-profile>`, `<forge-profile-link>`      | `@tylertech/forge-extended/user-profile`        | `@tylertech/forge/user-profile`        |
+
+In Forge, importing a parent component also registers its child elements. For example, `@tylertech/forge/footer` registers
+`<forge-footer-item>`, and `@tylertech/forge/user-profile` registers `<forge-profile-link>` and `<forge-theme-toggle>`, so you can
+drop separate imports such as `@tylertech/forge-extended/user-profile/profile-link`.
+
+Type imports move the same way:
+
+```typescript
+// Before
+import type { QuantityFieldComponent } from '@tylertech/forge-extended';
+
+// After
+import type { QuantityFieldComponent } from '@tylertech/forge/quantity-field';
+```
+
+## 3. Update framework wrappers
+
+### Angular
+
+Replace each `ForgeExtended*Module` with the matching module from `@tylertech/forge-angular`. The component, service, and ref class
+names, including `BusyIndicatorService` and `ConfirmationDialogService`, are unchanged.
+
+The codemod doesn't change the rows marked **manual** below:
+
+- The busy indicator and confirmation dialog `*ProxyModule` classes are folded into `ForgeBusyIndicatorModule` and
+  `ForgeConfirmationDialogModule`. Their services are provided in `root`, so you don't need to register a provider.
+- `ForgeExtendedModule` has no equivalent. Replace it with the individual module for each component you use (see the warning
+  below).
+
+```typescript
+// Before
+import { ForgeExtendedQuantityFieldModule } from '@tylertech/forge-extended-angular';
+
+// After
+import { ForgeQuantityFieldModule } from '@tylertech/forge-angular';
+```
+
+> **Warning:** Don't use barrel modules such as `ForgeExtendedModule` or `ForgeModule` in production applications. They import
+> every component in the library at once, which makes your bundle much larger than it needs to be. They were designed for
+> prototyping, not production apps. If your application uses `ForgeExtendedModule` (or `ForgeModule`), replace it with the
+> individual component modules you actually use. You should make this change even if you weren't migrating.
+
+| Before                                                    | After                           |
+| --------------------------------------------------------- | ------------------------------- |
+| `ForgeExtendedModule` (**manual**)                        | The individual modules you use  |
+| `ForgeExtendedAppLauncherModule`                          | `ForgeAppLauncherModule`        |
+| `ForgeExtendedAppLauncherLinkModule`                      | `ForgeAppLauncherLinkModule`    |
+| `ForgeExtendedAppLayoutModule`                            | `ForgeAppLayoutModule`          |
+| `ForgeExtendedBusyIndicatorModule`                        | `ForgeBusyIndicatorModule`      |
+| `ForgeExtendedBusyIndicatorProxyModule` (**manual**)      | `ForgeBusyIndicatorModule`      |
+| `ForgeExtendedConfirmationDialogModule`                   | `ForgeConfirmationDialogModule` |
+| `ForgeExtendedConfirmationDialogProxyModule` (**manual**) | `ForgeConfirmationDialogModule` |
+| `ForgeExtendedContentScaffoldModule`                      | `ForgeContentScaffoldModule`    |
+| `ForgeExtendedCountCardModule`                            | `ForgeCountCardModule`          |
+| `ForgeExtendedFooterModule`                               | `ForgeFooterModule`             |
+| `ForgeExtendedFooterItemModule`                           | `ForgeFooterItemModule`         |
+| `ForgeExtendedMultiSelectHeaderModule`                    | `ForgeMultiSelectHeaderModule`  |
+| `ForgeExtendedProfileLinkModule`                          | `ForgeProfileLinkModule`        |
+| `ForgeExtendedQuantityFieldModule`                        | `ForgeQuantityFieldModule`      |
+| `ForgeExtendedResponsiveToolbarModule`                    | `ForgeResponsiveToolbarModule`  |
+| `ForgeExtendedStructuredCardModule`                       | `ForgeStructuredCardModule`     |
+| `ForgeExtendedThemeToggleModule`                          | `ForgeThemeToggleModule`        |
+| `ForgeExtendedUserProfileModule`                          | `ForgeUserProfileModule`        |
+
+### React
+
+The React wrapper names are unchanged. Only the package name changes.
+
+```tsx
+// Before
+import { ForgeQuantityField } from '@tylertech/forge-extended-react';
+
+// After
+import { ForgeQuantityField } from '@tylertech/forge-react';
+```
+
+## 4. Remove `@tylertech/forge-extended` completely
+
+Because the tag names are the same, an element can only be registered by one package. If both packages are loaded, **whichever
+registers a tag first wins and the other is silently ignored.** Nothing will error, but your application may keep running the
+deprecated extended version of a component without you noticing.
+
+Migrate all of an application's extended components at once, then confirm `@tylertech/forge-extended` no longer appears in your
+dependency tree:
+
+```bash
+npm ls @tylertech/forge-extended
+```
+
+## What's new
+
+The Forge versions of these components include a few additions:
+
+- **App Launcher:** a new `search-placeholder` attribute, and new `header-title`, `loading-text`, and `empty-state-text` slots for
+  localizing the built-in text.
+- **Footer** and **Footer Item:** a new `root` CSS part, and a new `content` CSS part on the footer.
+
+## Getting help
+
+See the [Tyler Forge™ documentation](https://forge.tylerdev.io/forge/v3/) for the latest docs on each component. If you run into
+problems while migrating, open an issue in the [Tyler Forge™ repository](https://github.com/tyler-technologies-oss/forge/issues).
