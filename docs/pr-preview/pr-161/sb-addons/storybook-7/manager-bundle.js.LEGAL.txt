@@ -1,0 +1,653 @@
+Bundled license information:
+
+@tylertech/forge-core/dist/utils/platform.js:
+  /**
+   * @license
+   * Copyright Google LLC All Rights Reserved.
+   *
+   * Use of this source code is governed by an MIT-style license that can be
+   * found in the LICENSE file at https://angular.io/license
+   */
+
+@tylertech/forge-core/dist/index.js:
+  /**
+   * @license
+   * Copyright (c) 2022 Tyler Technologies, Inc.
+   * License: Apache-2.0
+   */
+
+@tylertech/forge/esm/core/base/base-component.js:
+@tylertech/forge/esm/core/configuration/global-configuration.js:
+@tylertech/forge/esm/core/base/base-adapter.js:
+@tylertech/forge/esm/core/utils/feature-detection.js:
+@tylertech/forge/esm/constants.js:
+@tylertech/forge/esm/open-icon/open-icon-constants.js:
+@tylertech/forge/esm/core/base/index.js:
+@tylertech/forge/esm/core/configuration/index.js:
+@tylertech/forge/esm/core/delegates/base-component-delegate.js:
+@tylertech/forge/esm/core/delegates/form-field-component-delegate.js:
+@tylertech/forge/esm/core/delegates/index.js:
+@tylertech/forge/esm/core/utils/date-utils.js:
+@tylertech/forge/esm/core/utils/deferred.js:
+@tylertech/forge/esm/core/utils/utils.js:
+@tylertech/forge/esm/core/utils/dismissible-stack.js:
+@tylertech/forge/esm/core/utils/event-utils.js:
+@tylertech/forge/esm/core/utils/form-utils.js:
+@tylertech/forge/esm/core/utils/reflect-utils.js:
+@tylertech/forge/esm/core/utils/svg-utils.js:
+@tylertech/forge/esm/core/utils/time-utils.js:
+@tylertech/forge/esm/core/utils/index.js:
+@tylertech/forge/esm/core/mask/date-input-mask.js:
+@tylertech/forge/esm/core/mask/time-segment-parser.js:
+@tylertech/forge/esm/core/mask/intermediate-time-parser.js:
+@tylertech/forge/esm/core/mask/time-input-mask.js:
+@tylertech/forge/esm/core/mask/index.js:
+@tylertech/forge/esm/core/index.js:
+@tylertech/forge/esm/icon/icon-constants.js:
+@tylertech/forge/esm/icon/icon-adapter.js:
+@tylertech/forge/esm/icon/icon-registry.js:
+@tylertech/forge/esm/icon/icon-utils.js:
+@tylertech/forge/esm/icon/icon-core.js:
+@tylertech/forge/esm/icon/icon.js:
+@tylertech/forge/esm/icon/icon-component-delegate.js:
+@tylertech/forge/esm/icon/index.js:
+@tylertech/forge/esm/open-icon/open-icon.js:
+@tylertech/forge/esm/open-icon/index.js:
+@tylertech/forge/esm/expansion-panel/expansion-panel-constants.js:
+@tylertech/forge/esm/expansion-panel/expansion-panel-adapter.js:
+@tylertech/forge/esm/expansion-panel/expansion-panel-core.js:
+@tylertech/forge/esm/expansion-panel/expansion-panel.js:
+@tylertech/forge/esm/expansion-panel/index.js:
+@tylertech/forge/esm/accordion/accordion-adapter.js:
+@tylertech/forge/esm/accordion/accordion-constants.js:
+@tylertech/forge/esm/accordion/accordion-core.js:
+@tylertech/forge/esm/accordion/accordion.js:
+@tylertech/forge/esm/accordion/index.js:
+@tylertech/forge/esm/app-bar/app-bar/app-bar-constants.js:
+@tylertech/forge/esm/state-layer/state-layer-constants.js:
+@tylertech/forge/esm/state-layer/state-layer-utils.js:
+@tylertech/forge/esm/state-layer/state-layer-adapter.js:
+@tylertech/forge/esm/state-layer/state-layer-core.js:
+@tylertech/forge/esm/state-layer/state-layer.js:
+@tylertech/forge/esm/state-layer/index.js:
+@tylertech/forge/esm/core/utils/lit-utils.js:
+@tylertech/forge/esm/core/base/base-lit-element.js:
+@tylertech/forge/esm/focus-indicator/focus-indicator.js:
+@tylertech/forge/esm/focus-indicator/focus-indicator-constants.js:
+@tylertech/forge/esm/focus-indicator/index.js:
+@tylertech/forge/esm/app-bar/app-bar/app-bar-adapter.js:
+@tylertech/forge/esm/app-bar/app-bar/app-bar-core.js:
+@tylertech/forge/esm/app-bar/app-bar/app-bar.js:
+@tylertech/forge/esm/app-bar/app-bar/index.js:
+@tylertech/forge/esm/app-bar/search/app-bar-search-constants.js:
+@tylertech/forge/esm/app-bar/search/app-bar-search-core.js:
+@tylertech/forge/esm/app-bar/search/app-bar-search-adapter.js:
+@tylertech/forge/esm/app-bar/search/app-bar-search.js:
+@tylertech/forge/esm/app-bar/search/index.js:
+@tylertech/forge/esm/app-bar/menu-button/app-bar-menu-button-constants.js:
+@tylertech/forge/esm/button/base/base-button-constants.js:
+@tylertech/forge/esm/core/mixins/label/with-label-aware.js:
+@tylertech/forge/esm/core/mixins/internals/with-element-internals.js:
+@tylertech/forge/esm/core/mixins/internals/with-default-aria.js:
+@tylertech/forge/esm/button/base/base-button.js:
+@tylertech/forge/esm/icon-button/icon-button-constants.js:
+@tylertech/forge/esm/button/base/base-button-core.js:
+@tylertech/forge/esm/icon-button/icon-button-core.js:
+@tylertech/forge/esm/button/base/base-button-adapter.js:
+@tylertech/forge/esm/icon-button/icon-button-adapter.js:
+@tylertech/forge/esm/icon-button/icon-button.js:
+@tylertech/forge/esm/icon-button/icon-button-component-delegate.js:
+@tylertech/forge/esm/icon-button/index.js:
+@tylertech/forge/esm/core/utils/position-utils.js:
+@tylertech/forge/esm/overlay/overlay-constants.js:
+@tylertech/forge/esm/overlay/overlay-adapter.js:
+@tylertech/forge/esm/overlay/base/base-overlay-core.js:
+@tylertech/forge/esm/overlay/overlay-core.js:
+@tylertech/forge/esm/overlay/base/base-overlay.js:
+@tylertech/forge/esm/overlay/overlay.js:
+@tylertech/forge/esm/overlay/index.js:
+@tylertech/forge/esm/tooltip/tooltip-constants.js:
+@tylertech/forge/esm/tooltip/tooltip-adapter.js:
+@tylertech/forge/esm/core/mixins/interactions/longpress/with-longpress-listener.js:
+@tylertech/forge/esm/tooltip/tooltip-core.js:
+@tylertech/forge/esm/tooltip/tooltip.js:
+@tylertech/forge/esm/tooltip/index.js:
+@tylertech/forge/esm/app-bar/menu-button/app-bar-menu-button.js:
+@tylertech/forge/esm/app-bar/menu-button/index.js:
+@tylertech/forge/esm/badge/badge.js:
+@tylertech/forge/esm/badge/badge-component-delegate.js:
+@tylertech/forge/esm/badge/badge-constants.js:
+@tylertech/forge/esm/badge/index.js:
+@tylertech/forge/esm/app-bar/notification-button/app-bar-notification-button-constants.js:
+@tylertech/forge/esm/app-bar/notification-button/app-bar-notification-button-adapter.js:
+@tylertech/forge/esm/app-bar/notification-button/app-bar-notification-button-core.js:
+@tylertech/forge/esm/app-bar/notification-button/app-bar-notification-button.js:
+@tylertech/forge/esm/app-bar/notification-button/index.js:
+@tylertech/forge/esm/list/list-item/list-item-constants.js:
+@tylertech/forge/esm/list/list/list-constants.js:
+@tylertech/forge/esm/list/list/list-adapter.js:
+@tylertech/forge/esm/list/list/list-core.js:
+@tylertech/forge/esm/list/list-item/list-item-adapter.js:
+@tylertech/forge/esm/list/list-item/list-item-core.js:
+@tylertech/forge/esm/list/list-item/list-item.js:
+@tylertech/forge/esm/list/list-item/index.js:
+@tylertech/forge/esm/list/list/list.js:
+@tylertech/forge/esm/list/list/index.js:
+@tylertech/forge/esm/list/index.js:
+@tylertech/forge/esm/list-dropdown/list-dropdown-constants.js:
+@tylertech/forge/esm/list-dropdown/list-dropdown-aware.js:
+@tylertech/forge/esm/overlay/base/overlay-aware-adapter.js:
+@tylertech/forge/esm/popover/popover-constants.js:
+@tylertech/forge/esm/popover/popover-adapter.js:
+@tylertech/forge/esm/overlay/base/overlay-aware-core.js:
+@tylertech/forge/esm/popover/popover-core.js:
+@tylertech/forge/esm/overlay/base/overlay-aware.js:
+@tylertech/forge/esm/popover/popover.js:
+@tylertech/forge/esm/popover/index.js:
+@tylertech/forge/esm/menu/menu-constants.js:
+@tylertech/forge/esm/linear-progress/linear-progress-constants.js:
+@tylertech/forge/esm/linear-progress/linear-progress-adapter.js:
+@tylertech/forge/esm/linear-progress/linear-progress-core.js:
+@tylertech/forge/esm/linear-progress/linear-progress.js:
+@tylertech/forge/esm/linear-progress/index.js:
+@tylertech/forge/esm/skeleton/skeleton-constants.js:
+@tylertech/forge/esm/skeleton/skeleton.js:
+@tylertech/forge/esm/skeleton/index.js:
+@tylertech/forge/esm/list-dropdown/list-dropdown-utils.js:
+@tylertech/forge/esm/list-dropdown/list-dropdown-core.js:
+@tylertech/forge/esm/list-dropdown/list-dropdown-adapter.js:
+@tylertech/forge/esm/list-dropdown/list-dropdown.js:
+@tylertech/forge/esm/list-dropdown/list-dropdown-aware-core.js:
+@tylertech/forge/esm/list-dropdown/cascading-list-dropdown-aware-core.js:
+@tylertech/forge/esm/list-dropdown/index.js:
+@tylertech/forge/esm/menu/menu-adapter.js:
+@tylertech/forge/esm/menu/menu-core.js:
+@tylertech/forge/esm/menu/menu.js:
+@tylertech/forge/esm/menu/index.js:
+@tylertech/forge/esm/app-bar/help-button/app-bar-help-button-constants.js:
+@tylertech/forge/esm/app-bar/help-button/app-bar-help-button-adapter.js:
+@tylertech/forge/esm/app-bar/help-button/app-bar-help-button-core.js:
+@tylertech/forge/esm/app-bar/help-button/app-bar-help-button.js:
+@tylertech/forge/esm/app-bar/help-button/index.js:
+@tylertech/forge/esm/profile-card/profile-card-constants.js:
+@tylertech/forge/esm/profile-card/profile-card-adapter.js:
+@tylertech/forge/esm/profile-card/profile-card-core.js:
+@tylertech/forge/esm/button/button-adapter.js:
+@tylertech/forge/esm/button/button-constants.js:
+@tylertech/forge/esm/button/button-core.js:
+@tylertech/forge/esm/button/button.js:
+@tylertech/forge/esm/button/button-component-delegate.js:
+@tylertech/forge/esm/button/index.js:
+@tylertech/forge/esm/avatar/avatar.js:
+@tylertech/forge/esm/avatar/avatar-constants.js:
+@tylertech/forge/esm/avatar/index.js:
+@tylertech/forge/esm/toolbar/toolbar-constants.js:
+@tylertech/forge/esm/toolbar/toolbar.js:
+@tylertech/forge/esm/toolbar/index.js:
+@tylertech/forge/esm/profile-card/profile-card.js:
+@tylertech/forge/esm/profile-card/index.js:
+@tylertech/forge/esm/app-bar/profile-button/app-bar-profile-button-constants.js:
+@tylertech/forge/esm/app-bar/profile-button/app-bar-profile-button-adapter.js:
+@tylertech/forge/esm/app-bar/profile-button/app-bar-profile-button-core.js:
+@tylertech/forge/esm/app-bar/profile-button/app-bar-profile-button.js:
+@tylertech/forge/esm/app-bar/profile-button/index.js:
+@tylertech/forge/esm/app-bar/index.js:
+@tylertech/forge/esm/divider/divider-constants.js:
+@tylertech/forge/esm/divider/divider.js:
+@tylertech/forge/esm/divider/index.js:
+@tylertech/forge/esm/label/label-aware.js:
+@tylertech/forge/esm/button-toggle/button-toggle/button-toggle-adapter.js:
+@tylertech/forge/esm/button-toggle/button-toggle/button-toggle-constants.js:
+@tylertech/forge/esm/button-toggle/button-toggle/button-toggle-core.js:
+@tylertech/forge/esm/button-toggle/button-toggle/button-toggle.js:
+@tylertech/forge/esm/button-toggle/button-toggle/index.js:
+@tylertech/forge/esm/core/mixins/form/with-form-validity.js:
+@tylertech/forge/esm/button-toggle/button-toggle-group/button-toggle-group-constants.js:
+@tylertech/forge/esm/button-toggle/button-toggle-group/button-toggle-group-adapter.js:
+@tylertech/forge/esm/button-toggle/button-toggle-group/button-toggle-group-core.js:
+@tylertech/forge/esm/button-toggle/button-toggle-group/button-toggle-group.js:
+@tylertech/forge/esm/button-toggle/button-toggle-group/index.js:
+@tylertech/forge/esm/button-toggle/index.js:
+@tylertech/forge/esm/checkbox/checkbox-constants.js:
+@tylertech/forge/esm/checkbox/checkbox-adapter.js:
+@tylertech/forge/esm/checkbox/checkbox-core.js:
+@tylertech/forge/esm/checkbox/checkbox.js:
+@tylertech/forge/esm/checkbox/checkbox-component-delegate.js:
+@tylertech/forge/esm/checkbox/index.js:
+@tylertech/forge/esm/radio/core/radio-group-manager.js:
+@tylertech/forge/esm/radio/radio/radio-constants.js:
+@tylertech/forge/esm/radio/radio/radio-adapter.js:
+@tylertech/forge/esm/radio/radio/radio-core.js:
+@tylertech/forge/esm/radio/radio/radio.js:
+@tylertech/forge/esm/radio/radio/index.js:
+@tylertech/forge/esm/radio/radio-group/radio-group-adapter.js:
+@tylertech/forge/esm/radio/radio-group/radio-group-constants.js:
+@tylertech/forge/esm/radio/radio-group/radio-group-core.js:
+@tylertech/forge/esm/radio/radio-group/radio-group.js:
+@tylertech/forge/esm/radio/radio-group/index.js:
+@tylertech/forge/esm/radio/index.js:
+@tylertech/forge/esm/switch/switch-constants.js:
+@tylertech/forge/esm/switch/switch-adapter.js:
+@tylertech/forge/esm/switch/switch-core.js:
+@tylertech/forge/esm/switch/switch.js:
+@tylertech/forge/esm/switch/switch-component-delegate.js:
+@tylertech/forge/esm/switch/index.js:
+@tylertech/forge/esm/label/label-constants.js:
+@tylertech/forge/esm/label/label-adapter.js:
+@tylertech/forge/esm/label/label-core.js:
+@tylertech/forge/esm/label/label.js:
+@tylertech/forge/esm/label/index.js:
+@tylertech/forge/esm/field/base/base-field-constants.js:
+@tylertech/forge/esm/field/field-constants.js:
+@tylertech/forge/esm/field/field-adapter.js:
+@tylertech/forge/esm/field/field-core.js:
+@tylertech/forge/esm/field/field.js:
+@tylertech/forge/esm/field/base/base-field.js:
+@tylertech/forge/esm/field/base/base-field-adapter.js:
+@tylertech/forge/esm/field/base/base-field-core.js:
+@tylertech/forge/esm/field/base/index.js:
+@tylertech/forge/esm/field/index.js:
+@tylertech/forge/esm/text-field/text-field-constants.js:
+@tylertech/forge/esm/text-field/text-field-adapter.js:
+@tylertech/forge/esm/text-field/text-field-core.js:
+@tylertech/forge/esm/text-field/text-field.js:
+@tylertech/forge/esm/text-field/text-field-component-delegate.js:
+@tylertech/forge/esm/text-field/index.js:
+@tylertech/forge/esm/chip-field/chip-field-constants.js:
+@tylertech/forge/esm/chip-field/chip-field-adapter.js:
+@tylertech/forge/esm/chip-field/chip-field-core.js:
+@tylertech/forge/esm/chips/chip-set/chip-set-constants.js:
+@tylertech/forge/esm/chips/chip/chip-constants.js:
+@tylertech/forge/esm/chips/chip/chip-adapter.js:
+@tylertech/forge/esm/chips/chip/chip-core.js:
+@tylertech/forge/esm/chips/chip/chip.js:
+@tylertech/forge/esm/chips/chip/index.js:
+@tylertech/forge/esm/chips/chip-set/chip-set.js:
+@tylertech/forge/esm/chips/chip-set/index.js:
+@tylertech/forge/esm/chips/index.js:
+@tylertech/forge/esm/chip-field/chip-field.js:
+@tylertech/forge/esm/chip-field/chip-field-component-delegate.js:
+@tylertech/forge/esm/chip-field/index.js:
+@tylertech/forge/esm/autocomplete/autocomplete-constants.js:
+@tylertech/forge/esm/autocomplete/autocomplete-adapter.js:
+@tylertech/forge/esm/autocomplete/autocomplete-utils.js:
+@tylertech/forge/esm/autocomplete/autocomplete-core.js:
+@tylertech/forge/esm/autocomplete/autocomplete.js:
+@tylertech/forge/esm/autocomplete/autocomplete-component-delegate.js:
+@tylertech/forge/esm/autocomplete/index.js:
+@tylertech/forge/esm/backdrop/backdrop-constants.js:
+@tylertech/forge/esm/backdrop/backdrop.js:
+@tylertech/forge/esm/backdrop/index.js:
+@tylertech/forge/esm/banner/banner-constants.js:
+@tylertech/forge/esm/banner/banner-adapter.js:
+@tylertech/forge/esm/banner/banner-core.js:
+@tylertech/forge/esm/banner/banner.js:
+@tylertech/forge/esm/banner/index.js:
+@tylertech/forge/esm/dialog/dialog-constants.js:
+@tylertech/forge/esm/dialog/dialog-adapter.js:
+@tylertech/forge/esm/core/mixins/interactions/moveable/with-moveable.js:
+@tylertech/forge/esm/core/controllers/move-controller.js:
+@tylertech/forge/esm/dialog/dialog-core.js:
+@tylertech/forge/esm/dialog/dialog.js:
+@tylertech/forge/esm/dialog/index.js:
+@tylertech/forge/esm/bottom-sheet/bottom-sheet-constants.js:
+@tylertech/forge/esm/bottom-sheet/bottom-sheet-adapter.js:
+@tylertech/forge/esm/bottom-sheet/bottom-sheet-core.js:
+@tylertech/forge/esm/bottom-sheet/bottom-sheet.js:
+@tylertech/forge/esm/bottom-sheet/index.js:
+@tylertech/forge/esm/button-area/button-area-constants.js:
+@tylertech/forge/esm/button-area/button-area-adapter.js:
+@tylertech/forge/esm/button-area/button-area-core.js:
+@tylertech/forge/esm/button-area/button-area.js:
+@tylertech/forge/esm/button-area/index.js:
+@tylertech/forge/esm/calendar/calendar-menu/calendar-menu-constants.js:
+@tylertech/forge/esm/calendar/calendar-menu/calendar-menu-utils.js:
+@tylertech/forge/esm/calendar/calendar-menu/calendar-menu-adapter.js:
+@tylertech/forge/esm/calendar/calendar-menu/calendar-menu-core.js:
+@tylertech/forge/esm/calendar/calendar-menu/calendar-menu.js:
+@tylertech/forge/esm/calendar/calendar-menu/index.js:
+@tylertech/forge/esm/calendar/calendar-constants.js:
+@tylertech/forge/esm/calendar/calendar-locale-utils.js:
+@tylertech/forge/esm/calendar/calendar-dom-utils.js:
+@tylertech/forge/esm/calendar/core/date-range.js:
+@tylertech/forge/esm/calendar/calendar-utils.js:
+@tylertech/forge/esm/calendar/calendar-adapter.js:
+@tylertech/forge/esm/calendar/calendar-core.js:
+@tylertech/forge/esm/calendar/calendar.js:
+@tylertech/forge/esm/calendar/calendar-component-delegate.js:
+@tylertech/forge/esm/calendar/calendar-dropdown/calendar-dropdown-constants.js:
+@tylertech/forge/esm/calendar/calendar-dropdown/calendar-dropdown.js:
+@tylertech/forge/esm/calendar/calendar-dropdown/index.js:
+@tylertech/forge/esm/calendar/core/calendar-base.js:
+@tylertech/forge/esm/calendar/core/index.js:
+@tylertech/forge/esm/calendar/index.js:
+@tylertech/forge/esm/card/card.js:
+@tylertech/forge/esm/card/card-constants.js:
+@tylertech/forge/esm/card/index.js:
+@tylertech/forge/esm/circular-progress/circular-progress-constants.js:
+@tylertech/forge/esm/circular-progress/circular-progress-adapter.js:
+@tylertech/forge/esm/circular-progress/circular-progress-core.js:
+@tylertech/forge/esm/circular-progress/circular-progress.js:
+@tylertech/forge/esm/circular-progress/index.js:
+@tylertech/forge/esm/color-picker/color-picker-constants.js:
+@tylertech/forge/esm/color-picker/color-picker-adapter.js:
+@tylertech/forge/esm/color-picker/color-picker-utils.js:
+@tylertech/forge/esm/color-picker/color-picker-gradient-slider.js:
+@tylertech/forge/esm/color-picker/color-picker-slider.js:
+@tylertech/forge/esm/color-picker/color-picker-core.js:
+@tylertech/forge/esm/color-picker/color-picker.js:
+@tylertech/forge/esm/color-picker/index.js:
+@tylertech/forge/esm/date-picker/base/base-date-picker-constants.js:
+@tylertech/forge/esm/date-picker/base/base-date-picker.js:
+@tylertech/forge/esm/date-picker/base/base-date-picker-utils.js:
+@tylertech/forge/esm/date-picker/base/base-date-picker-adapter.js:
+@tylertech/forge/esm/date-picker/date-picker-constants.js:
+@tylertech/forge/esm/date-picker/date-picker-adapter.js:
+@tylertech/forge/esm/date-picker/base/base-date-picker-core.js:
+@tylertech/forge/esm/date-picker/date-picker-core.js:
+@tylertech/forge/esm/date-picker/date-picker.js:
+@tylertech/forge/esm/date-picker/date-picker-component-delegate.js:
+@tylertech/forge/esm/date-picker/index.js:
+@tylertech/forge/esm/date-range-picker/date-range-picker-constants.js:
+@tylertech/forge/esm/date-range-picker/date-range-picker-adapter.js:
+@tylertech/forge/esm/date-range-picker/date-range-picker-core.js:
+@tylertech/forge/esm/date-range-picker/date-range-picker.js:
+@tylertech/forge/esm/date-range-picker/date-range-picker-component-delegate.js:
+@tylertech/forge/esm/date-range-picker/index.js:
+@tylertech/forge/esm/drawer/base/base-drawer-constants.js:
+@tylertech/forge/esm/drawer/base/base-drawer-adapter.js:
+@tylertech/forge/esm/drawer/base/base-drawer-core.js:
+@tylertech/forge/esm/drawer/base/base-drawer.js:
+@tylertech/forge/esm/drawer/base/index.js:
+@tylertech/forge/esm/drawer/drawer/drawer-constants.js:
+@tylertech/forge/esm/drawer/drawer/drawer.js:
+@tylertech/forge/esm/drawer/drawer/index.js:
+@tylertech/forge/esm/drawer/modal-drawer/modal-drawer-adapter.js:
+@tylertech/forge/esm/drawer/modal-drawer/modal-drawer-constants.js:
+@tylertech/forge/esm/drawer/modal-drawer/modal-drawer-core.js:
+@tylertech/forge/esm/drawer/modal-drawer/modal-drawer.js:
+@tylertech/forge/esm/drawer/modal-drawer/index.js:
+@tylertech/forge/esm/drawer/mini-drawer/mini-drawer-constants.js:
+@tylertech/forge/esm/drawer/mini-drawer/mini-drawer.js:
+@tylertech/forge/esm/drawer/mini-drawer/index.js:
+@tylertech/forge/esm/drawer/index.js:
+@tylertech/forge/esm/file-picker/file-picker-constants.js:
+@tylertech/forge/esm/file-picker/file-picker-adapter.js:
+@tylertech/forge/esm/file-picker/file-picker-core.js:
+@tylertech/forge/esm/file-picker/file-picker.js:
+@tylertech/forge/esm/file-picker/file-picker-component-delegate.js:
+@tylertech/forge/esm/file-picker/index.js:
+@tylertech/forge/esm/floating-action-button/floating-action-button-constants.js:
+@tylertech/forge/esm/floating-action-button/floating-action-button-adapter.js:
+@tylertech/forge/esm/floating-action-button/floating-action-button-core.js:
+@tylertech/forge/esm/floating-action-button/floating-action-button.js:
+@tylertech/forge/esm/floating-action-button/floating-action-button-component-delegate.js:
+@tylertech/forge/esm/floating-action-button/index.js:
+@tylertech/forge/esm/inline-message/inline-message-constants.js:
+@tylertech/forge/esm/inline-message/inline-message.js:
+@tylertech/forge/esm/inline-message/index.js:
+@tylertech/forge/esm/key/key/key.js:
+@tylertech/forge/esm/key/key/index.js:
+@tylertech/forge/esm/key/key-item/key-item.js:
+@tylertech/forge/esm/key/key-item/index.js:
+@tylertech/forge/esm/key/index.js:
+@tylertech/forge/esm/keyboard-shortcut/keyboard-shortcut-constants.js:
+@tylertech/forge/esm/keyboard-shortcut/keyboard-shortcut-adapter.js:
+@tylertech/forge/esm/keyboard-shortcut/keyboard-shortcut-utils.js:
+@tylertech/forge/esm/keyboard-shortcut/keyboard-shortcut-core.js:
+@tylertech/forge/esm/keyboard-shortcut/keyboard-shortcut.js:
+@tylertech/forge/esm/keyboard-shortcut/index.js:
+@tylertech/forge/esm/label-value/label-value-constants.js:
+@tylertech/forge/esm/label-value/label-value.js:
+@tylertech/forge/esm/label-value/label-value-component-delegate.js:
+@tylertech/forge/esm/label-value/index.js:
+@tylertech/forge/esm/meter/meter/meter.js:
+@tylertech/forge/esm/meter/meter/index.js:
+@tylertech/forge/esm/meter/meter-group/meter-group.js:
+@tylertech/forge/esm/meter/meter-group/index.js:
+@tylertech/forge/esm/meter/index.js:
+@tylertech/forge/esm/page-state/page-state-constants.js:
+@tylertech/forge/esm/page-state/page-state.js:
+@tylertech/forge/esm/page-state/index.js:
+@tylertech/forge/esm/paginator/paginator-constants.js:
+@tylertech/forge/esm/paginator/paginator-core.js:
+@tylertech/forge/esm/paginator/paginator-adapter.js:
+@tylertech/forge/esm/field/base/with-base-field.js:
+@tylertech/forge/esm/scaffold/scaffold-constants.js:
+@tylertech/forge/esm/scaffold/scaffold.js:
+@tylertech/forge/esm/scaffold/index.js:
+@tylertech/forge/esm/select/option/option-adapter.js:
+@tylertech/forge/esm/select/option/option-constants.js:
+@tylertech/forge/esm/select/option/option-core.js:
+@tylertech/forge/esm/select/option/option.js:
+@tylertech/forge/esm/select/option/index.js:
+@tylertech/forge/esm/select/option-group/option-group-constants.js:
+@tylertech/forge/esm/select/option-group/option-group.js:
+@tylertech/forge/esm/select/option-group/index.js:
+@tylertech/forge/esm/select/core/select-utils.js:
+@tylertech/forge/esm/select/core/base-select-adapter.js:
+@tylertech/forge/esm/select/core/base-select-constants.js:
+@tylertech/forge/esm/select/core/base-select-core.js:
+@tylertech/forge/esm/select/core/base-select.js:
+@tylertech/forge/esm/select/core/index.js:
+@tylertech/forge/esm/select/select/select-constants.js:
+@tylertech/forge/esm/select/select/select-adapter.js:
+@tylertech/forge/esm/select/select/select-core.js:
+@tylertech/forge/esm/select/select/select.js:
+@tylertech/forge/esm/select/select/index.js:
+@tylertech/forge/esm/paginator/paginator.js:
+@tylertech/forge/esm/paginator/index.js:
+@tylertech/forge/esm/select/select-dropdown/select-dropdown-constants.js:
+@tylertech/forge/esm/select/select-dropdown/select-dropdown-core.js:
+@tylertech/forge/esm/select/select-dropdown/select-dropdown-adapter.js:
+@tylertech/forge/esm/select/select-dropdown/select-dropdown.js:
+@tylertech/forge/esm/select/select-dropdown/index.js:
+@tylertech/forge/esm/select/select-component-delegate.js:
+@tylertech/forge/esm/select/index.js:
+@tylertech/forge/esm/skip-link/skip-link-constants.js:
+@tylertech/forge/esm/skip-link/skip-link.js:
+@tylertech/forge/esm/skip-link/index.js:
+@tylertech/forge/esm/core/base/base-form-component.js:
+@tylertech/forge/esm/slider/slider-constants.js:
+@tylertech/forge/esm/slider/slider-utils.js:
+@tylertech/forge/esm/slider/slider-adapter.js:
+@tylertech/forge/esm/slider/slider-core.js:
+@tylertech/forge/esm/slider/slider.js:
+@tylertech/forge/esm/slider/slider-component-delegate.js:
+@tylertech/forge/esm/slider/index.js:
+@tylertech/forge/esm/split-view/core/split-view-base.js:
+@tylertech/forge/esm/split-view/core/index.js:
+@tylertech/forge/esm/split-view/split-view-panel/split-view-panel-constants.js:
+@tylertech/forge/esm/split-view/split-view-panel/split-view-panel-utils.js:
+@tylertech/forge/esm/split-view/split-view-panel/split-view-panel-core.js:
+@tylertech/forge/esm/split-view/split-view/split-view-constants.js:
+@tylertech/forge/esm/split-view/split-view-panel/split-view-panel-adapter.js:
+@tylertech/forge/esm/split-view/split-view-panel/split-view-panel.js:
+@tylertech/forge/esm/split-view/split-view-panel/index.js:
+@tylertech/forge/esm/split-view/split-view/split-view-adapter.js:
+@tylertech/forge/esm/split-view/split-view/split-view-core.js:
+@tylertech/forge/esm/split-view/split-view/split-view.js:
+@tylertech/forge/esm/split-view/split-view/index.js:
+@tylertech/forge/esm/split-view/index.js:
+@tylertech/forge/esm/stack/stack-constants.js:
+@tylertech/forge/esm/stack/stack-adapter.js:
+@tylertech/forge/esm/stack/stack-core.js:
+@tylertech/forge/esm/stack/stack.js:
+@tylertech/forge/esm/stack/index.js:
+@tylertech/forge/esm/stepper/step/step-constants.js:
+@tylertech/forge/esm/stepper/step/step-adapter.js:
+@tylertech/forge/esm/stepper/step/step-core.js:
+@tylertech/forge/esm/stepper/step/step.js:
+@tylertech/forge/esm/stepper/step/index.js:
+@tylertech/forge/esm/stepper/stepper/stepper-constants.js:
+@tylertech/forge/esm/stepper/core/stepper-utils.js:
+@tylertech/forge/esm/stepper/stepper/stepper-adapter.js:
+@tylertech/forge/esm/stepper/stepper/stepper-core.js:
+@tylertech/forge/esm/stepper/stepper/stepper.js:
+@tylertech/forge/esm/stepper/stepper/index.js:
+@tylertech/forge/esm/stepper/index.js:
+@tylertech/forge/esm/table/table-constants.js:
+@tylertech/forge/esm/table/types.js:
+@tylertech/forge/esm/table/table-utils.js:
+@tylertech/forge/esm/table/table-adapter.js:
+@tylertech/forge/esm/table/multi-sort-manager.js:
+@tylertech/forge/esm/table/table-row.js:
+@tylertech/forge/esm/table/table-core.js:
+@tylertech/forge/esm/table/table.js:
+@tylertech/forge/esm/table/index.js:
+@tylertech/forge/esm/tabs/tab-bar/tab-bar-constants.js:
+@tylertech/forge/esm/tabs/tab/tab-constants.js:
+@tylertech/forge/esm/tabs/tab/tab-adapter.js:
+@tylertech/forge/esm/tabs/tab/tab-core.js:
+@tylertech/forge/esm/tabs/tab/tab.js:
+@tylertech/forge/esm/tabs/tab/index.js:
+@tylertech/forge/esm/tabs/tab-bar/tab-bar-adapter.js:
+@tylertech/forge/esm/tabs/tab-bar/tab-bar-core.js:
+@tylertech/forge/esm/tabs/tab-bar/tab-bar.js:
+@tylertech/forge/esm/tabs/tab-bar/index.js:
+@tylertech/forge/esm/tabs/index.js:
+@tylertech/forge/esm/time-picker/time-picker-constants.js:
+@tylertech/forge/esm/time-picker/time-picker-adapter.js:
+@tylertech/forge/esm/time-picker/time-picker-utils.js:
+@tylertech/forge/esm/time-picker/time-picker-core.js:
+@tylertech/forge/esm/time-picker/time-picker.js:
+@tylertech/forge/esm/time-picker/time-picker-component-delegate.js:
+@tylertech/forge/esm/time-picker/index.js:
+@tylertech/forge/esm/toast/toast-constants.js:
+@tylertech/forge/esm/toast/toast-adapter.js:
+@tylertech/forge/esm/toast/toast-core.js:
+@tylertech/forge/esm/toast/toast.js:
+@tylertech/forge/esm/toast/index.js:
+@tylertech/forge/esm/view-switcher/view-switcher-constants.js:
+@tylertech/forge/esm/view-switcher/view-switcher-adapter.js:
+@tylertech/forge/esm/view-switcher/view-switcher-core.js:
+@tylertech/forge/esm/view-switcher/view/view-constants.js:
+@tylertech/forge/esm/view-switcher/view/view.js:
+@tylertech/forge/esm/view-switcher/view-switcher.js:
+@tylertech/forge/esm/view-switcher/view/index.js:
+@tylertech/forge/esm/view-switcher/index.js:
+@tylertech/forge/esm/deprecated/button/deprecated-button-constants.js:
+@tylertech/forge/esm/deprecated/button/deprecated-button.js:
+@tylertech/forge/esm/deprecated/button/deprecated-button-component-delegate.js:
+@tylertech/forge/esm/deprecated/button/index.js:
+@tylertech/forge/esm/deprecated/icon-button/deprecated-icon-button-constants.js:
+@tylertech/forge/esm/deprecated/icon-button/deprecated-icon-button.js:
+@tylertech/forge/esm/deprecated/icon-button/deprecated-icon-button-component-delegate.js:
+@tylertech/forge/esm/deprecated/icon-button/index.js:
+@tylertech/forge/esm/split-button/split-button-adapter.js:
+@tylertech/forge/esm/split-button/split-button-constants.js:
+@tylertech/forge/esm/split-button/split-button-core.js:
+@tylertech/forge/esm/split-button/split-button.js:
+@tylertech/forge/esm/split-button/index.js:
+@tylertech/forge/esm/utils/color-utils.js:
+@tylertech/forge/esm/utils/index.js:
+  /**
+   * @license
+   * Copyright Tyler Technologies, Inc. 
+   * License: Apache-2.0
+   */
+
+@lit/reactive-element/css-tag.js:
+  /**
+   * @license
+   * Copyright 2019 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */
+
+@lit/reactive-element/reactive-element.js:
+lit-html/lit-html.js:
+lit-element/lit-element.js:
+@lit/reactive-element/decorators/custom-element.js:
+@lit/reactive-element/decorators/property.js:
+@lit/reactive-element/decorators/state.js:
+@lit/reactive-element/decorators/event-options.js:
+@lit/reactive-element/decorators/base.js:
+@lit/reactive-element/decorators/query.js:
+@lit/reactive-element/decorators/query-all.js:
+@lit/reactive-element/decorators/query-async.js:
+@lit/reactive-element/decorators/query-assigned-nodes.js:
+lit-html/directive.js:
+  /**
+   * @license
+   * Copyright 2017 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */
+
+lit-html/is-server.js:
+  /**
+   * @license
+   * Copyright 2022 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */
+
+@lit/reactive-element/decorators/query-assigned-elements.js:
+  /**
+   * @license
+   * Copyright 2021 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */
+
+@tylertech/forge/esm/core/utils/a11y-utils.js:
+  /**
+   * @license
+   * Copyright Tyler Technologies, Inc. 
+   * License: Apache-2.0
+   */
+  /**
+   * @license
+   * Copyright 2023 Google LLC
+   * SPDX-License-Identifier: Apache-2.0
+   *
+   * Adapted and influenced from [Material Web](https://github.com/material-components/material-web).
+   * The original source code can be found at: [GitHub](https://github.com/material-components/material-web/blob/main/internal/aria/aria.ts)
+   */
+
+lit-html/directives/style-map.js:
+lit-html/directives/class-map.js:
+  /**
+   * @license
+   * Copyright 2018 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   */
+
+@tylertech/forge/esm/core/mixins/focus/with-focusable.js:
+  /**
+   * @license
+   * Copyright Tyler Technologies, Inc. 
+   * License: Apache-2.0
+   */
+  /**
+   * @license
+   * Copyright 2023 Google LLC
+   * SPDX-License-Identifier: Apache-2.0
+   *
+   * Adapted and influenced from [Material Web](https://github.com/material-components/material-web).
+   * The original source code can be found at: [GitHub](https://github.com/material-components/material-web/blob/main/labs/behaviors/focusable.ts)
+   */
+
+@tylertech/forge/esm/core/mixins/form/with-form-associated.js:
+  /**
+   * @license
+   * Copyright Tyler Technologies, Inc. 
+   * License: Apache-2.0
+   */
+  /**
+   * @license
+   * Copyright 2023 Google LLC
+   * SPDX-License-Identifier: Apache-2.0
+   *
+   * Adapted and influenced from [Material Web](https://github.com/material-components/material-web).
+   * The original source code can be found at: [GitHub](https://github.com/material-components/material-web/blob/main/labs/behaviors/form-associated.ts)
+   */
+
+@tylertech/forge/esm/index.js:
+  /**
+   * @license
+   * Copyright Tyler Technologies, Inc. 
+   * License: Apache-2.0
+   */
+  /**
+   * @license
+   * Copyright (c) Tyler Technologies, Inc.
+   * License: Apache-2.0
+   */
