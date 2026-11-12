@@ -3,6 +3,34 @@
     font-family: 'Roboto', sans-serif !important;
   }
 
+  /* Stack the deprecation banner above the Storybook UI */
+  body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+
+  #root {
+    position: relative;
+    flex: 1;
+    min-height: 0;
+  }
+
+  /* Storybook sizes its layout to the full viewport; fit it to the space below the banner instead */
+  #root > div {
+    height: 100% !important;
+  }
+
+  #forge-extended-deprecation-banner {
+    flex: none;
+    font-family: 'Roboto', sans-serif;
+  }
+
+  #forge-extended-deprecation-banner a {
+    color: inherit;
+    font-weight: bold;
+  }
+
   .sidebar-header img {
     max-width: 100%;
   }

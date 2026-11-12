@@ -4,6 +4,30 @@ import { Meta } from '@storybook/addon-docs/blocks';
 
 # Tyler Forge™ Extended [![GitHub Repo stars](https://img.shields.io/github/stars/tyler-technologies-oss/forge-extended)](https://github.com/tyler-technologies-oss/forge-extended/)
 
+## This library is deprecated
+
+All of the components in Tyler Forge™ Extended have moved into the core [Tyler Forge™](https://forge.tylerdev.io/forge/v3/)
+library, starting with `@tylertech/forge@3.17.0`. They keep the same tag names and APIs, so migrating is mostly a matter of
+updating your dependencies and import paths.
+
+- **New projects** should install `@tylertech/forge` and should not install `@tylertech/forge-extended`.
+- **Existing projects** should follow the [migration guide](?path=/docs/migrating-to-forge-core--docs). The `forge-extended-migration`
+  codemod in the [Tyler Forge™ upgrade utility](https://github.com/tyler-technologies-oss/forge-upgrade) automates most of the work:
+
+```bash
+npx @tylertech/forge-upgrade@latest --configuration forge-extended-migration
+```
+
+### 90-day deprecation period
+
+The extended packages are in a **90-day deprecation period that ends on January 10, 2027**. They will not receive any new
+features. After the deprecation period ends, the extended packages will no longer be maintained, so plan to complete your
+migration before then.
+
+If you have any concerns about this timeline, please let us know in the <a href="https://teams.microsoft.com/l/channel/19%3A1gCw-wLjrS56X_iAY0mpHpk4PyWOi08JiMM7Kc1xvho1%40thread.tacv2/Support?groupId=2bb1b8ea-cd12-4df5-a4ab-0c895bfcda5c&amp;tenantId=7cc5f0f9-ee5b-4106-a62d-1b9f7be46118" target="_blank" rel="noopener noreferrer">Forge Support Teams channel</a>.
+
+## About
+
 The Tyler Forge™ Extended library is a set of high quality, accessible UI components that are built on top of the primitive
 [Tyler Forge™ components](https://forge.tylerdev.io/). These components are typically larger, more complex, and encapsulate
 a larger pattern or design to help developers create user interfaces more efficiently. The main focus of these components is
