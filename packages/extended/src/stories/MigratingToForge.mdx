@@ -45,6 +45,8 @@ Add `--dry-run` to preview the changes without modifying any files.
 > `"@tylertech/forge-extended": "^1.8.1"` becomes `"@tylertech/forge": "^1.8.1"`, which points to an old 1.x release of Forge. After running it, update each
 > package to at least the [minimum version](#migrating-to-tyler-forge) above. If your project already depends on
 > `@tylertech/forge`, the codemod removes the extended entry and keeps your existing version, so confirm it's 3.17.0 or later.
+> The codemod only rewrites root-package imports, not subpath imports. Update any subpath imports manually as described in
+> [step 2](#2-update-your-imports) before reinstalling dependencies.
 
 Anything the codemod can't map with certainty, such as the
 Angular `*ProxyModule` classes and `ForgeExtendedModule`, is left unchanged and reported with a console warning. Update those
@@ -74,6 +76,9 @@ npm install @tylertech/forge-react@^3.5.0
 ```
 
 ## 2. Update your imports
+
+The codemod does not update subpath imports; manually change them to the matching Forge subpath as shown below before reinstalling
+dependencies.
 
 Replace `@tylertech/forge-extended` with `@tylertech/forge` in every side-effect import. Each component registers itself when its
 subpath is imported.

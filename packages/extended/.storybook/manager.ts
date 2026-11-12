@@ -39,7 +39,7 @@ function renderDeprecationBanner(onNavigate: (path: string) => void): void {
   `;
   banner.addEventListener('click', evt => {
     const link = (evt.target as HTMLElement).closest<HTMLAnchorElement>('a[data-path]');
-    if (link) {
+    if (link && evt.button === 0 && !evt.ctrlKey && !evt.metaKey && !evt.shiftKey && !evt.altKey) {
       evt.preventDefault();
       onNavigate(link.dataset.path as string);
     }
