@@ -73,5 +73,5 @@ try{
       Concerns about the timeline? Let us know in the
       <a href="https://teams.microsoft.com/l/channel/19%3A1gCw-wLjrS56X_iAY0mpHpk4PyWOi08JiMM7Kc1xvho1%40thread.tacv2/Support?groupId=2bb1b8ea-cd12-4df5-a4ab-0c895bfcda5c&amp;tenantId=7cc5f0f9-ee5b-4106-a62d-1b9f7be46118" target="_blank" rel="noopener noreferrer">Forge Support Teams channel</a>.
     </div>
-  `,t.addEventListener("click",e=>{let o=e.target.closest("a[data-path]");o&&(e.preventDefault(),a(o.dataset.path))}),document.body.prepend(t)}W3.register("forge-extended/deprecation-banner",a=>{Tf(t=>a.navigate(t))});})();
+  `,t.addEventListener("click",e=>{let o=e.target.closest("a[data-path]");o&&e.button===0&&!e.ctrlKey&&!e.metaKey&&!e.shiftKey&&!e.altKey&&(e.preventDefault(),a(o.dataset.path))}),document.body.prepend(t)}W3.register("forge-extended/deprecation-banner",a=>{Tf(t=>a.navigate(t))});})();
 }catch(e){ console.error("[Storybook] One of your manager-entries failed: " + import.meta.url, e); }
