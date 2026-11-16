@@ -27,6 +27,7 @@ const preview: Preview = {
       storySort: {
         order: [
           'Home',
+          'Migrating to Forge Core',
           'Getting Started',
           ['Installation', 'Version Compatibility'],
           'Frameworks',
