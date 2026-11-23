@@ -28,6 +28,10 @@ const meta = {
         height: 100%;
       }
 
+      .demo-title {
+        color: var(--forge-landing-page-layout-header-color, #ffffff);
+      }
+
       .demo-area {
         border: dashed 2px var(--forge-theme-primary-container-high);
         background-color: var(--forge-theme-primary-container-minimum);
@@ -55,12 +59,7 @@ const meta = {
     return html`
       <forge-landing-page-layout mode="single" alignment="left">
         <span class="forge-typography--subheading7" slot="secondary-title">Article</span>
-        <h2
-          class="forge-typography--display6"
-          slot="main-title"
-          style="color: var(--forge-landing-page-layout-header-color, #ffffff)">
-          A single column, edge-aligned layout
-        </h2>
+        <h2 class="forge-typography--display6 demo-title" slot="main-title">A single column, edge-aligned layout</h2>
         <forge-button slot="action" variant="filled">Read more</forge-button>
 
         <div class="demo-area forge-typography--label1" slot="left">Article content</div>

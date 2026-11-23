@@ -87,6 +87,10 @@ const meta = {
         height: 100%;
       }
 
+      .demo-title {
+        color: var(--forge-landing-page-layout-header-color, #ffffff);
+      }
+
       .demo-announcement-title {
         margin: 0 0 var(--forge-spacing-xsmall);
       }
@@ -229,12 +233,7 @@ export const WithAppLayout: Story = {
 
         <forge-landing-page-layout slot="body" image-url-large=${snowboardingBg} image-url-small=${snowboardingBg}>
           <span class="forge-typography--subheading7" slot="secondary-title">Winter is here</span>
-          <h2
-            class="forge-typography--display6"
-            slot="main-title"
-            style="color: var(--forge-landing-page-layout-header-color, #ffffff)">
-            Hit the slopes this season
-          </h2>
+          <h2 class="forge-typography--display6 demo-title" slot="main-title">Hit the slopes this season</h2>
           <forge-button class="on-image" slot="action" variant="filled">
             Explore trails
             <forge-icon slot="end" name="forward"></forge-icon>

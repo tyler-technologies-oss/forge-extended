@@ -1,6 +1,7 @@
 import { LitElement, PropertyValues, TemplateResult, html, nothing, unsafeCSS } from 'lit';
-import { customElement, property, queryAssignedNodes } from 'lit/decorators.js';
+import { property, queryAssignedNodes } from 'lit/decorators.js';
 import { toggleState } from '@tylertech/forge';
+import { tryDefine } from '@tylertech/forge-core';
 
 import styles from './landing-page-layout.scss?inline';
 
@@ -88,7 +89,6 @@ export const LandingPageLayoutComponentTagName: keyof HTMLElementTagNameMap = 'f
  * @csspart body-footer - The footer of the body.
  * @csspart footer - The page footer region.
  */
-@customElement(LandingPageLayoutComponentTagName)
 export class LandingPageLayoutComponent extends LitElement {
   public static override styles = unsafeCSS(styles);
 
@@ -253,3 +253,5 @@ export class LandingPageLayoutComponent extends LitElement {
     `;
   }
 }
+
+tryDefine(LandingPageLayoutComponentTagName, LandingPageLayoutComponent);

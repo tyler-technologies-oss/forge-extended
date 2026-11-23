@@ -5,15 +5,40 @@
 @use '@tylertech/forge/sass/core/styles/tokens/color-palette' as forge-color-palette;
 
 //
+// Layout constants
+//
+// These values come from the original forge-internal landing page design and have no matching Forge spacing token.
+//
+
+// Maximum width of the header/body content area for each `size`.
+$content-width: 1040px !default;
+$content-width-wide: 1280px !default;
+
+// Inline padding of the footer.
+$footer-padding: 70px !default;
+
+// How far the header background extends below the header, so it sits behind the top of the body.
+$header-background-overlap: 75px !default;
+
+// Minimum height of the header background (gradient or image).
+$header-background-min-height: 333px !default;
+
+//
 // Host
 //
 
 :host {
-  --_landing-page-layout-content-width: var(--forge-landing-page-layout-content-width, 1040px);
-  --_landing-page-layout-content-width-wide: var(--forge-landing-page-layout-content-width-wide, 1280px);
-  --_landing-page-layout-body-padding: var(--forge-landing-page-layout-body-padding, 24px);
-  --_landing-page-layout-body-padding-mobile: var(--forge-landing-page-layout-body-padding-mobile, 8px);
-  --_landing-page-layout-footer-padding: var(--forge-landing-page-layout-footer-padding, 70px);
+  --_landing-page-layout-content-width: var(--forge-landing-page-layout-content-width, #{$content-width});
+  --_landing-page-layout-content-width-wide: var(
+    --forge-landing-page-layout-content-width-wide,
+    #{$content-width-wide}
+  );
+  --_landing-page-layout-body-padding: var(--forge-landing-page-layout-body-padding, #{forge-spacing.variable(large)});
+  --_landing-page-layout-body-padding-mobile: var(
+    --forge-landing-page-layout-body-padding-mobile,
+    #{forge-spacing.variable(xsmall)}
+  );
+  --_landing-page-layout-footer-padding: var(--forge-landing-page-layout-footer-padding, #{$footer-padding});
   --_landing-page-layout-root-height: var(--forge-landing-page-layout-root-height, 100%);
   --_landing-page-layout-actions-gap: var(--forge-landing-page-layout-actions-gap, #{forge-spacing.variable(medium)});
   --_landing-page-layout-actions-gap-mobile: var(
@@ -86,10 +111,10 @@
     var(--_landing-page-layout-header-gradient-start),
     var(--_landing-page-layout-header-gradient-end)
   );
-  height: calc(100% + 75px + var(--_landing-page-layout-body-padding));
+  height: calc(100% + #{$header-background-overlap} + var(--_landing-page-layout-body-padding));
   width: 100%;
   pointer-events: none;
-  min-height: 333px;
+  min-height: $header-background-min-height;
 
   ::slotted([slot='image']) {
     width: 100%;
@@ -127,7 +152,7 @@
   gap: var(--_landing-page-layout-body-padding);
   align-items: center;
   padding: var(--_landing-page-layout-body-padding);
-  padding-top: calc(var(--_landing-page-layout-body-padding) * 2);
+  padding-block-start: calc(var(--_landing-page-layout-body-padding) * 2);
 }
 
 .header-body-left {
@@ -252,7 +277,7 @@
   }
 
   .header-body-left {
-    text-align: left;
+    text-align: start;
   }
 }
 
@@ -341,7 +366,7 @@
 
 :host(:state(alignment-left):state(empty-announcements)) {
   .header-body-left {
-    text-align: left;
+    text-align: start;
   }
 }
 
@@ -455,7 +480,7 @@
 
 @media (max-width: 768px) {
   .header-background {
-    height: calc(100% + 75px + #{forge-spacing.variable(medium)});
+    height: calc(100% + #{$header-background-overlap} + #{forge-spacing.variable(medium)});
   }
 
   .header-body {
@@ -465,7 +490,7 @@
   }
 
   .header-body-left {
-    margin: 48px #{forge-spacing.variable(medium)};
+    margin: #{forge-spacing.variable(xxlarge)} #{forge-spacing.variable(medium)};
     grid-column: 1 / span 2;
     text-align: center;
   }

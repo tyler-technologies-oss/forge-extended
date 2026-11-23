@@ -1086,257 +1086,6 @@
     },
     {
       "kind": "javascript-module",
-      "path": "src/lib/footer/footer.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "FooterComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-footer'"
-        },
-        {
-          "kind": "class",
-          "description": "A footer component for displaying navigation, copyright, and branding information at the bottom of a page.",
-          "name": "FooterComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the background color of the footer.",
-              "name": "--forge-footer-background"
-            },
-            {
-              "description": "Controls the text color of footer content.",
-              "name": "--forge-footer-on-background"
-            },
-            {
-              "description": "Controls the padding of the footer.",
-              "name": "--forge-footer-padding"
-            },
-            {
-              "description": "Controls the left padding of the footer.",
-              "name": "--forge-footer-padding-left"
-            },
-            {
-              "description": "Controls the right padding of the footer.",
-              "name": "--forge-footer-padding-right"
-            },
-            {
-              "description": "Controls the gap between footer content and graphic in standard layout.",
-              "name": "--forge-footer-gap"
-            },
-            {
-              "description": "Controls the gap between stacked elements in alternative layout.",
-              "name": "--forge-footer-alternative-gap"
-            },
-            {
-              "description": "Controls the margin around dividers between footer items.",
-              "name": "--forge-footer-divider-margin"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Slot for footer items or custom content.",
-              "name": ""
-            },
-            {
-              "description": "Slot for footer graphic, such as a logo.",
-              "name": "graphic"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "layout",
-              "type": {
-                "text": "FooterLayout"
-              },
-              "privacy": "public",
-              "default": "'auto'",
-              "description": "Defines the footer layout mode.",
-              "attribute": "layout"
-            },
-            {
-              "kind": "field",
-              "name": "layoutBreakpoint",
-              "type": {
-                "text": "number"
-              },
-              "privacy": "public",
-              "default": "900",
-              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
-              "attribute": "layout-breakpoint"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "layout",
-              "type": {
-                "text": "FooterLayout"
-              },
-              "default": "'auto'",
-              "description": "Defines the footer layout mode.",
-              "fieldName": "layout"
-            },
-            {
-              "name": "layout-breakpoint",
-              "type": {
-                "text": "number"
-              },
-              "default": "900",
-              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
-              "fieldName": "layoutBreakpoint"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-footer",
-          "customElement": true,
-          "states": [
-            {
-              "name": "standard",
-              "description": "Applied when the layout is set to `standard` or when in `auto` mode above the breakpoint."
-            },
-            {
-              "name": "alternative",
-              "description": "Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint."
-            },
-            {
-              "name": "auto",
-              "description": "Applied when the layout is set to `auto`."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "FooterComponentTagName",
-          "declaration": {
-            "name": "FooterComponentTagName",
-            "module": "src/lib/footer/footer.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "FooterComponent",
-          "declaration": {
-            "name": "FooterComponent",
-            "module": "src/lib/footer/footer.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "MultiSelectHeaderComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-multi-select-header'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "MultiSelectHeaderComponent",
-          "slots": [
-            {
-              "description": "Text content for the select-all button",
-              "name": "select-all-button-text"
-            },
-            {
-              "description": "Action buttons (maps to the toolbar end slot)",
-              "name": "actions"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "privacy": "public",
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "attribute": "text"
-            },
-            {
-              "kind": "field",
-              "name": "noBorder",
-              "type": {
-                "text": "boolean"
-              },
-              "privacy": "public",
-              "default": "true",
-              "description": "Hides the bottom border",
-              "attribute": "no-border"
-            }
-          ],
-          "events": [
-            {
-              "type": {
-                "text": "CustomEvent"
-              },
-              "description": "Fired when the select-all button is clicked",
-              "name": "forge-multi-select-header-select-all"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "text",
-              "type": {
-                "text": "string"
-              },
-              "default": "''",
-              "description": "The text to display in the header (typically showing selection count)",
-              "fieldName": "text"
-            },
-            {
-              "name": "no-border",
-              "type": {
-                "text": "boolean"
-              },
-              "default": "true",
-              "description": "Hides the bottom border",
-              "fieldName": "noBorder"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-multi-select-header",
-          "customElement": true
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponentTagName",
-          "declaration": {
-            "name": "MultiSelectHeaderComponentTagName",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "MultiSelectHeaderComponent",
-          "declaration": {
-            "name": "MultiSelectHeaderComponent",
-            "module": "src/lib/multi-select-header/multi-select-header.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
       "path": "src/lib/count-card/count-card.ts",
       "declarations": [
         {
@@ -1526,6 +1275,621 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/footer/footer.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "FooterComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-footer'"
+        },
+        {
+          "kind": "class",
+          "description": "A footer component for displaying navigation, copyright, and branding information at the bottom of a page.",
+          "name": "FooterComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the background color of the footer.",
+              "name": "--forge-footer-background"
+            },
+            {
+              "description": "Controls the text color of footer content.",
+              "name": "--forge-footer-on-background"
+            },
+            {
+              "description": "Controls the padding of the footer.",
+              "name": "--forge-footer-padding"
+            },
+            {
+              "description": "Controls the left padding of the footer.",
+              "name": "--forge-footer-padding-left"
+            },
+            {
+              "description": "Controls the right padding of the footer.",
+              "name": "--forge-footer-padding-right"
+            },
+            {
+              "description": "Controls the gap between footer content and graphic in standard layout.",
+              "name": "--forge-footer-gap"
+            },
+            {
+              "description": "Controls the gap between stacked elements in alternative layout.",
+              "name": "--forge-footer-alternative-gap"
+            },
+            {
+              "description": "Controls the margin around dividers between footer items.",
+              "name": "--forge-footer-divider-margin"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Slot for footer items or custom content.",
+              "name": ""
+            },
+            {
+              "description": "Slot for footer graphic, such as a logo.",
+              "name": "graphic"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "layout",
+              "type": {
+                "text": "FooterLayout"
+              },
+              "privacy": "public",
+              "default": "'auto'",
+              "description": "Defines the footer layout mode.",
+              "attribute": "layout"
+            },
+            {
+              "kind": "field",
+              "name": "layoutBreakpoint",
+              "type": {
+                "text": "number"
+              },
+              "privacy": "public",
+              "default": "900",
+              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
+              "attribute": "layout-breakpoint"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "layout",
+              "type": {
+                "text": "FooterLayout"
+              },
+              "default": "'auto'",
+              "description": "Defines the footer layout mode.",
+              "fieldName": "layout"
+            },
+            {
+              "name": "layout-breakpoint",
+              "type": {
+                "text": "number"
+              },
+              "default": "900",
+              "description": "Width breakpoint in pixels used when layout is set to `auto`.",
+              "fieldName": "layoutBreakpoint"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-footer",
+          "customElement": true,
+          "states": [
+            {
+              "name": "standard",
+              "description": "Applied when the layout is set to `standard` or when in `auto` mode above the breakpoint."
+            },
+            {
+              "name": "alternative",
+              "description": "Applied when the layout is set to `alternative` or when in `auto` mode below the breakpoint."
+            },
+            {
+              "name": "auto",
+              "description": "Applied when the layout is set to `auto`."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "FooterComponentTagName",
+          "declaration": {
+            "name": "FooterComponentTagName",
+            "module": "src/lib/footer/footer.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "FooterComponent",
+          "declaration": {
+            "name": "FooterComponent",
+            "module": "src/lib/footer/footer.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/landing-page-layout/landing-page-layout.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "LandingPageLayoutComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-landing-page-layout'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "LandingPageLayoutComponent",
+          "cssProperties": [
+            {
+              "description": "Maximum width of the content area when `size` is `normal`. Defaults to `1040px`.",
+              "name": "--forge-landing-page-layout-content-width"
+            },
+            {
+              "description": "Maximum width of the content area when `size` is `wide`. Defaults to `1280px`.",
+              "name": "--forge-landing-page-layout-content-width-wide"
+            },
+            {
+              "description": "Padding around the body content area. Defaults to `24px`.",
+              "name": "--forge-landing-page-layout-body-padding"
+            },
+            {
+              "description": "Padding around the body on mobile screens. Defaults to `8px`.",
+              "name": "--forge-landing-page-layout-body-padding-mobile"
+            },
+            {
+              "description": "Inline padding of the footer. Defaults to `70px`.",
+              "name": "--forge-landing-page-layout-footer-padding"
+            },
+            {
+              "description": "Height of the root container. Defaults to `100%`.",
+              "name": "--forge-landing-page-layout-root-height"
+            },
+            {
+              "description": "Gap between action items in the header on large screens.",
+              "name": "--forge-landing-page-layout-actions-gap"
+            },
+            {
+              "description": "Gap between action items in the header on mobile screens.",
+              "name": "--forge-landing-page-layout-actions-gap-mobile"
+            },
+            {
+              "description": "Color of the header title and secondary title text. Defaults to white so the light-on-dark header treatment holds across themes.",
+              "name": "--forge-landing-page-layout-header-color"
+            },
+            {
+              "description": "Start color of the header background gradient. Defaults to Forge blue-800.",
+              "name": "--forge-landing-page-layout-header-gradient-start"
+            },
+            {
+              "description": "End color of the header background gradient. Defaults to Forge indigo-900.",
+              "name": "--forge-landing-page-layout-header-gradient-end"
+            },
+            {
+              "description": "Top color of the darkening overlay layered over the header background image. Defaults to Forge black at 75% opacity.",
+              "name": "--forge-landing-page-layout-header-overlay-start"
+            },
+            {
+              "description": "Bottom color of the darkening overlay layered over the header background image. Defaults to Forge black at 55% opacity.",
+              "name": "--forge-landing-page-layout-header-overlay-end"
+            }
+          ],
+          "cssParts": [
+            {
+              "description": "The outermost container element.",
+              "name": "root"
+            },
+            {
+              "description": "The main wrapper that holds the header and body.",
+              "name": "container"
+            },
+            {
+              "description": "The header region.",
+              "name": "header"
+            },
+            {
+              "description": "The header background image container.",
+              "name": "header-background"
+            },
+            {
+              "description": "The `<picture>` element used to render the responsive background image.",
+              "name": "header-background-picture"
+            },
+            {
+              "description": "The header body containing the title and announcements.",
+              "name": "header-body"
+            },
+            {
+              "description": "The left side of the header body (title and actions).",
+              "name": "header-body-left"
+            },
+            {
+              "description": "The right side of the header body (announcements).",
+              "name": "header-body-right"
+            },
+            {
+              "description": "The welcome title container.",
+              "name": "header-welcome"
+            },
+            {
+              "description": "The container that holds the action slot.",
+              "name": "header-actions"
+            },
+            {
+              "description": "The main body container.",
+              "name": "body"
+            },
+            {
+              "description": "The top area of the body.",
+              "name": "body-top"
+            },
+            {
+              "description": "The left column of the body.",
+              "name": "body-left"
+            },
+            {
+              "description": "The center column of the body.",
+              "name": "body-center"
+            },
+            {
+              "description": "The right column of the body.",
+              "name": "body-right"
+            },
+            {
+              "description": "The footer of the body.",
+              "name": "body-footer"
+            },
+            {
+              "description": "The page footer region.",
+              "name": "footer"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Slot for a custom background image element (typically an `<img>` or `<picture>`).",
+              "name": "image"
+            },
+            {
+              "description": "Small subheading text displayed above the main title in the header.",
+              "name": "secondary-title"
+            },
+            {
+              "description": "The main heading text of the header.",
+              "name": "main-title"
+            },
+            {
+              "description": "One or more calls to action displayed below the title in the header. Apply the `on-image` class to a slotted `forge-button` to make it legible over a background image (text/outlined buttons render white; filled buttons swap to a white background with a dark label).",
+              "name": "action"
+            },
+            {
+              "description": "Content displayed to the right of the header body (typically announcements or informational content).",
+              "name": "announcements"
+            },
+            {
+              "description": "Content displayed above the main body columns, spanning the full width.",
+              "name": "top"
+            },
+            {
+              "description": "Content for the left column of the body.",
+              "name": "left"
+            },
+            {
+              "description": "Content for the middle column (only shown when `mode` is `three`).",
+              "name": "center"
+            },
+            {
+              "description": "Content for the right column of the body.",
+              "name": "right"
+            },
+            {
+              "description": "Content displayed at the bottom of the body, spanning the full width.",
+              "name": "body-footer"
+            },
+            {
+              "description": "Content for the page footer (typically dark themed).",
+              "name": "footer"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "mode",
+              "type": {
+                "text": "LandingPageLayoutMode"
+              },
+              "privacy": "public",
+              "default": "'two-third'",
+              "description": "Controls the body column layout: `two-third` (default), `equal`, `three`, or `single`.",
+              "attribute": "mode"
+            },
+            {
+              "kind": "field",
+              "name": "alignment",
+              "type": {
+                "text": "LandingPageLayoutAlignment"
+              },
+              "privacy": "public",
+              "default": "'center'",
+              "description": "Controls the horizontal alignment of the header content: `center` (default) or `left`.",
+              "attribute": "alignment"
+            },
+            {
+              "kind": "field",
+              "name": "size",
+              "type": {
+                "text": "LandingPageLayoutSize"
+              },
+              "privacy": "public",
+              "default": "'normal'",
+              "description": "Controls the maximum width of the content area: `normal` (default) or `wide`.",
+              "attribute": "size"
+            },
+            {
+              "kind": "field",
+              "name": "imageUrlLarge",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "URL of the background image to use on large screens (>= 769px).",
+              "attribute": "image-url-large"
+            },
+            {
+              "kind": "field",
+              "name": "imageUrlSmall",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "URL of the background image to use on small screens (<= 768px).",
+              "attribute": "image-url-small"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "mode",
+              "type": {
+                "text": "LandingPageLayoutMode"
+              },
+              "default": "'two-third'",
+              "description": "Controls the body column layout: `two-third` (default), `equal`, `three`, or `single`.",
+              "fieldName": "mode"
+            },
+            {
+              "name": "alignment",
+              "type": {
+                "text": "LandingPageLayoutAlignment"
+              },
+              "default": "'center'",
+              "description": "Controls the horizontal alignment of the header content: `center` (default) or `left`.",
+              "fieldName": "alignment"
+            },
+            {
+              "name": "size",
+              "type": {
+                "text": "LandingPageLayoutSize"
+              },
+              "default": "'normal'",
+              "description": "Controls the maximum width of the content area: `normal` (default) or `wide`.",
+              "fieldName": "size"
+            },
+            {
+              "name": "image-url-large",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "URL of the background image to use on large screens (>= 769px).",
+              "fieldName": "imageUrlLarge"
+            },
+            {
+              "name": "image-url-small",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "URL of the background image to use on small screens (<= 768px).",
+              "fieldName": "imageUrlSmall"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-landing-page-layout",
+          "customElement": true,
+          "summary": "A responsive structural layout utility for building citizen-facing application landing pages consistent with Tyler patterns.",
+          "states": [
+            {
+              "name": "empty-announcements",
+              "description": "The `announcements` slot has no content and the header content is centered across the full width."
+            },
+            {
+              "name": "body-only",
+              "description": "No content is projected into the `top` slot, so the body area sits flush against the header."
+            },
+            {
+              "name": "has-image",
+              "description": "A background image is present (via `image-url-large`/`image-url-small` or the `image` slot). A darkening overlay is applied over the image to improve header text contrast."
+            },
+            {
+              "name": "mode-two-third",
+              "description": "The `mode` property is `two-third` (default)."
+            },
+            {
+              "name": "mode-equal",
+              "description": "The `mode` property is `equal`."
+            },
+            {
+              "name": "mode-three",
+              "description": "The `mode` property is `three`."
+            },
+            {
+              "name": "mode-single",
+              "description": "The `mode` property is `single`."
+            },
+            {
+              "name": "alignment-center",
+              "description": "The `alignment` property is `center` (default)."
+            },
+            {
+              "name": "alignment-left",
+              "description": "The `alignment` property is `left`."
+            },
+            {
+              "name": "size-normal",
+              "description": "The `size` property is `normal` (default)."
+            },
+            {
+              "name": "size-wide",
+              "description": "The `size` property is `wide`."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "LandingPageLayoutComponentTagName",
+          "declaration": {
+            "name": "LandingPageLayoutComponentTagName",
+            "module": "src/lib/landing-page-layout/landing-page-layout.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "LandingPageLayoutComponent",
+          "declaration": {
+            "name": "LandingPageLayoutComponent",
+            "module": "src/lib/landing-page-layout/landing-page-layout.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "MultiSelectHeaderComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-multi-select-header'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "MultiSelectHeaderComponent",
+          "slots": [
+            {
+              "description": "Text content for the select-all button",
+              "name": "select-all-button-text"
+            },
+            {
+              "description": "Action buttons (maps to the toolbar end slot)",
+              "name": "actions"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "privacy": "public",
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "attribute": "text"
+            },
+            {
+              "kind": "field",
+              "name": "noBorder",
+              "type": {
+                "text": "boolean"
+              },
+              "privacy": "public",
+              "default": "true",
+              "description": "Hides the bottom border",
+              "attribute": "no-border"
+            }
+          ],
+          "events": [
+            {
+              "type": {
+                "text": "CustomEvent"
+              },
+              "description": "Fired when the select-all button is clicked",
+              "name": "forge-multi-select-header-select-all"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "text",
+              "type": {
+                "text": "string"
+              },
+              "default": "''",
+              "description": "The text to display in the header (typically showing selection count)",
+              "fieldName": "text"
+            },
+            {
+              "name": "no-border",
+              "type": {
+                "text": "boolean"
+              },
+              "default": "true",
+              "description": "Hides the bottom border",
+              "fieldName": "noBorder"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-multi-select-header",
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "MultiSelectHeaderComponentTagName",
+          "declaration": {
+            "name": "MultiSelectHeaderComponentTagName",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "MultiSelectHeaderComponent",
+          "declaration": {
+            "name": "MultiSelectHeaderComponent",
+            "module": "src/lib/multi-select-header/multi-select-header.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/quantity-field/quantity-field.ts",
       "declarations": [
         {
@@ -1693,6 +2057,139 @@
     },
     {
       "kind": "javascript-module",
+      "path": "src/lib/structured-card/structured-card.ts",
+      "declarations": [
+        {
+          "kind": "variable",
+          "name": "StructuredCardComponentTagName",
+          "type": {
+            "text": "keyof HTMLElementTagNameMap"
+          },
+          "default": "'forge-structured-card'"
+        },
+        {
+          "kind": "class",
+          "description": "",
+          "name": "StructuredCardComponent",
+          "cssProperties": [
+            {
+              "description": "Controls the height of the body content. Defaults to `auto`.",
+              "name": "--forge-structured-card-body-height"
+            }
+          ],
+          "slots": [
+            {
+              "description": "Content displayed before the title in the header",
+              "name": "before-title"
+            },
+            {
+              "description": "The title content displayed in the header",
+              "name": "title"
+            },
+            {
+              "description": "Action buttons or controls displayed at the end of the header",
+              "name": "header-actions"
+            },
+            {
+              "description": "Content displayed after the header actions, designed specifically for icon buttons that need to run up against the card edge (ie: menu icon button)",
+              "name": "after-header-actions"
+            },
+            {
+              "description": "The main body content of the card",
+              "name": "body"
+            },
+            {
+              "description": "Content displayed at the start of the footer (e.g., pagination controls)",
+              "name": "footer-start"
+            },
+            {
+              "description": "Secondary action button displayed at the end of the footer",
+              "name": "footer-secondary-action"
+            },
+            {
+              "description": "Primary action button displayed at the end of the footer",
+              "name": "footer-primary-action"
+            }
+          ],
+          "members": [
+            {
+              "kind": "field",
+              "name": "headingLevel",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "privacy": "public",
+              "default": "2",
+              "description": "Controls the semantic heading level for the title content. Defaults to `2` (h2).\nUse this to maintain proper heading hierarchy in your document structure.",
+              "attribute": "heading-level"
+            },
+            {
+              "kind": "field",
+              "name": "bodySpacing",
+              "type": {
+                "text": "'none' | 'default'"
+              },
+              "privacy": "public",
+              "default": "'default'",
+              "description": "Controls the spacing applied to the body section. Defaults to `default`.\n- `default`: Applies standard padding to the body section.\n- `none`: Removes padding from the body section for full-width content like tables.",
+              "attribute": "body-spacing"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "heading-level",
+              "type": {
+                "text": "HeadingLevel"
+              },
+              "default": "2",
+              "description": "Controls the semantic heading level for the title content. Defaults to `2` (h2).\nUse this to maintain proper heading hierarchy in your document structure.",
+              "fieldName": "headingLevel"
+            },
+            {
+              "name": "body-spacing",
+              "type": {
+                "text": "'none' | 'default'"
+              },
+              "default": "'default'",
+              "description": "Controls the spacing applied to the body section. Defaults to `default`.\n- `default`: Applies standard padding to the body section.\n- `none`: Removes padding from the body section for full-width content like tables.",
+              "fieldName": "bodySpacing"
+            }
+          ],
+          "superclass": {
+            "name": "LitElement",
+            "package": "lit"
+          },
+          "tagName": "forge-structured-card",
+          "customElement": true,
+          "states": [
+            {
+              "name": "body-spacing-none",
+              "description": "Applied when the `bodySpacing` property is set to `none`. Used to remove default body padding for full-width content."
+            }
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "StructuredCardComponentTagName",
+          "declaration": {
+            "name": "StructuredCardComponentTagName",
+            "module": "src/lib/structured-card/structured-card.ts"
+          }
+        },
+        {
+          "kind": "js",
+          "name": "StructuredCardComponent",
+          "declaration": {
+            "name": "StructuredCardComponent",
+            "module": "src/lib/structured-card/structured-card.ts"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "declarations": [
         {
@@ -1832,139 +2329,6 @@
           "declaration": {
             "name": "ResponsiveToolbarComponent",
             "module": "src/lib/responsive-toolbar/responsive-toolbar.ts"
-          }
-        }
-      ]
-    },
-    {
-      "kind": "javascript-module",
-      "path": "src/lib/structured-card/structured-card.ts",
-      "declarations": [
-        {
-          "kind": "variable",
-          "name": "StructuredCardComponentTagName",
-          "type": {
-            "text": "keyof HTMLElementTagNameMap"
-          },
-          "default": "'forge-structured-card'"
-        },
-        {
-          "kind": "class",
-          "description": "",
-          "name": "StructuredCardComponent",
-          "cssProperties": [
-            {
-              "description": "Controls the height of the body content. Defaults to `auto`.",
-              "name": "--forge-structured-card-body-height"
-            }
-          ],
-          "slots": [
-            {
-              "description": "Content displayed before the title in the header",
-              "name": "before-title"
-            },
-            {
-              "description": "The title content displayed in the header",
-              "name": "title"
-            },
-            {
-              "description": "Action buttons or controls displayed at the end of the header",
-              "name": "header-actions"
-            },
-            {
-              "description": "Content displayed after the header actions, designed specifically for icon buttons that need to run up against the card edge (ie: menu icon button)",
-              "name": "after-header-actions"
-            },
-            {
-              "description": "The main body content of the card",
-              "name": "body"
-            },
-            {
-              "description": "Content displayed at the start of the footer (e.g., pagination controls)",
-              "name": "footer-start"
-            },
-            {
-              "description": "Secondary action button displayed at the end of the footer",
-              "name": "footer-secondary-action"
-            },
-            {
-              "description": "Primary action button displayed at the end of the footer",
-              "name": "footer-primary-action"
-            }
-          ],
-          "members": [
-            {
-              "kind": "field",
-              "name": "headingLevel",
-              "type": {
-                "text": "HeadingLevel"
-              },
-              "privacy": "public",
-              "default": "2",
-              "description": "Controls the semantic heading level for the title content. Defaults to `2` (h2).\nUse this to maintain proper heading hierarchy in your document structure.",
-              "attribute": "heading-level"
-            },
-            {
-              "kind": "field",
-              "name": "bodySpacing",
-              "type": {
-                "text": "'none' | 'default'"
-              },
-              "privacy": "public",
-              "default": "'default'",
-              "description": "Controls the spacing applied to the body section. Defaults to `default`.\n- `default`: Applies standard padding to the body section.\n- `none`: Removes padding from the body section for full-width content like tables.",
-              "attribute": "body-spacing"
-            }
-          ],
-          "attributes": [
-            {
-              "name": "heading-level",
-              "type": {
-                "text": "HeadingLevel"
-              },
-              "default": "2",
-              "description": "Controls the semantic heading level for the title content. Defaults to `2` (h2).\nUse this to maintain proper heading hierarchy in your document structure.",
-              "fieldName": "headingLevel"
-            },
-            {
-              "name": "body-spacing",
-              "type": {
-                "text": "'none' | 'default'"
-              },
-              "default": "'default'",
-              "description": "Controls the spacing applied to the body section. Defaults to `default`.\n- `default`: Applies standard padding to the body section.\n- `none`: Removes padding from the body section for full-width content like tables.",
-              "fieldName": "bodySpacing"
-            }
-          ],
-          "superclass": {
-            "name": "LitElement",
-            "package": "lit"
-          },
-          "tagName": "forge-structured-card",
-          "customElement": true,
-          "states": [
-            {
-              "name": "body-spacing-none",
-              "description": "Applied when the `bodySpacing` property is set to `none`. Used to remove default body padding for full-width content."
-            }
-          ]
-        }
-      ],
-      "exports": [
-        {
-          "kind": "js",
-          "name": "StructuredCardComponentTagName",
-          "declaration": {
-            "name": "StructuredCardComponentTagName",
-            "module": "src/lib/structured-card/structured-card.ts"
-          }
-        },
-        {
-          "kind": "js",
-          "name": "StructuredCardComponent",
-          "declaration": {
-            "name": "StructuredCardComponent",
-            "module": "src/lib/structured-card/structured-card.ts"
           }
         }
       ]
@@ -2561,18 +2925,6 @@
       "path": "src/lib/content-scaffold/content-scaffold.ts",
       "lineNumber": 38
     },
-    "FooterLayout": {
-      "path": "src/lib/footer/footer.ts",
-      "lineNumber": 16
-    },
-    "FooterComponent": {
-      "path": "src/lib/footer/footer.ts",
-      "lineNumber": 41
-    },
-    "MultiSelectHeaderComponent": {
-      "path": "src/lib/multi-select-header/multi-select-header.ts",
-      "lineNumber": 29
-    },
     "CountCardTheme": {
       "path": "src/lib/count-card/count-card.ts",
       "lineNumber": 17
@@ -2581,9 +2933,41 @@
       "path": "src/lib/count-card/count-card.ts",
       "lineNumber": 72
     },
+    "FooterLayout": {
+      "path": "src/lib/footer/footer.ts",
+      "lineNumber": 16
+    },
+    "FooterComponent": {
+      "path": "src/lib/footer/footer.ts",
+      "lineNumber": 41
+    },
+    "LandingPageLayoutMode": {
+      "path": "src/lib/landing-page-layout/landing-page-layout.ts",
+      "lineNumber": 14
+    },
+    "LandingPageLayoutAlignment": {
+      "path": "src/lib/landing-page-layout/landing-page-layout.ts",
+      "lineNumber": 15
+    },
+    "LandingPageLayoutSize": {
+      "path": "src/lib/landing-page-layout/landing-page-layout.ts",
+      "lineNumber": 16
+    },
+    "LandingPageLayoutComponent": {
+      "path": "src/lib/landing-page-layout/landing-page-layout.ts",
+      "lineNumber": 92
+    },
+    "MultiSelectHeaderComponent": {
+      "path": "src/lib/multi-select-header/multi-select-header.ts",
+      "lineNumber": 29
+    },
     "QuantityFieldComponent": {
       "path": "src/lib/quantity-field/quantity-field.ts",
       "lineNumber": 36
+    },
+    "StructuredCardComponent": {
+      "path": "src/lib/structured-card/structured-card.ts",
+      "lineNumber": 35
     },
     "ResponsiveToolbarState": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
@@ -2596,10 +2980,6 @@
     "ResponsiveToolbarComponent": {
       "path": "src/lib/responsive-toolbar/responsive-toolbar.ts",
       "lineNumber": 48
-    },
-    "StructuredCardComponent": {
-      "path": "src/lib/structured-card/structured-card.ts",
-      "lineNumber": 35
     },
     "ThemeToggleUpdateEventData": {
       "path": "src/lib/theme-toggle/theme-toggle.ts",
