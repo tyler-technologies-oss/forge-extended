@@ -14,4 +14,5 @@ export * from './structured-card';
 export * from './content-scaffold';
 export * from './app-layout';
 export * from './count-card';
+export * from './landing-page-layout';
 // -- EXPORTS PLACEHOLDER (DO NOT REMOVE) --

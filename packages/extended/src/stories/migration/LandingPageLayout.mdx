@@ -1,0 +1,87 @@
+import { Meta } from '@storybook/addon-docs/blocks';
+
+<Meta title="Migration/Landing Page Layout" />
+
+# Landing Page Layout Migration
+
+Migrating from the `forge-internal` `<forge-landing-page-layout>` to `@tylertech/forge-extended`.
+
+The tag name, properties (`mode`, `alignment`, `size`, `imageUrlLarge`, `imageUrlSmall`), slots, and existing CSS custom properties (`--forge-landing-page-layout-actions-gap`, `-actions-gap-mobile`, `-footer-padding`, `-root-height`) are unchanged.
+
+## Key Changes
+
+- **No attribute reflection:** `mode`, `alignment`, `size`, `image-url-large`, and `image-url-small` no longer reflect to host attributes. A selector such as `forge-landing-page-layout[mode='three']` only matches if you set that attribute in markup yourself, and never matches a default value. Use `:state(mode-…)`, `:state(alignment-…)`, and `:state(size-…)` instead.
+- **CSS parts renamed:**
+  - `header-background-container` → `header-background`
+  - `header-welcome-container` → `header-welcome`
+  - `header-actions-container` → `header-actions`
+  - `body-container` → `body`
+  - `body-topcontainer` → `body-top`
+  - `body-left-container` → `body-left`
+  - `body-center-container` → `body-center`
+  - `body-right-container` → `body-right`
+  - `body-footer-container` → `body-footer`
+  - `footer-container` → `footer`
+- **Actions gap overrides now apply:** in `forge-internal`, `--forge-landing-page-layout-actions-gap` and `--forge-landing-page-layout-actions-gap-mobile` were redeclared inside the component, so setting them on the host had no effect. They now work as documented, so remove any leftover overrides you don't want applied.
+- **New:** an `on-image` class for buttons in the `action` slot, CSS custom properties for content width, body padding, header colors, and the image overlay, and the `:state(empty-announcements)`, `:state(body-only)`, and `:state(has-image)` custom states.
+
+## Visual changes
+
+- **Header gradient:** the default header background is a fixed blue/indigo gradient. In `forge-internal` it was derived from the theme's `tertiary` and `primary` colors. See [Restoring the theme-derived header](#restoring-the-theme-derived-header).
+- **Header text color:** the header title and secondary title render in white by default. In `forge-internal` they used the theme's `on-primary` color. Override with `--forge-landing-page-layout-header-color`.
+- **Background image dimming:** a background image is no longer dimmed with `filter: brightness(0.5)`. A darkening gradient overlay is layered over it instead, denser at the top and lighter at the bottom. Tune it with `--forge-landing-page-layout-header-overlay-start` and `--forge-landing-page-layout-header-overlay-end`.
+- **Body spacing without `top` content:** when nothing is slotted into `top`, the body columns now sit directly below the header. In `forge-internal` this only happened after `top` content was added and then removed, so most pages rendered about 48px of extra space above the body columns. Pages that use the `top` slot are unaffected.
+
+## Before / After
+
+### Selecting a variant from outside the component
+
+```css
+/* Before — reflected attributes on the host */
+forge-landing-page-layout[mode='three'] { … }
+forge-landing-page-layout[alignment='left'] { … }
+forge-landing-page-layout[size='wide'] { … }
+```
+
+```css
+/* After — custom states on the host */
+forge-landing-page-layout:state(mode-three) { … }
+forge-landing-page-layout:state(alignment-left) { … }
+forge-landing-page-layout:state(size-wide) { … }
+```
+
+### Restoring the theme-derived header
+
+```css
+forge-landing-page-layout {
+  --forge-landing-page-layout-header-gradient-start: var(--forge-theme-tertiary);
+  --forge-landing-page-layout-header-gradient-end: var(--forge-theme-primary);
+  --forge-landing-page-layout-header-color: var(--forge-theme-on-primary);
+}
+```
+
+### Buttons over a background image
+
+```html
+<!-- After — opt into the built-in on-image treatment -->
+<forge-landing-page-layout image-url-large="/hero.jpg" image-url-small="/hero.jpg">
+  <forge-button class="on-image" slot="action" variant="filled">Explore</forge-button>
+  <forge-button class="on-image" slot="action" variant="outlined">Buy a pass</forge-button>
+</forge-landing-page-layout>
+```
+
+### Targeting parts
+
+```css
+/* Before */
+forge-landing-page-layout::part(body-container) { … }
+forge-landing-page-layout::part(footer-container) { … }
+```
+
+```css
+/* After */
+forge-landing-page-layout::part(body) { … }
+forge-landing-page-layout::part(footer) { … }
+```
+
+See the [Landing Page Layout docs](?path=/docs/components-landing-page-layout--docs) for the full API.
