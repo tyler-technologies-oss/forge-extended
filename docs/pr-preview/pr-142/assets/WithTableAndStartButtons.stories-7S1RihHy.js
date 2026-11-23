@@ -1,0 +1,17 @@
+import{x as t}from"./iframe-aIta0XjW.js";import{I as e,U as r,V as a,g as n}from"./with-default-aria-B18WzXUc.js";import"./structured-card-3aH3RvdT.js";import{d as i,a as s}from"./index-3-5WyxUN.js";import{d as p}from"./index-d0_CFtxH.js";import{d as m}from"./index-HhQTP63o.js";import{d}from"./index-D28XLDrM.js";import{d as c}from"./index-CLQ_eMfe.js";import"./component-utils-BI5goMsi.js";import"./constants-C89t2nXh.js";import"./utils-qX0sCc6t.js";import"./query-assigned-nodes-cwDSNLIu.js";import"./base-CShCMygk.js";import"./class-map-nJCrVyER.js";import"./directive-CJw_OlP2.js";import"./content-scaffold-DP1HJTSM.js";import"./when-3fO0zp9C.js";import"./lit-utils-yhn8fLQC.js";import"./async-directive-B4pUYcG0.js";import"./index-D37AZnfP.js";import"./icon-button-B6dAQuk5.js";import"./base-button-adapter-CZogyW6-.js";import"./focus-indicator-DCygggO6.js";import"./icon-COisYVme.js";import"./tooltip-a8xk4fMu.js";import"./with-longpress-listener-CRVOFTli.js";import"./dismissible-stack-BlFRNdPh.js";import"./select-gL69faKo.js";import"./with-form-associated-CykSvWe3.js";import"./field-CofY9NRD.js";import"./list-dropdown-aware-core-naRdIUSN.js";import"./linear-progress-constants-Di84Ggj_.js";import"./list-BtUAAgAz.js";import"./popover-CVYp0ER-.js";import"./skeleton-constants-0CYeGdwF.js";import"./divider-DIrAGJQM.js";import"./circular-progress-GSgkFdSW.js";import"./scaffold-BPaFWOS3.js";import"./toolbar-BOgCGGCx.js";i();p();m();s();d();c();e.define([r,a,n]);const l="forge-structured-card",oo={title:"Components/Structured Card",component:l,render:()=>t`
+      <forge-structured-card heading-level="2" body-spacing="none">
+        <div slot="title">Asset Inventory</div>
+        <forge-icon-button aria-label="Refresh data" slot="after-header-actions">
+          <forge-icon name="refresh"></forge-icon>
+        </forge-icon-button>
+        <forge-icon-button aria-label="Download report" slot="after-header-actions">
+          <forge-icon name="download"></forge-icon>
+        </forge-icon-button>
+        <forge-table slot="body" .data=${[{id:"AST-001",name:"Dell Latitude 5520",category:"Laptop",location:"Building A",status:"In Use"},{id:"AST-002",name:"HP LaserJet Pro",category:"Printer",location:"Building B",status:"Available"},{id:"AST-003",name:"Cisco IP Phone 8845",category:"Phone",location:"Building A",status:"In Use"},{id:"AST-004",name:'Samsung 27" Monitor',category:"Monitor",location:"Building C",status:"In Repair"},{id:"AST-005",name:"Logitech MX Keys",category:"Keyboard",location:"Building A",status:"Available"}]} .columnConfigurations=${[{property:"id",header:"Asset ID"},{property:"name",header:"Asset Name"},{property:"category",header:"Category"},{property:"location",header:"Location"},{property:"status",header:"Status"}]}></forge-table>
+        <forge-stack slot="footer-start" inline alignment="center" wrap gap="8">
+          <forge-button variant="outlined">Update asset inventory</forge-button>
+          <forge-button variant="outlined">Asset inventory dataset</forge-button>
+        </forge-stack>
+        <forge-paginator slot="footer-primary-action" page-size="5" total="25" page-index="0"></forge-paginator>
+      </forge-structured-card>
+    `},o={};o.parameters={...o.parameters,docs:{...o.parameters?.docs,source:{originalSource:"{}",...o.parameters?.docs?.source}}};const to=["WithTableAndStartButtons"];export{o as WithTableAndStartButtons,to as __namedExportsOrder,oo as default};
